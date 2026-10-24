@@ -13,7 +13,6 @@ use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
 use Johncms\Modules\Profile\Application\Access\BanAccess;
 use Johncms\Modules\Profile\Application\DTO\ProfileViewDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
-use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Modules\Profile\Domain\Repository\KarmaRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\Users\User;
@@ -55,7 +54,7 @@ final readonly class GetProfileViewUseCase
         $profileUser = $this->profileUserRepository->findById($userId);
 
         // An account awaiting confirmation exists only for whoever is allowed to see one
-        if ($profileUser === null || (! $profileUser->preg && ! $this->accessChecker->allows(ProfilePermissions::UNCONFIRMED_VIEW))) {
+        if ($profileUser === null || (! $profileUser->preg && ! $this->accessChecker->allows(CorePermissions::USERS_UNCONFIRMED_VIEW))) {
             throw new ProfileNotFoundException();
         }
 
@@ -166,7 +165,7 @@ final readonly class GetProfileViewUseCase
     private function buildNotifications(User $profileUser, array $config): array
     {
         $notifications = [];
-        if (! $profileUser->preg && empty($profileUser->regadm) && $this->accessChecker->allows(ProfilePermissions::UNCONFIRMED_VIEW)) {
+        if (! $profileUser->preg && empty($profileUser->regadm) && $this->accessChecker->allows(CorePermissions::USERS_UNCONFIRMED_VIEW)) {
             $notifications[] = __('Pending confirmation');
         }
         if (! empty($config['user_email_confirmation']) && ! $profileUser->email_confirmed) {
@@ -196,7 +195,7 @@ final readonly class GetProfileViewUseCase
 
         // Each button leads to a screen with a guard of its own, and asks here exactly what that
         // guard asks: a button nobody may press is worse than no button.
-        if ($isOwner || (! $targetStandsAbove && $this->accessChecker->allows(ProfilePermissions::PROFILE_EDIT))) {
+        if ($isOwner || (! $targetStandsAbove && $this->accessChecker->allows(CorePermissions::USERS_PROFILE_EDIT))) {
             $buttons[] = ['url' => '/profile/' . $profileUser->id . '/edit', 'name' => __('Edit')];
         }
         if (! $isOwner && ! $targetStandsAbove && $this->accessChecker->allows(CorePermissions::ADMIN_SETTINGS_MANAGE)) {

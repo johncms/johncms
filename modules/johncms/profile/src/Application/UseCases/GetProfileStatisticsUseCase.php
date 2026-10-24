@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
-use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\Users\User;
 
@@ -23,7 +23,7 @@ final readonly class GetProfileStatisticsUseCase
         $profileUser = $this->profileUserRepository->findById($userId);
 
         // An account awaiting confirmation exists only for whoever is allowed to see one
-        if ($profileUser === null || (! $profileUser->preg && ! $this->accessChecker->allows(ProfilePermissions::UNCONFIRMED_VIEW))) {
+        if ($profileUser === null || (! $profileUser->preg && ! $this->accessChecker->allows(CorePermissions::USERS_UNCONFIRMED_VIEW))) {
             throw new ProfileNotFoundException();
         }
 

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\Access;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\RoleLevels;
 use Johncms\Auth\CurrentUser;
-use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 
 /**
  * What the visitor may do to the bans of an account: which kind they may apply, and whether they
@@ -22,12 +22,12 @@ final readonly class BanAccess
 {
     /** Ban kinds as they are stored, and the permission each of them needs. */
     private const PERMISSION_BY_TYPE = [
-        1  => ProfilePermissions::BAN_MANAGE,
-        3  => ProfilePermissions::BAN_MANAGE,
-        10 => ProfilePermissions::BAN_MANAGE,
-        13 => ProfilePermissions::BAN_MANAGE,
-        11 => ProfilePermissions::BAN_FORUM,
-        15 => ProfilePermissions::BAN_LIBRARY,
+        1  => CorePermissions::USERS_BAN_MANAGE,
+        3  => CorePermissions::USERS_BAN_MANAGE,
+        10 => CorePermissions::USERS_BAN_MANAGE,
+        13 => CorePermissions::USERS_BAN_MANAGE,
+        11 => CorePermissions::USERS_BAN_FORUM,
+        15 => CorePermissions::USERS_BAN_LIBRARY,
     ];
 
     public function __construct(
@@ -85,7 +85,7 @@ final readonly class BanAccess
      */
     public function mayLift(int $targetId): bool
     {
-        return $this->accessChecker->allows(ProfilePermissions::BAN_PERMANENT) && $this->outranks($targetId);
+        return $this->accessChecker->allows(CorePermissions::USERS_BAN_PERMANENT) && $this->outranks($targetId);
     }
 
     /**
@@ -93,6 +93,6 @@ final readonly class BanAccess
      */
     public function mayDestroy(int $targetId): bool
     {
-        return $this->accessChecker->allows(ProfilePermissions::BAN_DESTROY) && $this->outranks($targetId);
+        return $this->accessChecker->allows(CorePermissions::USERS_BAN_DESTROY) && $this->outranks($targetId);
     }
 }

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Modules\Profile\Application\Access\BanAccess;
 use Johncms\Modules\Profile\Application\DTO\BanHistoryDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
-use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Modules\Profile\Domain\Repository\BanRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\Users\Ban;
@@ -98,7 +98,7 @@ final readonly class GetBanHistoryUseCase
         $target = $this->profileUserRepository->findById($targetId);
 
         // An account awaiting confirmation exists only for whoever is allowed to see one
-        if ($target === null || (! $target->preg && ! $this->accessChecker->allows(ProfilePermissions::UNCONFIRMED_VIEW))) {
+        if ($target === null || (! $target->preg && ! $this->accessChecker->allows(CorePermissions::USERS_UNCONFIRMED_VIEW))) {
             throw new ProfileNotFoundException();
         }
 

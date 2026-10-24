@@ -60,7 +60,7 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:322
 #: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:333
 #: modules/johncms/admin/src/Application/Services/AdminUserRowMapper.php:102
-#: modules/johncms/admin/src/Application/Services/UserListRowMapper.php:104
+#: modules/johncms/admin/src/Application/Services/UserListRowMapper.php:98
 #: modules/johncms/admin/templates/style-guide/examples/dropdown.twig:16
 #: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:12
 #: modules/johncms/admin/templates/style-guide/examples/list-group.twig:10
@@ -71,7 +71,7 @@ msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:40
 #: modules/johncms/admin/src/Application/Controllers/Access/AuthLogController.php:53
-#: modules/johncms/admin/src/Application/Services/UserListRowMapper.php:108
+#: modules/johncms/admin/src/Application/Services/UserListRowMapper.php:102
 msgid "Sign-in log"
 msgstr ""
 
@@ -570,8 +570,8 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:123
 #: modules/johncms/admin/src/Application/Controllers/Users/RegistrationModerationController.php:76
 #: modules/johncms/admin/src/Application/Controllers/Users/RegistrationModerationController.php:139
-#: modules/johncms/admin/src/Application/Services/UserListRowMapper.php:131
-#: modules/johncms/admin/src/Application/Services/UserListRowMapper.php:134
+#: modules/johncms/admin/src/Application/Services/UserListRowMapper.php:125
+#: modules/johncms/admin/src/Application/Services/UserListRowMapper.php:128
 #: modules/johncms/admin/templates/ad-confirm.twig:18
 #: modules/johncms/admin/templates/ads.twig:59
 #: modules/johncms/admin/templates/counter-delete-confirm.twig:20
@@ -1033,7 +1033,7 @@ msgid "Read the sign-in log"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Services/AdminUserRowMapper.php:82
-#: modules/johncms/admin/src/Application/Services/UserListRowMapper.php:118
+#: modules/johncms/admin/src/Application/Services/UserListRowMapper.php:112
 msgid "Browse as this user"
 msgstr ""
 
@@ -1142,20 +1142,20 @@ msgstr ""
 msgid "In the last year"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Services/UserListRowMapper.php:87
+#: modules/johncms/admin/src/Application/Services/UserListRowMapper.php:81
 msgid "Approve"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Services/UserListRowMapper.php:101
+#: modules/johncms/admin/src/Application/Services/UserListRowMapper.php:95
 #: modules/johncms/admin/templates/style-guide/examples/row-actions.twig:5
 msgid "Profile"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Services/UserListRowMapper.php:112
+#: modules/johncms/admin/src/Application/Services/UserListRowMapper.php:106
 msgid "Ban"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Services/UserListRowMapper.php:132
+#: modules/johncms/admin/src/Application/Services/UserListRowMapper.php:126
 msgid "Remove IP"
 msgstr ""
 

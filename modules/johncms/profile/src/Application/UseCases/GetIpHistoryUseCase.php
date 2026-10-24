@@ -10,7 +10,6 @@ use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Profile\Application\DTO\IpHistoryDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileAccessForbiddenException;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
-use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Modules\Profile\Domain\Repository\IpHistoryRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\Users\IpHistory;
@@ -66,7 +65,7 @@ final readonly class GetIpHistoryUseCase
         $profileUser = $this->profileUserRepository->findById($userId);
 
         // An account awaiting confirmation exists only for whoever is allowed to see one
-        if ($profileUser === null || (! $profileUser->preg && ! $this->accessChecker->allows(ProfilePermissions::UNCONFIRMED_VIEW))) {
+        if ($profileUser === null || (! $profileUser->preg && ! $this->accessChecker->allows(CorePermissions::USERS_UNCONFIRMED_VIEW))) {
             throw new ProfileNotFoundException();
         }
 

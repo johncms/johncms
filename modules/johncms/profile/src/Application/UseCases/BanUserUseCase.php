@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Profile\Application\Access\BanAccess;
 use Johncms\Modules\Profile\Application\DTO\BanUserCommand;
 use Johncms\Modules\Profile\Application\Exceptions\BanException;
 use Johncms\Modules\Profile\Domain\Repository\BanRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\KarmaRepositoryInterface;
-use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\Users\User;
 
@@ -88,11 +88,11 @@ final readonly class BanUserUseCase
 
         // A ban of one section is worth a day; the general ban of an account is worth a month;
         // longer than that is for whoever may also lift one.
-        if (! $this->accessChecker->allows(ProfilePermissions::BAN_MANAGE) && $timeval > 86400) {
+        if (! $this->accessChecker->allows(CorePermissions::USERS_BAN_MANAGE) && $timeval > 86400) {
             $timeval = 86400;
         }
 
-        if (! $this->accessChecker->allows(ProfilePermissions::BAN_PERMANENT) && $timeval > 2592000) {
+        if (! $this->accessChecker->allows(CorePermissions::USERS_BAN_PERMANENT) && $timeval > 2592000) {
             $timeval = 2592000;
         }
 

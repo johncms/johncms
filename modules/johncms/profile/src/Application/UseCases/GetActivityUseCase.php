@@ -6,6 +6,7 @@ namespace Johncms\Modules\Profile\Application\UseCases;
 
 use Illuminate\Support\Collection;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
@@ -17,7 +18,6 @@ use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Modules\Profile\Application\DTO\ActivityDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Application\Services\ForumActivityPreviewService;
-use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Modules\Profile\Domain\Enums\ActivityType;
 use Johncms\Modules\Profile\Domain\Repository\ProfileActivityRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
@@ -88,7 +88,7 @@ final readonly class GetActivityUseCase
         $profileUser = $this->profileUserRepository->findById($userId);
 
         // An account awaiting confirmation exists only for whoever is allowed to see one
-        if ($profileUser === null || (! $profileUser->preg && ! $this->accessChecker->allows(ProfilePermissions::UNCONFIRMED_VIEW))) {
+        if ($profileUser === null || (! $profileUser->preg && ! $this->accessChecker->allows(CorePermissions::USERS_UNCONFIRMED_VIEW))) {
             throw new ProfileNotFoundException();
         }
 

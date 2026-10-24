@@ -6,10 +6,10 @@ namespace Tests\Unit\Modules\Profile;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\RoleLevels;
 use Johncms\Auth\Identity;
 use Johncms\Modules\Profile\Application\Access\BanAccess;
-use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Users\User;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
@@ -39,7 +39,7 @@ final class BanAccessTest extends TestCase
 
     public function testAForumModeratorMayOnlyApplyTheForumBan(): void
     {
-        $access = $this->access([ProfilePermissions::BAN_FORUM]);
+        $access = $this->access([CorePermissions::USERS_BAN_FORUM]);
 
         self::assertTrue($access->mayBanAnything());
         self::assertTrue($access->mayApply(11), 'The forum ban');
@@ -49,7 +49,7 @@ final class BanAccessTest extends TestCase
 
     public function testTheGeneralPermissionCoversTheBansThatAreNotOfOneSection(): void
     {
-        $access = $this->access([ProfilePermissions::BAN_MANAGE]);
+        $access = $this->access([CorePermissions::USERS_BAN_MANAGE]);
 
         foreach ([1, 3, 10, 13] as $banType) {
             self::assertTrue($access->mayApply($banType), 'Ban type ' . $banType);
@@ -64,7 +64,7 @@ final class BanAccessTest extends TestCase
      */
     public function testAKindOfBanNobodyDeclaredIsRefused(): void
     {
-        $access = $this->access([ProfilePermissions::BAN_MANAGE]);
+        $access = $this->access([CorePermissions::USERS_BAN_MANAGE]);
 
         self::assertFalse($access->mayApply(0));
         self::assertFalse($access->mayApply(16));
@@ -79,7 +79,7 @@ final class BanAccessTest extends TestCase
         Capsule::table('cms_ban_users')->insert(
             ['user_id' => self::VISITOR, 'ban_time' => time() + 3600, 'ban_type' => 11, 'ban_reason' => 'Spam']
         );
-        $access = $this->access([ProfilePermissions::BAN_FORUM]);
+        $access = $this->access([CorePermissions::USERS_BAN_FORUM]);
 
         self::assertFalse($access->mayApply(11));
         self::assertFalse($access->mayBanAnything());

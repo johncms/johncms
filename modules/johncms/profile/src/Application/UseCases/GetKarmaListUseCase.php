@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Modules\Profile\Application\DTO\KarmaListDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
@@ -81,7 +82,7 @@ final readonly class GetKarmaListUseCase
         $target = $this->profileUserRepository->findById($targetId);
 
         // An account awaiting confirmation exists only for whoever is allowed to see one
-        if ($target === null || (! $target->preg && ! $this->accessChecker->allows(ProfilePermissions::UNCONFIRMED_VIEW))) {
+        if ($target === null || (! $target->preg && ! $this->accessChecker->allows(CorePermissions::USERS_UNCONFIRMED_VIEW))) {
             throw new ProfileNotFoundException();
         }
 

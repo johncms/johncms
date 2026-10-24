@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\RoleLevels;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Profile\Application\DTO\EditProfileContextDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileAccessForbiddenException;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
-use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\Users\User;
 
@@ -30,12 +30,12 @@ final readonly class GetEditContextUseCase
         $profileUser = $this->profileUserRepository->findById($userId);
 
         // An account awaiting confirmation exists only for whoever is allowed to see one
-        if ($profileUser === null || (! $profileUser->preg && ! $this->accessChecker->allows(ProfilePermissions::UNCONFIRMED_VIEW))) {
+        if ($profileUser === null || (! $profileUser->preg && ! $this->accessChecker->allows(CorePermissions::USERS_UNCONFIRMED_VIEW))) {
             throw new ProfileNotFoundException();
         }
 
         $isSelf = $profileUser->id === $this->currentUser->id();
-        $mayEditOthers = $this->accessChecker->allows(ProfilePermissions::PROFILE_EDIT);
+        $mayEditOthers = $this->accessChecker->allows(CorePermissions::USERS_PROFILE_EDIT);
         $ownLevel = $this->roleLevels->highest($this->identity->identity());
         $targetLevel = $this->roleLevels->highestGrantedTo($profileUser->id);
 
@@ -54,7 +54,7 @@ final readonly class GetEditContextUseCase
             profileUser: $profileUser,
             isSelf: $isSelf,
             canEditAdminFields: $mayEditOthers,
-            canResetSettings: $this->accessChecker->allows(ProfilePermissions::SETTINGS_RESET) && $targetLevel < $ownLevel,
+            canResetSettings: $this->accessChecker->allows(CorePermissions::USERS_SETTINGS_RESET) && $targetLevel < $ownLevel,
         );
     }
 }

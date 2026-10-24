@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\RoleLevels;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Profile\Application\DTO\ChangePasswordContextDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileAccessForbiddenException;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
-use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 
 final readonly class GetChangePasswordContextUseCase
@@ -28,7 +28,7 @@ final readonly class GetChangePasswordContextUseCase
         $profileUser = $this->profileUserRepository->findById($userId);
 
         // An account awaiting confirmation exists only for whoever is allowed to see one
-        if ($profileUser === null || (! $profileUser->preg && ! $this->accessChecker->allows(ProfilePermissions::UNCONFIRMED_VIEW))) {
+        if ($profileUser === null || (! $profileUser->preg && ! $this->accessChecker->allows(CorePermissions::USERS_UNCONFIRMED_VIEW))) {
             throw new ProfileNotFoundException();
         }
 
@@ -38,7 +38,7 @@ final readonly class GetChangePasswordContextUseCase
         if (
             ! $isSelf
             && (
-                ! $this->accessChecker->allows(ProfilePermissions::PASSWORD_CHANGE)
+                ! $this->accessChecker->allows(CorePermissions::USERS_PASSWORD_CHANGE)
                 || $this->roleLevels->highestGrantedTo($profileUser->id) > $this->roleLevels->highest($this->currentUser->identity())
             )
         ) {

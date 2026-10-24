@@ -20,12 +20,6 @@ use Johncms\Users\User;
  */
 final readonly class UserListRowMapper
 {
-    /**
-     * The permission of the profile module to ban, named by its string: the panel links to the
-     * form of that module and does not depend on its classes.
-     */
-    private const BAN_PERMISSION = 'users.ban.manage';
-
     public function __construct(
         private CurrentUser $currentUser,
         private AccessCheckerInterface $accessChecker,
@@ -108,7 +102,7 @@ final readonly class UserListRowMapper
             $actions[] = $this->link('/admin/auth-log?user=' . $user->id, __('Sign-in log'), 'history');
         }
 
-        if (! $self && $this->accessChecker->allows(self::BAN_PERMISSION)) {
+        if (! $self && $this->accessChecker->allows(CorePermissions::USERS_BAN_MANAGE)) {
             $actions[] = $this->link('/profile/' . $user->id . '/bans/new', __('Ban'), 'ban');
         }
 

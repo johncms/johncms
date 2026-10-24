@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\SecureToken;
 use Johncms\Mail\Queue\MailQueueInterface;
 use Johncms\Mail\Queue\QueuedEmailDTO;
 use Johncms\Modules\Profile\Application\DTO\UpdateProfileCommand;
 use Johncms\Modules\Profile\Application\Exceptions\EditProfileException;
-use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\System\i18n\Translator;
 use Johncms\Users\User;
@@ -35,7 +35,7 @@ final readonly class UpdateProfileUseCase
     public function execute(UpdateProfileCommand $command, User $profileUser): void
     {
         $config = config('johncms');
-        $isAdmin = $this->accessChecker->allows(ProfilePermissions::PROFILE_EDIT);
+        $isAdmin = $this->accessChecker->allows(CorePermissions::USERS_PROFILE_EDIT);
 
         $formData = $command->toFormData();
 

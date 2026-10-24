@@ -62,7 +62,7 @@ msgstr ""
 #: modules/johncms/profile/src/Application/Controllers/AvatarController.php:83
 #: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:165
 #: modules/johncms/profile/src/Application/Controllers/PhotoController.php:83
-#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:94
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:93
 msgid "My Profile"
 msgstr ""
 
@@ -116,7 +116,7 @@ msgid "Removing ban along with a record in the bans history"
 msgstr ""
 
 #: modules/johncms/profile/src/Application/Controllers/BanController.php:160
-#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:203
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:202
 #: modules/johncms/profile/templates/public/confirm-delete.twig:18
 #: modules/johncms/profile/templates/public/edit.twig:82
 #: modules/johncms/profile/templates/public/edit.twig:102
@@ -155,7 +155,7 @@ msgstr ""
 #: modules/johncms/profile/src/Application/Controllers/KarmaController.php:220
 #: modules/johncms/profile/src/Application/Controllers/KarmaController.php:241
 #: modules/johncms/profile/src/Application/Controllers/ProfileController.php:28
-#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:94
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:93
 msgid "User Profile"
 msgstr ""
 
@@ -352,55 +352,11 @@ msgstr ""
 
 #: modules/johncms/profile/src/Application/Notifications/BanNotificationProvider.php:29
 #: modules/johncms/profile/src/Application/UseCases/BanUserUseCase.php:64
-#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:206
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:205
 msgid "Ban"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:76
-msgid "Open an account awaiting confirmation"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:83
-msgid "Edit the profile of another account"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:90
-msgid "Change the password of another account"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:97
-msgid "Reset the settings of another account"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:104
-msgid "Read the notes the staff keep about an account"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:111
-msgid "Read the e-mail address of an account that hides it"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:118
-msgid "Ban from the site, private messages, comments and the guestbook"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:125
-msgid "Ban from the forum"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:132
-msgid "Ban from the library"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:139
-msgid "Ban without an end date and lift a ban"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:146
-msgid "Delete the record of a ban"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:151
+#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:29
 msgid "Delete a karma entry"
 msgstr ""
 
@@ -482,40 +438,40 @@ msgstr ""
 msgid "You cannot edit profile of higher administration"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/GetKarmaListUseCase.php:66
+#: modules/johncms/profile/src/Application/UseCases/GetKarmaListUseCase.php:67
 msgid "All"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/GetKarmaListUseCase.php:67
+#: modules/johncms/profile/src/Application/UseCases/GetKarmaListUseCase.php:68
 #: modules/johncms/profile/templates/public/karma-vote.twig:24
 #: modules/johncms/profile/templates/public/view.twig:122
 msgid "Positive"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/GetKarmaListUseCase.php:68
+#: modules/johncms/profile/src/Application/UseCases/GetKarmaListUseCase.php:69
 #: modules/johncms/profile/templates/public/karma-vote.twig:28
 #: modules/johncms/profile/templates/public/view.twig:128
 msgid "Negative"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:170
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:169
 #: modules/johncms/profile/templates/public/statistics.twig:15
 msgid "Pending confirmation"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:173
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:172
 msgid "E-mail address is not confirmed"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:193
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:192
 msgid "Add to Contacts"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:194
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:193
 msgid "Remove from Contacts"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:200
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:199
 msgid "Edit"
 msgstr ""
 

@@ -45,6 +45,39 @@ final class CorePermissions implements PermissionProviderInterface
     /** Browse the site as another account, to see what they see. */
     public const USERS_IMPERSONATE = 'users.impersonate';
 
+    /** Open an account that has not been confirmed yet. */
+    public const USERS_UNCONFIRMED_VIEW = 'users.unconfirmed.view';
+
+    /** Edit somebody else's profile. */
+    public const USERS_PROFILE_EDIT = 'users.profile.edit';
+
+    /** Change somebody else's password. */
+    public const USERS_PASSWORD_CHANGE = 'users.password.change';
+
+    /** Reset the settings of somebody else's account. */
+    public const USERS_SETTINGS_RESET = 'users.settings.reset';
+
+    /** The notes the staff keep about an account. */
+    public const USERS_NOTES_VIEW = 'users.notes.view';
+
+    /** Read the address of an account that keeps it hidden. */
+    public const USERS_EMAIL_VIEW = 'users.email.view';
+
+    /** Ban an account from the site, private messages, comments and the guestbook. */
+    public const USERS_BAN_MANAGE = 'users.ban.manage';
+
+    /** Ban an account from the forum. */
+    public const USERS_BAN_FORUM = 'users.ban.forum';
+
+    /** Ban an account from the library. */
+    public const USERS_BAN_LIBRARY = 'users.ban.library';
+
+    /** Ban without an end date, and lift a ban before it runs out. */
+    public const USERS_BAN_PERMANENT = 'users.ban.permanent';
+
+    /** Delete the record of a ban, not just end it. */
+    public const USERS_BAN_DESTROY = 'users.ban.destroy';
+
     /** Use the smilies kept for the staff. */
     public const SMILIES_ADMIN_USE = 'system.smilies.admin';
 
@@ -74,6 +107,7 @@ final class CorePermissions implements PermissionProviderInterface
             SystemRole::Admin->value,
         ];
         $administrators = [SystemRole::Admin->value];
+        $seniorStaff = [SystemRole::SuperModerator->value, SystemRole::Admin->value];
 
         return [
             new PermissionDefinition(
@@ -144,6 +178,82 @@ final class CorePermissions implements PermissionProviderInterface
                 d__('system', 'Browse the site as another user'),
                 $usersGroup,
                 $administrators
+            ),
+            new PermissionDefinition(
+                self::USERS_UNCONFIRMED_VIEW,
+                self::USERS_GROUP,
+                d__('system', 'Open an account awaiting confirmation'),
+                $usersGroup,
+                $administrators
+            ),
+            new PermissionDefinition(
+                self::USERS_PROFILE_EDIT,
+                self::USERS_GROUP,
+                d__('system', 'Edit the profile of another account'),
+                $usersGroup,
+                $administrators
+            ),
+            new PermissionDefinition(
+                self::USERS_PASSWORD_CHANGE,
+                self::USERS_GROUP,
+                d__('system', 'Change the password of another account'),
+                $usersGroup,
+                $administrators
+            ),
+            new PermissionDefinition(
+                self::USERS_SETTINGS_RESET,
+                self::USERS_GROUP,
+                d__('system', 'Reset the settings of another account'),
+                $usersGroup,
+                $administrators
+            ),
+            new PermissionDefinition(
+                self::USERS_NOTES_VIEW,
+                self::USERS_GROUP,
+                d__('system', 'Read the notes the staff keep about an account'),
+                $usersGroup,
+                $staff
+            ),
+            new PermissionDefinition(
+                self::USERS_EMAIL_VIEW,
+                self::USERS_GROUP,
+                d__('system', 'Read the e-mail address of an account that hides it'),
+                $usersGroup,
+                $administrators
+            ),
+            new PermissionDefinition(
+                self::USERS_BAN_MANAGE,
+                self::USERS_GROUP,
+                d__('system', 'Ban from the site, private messages, comments and the guestbook'),
+                $usersGroup,
+                $seniorStaff
+            ),
+            new PermissionDefinition(
+                self::USERS_BAN_FORUM,
+                self::USERS_GROUP,
+                d__('system', 'Ban from the forum'),
+                $usersGroup,
+                [SystemRole::ForumModerator->value, ...$seniorStaff]
+            ),
+            new PermissionDefinition(
+                self::USERS_BAN_LIBRARY,
+                self::USERS_GROUP,
+                d__('system', 'Ban from the library'),
+                $usersGroup,
+                [SystemRole::LibraryModerator->value, ...$seniorStaff]
+            ),
+            new PermissionDefinition(
+                self::USERS_BAN_PERMANENT,
+                self::USERS_GROUP,
+                d__('system', 'Ban without an end date and lift a ban'),
+                $usersGroup,
+                $administrators
+            ),
+            new PermissionDefinition(
+                self::USERS_BAN_DESTROY,
+                self::USERS_GROUP,
+                d__('system', 'Delete the record of a ban'),
+                $usersGroup
             ),
         ];
     }

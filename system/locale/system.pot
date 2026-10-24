@@ -37,7 +37,7 @@ msgid "Watching the photo album"
 msgstr ""
 
 #: config/places.global.php:14
-#: system/src/Auth/Authorization/CorePermissions.php:67
+#: system/src/Auth/Authorization/CorePermissions.php:100
 msgid "Users"
 msgstr ""
 
@@ -204,52 +204,96 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:65
+#: system/src/Auth/Authorization/CorePermissions.php:98
 msgid "Admin panel"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:66
+#: system/src/Auth/Authorization/CorePermissions.php:99
 msgid "System"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:82
+#: system/src/Auth/Authorization/CorePermissions.php:116
 msgid "Access the admin panel"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:89
+#: system/src/Auth/Authorization/CorePermissions.php:123
 msgid "Change system settings"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:95
+#: system/src/Auth/Authorization/CorePermissions.php:129
 msgid "Manage roles and permissions"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:102
+#: system/src/Auth/Authorization/CorePermissions.php:136
 msgid "See error details and the developer panel"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:109
+#: system/src/Auth/Authorization/CorePermissions.php:143
 msgid "Post without waiting out the full antiflood delay"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:116
+#: system/src/Auth/Authorization/CorePermissions.php:150
 msgid "Use the smilies kept for the staff"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:123
+#: system/src/Auth/Authorization/CorePermissions.php:157
 msgid "Moderate the comments of the modules"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:131
+#: system/src/Auth/Authorization/CorePermissions.php:165
 msgid "Install and remove modules"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:137
+#: system/src/Auth/Authorization/CorePermissions.php:171
 msgid "See where a visitor is on the site and where they came from"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:144
+#: system/src/Auth/Authorization/CorePermissions.php:178
 msgid "Browse the site as another user"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:185
+msgid "Open an account awaiting confirmation"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:192
+msgid "Edit the profile of another account"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:199
+msgid "Change the password of another account"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:206
+msgid "Reset the settings of another account"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:213
+msgid "Read the notes the staff keep about an account"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:220
+msgid "Read the e-mail address of an account that hides it"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:227
+msgid "Ban from the site, private messages, comments and the guestbook"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:234
+msgid "Ban from the forum"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:241
+msgid "Ban from the library"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:248
+msgid "Ban without an end date and lift a ban"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:255
+msgid "Delete the record of a ban"
 msgstr ""
 
 #: system/src/Auth/Authorization/SystemRole.php:103
