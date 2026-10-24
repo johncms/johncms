@@ -296,6 +296,7 @@
       'Detach' => 'Отвязать',
       'No services are linked to your account' => 'К вашему аккаунту не привязано ни одного сервиса',
       'Link another service' => 'Привязать другой сервис',
+      'The password must contain at least 6 characters' => 'Пароль должен содержать не менее 6 символов',
     ),
   ),
 );

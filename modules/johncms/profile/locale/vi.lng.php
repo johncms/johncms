@@ -244,6 +244,7 @@
       'Not specified' => 'Chưa xác định',
       'hidden' => 'ẩn',
       'Admin Notes' => 'Quản Trị Ghi Chú',
+      'The password must contain at least 6 characters' => 'Mật khẩu phải chứa ít nhất 6 ký tự',
     ),
   ),
 );

@@ -227,6 +227,7 @@
       'Gender' => 'Jenis kelamin',
       'Not specified' => 'Tidak ditentukan',
       'hidden' => 'tersembunyi',
+      'The password must contain at least 6 characters' => 'Kata sandi harus berisi minimal 6 karakter',
     ),
   ),
 );

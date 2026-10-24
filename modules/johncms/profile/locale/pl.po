@@ -1196,3 +1196,5 @@ msgstr "ukryty"
 msgid "Admin Notes"
 msgstr ""
 
+msgid "The password must contain at least 6 characters"
+msgstr "Hasło musi zawierać co najmniej 6 znaków"

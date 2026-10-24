@@ -372,8 +372,8 @@ msgstr ""
 msgid "The password confirmation you entered is wrong"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/ChangePasswordUseCase.php:53
-msgid "The password must contain at least 3 characters"
+#: modules/johncms/profile/src/Application/UseCases/ChangePasswordUseCase.php:54
+msgid "The password must contain at least 6 characters"
 msgstr ""
 
 #: modules/johncms/profile/src/Application/UseCases/GetBanFormContextUseCase.php:34

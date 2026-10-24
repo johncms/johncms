@@ -1193,3 +1193,5 @@ msgstr "tersembunyi"
 msgid "Admin Notes"
 msgstr ""
 
+msgid "The password must contain at least 6 characters"
+msgstr "Kata sandi harus berisi minimal 6 karakter"

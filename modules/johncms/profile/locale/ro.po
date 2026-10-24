@@ -1195,3 +1195,5 @@ msgstr "ascuns"
 msgid "Admin Notes"
 msgstr "Note administrative"
 
+msgid "The password must contain at least 6 characters"
+msgstr "Parola trebuie sa contina cel putin 6 caractere"

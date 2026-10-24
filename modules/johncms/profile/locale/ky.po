@@ -1195,3 +1195,5 @@ msgstr "жашыруун"
 msgid "Admin Notes"
 msgstr "Администраторго эскертмелер"
 
+msgid "The password must contain at least 6 characters"
+msgstr "Сырсөз кеминде 6 белгиден турушу керек"

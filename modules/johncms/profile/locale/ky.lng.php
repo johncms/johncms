@@ -255,6 +255,7 @@
       'Not specified' => 'Көрсөтүлгөн эмес',
       'hidden' => 'жашыруун',
       'Admin Notes' => 'Администраторго эскертмелер',
+      'The password must contain at least 6 characters' => 'Сырсөз кеминде 6 белгиден турушу керек',
     ),
   ),
 );

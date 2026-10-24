@@ -1193,3 +1193,5 @@ msgstr "ẩn"
 msgid "Admin Notes"
 msgstr "Quản Trị Ghi Chú"
 
+msgid "The password must contain at least 6 characters"
+msgstr "Mật khẩu phải chứa ít nhất 6 ký tự"

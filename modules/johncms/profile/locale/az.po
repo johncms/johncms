@@ -1194,3 +1194,5 @@ msgstr "gizli"
 msgid "Admin Notes"
 msgstr "Admin Qeydi"
 
+msgid "The password must contain at least 6 characters"
+msgstr "Şifrə ən az 6 işarədən ibarət olmalıdır"

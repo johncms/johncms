@@ -49,8 +49,9 @@ final readonly class ChangePasswordUseCase
             $errors[] = __('The password confirmation you entered is wrong');
         }
 
-        if (! $errors && strlen($command->newPassword) < 3) {
-            $errors[] = __('The password must contain at least 3 characters');
+        // The length registration and the panel ask for.
+        if (! $errors && mb_strlen($command->newPassword) < 6) {
+            $errors[] = __('The password must contain at least 6 characters');
         }
 
         if ($errors) {

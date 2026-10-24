@@ -1196,3 +1196,5 @@ msgstr "paslėptas"
 msgid "Admin Notes"
 msgstr ""
 
+msgid "The password must contain at least 6 characters"
+msgstr "Slaptažodis negali sudaryti mažiau, negu 6 simboliai"

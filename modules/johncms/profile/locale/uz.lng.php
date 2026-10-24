@@ -237,6 +237,7 @@
       'Gender' => 'Jins',
       'Not specified' => 'Ko\'rsatilmagan',
       'hidden' => 'berkitilgan',
+      'The password must contain at least 6 characters' => 'Parol kamida 6 ta belgidan iborat bo\'lishi kerak',
     ),
   ),
 );

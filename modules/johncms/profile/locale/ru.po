@@ -1299,3 +1299,6 @@ msgstr "К вашему аккаунту не привязано ни одног
 
 msgid "Link another service"
 msgstr "Привязать другой сервис"
+
+msgid "The password must contain at least 6 characters"
+msgstr "Пароль должен содержать не менее 6 символов"

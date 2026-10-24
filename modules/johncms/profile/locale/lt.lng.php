@@ -241,6 +241,7 @@
       'Gender' => 'Lytis',
       'Not specified' => 'Nenurodyta',
       'hidden' => 'paslėptas',
+      'The password must contain at least 6 characters' => 'Slaptažodis negali sudaryti mažiau, negu 6 simboliai',
     ),
   ),
 );

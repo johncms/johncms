@@ -241,6 +241,7 @@
       'Not specified' => 'Nespecificat',
       'hidden' => 'ascuns',
       'Admin Notes' => 'Note administrative',
+      'The password must contain at least 6 characters' => 'Parola trebuie sa contina cel putin 6 caractere',
     ),
   ),
 );

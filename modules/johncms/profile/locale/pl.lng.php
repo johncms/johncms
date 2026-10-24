@@ -235,6 +235,7 @@
       'Gender' => 'Płeć',
       'Not specified' => 'Nie określono',
       'hidden' => 'ukryty',
+      'The password must contain at least 6 characters' => 'Hasło musi zawierać co najmniej 6 znaków',
     ),
   ),
 );

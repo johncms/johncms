@@ -256,6 +256,7 @@
       'Not specified' => 'غير محدد',
       'hidden' => 'أُخْفِيَتْ',
       'Admin Notes' => 'ملاحظات المشرف',
+      'The password must contain at least 6 characters' => 'كلمة المرور يجب أن تحتوي على الأقل 6 أحرف',
     ),
   ),
 );

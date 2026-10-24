@@ -173,6 +173,7 @@
       'Not specified' => 'Көрсетілмеген',
       'hidden' => 'жасырын',
       'Admin Notes' => 'Админ Ескертулер',
+      'The password must contain at least 6 characters' => 'Құписөз құрамы 6 симболдан кем болмауы керек',
     ),
   ),
 );

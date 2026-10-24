@@ -276,6 +276,7 @@
       'Close' => 'Відключити',
       'No active devices' => 'Активних пристроїв немає',
       'Sign out on all other devices' => 'Вийти на всіх інших пристроях',
+      'The password must contain at least 6 characters' => 'Пароль повинен містити щонайменше 6 символів',
     ),
   ),
 );

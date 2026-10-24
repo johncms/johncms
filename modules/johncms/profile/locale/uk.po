@@ -1239,3 +1239,6 @@ msgstr "Активних пристроїв немає"
 
 msgid "Sign out on all other devices"
 msgstr "Вийти на всіх інших пристроях"
+
+msgid "The password must contain at least 6 characters"
+msgstr "Пароль повинен містити щонайменше 6 символів"

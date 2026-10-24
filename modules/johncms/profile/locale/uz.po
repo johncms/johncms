@@ -1194,3 +1194,5 @@ msgstr "berkitilgan"
 msgid "Admin Notes"
 msgstr ""
 
+msgid "The password must contain at least 6 characters"
+msgstr "Parol kamida 6 ta belgidan iborat bo'lishi kerak"

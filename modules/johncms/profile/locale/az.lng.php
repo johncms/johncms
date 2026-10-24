@@ -249,6 +249,7 @@
       'Not specified' => 'məlumat daxil edilməyib',
       'hidden' => 'gizli',
       'Admin Notes' => 'Admin Qeydi',
+      'The password must contain at least 6 characters' => 'Şifrə ən az 6 işarədən ibarət olmalıdır',
     ),
   ),
 );
