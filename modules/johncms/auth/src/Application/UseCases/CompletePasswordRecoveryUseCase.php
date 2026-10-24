@@ -42,7 +42,8 @@ final readonly class CompletePasswordRecoveryUseCase
             throw new PasswordRecoveryException(__('Time allotted for the password recovery has been exceeded'));
         }
 
-        $password = $this->passwordGenerator->generate(4);
+        // As long as registration asks a password to be.
+        $password = $this->passwordGenerator->generate(6);
         $name = ! empty($user->imname) ? $user->imname : $user->name;
 
         $this->mailQueue->push(
