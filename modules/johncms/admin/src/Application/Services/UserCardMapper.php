@@ -8,6 +8,7 @@ use Carbon\CarbonInterval;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\Role;
+use Johncms\Modules\Admin\Application\Access\UserEditAccess;
 use Johncms\Modules\Admin\Application\DTO\UserCardDTO;
 use Johncms\System\i18n\Translator;
 use Johncms\Users\BanKind;
@@ -23,8 +24,33 @@ final readonly class UserCardMapper
     public function __construct(
         private AccessCheckerInterface $accessChecker,
         private UserActionsMapper $actions,
+        private UserEditAccess $access,
         private Translator $translator,
     ) {
+    }
+
+    /**
+     * What every page of the account shows over it: the name, what can be done to it.
+     *
+     * @return array<string, mixed>
+     */
+    public function head(User $user): array
+    {
+        $url = '/admin/users/' . $user->id;
+        $actions = $this->actions->map($user, $url);
+        // The page does not link to itself, and the edit and the roles stand out as buttons.
+        $buttons = array_intersect_key($actions, ['edit' => true, 'roles' => true]);
+        $menu = array_diff_key($actions, ['card' => true, 'edit' => true, 'roles' => true]);
+
+        return [
+            'id'        => $user->id,
+            'name'      => $user->name,
+            'url'       => $url,
+            'approve'   => $this->actions->approve($user, $url),
+            'edit_url'  => $buttons['edit']['url'] ?? '',
+            'roles_url' => $buttons['roles']['url'] ?? '',
+            'actions'   => array_values($menu),
+        ];
     }
 
     /**
@@ -33,14 +59,8 @@ final readonly class UserCardMapper
     public function map(UserCardDTO $card): array
     {
         $user = $card->user;
-        $url = '/admin/users/' . $user->id;
-        $actions = $this->actions->map($user, $url);
-        unset($actions['card']);
 
-        return [
-            'id'            => $user->id,
-            'name'          => $user->name,
-            'url'           => $url,
+        return $this->head($user) + [
             'online'        => $user->is_online,
             'state'         => match (true) {
                 ! $user->preg           => 'pending',
@@ -48,7 +68,7 @@ final readonly class UserCardMapper
                 default                 => 'active',
             },
             'roles'         => array_map(static fn (Role $role): string => $role->display_name, $card->roles),
-            'custom_status' => (string) $user->status,
+            'custom_status' => $this->text($user->status),
             'photo'         => $user->photo,
             'account'       => $this->account($user),
             'profile'       => $this->profile($user),
@@ -69,27 +89,41 @@ final readonly class UserCardMapper
                 ),
                 'count'  => $card->banCount,
             ],
-            'notes'         => $this->accessChecker->allows(CorePermissions::USERS_NOTES_VIEW) ? (string) $user->admin_notes : '',
-            'approve'       => $this->actions->approve($user, $url),
-            'roles_url'     => $actions['roles']['url'] ?? '',
-            'actions'       => array_values(array_diff_key($actions, ['roles' => true])),
+            'notes'         => $this->access->mayReadNotes() ? (string) $user->admin_notes : '',
         ];
     }
 
     /**
-     * The pages of an account, one tab each.
+     * A text field of the profile as it is to be shown. The profile of the site stores what it is
+     * given escaped already; the panel stores it as typed. Both read back as the text itself here,
+     * and the template escapes it once.
+     */
+    public function text(mixed $value): string
+    {
+        return html_entity_decode((string) $value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    }
+
+    /**
+     * The pages of an account, one tab each, those the visitor may open.
      *
      * @return list<array<string, mixed>>
      */
-    public function tabs(int $id, string $active): array
+    public function tabs(User $user, string $active): array
     {
-        $tabs = [
-            'view' => [__('Overview'), '/admin/users/' . $id],
-        ];
+        $url = '/admin/users/' . $user->id;
+        $tabs = ['view' => [__('Overview'), $url]];
+
+        if ($this->access->mayEdit($user)) {
+            $tabs['edit'] = [__('Edit'), $url . '/edit'];
+        }
+
+        if ($this->access->mayChangePassword($user)) {
+            $tabs['password'] = [__('Password'), $url . '/password'];
+        }
 
         $result = [];
-        foreach ($tabs as $key => [$title, $url]) {
-            $result[] = ['title' => $title, 'url' => $url, 'active' => $key === $active];
+        foreach ($tabs as $key => [$title, $tabUrl]) {
+            $result[] = ['title' => $title, 'url' => $tabUrl, 'active' => $key === $active];
         }
 
         return $result;
@@ -122,15 +156,15 @@ final readonly class UserCardMapper
     private function profile(User $user): array
     {
         return [
-            'full_name' => (string) $user->imname,
+            'full_name' => $this->text($user->imname),
             'sex'       => (string) $user->sex,
             'birthday'  => $user->birthday_date,
-            'city'      => (string) $user->live,
+            'city'      => $this->text($user->live),
             'about'     => $user->formatted_about,
             'site'      => $user->website,
-            'phone'     => (string) $user->mibile,
-            'skype'     => (string) $user->skype,
-            'jabber'    => (string) $user->jabber,
+            'phone'     => $this->text($user->mibile),
+            'skype'     => $this->text($user->skype),
+            'jabber'    => $this->text($user->jabber),
         ];
     }
 

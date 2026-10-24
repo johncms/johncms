@@ -1,7 +1,8 @@
 {#
     The pages of one account: its name over them, what can be done to it, and a tab for each page.
 
-    @var array  user            Built by UserCardMapper: id, name, approve, roles_url, actions.
+    @var array  user            Built by UserCardMapper::head(): id, name, approve, edit_url,
+                                roles_url, actions.
     @var array  tabs            title, url, active.
     @var string success_message Empty unless an action has just been performed.
 
@@ -21,6 +22,12 @@
                 {{ user.approve.title }}
             </button>
         </form>
+    {% endif %}
+    {% if user.edit_url %}
+        <a class="btn btn-secondary" href="{{ user.edit_url }}">
+            {% include '@admin/components/ui/icon.twig' with {name: 'pencil', size: 14} only %}
+            {{ __('Edit') }}
+        </a>
     {% endif %}
     {% if user.roles_url %}
         <a class="btn btn-secondary" href="{{ user.roles_url }}">

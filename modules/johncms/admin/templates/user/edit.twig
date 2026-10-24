@@ -1,0 +1,112 @@
+{#
+    The profile of an account, as the staff change it.
+
+    @var array form         The values of the fields.
+    @var array errors       Field => messages, from the last attempt.
+    @var bool  staff_fields Whether the nickname, the gender and the karma are the editor's to change.
+    @var bool  notes_field  Whether the notes of the staff are.
+#}
+{% extends '@admin/user/layout.twig' %}
+
+{% macro field(name, label, form, errors, type) %}
+    <label class="form-label" for="user-{{ name }}">{{ label }}</label>
+    <input type="{{ type|default('text') }}" class="form-control{{ errors[name] is defined ? ' is-invalid' }}" id="user-{{ name }}" name="{{ name }}" value="{{ form[name] }}">
+    {% include '@theme/components/field-errors.twig' with {errors: errors[name]|default([])} only %}
+{% endmacro %}
+
+{% block user_content %}
+    {% import _self as edit %}
+    <form method="post" action="/admin/users/{{ user.id }}/edit" class="admin-user-form">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+
+        <div class="card">
+            <div class="card-header">{{ __('Account') }}</div>
+            <div class="card-body row g-3">
+                {% if staff_fields %}
+                    <div class="col-md-6">{{ edit.field('name', __('Nickname'), form, errors) }}</div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="user-sex">{{ __('Gender') }}</label>
+                        <select class="form-select{{ errors.sex is defined ? ' is-invalid' }}" id="user-sex" name="sex">
+                            <option value=""{% if form.sex == '' %} selected{% endif %}>{{ __('Not specified') }}</option>
+                            <option value="m"{% if form.sex == 'm' %} selected{% endif %}>{{ __('Man') }}</option>
+                            <option value="zh"{% if form.sex == 'zh' %} selected{% endif %}>{{ __('Woman') }}</option>
+                        </select>
+                        {% include '@theme/components/field-errors.twig' with {errors: errors.sex|default([])} only %}
+                    </div>
+                {% endif %}
+                <div class="col-md-6">{{ edit.field('mail', __('Email'), form, errors, 'email') }}</div>
+                <div class="col-md-6 d-flex align-items-end">
+                    <div class="form-check form-switch mb-2">
+                        <input class="form-check-input" type="checkbox" role="switch" id="user-mailvis" name="mailvis" value="1"{% if form.mailvis %} checked{% endif %}>
+                        <label class="form-check-label" for="user-mailvis">{{ __('Show the e-mail to everyone') }}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">{{ __('Profile') }}</div>
+            <div class="card-body row g-3">
+                <div class="col-md-6">{{ edit.field('imname', __('Name'), form, errors) }}</div>
+                <div class="col-md-6">{{ edit.field('live', __('City, Country'), form, errors) }}</div>
+                <div class="col-md-6">
+                    <span class="form-label d-block">{{ __('Birthday') }}</span>
+                    <div class="admin-user-form__birthday">
+                        <input type="number" class="form-control{{ errors.dayb is defined ? ' is-invalid' }}" name="dayb" value="{{ form.dayb ?: '' }}" min="1" max="31" placeholder="{{ __('Day') }}" aria-label="{{ __('Day') }}">
+                        <input type="number" class="form-control{{ errors.monthb is defined ? ' is-invalid' }}" name="monthb" value="{{ form.monthb ?: '' }}" min="1" max="12" placeholder="{{ __('Month') }}" aria-label="{{ __('Month') }}">
+                        <input type="number" class="form-control{{ errors.yearofbirth is defined ? ' is-invalid' }}" name="yearofbirth" value="{{ form.yearofbirth ?: '' }}" min="1900" placeholder="{{ __('Year') }}" aria-label="{{ __('Year') }}">
+                    </div>
+                    {% if errors.dayb is defined or errors.monthb is defined or errors.yearofbirth is defined %}
+                        <div class="invalid-feedback d-block">{{ __('A birthday needs the day, the month and the year') }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">{{ edit.field('status', __('Status'), form, errors) }}</div>
+                <div class="col-12">
+                    <label class="form-label" for="user-about">{{ __('About') }}</label>
+                    <textarea class="form-control{{ errors.about is defined ? ' is-invalid' }}" id="user-about" name="about" rows="4">{{ form.about }}</textarea>
+                    {% include '@theme/components/field-errors.twig' with {errors: errors.about|default([])} only %}
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">{{ __('Contacts') }}</div>
+            <div class="card-body row g-3">
+                <div class="col-md-6">{{ edit.field('mibile', __('Phone number'), form, errors) }}</div>
+                <div class="col-md-6">{{ edit.field('www', __('Site'), form, errors) }}</div>
+                <div class="col-md-6">{{ edit.field('skype', 'Skype', form, errors) }}</div>
+                <div class="col-md-6">{{ edit.field('jabber', 'Jabber', form, errors) }}</div>
+            </div>
+        </div>
+
+        {% if staff_fields %}
+            <div class="card">
+                <div class="card-header">{{ __('For the staff') }}</div>
+                <div class="card-body row g-3">
+                    <div class="col-12">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="user-karma-off" name="karma_off" value="1"{% if form.karma_off %} checked{% endif %}>
+                            <label class="form-check-label" for="user-karma-off">{{ __('Nobody may vote for the karma of the account') }}</label>
+                        </div>
+                    </div>
+                    {% if notes_field %}
+                        <div class="col-12">
+                            <label class="form-label" for="user-notes">{{ __('Admin Notes') }}</label>
+                            <textarea class="form-control{{ errors.admin_notes is defined ? ' is-invalid' }}" id="user-notes" name="admin_notes" rows="3">{{ form.admin_notes }}</textarea>
+                            <div class="form-text">{{ __('Seen only by the staff who may read the notes.') }}</div>
+                            {% include '@theme/components/field-errors.twig' with {errors: errors.admin_notes|default([])} only %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="admin-user-form__actions">
+            <a class="btn btn-secondary" href="/admin/users/{{ user.id }}">{{ __('Cancel') }}</a>
+            <button type="submit" class="btn btn-primary">
+                {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
+                {{ __('Save') }}
+            </button>
+        </div>
+    </form>
+{% endblock %}

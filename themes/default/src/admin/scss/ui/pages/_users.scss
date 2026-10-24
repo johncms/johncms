@@ -110,3 +110,24 @@
 .admin-user-card__notes {
   white-space: normal;
 }
+
+// The form of an account (admin::user/edit).
+
+.admin-user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 56rem;
+}
+
+.admin-user-form__birthday {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.4fr;
+  gap: 0.5rem;
+}
+
+.admin-user-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}

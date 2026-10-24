@@ -31,6 +31,7 @@ use Johncms\Modules\Admin\Application\Controllers\Users\KarmaController;
 use Johncms\Modules\Admin\Application\Controllers\Users\RegistrationModerationController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UserCardController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UserCleanupController;
+use Johncms\Modules\Admin\Application\Controllers\Users\UserEditController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UserListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UsersController;
 use Johncms\Modules\Admin\Application\Middlewares\AdminAccessMiddleware;
@@ -60,6 +61,14 @@ return static function (RouteCollection $router): void {
         $r->get('/admin/users', UserListController::class)->name('admin.users');
         $r->get('/admin/users/cleanup', [UserCleanupController::class, 'index'])->name('admin.users.cleanup');
         $r->get('/admin/users/{id:number}', UserCardController::class)->name('admin.users.view');
+        // Who may change which account is decided by the use cases: the permission and the place
+        // in the hierarchy, as for the profile of the site.
+        $r->get('/admin/users/{id:number}/edit', [UserEditController::class, 'form'])->name('admin.users.edit');
+        $r->post('/admin/users/{id:number}/edit', [UserEditController::class, 'save'])->name('admin.users.edit.save');
+        $r->get('/admin/users/{id:number}/password', [UserEditController::class, 'passwordForm'])->name('admin.users.password');
+        $r->post('/admin/users/{id:number}/password', [UserEditController::class, 'savePassword'])->name('admin.users.password.save');
+        $r->get('/admin/users/{id:number}/reset-settings', [UserEditController::class, 'resetConfirm'])->name('admin.users.reset_settings');
+        $r->post('/admin/users/{id:number}/reset-settings', [UserEditController::class, 'reset'])->name('admin.users.reset_settings.run');
         $r->post('/admin/users/cleanup', [UserCleanupController::class, 'clean'])->name('admin.users.cleanup.run');
         // Who may open these is decided by the admin.roles.manage permission rather than by the
         // group: an administrator holds it, and a role standing above the visitor's own is

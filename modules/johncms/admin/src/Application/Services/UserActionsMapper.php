@@ -7,6 +7,7 @@ namespace Johncms\Modules\Admin\Application\Services;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\CurrentUser;
+use Johncms\Modules\Admin\Application\Access\UserEditAccess;
 use Johncms\Users\User;
 
 /**
@@ -26,6 +27,7 @@ final readonly class UserActionsMapper
         private CurrentUser $currentUser,
         private AccessCheckerInterface $accessChecker,
         private PublicProfileLinks $profiles,
+        private UserEditAccess $editAccess,
     ) {
     }
 
@@ -42,6 +44,10 @@ final readonly class UserActionsMapper
 
         $actions = ['card' => $this->link('/admin/users/' . $user->id, __('Profile'), 'user')];
 
+        if ($this->editAccess->mayEdit($user)) {
+            $actions['edit'] = $this->link('/admin/users/' . $user->id . '/edit', __('Edit'), 'pencil');
+        }
+
         $siteUrl = $this->profiles->urlOf($user->id);
         if ($siteUrl !== null) {
             $actions['site'] = $this->link($siteUrl, __('Open on the site'), 'external-link');
@@ -57,6 +63,10 @@ final readonly class UserActionsMapper
 
         if (! $self && $this->accessChecker->allows(CorePermissions::USERS_BAN_MANAGE)) {
             $actions['ban'] = $this->link('/profile/' . $user->id . '/bans/new', __('Ban'), 'ban');
+        }
+
+        if ($this->editAccess->mayResetSettings($user)) {
+            $actions['reset_settings'] = $this->link('/admin/users/' . $user->id . '/reset-settings', __('Reset settings'), 'rotate-ccw', false, true);
         }
 
         // Whether this particular account may be browsed as — nobody may browse as somebody who

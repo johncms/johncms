@@ -53,7 +53,7 @@ final readonly class UserCardController
                 'page_title'      => $card->user->name,
                 'usr_menu'        => ['userlist' => true],
                 'user'            => $this->mapper->map($card),
-                'tabs'            => $this->mapper->tabs($card->user->id, 'view'),
+                'tabs'            => $this->mapper->tabs($card->user, 'view'),
                 'success_message' => (string) $this->session->getFlash('success_message'),
             ]
         );
