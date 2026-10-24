@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Admin;
 
+use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Users\IpHistory;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Functional\FunctionalTestCase;
+use Tests\Support\Fixture;
 use Tests\Support\FunctionalUserFactory;
 
 /**
- * Removing accounts that wait for approval is confirmed in a dialog saying what would go, and the
- * action returns to the page of the list it was taken from.
+ * The accounts waiting for approval: they are let in one by one or all at once, and removing them
+ * is confirmed in a dialog saying what would go and takes nothing but them. Every action returns
+ * to the page of the list it was taken from.
  */
 final class RegistrationConfirmationTest extends FunctionalTestCase
 {
@@ -87,6 +91,67 @@ final class RegistrationConfirmationTest extends FunctionalTestCase
 
         self::assertSame('/admin/users?status=pending&page=3', $response->headers->get('Location'));
         self::assertNull(User::query()->find($waiting->id));
+    }
+
+    public function testApprovingAllLetsInEveryAccountWaiting(): void
+    {
+        $first = FunctionalUserFactory::create(['preg' => 0]);
+        $second = FunctionalUserFactory::create(['preg' => 0]);
+
+        $this->post('/admin/registrations/approve-all', ['back' => '/admin/users?status=pending']);
+
+        foreach ([$first, $second] as $user) {
+            $user = User::query()->findOrFail($user->id);
+            self::assertTrue($user->preg);
+            self::assertNotSame('', (string) $user->regadm, 'The account says who let it in.');
+        }
+    }
+
+    public function testRemovingByAddressTakesOnlyTheAccountsWaitingFromIt(): void
+    {
+        $ip = (int) ip2long('10.0.0.66');
+        $waiting = FunctionalUserFactory::create(['preg' => 0, 'ip' => $ip]);
+        Fixture::insert('cms_users_iphistory', ['user_id' => $waiting->id, 'ip' => $ip, 'ip_via_proxy' => 0, 'time' => time()]);
+        $elsewhere = FunctionalUserFactory::create(['preg' => 0, 'ip' => (int) ip2long('10.0.0.67')]);
+        $approved = FunctionalUserFactory::create(['preg' => 1, 'ip' => $ip]);
+
+        $this->post('/admin/registrations/delete-by-ip', ['ip' => (string) $ip]);
+
+        self::assertNull(User::query()->find($waiting->id));
+        self::assertSame(0, IpHistory::query()->where('user_id', $waiting->id)->count(), 'The history of a removed account goes with it.');
+        self::assertNotNull(User::query()->find($elsewhere->id));
+        self::assertNotNull(User::query()->find($approved->id), 'An account let in already is not one the action removes.');
+    }
+
+    public function testRemovingAllLeavesTheAccountsLetInAlready(): void
+    {
+        $waiting = FunctionalUserFactory::create(['preg' => 0]);
+        $member = FunctionalUserFactory::create();
+
+        $this->post('/admin/registrations/delete-all', []);
+
+        self::assertNull(User::query()->find($waiting->id));
+        self::assertNotNull(User::query()->find($member->id));
+    }
+
+    /**
+     * Moderating registrations is part of the panel itself: whoever may open it may let accounts
+     * in, remove the ones nobody has let in, and confirm an e-mail for its owner.
+     */
+    public function testAccessToThePanelIsEnoughToModerateRegistrations(): void
+    {
+        $staff = FunctionalUserFactory::createWithPermissions([CorePermissions::ADMIN_ACCESS]);
+        $waiting = FunctionalUserFactory::create(['preg' => 0]);
+
+        $response = $this->handleRequest(
+            '/admin/registrations/approve',
+            'POST',
+            $this->withCsrfToken(['id' => (string) $waiting->id, 'back' => '/admin/users?status=pending']),
+            cookies: $this->actingAs($staff)
+        );
+
+        self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
+        self::assertTrue(User::query()->findOrFail($waiting->id)->preg);
     }
 
     public function testAReturnAddressOutsideTheListIsNotFollowed(): void

@@ -8,9 +8,11 @@ use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Auth\Session\AuthSessionManager;
 use Johncms\Security\ClientInfoDTO;
+use Johncms\Users\Bans\BanKind;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Functional\FunctionalTestCase;
+use Tests\Support\Fixture;
 use Tests\Support\FunctionalUserFactory;
 
 /**
@@ -43,6 +45,51 @@ final class UserEditTest extends FunctionalTestCase
         self::assertSame(Response::HTTP_OK, $response->getStatusCode());
         self::assertStringContainsString('id="user-name" name="name" value="Aragorn"', (string) $response->getContent());
         self::assertSame('Strider', User::query()->findOrFail($member->id)->name);
+    }
+
+    public function testATakenEmailIsRefused(): void
+    {
+        FunctionalUserFactory::create(['mail' => 'frodo@example.com']);
+        $member = FunctionalUserFactory::create(['mail' => 'sam@example.com']);
+
+        $response = $this->post('/admin/users/' . $member->id . '/edit', $this->profile(['name' => $member->name, 'mail' => 'frodo@example.com']));
+
+        self::assertSame(Response::HTTP_OK, $response->getStatusCode());
+        self::assertSame('sam@example.com', User::query()->findOrFail($member->id)->mail);
+    }
+
+    public function testTheNotesAreChangedOnlyBySomebodyWhoMayReadThem(): void
+    {
+        $editor = FunctionalUserFactory::createWithPermissions([CorePermissions::ADMIN_ACCESS, CorePermissions::USERS_PROFILE_EDIT], level: 20);
+        $member = FunctionalUserFactory::create(['admin_notes' => 'Keeps arguing in the guestbook']);
+
+        $form = (string) $this->handleRequest('/admin/users/' . $member->id . '/edit', cookies: $this->actingAs($editor))->getContent();
+        self::assertStringNotContainsString('name="admin_notes"', $form);
+
+        $this->handleRequest(
+            '/admin/users/' . $member->id . '/edit',
+            'POST',
+            $this->withCsrfToken($this->profile(['name' => $member->name, 'admin_notes' => 'Nothing to see'])),
+            cookies: $this->actingAs($editor)
+        );
+
+        self::assertSame('Keeps arguing in the guestbook', User::query()->findOrFail($member->id)->admin_notes);
+    }
+
+    public function testAnEditorBannedFromTheSiteChangesNothing(): void
+    {
+        $editor = FunctionalUserFactory::createSupervisor();
+        Fixture::insert('cms_ban_users', ['user_id' => $editor->id, 'ban_time' => time() + 3600, 'ban_while' => time(), 'ban_type' => BanKind::SITE->value, 'ban_reason' => 'Spam', 'ban_who' => 'admin']);
+        $member = FunctionalUserFactory::create(['name' => 'Bill']);
+
+        $this->handleRequest(
+            '/admin/users/' . $member->id . '/edit',
+            'POST',
+            $this->withCsrfToken($this->profile(['name' => 'Ferny'])),
+            cookies: $this->actingAs($editor)
+        );
+
+        self::assertSame('Bill', User::query()->findOrFail($member->id)->name);
     }
 
     public function testABirthdayIsAllThreePartsOrNone(): void
@@ -139,6 +186,42 @@ final class UserEditTest extends FunctionalTestCase
 
         self::assertSame(Response::HTTP_OK, $response->getStatusCode());
         self::assertSame($old, User::query()->findOrFail($member->id)->password);
+    }
+
+    public function testAShortPasswordIsRefused(): void
+    {
+        $member = FunctionalUserFactory::create();
+
+        $response = $this->post('/admin/users/' . $member->id . '/password', ['password' => 'short', 'confirmation' => 'short']);
+
+        self::assertSame(Response::HTTP_OK, $response->getStatusCode());
+        self::assertSame($member->password, User::query()->findOrFail($member->id)->password);
+    }
+
+    public function testThePasswordOfSomebodyElseNeedsThePermission(): void
+    {
+        $moderator = FunctionalUserFactory::createWithPermissions([CorePermissions::ADMIN_ACCESS, CorePermissions::USERS_PROFILE_EDIT], level: 20);
+        $member = FunctionalUserFactory::create();
+
+        $response = $this->handleRequest('/admin/users/' . $member->id . '/password', cookies: $this->actingAs($moderator));
+
+        self::assertSame(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+    }
+
+    /**
+     * Wiping the settings of a peer is not what the permission is for: it reaches down only.
+     */
+    public function testTheSettingsOfAPeerAreNotReset(): void
+    {
+        $permissions = [CorePermissions::ADMIN_ACCESS, CorePermissions::USERS_SETTINGS_RESET];
+        $editor = FunctionalUserFactory::createWithPermissions($permissions, level: 20);
+        $peer = FunctionalUserFactory::createWithPermissions($permissions, level: 20);
+        $peer->update(['set_forum' => ['upfp' => 1]]);
+
+        $response = $this->handleRequest('/admin/users/' . $peer->id . '/reset-settings', 'POST', $this->withCsrfToken(), cookies: $this->actingAs($editor));
+
+        self::assertSame(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        self::assertSame(['upfp' => 1], User::query()->findOrFail($peer->id)->set_forum);
     }
 
     public function testTheSettingsGoBackToTheDefaults(): void
