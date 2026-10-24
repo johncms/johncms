@@ -31,10 +31,13 @@ final readonly class DeleteBanUseCase
 
     public function delete(Ban $ban): void
     {
-        // Roll back the karma penalty that was applied together with the ban
-        $points = config('johncms')['karma']['karma_points'] * 2;
-        $this->karmaRepository->deleteSystemPenalty($ban->user_id, $ban->ban_while);
-        $this->profileUserRepository->subtractKarmaPoints($ban->user_id, false, $points);
+        // The karma penalty goes with the ban, by what it cost. A ban given while karma was off
+        // cost nothing, and the minuses the account has then are the votes of other members.
+        $penalty = $this->karmaRepository->findSystemPenalty($ban->user_id, $ban->ban_while);
+        if ($penalty !== null) {
+            $this->karmaRepository->deleteVote($penalty->id);
+            $this->profileUserRepository->subtractKarmaPoints($ban->user_id, false, $penalty->points);
+        }
 
         $this->banRepository->deleteById($ban->id);
     }

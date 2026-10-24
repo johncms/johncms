@@ -64,7 +64,7 @@ interface KarmaRepositoryInterface
     public function deleteAllForTarget(int $targetId): void;
 
     /**
-     * Delete a single system penalty record (user_id = 0) added to the target user at the given time.
+     * The penalty the system (user_id = 0) gave the target user at the given time, if it gave one.
      */
-    public function deleteSystemPenalty(int $targetId, int $time): void;
+    public function findSystemPenalty(int $targetId, int $time): ?Karma;
 }

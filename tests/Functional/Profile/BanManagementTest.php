@@ -177,10 +177,10 @@ final class BanManagementTest extends FunctionalTestCase
     }
 
     /**
-     * Pinned as it is: the penalty is taken back whether the ban cost one or not, so deleting a ban
-     * given while karma was off takes away what other members voted.
+     * A ban given while karma was off cost nothing, and the minuses the account has are what other
+     * members voted: deleting the ban leaves them.
      */
-    public function testDeletingABanThatCostNoKarmaStillTakesKarma(): void
+    public function testDeletingABanThatCostNoKarmaLeavesTheVotesOfTheMembers(): void
     {
         $supervisor = FunctionalUserFactory::createSupervisor();
         $member = FunctionalUserFactory::create(['karma_minus' => 10]);
@@ -189,7 +189,7 @@ final class BanManagementTest extends FunctionalTestCase
         $this->withKarma(fn () => $this->post($supervisor, '/profile/' . $member->id . '/bans/' . $ban . '/delete'));
 
         self::assertSame([], $this->bansOf($member));
-        self::assertSame(0, $this->karmaMinusOf($member));
+        self::assertSame(10, $this->karmaMinusOf($member));
     }
 
     /**
