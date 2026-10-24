@@ -36,7 +36,7 @@
         </a>
     {% endif %}
     {% if user.actions is not empty %}
-        {% include '@admin/components/ui/row-actions.twig' with {actions: user.actions, label: __('Actions')} only %}
+        {% include '@admin/components/ui/row-actions.twig' with {actions: user.actions, label: __('Actions'), size: 'md'} only %}
     {% endif %}
 {% endblock %}
 

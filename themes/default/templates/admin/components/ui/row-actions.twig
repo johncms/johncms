@@ -7,9 +7,11 @@
     @param array  actions method (get | post), url, title, icon, danger, fields (posted with it),
                           dialog (the link opens in the modal of the panel, see dialog.twig).
     @param string label   What the button says to a screen reader.
+    @param string size    sm (default) in a row of a table; md beside the buttons of a page head,
+                          as tall as they are.
 #}
 <div class="dropdown">
-    <button type="button" class="btn btn-outline-secondary btn-icon btn-sm" data-bs-toggle="dropdown"
+    <button type="button" class="btn btn-outline-secondary btn-icon{{ size|default('sm') == 'sm' ? ' btn-sm' }}" data-bs-toggle="dropdown"
             data-bs-popper-config='{"strategy":"fixed"}' aria-expanded="false" aria-label="{{ label }}" title="{{ label }}">
         {% include '@admin/components/ui/icon.twig' with {name: 'ellipsis', size: 14} only %}
     </button>
