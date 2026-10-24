@@ -334,7 +334,6 @@
         3 => '%d хвилин',
       ),
       'Users on registration' => 'Користувачі на реєстрації',
-      'Old password entered incorrectly' => 'Старий пароль введено невірно',
     ),
   ),
 );

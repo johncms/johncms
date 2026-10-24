@@ -1621,6 +1621,3 @@ msgstr ""
 
 msgid "Users on registration"
 msgstr "Người dùng đăng ký"
-
-msgid "Old password entered incorrectly"
-msgstr "Mật khẩu cũ đã nhập sai"

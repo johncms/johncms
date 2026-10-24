@@ -40,8 +40,9 @@ final readonly class UserEditAccess
     }
 
     /**
-     * The password is changed by its owner, who is asked for the current one, or by whoever holds
-     * the permission and does not stand below the owner.
+     * The password is changed by its owner, or by whoever holds the permission and does not stand
+     * below the owner. The panel asks nobody for the current one: a session of the staff is trusted
+     * with the account as it is with the rest of the site.
      */
     public function mayChangePassword(User $target): bool
     {

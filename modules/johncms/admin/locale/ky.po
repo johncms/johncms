@@ -1650,6 +1650,3 @@ msgstr "Куки-баннер"
 
 msgid "Users on registration"
 msgstr "Катталган колдонуучулар"
-
-msgid "Old password entered incorrectly"
-msgstr "Эски сырсөз туура эмес киргизилген"

@@ -2050,6 +2050,3 @@ msgstr "Применяется при уменьшении или перекод
 
 msgid "Users on registration"
 msgstr "Пользователи на регистрации"
-
-msgid "Old password entered incorrectly"
-msgstr "Старый пароль введен неправильно"

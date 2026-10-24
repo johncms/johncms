@@ -91,7 +91,6 @@ final readonly class UserEditController
         try {
             $this->changePassword->execute(
                 $user,
-                $request->body('current_password'),
                 $request->body('password'),
                 $request->body('confirmation'),
                 $request->hasBody('sign_out'),

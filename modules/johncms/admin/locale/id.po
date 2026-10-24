@@ -1620,6 +1620,3 @@ msgstr ""
 
 msgid "Users on registration"
 msgstr "Pengguna pada saat pendaftaran"
-
-msgid "Old password entered incorrectly"
-msgstr "Kata sandi lama salah"

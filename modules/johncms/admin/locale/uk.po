@@ -1631,6 +1631,3 @@ msgstr[3] "%d хвилин"
 
 msgid "Users on registration"
 msgstr "Користувачі на реєстрації"
-
-msgid "Old password entered incorrectly"
-msgstr "Старий пароль введено невірно"

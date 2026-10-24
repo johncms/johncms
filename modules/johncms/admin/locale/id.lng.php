@@ -255,7 +255,6 @@
       'Are you sure that you want to delete this user?' => 'Apakah Anda yakin ingin menghapus pengguna ini?',
       'All threads and posts created by the user go in the hidden state' => 'Semua thread dan posting yang dibuat oleh pengguna pergi dalam keadaan tersembunyi',
       'Users on registration' => 'Pengguna pada saat pendaftaran',
-      'Old password entered incorrectly' => 'Kata sandi lama salah',
     ),
   ),
 );

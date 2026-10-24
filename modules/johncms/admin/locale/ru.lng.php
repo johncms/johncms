@@ -483,7 +483,6 @@
       'Quality' => 'Качество',
       'Applied when a picture is scaled down or re-encoded.' => 'Применяется при уменьшении или перекодировании изображения.',
       'Users on registration' => 'Пользователи на регистрации',
-      'Old password entered incorrectly' => 'Старый пароль введен неправильно',
     ),
   ),
 );

@@ -22,8 +22,7 @@ use Johncms\Validator\ValidatorInterface;
  * account may be signed out everywhere at the same time: a password is changed by the staff most
  * often because somebody else knows the old one.
  *
- * The owner changing their own is asked for the current one, as the settings of the account ask,
- * and stays signed in where they are.
+ * The owner changing their own stays signed in where they are.
  */
 final readonly class ChangeUserPasswordUseCase
 {
@@ -38,14 +37,9 @@ final readonly class ChangeUserPasswordUseCase
     ) {
     }
 
-    public function execute(User $user, string $currentPassword, string $password, string $confirmation, bool $signOut): void
+    public function execute(User $user, string $password, string $confirmation, bool $signOut): void
     {
-        $self = $user->id === $this->currentUser->id();
         $result = $this->validator->validate(['password' => $password], ['password' => [new StringLength(min: 6)]]);
-
-        if ($self && ! $this->hasher->verify($currentPassword, $user->password)) {
-            $result = $result->withError('current_password', __('Old password entered incorrectly'));
-        }
 
         if ($password !== $confirmation) {
             $result = $result->withError('confirmation', __('The password confirmation you entered is wrong'));
@@ -62,7 +56,7 @@ final readonly class ChangeUserPasswordUseCase
             return;
         }
 
-        if ($self) {
+        if ($user->id === $this->currentUser->id()) {
             $this->signIn->signOutEverywhereElse($user->id, SessionRevocationReason::PasswordChange);
         } else {
             $this->sessions->revokeAllFor($user->id, SessionRevocationReason::Admin);

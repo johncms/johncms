@@ -1620,6 +1620,3 @@ msgstr ""
 
 msgid "Users on registration"
 msgstr "Rejestracja użytkownika"
-
-msgid "Old password entered incorrectly"
-msgstr "Stare hasło jest nieprawidłowe"
