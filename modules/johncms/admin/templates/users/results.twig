@@ -60,6 +60,8 @@
                                 <td>
                                     {% if user.status == 'pending' %}
                                         <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis badge-dot">{{ __('Awaiting approval') }}</span>
+                                    {% elseif user.status == 'unconfirmed' %}
+                                        <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis badge-dot">{{ __('E-mail not confirmed') }}</span>
                                     {% elseif user.status == 'banned' %}
                                         <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis badge-dot">{{ __('Banned') }}</span>
                                         <div class="admin-users-table__sub">{{ __('until %s')|format(user.ban_ends|display_date) }}</div>
@@ -78,17 +80,17 @@
                                 {% endif %}
                                 <td>
                                     <div class="admin-users-table__actions">
-                                        {% if user.approve %}
-                                            <form method="post" action="{{ user.approve.url }}">
+                                        {% for action in [user.approve, user.confirm_email]|filter(action => action) %}
+                                            <form method="post" action="{{ action.url }}">
                                                 <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                                                {% for field, value in user.approve.fields %}
+                                                {% for field, value in action.fields %}
                                                     <input type="hidden" name="{{ field }}" value="{{ value }}">
                                                 {% endfor %}
-                                                <button type="submit" class="btn btn-outline-primary btn-icon btn-sm" aria-label="{{ user.approve.title }}" title="{{ user.approve.title }}">
-                                                    {% include '@admin/components/ui/icon.twig' with {name: 'check', size: 14} only %}
+                                                <button type="submit" class="btn btn-outline-primary btn-icon btn-sm" aria-label="{{ action.title }}" title="{{ action.title }}">
+                                                    {% include '@admin/components/ui/icon.twig' with {name: action.icon, size: 14} only %}
                                                 </button>
                                             </form>
-                                        {% endif %}
+                                        {% endfor %}
                                         {% include '@admin/components/ui/row-actions.twig' with {actions: user.actions, label: __('Actions')} only %}
                                     </div>
                                 </td>

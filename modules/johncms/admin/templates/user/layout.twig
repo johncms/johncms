@@ -1,8 +1,8 @@
 {#
     The pages of one account: its name over them, what can be done to it, and a tab for each page.
 
-    @var array  user            Built by UserCardMapper::head(): id, name, approve, edit_url,
-                                roles_url, actions.
+    @var array  user            Built by UserCardMapper::head(): id, name, approve, confirm_email,
+                                edit_url, roles_url, actions.
     @var array  tabs            title, url, active.
     @var string success_message Empty unless an action has just been performed.
 
@@ -11,18 +11,19 @@
 {% extends '@admin/layouts/default.twig' %}
 
 {% block page_actions %}
-    {% if user.approve %}
-        <form method="post" action="{{ user.approve.url }}">
+    {# What the account waits for, the first of them as the main action of the page. #}
+    {% for action in [user.approve, user.confirm_email]|filter(action => action) %}
+        <form method="post" action="{{ action.url }}">
             <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-            {% for field, value in user.approve.fields %}
+            {% for field, value in action.fields %}
                 <input type="hidden" name="{{ field }}" value="{{ value }}">
             {% endfor %}
-            <button type="submit" class="btn btn-primary">
-                {% include '@admin/components/ui/icon.twig' with {name: 'check', size: 14} only %}
-                {{ user.approve.title }}
+            <button type="submit" class="btn {{ loop.first ? 'btn-primary' : 'btn-secondary' }}">
+                {% include '@admin/components/ui/icon.twig' with {name: action.icon, size: 14} only %}
+                {{ action.title }}
             </button>
         </form>
-    {% endif %}
+    {% endfor %}
     {% if user.edit_url %}
         <a class="btn btn-secondary" href="{{ user.edit_url }}">
             {% include '@admin/components/ui/icon.twig' with {name: 'pencil', size: 14} only %}

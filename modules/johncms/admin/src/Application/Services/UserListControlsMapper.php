@@ -6,6 +6,7 @@ namespace Johncms\Modules\Admin\Application\Services;
 
 use BackedEnum;
 use Johncms\Auth\Authorization\Role;
+use Johncms\Auth\RegistrationSettings;
 use Johncms\Modules\Admin\Application\DTO\UserListStatsDTO;
 use Johncms\Modules\Admin\Domain\Enums\UserListActivity;
 use Johncms\Modules\Admin\Domain\Enums\UserListRegistered;
@@ -26,6 +27,7 @@ final readonly class UserListControlsMapper
 
     public function __construct(
         private UserListFilterMapper $filterMapper,
+        private RegistrationSettings $registration,
     ) {
     }
 
@@ -112,8 +114,16 @@ final readonly class UserListControlsMapper
         $tabs = [
             [UserListStatus::ALL, __('All'), 0],
             [UserListStatus::PENDING, __('Awaiting approval'), $stats->pending],
-            [UserListStatus::BANNED, __('Banned'), $stats->banned],
         ];
+
+        // Without the confirmation the e-mail of an account is no reason to keep it out, and the
+        // accounts that never confirmed one are no group to look at. A list opened on it still
+        // works, so a link saved earlier does not break.
+        if ($this->registration->emailConfirmationRequired() || $filter->status === UserListStatus::UNCONFIRMED) {
+            $tabs[] = [UserListStatus::UNCONFIRMED, __('E-mail not confirmed'), $stats->unconfirmed];
+        }
+
+        $tabs[] = [UserListStatus::BANNED, __('Banned'), $stats->banned];
 
         return array_map(
             fn (array $tab): array => [

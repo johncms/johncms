@@ -615,6 +615,9 @@
         2 => '%d сообщений',
         3 => '%d сообщений',
       ),
+      'Confirm the e-mail' => 'Подтвердить e-mail',
+      'E-mail not confirmed' => 'E-mail не подтверждён',
+      'The e-mail is confirmed' => 'E-mail подтверждён',
     ),
   ),
 );

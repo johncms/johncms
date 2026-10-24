@@ -47,6 +47,7 @@ final readonly class UserCardMapper
             'name'      => $user->name,
             'url'       => $url,
             'approve'   => $this->actions->approve($user, $url),
+            'confirm_email' => $this->actions->confirmEmail($user, $url),
             'edit_url'  => $buttons['edit']['url'] ?? '',
             'roles_url' => $buttons['roles']['url'] ?? '',
             'actions'   => array_values($menu),
@@ -62,11 +63,7 @@ final readonly class UserCardMapper
 
         return $this->head($user) + [
             'online'        => $user->is_online,
-            'state'         => match (true) {
-                ! $user->preg           => 'pending',
-                $card->activeBans !== [] => 'banned',
-                default                 => 'active',
-            },
+            'state'         => $this->actions->state($user, $card->activeBans !== []),
             'roles'         => array_map(static fn (Role $role): string => $role->display_name, $card->roles),
             'custom_status' => $this->text($user->status),
             'photo'         => $user->photo,

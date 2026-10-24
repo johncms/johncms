@@ -27,6 +27,11 @@ interface RegistrationModerationRepositoryInterface
 
     public function approveAll(string $adminName): void;
 
+    /**
+     * Confirms the e-mail of the account on its behalf, as the link mailed to it would.
+     */
+    public function confirmEmail(int $id): void;
+
     public function delete(int $id): void;
 
     public function deleteAll(): void;

@@ -25,6 +25,8 @@
                     <div class="admin-user-card__badges">
                         {% if user.state == 'pending' %}
                             <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis badge-dot">{{ __('Awaiting approval') }}</span>
+                        {% elseif user.state == 'unconfirmed' %}
+                            <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis badge-dot">{{ __('E-mail not confirmed') }}</span>
                         {% elseif user.state == 'banned' %}
                             <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis badge-dot">{{ __('Banned') }}</span>
                         {% else %}

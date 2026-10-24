@@ -15,6 +15,7 @@ final readonly class UserListStatsDTO
         public int $registeredToday,
         public int $banned,
         public int $pending,
+        public int $unconfirmed,
     ) {
     }
 }

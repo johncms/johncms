@@ -7,6 +7,7 @@ namespace Johncms\Modules\Admin\Application\Services;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\CurrentUser;
+use Johncms\Auth\RegistrationSettings;
 use Johncms\Modules\Admin\Application\Access\UserEditAccess;
 use Johncms\Users\Bans\BanAccess;
 use Johncms\Users\User;
@@ -30,6 +31,7 @@ final readonly class UserActionsMapper
         private PublicProfileLinks $profiles,
         private UserEditAccess $editAccess,
         private BanAccess $banAccess,
+        private RegistrationSettings $registration,
     ) {
     }
 
@@ -74,8 +76,9 @@ final readonly class UserActionsMapper
         }
 
         // Whether this particular account may be browsed as — nobody may browse as somebody who
-        // outranks them — is decided when the button is pressed.
-        if (! $self && $this->accessChecker->allows(CorePermissions::USERS_IMPERSONATE)) {
+        // outranks them — is decided when the button is pressed. One that cannot sign in yet is
+        // not offered at all.
+        if (! $self && $this->accessChecker->allows(CorePermissions::USERS_IMPERSONATE) && $this->maySignIn($user)) {
             $actions['impersonate'] = $this->post('/impersonation/start/' . $user->id, [], __('Browse as this user'), 'venetian-mask');
         }
 
@@ -103,6 +106,38 @@ final readonly class UserActionsMapper
     public function approve(User $user, string $returnUrl): ?array
     {
         return $user->preg ? null : $this->post('/admin/registrations/approve', ['id' => $user->id, 'back' => $returnUrl], __('Approve'), 'check');
+    }
+
+    /**
+     * Confirming the e-mail on behalf of an account that has to confirm it before it signs in, or
+     * null for any other.
+     *
+     * @return array<string, mixed>|null
+     */
+    public function confirmEmail(User $user, string $returnUrl): ?array
+    {
+        return $this->registration->awaitsEmailConfirmation($user)
+            ? $this->post('/admin/registrations/confirm-email', ['id' => $user->id, 'back' => $returnUrl], __('Confirm the e-mail'), 'mail-check')
+            : null;
+    }
+
+    /**
+     * The state of the account as the list and its page show it: waiting for an administrator,
+     * waiting for its owner to confirm the e-mail, banned, or none of these.
+     */
+    public function state(User $user, bool $banned): string
+    {
+        return match (true) {
+            ! $user->preg                                      => 'pending',
+            $this->registration->awaitsEmailConfirmation($user) => 'unconfirmed',
+            $banned                                            => 'banned',
+            default                                            => 'active',
+        };
+    }
+
+    private function maySignIn(User $user): bool
+    {
+        return $user->preg && ! $this->registration->awaitsEmailConfirmation($user);
     }
 
     /**

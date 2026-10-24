@@ -39,6 +39,13 @@ final class EloquentRegistrationModerationRepository implements RegistrationMode
             ->update(['preg' => 1, 'regadm' => $adminName]);
     }
 
+    public function confirmEmail(int $id): void
+    {
+        User::query()
+            ->where('id', $id)
+            ->update(['email_confirmed' => 1, 'confirmation_code' => null]);
+    }
+
     public function delete(int $id): void
     {
         $deleted = User::query()

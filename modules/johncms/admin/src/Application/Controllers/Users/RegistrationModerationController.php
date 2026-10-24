@@ -10,14 +10,15 @@ use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Admin\Application\Services\UserListControlsMapper;
 use Johncms\Modules\Admin\Application\UseCases\ApproveRegistrationUseCase;
+use Johncms\Modules\Admin\Application\UseCases\ConfirmUserEmailUseCase;
 use Johncms\Modules\Admin\Application\UseCases\DeleteRegistrationUseCase;
 use Johncms\Modules\Admin\Application\UseCases\GetPendingRegistrationsUseCase;
 use Johncms\NavChain;
 
 /**
- * What is done to the accounts waiting for an administrator to let them in. They are listed by
- * the list of users (status=pending), where the menu of each row and the head of the list lead
- * here.
+ * What is done to the accounts waiting for an administrator to let them in, or for their owner to
+ * confirm the e-mail. They are listed by the list of users (status=pending, status=unconfirmed),
+ * where the menu of each row and the head of the list lead here.
  *
  * Removing is confirmed first, in a dialog saying what would go: the modal of the panel asks for
  * it with X-Requested-With and gets the dialog alone, a plain visit gets it as a page. Every
@@ -34,6 +35,7 @@ final readonly class RegistrationModerationController
         private NavChain $navChain,
         private CurrentUser $currentUser,
         private ApproveRegistrationUseCase $approveRegistration,
+        private ConfirmUserEmailUseCase $confirmUserEmail,
         private DeleteRegistrationUseCase $deleteRegistration,
         private GetPendingRegistrationsUseCase $pending,
         private UserListControlsMapper $controls,
@@ -46,6 +48,16 @@ final readonly class RegistrationModerationController
         if (($id = $this->postedId($request)) > 0) {
             $this->approveRegistration->execute($id, $this->currentUser->user()->name);
             $this->session->flash('success_message', __('Registration is confirmed'));
+        }
+
+        redirect($this->returnUrl($request->body('back')));
+    }
+
+    public function confirmEmail(Request $request): ViewResponse
+    {
+        if (($id = $this->postedId($request)) > 0) {
+            $this->confirmUserEmail->execute($id);
+            $this->session->flash('success_message', __('The e-mail is confirmed'));
         }
 
         redirect($this->returnUrl($request->body('back')));

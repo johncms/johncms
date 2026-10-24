@@ -67,11 +67,7 @@ final readonly class UserListRowMapper
             'roles'        => array_map(static fn (Role $role): string => $role->display_name, $roles),
             'last_visit'   => $user->last_visit,
             'posts'        => (int) $user->postforum + (int) $user->postguest,
-            'status'       => match (true) {
-                ! $user->preg => 'pending',
-                $banEnds > 0  => 'banned',
-                default       => 'active',
-            },
+            'status'       => $this->actions->state($user, $banEnds > 0),
             'ban_ends'     => $banEnds,
             'karma'        => (int) $user->karma_plus - (int) $user->karma_minus,
             'registered'   => (int) $user->datereg,
@@ -79,6 +75,7 @@ final readonly class UserListRowMapper
             'ip'           => $showOrigin ? (string) $user->ip : '',
             'ip_url'       => $showOrigin ? '/admin/ip-search?ip=' . $user->ip : '',
             'approve'      => $this->actions->approve($user, $listUrl),
+            'confirm_email' => $this->actions->confirmEmail($user, $listUrl),
             'actions'      => array_values($this->actions->map($user, $listUrl)),
         ];
     }

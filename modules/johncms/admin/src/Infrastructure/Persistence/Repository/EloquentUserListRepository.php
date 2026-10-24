@@ -80,9 +80,12 @@ final class EloquentUserListRepository implements UserListRepositoryInterface
         }
 
         match ($filter->status) {
-            UserListStatus::PENDING => $query->where('preg', 0),
-            UserListStatus::BANNED  => $query->whereIn('id', Ban::query()->select('user_id')->where('ban_time', '>', $now)),
-            UserListStatus::ALL     => null,
+            UserListStatus::PENDING     => $query->where('preg', 0),
+            UserListStatus::UNCONFIRMED => $query->where(static function (Builder $query): void {
+                $query->whereNull('email_confirmed')->orWhere('email_confirmed', 0);
+            }),
+            UserListStatus::BANNED      => $query->whereIn('id', Ban::query()->select('user_id')->where('ban_time', '>', $now)),
+            UserListStatus::ALL         => null,
         };
 
         if ($filter->staff || $filter->roleId !== null) {

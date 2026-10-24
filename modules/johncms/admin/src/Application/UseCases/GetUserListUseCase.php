@@ -57,6 +57,7 @@ final readonly class GetUserListUseCase
             registeredToday: $this->users->count(new UserListFilter(registered: UserListRegistered::DAY), $now),
             banned: $this->users->count(new UserListFilter(status: UserListStatus::BANNED), $now),
             pending: $this->users->count(new UserListFilter(status: UserListStatus::PENDING), $now),
+            unconfirmed: $this->users->count(new UserListFilter(status: UserListStatus::UNCONFIRMED), $now),
         );
     }
 

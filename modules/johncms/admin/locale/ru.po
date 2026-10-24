@@ -2404,3 +2404,12 @@ msgstr[0] "%d сообщение"
 msgstr[1] "%d сообщения"
 msgstr[2] "%d сообщений"
 msgstr[3] "%d сообщений"
+
+msgid "Confirm the e-mail"
+msgstr "Подтвердить e-mail"
+
+msgid "E-mail not confirmed"
+msgstr "E-mail не подтверждён"
+
+msgid "The e-mail is confirmed"
+msgstr "E-mail подтверждён"
