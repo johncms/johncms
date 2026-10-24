@@ -932,3 +932,9 @@ msgstr "Днів (макс. 30)"
 
 msgid "Till cancel"
 msgstr "До відміни"
+
+msgid "Man"
+msgstr "Чоловік"
+
+msgid "Woman"
+msgstr "Жінка"

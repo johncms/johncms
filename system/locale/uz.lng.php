@@ -158,6 +158,8 @@ PHP standart drayver bilan ishlashi kerak: <a href="https://www.php.net/manual/e
       'Hours (24 max.)' => 'Soat (24 max.)',
       'Days (30 max.)' => 'Kun (30 max.)',
       'Till cancel' => 'Bekor qilishgacha',
+      'Man' => 'Erkak',
+      'Woman' => 'Ayol',
     ),
   ),
 );

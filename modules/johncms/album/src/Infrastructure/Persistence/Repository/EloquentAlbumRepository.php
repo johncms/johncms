@@ -10,6 +10,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
 use Johncms\Modules\Album\Domain\Enums\AlbumAccess;
 use Johncms\Modules\Album\Domain\Models\Album;
 use Johncms\Modules\Album\Domain\Repository\AlbumRepositoryInterface;
+use Johncms\Users\Gender;
 use Johncms\Users\User;
 
 final class EloquentAlbumRepository implements AlbumRepositoryInterface
@@ -44,11 +45,11 @@ final class EloquentAlbumRepository implements AlbumRepositoryInterface
         return $query->get();
     }
 
-    public function countOwnersBySex(string $sex, ?int $restrictToVisibleForUser): int
+    public function countOwnersByGender(Gender $gender, ?int $restrictToVisibleForUser): int
     {
         $query = Album::query()
             ->join('users', 'users.id', '=', 'cms_album_cat.user_id')
-            ->where('users.sex', $sex);
+            ->where('users.sex', $gender->value);
 
         if ($restrictToVisibleForUser !== null) {
             $query->where(static function (Builder $builder) use ($restrictToVisibleForUser): void {
@@ -61,17 +62,17 @@ final class EloquentAlbumRepository implements AlbumRepositoryInterface
         return $query->distinct()->count('cms_album_cat.user_id');
     }
 
-    public function countOwners(?string $sex, ?int $restrictToVisibleForUser): int
+    public function countOwners(?Gender $gender, ?int $restrictToVisibleForUser): int
     {
-        return $this->ownersQuery($sex, $restrictToVisibleForUser)->count();
+        return $this->ownersQuery($gender, $restrictToVisibleForUser)->count();
     }
 
     /**
      * @return Collection<int, User>
      */
-    public function getOwners(?string $sex, ?int $restrictToVisibleForUser, int $limit, int $offset): Collection
+    public function getOwners(?Gender $gender, ?int $restrictToVisibleForUser, int $limit, int $offset): Collection
     {
-        $users = $this->ownersQuery($sex, $restrictToVisibleForUser)
+        $users = $this->ownersQuery($gender, $restrictToVisibleForUser)
             ->orderBy('name')
             ->offset($offset)
             ->limit($limit)
@@ -89,12 +90,12 @@ final class EloquentAlbumRepository implements AlbumRepositoryInterface
     /**
      * @return Builder<User>
      */
-    private function ownersQuery(?string $sex, ?int $restrictToVisibleForUser): Builder
+    private function ownersQuery(?Gender $gender, ?int $restrictToVisibleForUser): Builder
     {
         return User::query()
             ->when(
-                $sex !== null,
-                static fn (Builder $query): Builder => $query->where('sex', $sex),
+                $gender !== null,
+                static fn (Builder $query): Builder => $query->where('sex', $gender?->value),
                 static fn (Builder $query): Builder => $query->where('sex', '<>', '')
             )
             ->whereExists(function (QueryBuilder $query) use ($restrictToVisibleForUser): void {

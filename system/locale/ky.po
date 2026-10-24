@@ -912,3 +912,9 @@ msgstr "Күндөр (30 макс.)"
 
 msgid "Till cancel"
 msgstr "Жок кылынганга чейин"
+
+msgid "Man"
+msgstr "Эркек"
+
+msgid "Woman"
+msgstr "Аял"

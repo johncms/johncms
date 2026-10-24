@@ -117,6 +117,8 @@
       'Hours (24 max.)' => 'Valandos (24 maks.)',
       'Days (30 max.)' => 'Dienų (30 max.)',
       'Till cancel' => 'Iki atšaukimo',
+      'Man' => 'Vyras',
+      'Woman' => 'Moteris',
     ),
   ),
 );

@@ -902,3 +902,9 @@ msgstr "Gün (maksimum 30.)"
 
 msgid "Till cancel"
 msgstr "Ləğv qədər"
+
+msgid "Man"
+msgstr "Kişi"
+
+msgid "Woman"
+msgstr "Qadın"

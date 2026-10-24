@@ -903,3 +903,9 @@ msgstr "Ngày (tối đa 30n)"
 
 msgid "Till cancel"
 msgstr "Vô thời hạn (đến khi hủy lệnh cấm)"
+
+msgid "Man"
+msgstr "Hot Boy"
+
+msgid "Woman"
+msgstr "Hot Girl"

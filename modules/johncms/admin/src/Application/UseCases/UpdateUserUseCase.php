@@ -7,6 +7,7 @@ namespace Johncms\Modules\Admin\Application\UseCases;
 use Johncms\Modules\Admin\Application\DTO\UpdateUserCommand;
 use Johncms\Modules\Admin\Application\Exceptions\UserEditException;
 use Johncms\Modules\Admin\Domain\Repository\UserEditRepositoryInterface;
+use Johncms\Users\Gender;
 use Johncms\Users\LoginName;
 use Johncms\Users\User;
 use Johncms\Validator\Rules\Between;
@@ -81,7 +82,7 @@ final readonly class UpdateUserUseCase
         if ($command->sex !== null) {
             $fields['sex'] = $command->sex;
             // An account registered before the gender was asked for may have none; it stays so.
-            $rules['sex'] = [new InArray(haystack: ['m', 'zh'], allowEmpty: true)];
+            $rules['sex'] = [new InArray(haystack: Gender::values(), allowEmpty: true)];
         }
 
         if ($command->notes !== null) {

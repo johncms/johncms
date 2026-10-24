@@ -238,14 +238,12 @@
                     </div>
 
                     <h3>{{ __('Select gender') }}</h3>
-                    <div class="custom-control custom-radio">
-                        <input type="radio" id="m" name="sex" value="m" class="custom-control-input"{% if form_data.sex == 'm' %} checked="checked"{% endif %}>
-                        <label class="custom-control-label" for="m">{{ __('Man') }}</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input type="radio" id="zh" name="sex" value="zh" class="custom-control-input"{% if form_data.sex == 'zh' %} checked="checked"{% endif %}>
-                        <label class="custom-control-label" for="zh">{{ __('Woman') }}</label>
-                    </div>
+                    {% for gender in genders %}
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="sex-{{ gender.value }}" name="sex" value="{{ gender.value }}" class="custom-control-input"{% if form_data.sex == gender.value %} checked="checked"{% endif %}>
+                            <label class="custom-control-label" for="sex-{{ gender.value }}">{{ gender.title }}</label>
+                        </div>
+                    {% endfor %}
 
                     {# What an account may do is a matter of the roles it holds, and they are handed out on a screen of their own. #}
                     {% if not is_self and can('admin.roles.manage') %}

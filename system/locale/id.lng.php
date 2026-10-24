@@ -105,6 +105,8 @@
       'Hours (24 max.)' => 'Jam (maks. 24)',
       'Days (30 max.)' => 'Hari (Maks. 30)',
       'Till cancel' => 'Sampai membatalkan',
+      'Man' => 'Pria',
+      'Woman' => 'Wanita',
     ),
   ),
 );

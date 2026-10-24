@@ -13,6 +13,7 @@ use Johncms\Modules\Profile\Application\DTO\UpdateProfileCommand;
 use Johncms\Modules\Profile\Application\Exceptions\EditProfileException;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\System\i18n\Translator;
+use Johncms\Users\Gender;
 use Johncms\Users\LoginName;
 use Johncms\Users\User;
 use Johncms\Validator\Rules\Between;
@@ -63,7 +64,7 @@ final readonly class UpdateProfileUseCase
                     allowEmpty: true,
                 ),
             ],
-            'sex'         => [new InArray(haystack: ['m', 'zh'])],
+            'sex'         => [new InArray(haystack: Gender::values())],
         ];
 
         // When email confirmation is enabled, the address becomes mandatory and its host has to

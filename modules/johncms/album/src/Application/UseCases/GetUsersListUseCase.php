@@ -9,6 +9,7 @@ use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Album\Application\Services\AlbumPermissions;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
 use Johncms\Modules\Album\Domain\Repository\AlbumRepositoryInterface;
+use Johncms\Users\Gender;
 use Johncms\Users\User;
 
 final readonly class GetUsersListUseCase
@@ -21,19 +22,19 @@ final readonly class GetUsersListUseCase
     ) {
     }
 
-    public function count(?string $sex): int
+    public function count(?Gender $gender): int
     {
-        return $this->albumRepository->countOwners($sex, $this->restrictForUser());
+        return $this->albumRepository->countOwners($gender, $this->restrictForUser());
     }
 
     /**
      * @return array<int, User>
      */
-    public function getPage(?string $sex, int $limit, int $offset): array
+    public function getPage(?Gender $gender, int $limit, int $offset): array
     {
         $restrictForUser = $this->restrictForUser();
 
-        $users = $this->albumRepository->getOwners($sex, $restrictForUser, $limit, $offset);
+        $users = $this->albumRepository->getOwners($gender, $restrictForUser, $limit, $offset);
 
         $userIds = $users->map(static fn (User $user): int => $user->id)->all();
         $photoCounts = $this->albumPhotoRepository->countByUsers($userIds, $restrictForUser);

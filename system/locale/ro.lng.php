@@ -189,6 +189,8 @@ PHP ar trebui să funcționeze cu șoferul implicit: <a href="https://www.php.ne
       'Hours (24 max.)' => 'Ore (max. 24)',
       'Days (30 max.)' => 'Zile (max. 30)',
       'Till cancel' => 'Pana se anuleaza',
+      'Man' => 'Barbat',
+      'Woman' => 'Femeie',
     ),
   ),
 );

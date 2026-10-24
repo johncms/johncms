@@ -10,6 +10,7 @@ use Johncms\Modules\Album\Application\DTO\AlbumIndexDTO;
 use Johncms\Modules\Album\Application\Services\AlbumPermissions;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
 use Johncms\Modules\Album\Domain\Repository\AlbumRepositoryInterface;
+use Johncms\Users\Gender;
 
 final readonly class GetAlbumIndexUseCase
 {
@@ -30,8 +31,8 @@ final readonly class GetAlbumIndexUseCase
             ? null
             : $this->currentUser->id();
 
-        $men = $this->albumRepository->countOwnersBySex('m', $restrictForUser);
-        $women = $this->albumRepository->countOwnersBySex('zh', $restrictForUser);
+        $men = $this->albumRepository->countOwnersByGender(Gender::Male, $restrictForUser);
+        $women = $this->albumRepository->countOwnersByGender(Gender::Female, $restrictForUser);
 
         return new AlbumIndexDTO(
             men: $men,

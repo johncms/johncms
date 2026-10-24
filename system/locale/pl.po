@@ -903,3 +903,9 @@ msgstr "Dni (30 max.)"
 
 msgid "Till cancel"
 msgstr "Do odwołania"
+
+msgid "Man"
+msgstr "Mężczyzna"
+
+msgid "Woman"
+msgstr "Kobieta"

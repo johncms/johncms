@@ -168,6 +168,8 @@
       'Hours (24 max.)' => 'Saat (24 maks.)',
       'Days (30 max.)' => 'Gün (maksimum 30.)',
       'Till cancel' => 'Ləğv qədər',
+      'Man' => 'Kişi',
+      'Woman' => 'Qadın',
     ),
   ),
 );

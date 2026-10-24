@@ -1227,3 +1227,9 @@ msgstr "Дней (30 макс.)"
 
 msgid "Till cancel"
 msgstr "До отмены"
+
+msgid "Man"
+msgstr "Мужской"
+
+msgid "Woman"
+msgstr "Женский"

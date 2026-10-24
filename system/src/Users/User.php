@@ -84,6 +84,7 @@ use Johncms\System\Users\UserConfig;
  * @property array $ban - Массив банов.
  * @property bool $is_valid - проверка валидности пользователя
  * @property bool $is_birthday - у пользователя день рождения?
+ * @property Gender|null $gender - пол, если пользователь его указал
  * @property string $birthday_date - дата рождения пользователя
  * @property Markup $display_place - местоположение
  * @property string $formatted_about - О себе в подготовленном для отображения виде

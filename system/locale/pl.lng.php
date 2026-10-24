@@ -151,6 +151,8 @@ PHP powinien pracować z domyślnym sterownikiem: <a href="https://www.php.net/m
       'Hours (24 max.)' => 'Godzin (24 max.)',
       'Days (30 max.)' => 'Dni (30 max.)',
       'Till cancel' => 'Do odwołania',
+      'Man' => 'Mężczyzna',
+      'Woman' => 'Kobieta',
     ),
   ),
 );

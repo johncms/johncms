@@ -904,3 +904,9 @@ msgstr "Kun (30 max.)"
 
 msgid "Till cancel"
 msgstr "Bekor qilishgacha"
+
+msgid "Man"
+msgstr "Erkak"
+
+msgid "Woman"
+msgstr "Ayol"

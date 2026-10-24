@@ -6,6 +6,7 @@ namespace Johncms\Modules\Album\Domain\Repository;
 
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Album\Domain\Models\Album;
+use Johncms\Users\Gender;
 use Johncms\Users\User;
 
 interface AlbumRepositoryInterface
@@ -41,33 +42,34 @@ interface AlbumRepositoryInterface
     public function getUserAlbums(int $userId, ?int $restrictToVisibleForUser): Collection;
 
     /**
-     * Count distinct owners of a given sex that have at least one album.
+     * Count distinct owners of a given gender that have at least one album.
      *
      * When $restrictToVisibleForUser is provided, only albums that are visible
      * to that user (non-private) or owned by them are taken into account.
      * Pass null to count without visibility restriction (e.g. for moderators).
      */
-    public function countOwnersBySex(string $sex, ?int $restrictToVisibleForUser): int;
+    public function countOwnersByGender(Gender $gender, ?int $restrictToVisibleForUser): int;
 
     /**
-     * Count album owners, optionally filtered by sex.
+     * Count album owners, optionally filtered by gender.
      *
-     * Mirrors the filters of {@see getOwners()}. Pass $sex = null to include
-     * every sex and $restrictToVisibleForUser = null to bypass the visibility
-     * restriction.
+     * Mirrors the filters of {@see getOwners()}. Pass $gender = null to include
+     * every owner who named a gender and $restrictToVisibleForUser = null to
+     * bypass the visibility restriction.
      */
-    public function countOwners(?string $sex, ?int $restrictToVisibleForUser): int;
+    public function countOwners(?Gender $gender, ?int $restrictToVisibleForUser): int;
 
     /**
-     * Get a page of album owners, optionally filtered by sex, ordered by user name.
+     * Get a page of album owners, optionally filtered by gender, ordered by user name.
      *
      * Each returned user model has a dynamic `count_albums` attribute holding the
-     * number of their visible albums. Pass $sex = null to include every sex and
-     * $restrictToVisibleForUser = null to bypass the visibility restriction.
+     * number of their visible albums. Pass $gender = null to include every owner who
+     * named a gender and $restrictToVisibleForUser = null to bypass the visibility
+     * restriction.
      *
      * @return Collection<int, User>
      */
-    public function getOwners(?string $sex, ?int $restrictToVisibleForUser, int $limit, int $offset): Collection;
+    public function getOwners(?Gender $gender, ?int $restrictToVisibleForUser, int $limit, int $offset): Collection;
 
     /**
      * Whether the user already owns an album with the given name.

@@ -182,6 +182,8 @@ PHP sẽ hoạt động với trình điều khiển mặc định: <a href="htt
       'Hours (24 max.)' => 'Giờ (tối đa 24g)',
       'Days (30 max.)' => 'Ngày (tối đa 30n)',
       'Till cancel' => 'Vô thời hạn (đến khi hủy lệnh cấm)',
+      'Man' => 'Hot Boy',
+      'Woman' => 'Hot Girl',
     ),
   ),
 );

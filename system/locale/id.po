@@ -902,3 +902,9 @@ msgstr "Hari (Maks. 30)"
 
 msgid "Till cancel"
 msgstr "Sampai membatalkan"
+
+msgid "Man"
+msgstr "Pria"
+
+msgid "Woman"
+msgstr "Wanita"

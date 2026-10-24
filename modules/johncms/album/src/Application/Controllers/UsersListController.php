@@ -10,6 +10,7 @@ use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Album\Application\UseCases\GetUsersListUseCase;
 use Johncms\NavChain;
+use Johncms\Users\Gender;
 
 final readonly class UsersListController
 {
@@ -23,9 +24,9 @@ final readonly class UsersListController
 
     public function __invoke(?string $filter = null): ViewResponse
     {
-        $sex = match ($filter) {
-            'boys'  => 'm',
-            'girls' => 'zh',
+        $gender = match ($filter) {
+            'boys'  => Gender::Male,
+            'girls' => Gender::Female,
             default => null,
         };
 
@@ -33,7 +34,7 @@ final readonly class UsersListController
         $this->navChain->add(__('Albums'), '/album');
         $this->navChain->add($title);
 
-        $pagination = $this->paginationFactory->create($this->useCase->count($sex));
+        $pagination = $this->paginationFactory->create($this->useCase->count($gender));
 
         $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
         if ($redirectUrl !== null) {
@@ -42,7 +43,7 @@ final readonly class UsersListController
 
         $total = $pagination->getTotal();
         $userModels = $total > 0
-            ? $this->useCase->getPage($sex, $pagination->getPerPage(), $pagination->getOffset())
+            ? $this->useCase->getPage($gender, $pagination->getPerPage(), $pagination->getOffset())
             : [];
 
         $users = [];

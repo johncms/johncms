@@ -18,6 +18,7 @@ use Johncms\Modules\Profile\Application\UseCases\UpdateProfileUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
+use Johncms\Users\Gender;
 use Johncms\Users\User;
 use Johncms\Users\UserImages;
 use Symfony\Component\HttpFoundation\Response;
@@ -184,6 +185,7 @@ final readonly class EditProfileController
                 'field_height'    => $this->currentUser->user()->config->fieldHeight,
                 'user'            => $userArray,
                 'form_data'       => $formData,
+                'genders'         => Gender::cases(),
                 'can_edit_admin_fields' => $context->canEditAdminFields,
                 'can_reset_settings'    => $context->canResetSettings,
             ]

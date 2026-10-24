@@ -104,7 +104,7 @@
                 <div class="card-body">
                     {% include '@admin/components/ui/facts.twig' with {items: [
                         {label: __('Name'), value: user.profile.full_name},
-                        {label: __('Gender'), value: user.profile.sex == 'm' ? __('Man') : (user.profile.sex == 'zh' ? __('Woman') : '')},
+                        {label: __('Gender'), value: user.profile.gender},
                         {label: __('Birthday'), value: user.profile.birthday},
                         {label: __('City, Country'), value: user.profile.city},
                         {label: __('Phone number'), value: user.profile.phone},

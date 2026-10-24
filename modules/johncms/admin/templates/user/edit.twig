@@ -3,6 +3,7 @@
 
     @var array form         The values of the fields.
     @var array errors       Field => messages, from the last attempt.
+    @var list  genders      Johncms\Users\Gender, the genders to choose from.
     @var bool  staff_fields Whether the nickname, the gender and the karma are the editor's to change.
     @var bool  notes_field  Whether the notes of the staff are.
 #}
@@ -28,8 +29,9 @@
                         <label class="form-label" for="user-sex">{{ __('Gender') }}</label>
                         <select class="form-select{{ errors.sex is defined ? ' is-invalid' }}" id="user-sex" name="sex">
                             <option value=""{% if form.sex == '' %} selected{% endif %}>{{ __('Not specified') }}</option>
-                            <option value="m"{% if form.sex == 'm' %} selected{% endif %}>{{ __('Man') }}</option>
-                            <option value="zh"{% if form.sex == 'zh' %} selected{% endif %}>{{ __('Woman') }}</option>
+                            {% for gender in genders %}
+                                <option value="{{ gender.value }}"{% if form.sex == gender.value %} selected{% endif %}>{{ gender.title }}</option>
+                            {% endfor %}
                         </select>
                         {% include '@theme/components/field-errors.twig' with {errors: errors.sex|default([])} only %}
                     </div>

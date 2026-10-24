@@ -905,3 +905,9 @@ msgstr "Dienų (30 max.)"
 
 msgid "Till cancel"
 msgstr "Iki atšaukimo"
+
+msgid "Man"
+msgstr "Vyras"
+
+msgid "Woman"
+msgstr "Moteris"

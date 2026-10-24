@@ -908,3 +908,9 @@ msgstr "يوما (30 كحد أقصى.)"
 
 msgid "Till cancel"
 msgstr "حتى إلغاء الأمر"
+
+msgid "Man"
+msgstr "رجل"
+
+msgid "Woman"
+msgstr "امرأة"

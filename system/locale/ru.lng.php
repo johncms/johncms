@@ -318,6 +318,8 @@ The number is shown so that support for the old scheme is not removed while it i
       'Hours (24 max.)' => 'Часов (24 макс.)',
       'Days (30 max.)' => 'Дней (30 макс.)',
       'Till cancel' => 'До отмены',
+      'Man' => 'Мужской',
+      'Woman' => 'Женский',
     ),
   ),
 );

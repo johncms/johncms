@@ -2,6 +2,7 @@
     The registration form.
 
     @var fields         array  name, password, email, sex, imname, about, consent_<id>
+    @var genders        list   Johncms\Users\Gender, the genders to choose from
     @var errors         array  Validation messages by field name.
     @var captcha        \Johncms\Captcha\CaptchaChallenge
     @var consents       array  Consents the visitor has to give, see FormConsentDTO.
@@ -71,9 +72,10 @@
         <div class="form-group">
             <label for="gender">{{ __('Select Gender') }}</label>
             <select id="gender" name="sex" class="form-control {{ errors.sex|default([]) ? 'is-invalid' : '' }}">
-                <option value="?">- ? -</option>
-                <option value="m"{% if fields.sex == 'm' %} selected="selected"{% endif %}>{{ __('Man') }}</option>
-                <option value="zh"{% if fields.sex == 'zh' %} selected="selected"{% endif %}>{{ __('Woman') }}</option>
+                <option value="">- ? -</option>
+                {% for gender in genders %}
+                    <option value="{{ gender.value }}"{% if fields.sex == gender.value %} selected="selected"{% endif %}>{{ gender.title }}</option>
+                {% endfor %}
             </select>
             {% include '@theme/components/field-errors.twig' with {errors: errors.sex|default([])} only %}
         </div>

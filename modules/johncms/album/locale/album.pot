@@ -23,7 +23,7 @@ msgstr ""
 #: modules/johncms/album/src/Application/Controllers/UploadPhotoController.php:80
 #: modules/johncms/album/src/Application/Controllers/UserAlbumsController.php:35
 #: modules/johncms/album/src/Application/Controllers/UserAlbumsController.php:70
-#: modules/johncms/album/src/Application/Controllers/UsersListController.php:33
+#: modules/johncms/album/src/Application/Controllers/UsersListController.php:34
 #: modules/johncms/album/src/Application/Controllers/VotePhotoController.php:51
 #: modules/johncms/album/templates/public/index.twig:20
 msgid "Albums"
@@ -211,20 +211,20 @@ msgstr ""
 msgid "User albums:"
 msgstr ""
 
-#: modules/johncms/album/src/Application/Controllers/UsersListController.php:32
+#: modules/johncms/album/src/Application/Controllers/UsersListController.php:33
 msgid "List of users"
 msgstr ""
 
-#: modules/johncms/album/src/Application/Controllers/UsersListController.php:67
+#: modules/johncms/album/src/Application/Controllers/UsersListController.php:68
 msgid "All"
 msgstr ""
 
-#: modules/johncms/album/src/Application/Controllers/UsersListController.php:68
+#: modules/johncms/album/src/Application/Controllers/UsersListController.php:69
 #: modules/johncms/album/templates/public/index.twig:24
 msgid "Guys"
 msgstr ""
 
-#: modules/johncms/album/src/Application/Controllers/UsersListController.php:69
+#: modules/johncms/album/src/Application/Controllers/UsersListController.php:70
 #: modules/johncms/album/templates/public/index.twig:28
 msgid "Girls"
 msgstr ""

@@ -138,6 +138,8 @@
       'You do not have enought rights to ban this user' => 'Сізде жеткілікті құқықтары жоқ',
       'Hours (24 max.)' => 'Сағат (24 макс.)',
       'Till cancel' => 'Бас тартуға дейін',
+      'Man' => 'Ер адам',
+      'Woman' => 'Әйел адам',
     ),
   ),
 );

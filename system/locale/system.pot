@@ -835,6 +835,14 @@ msgstr ""
 msgid "Ban not active"
 msgstr ""
 
+#: system/src/Users/Gender.php:27
+msgid "Man"
+msgstr ""
+
+#: system/src/Users/Gender.php:28
+msgid "Woman"
+msgstr ""
+
 #: system/src/Users/LoginName.php:58
 msgid "The nickname needs at least one letter or digit"
 msgstr ""

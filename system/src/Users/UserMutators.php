@@ -146,6 +146,14 @@ trait UserMutators
     }
 
     /**
+     * The gender the account named, or null when it named none.
+     */
+    public function getGenderAttribute(): ?Gender
+    {
+        return Gender::tryFrom((string) $this->sex);
+    }
+
+    /**
      * День рождения пользователя
      *
      * @return string

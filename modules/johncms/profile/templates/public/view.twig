@@ -163,13 +163,7 @@
                 <div class="d-flex">
                     <div class="text-muted pe-2">{{ __('Gender') }}:</div>
                     <div>
-                        {% if user.sex == 'm' %}
-                            {{ __('Man') }}
-                        {% elseif user.sex == 'zh' %}
-                            {{ __('Woman') }}
-                        {% else %}
-                            {{ __('Not specified') }}
-                        {% endif %}
+                        {{ user.gender ?: __('Not specified') }}
                     </div>
                 </div>
                 {% if user.live %}

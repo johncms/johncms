@@ -902,3 +902,9 @@ msgstr "Zile (max. 30)"
 
 msgid "Till cancel"
 msgstr "Pana se anuleaza"
+
+msgid "Man"
+msgstr "Barbat"
+
+msgid "Woman"
+msgstr "Femeie"

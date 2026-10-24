@@ -159,7 +159,7 @@ final readonly class UserCardMapper
     {
         return [
             'full_name' => $this->text($user->imname),
-            'sex'       => (string) $user->sex,
+            'gender'    => $user->gender?->title() ?? '',
             'birthday'  => $user->birthday_date,
             'city'      => $this->text($user->live),
             'about'     => $user->formatted_about,

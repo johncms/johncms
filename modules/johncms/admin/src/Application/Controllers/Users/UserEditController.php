@@ -18,6 +18,7 @@ use Johncms\Modules\Admin\Application\UseCases\GetUserEditUseCase;
 use Johncms\Modules\Admin\Application\UseCases\ResetUserSettingsUseCase;
 use Johncms\Modules\Admin\Application\UseCases\UpdateUserUseCase;
 use Johncms\NavChain;
+use Johncms\Users\Gender;
 use Johncms\Users\User;
 
 /**
@@ -154,6 +155,7 @@ final readonly class UserEditController
         return $this->page($user, 'edit', __('Edit'), '@admin/user/edit.twig', [
             'form'         => $form,
             'errors'       => $errors,
+            'genders'      => Gender::cases(),
             'staff_fields' => $this->access->mayEditStaffFields(),
             'notes_field'  => $this->access->mayEditStaffFields() && $this->access->mayReadNotes(),
         ]);

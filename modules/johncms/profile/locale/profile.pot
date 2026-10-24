@@ -11,7 +11,7 @@ msgstr ""
 #: modules/johncms/profile/src/Application/Controllers/ActivityController.php:68
 #: modules/johncms/profile/src/Application/Controllers/ActivityController.php:71
 #: modules/johncms/profile/templates/public/statistics.twig:33
-#: modules/johncms/profile/templates/public/view.twig:236
+#: modules/johncms/profile/templates/public/view.twig:230
 msgid "Activity"
 msgstr ""
 
@@ -60,14 +60,14 @@ msgid "Continue"
 msgstr ""
 
 #: modules/johncms/profile/src/Application/Controllers/AvatarController.php:83
-#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:166
+#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:167
 #: modules/johncms/profile/src/Application/Controllers/PhotoController.php:83
 #: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:93
 msgid "My Profile"
 msgstr ""
 
 #: modules/johncms/profile/src/Application/Controllers/AvatarController.php:83
-#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:166
+#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:167
 #: modules/johncms/profile/src/Application/Controllers/GuestbookController.php:44
 #: modules/johncms/profile/src/Application/Controllers/PhotoController.php:83
 #: modules/johncms/profile/templates/public/account.twig:13
@@ -180,20 +180,20 @@ msgstr ""
 msgid "Password successfully changed"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:66
+#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:67
 msgid "Data saved"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:78
+#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:79
 msgid "Avatar is successfully removed"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:90
+#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:91
 msgid "Photo is successfully removed"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:164
-#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:198
+#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:165
+#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:200
 #: modules/johncms/profile/templates/public/account.twig:67
 msgid "Edit Profile"
 msgstr ""
@@ -207,7 +207,7 @@ msgstr ""
 #: modules/johncms/profile/templates/public/account.twig:23
 #: modules/johncms/profile/templates/public/ban.twig:33
 #: modules/johncms/profile/templates/public/statistics.twig:36
-#: modules/johncms/profile/templates/public/view.twig:239
+#: modules/johncms/profile/templates/public/view.twig:233
 msgid "Guestbook"
 msgstr ""
 
@@ -346,7 +346,7 @@ msgstr ""
 #: modules/johncms/profile/src/Application/Controllers/StatisticsController.php:35
 #: modules/johncms/profile/src/Application/Controllers/StatisticsController.php:38
 #: modules/johncms/profile/templates/public/statistics.twig:9
-#: modules/johncms/profile/templates/public/view.twig:237
+#: modules/johncms/profile/templates/public/view.twig:231
 msgid "Statistic"
 msgstr ""
 
@@ -480,11 +480,11 @@ msgstr ""
 msgid "You have exceeded the limit of votes. New voices will be added %s"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/UpdateProfileUseCase.php:115
+#: modules/johncms/profile/src/Application/UseCases/UpdateProfileUseCase.php:116
 msgid "Confirm email change"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/UpdateProfileUseCase.php:132
+#: modules/johncms/profile/src/Application/UseCases/UpdateProfileUseCase.php:133
 msgid "The procedure for changing the email address was started"
 msgstr ""
 
@@ -502,7 +502,7 @@ msgid "Statistics"
 msgstr ""
 
 #: modules/johncms/profile/templates/public/account.twig:19
-#: modules/johncms/profile/templates/public/view.twig:238
+#: modules/johncms/profile/templates/public/view.twig:232
 msgid "Photo Album"
 msgstr ""
 
@@ -525,7 +525,7 @@ msgstr ""
 #: modules/johncms/profile/templates/public/account.twig:51
 #: modules/johncms/profile/templates/public/account.twig:55
 #: modules/johncms/profile/templates/public/edit.twig:160
-#: modules/johncms/profile/templates/public/view.twig:190
+#: modules/johncms/profile/templates/public/view.twig:184
 msgid "Contacts"
 msgstr ""
 
@@ -546,7 +546,7 @@ msgstr ""
 #: modules/johncms/profile/templates/public/ban-cancel.twig:19
 #: modules/johncms/profile/templates/public/ban.twig:82
 #: modules/johncms/profile/templates/public/confirm-delete.twig:19
-#: modules/johncms/profile/templates/public/edit.twig:261
+#: modules/johncms/profile/templates/public/edit.twig:259
 #: modules/johncms/profile/templates/public/forum-settings.twig:51
 #: modules/johncms/profile/templates/public/images.twig:35
 #: modules/johncms/profile/templates/public/karma-vote.twig:48
@@ -702,7 +702,7 @@ msgstr ""
 
 #: modules/johncms/profile/templates/public/edit.twig:145
 #: modules/johncms/profile/templates/public/edit.twig:151
-#: modules/johncms/profile/templates/public/view.twig:177
+#: modules/johncms/profile/templates/public/view.twig:171
 msgid "City, Country"
 msgstr ""
 
@@ -712,13 +712,13 @@ msgstr ""
 
 #: modules/johncms/profile/templates/public/edit.twig:162
 #: modules/johncms/profile/templates/public/edit.twig:168
-#: modules/johncms/profile/templates/public/view.twig:193
+#: modules/johncms/profile/templates/public/view.twig:187
 msgid "Phone number"
 msgstr ""
 
 #: modules/johncms/profile/templates/public/edit.twig:173
 #: modules/johncms/profile/templates/public/edit.twig:179
-#: modules/johncms/profile/templates/public/view.twig:199
+#: modules/johncms/profile/templates/public/view.twig:193
 msgid "E-mail"
 msgstr ""
 
@@ -740,13 +740,13 @@ msgstr ""
 
 #: modules/johncms/profile/templates/public/edit.twig:197
 #: modules/johncms/profile/templates/public/edit.twig:203
-#: modules/johncms/profile/templates/public/view.twig:208
+#: modules/johncms/profile/templates/public/view.twig:202
 msgid "Skype"
 msgstr ""
 
 #: modules/johncms/profile/templates/public/edit.twig:209
 #: modules/johncms/profile/templates/public/edit.twig:215
-#: modules/johncms/profile/templates/public/view.twig:215
+#: modules/johncms/profile/templates/public/view.twig:209
 msgid "Site"
 msgstr ""
 
@@ -770,25 +770,15 @@ msgstr ""
 msgid "Select gender"
 msgstr ""
 
-#: modules/johncms/profile/templates/public/edit.twig:243
-#: modules/johncms/profile/templates/public/view.twig:167
-msgid "Man"
-msgstr ""
-
-#: modules/johncms/profile/templates/public/edit.twig:247
-#: modules/johncms/profile/templates/public/view.twig:169
-msgid "Woman"
-msgstr ""
-
-#: modules/johncms/profile/templates/public/edit.twig:252
+#: modules/johncms/profile/templates/public/edit.twig:250
 msgid "Position on the Site"
 msgstr ""
 
-#: modules/johncms/profile/templates/public/edit.twig:254
+#: modules/johncms/profile/templates/public/edit.twig:252
 msgid "Roles of the account"
 msgstr ""
 
-#: modules/johncms/profile/templates/public/edit.twig:260
+#: modules/johncms/profile/templates/public/edit.twig:258
 #: modules/johncms/profile/templates/public/forum-settings.twig:50
 #: modules/johncms/profile/templates/public/images.twig:34
 #: modules/johncms/profile/templates/public/mail-settings.twig:31
@@ -1095,14 +1085,14 @@ msgstr ""
 msgid "Gender"
 msgstr ""
 
-#: modules/johncms/profile/templates/public/view.twig:171
+#: modules/johncms/profile/templates/public/view.twig:166
 msgid "Not specified"
 msgstr ""
 
-#: modules/johncms/profile/templates/public/view.twig:202
+#: modules/johncms/profile/templates/public/view.twig:196
 msgid "hidden"
 msgstr ""
 
-#: modules/johncms/profile/templates/public/view.twig:226
+#: modules/johncms/profile/templates/public/view.twig:220
 msgid "Admin Notes"
 msgstr ""

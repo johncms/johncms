@@ -69,6 +69,7 @@ final readonly class GetProfileViewUseCase
         $targetStandsBelow = $targetLevel < $ownLevel;
 
         $userData = $profileUser->setAppends(self::APPENDS)->toArray();
+        $userData['gender'] = $profileUser->gender?->title() ?? '';
 
         // IP history
         $userData['ip_history_count'] = $profileUser->ipHistory()->count();

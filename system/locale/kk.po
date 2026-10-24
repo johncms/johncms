@@ -897,3 +897,9 @@ msgstr "Сағат (24 макс.)"
 
 msgid "Till cancel"
 msgstr "Бас тартуға дейін"
+
+msgid "Man"
+msgstr "Ер адам"
+
+msgid "Woman"
+msgstr "Әйел адам"

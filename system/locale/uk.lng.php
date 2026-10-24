@@ -220,6 +220,8 @@ The number is shown so that support for the old scheme is not removed while it i
       'Hours (24 max.)' => 'Годин (макс. 24)',
       'Days (30 max.)' => 'Днів (макс. 30)',
       'Till cancel' => 'До відміни',
+      'Man' => 'Чоловік',
+      'Woman' => 'Жінка',
     ),
   ),
 );

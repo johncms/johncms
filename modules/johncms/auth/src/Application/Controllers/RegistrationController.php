@@ -17,6 +17,7 @@ use Johncms\Modules\Auth\Application\Services\RegistrationPermissions;
 use Johncms\Modules\Auth\Application\UseCases\RegisterUserUseCase;
 use Johncms\Modules\Consent\Application\Services\ConsentService;
 use Johncms\NavChain;
+use Johncms\Users\Gender;
 use Johncms\Users\LoginName;
 use Johncms\Users\User;
 use Johncms\Validator\Rules\Captcha;
@@ -85,7 +86,7 @@ final readonly class RegistrationController
                 // The nickname and the name it signs in under, by the rules of the whole site.
                 ...LoginName::rules(),
                 'password' => [new StringLength(min: 6)],
-                'sex'      => [new InArray(haystack: ['m', 'zh'])],
+                'sex'      => [new InArray(haystack: Gender::values())],
                 'captcha'  => [new Captcha(scope: self::CAPTCHA_SCOPE)],
             ];
 
@@ -158,6 +159,7 @@ final readonly class RegistrationController
                 'page_title'     => __('Registration'),
                 'errors'         => $errors,
                 'fields'         => $fields,
+                'genders'        => Gender::cases(),
                 // Issued last: checking an answer spends it, so a form shown again after a
                 // failed attempt has to carry a new one.
                 'captcha'        => $this->captcha->challenge(self::CAPTCHA_SCOPE),

@@ -24,6 +24,7 @@ use Johncms\Console\Commands\ModuleSyncCommand;
 use Johncms\Modules\Installer;
 use Johncms\Modules\ModuleRegistryFactory;
 use Johncms\Http\Request;
+use Johncms\Users\Gender;
 use Johncms\Users\LoginName;
 use Johncms\Users\User;
 use Johncms\Validator\Rules\EmailAddress;
@@ -103,7 +104,7 @@ if ($request->getMethod() === 'POST') {
                     'browser'         => htmlentities($_SERVER['HTTP_USER_AGENT']),
                     'preg'            => 1,
                     'email_confirmed' => 1,
-                    'sex'             => 'm',
+                    'sex'             => Gender::Male->value,
                     'about'           => '',
                     'set_user'        => [],
                     'set_forum'       => [],
@@ -142,8 +143,8 @@ if ($request->getMethod() === 'POST') {
             if (! empty($fields['install_demo'])) {
                 // Seed a couple of regular users referenced by module demo data (authors, commenters).
                 $demoUsers = [
-                    ['name' => 'Alex', 'sex' => 'm', 'mail' => 'alex@example.com', 'ip' => '192.0.2.10'],
-                    ['name' => 'Maria', 'sex' => 'zh', 'mail' => 'maria@example.com', 'ip' => '192.0.2.20'],
+                    ['name' => 'Alex', 'sex' => Gender::Male->value, 'mail' => 'alex@example.com', 'ip' => '192.0.2.10'],
+                    ['name' => 'Maria', 'sex' => Gender::Female->value, 'mail' => 'maria@example.com', 'ip' => '192.0.2.20'],
                 ];
                 foreach ($demoUsers as $demoUser) {
                     $demoModel = new User();
