@@ -4,12 +4,6 @@
 @import 'bootstrap/scss/bootstrap';
 // Основные стили шаблона
 @import "base_styles";
-// Анимации
-@import "animations";
-// Левое меню
-@import "sidebar";
-// Шапка
-@import "header";
 // Иконки
 @import "icons";
 @import "posts";
@@ -52,4 +46,5 @@
 @import 'ui/navs';
 @import 'ui/overlays';
 @import 'ui/list-group';
+@import 'ui/shell';
 @import 'ui/style-guide';

@@ -1,0 +1,577 @@
+// The chrome of the panel (layouts/default.twig): the sidebar beside the page on a wide screen,
+// over it on a narrow one; the top bar, the head of the page and the footer.
+//
+// The states are classes of <html> set by src/admin/js/shell.js: admin-sidebar-folded (the
+// sidebar folded to its icons) and admin-nav-open (the menu opened on a narrow screen).
+
+$admin-sidebar-width: 15rem;
+$admin-sidebar-folded-width: 3.75rem;
+$admin-topbar-height: 3.75rem;
+
+// Hidden from the eye, kept for a screen reader: the labels of the folded sidebar still name
+// its links.
+@mixin admin-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.admin-shell {
+  display: grid;
+  grid-template-columns: $admin-sidebar-width minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.admin-shell__scrim {
+  display: none;
+}
+
+// The sidebar
+
+.admin-sidebar {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  border-right: 1px solid var(--border);
+  background: var(--bg-inset);
+}
+
+.admin-sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-height: $admin-topbar-height;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--fg);
+
+  &:hover {
+    color: var(--fg);
+    text-decoration: none;
+  }
+}
+
+.admin-sidebar__brand-mark {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-family: $ui-font-mono;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.admin-sidebar__brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.admin-sidebar__brand-name {
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.admin-sidebar__brand-sub {
+  overflow: hidden;
+  font-family: $ui-font-mono;
+  font-size: 0.65625rem;
+  color: var(--fg-dim);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-sidebar__nav {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0.375rem 0.75rem 1rem;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.admin-nav__section {
+  padding: 0.875rem 0.625rem 0.25rem;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--fg-dim);
+}
+
+.admin-nav__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.4375rem 0.625rem;
+  border-radius: 0.375rem;
+  color: var(--fg-muted);
+  font-size: 0.8125rem;
+  transition: background-color 0.1s, color 0.1s;
+
+  &:hover {
+    background: var(--bg-elev);
+    color: var(--fg);
+    text-decoration: none;
+  }
+}
+
+.admin-nav__item--active {
+  background: var(--bg-elev);
+  color: var(--fg);
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -0.75rem;
+    top: 50%;
+    width: 3px;
+    height: 1rem;
+    border-radius: 0 2px 2px 0;
+    background: var(--accent);
+    transform: translateY(-50%);
+  }
+}
+
+.admin-nav__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 1rem;
+  color: var(--fg-dim);
+
+  .admin-nav__item:hover & {
+    color: var(--fg);
+  }
+
+  .admin-nav__item--active & {
+    color: var(--accent);
+  }
+}
+
+.admin-nav__label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-nav__count {
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg-elev-2);
+  color: var(--fg-muted);
+  font-family: $ui-font-mono;
+  font-size: 0.65625rem;
+}
+
+@each $tone, $token in ('danger': 'danger', 'warn': 'warn', 'accent': 'accent') {
+  .admin-nav__count--#{$tone} {
+    border-color: color-mix(in oklab, var(--#{$token}) 30%, transparent);
+    background: color-mix(in oklab, var(--#{$token}) 16%, transparent);
+    color: var(--#{$token});
+  }
+}
+
+.admin-sidebar__foot {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0.625rem 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.admin-sidebar__foot-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  width: 100%;
+  padding: 0.4375rem 0.625rem;
+  border: 0;
+  border-radius: 0.375rem;
+  background: transparent;
+  color: var(--fg-muted);
+  font-size: 0.78125rem;
+  text-align: start;
+  transition: background-color 0.1s, color 0.1s;
+
+  &:hover {
+    background: var(--bg-elev);
+    color: var(--fg);
+    text-decoration: none;
+  }
+}
+
+.admin-sidebar__foot-icon {
+  color: var(--fg-dim);
+
+  .admin-sidebar__foot-btn:hover & {
+    color: var(--fg);
+  }
+}
+
+.admin-sidebar__foot-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-sidebar__fold-open {
+  display: none;
+}
+
+// Folded to its icons. Only a wide screen has room to keep the sidebar beside the page; a narrow
+// one opens it over the page instead.
+@include media-breakpoint-up(lg) {
+  .admin-sidebar-folded {
+    .admin-shell {
+      grid-template-columns: $admin-sidebar-folded-width minmax(0, 1fr);
+    }
+
+    .admin-sidebar__brand {
+      justify-content: center;
+      padding-inline: 0;
+    }
+
+    .admin-sidebar__brand-text {
+      display: none;
+    }
+
+    .admin-sidebar__nav {
+      padding-inline: 0.375rem;
+    }
+
+    .admin-nav__section {
+      position: relative;
+      padding: 0.5rem 0 0.25rem;
+      font-size: 0;
+
+      &::after {
+        content: '';
+        display: block;
+        width: 1rem;
+        height: 1px;
+        margin: 0 auto;
+        background: var(--border);
+      }
+    }
+
+    .admin-nav__item {
+      justify-content: center;
+      padding: 0.5625rem 0.375rem;
+
+      &::before {
+        left: -0.375rem;
+      }
+    }
+
+    .admin-nav__label,
+    .admin-nav__count,
+    .admin-sidebar__foot-label {
+      @include admin-visually-hidden;
+    }
+
+    // A count that asks for attention stays as a dot on the icon.
+    .admin-nav__item--danger::after,
+    .admin-nav__item--warn::after,
+    .admin-nav__item--accent::after {
+      content: '';
+      position: absolute;
+      top: 0.375rem;
+      right: 0.375rem;
+      width: 6px;
+      height: 6px;
+      border: 1.5px solid var(--bg-inset);
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .admin-nav__item--danger::after {
+      background: var(--danger);
+    }
+
+    .admin-nav__item--warn::after {
+      background: var(--warn);
+    }
+
+    .admin-sidebar__foot {
+      padding-inline: 0.375rem;
+    }
+
+    .admin-sidebar__foot-btn {
+      justify-content: center;
+      padding-inline: 0.375rem;
+    }
+
+    .admin-sidebar__fold-close {
+      display: none;
+    }
+
+    .admin-sidebar__fold-open {
+      display: inline-block;
+    }
+  }
+}
+
+// A narrow screen: the sidebar slides in over the page.
+@include media-breakpoint-down(lg) {
+  .admin-shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: $zindex-offcanvas;
+    width: 17.5rem;
+    max-width: 85vw;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+  }
+
+  .admin-sidebar__fold {
+    display: none;
+  }
+
+  .admin-nav-open {
+    overflow: hidden;
+
+    .admin-sidebar {
+      transform: none;
+    }
+
+    .admin-shell__scrim {
+      display: block;
+      position: fixed;
+      inset: 0;
+      z-index: $zindex-offcanvas-backdrop;
+      background: rgb(0 0 0 / 0.5);
+    }
+  }
+}
+
+// The main column
+
+.admin-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 100vh;
+}
+
+.admin-topbar {
+  position: sticky;
+  top: 0;
+  z-index: $zindex-sticky;
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  height: $admin-topbar-height;
+  padding: 0 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in oklab, var(--bg) 92%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.admin-topbar__spacer {
+  flex: 1;
+}
+
+.admin-topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.admin-topbar__btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  height: 1.875rem;
+  padding: 0 0.625rem;
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  background: var(--bg-elev);
+  color: var(--fg-muted);
+  font-size: 0.75rem;
+  transition: border-color 0.12s, color 0.12s;
+
+  &:hover {
+    border-color: var(--border-strong);
+    color: var(--fg);
+    text-decoration: none;
+  }
+}
+
+.admin-topbar__btn--icon {
+  width: 1.875rem;
+  padding: 0;
+}
+
+// Something unread behind the button.
+.admin-topbar__btn--dot::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 6px;
+  height: 6px;
+  border: 1.5px solid var(--bg-elev);
+  border-radius: 50%;
+  background: var(--danger);
+}
+
+.admin-topbar__burger {
+  display: none;
+}
+
+.admin-topbar__flag {
+  width: 1.125rem;
+  height: 0.8125rem;
+  border-radius: 2px;
+  object-fit: cover;
+}
+
+.admin-topbar__account {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 3px 0.625rem 3px 3px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: var(--bg-elev);
+  color: var(--fg);
+  font-size: 0.78125rem;
+  font-weight: 500;
+  transition: border-color 0.12s;
+
+  &:hover {
+    border-color: var(--border-strong);
+  }
+}
+
+.admin-topbar__avatar {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--bg-elev-2);
+  object-fit: cover;
+}
+
+@include media-breakpoint-down(lg) {
+  .admin-topbar__burger {
+    display: inline-flex;
+  }
+
+  .admin-topbar__account-name,
+  .admin-topbar__btn-label {
+    display: none;
+  }
+}
+
+// The page
+
+.admin-page {
+  flex: 1;
+  width: 100%;
+  max-width: 87.5rem;
+  padding: 1.75rem 1.5rem 3rem;
+}
+
+.admin-page__head {
+  margin-bottom: 1.25rem;
+
+  > .nav-tabs {
+    margin-top: 1.375rem;
+  }
+}
+
+.admin-page__title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.admin-page__title {
+  margin: 0;
+}
+
+.admin-page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.admin-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+  color: var(--fg-dim);
+  font-size: 0.75rem;
+
+  a {
+    color: var(--fg-muted);
+  }
+}
+
+.admin-footer__counters {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.admin-footer__debug {
+  margin-left: auto;
+  font-family: $ui-font-mono;
+}
+
+@include media-breakpoint-down(md) {
+  .admin-topbar {
+    padding: 0 1rem;
+  }
+
+  .admin-page {
+    padding: 1.25rem 1rem 2rem;
+  }
+
+  .admin-page__title {
+    font-size: 1.5rem;
+  }
+
+  .admin-footer {
+    padding: 1rem;
+  }
+}

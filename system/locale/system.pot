@@ -121,6 +121,8 @@ msgstr ""
 #: modules/johncms/notifications/src/Application/Controllers/IndexController.php:37
 #: modules/johncms/notifications/src/Application/Controllers/IndexController.php:43
 #: modules/johncms/notifications/src/Application/Controllers/SettingsController.php:30
+#: themes/default/templates/admin/components/topbar.twig:39
+#: themes/default/templates/admin/components/topbar.twig:54
 #: themes/default/templates/components/sidebar-user-menu.twig:41
 msgid "Notifications"
 msgstr ""
@@ -794,18 +796,28 @@ msgstr ""
 msgid "'%hostname%' does not appear to have any valid MX or A records for the email address"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:425
+#: themes/default/templates/admin/components/topbar.twig:9
+#: themes/default/templates/admin/components/topbar.twig:31
 #: themes/default/templates/components/sidebar-main-menu.twig:5
 #: themes/default/templates/components/sidebar-main-menu.twig:100
 msgid "Set Light Theme"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:424
+#: themes/default/templates/admin/components/topbar.twig:9
+#: themes/default/templates/admin/components/topbar.twig:30
 #: themes/default/templates/components/sidebar-main-menu.twig:5
 #: themes/default/templates/components/sidebar-main-menu.twig:99
 msgid "Set Dark Theme"
+msgstr ""
+
+#: themes/default/templates/admin/components/topbar.twig:63
+#: themes/default/templates/components/sidebar-user-menu.twig:52
+msgid "Personal"
+msgstr ""
+
+#: themes/default/templates/admin/components/topbar.twig:76
+#: themes/default/templates/components/sidebar-user-menu.twig:60
+msgid "Exit"
 msgstr ""
 
 #: themes/default/templates/components/captcha/image.twig:9
@@ -860,14 +872,6 @@ msgstr ""
 #: themes/default/templates/components/sidebar-user-menu.twig:24
 #: modules/johncms/auth/templates/public/registration-email-confirmed.twig:15
 msgid "Log In"
-msgstr ""
-
-#: themes/default/templates/components/sidebar-user-menu.twig:52
-msgid "Personal"
-msgstr ""
-
-#: themes/default/templates/components/sidebar-user-menu.twig:60
-msgid "Exit"
 msgstr ""
 
 #: themes/default/templates/emails/changed-email-notification.twig:9

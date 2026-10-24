@@ -11,7 +11,7 @@ import './bootstrap';
 import '../scss/app.scss';
 
 import './jquery.magnific-popup';
-import './menu';
+import './shell';
 import './prism';
 import './forum';
 import './modals';

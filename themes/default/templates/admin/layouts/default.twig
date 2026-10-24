@@ -1,136 +1,94 @@
 {#
-    The layout of the admin panel: the admin sidebar, the top bar and the footer of the panel.
+    The layout of the admin panel: the sidebar with the menu, the top bar, the head of the page and
+    a footer.
 
-    @var string page_title Heading printed above the content.
+    The sidebar folds to its icons on a wide screen and opens over the page on a narrow one; both
+    are driven by src/admin/js/shell.js.
+
+    @var string page_title Heading printed in the head of the page.
+
+    A page may fill two more blocks of the head: page_actions, the buttons next to the heading
+    (the main action of the page), and page_tabs, the tabs under it.
 #}
 {% extends '@admin/layouts/base.twig' %}
 
 {% block body %}
     {% set layout_notifications = notifications() %}
-    <div class="wrapper min-vh-100 d-flex flex-column justify-content-between" id="app">
-        <div class="page_layout justify-content-end d-flex w-100">
-            <div class="sidebar">
-                <div class="sidebar__logo">
-                    <a href="/admin/">
-                        <span class="logo__image"><img src="{{ asset('images/logo.svg') }}" alt="logo" style="width: 70%;" class="img-fluid"></span>
-                    </a>
-                </div>
-                <div class="sidebar__wrapper d-flex flex-column">
-                    {% block sidebar_user %}
-                        {% include '@theme/components/sidebar-user-menu.twig' with {notifications: layout_notifications} only %}
-                    {% endblock %}
-                    {% block sidebar_menu %}
-                        {% include '@admin/components/sidebar-admin-menu.twig' with {
-                            usr_menu: usr_menu|default({}),
-                            module_menu: module_menu|default({}),
-                            sys_menu: sys_menu|default({}),
-                            sec_menu: sec_menu|default({})
-                        } only %}
-                    {% endblock %}
-                </div>
+    <div class="admin-shell">
+        <div class="admin-shell__scrim" data-admin-nav-close></div>
+
+        <aside class="admin-sidebar" id="admin-sidebar">
+            <a class="admin-sidebar__brand" href="/admin/">
+                <span class="admin-sidebar__brand-mark">J</span>
+                <span class="admin-sidebar__brand-text">
+                    <span class="admin-sidebar__brand-name">JohnCMS</span>
+                    <span class="admin-sidebar__brand-sub">{{ d__('admin', 'Admin Panel') }}</span>
+                </span>
+            </a>
+
+            <nav class="admin-sidebar__nav" aria-label="{{ d__('admin', 'Admin Panel') }}">
+                {% block sidebar_menu %}
+                    {% include '@admin/components/sidebar-admin-menu.twig' with {
+                        usr_menu: usr_menu|default({}),
+                        module_menu: module_menu|default({}),
+                        sys_menu: sys_menu|default({}),
+                        sec_menu: sec_menu|default({})
+                    } only %}
+                {% endblock %}
+            </nav>
+
+            <div class="admin-sidebar__foot">
+                <a class="admin-sidebar__foot-btn" href="/online/" data-tip="{{ d__('admin', 'Online') }}">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'users', class: 'admin-sidebar__foot-icon'} only %}
+                    <span class="admin-sidebar__foot-label">{{ d__('admin', 'Online') }}: {{ online() }}</span>
+                </a>
+                <a class="admin-sidebar__foot-btn" href="/" data-tip="{{ d__('admin', 'Back to the site') }}">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'arrow-left', class: 'admin-sidebar__foot-icon'} only %}
+                    <span class="admin-sidebar__foot-label">{{ d__('admin', 'Back to the site') }}</span>
+                </a>
+                <button type="button" class="admin-sidebar__foot-btn admin-sidebar__fold" data-admin-sidebar-fold
+                        data-tip="{{ d__('admin', 'Expand the menu') }}" aria-controls="admin-sidebar">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'panel-left-close', class: 'admin-sidebar__foot-icon admin-sidebar__fold-close'} only %}
+                    {% include '@admin/components/ui/icon.twig' with {name: 'panel-left-open', class: 'admin-sidebar__foot-icon admin-sidebar__fold-open'} only %}
+                    <span class="admin-sidebar__foot-label">{{ d__('admin', 'Collapse the menu') }}</span>
+                </button>
             </div>
-            <div class="content-container content-container-padding d-flex flex-column">
-                <nav class="navbar navbar-expand-lg top_nav fixed-top border-bottom shadow">
-                    <div class="container-fluid">
-                        <div class="navbar-wrapper d-flex w-100 justify-content-between">
-                            <div class="navbar-toggle">
-                                <button type="button" class="navbar-toggler">
-                                    <span class="navbar-toggler-bar bar1"></span>
-                                    <span class="navbar-toggler-bar bar2"></span>
-                                    <span class="navbar-toggler-bar bar3"></span>
-                                </button>
-                            </div>
-                            <div class="logo">
-                                <a href="/">
-                                    <img src="{{ asset('images/logo_mobile.svg') }}" alt="logo" class="img-fluid" style="height: 30px; margin-bottom: -18px;">
-                                </a>
-                            </div>
-                            <div>
-                                {% if app.user.isValid %}
-                                    <a href="/notifications/" class="icon_with_badge me-2">
-                                        <svg class="icon icon_messages">
-                                            <use xlink:href="{{ asset('icons/sprite.svg') }}#messages"/>
-                                        </svg>
-                                        {% if layout_notifications.all|default(0) %}
-                                            <span class="badge bg-danger rounded-pill">{{ layout_notifications.all }}</span>
-                                        {% endif %}
-                                    </a>
-                                {% else %}
-                                    <a href="/login/" class="icon_with_badge">
-                                        <svg class="icon ms-n2">
-                                            <use xlink:href="{{ asset('icons/sprite.svg') }}#log-in"/>
-                                        </svg>
-                                    </a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-                <div class="container-fluid flex-grow-1">
-                    {% include '@admin/components/pending-migrations.twig' only %}
-                    {% if page_title|default('') %}
-                        <h1 class="mb-0">{{ page_title }}</h1>
-                    {% endif %}
+        </aside>
+
+        <div class="admin-main">
+            {% include '@admin/components/topbar.twig' with {notifications: layout_notifications} only %}
+
+            <main class="admin-page">
+                {% include '@admin/components/pending-migrations.twig' only %}
+                <div class="admin-page__head">
                     {% block breadcrumbs %}
                         {% include '@theme/components/breadcrumbs.twig' only %}
                     {% endblock %}
-                    {% block content %}{% endblock %}
-                    <div class="to-top to-top_hidden">
-                        <button class="btn btn__top">
-                            <svg class="icon-40">
-                                <use xlink:href="{{ asset('icons/sprite.svg') }}#top"/>
-                            </svg>
-                        </button>
+                    <div class="admin-page__title-row">
+                        {% if page_title|default('') %}
+                            <h1 class="admin-page__title">{{ page_title }}</h1>
+                        {% endif %}
+                        <div class="admin-page__actions">{%- block page_actions -%}{%- endblock -%}</div>
                     </div>
+                    {% block page_tabs %}{% endblock %}
                 </div>
-            </div>
-        </div>
-        <div class="page_layout container">
-            {% block footer_content %}{% endblock %}
-        </div>
-        <div class="overlay"></div>
-        <div class="page_layout justify-content-end d-flex w-100">
-            <div></div>
-            <div class="content-container">
-                <div class="content-container-padding footer-padding">
-                    <div class="d-flex justify-content-between align-items-center border-top p-4 page-footer">
-                        <div class="ps-1">
-                            <a href="https://twitter.com/johncms" title="Twitter" target="_blank" rel="nofollow" class="me-3 text-muted text-decoration-none">
-                                <svg class="icon">
-                                    <use xlink:href="{{ asset('icons/sprite.svg') }}#twitter"/>
-                                </svg>
-                            </a>
-                            <a href="https://t.me/johncms_official" title="Telegram" target="_blank" rel="nofollow" class="me-3 text-muted text-decoration-none">
-                                <svg class="icon">
-                                    <use xlink:href="{{ asset('icons/sprite.svg') }}#telegram"/>
-                                </svg>
-                            </a>
-                            <a href="https://www.youtube.com/channel/UCIzwmZMHJgnBPEicpU9Itsw" title="YouTube" target="_blank" rel="nofollow" class="me-2 text-muted text-decoration-none">
-                                <svg class="icon">
-                                    <use xlink:href="{{ asset('icons/sprite.svg') }}#youtube2"/>
-                                </svg>
-                            </a>
-                        </div>
-                        <div class="flex-shrink-1 d-flex position-relative">
-                            {% set layout_analytics = analytics() %}
-                            {% if layout_analytics %}
-                                <div class="me-2 d-flex">
-                                    {% for counter in layout_analytics %}
-                                        <div>{{ counter }}</div>
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
-                            <div>
-                                &copy; {{ 'now'|date('Y') }}, <a href="https://johncms.com" target="_blank" rel="nofollow" class="text-info">JohnCMS</a>
-                            </div>
-                            {% include '@theme/components/debug.twig' with {
-                                trigger_class: 'position-absolute small text-nowrap',
-                                trigger_style: 'bottom: -13px; right: 0;'
-                            } only %}
-                        </div>
+
+                {% block content %}{% endblock %}
+                {% block footer_content %}{% endblock %}
+            </main>
+
+            <footer class="admin-footer">
+                <div>&copy; {{ 'now'|date('Y') }}, <a href="https://johncms.com" target="_blank" rel="nofollow">JohnCMS</a></div>
+                {% set layout_analytics = analytics() %}
+                {% if layout_analytics %}
+                    <div class="admin-footer__counters">
+                        {% for counter in layout_analytics %}
+                            <div>{{ counter }}</div>
+                        {% endfor %}
                     </div>
-                </div>
-            </div>
+                {% endif %}
+                {% include '@theme/components/debug.twig' with {trigger_class: 'admin-footer__debug', trigger_style: ''} only %}
+            </footer>
         </div>
     </div>
     <div class="modal fade ajax_modal" tabindex="-1" role="dialog" aria-hidden="true">

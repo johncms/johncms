@@ -1,0 +1,83 @@
+{#
+    The top bar of the panel: the button that opens the menu on a narrow screen, and on the right
+    the language, the color scheme, the notifications and the menu of the account.
+
+    @param array notifications Unread counters, as the notifications() function returns them.
+#}
+{% set unread = notifications.all|default(0) %}
+{% set languages = config('johncms.lng_list')|default({}) %}
+{% set theme_title = app.dark_scheme ? d__('system', 'Set Light Theme') : d__('system', 'Set Dark Theme') %}
+<header class="admin-topbar">
+    <button type="button" class="admin-topbar__btn admin-topbar__btn--icon admin-topbar__burger"
+            data-admin-nav-open aria-controls="admin-sidebar" aria-label="{{ d__('admin', 'Menu') }}">
+        {% include '@admin/components/ui/icon.twig' with {name: 'menu'} only %}
+    </button>
+
+    <div class="admin-topbar__spacer"></div>
+
+    <div class="admin-topbar__actions">
+        {% if languages|length > 1 %}
+            <button type="button" class="admin-topbar__btn" data-url="/language/" data-bs-toggle="modal" data-bs-target=".ajax_modal">
+                <img class="admin-topbar__flag" src="{{ asset('images/flags/' ~ app.locale|lower ~ '.svg') }}" alt="">
+                <span class="admin-topbar__btn-label">{{ languages[app.locale].name }}</span>
+            </button>
+        {% endif %}
+
+        <button type="button" class="admin-topbar__btn admin-topbar__btn--icon"
+                data-theme-toggle
+                data-current-theme="{{ app.color_scheme }}"
+                data-icon-sprite="{{ asset('icons/admin.svg', true) }}"
+                data-title-dark="{{ d__('system', 'Set Dark Theme') }}"
+                data-title-light="{{ d__('system', 'Set Light Theme') }}"
+                title="{{ theme_title }}"
+                aria-label="{{ theme_title }}">
+            {% include '@admin/components/ui/icon.twig' with {name: app.dark_scheme ? 'sun' : 'moon'} only %}
+        </button>
+
+        {% if app.user.isValid %}
+            <a href="/notifications/" class="admin-topbar__btn admin-topbar__btn--icon{{ unread ? ' admin-topbar__btn--dot' }}"
+               title="{{ d__('system', 'Notifications') }}" aria-label="{{ d__('system', 'Notifications') }}{{ unread ? ': ' ~ unread }}">
+                {% include '@admin/components/ui/icon.twig' with {name: 'bell'} only %}
+            </a>
+
+            <div class="dropdown">
+                <button type="button" class="admin-topbar__account" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img class="admin-topbar__avatar" src="{{ avatar(app.user.id) }}" alt="">
+                    <span class="admin-topbar__account-name">{{ app.user.name }}</span>
+                    {% include '@admin/components/ui/icon.twig' with {name: 'chevron-down', size: 12, class: 'text-body-tertiary'} only %}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><h6 class="dropdown-header">{{ app.user.name }}</h6></li>
+                    <li>
+                        <a class="dropdown-item" href="/notifications/">
+                            {% include '@admin/components/ui/icon.twig' with {name: 'bell', size: 14} only %}
+                            <span class="flex-grow-1">{{ d__('system', 'Notifications') }}</span>
+                            {% if unread %}
+                                <span class="badge text-bg-danger">{{ unread }}</span>
+                            {% endif %}
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="/profile/account">
+                            {% include '@admin/components/ui/icon.twig' with {name: 'user', size: 14} only %}
+                            {{ d__('system', 'Personal') }}
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="/">
+                            {% include '@admin/components/ui/icon.twig' with {name: 'house', size: 14} only %}
+                            {{ d__('admin', 'Back to the site') }}
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item text-danger" href="/logout">
+                            {% include '@admin/components/ui/icon.twig' with {name: 'log-out', size: 14} only %}
+                            {{ d__('system', 'Exit') }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</header>

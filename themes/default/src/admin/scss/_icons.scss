@@ -67,3 +67,15 @@
   width: 15px;
   height: 15px;
 }
+
+// An icon with a counter on its corner.
+.icon_with_badge {
+  position: relative;
+
+  .badge {
+    position: absolute;
+    left: 40%;
+    top: -30%;
+    padding: 0.2rem 0.4rem;
+  }
+}

@@ -6,8 +6,8 @@
 {% extends '@admin/layouts/default.twig' %}
 
 {% block content %}
-    <div class="d-block d-md-none text-center">
-        <button class="show_menu_btn btn btn-outline-primary w-100">{{ __('Show admin menu') }}</button>
+    <div class="d-block d-lg-none text-center">
+        <button type="button" class="btn btn-outline-primary w-100" data-admin-nav-open aria-controls="admin-sidebar">{{ __('Show admin menu') }}</button>
     </div>
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3">

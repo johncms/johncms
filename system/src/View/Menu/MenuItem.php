@@ -25,8 +25,9 @@ final readonly class MenuItem
     /**
      * @param string      $title      Translated — d__('blog', 'Blog').
      * @param string      $url        Where it leads.
-     * @param string|null $icon       An id in the sprite of the theme ("book"), or the address of
-     *                                an image the module ships. Null draws no icon.
+     * @param string|null $icon       An id in the sprite of the theme ("book") — for the panel a
+     *                                Lucide name from its own sprite — or the address of an image
+     *                                the module ships. Null draws no icon.
      * @param string|null $permission The item is drawn only for a visitor holding this.
      * @param int         $weight     Lighter items float up; equal weights keep alphabetical order.
      * @param (Closure(): int)|null $counter What is new behind the item — the number on its badge.
