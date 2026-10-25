@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Admin;
 
+use Johncms\Auth\Authorization\UserRole;
 use Johncms\Users\IpHistory;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,6 +50,17 @@ final class UserCleanupTest extends FunctionalTestCase
         foreach ([$wroteInTheForum, $registeredLately, $seenLately, $quietModerator] as $kept) {
             self::assertNotNull(User::query()->find($kept->id), $kept->name . ' is not one the cleanup removes.');
         }
+    }
+
+    public function testAModeratorWhoseRoleRanOutIsNoLongerKept(): void
+    {
+        $former = $this->forgotten();
+        FunctionalUserFactory::grant($former->id, FunctionalUserFactory::createRole([], 20)->slug);
+        UserRole::query()->where('user_id', '=', $former->id)->update(['expires_at' => time() - 1]);
+
+        $this->postForm('/admin/users/cleanup', [], FunctionalUserFactory::createSupervisor());
+
+        self::assertNull(User::query()->find($former->id));
     }
 
     /**

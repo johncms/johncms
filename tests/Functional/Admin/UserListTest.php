@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Functional\Admin;
 
 use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Auth\Authorization\UserRole;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Functional\FunctionalTestCase;
@@ -47,6 +48,17 @@ final class UserListTest extends FunctionalTestCase
 
         self::assertStringContainsString($moderator->name, $body);
         self::assertStringNotContainsString('Pippin', $body);
+    }
+
+    public function testAGrantThatRanOutMakesNobodyStaffOrAHolder(): void
+    {
+        $role = FunctionalUserFactory::createRole([], 20);
+        $former = FunctionalUserFactory::create(['name' => 'Saruman']);
+        FunctionalUserFactory::grant($former->id, $role->slug);
+        UserRole::query()->where('user_id', '=', $former->id)->update(['expires_at' => time() - 1]);
+
+        self::assertStringNotContainsString($former->name, $this->listOf('/admin/users?role=staff'));
+        self::assertStringNotContainsString($former->name, $this->listOf('/admin/users?role=' . $role->id));
     }
 
     public function testThePendingFilterListsTheAccountsWaitingWithTheirApproval(): void
