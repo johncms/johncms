@@ -306,6 +306,7 @@ final readonly class RolesController
     {
         return array_map(
             static fn (PermissionGroupDTO $group): array => [
+                'key'   => $group->key,
                 'label' => $group->label,
                 'items' => array_map(
                     static fn (PermissionItemDTO $item): array => [

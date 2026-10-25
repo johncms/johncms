@@ -66,9 +66,9 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:71
 #: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:168
 #: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:276
-#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:364
-#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:372
-#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:383
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:365
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:373
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:384
 #: modules/johncms/admin/src/Application/Services/AdminUserRowMapper.php:102
 #: modules/johncms/admin/src/Application/Services/UserActionsMapper.php:61
 #: modules/johncms/admin/templates/style-guide/examples/dropdown.twig:16
@@ -309,7 +309,8 @@ msgstr ""
 #: modules/johncms/admin/templates/karma.twig:44
 #: modules/johncms/admin/templates/modules-confirm.twig:62
 #: modules/johncms/admin/templates/modules-upload.twig:30
-#: modules/johncms/admin/templates/role-form.twig:121
+#: modules/johncms/admin/templates/role-form.twig:29
+#: modules/johncms/admin/templates/role-form.twig:145
 #: modules/johncms/admin/templates/smilies.twig:21
 #: modules/johncms/admin/templates/style-guide/examples/card.twig:15
 #: modules/johncms/admin/templates/style-guide/examples/dialog.twig:13
@@ -1409,7 +1410,6 @@ msgstr ""
 #: modules/johncms/admin/templates/ad-form.twig:39
 #: modules/johncms/admin/templates/counter-preview.twig:23
 #: modules/johncms/admin/templates/counter-view.twig:21
-#: modules/johncms/admin/templates/role-form.twig:53
 #: modules/johncms/admin/templates/settings.twig:85
 #: modules/johncms/admin/templates/style-guide/examples/card.twig:10
 #: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:20
@@ -1477,7 +1477,8 @@ msgstr ""
 #: modules/johncms/admin/templates/karma.twig:43
 #: modules/johncms/admin/templates/languages.twig:31
 #: modules/johncms/admin/templates/mail-settings.twig:104
-#: modules/johncms/admin/templates/role-form.twig:120
+#: modules/johncms/admin/templates/role-form.twig:32
+#: modules/johncms/admin/templates/role-form.twig:148
 #: modules/johncms/admin/templates/settings.twig:125
 #: modules/johncms/admin/templates/style-guide/examples/card.twig:16
 #: modules/johncms/admin/templates/user-roles.twig:69
@@ -1565,7 +1566,7 @@ msgstr ""
 #: modules/johncms/admin/templates/ip-bans.twig:63
 #: modules/johncms/admin/templates/ip-search.twig:61
 #: modules/johncms/admin/templates/languages-manage.twig:63
-#: modules/johncms/admin/templates/role-form.twig:118
+#: modules/johncms/admin/templates/role-form.twig:27
 msgid "Back"
 msgstr ""
 
@@ -2225,37 +2226,49 @@ msgstr ""
 msgid "Short name"
 msgstr ""
 
-#: modules/johncms/admin/templates/role-form.twig:27
-msgid "This is a built-in role: its name and its level are fixed, because the code refers to them. What it may do is yours to change."
+#: modules/johncms/admin/templates/role-form.twig:42
+msgid "Main"
 msgstr ""
 
-#: modules/johncms/admin/templates/role-form.twig:37
+#: modules/johncms/admin/templates/role-form.twig:46
+#: modules/johncms/admin/templates/role-form.twig:69
+msgid "Role name"
+msgstr ""
+
+#: modules/johncms/admin/templates/role-form.twig:47
+#: modules/johncms/admin/templates/role-form.twig:58
 msgid "Identifier"
 msgstr ""
 
-#: modules/johncms/admin/templates/role-form.twig:44
-msgid "Used in code and cannot be changed later, for example: news-editor"
-msgstr ""
-
-#: modules/johncms/admin/templates/role-form.twig:63
+#: modules/johncms/admin/templates/role-form.twig:48
+#: modules/johncms/admin/templates/role-form.twig:74
 #: modules/johncms/admin/templates/roles.twig:30
 msgid "Level"
 msgstr ""
 
-#: modules/johncms/admin/templates/role-form.twig:72
+#: modules/johncms/admin/templates/role-form.twig:52
+msgid "This is a built-in role: its name and its level are fixed, because the code refers to them. What it may do is yours to change."
+msgstr ""
+
+#: modules/johncms/admin/templates/role-form.twig:62
+#: modules/johncms/admin/templates/role-form.twig:65
+msgid "Used in code and cannot be changed later, for example: news-editor"
+msgstr ""
+
+#: modules/johncms/admin/templates/role-form.twig:77
 msgid "Who outranks whom. A role cannot be placed above your own."
 msgstr ""
 
-#: modules/johncms/admin/templates/role-form.twig:76
+#: modules/johncms/admin/templates/role-form.twig:88
 #: modules/johncms/admin/templates/roles.twig:31
 msgid "Permissions"
 msgstr ""
 
-#: modules/johncms/admin/templates/role-form.twig:80
+#: modules/johncms/admin/templates/role-form.twig:96
 msgid "A role of this level is allowed everything, whatever is ticked, so the permissions are not shown for it. That is what keeps a site from locking itself out of its own admin panel."
 msgstr ""
 
-#: modules/johncms/admin/templates/role-form.twig:106
+#: modules/johncms/admin/templates/role-form.twig:131
 msgid "The role also carries permissions no installed module declares. They are kept as they are:"
 msgstr ""
 

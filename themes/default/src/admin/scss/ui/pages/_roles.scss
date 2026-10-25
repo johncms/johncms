@@ -56,3 +56,72 @@
 .admin-roles-table__lock {
   color: var(--fg-dim);
 }
+
+// A role and what it may do (admin::role-form).
+
+.admin-role-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.admin-role-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.admin-permissions {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.admin-permissions__group {
+  & + & {
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+}
+
+.admin-permissions__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.admin-permissions__count {
+  font-family: $ui-font-mono;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--fg-dim);
+}
+
+.admin-permissions__items {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.625rem 1.5rem;
+
+  @include media-breakpoint-up(xl) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @include media-breakpoint-down(md) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .form-check {
+    margin-bottom: 0;
+  }
+}
+
+.admin-permissions__key {
+  display: block;
+  font-family: $ui-font-mono;
+  font-size: 0.6875rem;
+  color: var(--fg-dim);
+  overflow-wrap: anywhere;
+}

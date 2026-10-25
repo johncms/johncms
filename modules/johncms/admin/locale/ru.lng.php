@@ -622,6 +622,8 @@
       'all' => 'все',
       'Delete role' => 'Удаление роли',
       'The role "%s" is deleted for good. This cannot be undone.' => 'Роль «%s» будет удалена навсегда. Это действие нельзя отменить.',
+      'Main' => 'Основное',
+      'Role name' => 'Название',
     ),
   ),
 );

@@ -2425,3 +2425,9 @@ msgstr "Удаление роли"
 
 msgid "The role \"%s\" is deleted for good. This cannot be undone."
 msgstr "Роль «%s» будет удалена навсегда. Это действие нельзя отменить."
+
+msgid "Main"
+msgstr "Основное"
+
+msgid "Role name"
+msgstr "Название"
