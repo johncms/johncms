@@ -31,10 +31,9 @@ final class RolesPageTest extends FunctionalTestCase
 
     public function testARoleAboveTheVisitorIsListedButNotOpened(): void
     {
-        $manager = FunctionalUserFactory::createWithPermissions([CorePermissions::ADMIN_ACCESS, CorePermissions::ADMIN_ROLES_MANAGE], level: 20);
         $supervisor = $this->systemRole(SystemRole::Supervisor);
 
-        $body = $this->page($manager);
+        $body = $this->page($this->manager());
 
         self::assertStringContainsString($supervisor->display_name, $body);
         self::assertStringNotContainsString('/admin/roles/' . $supervisor->id . '/edit', $body);
@@ -93,6 +92,55 @@ final class RolesPageTest extends FunctionalTestCase
         self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
         self::assertSame('/admin/roles', $response->headers->get('Location'));
         self::assertNull(Role::query()->find($role->id));
+    }
+
+    public function testTheRolesAreForWhoeverManagesThem(): void
+    {
+        $staff = FunctionalUserFactory::createWithPermissions([CorePermissions::ADMIN_ACCESS], level: 20);
+        $role = FunctionalUserFactory::createRole([], 10);
+
+        foreach (['/admin/roles', '/admin/roles/new', '/admin/roles/' . $role->id . '/edit', '/admin/roles/' . $role->id . '/delete'] as $url) {
+            $response = $this->handleRequest($url, cookies: $this->actingAs($staff));
+            self::assertSame(Response::HTTP_FORBIDDEN, $response->getStatusCode(), $url);
+        }
+
+        $response = $this->postForm('/admin/roles/' . $role->id . '/delete', [], $staff);
+        self::assertSame(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        self::assertNotNull(Role::query()->find($role->id));
+    }
+
+    public function testARoleAboveTheVisitorIsNotDeleted(): void
+    {
+        $above = FunctionalUserFactory::createRole([], 50);
+
+        $response = $this->postForm('/admin/roles/' . $above->id . '/delete', [], $this->manager());
+
+        self::assertSame(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        self::assertNotNull(Role::query()->find($above->id));
+    }
+
+    public function testABuiltInRoleIsNotDeletedByAPostEither(): void
+    {
+        $user = $this->systemRole(SystemRole::User);
+
+        $response = $this->postForm('/admin/roles/' . $user->id . '/delete', [], FunctionalUserFactory::createSupervisor());
+
+        self::assertSame(Response::HTTP_OK, $response->getStatusCode());
+        self::assertStringContainsString('alert-danger', (string) $response->getContent());
+        self::assertNotNull(Role::query()->find($user->id));
+    }
+
+    public function testARoleThatIsGoneLeadsBackToTheList(): void
+    {
+        $response = $this->handleRequest('/admin/roles/999999/delete', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()));
+
+        self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
+        self::assertSame('/admin/roles', $response->headers->get('Location'));
+    }
+
+    private function manager(): User
+    {
+        return FunctionalUserFactory::createWithPermissions([CorePermissions::ADMIN_ACCESS, CorePermissions::ADMIN_ROLES_MANAGE], level: 20);
     }
 
     private function page(User $visitor): string
