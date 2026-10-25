@@ -77,17 +77,17 @@ final readonly class AntifloodSettingsController
     private function modeOptions(): array
     {
         return [
-            ['value' => 3, 'label' => __('Day'), 'hint' => ''],
-            ['value' => 4, 'label' => __('Night'), 'hint' => ''],
+            ['value' => 3, 'label' => __('Day'), 'hint' => __('The day delay applies all the time.')],
+            ['value' => 4, 'label' => __('Night'), 'hint' => __('The night delay applies all the time.')],
             [
                 'value' => 2,
                 'label' => __('Day / Night'),
-                'hint'  => __('Automatic change from day to night mode, according to specified time set'),
+                'hint'  => __('The day delay applies in the hours of the day set below, the night one the rest of the time.'),
             ],
             [
                 'value' => 1,
                 'label' => __('Adaptive'),
-                'hint'  => __('If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;'),
+                'hint'  => __('The day delay applies while somebody of the staff is on the site, the night one when nobody is.'),
             ],
         ];
     }

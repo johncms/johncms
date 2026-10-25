@@ -945,17 +945,9 @@ msgstr "Ночь"
 msgid "Day / Night"
 msgstr "День / Ночь"
 
-#: modules/admin/templates/antiflood.phtml:35
-msgid "Automatic change from day to night mode, according to specified time set"
-msgstr "Автоматический переход с дневного на ночной режим, согласно заданному в настройках времени"
-
 #: modules/admin/templates/antiflood.phtml:39
 msgid "Adaptive"
 msgstr "Адаптивный режим"
-
-#: modules/admin/templates/antiflood.phtml:40
-msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
-msgstr "Если на сайте есть кто-то из Администрации, система работает в &quot;дневном&quot; режиме, иначе переходит в &quot;ночной&quot;"
 
 #: modules/admin/templates/antiflood.phtml:43
 msgid "Time limit"
@@ -2530,3 +2522,33 @@ msgid_plural "%d accounts are removed together with everything they left on the 
 msgstr[0] "Будет удалён %d аккаунт вместе со всем, что он оставил на сайте."
 msgstr[1] "Будет удалено %d аккаунта вместе со всем, что они оставили на сайте."
 msgstr[2] "Будет удалено %d аккаунтов вместе со всем, что они оставили на сайте."
+
+msgid "The day delay applies all the time."
+msgstr "Всегда действует дневная задержка."
+
+msgid "The night delay applies all the time."
+msgstr "Всегда действует ночная задержка."
+
+msgid "The day delay applies in the hours of the day set below, the night one the rest of the time."
+msgstr "В дневные часы, заданные ниже, действует дневная задержка, в остальное время — ночная."
+
+msgid "The day delay applies while somebody of the staff is on the site, the night one when nobody is."
+msgstr "Пока на сайте есть кто-то из персонала, действует дневная задержка, когда никого нет — ночная."
+
+msgid "The antiflood makes a visitor wait between two posts. The delay is different by day and by night, and the mode decides which of them applies."
+msgstr "Антифлуд заставляет посетителя подождать между двумя сообщениями. Задержка бывает дневная и ночная, а режим решает, какая из них действует."
+
+msgid "seconds"
+msgstr "секунд"
+
+msgid "From %d to %d seconds"
+msgstr "От %d до %d секунд"
+
+msgid "The staff allowed to post without waiting out the full delay wait a few seconds whatever is set here."
+msgstr "Персонал, которому разрешено писать без полной задержки, ждёт несколько секунд, что бы здесь ни стояло."
+
+msgid "For the \"Day / Night\" mode"
+msgstr "Для режима «День / Ночь»"
+
+msgid "From %d:00 to %d:00"
+msgstr "С %d:00 до %d:00"

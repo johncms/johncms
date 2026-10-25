@@ -1,5 +1,6 @@
 {#
-    How often a visitor may post.
+    How often a visitor may post: the mode that picks the limit, the two limits and the hours of
+    the day.
 
     @var array  settings        Current values: mode, day, night, dayfrom, dayto.
     @var array  mode_options    Modes: value, label, hint.
@@ -10,44 +11,95 @@
 {% extends '@admin/layouts/default.twig' %}
 
 {% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: error_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
 
-    <form action="{{ form_action }}" method="post">
-        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-        <h3>{{ __('Operation mode') }}</h3>
+    <p class="text-body-secondary">
+        {{ __('The antiflood makes a visitor wait between two posts. The delay is different by day and by night, and the mode decides which of them applies.') }}
+    </p>
 
-        {% for option in mode_options %}
-            <div class="form-check">
-                <input type="radio" class="form-check-input" name="mode" value="{{ option.value }}" id="mode{{ option.value }}"{% if settings.mode == option.value %} checked{% endif %}>
-                <label class="form-check-label" for="mode{{ option.value }}">{{ option.label }}</label>
-                {% if option.hint %}
-                    <div class="text-muted small">{{ option.hint|raw }}</div>
-                {% endif %}
-            </div>
-        {% endfor %}
+    <div class="row">
+        <div class="col-xxl-9">
+            <form action="{{ form_action }}" method="post" class="d-flex flex-column gap-3">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
 
-        <h3 class="mt-3">{{ __('Time limit') }}</h3>
-        <div class="form-group">
-            <label for="day">{{ __('Day') }}</label>
-            <input type="text" name="day" class="form-control" id="day" value="{{ settings.day }}">
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'gauge', size: 15, class: 'text-body-tertiary'} only %}
+                        {{ __('Operation mode') }}
+                    </div>
+                    <div class="card-body row g-3">
+                        {% for option in mode_options %}
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" name="mode" value="{{ option.value }}" id="antiflood-mode-{{ option.value }}"{% if settings.mode == option.value %} checked{% endif %}>
+                                    <label class="form-check-label" for="antiflood-mode-{{ option.value }}">
+                                        {{ option.label }}
+                                        <span class="form-text d-block mt-0">{{ option.hint }}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'clock', size: 15, class: 'text-body-tertiary'} only %}
+                        {{ __('Time limit') }}
+                    </div>
+                    <div class="card-body row g-3">
+                        {% for field in [
+                            {name: 'day', label: __('Day')},
+                            {name: 'night', label: __('Night')},
+                        ] %}
+                            <div class="col-md-6">
+                                <label class="form-label" for="antiflood-{{ field.name }}">{{ field.label }}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="{{ field.name }}" id="antiflood-{{ field.name }}" value="{{ settings[field.name] }}" min="4" max="300" aria-describedby="antiflood-{{ field.name }}-help">
+                                    <span class="input-group-text">{{ __('seconds') }}</span>
+                                </div>
+                                <div class="form-text" id="antiflood-{{ field.name }}-help">{{ __('From %d to %d seconds')|format(4, 300) }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="card-footer d-flex align-items-center gap-2 text-body-secondary">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'shield-check', size: 15, class: 'text-success'} only %}
+                        {{ __('The staff allowed to post without waiting out the full delay wait a few seconds whatever is set here.') }}
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'sun-moon', size: 15, class: 'text-body-tertiary'} only %}
+                        <span class="flex-grow-1">{{ __('Day mode') }}</span>
+                        <span class="small fw-normal text-body-secondary">{{ __('For the "Day / Night" mode') }}</span>
+                    </div>
+                    <div class="card-body row g-3">
+                        {% for field in [
+                            {name: 'dayfrom', label: __('Beginning of day'), min: 6, max: 12},
+                            {name: 'dayto', label: __('End of day'), min: 17, max: 23},
+                        ] %}
+                            <div class="col-md-6">
+                                <label class="form-label" for="antiflood-{{ field.name }}">{{ field.label }}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="{{ field.name }}" id="antiflood-{{ field.name }}" value="{{ settings[field.name] }}" min="{{ field.min }}" max="{{ field.max }}" aria-describedby="antiflood-{{ field.name }}-help">
+                                    <span class="input-group-text">:00</span>
+                                </div>
+                                <div class="form-text" id="antiflood-{{ field.name }}-help">{{ __('From %d:00 to %d:00')|format(field.min, field.max) }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="/admin" class="btn btn-secondary">{{ __('Cancel') }}</a>
+                    <button type="submit" class="btn btn-primary">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
+                        {{ __('Save') }}
+                    </button>
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="night">{{ __('Night') }}</label>
-            <input type="text" name="night" class="form-control" id="night" value="{{ settings.night }}">
-        </div>
-        <h3 class="mt-3">{{ __('Day mode') }}</h3>
-        <div class="form-group">
-            <label for="dayfrom">{{ __('Beginning of day') }}</label>
-            <input type="text" name="dayfrom" class="form-control" id="dayfrom" value="{{ settings.dayfrom }}">
-        </div>
-        <div class="form-group">
-            <label for="dayto">{{ __('End of day') }}</label>
-            <input type="text" name="dayto" class="form-control" id="dayto" value="{{ settings.dayto }}">
-        </div>
-        <div class="mt-3">
-            <input type="submit" name="submit" value="{{ __('Save') }}" class="btn btn-primary"/>
-            <a href="/admin/" class="btn btn-secondary">{{ __('Cancel') }}</a>
-        </div>
-    </form>
+    </div>
 {% endblock %}

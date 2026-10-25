@@ -108,8 +108,6 @@ return static function (RouteCollection $router): void {
             ->name('admin.ip_search.mode')
             ->requirements(['mode' => 'history']);
         $r->get('/admin/bans', BanListController::class)->name('admin.bans');
-        $r->get('/admin/antiflood', [AntifloodSettingsController::class, 'form'])->name('admin.antiflood');
-        $r->post('/admin/antiflood', [AntifloodSettingsController::class, 'save'])->name('admin.antiflood.save');
         $r->post('/admin/registrations/approve', [RegistrationModerationController::class, 'approve'])->name('admin.registrations.approve');
         $r->post('/admin/registrations/confirm-email', [RegistrationModerationController::class, 'confirmEmail'])->name('admin.registrations.confirm_email');
         // Removing is confirmed first: the dialog says what would go (see the controller).
@@ -172,6 +170,8 @@ return static function (RouteCollection $router): void {
             $sr->get('/admin/settings/captcha', [CaptchaSettingsController::class, 'form'])->name('admin.settings.captcha');
             $sr->post('/admin/settings/captcha', [CaptchaSettingsController::class, 'save'])
                 ->name('admin.settings.captcha.save');
+            $sr->get('/admin/antiflood', [AntifloodSettingsController::class, 'form'])->name('admin.antiflood');
+            $sr->post('/admin/antiflood', [AntifloodSettingsController::class, 'save'])->name('admin.antiflood.save');
 
             $sr->get('/admin/ip-bans', [IpBanController::class, 'index'])->name('admin.ip_bans');
             $sr->get('/admin/ip-bans/new', [IpBanController::class, 'newForm'])->name('admin.ip_bans.new');
