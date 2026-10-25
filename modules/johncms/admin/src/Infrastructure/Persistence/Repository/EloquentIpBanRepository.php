@@ -71,6 +71,8 @@ final class EloquentIpBanRepository implements IpBanRepositoryInterface
 
     public function clearAll(): void
     {
-        BanIp::query()->truncate();
+        // A delete rather than a truncate: MySQL commits the transaction around a truncate, so the
+        // clearing could not be undone together with the rest of what the request did.
+        BanIp::query()->delete();
     }
 }
