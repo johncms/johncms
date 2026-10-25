@@ -72,6 +72,68 @@ final class AuthLogPageTest extends FunctionalTestCase
         self::assertStringContainsString('functional_test_marker', (string) $response->getContent());
     }
 
+    public function testTheLiveListIsAnsweredWithItsRegionsAlone(): void
+    {
+        $userId = FunctionalUserFactory::createSupervisor()->id;
+        $this->store(AuthEventType::LoginSuccess, $userId);
+
+        $response = $this->handleRequest(
+            self::URL . '?q=127.0.0.1',
+            server: ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'],
+            cookies: $this->actingAs($userId)
+        );
+        $body = (string) $response->getContent();
+
+        self::assertStringContainsString('data-live-list-region="results"', $body);
+        self::assertStringContainsString('data-live-list-region="filters"', $body);
+        self::assertStringNotContainsString('<html', $body);
+    }
+
+    /**
+     * The page of an account links here with its number; the chip names the account and takes
+     * the narrowing back.
+     */
+    public function testTheLogOfOneAccountNamesItInAChip(): void
+    {
+        $viewer = FunctionalUserFactory::createSupervisor();
+        $member = FunctionalUserFactory::create(['name' => 'Peregrin']);
+        $this->store(AuthEventType::LoginSuccess, $member->id);
+
+        $body = (string) $this->handleRequest(self::URL . '?user=' . $member->id, cookies: $this->actingAs($viewer))->getContent();
+
+        self::assertMatchesRegularExpression('#<a class="admin-chip" href="/admin/auth-log"[^>]*>.*?Peregrin#s', $body);
+    }
+
+    public function testAnEntryLeadsToTheAccountAndToEverythingFromItsAddress(): void
+    {
+        $viewer = FunctionalUserFactory::createSupervisor();
+        $member = FunctionalUserFactory::create(['name' => 'Meriadoc']);
+        $this->store(AuthEventType::LoginSuccess, $member->id);
+
+        $body = (string) $this->handleRequest(self::URL, cookies: $this->actingAs($viewer))->getContent();
+
+        self::assertStringContainsString('href="/admin/users/' . $member->id . '">Meriadoc</a>', $body);
+        self::assertStringContainsString('href="/admin/auth-log?q=127.0.0.1"', $body);
+    }
+
+    public function testAnotherKindOfEventIsLeftOut(): void
+    {
+        $userId = FunctionalUserFactory::createSupervisor()->id;
+        $this->store(AuthEventType::LoginFailed, $userId, ['reason' => 'kept_marker']);
+        $this->store(AuthEventType::LoginSuccess, $userId, ['marker' => 'left_out_marker']);
+
+        // Asked as the live list asks: the whole page carries the query log when debugging is on,
+        // and the marker of the entry left out would be found there.
+        $body = (string) $this->handleRequest(
+            self::URL . '?event=' . AuthEventType::LoginFailed->value,
+            server: ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'],
+            cookies: $this->actingAs($userId)
+        )->getContent();
+
+        self::assertStringContainsString('kept_marker', $body);
+        self::assertStringNotContainsString('left_out_marker', $body);
+    }
+
     /**
      * @param array<string, mixed> $context
      */

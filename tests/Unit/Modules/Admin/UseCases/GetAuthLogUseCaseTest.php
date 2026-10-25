@@ -12,6 +12,8 @@ use Johncms\Auth\Events\AuthEventType;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentAuthEventRepository;
 use Johncms\Auth\AuthTables;
 use Johncms\Modules\Admin\Application\UseCases\GetAuthLogUseCase;
+use Johncms\Modules\Admin\Domain\Enums\AuthLogPeriod;
+use Johncms\Modules\Admin\Domain\ValueObjects\AuthLogFilter;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentAuthLogRepository;
 use Johncms\Users\User;
 use PHPUnit\Framework\TestCase;
@@ -50,7 +52,7 @@ final class GetAuthLogUseCaseTest extends TestCase
         $this->store(AuthEventType::LoginSuccess->value, 7, createdAt: 100);
         $this->store(AuthEventType::Logout->value, 7, createdAt: 200);
 
-        $rows = $this->useCase->getPage(10, 0);
+        $rows = $this->useCase->getPage(new AuthLogFilter(), 10, 0);
 
         self::assertSame(['logout', 'login.success'], array_column($rows, 'event'));
     }
@@ -61,7 +63,7 @@ final class GetAuthLogUseCaseTest extends TestCase
         $admin = $this->createUser('Root');
         $this->store(AuthEventType::RoleGranted->value, $user->id, $admin->id);
 
-        $row = $this->useCase->getPage(10, 0)[0];
+        $row = $this->useCase->getPage(new AuthLogFilter(), 10, 0)[0];
 
         self::assertSame('Tester', $row->userName);
         self::assertSame('Root', $row->actorName);
@@ -77,8 +79,8 @@ final class GetAuthLogUseCaseTest extends TestCase
         $this->store(AuthEventType::RoleGranted->value, 9, 7);
         $this->store(AuthEventType::LoginSuccess->value, 8);
 
-        self::assertSame(2, $this->useCase->count(userId: 7));
-        self::assertCount(2, $this->useCase->getPage(10, 0, userId: 7));
+        self::assertSame(2, $this->useCase->count(new AuthLogFilter(userId: 7)));
+        self::assertCount(2, $this->useCase->getPage(new AuthLogFilter(userId: 7), 10, 0));
     }
 
     public function testFilteringByEventNarrowsTheList(): void
@@ -86,7 +88,56 @@ final class GetAuthLogUseCaseTest extends TestCase
         $this->store(AuthEventType::LoginSuccess->value, 7);
         $this->store(AuthEventType::LoginFailed->value, 7);
 
-        self::assertSame(1, $this->useCase->count(event: AuthEventType::LoginFailed->value));
+        self::assertSame(1, $this->useCase->count(new AuthLogFilter(event: AuthEventType::LoginFailed->value)));
+    }
+
+    public function testTheSearchFindsTheEntriesAboutAnAccountByPartOfItsNickname(): void
+    {
+        $user = $this->createUser('Gandalf');
+        $other = $this->createUser('Saruman');
+        $this->store(AuthEventType::LoginSuccess->value, $user->id);
+        $this->store(AuthEventType::RoleGranted->value, $other->id, $user->id);
+        $this->store(AuthEventType::LoginSuccess->value, $other->id);
+
+        self::assertSame(2, $this->useCase->count(new AuthLogFilter(search: 'anda')));
+    }
+
+    public function testTheSearchFindsAnAccountByItsNumber(): void
+    {
+        $this->store(AuthEventType::LoginSuccess->value, 7);
+        $this->store(AuthEventType::LoginSuccess->value, 77);
+
+        self::assertSame(1, $this->useCase->count(new AuthLogFilter(search: '7')));
+    }
+
+    /**
+     * A sign-in refused for a login that does not exist names no account: the address is the only
+     * thread that ties the attempts together.
+     */
+    public function testTheSearchFindsTheEntriesFromAnAddress(): void
+    {
+        $this->store(AuthEventType::LoginFailed->value, null, ip: '198.51.100.7');
+        $this->store(AuthEventType::LoginFailed->value, null, ip: '198.51.100.8');
+
+        self::assertSame(1, $this->useCase->count(new AuthLogFilter(search: '198.51.100.7')));
+    }
+
+    public function testThePeriodLeavesOutTheOlderEntries(): void
+    {
+        $now = 10_000_000;
+        $this->store(AuthEventType::LoginSuccess->value, 7, createdAt: $now - 3600);
+        $this->store(AuthEventType::LoginSuccess->value, 7, createdAt: $now - 2 * 86400);
+
+        self::assertSame(1, $this->useCase->count(new AuthLogFilter(period: AuthLogPeriod::DAY), $now));
+        self::assertSame(2, $this->useCase->count(new AuthLogFilter(period: AuthLogPeriod::WEEK), $now));
+    }
+
+    public function testTheNameOfTheAccountTheLogIsNarrowedTo(): void
+    {
+        $user = $this->createUser('Tester');
+
+        self::assertSame('Tester', $this->useCase->userName($user->id));
+        self::assertNull($this->useCase->userName(999));
     }
 
     /**
@@ -97,7 +148,7 @@ final class GetAuthLogUseCaseTest extends TestCase
     {
         $this->store('shop.order.paid', 7);
 
-        $row = $this->useCase->getPage(10, 0)[0];
+        $row = $this->useCase->getPage(new AuthLogFilter(), 10, 0)[0];
 
         self::assertSame('shop.order.paid', $row->label);
     }
@@ -106,7 +157,7 @@ final class GetAuthLogUseCaseTest extends TestCase
     {
         $this->store(AuthEventType::LoginFailed->value, null, context: ['reason' => 'invalid_credentials']);
 
-        self::assertSame(['reason: invalid_credentials'], $this->useCase->getPage(10, 0)[0]->details);
+        self::assertSame(['reason: invalid_credentials'], $this->useCase->getPage(new AuthLogFilter(), 10, 0)[0]->details);
     }
 
     /**
@@ -118,13 +169,14 @@ final class GetAuthLogUseCaseTest extends TestCase
         ?int $actorId = null,
         array $context = [],
         int $createdAt = 1000,
+        string $ip = '192.0.2.10',
     ): void {
         $this->events->store(
             [
                 'user_id'    => $userId,
                 'actor_id'   => $actorId,
                 'event'      => $event,
-                'ip'         => '192.0.2.10',
+                'ip'         => $ip,
                 'user_agent' => 'Mozilla/5.0',
                 'context'    => $context === [] ? null : $context,
                 'created_at' => $createdAt,

@@ -6,20 +6,21 @@ namespace Johncms\Modules\Admin\Domain\Repository;
 
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Auth\Events\AuthEvent;
+use Johncms\Modules\Admin\Domain\ValueObjects\AuthLogFilter;
 
 interface AuthLogRepositoryInterface
 {
     /**
-     * @param int|null    $userId Entries about one account, including the ones somebody else made
-     *                            about it.
-     * @param string|null $event  One kind of event, by its key.
+     * @param int $now The moment the period of the filter is counted back from.
      */
-    public function count(?int $userId = null, ?string $event = null): int;
+    public function count(AuthLogFilter $filter, int $now): int;
 
     /**
+     * The newest entries first.
+     *
      * @return Collection<int, AuthEvent>
      */
-    public function get(int $limit, int $offset, ?int $userId = null, ?string $event = null): Collection;
+    public function get(AuthLogFilter $filter, int $now, int $limit, int $offset): Collection;
 
     /**
      * The names behind the ids of a page, in one query.

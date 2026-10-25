@@ -50,7 +50,8 @@ msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:37
 #: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:125
-#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:49
+#: modules/johncms/admin/src/Application/Services/AuthLogControlsMapper.php:42
+#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:50
 #: modules/johncms/admin/templates/ip-ban-search.twig:23
 #: modules/johncms/admin/templates/ip-bans.twig:57
 #: modules/johncms/admin/templates/ip-search.twig:28
@@ -84,7 +85,7 @@ msgid "Roles"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:40
-#: modules/johncms/admin/src/Application/Controllers/Access/AuthLogController.php:53
+#: modules/johncms/admin/src/Application/Controllers/Access/AuthLogController.php:64
 #: modules/johncms/admin/src/Application/Services/UserActionsMapper.php:65
 msgid "Sign-in log"
 msgstr ""
@@ -1095,7 +1096,6 @@ msgid "The settings of the account and of its forum go back to the defaults."
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:121
-#: modules/johncms/admin/templates/auth-log.twig:37
 msgid "Reset"
 msgstr ""
 
@@ -1211,6 +1211,55 @@ msgstr ""
 msgid "Browse as this user"
 msgstr ""
 
+#: modules/johncms/admin/src/Application/Services/AuthLogControlsMapper.php:38
+#: modules/johncms/admin/templates/auth-log/results.twig:32
+#: modules/johncms/admin/templates/style-guide/examples/dropdown.twig:6
+#: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:14
+#: modules/johncms/admin/templates/style-guide/examples/sort-header.twig:5
+#: modules/johncms/admin/templates/users/results.twig:25
+msgid "User"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Services/AuthLogControlsMapper.php:72
+#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:148
+#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:186
+#: modules/johncms/admin/templates/style-guide/examples/toolbar.twig:15
+#: modules/johncms/admin/templates/style-guide/examples/toolbar.twig:21
+#: modules/johncms/admin/templates/style-guide/examples/toolbar.twig:24
+msgid "Any"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Services/AuthLogControlsMapper.php:78
+#: modules/johncms/admin/templates/auth-log/results.twig:31
+msgid "Event"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Services/AuthLogControlsMapper.php:87
+#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:200
+msgid "Any time"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Services/AuthLogControlsMapper.php:88
+#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:188
+#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:201
+msgid "In the last 24 hours"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Services/AuthLogControlsMapper.php:89
+#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:189
+#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:202
+msgid "In the last 7 days"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Services/AuthLogControlsMapper.php:90
+#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:203
+msgid "In the last 30 days"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Services/AuthLogControlsMapper.php:99
+msgid "Period"
+msgstr ""
+
 #: modules/johncms/admin/src/Application/Services/BanListRowMapper.php:40
 msgid "Violations history"
 msgstr ""
@@ -1258,14 +1307,14 @@ msgstr ""
 msgid "Overview"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:42
+#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:43
 #: modules/johncms/admin/templates/style-guide/examples/toolbar.twig:20
 #: modules/johncms/admin/templates/user/view.twig:50
 #: modules/johncms/admin/templates/users/results.twig:26
 msgid "Activity"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:43
+#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:44
 #: modules/johncms/admin/src/Domain/Enums/IpBanType.php:22
 #: modules/johncms/admin/templates/ip-ban-form.twig:27
 #: modules/johncms/admin/templates/style-guide/examples/sort-header.twig:6
@@ -1273,12 +1322,12 @@ msgstr ""
 msgid "Registration"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:115
+#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:116
 #: modules/johncms/admin/templates/style-guide/examples/pills.twig:3
 msgid "All"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:116
+#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:117
 #: modules/johncms/admin/templates/style-guide/examples/stat-cards.twig:4
 #: modules/johncms/admin/templates/user/view.twig:27
 #: modules/johncms/admin/templates/users.twig:29
@@ -1286,13 +1335,13 @@ msgstr ""
 msgid "Awaiting approval"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:123
+#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:124
 #: modules/johncms/admin/templates/user/view.twig:29
 #: modules/johncms/admin/templates/users/results.twig:64
 msgid "E-mail not confirmed"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:126
+#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:127
 #: modules/johncms/admin/templates/style-guide/examples/badges.twig:10
 #: modules/johncms/admin/templates/style-guide/examples/list-group.twig:14
 #: modules/johncms/admin/templates/style-guide/examples/pills.twig:9
@@ -1305,23 +1354,14 @@ msgstr ""
 msgid "Banned"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:147
-#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:206
-#: modules/johncms/admin/templates/auth-log.twig:26
-#: modules/johncms/admin/templates/style-guide/examples/toolbar.twig:15
-#: modules/johncms/admin/templates/style-guide/examples/toolbar.twig:21
-#: modules/johncms/admin/templates/style-guide/examples/toolbar.twig:24
-msgid "Any"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:148
+#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:149
 #: modules/johncms/admin/templates/style-guide/examples/filter-chips.twig:4
 #: modules/johncms/admin/templates/style-guide/examples/toolbar.twig:12
 #: modules/johncms/admin/templates/style-guide/examples/toolbar.twig:16
 msgid "Staff"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:155
+#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:156
 #: modules/johncms/admin/templates/roles.twig:29
 #: modules/johncms/admin/templates/style-guide/examples/filter-chips.twig:4
 #: modules/johncms/admin/templates/style-guide/examples/toolbar.twig:11
@@ -1329,7 +1369,7 @@ msgstr ""
 msgid "Role"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:207
+#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:187
 #: modules/johncms/admin/templates/style-guide/examples/stat-cards.twig:3
 #: modules/johncms/admin/templates/style-guide/examples/toolbar.twig:25
 #: modules/johncms/admin/templates/user/view.twig:41
@@ -1337,29 +1377,11 @@ msgstr ""
 msgid "Online now"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:208
-#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:221
-msgid "In the last 24 hours"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:209
-#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:222
-msgid "In the last 7 days"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:210
+#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:190
 msgid "Not seen for half a year"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:220
-msgid "Any time"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:223
-msgid "In the last 30 days"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:224
+#: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:204
 msgid "In the last year"
 msgstr ""
 
@@ -1452,7 +1474,6 @@ msgstr ""
 #: modules/johncms/admin/templates/ad-form.twig:58
 #: modules/johncms/admin/templates/ads.twig:49
 #: modules/johncms/admin/templates/ads.twig:62
-#: modules/johncms/admin/templates/auth-log.twig:33
 msgid "Show"
 msgstr ""
 
@@ -1489,7 +1510,6 @@ msgid "Save"
 msgstr ""
 
 #: modules/johncms/admin/templates/ads.twig:31
-#: modules/johncms/admin/templates/auth-log.twig:43
 #: modules/johncms/admin/templates/banned-users.twig:25
 #: modules/johncms/admin/templates/counters.twig:20
 #: modules/johncms/admin/templates/external-providers.twig:56
@@ -1546,7 +1566,6 @@ msgid "Hide"
 msgstr ""
 
 #: modules/johncms/admin/templates/ads.twig:75
-#: modules/johncms/admin/templates/auth-log.twig:82
 #: modules/johncms/admin/templates/banned-users.twig:37
 #: modules/johncms/admin/templates/counters.twig:46
 #: modules/johncms/admin/templates/ip-bans.twig:46
@@ -1559,7 +1578,6 @@ msgid "Delete inactive links"
 msgstr ""
 
 #: modules/johncms/admin/templates/ads.twig:84
-#: modules/johncms/admin/templates/auth-log.twig:86
 #: modules/johncms/admin/templates/banned-users.twig:46
 #: modules/johncms/admin/templates/counter-view.twig:52
 #: modules/johncms/admin/templates/counters.twig:51
@@ -1604,24 +1622,45 @@ msgstr ""
 msgid "End of day"
 msgstr ""
 
-#: modules/johncms/admin/templates/auth-log.twig:19
-msgid "User ID"
+#: modules/johncms/admin/templates/auth-log.twig:22
+msgid "Search the log"
 msgstr ""
 
-#: modules/johncms/admin/templates/auth-log.twig:24
-msgid "Event"
+#: modules/johncms/admin/templates/auth-log.twig:23
+msgid "Nickname, ID or IP"
 msgstr ""
 
-#: modules/johncms/admin/templates/auth-log.twig:54
-#: modules/johncms/admin/templates/style-guide/examples/dropdown.twig:6
-#: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:14
-#: modules/johncms/admin/templates/style-guide/examples/sort-header.twig:5
-#: modules/johncms/admin/templates/users/results.twig:25
-msgid "User"
+#: modules/johncms/admin/templates/auth-log/results.twig:22
+msgid "Nothing in the log"
 msgstr ""
 
-#: modules/johncms/admin/templates/auth-log.twig:59
+#: modules/johncms/admin/templates/auth-log/results.twig:23
+#: modules/johncms/admin/templates/style-guide/examples/empty-state.twig:5
+#: modules/johncms/admin/templates/users/results.twig:18
+msgid "Change the search or reset the filters."
+msgstr ""
+
+#: modules/johncms/admin/templates/auth-log/results.twig:30
+msgid "Time"
+msgstr ""
+
+#: modules/johncms/admin/templates/auth-log/results.twig:33
 msgid "Performed by"
+msgstr ""
+
+#: modules/johncms/admin/templates/auth-log/results.twig:35
+msgid "Details"
+msgstr ""
+
+#: modules/johncms/admin/templates/auth-log/results.twig:58
+msgid "Everything from this address"
+msgstr ""
+
+#: modules/johncms/admin/templates/auth-log/results.twig:75
+#: modules/johncms/admin/templates/user/bans.twig:15
+#: modules/johncms/admin/templates/user/view.twig:157
+#: modules/johncms/admin/templates/users/results.twig:103
+msgid "Found: %s"
 msgstr ""
 
 #: modules/johncms/admin/templates/banned-users.twig:17
@@ -2641,11 +2680,6 @@ msgstr ""
 msgid "Nobody found"
 msgstr ""
 
-#: modules/johncms/admin/templates/style-guide/examples/empty-state.twig:5
-#: modules/johncms/admin/templates/users/results.twig:18
-msgid "Change the search or reset the filters."
-msgstr ""
-
 #: modules/johncms/admin/templates/style-guide/examples/facts.twig:6
 #: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:7
 #: modules/johncms/admin/templates/user/edit.twig:39
@@ -2763,12 +2797,6 @@ msgstr ""
 
 #: modules/johncms/admin/templates/user/ban-dialog.twig:50
 msgid "Counted in"
-msgstr ""
-
-#: modules/johncms/admin/templates/user/bans.twig:15
-#: modules/johncms/admin/templates/user/view.twig:157
-#: modules/johncms/admin/templates/users/results.twig:103
-msgid "Found: %s"
 msgstr ""
 
 #: modules/johncms/admin/templates/user/bans.twig:35

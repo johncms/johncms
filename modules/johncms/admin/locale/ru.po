@@ -2422,3 +2422,24 @@ msgstr "Оставьте дату пустой, чтобы выдать роль
 
 msgid "Valid until"
 msgstr "Действует до"
+
+msgid "Search the log"
+msgstr "Поиск по журналу"
+
+msgid "Nickname, ID or IP"
+msgstr "Ник, ID или IP"
+
+msgid "Period"
+msgstr "Период"
+
+msgid "Nothing in the log"
+msgstr "В журнале ничего нет"
+
+msgid "Time"
+msgstr "Время"
+
+msgid "Details"
+msgstr "Подробности"
+
+msgid "Everything from this address"
+msgstr "Всё с этого адреса"

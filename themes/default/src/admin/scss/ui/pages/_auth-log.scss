@@ -1,0 +1,61 @@
+// The sign-in log (admin::auth-log).
+
+.admin-log-table {
+  td {
+    white-space: nowrap;
+  }
+
+  // The details and the event wrap, so a long path or a long name does not push the table
+  // past the card.
+  td.admin-log-table__details {
+    min-width: 12rem;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
+td.admin-log-table__event {
+  white-space: normal;
+
+  .badge {
+    max-width: 16rem;
+    white-space: normal;
+    text-align: left;
+  }
+}
+
+.admin-log-table__time {
+  font-family: $ui-font-mono;
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+}
+
+.admin-log-table__account {
+  font-weight: 600;
+  color: var(--fg);
+
+  &:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+}
+
+.admin-log-table__gone {
+  font-family: $ui-font-mono;
+  color: var(--fg-dim);
+}
+
+.admin-log-table__agent {
+  max-width: 16rem;
+  margin-top: 2px;
+  overflow: hidden;
+  font-size: 0.6875rem;
+  color: var(--fg-dim);
+  text-overflow: ellipsis;
+}
+
+.admin-log-table__details {
+  font-family: $ui-font-mono;
+  font-size: 0.6875rem;
+  color: var(--fg-muted);
+}

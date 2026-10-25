@@ -7,6 +7,7 @@ namespace Johncms\Modules\Admin\Application\UseCases;
 use Johncms\Auth\Events\AuthEvent;
 use Johncms\Modules\Admin\Application\DTO\AuthLogRowDTO;
 use Johncms\Modules\Admin\Domain\Repository\AuthLogRepositoryInterface;
+use Johncms\Modules\Admin\Domain\ValueObjects\AuthLogFilter;
 
 /**
  * The sign-in log, as the admin panel reads it.
@@ -17,17 +18,17 @@ final readonly class GetAuthLogUseCase
     {
     }
 
-    public function count(?int $userId = null, ?string $event = null): int
+    public function count(AuthLogFilter $filter, ?int $now = null): int
     {
-        return $this->repository->count($userId, $event);
+        return $this->repository->count($filter, $now ?? time());
     }
 
     /**
      * @return list<AuthLogRowDTO>
      */
-    public function getPage(int $limit, int $offset, ?int $userId = null, ?string $event = null): array
+    public function getPage(AuthLogFilter $filter, int $limit, int $offset, ?int $now = null): array
     {
-        $entries = $this->repository->get($limit, $offset, $userId, $event);
+        $entries = $this->repository->get($filter, $now ?? time(), $limit, $offset);
         $names = $this->repository->namesOf($this->idsOf($entries->all()));
 
         return array_map(
@@ -48,6 +49,15 @@ final readonly class GetAuthLogUseCase
             ),
             $entries->all()
         );
+    }
+
+    /**
+     * The name of the account the log is narrowed to, for the chip that says so; null for an
+     * account that is gone.
+     */
+    public function userName(int $userId): ?string
+    {
+        return $this->repository->namesOf([$userId])[$userId] ?? null;
     }
 
     /**

@@ -621,6 +621,13 @@
       'Role name' => 'Название',
       'Leave the date empty to grant the role without an end date.' => 'Оставьте дату пустой, чтобы выдать роль бессрочно.',
       'Valid until' => 'Действует до',
+      'Search the log' => 'Поиск по журналу',
+      'Nickname, ID or IP' => 'Ник, ID или IP',
+      'Period' => 'Период',
+      'Nothing in the log' => 'В журнале ничего нет',
+      'Time' => 'Время',
+      'Details' => 'Подробности',
+      'Everything from this address' => 'Всё с этого адреса',
     ),
   ),
 );

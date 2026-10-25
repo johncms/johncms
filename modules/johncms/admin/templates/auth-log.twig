@@ -1,88 +1,36 @@
 {#
     The sign-in log: who signed in, what was refused, who changed whose roles.
 
-    @var array        items         Rows: id, createdAt, event, label, userId, userName, actorId,
-                                    actorName, ip, userAgent, details.
-    @var int          total
-    @var int          per_page
+    A live list, as the list of users (src/admin/js/live-list.js): the regions are drawn by
+    templates of their own, and admin::auth-log/live puts them back in place as the search is
+    typed or a filter is picked.
+
+    @var array        controls   Built by AuthLogControlsMapper.
+    @var array        entries    Rows built by AuthLogRowMapper.
+    @var string       search
+    @var int          total      Entries the filter lets through.
     @var \Twig\Markup pagination
-    @var string       form_action
-    @var int|null     filter_user   The account the list is narrowed to.
-    @var string|null  filter_event  The kind of event the list is narrowed to.
-    @var array        event_options The kinds to choose from: value, label.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
 {% block content %}
-    <form method="get" action="{{ form_action }}" class="row g-2 align-items-end mb-3">
-        <div class="col-auto">
-            <label class="form-label mb-1" for="filter_user">{{ __('User ID') }}</label>
-            <input type="number" class="form-control form-control-sm" id="filter_user" name="user"
-                   value="{{ filter_user }}" min="1">
-        </div>
-        <div class="col-auto">
-            <label class="form-label mb-1" for="filter_event">{{ __('Event') }}</label>
-            <select class="form-select form-select-sm" id="filter_event" name="event">
-                <option value="">{{ __('Any') }}</option>
-                {% for option in event_options %}
-                    <option value="{{ option.value }}" {{ option.value == filter_event ? 'selected' : '' }}>{{ option.label }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="col-auto">
-            <button type="submit" class="btn btn-sm btn-primary">{{ __('Show') }}</button>
-        </div>
-        {% if filter_user or filter_event %}
-            <div class="col-auto">
-                <a href="{{ form_action }}" class="btn btn-sm btn-outline-secondary">{{ __('Reset') }}</a>
-            </div>
-        {% endif %}
-    </form>
+    <div data-live-list>
+        <form class="admin-toolbar" method="get" action="{{ controls.action }}" role="search" data-live-list-form>
+            {% include '@admin/components/ui/search-field.twig' with {
+                name: 'q',
+                value: search,
+                label: __('Search the log'),
+                placeholder: __('Nickname, ID or IP'),
+            } only %}
+            {% include '@admin/components/list-state.twig' with {controls: controls} only %}
+            {% include '@admin/components/list-filters.twig' with {controls: controls} only %}
+        </form>
 
-    {% if items is empty %}
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
-    {% endif %}
-
-    {% for item in items %}
-        <div class="border-bottom py-2">
-            <div>
-                <strong>{{ item.label }}</strong>
-                <span class="text-muted small ms-2">{{ item.createdAt|display_date }}</span>
-            </div>
-            <div class="small">
-                {% if item.userId %}
-                    {{ __('User') }}:
-                    <a href="/profile/{{ item.userId }}">{{ item.userName ?? item.userId }}</a>
-                {% endif %}
-                {% if item.actorId %}
-                    <span class="ms-2">
-                        {{ __('Performed by') }}:
-                        <a href="/profile/{{ item.actorId }}">{{ item.actorName ?? item.actorId }}</a>
-                    </span>
-                {% endif %}
-            </div>
-            {% if item.details is not empty %}
-                <div class="small text-muted">
-                    {% for detail in item.details %}
-                        <span class="me-2">{{ detail }}</span>
-                    {% endfor %}
-                </div>
-            {% endif %}
-            <div class="small text-muted">
-                {{ item.ip }}{% if item.userAgent %} · {{ item.userAgent }}{% endif %}
-            </div>
-        </div>
-    {% endfor %}
-
-    <div class="mt-4">
-        {% if total > per_page %}
-            <div>{{ pagination }}</div>
-        {% endif %}
-        {% if total > 0 %}
-            <div>{{ __('Total:') }} {{ total }}</div>
-        {% endif %}
-    </div>
-    <div class="mt-3">
-        <a href="/admin">{{ __('Back') }}</a>
+        {% include '@admin/auth-log/results.twig' with {
+            controls: controls,
+            entries: entries,
+            total: total,
+            pagination: pagination,
+        } only %}
     </div>
 {% endblock %}

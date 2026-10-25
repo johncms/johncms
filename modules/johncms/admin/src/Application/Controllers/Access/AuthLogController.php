@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Access;
 
-use Johncms\Auth\Events\AuthEventType;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\Admin\Application\Services\AuthLogControlsMapper;
+use Johncms\Modules\Admin\Application\Services\AuthLogFilterMapper;
+use Johncms\Modules\Admin\Application\Services\AuthLogRowMapper;
 use Johncms\Modules\Admin\Application\UseCases\GetAuthLogUseCase;
 use Johncms\NavChain;
 
@@ -18,14 +20,18 @@ use Johncms\NavChain;
  *
  * The trail is the point of recording anything at all — an entry nobody can read answers no
  * question — so the screen arrives together with the events it shows.
+ *
+ * A live list, as the list of users: the script asks for the same address with
+ * X-Requested-With and gets the regions of the page alone.
  */
 final readonly class AuthLogController
 {
-    private const URL = '/admin/auth-log';
-
     public function __construct(
         private NavChain $navChain,
         private GetAuthLogUseCase $getAuthLog,
+        private AuthLogFilterMapper $filterMapper,
+        private AuthLogControlsMapper $controlsMapper,
+        private AuthLogRowMapper $rowMapper,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
@@ -33,65 +39,37 @@ final readonly class AuthLogController
 
     public function __invoke(Request $request): ViewResponse
     {
-        $userId = $request->queryInt('user') ?: null;
-        $event = $this->event($request);
-
-        $pagination = $this->paginationFactory->create($this->getAuthLog->count($userId, $event));
+        $filter = $this->filterMapper->fromQuery($request->query->all());
+        $pagination = $this->paginationFactory->create($this->getAuthLog->count($filter));
 
         $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
         if ($redirectUrl !== null) {
             redirect($redirectUrl);
         }
 
-        $rows = $this->getAuthLog->getPage(
-            $pagination->getPerPage(),
-            $pagination->getOffset(),
-            $userId,
-            $event
-        );
+        $userName = $filter->userId === null ? null : $this->getAuthLog->userName($filter->userId);
+
+        $data = [
+            'entries'    => $this->rowMapper->map($this->getAuthLog->getPage($filter, $pagination->getPerPage(), $pagination->getOffset())),
+            'controls'   => $this->controlsMapper->map($filter, $userName),
+            'search'     => $filter->search,
+            'total'      => $pagination->getTotal(),
+            'pagination' => $pagination->render(),
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            return new ViewResponse('@admin/auth-log/live.twig', $data);
+        }
 
         $title = __('Sign-in log');
         $this->navChain->add($title);
 
         $meta = new PageMeta($title, $pagination->getCurrentPage());
 
-        return new ViewResponse(
-            '@admin/auth-log.twig',
-            [
-                'title'          => $meta->title,
-                'page_title'     => $title,
-                'usr_menu'       => ['auth_log' => true],
-                'items'          => $rows,
-                'total'          => $pagination->getTotal(),
-                'per_page'       => $pagination->getPerPage(),
-                'pagination'     => $pagination->render(),
-                'form_action'    => self::URL,
-                'filter_user'    => $userId,
-                'filter_event'   => $event,
-                'event_options'  => $this->eventOptions(),
-            ]
-        );
-    }
-
-    /**
-     * Only a key the core knows is accepted: the filter goes into a query, and an arbitrary
-     * string from the address bar has no business reaching it.
-     */
-    private function event(Request $request): ?string
-    {
-        $event = trim($request->queryParam('event'));
-
-        return $event === '' ? null : AuthEventType::tryFrom($event)?->value;
-    }
-
-    /**
-     * @return list<array{value: string, label: string}>
-     */
-    private function eventOptions(): array
-    {
-        return array_map(
-            static fn (AuthEventType $type): array => ['value' => $type->value, 'label' => $type->label()],
-            AuthEventType::cases()
-        );
+        return new ViewResponse('@admin/auth-log.twig', $data + [
+            'title'      => $meta->title,
+            'page_title' => $title,
+            'usr_menu'   => ['auth_log' => true],
+        ]);
     }
 }

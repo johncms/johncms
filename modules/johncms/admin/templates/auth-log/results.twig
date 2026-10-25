@@ -1,0 +1,80 @@
+{#
+    The entries the filter lets through: the chips of what is applied, the table and the pages.
+
+    @param array        controls
+    @param array        entries    Rows built by AuthLogRowMapper.
+    @param int          total
+    @param \Twig\Markup pagination
+#}
+{% set tones = {
+    success: 'bg-success-subtle text-success-emphasis',
+    danger: 'bg-danger-subtle text-danger-emphasis',
+    warning: 'bg-warning-subtle text-warning-emphasis',
+    info: 'bg-info-subtle text-info-emphasis',
+} %}
+<div class="admin-list-results" data-live-list-region="results">
+    {% include '@admin/components/ui/filter-chips.twig' with {chips: controls.chips, clear_url: controls.clear_url} only %}
+
+    <div class="card">
+        {% if entries is empty %}
+            {% include '@admin/components/ui/empty-state.twig' with {
+                icon: 'history',
+                title: __('Nothing in the log'),
+                description: controls.chips is empty ? '' : __('Change the search or reset the filters.'),
+            } only %}
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-hover admin-log-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ __('Time') }}</th>
+                            <th scope="col">{{ __('Event') }}</th>
+                            <th scope="col">{{ __('User') }}</th>
+                            <th scope="col">{{ __('Performed by') }}</th>
+                            <th scope="col">IP</th>
+                            <th scope="col">{{ __('Details') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in entries %}
+                            <tr>
+                                <td class="admin-log-table__time">{{ entry.time|display_date }}</td>
+                                <td class="admin-log-table__event">
+                                    <span class="badge rounded-pill badge-dot {{ tones[entry.tone] ?? 'text-bg-light' }}">{{ entry.label }}</span>
+                                </td>
+                                {% for account in [entry.user, entry.actor] %}
+                                    <td>
+                                        {% if account is null %}
+                                            <span class="text-body-tertiary">—</span>
+                                        {% elseif account.url %}
+                                            <a class="admin-log-table__account" href="{{ account.url }}">{{ account.name }}</a>
+                                        {% else %}
+                                            <span class="admin-log-table__gone">{{ account.name }}</span>
+                                        {% endif %}
+                                    </td>
+                                {% endfor %}
+                                <td>
+                                    {% if entry.ip_url %}
+                                        <a class="font-monospace" href="{{ entry.ip_url }}" title="{{ __('Everything from this address') }}">{{ entry.ip }}</a>
+                                    {% endif %}
+                                    {% if entry.user_agent %}
+                                        <div class="admin-log-table__agent" title="{{ entry.user_agent }}">{{ entry.user_agent }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="admin-log-table__details">
+                                    {% for detail in entry.details %}
+                                        <div>{{ detail }}</div>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer admin-list-footer">
+                <span class="admin-list-footer__total">{{ __('Found: %s')|format(total|format_number) }}</span>
+                <div class="pagination-no-padding">{{ pagination }}</div>
+            </div>
+        {% endif %}
+    </div>
+</div>
