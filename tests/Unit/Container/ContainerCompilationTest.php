@@ -14,6 +14,7 @@ use Johncms\Http\CookieQueue;
 use Johncms\Modules\Admin\Application\Services\AdminPermissions;
 use Johncms\Modules\Consent\Application\View\CookieBannerExtension;
 use Johncms\Modules\Forum\Application\Console\CleanupOrphanFilesCommand;
+use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\News\Application\Sitemap\NewsUrlsProvider;
 use Johncms\View\Twig\Extension\MailExtension;
 use Johncms\Http\Environment;
@@ -84,6 +85,8 @@ final class ContainerCompilationTest extends TestCase
                 CookieQueue::class,
                 Environment::class,
                 Session::class,
+                // Remembers the paths of the sections of the forum for one request.
+                ForumSectionPathService::class,
                 NavChain::class,
                 // Holds the menu items this visitor may open, which is a fact about one request.
                 MenuRegistry::class,

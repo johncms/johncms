@@ -6,8 +6,14 @@ namespace Johncms\Modules\Forum\Application\Services;
 
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
+use Symfony\Contracts\Service\ResetInterface;
 
-final class ForumSectionPathService
+/**
+ * The paths of the sections of the forum, remembered for the rest of the request: a page of
+ * topics asks for the same few sections over and over. Reset before every request, since a
+ * section may be renamed or moved between two of them.
+ */
+final class ForumSectionPathService implements ResetInterface
 {
     /** @var array<int, string> */
     private array $pathCache = [];
@@ -80,6 +86,12 @@ final class ForumSectionPathService
     public function getSectionUrl(ForumSection $section): string
     {
         return '/forum/' . $this->getSectionPath($section) . '/';
+    }
+
+    public function reset(): void
+    {
+        $this->pathCache = [];
+        $this->sectionByPathCache = [];
     }
 
     public function getSectionUrlById(int $sectionId): ?string
