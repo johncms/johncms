@@ -55,6 +55,31 @@ final class PermissionResolverTest extends TestCase
         self::assertTrue($identity->hasPermission('forum.topic.delete'));
     }
 
+    public function testARoleWhoseGrantRanOutGivesNothing(): void
+    {
+        $roles = new FakeRoleRepository();
+        $roles->add('user', ['forum.post'], isDefault: true);
+        $moderator = $roles->add('forum-moderator', ['forum.topic.delete']);
+        $roles->grant(7, $moderator->id, null, time() - 100, time() - 1);
+
+        $identity = (new PermissionResolver($roles))->resolve(IdentityFactory::user(id: 7));
+
+        self::assertSame(['user'], $identity->roles);
+        self::assertFalse($identity->hasPermission('forum.topic.delete'));
+    }
+
+    public function testARoleIsHeldUntilItsGrantRunsOut(): void
+    {
+        $roles = new FakeRoleRepository();
+        $roles->add('user', [], isDefault: true);
+        $moderator = $roles->add('forum-moderator', ['forum.topic.delete']);
+        $roles->grant(7, $moderator->id, null, time() - 100, time() + 3600);
+
+        $identity = (new PermissionResolver($roles))->resolve(IdentityFactory::user(id: 7));
+
+        self::assertTrue($identity->hasPermission('forum.topic.delete'));
+    }
+
     /**
      * Whatever an authenticator happened to put there is replaced: what a visitor may do is
      * decided here, not by whoever recognised them.

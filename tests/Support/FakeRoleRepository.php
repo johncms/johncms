@@ -64,6 +64,7 @@ final class FakeRoleRepository implements RoleRepositoryInterface
     public function grantTo(int $userId, array $slugs): void
     {
         $this->granted[$userId] = $slugs;
+        $this->expiries[$userId] = [];
     }
 
     public function all(): Collection
@@ -107,7 +108,8 @@ final class FakeRoleRepository implements RoleRepositoryInterface
         $slugs = $this->granted[$userId] ?? [];
 
         return new Collection(array_values(array_filter(
-            array_map(fn (string $slug): ?Role => $this->roles[$slug] ?? null, $slugs)
+            array_map(fn (string $slug): ?Role => $this->roles[$slug] ?? null, $slugs),
+            fn (?Role $role): bool => $role !== null && $this->counts($userId, $role->id, $now)
         )));
     }
 
@@ -148,11 +150,11 @@ final class FakeRoleRepository implements RoleRepositoryInterface
     {
         $counts = [];
 
-        foreach ($this->granted as $slugs) {
+        foreach ($this->granted as $userId => $slugs) {
             foreach ($slugs as $slug) {
                 $role = $this->findBySlug($slug);
 
-                if ($role !== null) {
+                if ($role !== null && $this->counts($userId, $role->id, $now)) {
                     $counts[$role->id] = ($counts[$role->id] ?? 0) + 1;
                 }
             }
@@ -251,5 +253,17 @@ final class FakeRoleRepository implements RoleRepositoryInterface
         $this->granted[$userId] = array_values(
             array_filter($this->granted[$userId] ?? [], static fn (string $slug): bool => $slug !== $role->slug)
         );
+        unset($this->expiries[$userId][$roleId]);
+    }
+
+    /**
+     * Whether a grant still counts: one without an end date always does, one with it until that
+     * moment and not at it — as EloquentRoleRepository reads them.
+     */
+    private function counts(int $userId, int $roleId, int $now): bool
+    {
+        $expiresAt = $this->expiries[$userId][$roleId] ?? null;
+
+        return $expiresAt === null || $expiresAt > $now;
     }
 }

@@ -51,6 +51,22 @@ final class RoleLevelsTest extends TestCase
         }
     }
 
+    /**
+     * Whom an account may ban or edit follows its level, so a grant that ran out must not keep
+     * the account standing where the role put it.
+     */
+    public function testAGrantThatRanOutNoLongerRaisesTheLevel(): void
+    {
+        $administrator = $this->roles->findBySlug('administrator');
+        self::assertNotNull($administrator);
+        $this->roles->grant(1, $administrator->id, null, time() - 100, time() - 1);
+        $this->roles->grant(2, $administrator->id, null, time() - 100, time() + 3600);
+
+        self::assertSame(10, $this->levels->highestGrantedTo(1));
+        self::assertSame(70, $this->levels->highestGrantedTo(2));
+        self::assertSame([1 => 10, 2 => 70], $this->levels->highestGrantedToMany([1, 2]));
+    }
+
     public function testAskingAboutNobodyAsksTheRepositoryNothing(): void
     {
         self::assertSame([], $this->levels->highestGrantedToMany([]));
