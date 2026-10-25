@@ -1,0 +1,58 @@
+// The list of roles (admin::roles).
+
+.admin-roles-table {
+  td {
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  td:first-child {
+    width: 100%;
+    min-width: 14rem;
+    white-space: normal;
+  }
+}
+
+.admin-roles-table__name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem;
+  font-weight: 600;
+
+  a {
+    color: var(--fg);
+
+    &:hover {
+      color: var(--accent);
+      text-decoration: none;
+    }
+  }
+}
+
+.admin-roles-table__sub {
+  margin-top: 2px;
+  font-family: $ui-font-mono;
+  font-size: 0.71875rem;
+  color: var(--fg-dim);
+}
+
+.admin-roles-table__number {
+  font-family: $ui-font-mono;
+  font-weight: 600;
+}
+
+// A role above the visitor's own: listed, but not theirs to open.
+.admin-roles-table__locked .admin-roles-table__name {
+  color: var(--fg-muted);
+}
+
+.admin-roles-table__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.25rem;
+}
+
+.admin-roles-table__lock {
+  color: var(--fg-dim);
+}

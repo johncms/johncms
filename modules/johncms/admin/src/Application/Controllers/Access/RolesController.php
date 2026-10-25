@@ -17,6 +17,7 @@ use Johncms\Modules\Admin\Application\Exceptions\RoleAccessDeniedException;
 use Johncms\Modules\Admin\Application\Exceptions\RoleNotFoundException;
 use Johncms\Modules\Admin\Application\Exceptions\RoleSlugTakenException;
 use Johncms\Modules\Admin\Application\Exceptions\SystemRoleNotDeletableException;
+use Johncms\Modules\Admin\Application\Services\RoleListRowMapper;
 use Johncms\Modules\Admin\Application\UseCases\DeleteRoleUseCase;
 use Johncms\Modules\Admin\Application\UseCases\EnsureRoleManagementAccessUseCase;
 use Johncms\Modules\Admin\Application\UseCases\GetRoleEditorUseCase;
@@ -37,7 +38,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final readonly class RolesController
 {
-    private const URL = '/admin/roles';
+    private const URL = RoleListRowMapper::PATH;
 
     /** Lower case, digits and hyphens, starting with a letter: it appears in code and in URLs. */
     private const SLUG_PATTERN = '/^[a-z][a-z0-9-]{1,63}$/';
@@ -52,6 +53,7 @@ final readonly class RolesController
         private RoleRepositoryInterface $roles,
         private EnsureRoleManagementAccessUseCase $ensureAccess,
         private GetRoleListUseCase $getRoleList,
+        private RoleListRowMapper $rows,
         private GetRoleEditorUseCase $getRoleEditor,
         private SaveRoleUseCase $saveRole,
         private DeleteRoleUseCase $deleteRole,
@@ -70,7 +72,7 @@ final readonly class RolesController
         $this->navChain->add($title, self::URL);
 
         return new ViewResponse('@admin/roles.twig', $this->menu($title) + [
-            'items'           => $this->getRoleList->execute($this->ensureAccess->maxLevel()),
+            'roles'           => $this->rows->map($this->getRoleList->execute($this->ensureAccess->maxLevel())),
             'add_url'         => self::URL . '/new',
             'success_message' => (string) $this->session->getFlash('success_message'),
         ]);
@@ -112,8 +114,15 @@ final readonly class RolesController
         return $this->save($request, $id);
     }
 
-    public function deleteConfirm(int $id): ViewResponse
+    /**
+     * The confirmation is a dialog: the modal of the panel asks for it with X-Requested-With and
+     * gets the dialog alone, a plain visit gets it as a page.
+     */
+    public function deleteConfirm(Request $request, int $id): ViewResponse
     {
+        $dialog = $request->isXmlHttpRequest();
+        $title = __('Delete role');
+
         $role = $this->roles->findById($id);
         if ($role === null) {
             redirect(self::URL);
@@ -122,23 +131,45 @@ final readonly class RolesController
         try {
             $this->ensureAccess->execute($role);
         } catch (RoleAccessDeniedException $e) {
-            return $this->forbidden($e->getMessage());
+            return $this->refused($title, $e->getMessage(), $dialog, Response::HTTP_FORBIDDEN);
         }
 
         if ($role->is_system) {
-            return $this->error(__('A built-in role cannot be deleted'));
+            return $this->refused($title, __('A built-in role cannot be deleted'), $dialog);
         }
 
-        $title = __('Delete:') . ' ' . $role->display_name;
+        $holders = $this->roles->holderCounts(time())[$role->id] ?? 0;
+        $message = __('The role "%s" is deleted for good. This cannot be undone.', $role->display_name);
+        if ($holders > 0) {
+            $message .= ' ' . sprintf(
+                n__(
+                    'It is held by one account, which loses everything the role granted it.',
+                    'It is held by %d accounts, which lose everything the role granted them.',
+                    $holders
+                ),
+                $holders
+            );
+        }
+
+        $data = [
+            'title'    => $title,
+            'message'  => $message,
+            'user'     => [],
+            'action'   => self::URL . '/' . $role->id . '/delete',
+            'fields'   => [],
+            'confirm'  => __('Delete'),
+            'back_url' => self::URL,
+        ];
+
+        if ($dialog) {
+            return new ViewResponse('@admin/pages/confirm-dialog.twig', $data);
+        }
+
         $this->navChain->add(__('Roles'), self::URL);
         $this->navChain->add($title);
 
-        return new ViewResponse('@admin/role-delete-confirm.twig', $this->menu($title) + [
-            'role_name'   => $role->display_name,
-            'holders'     => $this->roles->holderCounts(time())[$role->id] ?? 0,
-            'form_action' => self::URL . '/' . $role->id . '/delete',
-            'back_url'    => self::URL,
-        ]);
+        // The dialog carries the heading itself.
+        return new ViewResponse('@admin/pages/confirm.twig', ['title' => $title, 'dialog' => $data]);
     }
 
     public function delete(int $id): ViewResponse
@@ -315,6 +346,25 @@ final readonly class RolesController
             'level'       => $request->bodyInt('level'),
             'permissions' => array_values(array_filter($request->bodyList('permissions'), 'is_string')),
         ];
+    }
+
+    private function refused(string $title, string $message, bool $dialog, int $status = Response::HTTP_OK): ViewResponse
+    {
+        $data = [
+            'title'    => $title,
+            'type'     => 'alert-danger',
+            'message'  => $message,
+            'back_url' => self::URL,
+        ];
+
+        if ($dialog) {
+            return new ViewResponse('@admin/pages/result-dialog.twig', $data, $status);
+        }
+
+        $this->navChain->add(__('Roles'), self::URL);
+        $this->navChain->add($title);
+
+        return new ViewResponse('@admin/pages/result.twig', $data + ['page_title' => $title], $status);
     }
 
     private function error(string $message): ViewResponse

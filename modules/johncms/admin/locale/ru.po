@@ -2413,3 +2413,15 @@ msgstr "E-mail не подтверждён"
 
 msgid "The e-mail is confirmed"
 msgstr "E-mail подтверждён"
+
+msgid "Accounts"
+msgstr "Аккаунты"
+
+msgid "all"
+msgstr "все"
+
+msgid "Delete role"
+msgstr "Удаление роли"
+
+msgid "The role \"%s\" is deleted for good. This cannot be undone."
+msgstr "Роль «%s» будет удалена навсегда. Это действие нельзя отменить."

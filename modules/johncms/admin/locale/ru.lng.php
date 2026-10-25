@@ -618,6 +618,10 @@
       'Confirm the e-mail' => 'Подтвердить e-mail',
       'E-mail not confirmed' => 'E-mail не подтверждён',
       'The e-mail is confirmed' => 'E-mail подтверждён',
+      'Accounts' => 'Аккаунты',
+      'all' => 'все',
+      'Delete role' => 'Удаление роли',
+      'The role "%s" is deleted for good. This cannot be undone.' => 'Роль «%s» будет удалена навсегда. Это действие нельзя отменить.',
     ),
   ),
 );

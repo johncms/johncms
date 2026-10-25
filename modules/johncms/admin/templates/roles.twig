@@ -1,68 +1,97 @@
 {#
-    The roles of the site and what each of them carries.
+    The roles of the site and what each of them carries, from the highest level down.
 
-    @var array  items           Rows: id, slug, name, level, isSystem, isDefault, isGuest,
-                                permissions, holders, manageable, fullAccess.
+    @var array  roles           Rows built by RoleListRowMapper.
     @var string add_url
     @var string success_message Empty unless a save has just succeeded.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
+{% block page_actions %}
+    <a class="btn btn-primary" href="{{ add_url }}">
+        {% include '@admin/components/ui/icon.twig' with {name: 'plus', size: 14} only %}
+        {{ __('New role') }}
+    </a>
+{% endblock %}
+
 {% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
 
-    <div class="alert alert-info">
+    <p class="text-body-secondary">
         {{ __('A role carries the permissions the code checks. The "Guest" role decides what the site shows without signing in, and "User" applies to everybody who is signed in.') }}
-    </div>
+    </p>
 
-    {% for item in items %}
-        <div class="new_post-item without_avatar">
-            <div class="d-flex justify-content-between align-items-center">
-                {% if item.manageable %}
-                    <a href="/admin/roles/{{ item.id }}/edit" class="h3">{{ item.name }}</a>
-                {% else %}
-                    <span class="h3">{{ item.name }}</span>
-                {% endif %}
-                <div>
-                    {% if item.fullAccess %}
-                        <span class="badge rounded-pill bg-warning text-dark">{{ __('Full access') }}</span>
-                    {% endif %}
-                    {% if item.isGuest %}
-                        <span class="badge rounded-pill bg-secondary">{{ __('Guests') }}</span>
-                    {% endif %}
-                    {% if item.isDefault %}
-                        <span class="badge rounded-pill bg-secondary">{{ __('Everybody signed in') }}</span>
-                    {% endif %}
-                    {% if item.isSystem %}
-                        <span class="badge rounded-pill bg-light text-dark">{{ __('Built-in') }}</span>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="text-muted small">
-                <code>{{ item.slug }}</code> · {{ __('Level:') }} {{ item.level }}
-                {% if not item.fullAccess %}
-                    · {{ __('Permissions:') }} {{ item.permissions }}
-                {% endif %}
-                {% if not item.isDefault and not item.isGuest %}
-                    · {{ __('Accounts:') }} {{ item.holders }}
-                {% endif %}
-            </div>
-            {% if item.manageable %}
-                <div class="mt-2 d-flex align-items-center">
-                    <a href="/admin/roles/{{ item.id }}/edit" class="me-2">{{ __('Edit') }}</a>
-                    {% if not item.isSystem %}
-                        <a href="/admin/roles/{{ item.id }}/delete" class="me-2 text-danger">{{ __('Delete') }}</a>
-                    {% endif %}
-                </div>
-            {% endif %}
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-hover admin-roles-table">
+                <thead>
+                    <tr>
+                        <th scope="col">{{ __('Role') }}</th>
+                        <th scope="col" class="text-end">{{ __('Level') }}</th>
+                        <th scope="col" class="text-end">{{ __('Permissions') }}</th>
+                        <th scope="col">{{ __('Accounts') }}</th>
+                        <th scope="col"><span class="visually-hidden">{{ __('Actions') }}</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for role in roles %}
+                        <tr{% if not role.edit_url %} class="admin-roles-table__locked"{% endif %}>
+                            <td>
+                                <div class="admin-roles-table__name">
+                                    {% if role.edit_url %}
+                                        <a href="{{ role.edit_url }}">{{ role.name }}</a>
+                                    {% else %}
+                                        {{ role.name }}
+                                    {% endif %}
+                                    {% if role.full_access %}
+                                        <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis">{{ __('Full access') }}</span>
+                                    {% endif %}
+                                    {% if role.is_system %}
+                                        <span class="badge rounded-pill text-bg-light">{{ __('Built-in') }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="admin-roles-table__sub">{{ role.slug }}</div>
+                            </td>
+                            <td class="text-end admin-roles-table__number">{{ role.level }}</td>
+                            <td class="text-end admin-roles-table__number">
+                                {%- if role.full_access -%}
+                                    <span class="text-body-tertiary">{{ __('all') }}</span>
+                                {%- else -%}
+                                    {{ role.permissions }}
+                                {%- endif -%}
+                            </td>
+                            <td>
+                                {% if role.holders.count is null %}
+                                    <span class="text-body-secondary">{{ role.holders.group }}</span>
+                                {% elseif role.holders.url %}
+                                    <a class="admin-roles-table__number" href="{{ role.holders.url }}">{{ role.holders.count|format_number }}</a>
+                                {% else %}
+                                    <span class="admin-roles-table__number text-body-tertiary">0</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="admin-roles-table__actions">
+                                    {% if role.edit_url %}
+                                        <a class="btn btn-outline-secondary btn-icon btn-sm" href="{{ role.edit_url }}" aria-label="{{ __('Edit') }}" title="{{ __('Edit') }}">
+                                            {% include '@admin/components/ui/icon.twig' with {name: 'pencil', size: 14} only %}
+                                        </a>
+                                    {% else %}
+                                        <span class="btn btn-icon btn-sm border-0 admin-roles-table__lock" title="{{ __('This role stands above your own') }}">
+                                            {% include '@admin/components/ui/icon.twig' with {name: 'lock', size: 14} only %}
+                                            <span class="visually-hidden">{{ __('This role stands above your own') }}</span>
+                                        </span>
+                                    {% endif %}
+                                    {% if role.delete_url %}
+                                        <a class="btn btn-outline-danger btn-icon btn-sm" href="{{ role.delete_url }}" data-admin-modal aria-label="{{ __('Delete') }}" title="{{ __('Delete') }}">
+                                            {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-    {% endfor %}
-
-    <div class="mt-2">
-        <div class="mb-2">{{ __('Total:') }} {{ items|length }}</div>
-        <a href="{{ add_url }}" class="btn btn-primary">{{ __('Add') }}</a>
-    </div>
-    <div class="mt-2">
-        <a href="/admin">{{ __('Back') }}</a>
     </div>
 {% endblock %}

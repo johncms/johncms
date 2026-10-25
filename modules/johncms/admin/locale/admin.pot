@@ -63,11 +63,12 @@ msgid "Search"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:39
-#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:69
-#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:133
-#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:245
-#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:322
-#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:333
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:71
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:168
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:276
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:364
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:372
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:383
 #: modules/johncms/admin/src/Application/Services/AdminUserRowMapper.php:102
 #: modules/johncms/admin/src/Application/Services/UserActionsMapper.php:61
 #: modules/johncms/admin/templates/style-guide/examples/dropdown.twig:16
@@ -308,7 +309,6 @@ msgstr ""
 #: modules/johncms/admin/templates/karma.twig:44
 #: modules/johncms/admin/templates/modules-confirm.twig:62
 #: modules/johncms/admin/templates/modules-upload.twig:30
-#: modules/johncms/admin/templates/role-delete-confirm.twig:25
 #: modules/johncms/admin/templates/role-form.twig:121
 #: modules/johncms/admin/templates/smilies.twig:21
 #: modules/johncms/admin/templates/style-guide/examples/card.twig:15
@@ -325,39 +325,72 @@ msgid "Cancel"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Access/ExternalProvidersController.php:70
-#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:195
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:226
 #: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:94
 #: modules/johncms/admin/templates/style-guide/examples/alerts.twig:1
 msgid "Changes saved successfully"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:129
-#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:157
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:124
+msgid "Delete role"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:138
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:188
 msgid "A built-in role cannot be deleted"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:132
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:155
-msgid "Delete:"
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:142
+#, php-format
+msgid "The role \"%s\" is deleted for good. This cannot be undone."
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:162
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:145
+msgid "It is held by one account, which loses everything the role granted it."
+msgid_plural "It is held by %d accounts, which lose everything the role granted them."
+msgstr[0] ""
+
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:160
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:123
+#: modules/johncms/admin/src/Application/Controllers/Users/RegistrationModerationController.php:88
+#: modules/johncms/admin/src/Application/Controllers/Users/RegistrationModerationController.php:151
+#: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:138
+#: modules/johncms/admin/src/Application/Services/UserActionsMapper.php:92
+#: modules/johncms/admin/src/Application/Services/UserActionsMapper.php:95
+#: modules/johncms/admin/templates/ad-confirm.twig:18
+#: modules/johncms/admin/templates/ads.twig:59
+#: modules/johncms/admin/templates/counter-delete-confirm.twig:20
+#: modules/johncms/admin/templates/counter-view.twig:51
+#: modules/johncms/admin/templates/counters.twig:39
+#: modules/johncms/admin/templates/languages-manage.twig:51
+#: modules/johncms/admin/templates/roles.twig:85
+#: modules/johncms/admin/templates/style-guide/examples/buttons-sizes.twig:17
+#: modules/johncms/admin/templates/style-guide/examples/dialog.twig:14
+#: modules/johncms/admin/templates/style-guide/examples/modal.twig:17
+#: modules/johncms/admin/templates/style-guide/examples/row-actions.twig:7
+#: modules/johncms/admin/templates/users-cleanup.twig:25
+#: modules/johncms/admin/templates/users/delete-dialog.twig:57
+msgid "Delete"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:193
 msgid "The role is deleted"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:198
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:229
 msgid "A role with this identifier already exists"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:229
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:260
 msgid "The identifier may hold lower case letters, digits and hyphens, and starts with a letter"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:243
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:274
+#: modules/johncms/admin/templates/roles.twig:13
 msgid "New role"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:243
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:274
 msgid "Role:"
 msgstr ""
 
@@ -587,29 +620,6 @@ msgstr ""
 msgid "Link successfully added"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:123
-#: modules/johncms/admin/src/Application/Controllers/Users/RegistrationModerationController.php:88
-#: modules/johncms/admin/src/Application/Controllers/Users/RegistrationModerationController.php:151
-#: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:138
-#: modules/johncms/admin/src/Application/Services/UserActionsMapper.php:92
-#: modules/johncms/admin/src/Application/Services/UserActionsMapper.php:95
-#: modules/johncms/admin/templates/ad-confirm.twig:18
-#: modules/johncms/admin/templates/ads.twig:59
-#: modules/johncms/admin/templates/counter-delete-confirm.twig:20
-#: modules/johncms/admin/templates/counter-view.twig:51
-#: modules/johncms/admin/templates/counters.twig:39
-#: modules/johncms/admin/templates/languages-manage.twig:51
-#: modules/johncms/admin/templates/role-delete-confirm.twig:24
-#: modules/johncms/admin/templates/roles.twig:54
-#: modules/johncms/admin/templates/style-guide/examples/buttons-sizes.twig:17
-#: modules/johncms/admin/templates/style-guide/examples/dialog.twig:14
-#: modules/johncms/admin/templates/style-guide/examples/modal.twig:17
-#: modules/johncms/admin/templates/style-guide/examples/row-actions.twig:7
-#: modules/johncms/admin/templates/users-cleanup.twig:25
-#: modules/johncms/admin/templates/users/delete-dialog.twig:57
-msgid "Delete"
-msgstr ""
-
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:128
 msgid "Are you sure want to delete link?"
 msgstr ""
@@ -648,7 +658,7 @@ msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:305
 #: modules/johncms/admin/src/Application/Services/AdRowMapper.php:121
-#: modules/johncms/admin/templates/roles.twig:31
+#: modules/johncms/admin/src/Application/Services/RoleListRowMapper.php:57
 msgid "Guests"
 msgstr ""
 
@@ -723,8 +733,11 @@ msgstr ""
 msgid "Viewing"
 msgstr ""
 
+#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:155
+msgid "Delete:"
+msgstr ""
+
 #: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:160
-#: modules/johncms/admin/templates/role-delete-confirm.twig:13
 msgid "Do you really want to delete?"
 msgstr ""
 
@@ -1093,7 +1106,7 @@ msgstr ""
 #: modules/johncms/admin/templates/ads.twig:58
 #: modules/johncms/admin/templates/counter-view.twig:50
 #: modules/johncms/admin/templates/counters.twig:38
-#: modules/johncms/admin/templates/roles.twig:52
+#: modules/johncms/admin/templates/roles.twig:75
 #: modules/johncms/admin/templates/style-guide/examples/buttons-sizes.twig:14
 #: modules/johncms/admin/templates/style-guide/examples/buttons-sizes.twig:20
 #: modules/johncms/admin/templates/style-guide/examples/dropdown.twig:3
@@ -1208,6 +1221,10 @@ msgstr ""
 msgid "Second IP is entered incorrectly"
 msgstr ""
 
+#: modules/johncms/admin/src/Application/Services/RoleListRowMapper.php:58
+msgid "Everybody signed in"
+msgstr ""
+
 #: modules/johncms/admin/src/Application/Services/UserActionsMapper.php:49
 #: modules/johncms/admin/templates/style-guide/examples/row-actions.twig:5
 #: modules/johncms/admin/templates/user/edit.twig:50
@@ -1303,6 +1320,7 @@ msgid "Staff"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:155
+#: modules/johncms/admin/templates/roles.twig:29
 #: modules/johncms/admin/templates/style-guide/examples/filter-chips.twig:4
 #: modules/johncms/admin/templates/style-guide/examples/toolbar.twig:11
 msgid "Role"
@@ -1530,7 +1548,6 @@ msgstr ""
 #: modules/johncms/admin/templates/counters.twig:46
 #: modules/johncms/admin/templates/ip-bans.twig:46
 #: modules/johncms/admin/templates/ip-search.twig:57
-#: modules/johncms/admin/templates/roles.twig:62
 msgid "Total:"
 msgstr ""
 
@@ -1549,7 +1566,6 @@ msgstr ""
 #: modules/johncms/admin/templates/ip-search.twig:61
 #: modules/johncms/admin/templates/languages-manage.twig:63
 #: modules/johncms/admin/templates/role-form.twig:118
-#: modules/johncms/admin/templates/roles.twig:66
 msgid "Back"
 msgstr ""
 
@@ -1716,7 +1732,6 @@ msgstr ""
 
 #: modules/johncms/admin/templates/counters.twig:48
 #: modules/johncms/admin/templates/ip-bans.twig:54
-#: modules/johncms/admin/templates/roles.twig:63
 #: modules/johncms/admin/templates/style-guide/examples/buttons-sizes.twig:10
 msgid "Add"
 msgstr ""
@@ -2210,11 +2225,6 @@ msgstr ""
 msgid "Short name"
 msgstr ""
 
-#: modules/johncms/admin/templates/role-delete-confirm.twig:17
-msgid "It is held by one account, which loses everything the role granted it."
-msgid_plural "It is held by %d accounts, which lose everything the role granted them."
-msgstr[0] ""
-
 #: modules/johncms/admin/templates/role-form.twig:27
 msgid "This is a built-in role: its name and its level are fixed, because the code refers to them. What it may do is yours to change."
 msgstr ""
@@ -2228,6 +2238,7 @@ msgid "Used in code and cannot be changed later, for example: news-editor"
 msgstr ""
 
 #: modules/johncms/admin/templates/role-form.twig:63
+#: modules/johncms/admin/templates/roles.twig:30
 msgid "Level"
 msgstr ""
 
@@ -2236,6 +2247,7 @@ msgid "Who outranks whom. A role cannot be placed above your own."
 msgstr ""
 
 #: modules/johncms/admin/templates/role-form.twig:76
+#: modules/johncms/admin/templates/roles.twig:31
 msgid "Permissions"
 msgstr ""
 
@@ -2247,33 +2259,40 @@ msgstr ""
 msgid "The role also carries permissions no installed module declares. They are kept as they are:"
 msgstr ""
 
-#: modules/johncms/admin/templates/roles.twig:15
+#: modules/johncms/admin/templates/roles.twig:21
 msgid "A role carries the permissions the code checks. The \"Guest\" role decides what the site shows without signing in, and \"User\" applies to everybody who is signed in."
 msgstr ""
 
-#: modules/johncms/admin/templates/roles.twig:28
-msgid "Full access"
+#: modules/johncms/admin/templates/roles.twig:32
+msgid "Accounts"
 msgstr ""
 
-#: modules/johncms/admin/templates/roles.twig:34
-msgid "Everybody signed in"
-msgstr ""
-
-#: modules/johncms/admin/templates/roles.twig:37
-msgid "Built-in"
-msgstr ""
-
-#: modules/johncms/admin/templates/roles.twig:42
-#: modules/johncms/admin/templates/user-roles.twig:45
-msgid "Level:"
-msgstr ""
-
-#: modules/johncms/admin/templates/roles.twig:44
-msgid "Permissions:"
+#: modules/johncms/admin/templates/roles.twig:33
+#: modules/johncms/admin/templates/style-guide/examples/row-actions.twig:3
+#: modules/johncms/admin/templates/user/bans.twig:45
+#: modules/johncms/admin/templates/user/bans.twig:76
+#: modules/johncms/admin/templates/user/layout.twig:40
+#: modules/johncms/admin/templates/users/results.twig:33
+#: modules/johncms/admin/templates/users/results.twig:94
+msgid "Actions"
 msgstr ""
 
 #: modules/johncms/admin/templates/roles.twig:47
-msgid "Accounts:"
+msgid "Full access"
+msgstr ""
+
+#: modules/johncms/admin/templates/roles.twig:50
+msgid "Built-in"
+msgstr ""
+
+#: modules/johncms/admin/templates/roles.twig:58
+msgid "all"
+msgstr ""
+
+#: modules/johncms/admin/templates/roles.twig:79
+#: modules/johncms/admin/templates/roles.twig:81
+#: modules/johncms/admin/templates/user-roles.twig:63
+msgid "This role stands above your own"
 msgstr ""
 
 #: modules/johncms/admin/templates/settings.twig:22
@@ -2664,15 +2683,6 @@ msgstr ""
 msgid "The account and everything it wrote will be removed. This cannot be undone."
 msgstr ""
 
-#: modules/johncms/admin/templates/style-guide/examples/row-actions.twig:3
-#: modules/johncms/admin/templates/user/bans.twig:45
-#: modules/johncms/admin/templates/user/bans.twig:76
-#: modules/johncms/admin/templates/user/layout.twig:40
-#: modules/johncms/admin/templates/users/results.twig:33
-#: modules/johncms/admin/templates/users/results.twig:94
-msgid "Actions"
-msgstr ""
-
 #: modules/johncms/admin/templates/style-guide/examples/sort-header.twig:7
 #: modules/johncms/admin/templates/style-guide/examples/table.twig:12
 #: modules/johncms/admin/templates/user/edit.twig:65
@@ -2708,6 +2718,10 @@ msgstr ""
 msgid "Everybody signed in holds the \"%s\" role; it is not given out."
 msgstr ""
 
+#: modules/johncms/admin/templates/user-roles.twig:45
+msgid "Level:"
+msgstr ""
+
 #: modules/johncms/admin/templates/user-roles.twig:47
 msgid "Expired"
 msgstr ""
@@ -2718,10 +2732,6 @@ msgstr ""
 
 #: modules/johncms/admin/templates/user-roles.twig:60
 msgid "Leave empty to grant it without an end date"
-msgstr ""
-
-#: modules/johncms/admin/templates/user-roles.twig:63
-msgid "This role stands above your own"
 msgstr ""
 
 #: modules/johncms/admin/templates/user-roles.twig:75
