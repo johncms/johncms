@@ -17,7 +17,6 @@
       'Settings' => 'Настройки',
       'Settings saved!' => 'Настройки сохранены!',
       'Create section' => 'Создать раздел',
-      'The section name cannot be empty' => 'Название раздела не может быть пустым',
       'The section was created successfully' => 'Раздел успешно создан',
       'A section with this code already exists' => 'Раздел с таким кодом уже существует',
       'Edit section' => 'Редактировать раздел',
@@ -174,6 +173,7 @@
       'The article is not saved: check the fields marked below.' => 'Статья не сохранена: проверьте отмеченные поля.',
       'The last part of the address of the article. Left empty, it is made of the name.' => 'Последняя часть адреса статьи. Если оставить пустым, код составится из названия.',
       'dd.mm.yyyy hh:mm' => 'дд.мм.гггг чч:мм',
+      'Choose one of the sections, not this one or a section under it' => 'Выберите один из разделов, но не этот и не вложенный в него',
     ),
   ),
 );

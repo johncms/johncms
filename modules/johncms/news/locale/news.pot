@@ -7,7 +7,7 @@ msgid "The requested article was not found."
 msgstr ""
 
 #: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:44
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:33
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:38
 #: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:148
 #: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:163
 #: modules/johncms/news/src/Application/Controllers/Admin/DeleteArticleController.php:52
@@ -34,32 +34,22 @@ msgstr ""
 msgid "Settings saved!"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:48
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:63
-msgid "Create section"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:85
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:163
-msgid "The section name cannot be empty"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:111
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:56
 msgid "The section was created successfully"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:114
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:185
-msgid "A section with this code already exists"
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:65
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:67
+msgid "Create section"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:134
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:135
-msgid "Edit section"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:182
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:96
 msgid "The section was updated successfully"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:106
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:108
+msgid "Edit section"
 msgstr ""
 
 #: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:62
@@ -266,6 +256,14 @@ msgstr ""
 
 #: modules/johncms/news/src/Application/UseCases/SaveArticleUseCase.php:133
 msgid "Enter the date as dd.mm.yyyy hh:mm"
+msgstr ""
+
+#: modules/johncms/news/src/Application/UseCases/SaveSectionUseCase.php:82
+msgid "Choose one of the sections, not this one or a section under it"
+msgstr ""
+
+#: modules/johncms/news/src/Application/UseCases/SaveSectionUseCase.php:87
+msgid "A section with this code already exists"
 msgstr ""
 
 #: modules/johncms/news/src/Install/Installer.php:36

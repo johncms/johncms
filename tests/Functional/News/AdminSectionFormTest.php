@@ -60,15 +60,14 @@ final class AdminSectionFormTest extends FunctionalTestCase
         self::assertSame(1, NewsSection::query()->where('code', 'taken')->count());
     }
 
-    public function testACodeTakenAtTheRootIsAllowedAgain(): void
+    public function testACodeTakenAtTheRootIsRefused(): void
     {
         $this->section('Taken', 'taken');
 
-        // Odd: the root is looked for as a null parent, while the form stores 0 — the check finds
-        // nothing there, and two sections at the top get the same address.
-        $this->postForm('/admin/news/add_section/0', ['name' => 'Another', 'code' => 'taken'], FunctionalUserFactory::createSupervisor());
+        $response = $this->postForm('/admin/news/add_section/0', ['name' => 'Another', 'code' => 'taken'], FunctionalUserFactory::createSupervisor());
 
-        self::assertSame(2, NewsSection::query()->where('code', 'taken')->count());
+        self::assertSame(Response::HTTP_OK, $response->getStatusCode());
+        self::assertSame(1, NewsSection::query()->where('code', 'taken')->count());
     }
 
     public function testAnUnknownSectionToAddUnderIsNotFound(): void
@@ -101,6 +100,20 @@ final class AdminSectionFormTest extends FunctionalTestCase
         self::assertSame('Versions', $changed->name);
         self::assertSame('versions', $changed->code);
         self::assertSame($parent, $changed->parent);
+    }
+
+    public function testANewCodeChangesTheAddressesOfTheArticles(): void
+    {
+        $section = $this->section('Releases', 'releases');
+        Fixture::insert('news_articles', ['name' => 'Ten', 'code' => 'ten', 'section_id' => $section, 'active' => 1, 'created_at' => date('Y-m-d H:i:s')]);
+        $supervisor = FunctionalUserFactory::createSupervisor();
+        $cookies = $this->actingAs($supervisor);
+        // The list asks for the path of the section, which the tree keeps in the cache.
+        self::assertStringContainsString('href="/news/releases/ten.html"', (string) $this->handleRequest('/admin/news', cookies: $cookies)->getContent());
+
+        $this->postForm('/admin/news/edit_section/' . $section, ['name' => 'Releases', 'code' => 'versions'], $supervisor);
+
+        self::assertStringContainsString('href="/news/versions/ten.html"', (string) $this->handleRequest('/admin/news', cookies: $cookies)->getContent());
     }
 
     public function testAChangeToACodeTakenBesideItIsRefused(): void

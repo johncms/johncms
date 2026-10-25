@@ -84,11 +84,6 @@ msgstr "Настройки сохранены!"
 msgid "Create section"
 msgstr "Создать раздел"
 
-#: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:90
-#: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:172
-msgid "The section name cannot be empty"
-msgstr "Название раздела не может быть пустым"
-
 #: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:116
 msgid "The section was created successfully"
 msgstr "Раздел успешно создан"
@@ -646,3 +641,6 @@ msgstr "Последняя часть адреса статьи. Если ост
 
 msgid "dd.mm.yyyy hh:mm"
 msgstr "дд.мм.гггг чч:мм"
+
+msgid "Choose one of the sections, not this one or a section under it"
+msgstr "Выберите один из разделов, но не этот и не вложенный в него"

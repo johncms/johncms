@@ -62,6 +62,33 @@ final class EloquentNewsSectionRepository implements NewsSectionRepositoryInterf
             ->get();
     }
 
+    public function isCodeTaken(string $code, int $parentId, ?int $exceptId = null): bool
+    {
+        $query = NewsSection::query()->where('code', $code);
+
+        if ($parentId === NewsListFilter::ROOT) {
+            $query->where(static fn (Builder $query) => $query->where('parent', 0)->orWhereNull('parent'));
+        } else {
+            $query->where('parent', $parentId);
+        }
+
+        if ($exceptId !== null) {
+            $query->where('id', '!=', $exceptId);
+        }
+
+        return $query->exists();
+    }
+
+    public function create(array $attributes): NewsSection
+    {
+        return NewsSection::query()->create($attributes);
+    }
+
+    public function update(NewsSection $section, array $attributes): void
+    {
+        $section->update($attributes);
+    }
+
     public function deleteByIds(array $ids): void
     {
         if ($ids === []) {

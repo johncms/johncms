@@ -2185,54 +2185,6 @@ parameters:
 			path: modules/johncms/news/src/Application/Article.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$code\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$description\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$keywords\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name\.$#'
-			identifier: property.notFound
-			count: 2
-			path: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$parent\.$#'
-			identifier: property.notFound
-			count: 3
-			path: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$parentSection\.$#'
-			identifier: property.notFound
-			count: 2
-			path: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$text\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Collection\<int, Illuminate\\Database\\Eloquent\\Model\>\|Illuminate\\Database\\Eloquent\\Model\:\:\$user_id\.$#'
 			identifier: property.notFound
 			count: 1

@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Controllers\Admin;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Str;
-use Johncms\Modules\News\Application\Section;
-use Johncms\Modules\News\Application\Utils\Helpers;
-use Johncms\Modules\News\Domain\Models\NewsSection;
-use Johncms\Http\Session;
-use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\News\Application\DTO\SectionFormDTO;
+use Johncms\Modules\News\Application\Exceptions\SectionFormException;
+use Johncms\Modules\News\Application\Exceptions\SectionNotFoundException;
+use Johncms\Modules\News\Application\UseCases\GetSectionTreeUseCase;
+use Johncms\Modules\News\Application\UseCases\GetSectionUseCase;
+use Johncms\Modules\News\Application\UseCases\SaveSectionUseCase;
+use Johncms\Modules\News\Application\Utils\Helpers;
+use Johncms\NavChain;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,6 +22,9 @@ final readonly class AdminSectionController
 {
     public function __construct(
         private NavChain $navChain,
+        private GetSectionUseCase $getSection,
+        private GetSectionTreeUseCase $getTree,
+        private SaveSectionUseCase $saveSection,
         private Session $session,
     ) {
     }
@@ -34,161 +39,105 @@ final readonly class AdminSectionController
     }
 
     /**
-     * Section creation page
-     *
-     * @param Request $request
-     * @param Section $section_service
-     * @param int $section_id
-     * @return Response
+     * Adding a section under the section of the address.
      */
-    public function add(Request $request, Section $section_service, int $section_id = 0): Response | ViewResponse
+    public function add(Request $request, int $section_id = 0): Response | ViewResponse
     {
-        $this->addSectionBreadcrumbs();
-
-        $pageTitle = __('Create section');
-
-        if (! empty($section_id)) {
-            try {
-                $current_section = (new NewsSection())->findOrFail($section_id);
-
-                Helpers::buildAdminBreadcrumbs($current_section->parentSection);
-
-                // Adding the current section to the navigation chain
-                $this->navChain->add($current_section->name, '/admin/news/content/' . $current_section->id);
-            } catch (ModelNotFoundException $exception) {
-                pageNotFound();
-            }
-        }
-
-        $this->navChain->add(__('Create section'));
-
-        $data = [
-            'action_url' => '/admin/news/add_section/' . $section_id,
-            'back_url'   => '/admin/news/content/' . $section_id,
-            'section_id' => $section_id,
-            'fields'     => [
-                'parent'      => $section_id,
-                'name'        => $request->body('name', ''),
-                'code'        => $request->body('code', ''),
-                'keywords'    => $request->body('keywords', ''),
-                'description' => $request->body('description', ''),
-                'text'        => $request->body('text', ''),
-            ],
-        ];
-
-        $data['fields'] = array_map('trim', $data['fields']);
-
-        $errors = [];
-        // Processing the sent data from the form.
-        if ($request->getMethod() === 'POST') {
-            if (empty($data['fields']['name'])) {
-                $errors[] = __('The section name cannot be empty');
-            }
-
-            // Code generation
-            if (empty($data['fields']['code'])) {
-                $data['fields']['code'] = Str::slug($data['fields']['name']);
-            } else {
-                $data['fields']['code'] = Str::slug($data['fields']['code']);
-            }
-
-            if (empty($errors)) {
-                if (! empty($section_id)) {
-                    $check = (new NewsSection())
-                        ->where('code', $data['fields']['code'])
-                        ->where('parent', $section_id)
-                        ->first();
-                } else {
-                    $check = (new NewsSection())
-                        ->where('code', $data['fields']['code'])
-                        ->whereNull('parent')
-                        ->first();
-                }
-
-                if (! $check) {
-                    (new NewsSection())->create($data['fields']);
-                    $section_service->clearCache();
-                    $this->session->flash('success_message', __('The section was created successfully'));
-                    return new RedirectResponse('/admin/news/content/' . $section_id);
-                }
-                $errors[] = __('A section with this code already exists');
-            }
-        }
-
-        $data['errors'] = $errors;
-
-        return new ViewResponse('@news/admin/section-form.twig', $this->menu($pageTitle) + $data);
-    }
-
-    /**
-     * The edit section page
-     *
-     * @param int $section_id
-     * @param Request $request
-     * @return Response
-     */
-    public function edit(int $section_id, Request $request): Response | ViewResponse
-    {
-        $this->addSectionBreadcrumbs();
-
-        $this->navChain->add(__('Edit section'));
-        $pageTitle = __('Edit section');
-
-        try {
-            $section = (new NewsSection())->findOrFail($section_id);
-            Helpers::buildAdminBreadcrumbs($section->parentSection);
-        } catch (ModelNotFoundException $exception) {
+        if ($section_id !== 0 && ! $this->getTree->execute()->has($section_id)) {
             pageNotFound();
         }
 
-        $data = [
-            'action_url' => '/admin/news/edit_section/' . $section_id,
-            'back_url'   => '/admin/news/content/' . $section->parent,
-            'section_id' => $section_id,
-            'fields'     => [
-                'name'        => $request->body('name', (string) $section->name),
-                'code'        => $request->body('code', (string) $section->code),
-                'keywords'    => $request->body('keywords', (string) $section->keywords),
-                'description' => $request->body('description', (string) $section->description),
-                'text'        => $request->body('text', (string) $section->text),
-            ],
-        ];
-
-        $data['fields'] = array_map('trim', $data['fields']);
-
+        $form = $this->form($request, $section_id);
         $errors = [];
-        // Processing the sent data from the form.
+
         if ($request->getMethod() === 'POST') {
-            if (empty($data['fields']['name'])) {
-                $errors[] = __('The section name cannot be empty');
-            }
+            try {
+                $this->saveSection->create($form);
+                $this->session->flash('success_message', __('The section was created successfully'));
 
-            // Code generation
-            if (empty($data['fields']['code'])) {
-                $data['fields']['code'] = Str::slug($data['fields']['name']);
-            } else {
-                $data['fields']['code'] = Str::slug($data['fields']['code']);
-            }
-
-            if (empty($errors)) {
-                $check = (new NewsSection())
-                    ->where('code', $data['fields']['code'])
-                    ->where('id', '!=', $section_id)
-                    ->where('parent', '=', $section->parent)
-                    ->first();
-
-                if (! $check) {
-                    $section->update($data['fields']);
-                    $this->session->flash('success_message', __('The section was updated successfully'));
-                    return new RedirectResponse('/admin/news/content/' . $section->parent);
-                }
-                $errors[] = __('A section with this code already exists');
+                return new RedirectResponse('/admin/news/content/' . $section_id);
+            } catch (SectionFormException $e) {
+                $errors = $e->errors;
             }
         }
 
-        $data['errors'] = $errors;
+        $this->addSectionBreadcrumbs();
+        $this->navChain->add(__('Create section'));
 
-        return new ViewResponse('@news/admin/section-form.twig', $this->menu($pageTitle) + $data);
+        return new ViewResponse('@news/admin/section-form.twig', $this->menu(__('Create section')) + [
+            'action_url' => '/admin/news/add_section/' . $section_id,
+            'back_url'   => '/admin/news/content/' . $section_id,
+            'section_id' => $section_id,
+            'fields'     => $this->fields($form),
+            'errors'     => array_merge(...array_values($errors)),
+        ]);
+    }
+
+    /**
+     * Changing a section where it stands.
+     */
+    public function edit(int $section_id, Request $request): Response | ViewResponse
+    {
+        try {
+            $section = $this->getSection->execute($section_id);
+        } catch (SectionNotFoundException) {
+            pageNotFound();
+        }
+
+        $parentId = (int) $section->parent;
+        $form = $request->getMethod() === 'POST'
+            ? $this->form($request, $parentId)
+            : new SectionFormDTO($parentId, $section->name, $section->code, (string) $section->keywords, (string) $section->description, (string) $section->text);
+        $errors = [];
+
+        if ($request->getMethod() === 'POST') {
+            try {
+                $this->saveSection->update($section, $form);
+                $this->session->flash('success_message', __('The section was updated successfully'));
+
+                return new RedirectResponse('/admin/news/content/' . $parentId);
+            } catch (SectionFormException $e) {
+                $errors = $e->errors;
+            }
+        }
+
+        $this->addSectionBreadcrumbs();
+        Helpers::buildAdminBreadcrumbs($section->parentSection);
+        $this->navChain->add(__('Edit section'));
+
+        return new ViewResponse('@news/admin/section-form.twig', $this->menu(__('Edit section')) + [
+            'action_url' => '/admin/news/edit_section/' . $section_id,
+            'back_url'   => '/admin/news/content/' . $parentId,
+            'section_id' => $section_id,
+            'fields'     => $this->fields($form),
+            'errors'     => array_merge(...array_values($errors)),
+        ]);
+    }
+
+    private function form(Request $request, int $parentId): SectionFormDTO
+    {
+        return new SectionFormDTO(
+            parentId: $parentId,
+            name: $request->body('name'),
+            code: $request->body('code'),
+            keywords: $request->body('keywords'),
+            description: $request->body('description'),
+            text: $request->body('text'),
+        );
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function fields(SectionFormDTO $form): array
+    {
+        return [
+            'name'        => $form->name,
+            'code'        => $form->code,
+            'keywords'    => $form->keywords,
+            'description' => $form->description,
+            'text'        => $form->text,
+        ];
     }
 
     /**

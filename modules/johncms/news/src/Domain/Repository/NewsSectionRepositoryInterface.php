@@ -45,6 +45,22 @@ interface NewsSectionRepositoryInterface
     public function getList(NewsListFilter $filter, ?array $ids, int $limit, int $offset): Collection;
 
     /**
+     * Whether another section under the parent holds the code. 0 is the root, where the sections
+     * stored without a parent stand as well.
+     */
+    public function isCodeTaken(string $code, int $parentId, ?int $exceptId = null): bool;
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    public function create(array $attributes): NewsSection;
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    public function update(NewsSection $section, array $attributes): void;
+
+    /**
      * @param list<int> $ids
      */
     public function deleteByIds(array $ids): void;
