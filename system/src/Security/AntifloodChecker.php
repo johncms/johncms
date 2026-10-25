@@ -51,15 +51,19 @@ final readonly class AntifloodChecker implements AntifloodCheckerInterface
             1       => $this->hasRecentlyActiveAdmins() ? $day : $night,
             3       => $day,
             4       => $night,
-            default => $this->getLimitByTimeOfDay($day, $night),
+            default => $this->getLimitByTimeOfDay($day, $night, (int) ($config['dayfrom'] ?? 0), (int) ($config['dayto'] ?? 0)),
         };
     }
 
-    private function getLimitByTimeOfDay(int $day, int $night): int
+    /**
+     * The day lasts from the hour it begins up to the hour it ends: with 10 and 22 the day delay
+     * applies from 10:00 to 21:59.
+     */
+    private function getLimitByTimeOfDay(int $day, int $night, int $dayFrom, int $dayTo): int
     {
         $currentHour = (int) date('G');
 
-        return $currentHour > $day && $currentHour < $night ? $day : $night;
+        return $currentHour >= $dayFrom && $currentHour < $dayTo ? $day : $night;
     }
 
     /**

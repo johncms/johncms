@@ -90,9 +90,40 @@ final class AntifloodCheckerTest extends TestCase
         self::assertSame(300, $checker->getRemainingSeconds());
     }
 
-    private function configureAntiflood(int $day, int $night, int $mode): void
+    /**
+     * The day/night mode picks the delay by the hours of the day that are set, not by the delays
+     * themselves. The hours are put around the current one with an hour to spare on either side, so
+     * the hour changing while the test runs changes nothing.
+     */
+    public function testTheDayNightModeAppliesTheDayDelayInTheHoursOfTheDay(): void
     {
-        ConfigRepository::init(['johncms' => ['antiflood' => ['day' => $day, 'night' => $night, 'mode' => $mode]]]);
+        $hour = (int) date('G');
+        $this->configureAntiflood(day: 60, night: 5, mode: 2, dayFrom: $hour - 1, dayTo: $hour + 2);
+
+        $checker = new AntifloodChecker(CurrentUserFactory::withProfile($this->userWhoJustPosted()), $this->accessChecker(allows: false));
+
+        self::assertSame(60, $checker->getRemainingSeconds());
+    }
+
+    public function testTheDayNightModeAppliesTheNightDelayOutsideTheHoursOfTheDay(): void
+    {
+        $hour = (int) date('G');
+        $this->configureAntiflood(day: 5, night: 60, mode: 2, dayFrom: $hour + 2, dayTo: $hour + 3);
+
+        $checker = new AntifloodChecker(CurrentUserFactory::withProfile($this->userWhoJustPosted()), $this->accessChecker(allows: false));
+
+        self::assertSame(60, $checker->getRemainingSeconds());
+    }
+
+    private function configureAntiflood(int $day, int $night, int $mode, int $dayFrom = 10, int $dayTo = 22): void
+    {
+        ConfigRepository::init(['johncms' => ['antiflood' => [
+            'day'     => $day,
+            'night'   => $night,
+            'mode'    => $mode,
+            'dayfrom' => $dayFrom,
+            'dayto'   => $dayTo,
+        ]]]);
     }
 
     private function userWhoJustPosted(): User
