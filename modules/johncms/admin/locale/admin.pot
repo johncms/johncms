@@ -28,7 +28,7 @@ msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:34
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:38
-#: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:130
+#: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:134
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:306
 #: modules/johncms/admin/src/Application/Controllers/Users/DeleteUserController.php:64
 #: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:217
@@ -69,14 +69,17 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:365
 #: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:373
 #: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:384
+#: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:136
+#: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:139
 #: modules/johncms/admin/src/Application/Services/AdminUserRowMapper.php:102
 #: modules/johncms/admin/src/Application/Services/UserActionsMapper.php:61
+#: modules/johncms/admin/src/Application/Services/UserCardMapper.php:114
 #: modules/johncms/admin/templates/style-guide/examples/dropdown.twig:16
 #: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:12
 #: modules/johncms/admin/templates/style-guide/examples/list-group.twig:10
 #: modules/johncms/admin/templates/style-guide/examples/row-actions.twig:6
 #: modules/johncms/admin/templates/style-guide/examples/tabs.twig:8
-#: modules/johncms/admin/templates/user/layout.twig:36
+#: modules/johncms/admin/templates/user-roles.twig:23
 msgid "Roles"
 msgstr ""
 
@@ -316,7 +319,7 @@ msgstr ""
 #: modules/johncms/admin/templates/style-guide/examples/dialog.twig:13
 #: modules/johncms/admin/templates/style-guide/examples/modal.twig:10
 #: modules/johncms/admin/templates/style-guide/examples/modal.twig:16
-#: modules/johncms/admin/templates/user-roles.twig:70
+#: modules/johncms/admin/templates/user-roles.twig:82
 #: modules/johncms/admin/templates/user/ban-dialog.twig:64
 #: modules/johncms/admin/templates/user/edit.twig:107
 #: modules/johncms/admin/templates/user/password.twig:33
@@ -327,7 +330,7 @@ msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Access/ExternalProvidersController.php:70
 #: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:226
-#: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:94
+#: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:98
 #: modules/johncms/admin/templates/style-guide/examples/alerts.twig:1
 msgid "Changes saved successfully"
 msgstr ""
@@ -395,12 +398,11 @@ msgstr ""
 msgid "Role:"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:71
+#: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:75
 msgid "The expiry date is not a date"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:129
-#: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:150
+#: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:158
 msgid "Roles of the user"
 msgstr ""
 
@@ -1103,7 +1105,7 @@ msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:155
 #: modules/johncms/admin/src/Application/Services/UserActionsMapper.php:52
-#: modules/johncms/admin/src/Application/Services/UserCardMapper.php:114
+#: modules/johncms/admin/src/Application/Services/UserCardMapper.php:110
 #: modules/johncms/admin/templates/ads.twig:58
 #: modules/johncms/admin/templates/counter-view.twig:50
 #: modules/johncms/admin/templates/counters.twig:38
@@ -1116,7 +1118,6 @@ msgstr ""
 #: modules/johncms/admin/templates/style-guide/examples/table.twig:24
 #: modules/johncms/admin/templates/style-guide/examples/table.twig:36
 #: modules/johncms/admin/templates/style-guide/examples/table.twig:47
-#: modules/johncms/admin/templates/user/layout.twig:30
 msgid "Edit"
 msgstr ""
 
@@ -1253,7 +1254,7 @@ msgstr ""
 msgid "Delete the record"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Services/UserCardMapper.php:111
+#: modules/johncms/admin/src/Application/Services/UserCardMapper.php:107
 msgid "Overview"
 msgstr ""
 
@@ -1324,6 +1325,7 @@ msgstr ""
 #: modules/johncms/admin/templates/roles.twig:29
 #: modules/johncms/admin/templates/style-guide/examples/filter-chips.twig:4
 #: modules/johncms/admin/templates/style-guide/examples/toolbar.twig:11
+#: modules/johncms/admin/templates/user-roles.twig:35
 msgid "Role"
 msgstr ""
 
@@ -1481,7 +1483,7 @@ msgstr ""
 #: modules/johncms/admin/templates/role-form.twig:148
 #: modules/johncms/admin/templates/settings.twig:125
 #: modules/johncms/admin/templates/style-guide/examples/card.twig:16
-#: modules/johncms/admin/templates/user-roles.twig:69
+#: modules/johncms/admin/templates/user-roles.twig:85
 #: modules/johncms/admin/templates/user/edit.twig:110
 msgid "Save"
 msgstr ""
@@ -2243,6 +2245,7 @@ msgstr ""
 #: modules/johncms/admin/templates/role-form.twig:48
 #: modules/johncms/admin/templates/role-form.twig:74
 #: modules/johncms/admin/templates/roles.twig:30
+#: modules/johncms/admin/templates/user-roles.twig:36
 msgid "Level"
 msgstr ""
 
@@ -2284,7 +2287,7 @@ msgstr ""
 #: modules/johncms/admin/templates/style-guide/examples/row-actions.twig:3
 #: modules/johncms/admin/templates/user/bans.twig:45
 #: modules/johncms/admin/templates/user/bans.twig:76
-#: modules/johncms/admin/templates/user/layout.twig:40
+#: modules/johncms/admin/templates/user/layout.twig:28
 #: modules/johncms/admin/templates/users/results.twig:33
 #: modules/johncms/admin/templates/users/results.twig:94
 msgid "Actions"
@@ -2304,7 +2307,8 @@ msgstr ""
 
 #: modules/johncms/admin/templates/roles.twig:79
 #: modules/johncms/admin/templates/roles.twig:81
-#: modules/johncms/admin/templates/user-roles.twig:63
+#: modules/johncms/admin/templates/user-roles.twig:65
+#: modules/johncms/admin/templates/user-roles.twig:67
 msgid "This role stands above your own"
 msgstr ""
 
@@ -2727,28 +2731,25 @@ msgstr ""
 msgid "Value"
 msgstr ""
 
-#: modules/johncms/admin/templates/user-roles.twig:26
+#: modules/johncms/admin/templates/user-roles.twig:24
+msgid "What each role may do"
+msgstr ""
+
+#: modules/johncms/admin/templates/user-roles.twig:28
 msgid "Everybody signed in holds the \"%s\" role; it is not given out."
 msgstr ""
 
-#: modules/johncms/admin/templates/user-roles.twig:45
-msgid "Level:"
+#: modules/johncms/admin/templates/user-roles.twig:37
+#: modules/johncms/admin/templates/user-roles.twig:63
+msgid "Valid until"
 msgstr ""
 
-#: modules/johncms/admin/templates/user-roles.twig:47
+#: modules/johncms/admin/templates/user-roles.twig:52
 msgid "Expired"
 msgstr ""
 
-#: modules/johncms/admin/templates/user-roles.twig:53
-msgid "Until"
-msgstr ""
-
-#: modules/johncms/admin/templates/user-roles.twig:60
-msgid "Leave empty to grant it without an end date"
-msgstr ""
-
-#: modules/johncms/admin/templates/user-roles.twig:75
-msgid "What each role may do"
+#: modules/johncms/admin/templates/user-roles.twig:77
+msgid "Leave the date empty to grant the role without an end date."
 msgstr ""
 
 #: modules/johncms/admin/templates/user/ban-dialog.twig:33

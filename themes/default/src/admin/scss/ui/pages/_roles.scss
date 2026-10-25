@@ -125,3 +125,34 @@
   color: var(--fg-dim);
   overflow-wrap: anywhere;
 }
+
+// The roles of one account (admin::user-roles).
+
+.admin-user-roles-table {
+  td {
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  td:first-child {
+    width: 100%;
+    min-width: 14rem;
+    white-space: normal;
+  }
+
+  .form-check-label {
+    cursor: pointer;
+  }
+}
+
+.admin-user-roles-table__date {
+  width: 11rem;
+}
+
+.admin-user-roles-table__locked-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  color: var(--fg-dim);
+}

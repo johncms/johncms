@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\DTO;
 
+use Johncms\Users\User;
+
 /**
  * The roles of one account, as the screen shows them.
  */
@@ -15,8 +17,7 @@ final readonly class UserRolesDTO
      *                                          their own; shown as a note rather than a checkbox.
      */
     public function __construct(
-        public int $userId,
-        public string $userName,
+        public User $user,
         public array $rows,
         public ?string $defaultRole,
     ) {

@@ -2,7 +2,7 @@
     The pages of one account: its name over them, what can be done to it, and a tab for each page.
 
     @var array  user            Built by UserCardMapper::head(): id, name, approve, confirm_email,
-                                edit_url, roles_url, actions.
+                                actions.
     @var array  tabs            title, url, active.
     @var string success_message Empty unless an action has just been performed.
 
@@ -24,18 +24,6 @@
             </button>
         </form>
     {% endfor %}
-    {% if user.edit_url %}
-        <a class="btn btn-secondary" href="{{ user.edit_url }}">
-            {% include '@admin/components/ui/icon.twig' with {name: 'pencil', size: 14} only %}
-            {{ __('Edit') }}
-        </a>
-    {% endif %}
-    {% if user.roles_url %}
-        <a class="btn btn-secondary" href="{{ user.roles_url }}">
-            {% include '@admin/components/ui/icon.twig' with {name: 'key-round', size: 14} only %}
-            {{ __('Roles') }}
-        </a>
-    {% endif %}
     {% if user.actions is not empty %}
         {% include '@admin/components/ui/row-actions.twig' with {actions: user.actions, label: __('Actions'), size: 'md'} only %}
     {% endif %}

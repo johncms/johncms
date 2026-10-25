@@ -11,6 +11,8 @@ use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Admin\Application\DTO\UserRolesDTO;
 use Johncms\Modules\Admin\Application\Exceptions\RoleAccessDeniedException;
 use Johncms\Modules\Admin\Application\Exceptions\UserNotFoundException;
+use Johncms\Modules\Admin\Application\Services\RoleListRowMapper;
+use Johncms\Modules\Admin\Application\Services\UserCardMapper;
 use Johncms\Modules\Admin\Application\UseCases\EnsureRoleManagementAccessUseCase;
 use Johncms\Modules\Admin\Application\UseCases\EnsureUserRoleAccessUseCase;
 use Johncms\Modules\Admin\Application\UseCases\GetUserRolesUseCase;
@@ -20,7 +22,8 @@ use Johncms\Validator\ValidationResult;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * The roles of one account: which of them it holds, and until when.
+ * The roles of one account: which of them it holds, and until when. A tab of the pages of the
+ * account, under its name and its actions.
  */
 final readonly class UserRolesController
 {
@@ -34,6 +37,7 @@ final readonly class UserRolesController
         private EnsureUserRoleAccessUseCase $ensureUserRoleAccess,
         private GetUserRolesUseCase $getUserRoles,
         private UpdateUserRolesUseCase $updateUserRoles,
+        private UserCardMapper $card,
     ) {
     }
 
@@ -126,18 +130,22 @@ final readonly class UserRolesController
      */
     private function render(UserRolesDTO $context, array $errors = []): ViewResponse
     {
-        $title = __('Roles of the user');
+        $user = $context->user;
         $this->navChain->add(__('Users'), self::URL);
-        $this->navChain->add($title);
+        $this->navChain->add($user->name, self::URL . '/' . $user->id);
+        $this->navChain->add(__('Roles'));
 
-        return new ViewResponse('@admin/user-roles.twig', $this->menu($title) + [
-            'user_name'       => $context->userName,
-            'user_url'        => '/profile/' . $context->userId,
+        return new ViewResponse('@admin/user-roles.twig', [
+            'title'           => $user->name . ' — ' . __('Roles'),
+            'page_title'      => $user->name,
+            'usr_menu'        => ['userlist' => true],
+            'user'            => $this->card->head($user),
+            'tabs'            => $this->card->tabs($user, 'roles'),
             'default_role'    => $context->defaultRole,
             'rows'            => $context->rows,
-            'form_action'     => self::URL . '/' . $context->userId . '/roles',
-            'back_url'        => self::URL,
-            'roles_url'       => '/admin/roles',
+            'form_action'     => self::URL . '/' . $user->id . '/roles',
+            'back_url'        => self::URL . '/' . $user->id,
+            'roles_url'       => RoleListRowMapper::PATH,
             'errors'          => $errors[ValidationResult::FORM_KEY] ?? [],
             'success_message' => (string) $this->session->getFlash('success_message'),
         ]);

@@ -1653,15 +1653,6 @@ msgstr "Используется в коде и потом не меняется
 msgid "Level"
 msgstr "Уровень"
 
-msgid "Level:"
-msgstr "Уровень:"
-
-msgid "Permissions:"
-msgstr "Прав:"
-
-msgid "Accounts:"
-msgstr "Пользователей:"
-
 msgid "Built-in"
 msgstr "Встроенная"
 
@@ -1670,12 +1661,6 @@ msgstr "Все авторизованные"
 
 msgid "Expired"
 msgstr "Истекла"
-
-msgid "Until"
-msgstr "До"
-
-msgid "Leave empty to grant it without an end date"
-msgstr "Оставьте пустым, чтобы выдать бессрочно"
 
 msgid "This role stands above your own"
 msgstr "Эта роль выше вашей собственной"
@@ -2431,3 +2416,9 @@ msgstr "Основное"
 
 msgid "Role name"
 msgstr "Название"
+
+msgid "Leave the date empty to grant the role without an end date."
+msgstr "Оставьте дату пустой, чтобы выдать роль бессрочно."
+
+msgid "Valid until"
+msgstr "Действует до"

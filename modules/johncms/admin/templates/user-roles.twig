@@ -1,78 +1,89 @@
 {#
-    The roles of one account.
+    The roles of one account, a tab of its pages: which it holds, and until when.
 
-    @var string      user_name
-    @var string      user_url
-    @var string|null default_role    The role everybody signed in holds without being given it.
-    @var array       rows            Roles: id, name, slug, level, granted, expiresAt, expired,
-                                     manageable.
+    @var array       user         Built by UserCardMapper::head().
+    @var array       tabs
+    @var string|null default_role The role everybody signed in holds without being given it.
+    @var list<\Johncms\Modules\Admin\Application\DTO\UserRoleRowDTO> rows
     @var string      form_action
     @var string      back_url
-    @var string      roles_url       Where the roles themselves are edited.
-    @var array       errors          Messages about the form as a whole.
-    @var string      success_message Empty unless a save has just succeeded.
+    @var string      roles_url    Where the roles themselves are edited.
+    @var array       errors       Messages about the form as a whole.
 #}
-{% extends '@admin/layouts/default.twig' %}
+{% extends '@admin/user/layout.twig' %}
 
-{% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: errors} only %}
+{% block user_content %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
 
-    <div style="max-width: 720px">
-        <h3><a href="{{ user_url }}">{{ user_name }}</a></h3>
+    <form method="post" action="{{ form_action }}" class="admin-role-form">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
 
-        {% if default_role %}
-            <div class="text-muted small mb-3">
-                {{ __('Everybody signed in holds the "%s" role; it is not given out.')|format(default_role) }}
+        <div class="card">
+            <div class="card-header">
+                <span class="flex-grow-1">{{ __('Roles') }}</span>
+                <a class="small" href="{{ roles_url }}">{{ __('What each role may do') }}</a>
             </div>
-        {% endif %}
-
-        <form method="post" action="{{ form_action }}">
-            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-
-            {% for row in rows %}
-                <div class="border-bottom py-2">
-                    <div class="form-check">
-                        <input type="checkbox"
-                               class="form-check-input"
-                               name="roles[]"
-                               value="{{ row.id }}"
-                               id="role_{{ row.id }}"
-                               {% if row.granted %}checked{% endif %}
-                               {% if not row.manageable %}disabled{% endif %}>
-                        <label class="form-check-label" for="role_{{ row.id }}">
-                            {{ row.name }}
-                            <span class="text-muted small">{{ row.slug }} · {{ __('Level:') }} {{ row.level }}</span>
-                            {% if row.expired %}
-                                <span class="badge rounded-pill bg-danger">{{ __('Expired') }}</span>
-                            {% endif %}
-                        </label>
-                    </div>
-                    {% if row.manageable %}
-                        <div class="mt-1 ms-4">
-                            <label for="expires_{{ row.id }}" class="text-muted small">{{ __('Until') }}</label>
-                            <input type="date"
-                                   class="form-control form-control-sm"
-                                   style="max-width: 220px"
-                                   id="expires_{{ row.id }}"
-                                   name="expires_{{ row.id }}"
-                                   value="{{ row.expiresAt }}">
-                            <div class="text-muted small">{{ __('Leave empty to grant it without an end date') }}</div>
-                        </div>
-                    {% else %}
-                        <div class="mt-1 ms-4 text-muted small">{{ __('This role stands above your own') }}</div>
-                    {% endif %}
+            {% if default_role %}
+                <div class="card-body pb-0 text-body-secondary">
+                    {{ __('Everybody signed in holds the "%s" role; it is not given out.')|format(default_role) }}
                 </div>
-            {% endfor %}
-
-            <div class="mt-3">
-                <input type="submit" value="{{ __('Save') }}" class="btn btn-primary">
-                <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+            {% endif %}
+            <div class="table-responsive">
+                <table class="table admin-user-roles-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ __('Role') }}</th>
+                            <th scope="col" class="text-end">{{ __('Level') }}</th>
+                            <th scope="col">{{ __('Valid until') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in rows %}
+                            <tr{% if not row.manageable %} class="admin-roles-table__locked"{% endif %}>
+                                <td>
+                                    <div class="form-check form-switch mb-0">
+                                        <input type="checkbox" class="form-check-input" role="switch" name="roles[]" value="{{ row.id }}" id="role-{{ row.id }}"
+                                               {% if row.granted %}checked{% endif %}
+                                               {% if not row.manageable %}disabled{% endif %}>
+                                        <label class="form-check-label" for="role-{{ row.id }}">
+                                            <span class="admin-roles-table__name">
+                                                {{ row.name }}
+                                                {% if row.expired %}
+                                                    <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis badge-dot">{{ __('Expired') }}</span>
+                                                {% endif %}
+                                            </span>
+                                            <span class="admin-roles-table__sub d-block">{{ row.slug }}</span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td class="text-end admin-roles-table__number">{{ row.level }}</td>
+                                <td>
+                                    {% if row.manageable %}
+                                        <input type="date" class="form-control form-control-sm admin-user-roles-table__date" id="expires-{{ row.id }}" name="expires_{{ row.id }}"
+                                               value="{{ row.expiresAt }}" aria-label="{{ __('Valid until') }}: {{ row.name }}">
+                                    {% else %}
+                                        <span class="admin-user-roles-table__locked-note" title="{{ __('This role stands above your own') }}">
+                                            {% include '@admin/components/ui/icon.twig' with {name: 'lock', size: 14} only %}
+                                            {{ __('This role stands above your own') }}
+                                        </span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-        </form>
-
-        <div class="mt-3">
-            <a href="{{ roles_url }}">{{ __('What each role may do') }}</a>
+            <div class="card-footer text-body-secondary small">
+                {{ __('Leave the date empty to grant the role without an end date.') }}
+            </div>
         </div>
-    </div>
+
+        <div class="admin-role-form__actions">
+            <a class="btn btn-secondary" href="{{ back_url }}">{{ __('Cancel') }}</a>
+            <button type="submit" class="btn btn-primary">
+                {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
+                {{ __('Save') }}
+            </button>
+        </div>
+    </form>
 {% endblock %}

@@ -37,10 +37,8 @@ final readonly class UserCardMapper
     public function head(User $user): array
     {
         $url = '/admin/users/' . $user->id;
-        $actions = $this->actions->map($user, $url);
-        // The page does not link to itself, and the edit and the roles stand out as buttons.
-        $buttons = array_intersect_key($actions, ['edit' => true, 'roles' => true]);
-        $menu = array_diff_key($actions, ['card' => true, 'edit' => true, 'roles' => true]);
+        // The overview, the edit and the roles are tabs of the pages, so the menu leaves them out.
+        $menu = array_diff_key($this->actions->map($user, $url), ['card' => true, 'edit' => true, 'roles' => true]);
 
         return [
             'id'        => $user->id,
@@ -48,8 +46,6 @@ final readonly class UserCardMapper
             'url'       => $url,
             'approve'   => $this->actions->approve($user, $url),
             'confirm_email' => $this->actions->confirmEmail($user, $url),
-            'edit_url'  => $buttons['edit']['url'] ?? '',
-            'roles_url' => $buttons['roles']['url'] ?? '',
             'actions'   => array_values($menu),
         ];
     }
@@ -112,6 +108,10 @@ final readonly class UserCardMapper
 
         if ($this->access->mayEdit($user)) {
             $tabs['edit'] = [__('Edit'), $url . '/edit'];
+        }
+
+        if ($this->accessChecker->allows(CorePermissions::ADMIN_ROLES_MANAGE)) {
+            $tabs['roles'] = [__('Roles'), $url . '/roles'];
         }
 
         $tabs['bans'] = [__('Bans'), $url . '/bans'];

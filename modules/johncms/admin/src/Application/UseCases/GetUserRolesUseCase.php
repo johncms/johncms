@@ -60,6 +60,6 @@ final readonly class GetUserRolesUseCase
             );
         }
 
-        return new UserRolesDTO($user->id, $user->name, $rows, $defaultRole);
+        return new UserRolesDTO($user, $rows, $defaultRole);
     }
 }
