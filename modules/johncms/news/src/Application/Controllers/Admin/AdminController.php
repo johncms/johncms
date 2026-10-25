@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Johncms\Modules\News\Application\Controllers\Admin;
 
 use Johncms\Http\Session;
-use Johncms\Modules\News\Application\Services\NewsListControlsMapper;
-use Johncms\Modules\News\Domain\ValueObjects\NewsListFilter;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
@@ -17,20 +15,8 @@ final readonly class AdminController
 {
     public function __construct(
         private NavChain $navChain,
-        private NewsListControlsMapper $controls,
         private Session $session,
     ) {
-    }
-
-    /**
-     * The level of the tree the list used to show: the list narrowed to that section now, the
-     * whole list for the root. The forms of the articles and the sections still return here.
-     */
-    public function content(int $section_id = 0): RedirectResponse
-    {
-        $filter = $section_id > 0 ? new NewsListFilter(section: $section_id) : new NewsListFilter();
-
-        return new RedirectResponse($this->controls->url($filter));
     }
 
     /**

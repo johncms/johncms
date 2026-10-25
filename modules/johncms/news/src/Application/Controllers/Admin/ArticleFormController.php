@@ -19,13 +19,12 @@ use Johncms\Modules\News\Application\UseCases\SaveArticleUseCase;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Modules\News\Domain\ValueObjects\NewsListFilter;
 use Johncms\NavChain;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * The form of an article: adding one and changing one.
  *
  * Saving stays on the form of the article, which says so; "save and close" returns to the list of
- * its section. The old addresses of the form lead here.
+ * its section.
  */
 final readonly class ArticleFormController
 {
@@ -83,22 +82,6 @@ final readonly class ArticleFormController
 
         $this->session->flash('success_message', __('The article was updated successfully'));
         redirect($this->afterSave($request, $article->id, $form->sectionId));
-    }
-
-    /**
-     * /admin/news/add_article/{section}, as the form was reached before.
-     */
-    public function legacyCreate(int $section_id = 0): RedirectResponse
-    {
-        return new RedirectResponse('/admin/news/articles/new' . ($section_id > 0 ? '?section=' . $section_id : ''));
-    }
-
-    /**
-     * /admin/news/edit_article/{id}, as the form was reached before.
-     */
-    public function legacyEdit(int $article_id): RedirectResponse
-    {
-        return new RedirectResponse('/admin/news/articles/' . $article_id . '/edit');
     }
 
     private function article(int $id): NewsArticle

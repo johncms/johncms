@@ -147,17 +147,6 @@ final class AdminArticleFormTest extends FunctionalTestCase
         self::assertSame('/admin/news?section=' . $releases, $response->headers->get('Location'));
     }
 
-    public function testTheOldAddressesOfTheFormLeadToTheNewOnes(): void
-    {
-        $releases = $this->section('releases');
-        $article = $this->article('Old news', 'old-news', $releases);
-        $cookies = $this->actingAs(FunctionalUserFactory::createSupervisor());
-
-        self::assertSame('/admin/news/articles/new?section=' . $releases, $this->handleRequest('/admin/news/add_article/' . $releases, cookies: $cookies)->headers->get('Location'));
-        self::assertSame('/admin/news/articles/new', $this->handleRequest('/admin/news/add_article', cookies: $cookies)->headers->get('Location'));
-        self::assertSame('/admin/news/articles/' . $article . '/edit', $this->handleRequest('/admin/news/edit_article/' . $article, cookies: $cookies)->headers->get('Location'));
-    }
-
     public function testTheFormOfAnArticleShowsWhatItHolds(): void
     {
         $article = $this->article('Old news', 'old-news', 0, [

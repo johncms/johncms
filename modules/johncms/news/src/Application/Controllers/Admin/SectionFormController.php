@@ -19,13 +19,12 @@ use Johncms\Modules\News\Domain\Enums\NewsListTab;
 use Johncms\Modules\News\Domain\Models\NewsSection;
 use Johncms\Modules\News\Domain\ValueObjects\NewsListFilter;
 use Johncms\NavChain;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * The form of a section: adding one and changing one, the place in the tree among the rest.
  *
  * Saving stays on the form of the section, which says so; "save and close" returns to the sections
- * beside it. The old addresses of the form lead here.
+ * beside it.
  */
 final readonly class SectionFormController
 {
@@ -82,22 +81,6 @@ final readonly class SectionFormController
 
         $this->session->flash('success_message', __('The section was updated successfully'));
         redirect($this->afterSave($request, $section->id, $form->parentId));
-    }
-
-    /**
-     * /admin/news/add_section/{parent}, as the form was reached before.
-     */
-    public function legacyCreate(int $section_id = 0): RedirectResponse
-    {
-        return new RedirectResponse('/admin/news/sections/new' . ($section_id > 0 ? '?parent=' . $section_id : ''));
-    }
-
-    /**
-     * /admin/news/edit_section/{id}, as the form was reached before.
-     */
-    public function legacyEdit(int $section_id): RedirectResponse
-    {
-        return new RedirectResponse('/admin/news/sections/' . $section_id . '/edit');
     }
 
     private function section(int $id): NewsSection

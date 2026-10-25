@@ -32,25 +32,17 @@ return static function (RouteCollection $router): void {
 
     $admin = $router->group('', function (RouteCollection $router): void {
         $router->get('/admin/news', NewsListController::class)->name('news.admin.index');
-        // The level of the tree the list used to show; the forms still return here.
-        $router->get('/admin/news/content/{section_id:number}', [AdminController::class, 'content'])->name('news.admin.section')->defaults(['section_id' => null]);
         $router->map(['GET', 'POST'], '/admin/news/settings', [AdminController::class, 'settings'])->name('news.admin.settings');
         $router->get('/admin/news/articles/new', [ArticleFormController::class, 'create'])->name('news.admin.add_article');
         $router->post('/admin/news/articles/new', [ArticleFormController::class, 'store'])->name('news.admin.add_article.store');
         $router->get('/admin/news/articles/{id:number}/edit', [ArticleFormController::class, 'edit'])->name('news.admin.edit_article');
         $router->post('/admin/news/articles/{id:number}/edit', [ArticleFormController::class, 'update'])->name('news.admin.edit_article.update');
-        // The addresses the form had before.
-        $router->get('/admin/news/add_article/{section_id:number}', [ArticleFormController::class, 'legacyCreate'])->name('news.admin.add_article.legacy')->defaults(['section_id' => null]);
-        $router->get('/admin/news/edit_article/{article_id:number}', [ArticleFormController::class, 'legacyEdit'])->name('news.admin.edit_article.legacy');
         $router->get('/admin/news/articles/{id:number}/delete', [DeleteArticleController::class, 'index'])->name('news.admin.delete_article');
         $router->post('/admin/news/articles/{id:number}/delete', [DeleteArticleController::class, 'delete'])->name('news.admin.delete_article.run');
         $router->get('/admin/news/sections/new', [SectionFormController::class, 'create'])->name('news.admin.add_section');
         $router->post('/admin/news/sections/new', [SectionFormController::class, 'store'])->name('news.admin.add_section.store');
         $router->get('/admin/news/sections/{id:number}/edit', [SectionFormController::class, 'edit'])->name('news.admin.edit_section');
         $router->post('/admin/news/sections/{id:number}/edit', [SectionFormController::class, 'update'])->name('news.admin.edit_section.update');
-        // The addresses the form had before.
-        $router->get('/admin/news/add_section/{section_id:number}', [SectionFormController::class, 'legacyCreate'])->name('news.admin.add_section.legacy')->defaults(['section_id' => null]);
-        $router->get('/admin/news/edit_section/{section_id:number}', [SectionFormController::class, 'legacyEdit'])->name('news.admin.edit_section.legacy');
         $router->get('/admin/news/sections/{id:number}/delete', [DeleteSectionController::class, 'index'])->name('news.admin.delete_section');
         $router->post('/admin/news/sections/{id:number}/delete', [DeleteSectionController::class, 'delete'])->name('news.admin.delete_section.run');
         $router->post('/admin/news/upload_file', ArticleUploadController::class)->name('news.admin.upload_file');

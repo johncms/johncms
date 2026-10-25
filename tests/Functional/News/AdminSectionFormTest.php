@@ -94,16 +94,6 @@ final class AdminSectionFormTest extends FunctionalTestCase
         self::assertSame('/admin/news?tab=sections&section=' . $releases, $response->headers->get('Location'));
     }
 
-    public function testTheOldAddressesOfTheFormLeadToTheNewOnes(): void
-    {
-        $releases = $this->section('Releases', 'releases');
-        $cookies = $this->actingAs(FunctionalUserFactory::createSupervisor());
-
-        self::assertSame('/admin/news/sections/new?parent=' . $releases, $this->handleRequest('/admin/news/add_section/' . $releases, cookies: $cookies)->headers->get('Location'));
-        self::assertSame('/admin/news/sections/new', $this->handleRequest('/admin/news/add_section', cookies: $cookies)->headers->get('Location'));
-        self::assertSame('/admin/news/sections/' . $releases . '/edit', $this->handleRequest('/admin/news/edit_section/' . $releases, cookies: $cookies)->headers->get('Location'));
-    }
-
     public function testTheFormOfASectionShowsWhatItHolds(): void
     {
         $section = $this->section('Releases', 'releases');

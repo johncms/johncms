@@ -168,14 +168,6 @@ final class AdminNewsListTest extends FunctionalTestCase
         self::assertStringContainsString('data-live-list-region="results"', (string) $response->getContent());
     }
 
-    public function testTheAddressOfALevelOfTheTreeLeadsToTheListOfThatSection(): void
-    {
-        $releases = $this->section('Releases', 'releases');
-
-        self::assertSame('/admin/news?section=' . $releases, $this->request('/admin/news/content/' . $releases)->headers->get('Location'));
-        self::assertSame('/admin/news', $this->request('/admin/news/content')->headers->get('Location'));
-    }
-
     public function testAMemberOfThePanelWithoutThePermissionIsNotLetIn(): void
     {
         $member = FunctionalUserFactory::createWithPermissions([CorePermissions::ADMIN_ACCESS], level: 60);
