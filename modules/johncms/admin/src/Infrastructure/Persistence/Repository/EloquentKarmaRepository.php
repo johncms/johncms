@@ -10,6 +10,11 @@ use Johncms\Users\User;
 
 final class EloquentKarmaRepository implements KarmaRepositoryInterface
 {
+    public function countVotes(): int
+    {
+        return Karma::query()->count();
+    }
+
     public function resetAll(): void
     {
         Karma::query()->truncate();

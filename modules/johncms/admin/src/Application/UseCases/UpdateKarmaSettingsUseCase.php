@@ -25,7 +25,8 @@ final readonly class UpdateKarmaSettingsUseCase
         $config['karma']['karma_points'] = $dto->karmaPoints;
         $config['karma']['forum'] = $dto->forumPosts;
         $config['karma']['on'] = $dto->enabled ? 1 : 0;
-        $config['karma']['adm'] = $dto->forbidAdmin ? 1 : 0;
+        // "adm" lets the staff be voted for: without it nobody may vote for an account holding a role.
+        $config['karma']['adm'] = $dto->staffVotable ? 1 : 0;
 
         $this->configRepository->saveJohncms($config);
     }

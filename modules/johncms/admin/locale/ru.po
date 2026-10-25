@@ -479,10 +479,6 @@ msgstr "Вы не можете удалить старшего Вас по до�
 msgid "Karma"
 msgstr "Карма"
 
-#: modules/admin/src/Application/Controllers/Users/KarmaController.php:74
-msgid "You really want to clear the Karma?"
-msgstr "Вы действительно хотите очистить карму?"
-
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:84
 msgid "Karma is cleared"
 msgstr "Карма очищена"
@@ -1243,14 +1239,6 @@ msgstr "Удалить бан"
 msgid "Enter a single address, mask and range are not allowed"
 msgstr "Вводите одиночный адрес, маска и диапазоны недопустимы"
 
-#: modules/admin/templates/karma.phtml:26
-msgid "Voices per day"
-msgstr "Голосов в сутки"
-
-#: modules/admin/templates/karma.phtml:30
-msgid "Restriction for vote"
-msgstr "Ограничения для голосования"
-
 #: modules/admin/templates/karma.phtml:33
 msgid "Forum posts"
 msgstr "Постов на форуме"
@@ -1262,10 +1250,6 @@ msgstr "Общие настройки"
 #: modules/admin/templates/karma.phtml:41
 msgid "Switch module ON"
 msgstr "Включить модуль"
-
-#: modules/admin/templates/karma.phtml:46
-msgid "Forbid to vote for the administration"
-msgstr "Запретить голосовать за администрацию"
 
 #: modules/admin/templates/karma.phtml:52
 msgid "Clear Karma"
@@ -2552,3 +2536,45 @@ msgstr "Для режима «День / Ночь»"
 
 msgid "From %d:00 to %d:00"
 msgstr "С %d:00 до %d:00"
+
+msgid "The karma is what the users think of each other: a vote gives an account plus or minus points and may say why."
+msgstr "Карма — это мнение пользователей друг о друге: голос добавляет аккаунту плюсы или минусы и может объяснить почему."
+
+msgid "Switched off, the karma is neither shown in the profiles nor voted for."
+msgstr "Если выключить, карма не показывается в профилях и за неё нельзя голосовать."
+
+msgid "Let the staff be voted for"
+msgstr "Разрешить голосовать за персонал"
+
+msgid "Switched off, nobody may vote for an account holding a role."
+msgstr "Если выключить, за аккаунт с ролью голосовать нельзя."
+
+msgid "Voting"
+msgstr "Голосование"
+
+msgid "points"
+msgstr "баллов"
+
+msgid "How many points a user may give out in a day, one vote or several. A ban takes twice as many from the karma of the banned."
+msgstr "Сколько баллов пользователь может раздать за сутки, одним голосом или несколькими. Бан снимает с кармы нарушителя вдвое больше."
+
+msgid "posts"
+msgstr "сообщений"
+
+msgid "How many posts a user needs on the forum to vote. A week on the site is needed besides."
+msgstr "Сколько сообщений на форуме нужно, чтобы голосовать. Кроме того, нужна неделя на сайте."
+
+msgid "Every vote is deleted and the karma of every account goes back to zero."
+msgstr "Все голоса удаляются, а карма каждого аккаунта обнуляется."
+
+msgid "%d vote is deleted, and the karma of every account goes back to zero."
+msgid_plural "%d votes are deleted, and the karma of every account goes back to zero."
+msgstr[0] "Будет удалён %d голос, а карма каждого аккаунта обнулится."
+msgstr[1] "Будет удалено %d голоса, а карма каждого аккаунта обнулится."
+msgstr[2] "Будет удалено %d голосов, а карма каждого аккаунта обнулится."
+
+msgid "This cannot be undone."
+msgstr "Это нельзя отменить."
+
+msgid "Points per day"
+msgstr "Баллов в сутки"

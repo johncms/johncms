@@ -1,48 +1,97 @@
 {#
-    The settings of the karma.
+    The settings of the karma: whether it is on, who may be voted for, what it takes to vote, and
+    clearing it, which asks in a dialog (karma/clear-dialog.twig).
 
-    @var array  settings        Current values, keyed by setting name.
+    @var array  settings        Current values: on, adm, karma_points, forum.
     @var string form_action
     @var string clear_url
     @var string error_message   Empty unless the last save failed.
-    @var string success_message Empty unless a save has just succeeded.
+    @var string success_message Empty unless a save or a clearing has just succeeded.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
 {% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: error_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
 
-    <form action="{{ form_action }}" method="post">
-        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-        <div class="form-group">
-            <label for="karma_points">{{ __('Voices per day') }}</label>
-            <input type="text" name="karma_points" class="form-control" id="karma_points" value="{{ settings.karma_points }}">
+    <p class="text-body-secondary">
+        {{ __('The karma is what the users think of each other: a vote gives an account plus or minus points and may say why.') }}
+    </p>
+
+    <div class="row">
+        <div class="col-xxl-9 d-flex flex-column gap-3">
+            <form action="{{ form_action }}" method="post" class="d-flex flex-column gap-3">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'settings', size: 15, class: 'text-body-tertiary'} only %}
+                        {{ __('General Settings') }}
+                    </div>
+                    <div class="card-body d-flex flex-column gap-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" name="on" value="1" id="karma-on"{% if settings.on %} checked{% endif %}>
+                            <label class="form-check-label" for="karma-on">
+                                {{ __('Switch module ON') }}
+                                <span class="form-text d-block mt-0">{{ __('Switched off, the karma is neither shown in the profiles nor voted for.') }}</span>
+                            </label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" name="adm" value="1" id="karma-adm"{% if settings.adm %} checked{% endif %}>
+                            <label class="form-check-label" for="karma-adm">
+                                {{ __('Let the staff be voted for') }}
+                                <span class="form-text d-block mt-0">{{ __('Switched off, nobody may vote for an account holding a role.') }}</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'thumbs-up', size: 15, class: 'text-body-tertiary'} only %}
+                        {{ __('Voting') }}
+                    </div>
+                    <div class="card-body row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label" for="karma-points">{{ __('Points per day') }}</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" name="karma_points" id="karma-points" value="{{ settings.karma_points }}" min="0" aria-describedby="karma-points-help">
+                                <span class="input-group-text">{{ __('points') }}</span>
+                            </div>
+                            <div class="form-text" id="karma-points-help">{{ __('How many points a user may give out in a day, one vote or several. A ban takes twice as many from the karma of the banned.') }}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="karma-forum">{{ __('Forum posts') }}</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" name="forum" id="karma-forum" value="{{ settings.forum }}" min="0" aria-describedby="karma-forum-help">
+                                <span class="input-group-text">{{ __('posts') }}</span>
+                            </div>
+                            <div class="form-text" id="karma-forum-help">{{ __('How many posts a user needs on the forum to vote. A week on the site is needed besides.') }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="/admin" class="btn btn-secondary">{{ __('Cancel') }}</a>
+                    <button type="submit" class="btn btn-primary">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
+                        {{ __('Save') }}
+                    </button>
+                </div>
+            </form>
+
+            <div class="card border-danger-subtle">
+                <div class="card-body d-flex flex-wrap align-items-center gap-3">
+                    <div class="flex-grow-1">
+                        <div class="fw-semibold">{{ __('Clear Karma') }}</div>
+                        <div class="form-text mt-0">{{ __('Every vote is deleted and the karma of every account goes back to zero.') }}</div>
+                    </div>
+                    <a href="{{ clear_url }}" class="btn btn-outline-danger" data-admin-modal>
+                        {% include '@admin/components/ui/icon.twig' with {name: 'rotate-ccw', size: 14} only %}
+                        {{ __('Clear Karma') }}
+                    </a>
+                </div>
+            </div>
         </div>
-
-        <h3>{{ __('Restriction for vote') }}</h3>
-
-        <div class="form-group">
-            <label for="forum">{{ __('Forum posts') }}</label>
-            <input type="text" name="forum" class="form-control" id="forum" value="{{ settings.forum }}">
-        </div>
-
-        <h3>{{ __('General Settings') }}</h3>
-
-        <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="on" value="1" id="on"{% if settings.on %} checked{% endif %}>
-            <label class="form-check-label" for="on">{{ __('Switch module ON') }}</label>
-        </div>
-
-        <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="adm" value="1" id="adm"{% if settings.adm %} checked{% endif %}>
-            <label class="form-check-label" for="adm">{{ __('Forbid to vote for the administration') }}</label>
-        </div>
-
-        <div class="mt-3">
-            <input type="submit" value="{{ __('Save') }}" class="btn btn-primary"/>
-            <a href="/admin/" class="btn btn-secondary">{{ __('Cancel') }}</a>
-            <a href="{{ clear_url }}" class="btn btn-danger float-right">{{ __('Clear Karma') }}</a>
-        </div>
-    </form>
+    </div>
 {% endblock %}

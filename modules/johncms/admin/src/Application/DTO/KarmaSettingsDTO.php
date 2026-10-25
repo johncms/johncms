@@ -10,7 +10,7 @@ final readonly class KarmaSettingsDTO
         public int $karmaPoints,
         public int $forumPosts,
         public bool $enabled,
-        public bool $forbidAdmin,
+        public bool $staffVotable,
     ) {
     }
 }

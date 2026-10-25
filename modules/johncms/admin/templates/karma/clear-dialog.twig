@@ -1,0 +1,26 @@
+{#
+    Clearing the karma of everyone. Answered to the modal of the panel as it is, and put into a page
+    of its own (karma-clear-confirm.twig) for a plain visit.
+
+    @var int    votes       The votes the clearing would delete.
+    @var string form_action
+    @var string back_url
+#}
+{% embed '@admin/components/ui/dialog.twig' with {
+    title: __('Clear Karma'),
+    action: form_action,
+    close_url: back_url,
+    votes: votes,
+} only %}
+    {% block body %}
+        <p>{{ n__('%d vote is deleted, and the karma of every account goes back to zero.', '%d votes are deleted, and the karma of every account goes back to zero.', votes)|format(votes) }}</p>
+        <div class="alert alert-danger mb-0">{{ __('This cannot be undone.') }}</div>
+    {% endblock %}
+    {% block footer %}
+        <a href="{{ close_url }}" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</a>
+        <button type="submit" class="btn btn-danger">
+            {% include '@admin/components/ui/icon.twig' with {name: 'rotate-ccw', size: 14} only %}
+            {{ __('Clear') }}
+        </button>
+    {% endblock %}
+{% endembed %}

@@ -8,11 +8,17 @@ use Johncms\Modules\Admin\Application\DTO\KarmaSettingsDTO;
 use Johncms\Modules\Admin\Application\UseCases\ResetKarmaUseCase;
 use Johncms\Modules\Admin\Application\UseCases\UpdateKarmaSettingsUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
+use Johncms\Modules\Admin\Domain\Repository\KarmaRepositoryInterface;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 
+/**
+ * The settings of the karma and clearing it. Clearing is confirmed in a dialog: the modal of the
+ * panel asks for it with X-Requested-With and gets the dialog alone, a plain visit gets it as a
+ * page.
+ */
 final readonly class KarmaController
 {
     private const URL = '/admin/karma';
@@ -21,6 +27,7 @@ final readonly class KarmaController
         private NavChain $navChain,
         private UpdateKarmaSettingsUseCase $updateKarmaSettings,
         private ResetKarmaUseCase $resetKarma,
+        private KarmaRepositoryInterface $karma,
         private Session $session,
     ) {
     }
@@ -36,7 +43,7 @@ final readonly class KarmaController
             karmaPoints: abs($request->bodyInt('karma_points')),
             forumPosts: abs($request->bodyInt('forum')),
             enabled: $request->hasBody('on'),
-            forbidAdmin: $request->hasBody('adm'),
+            staffVotable: $request->hasBody('adm'),
         );
 
         try {
@@ -49,18 +56,27 @@ final readonly class KarmaController
         redirect(self::URL);
     }
 
-    public function clearConfirm(): ViewResponse
+    public function clearConfirm(Request $request): ViewResponse
     {
-        $title = __('Karma');
-        $this->navChain->add($title, self::URL);
-
-        return new ViewResponse('@admin/karma-clear-confirm.twig', [
-            'title'       => $title,
-            'page_title'  => $title,
-            'usr_menu'    => ['karma' => true],
-            'message'     => __('You really want to clear the Karma?'),
+        $data = [
+            'votes'       => $this->karma->countVotes(),
             'form_action' => self::URL . '/reset',
             'back_url'    => self::URL,
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            return new ViewResponse('@admin/karma/clear-dialog.twig', $data);
+        }
+
+        $title = __('Clear Karma');
+        $this->navChain->add(__('Karma'), self::URL);
+        $this->navChain->add($title);
+
+        return new ViewResponse('@admin/karma-clear-confirm.twig', [
+            // The dialog carries the heading itself.
+            'title'    => $title,
+            'usr_menu' => ['karma' => true],
+            'dialog'   => $data,
         ]);
     }
 
@@ -72,7 +88,7 @@ final readonly class KarmaController
         redirect(self::URL);
     }
 
-    private function renderForm(?string $errorMessage = null): ViewResponse
+    private function renderForm(string $errorMessage = ''): ViewResponse
     {
         $title = __('Karma');
         $this->navChain->add($title);

@@ -106,8 +106,8 @@ msgid "Antiflood"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:44
-#: modules/johncms/admin/src/Application/Controllers/Users/KarmaController.php:54
-#: modules/johncms/admin/src/Application/Controllers/Users/KarmaController.php:77
+#: modules/johncms/admin/src/Application/Controllers/Users/KarmaController.php:72
+#: modules/johncms/admin/src/Application/Controllers/Users/KarmaController.php:93
 #: modules/johncms/admin/templates/user/view.twig:61
 #: modules/johncms/admin/templates/users/results.twig:28
 msgid "Karma"
@@ -311,8 +311,8 @@ msgstr ""
 #: modules/johncms/admin/templates/ip-ban-confirm.twig:44
 #: modules/johncms/admin/templates/ip-ban-form.twig:54
 #: modules/johncms/admin/templates/ip-ban-search.twig:24
-#: modules/johncms/admin/templates/karma-clear-confirm.twig:22
-#: modules/johncms/admin/templates/karma.twig:44
+#: modules/johncms/admin/templates/karma.twig:75
+#: modules/johncms/admin/templates/karma/clear-dialog.twig:20
 #: modules/johncms/admin/templates/modules-confirm.twig:62
 #: modules/johncms/admin/templates/modules-upload.twig:30
 #: modules/johncms/admin/templates/role-form.twig:29
@@ -492,7 +492,7 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:36
 #: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:41
 #: modules/johncms/admin/src/Application/Controllers/Settings/SystemSettingsController.php:40
-#: modules/johncms/admin/src/Application/Controllers/Users/KarmaController.php:45
+#: modules/johncms/admin/src/Application/Controllers/Users/KarmaController.php:52
 msgid "ERROR: Can not write file `system.local.php`"
 msgstr ""
 
@@ -506,7 +506,7 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:44
 #: modules/johncms/admin/src/Application/Controllers/Settings/MailSettingsController.php:46
 #: modules/johncms/admin/src/Application/Controllers/Settings/SystemSettingsController.php:43
-#: modules/johncms/admin/src/Application/Controllers/Users/KarmaController.php:48
+#: modules/johncms/admin/src/Application/Controllers/Users/KarmaController.php:55
 msgid "Settings are saved successfully"
 msgstr ""
 
@@ -929,11 +929,14 @@ msgstr ""
 msgid "You cannot delete higher administration"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Users/KarmaController.php:61
-msgid "You really want to clear the Karma?"
+#: modules/johncms/admin/src/Application/Controllers/Users/KarmaController.php:71
+#: modules/johncms/admin/templates/karma.twig:86
+#: modules/johncms/admin/templates/karma.twig:91
+#: modules/johncms/admin/templates/karma/clear-dialog.twig:10
+msgid "Clear Karma"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Users/KarmaController.php:70
+#: modules/johncms/admin/src/Application/Controllers/Users/KarmaController.php:86
 msgid "Karma is cleared"
 msgstr ""
 
@@ -1044,7 +1047,7 @@ msgid "Every ban that has run out or was lifted goes, with the karma it cost. Th
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:160
-#: modules/johncms/admin/templates/karma-clear-confirm.twig:20
+#: modules/johncms/admin/templates/karma/clear-dialog.twig:23
 #: modules/johncms/admin/templates/style-guide/examples/alerts.twig:5
 msgid "Clear"
 msgstr ""
@@ -1523,7 +1526,7 @@ msgstr ""
 #: modules/johncms/admin/templates/editor-images.twig:64
 #: modules/johncms/admin/templates/external-providers.twig:59
 #: modules/johncms/admin/templates/ip-ban-form.twig:53
-#: modules/johncms/admin/templates/karma.twig:43
+#: modules/johncms/admin/templates/karma.twig:78
 #: modules/johncms/admin/templates/languages.twig:31
 #: modules/johncms/admin/templates/mail-settings.twig:104
 #: modules/johncms/admin/templates/role-form.twig:32
@@ -2132,32 +2135,69 @@ msgstr ""
 msgid "Search results"
 msgstr ""
 
-#: modules/johncms/admin/templates/karma.twig:19
-msgid "Voices per day"
+#: modules/johncms/admin/templates/karma.twig:18
+msgid "The karma is what the users think of each other: a vote gives an account plus or minus points and may say why."
 msgstr ""
 
-#: modules/johncms/admin/templates/karma.twig:23
-msgid "Restriction for vote"
-msgstr ""
-
-#: modules/johncms/admin/templates/karma.twig:26
-msgid "Forum posts"
-msgstr ""
-
-#: modules/johncms/admin/templates/karma.twig:30
+#: modules/johncms/admin/templates/karma.twig:29
 msgid "General Settings"
 msgstr ""
 
-#: modules/johncms/admin/templates/karma.twig:34
+#: modules/johncms/admin/templates/karma.twig:35
 msgid "Switch module ON"
 msgstr ""
 
-#: modules/johncms/admin/templates/karma.twig:39
-msgid "Forbid to vote for the administration"
+#: modules/johncms/admin/templates/karma.twig:36
+msgid "Switched off, the karma is neither shown in the profiles nor voted for."
 msgstr ""
 
-#: modules/johncms/admin/templates/karma.twig:45
-msgid "Clear Karma"
+#: modules/johncms/admin/templates/karma.twig:42
+msgid "Let the staff be voted for"
+msgstr ""
+
+#: modules/johncms/admin/templates/karma.twig:43
+msgid "Switched off, nobody may vote for an account holding a role."
+msgstr ""
+
+#: modules/johncms/admin/templates/karma.twig:52
+msgid "Voting"
+msgstr ""
+
+#: modules/johncms/admin/templates/karma.twig:56
+msgid "Points per day"
+msgstr ""
+
+#: modules/johncms/admin/templates/karma.twig:59
+msgid "points"
+msgstr ""
+
+#: modules/johncms/admin/templates/karma.twig:61
+msgid "How many points a user may give out in a day, one vote or several. A ban takes twice as many from the karma of the banned."
+msgstr ""
+
+#: modules/johncms/admin/templates/karma.twig:64
+msgid "Forum posts"
+msgstr ""
+
+#: modules/johncms/admin/templates/karma.twig:67
+msgid "posts"
+msgstr ""
+
+#: modules/johncms/admin/templates/karma.twig:69
+msgid "How many posts a user needs on the forum to vote. A week on the site is needed besides."
+msgstr ""
+
+#: modules/johncms/admin/templates/karma.twig:87
+msgid "Every vote is deleted and the karma of every account goes back to zero."
+msgstr ""
+
+#: modules/johncms/admin/templates/karma/clear-dialog.twig:16
+msgid "%d vote is deleted, and the karma of every account goes back to zero."
+msgid_plural "%d votes are deleted, and the karma of every account goes back to zero."
+msgstr[0] ""
+
+#: modules/johncms/admin/templates/karma/clear-dialog.twig:17
+msgid "This cannot be undone."
 msgstr ""
 
 #: modules/johncms/admin/templates/languages-manage.twig:36
