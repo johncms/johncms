@@ -13,19 +13,19 @@ use Johncms\Modules\News\Application\Section;
 /**
  * @mixin Builder
  *
- * @property $id - Идентификатор
- * @property $parent - Родительский раздел
- * @property $name - Название раздела
- * @property $code - Символьный код раздела
- * @property $text - Текст с описанием
- * @property $keywords - Ключевые слова
- * @property $description - Описание
- * @property $created_at - Дата создания
- * @property $updated_at - Дата изменения
+ * @property int $id
+ * @property int|null $parent 0 or null at the root
+ * @property string $name
+ * @property string $code
+ * @property string|null $text
+ * @property string|null $keywords
+ * @property string|null $description
+ * @property string|null $created_at Formatted for display
+ * @property string|null $updated_at Formatted for display
  *
- * @property NewsSection $parentSection - Родительский раздел
- * @property NewsSection $childSections - Дочерние раздел
- * @property $url - Ссылка на страницу просмотра раздела
+ * @property NewsSection|null $parentSection
+ * @property \Illuminate\Database\Eloquent\Collection<int, NewsSection> $childSections
+ * @property string $url
  */
 class NewsSection extends Model
 {

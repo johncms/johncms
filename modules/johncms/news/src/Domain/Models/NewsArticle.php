@@ -18,38 +18,38 @@ use Johncms\Users\User;
 /**
  * @mixin Builder
  *
- * @property $id - Идентификатор
- * @property $section_id - Родительский раздел
- * @property $active - Активность
- * @property $active_from - Дата начала активности
- * @property $active_to - Дата завершения активности
- * @property $name - Название
- * @property $page_title - Заголовок страницы
- * @property $code - Символьный код
- * @property $preview_text - Краткое описание статьи в списке
- * @property $preview_text_safe - Краткое описание статьи в списке в безопасном виде
- * @property $text - Текст с описанием
- * @property $text_safe - Текст с описанием в безопасном виде
- * @property $view_count - Количество просмотров
- * @property $keywords - Ключевые слова
- * @property $description - Описание
- * @property $tags - Tags
- * @property $created_at - Дата создания
- * @property $updated_at - Дата изменения
- * @property $created_by - Автор
- * @property $updated_by - Пользователь, изменивший запись
+ * @property int $id
+ * @property int|null $section_id 0 or null at the root
+ * @property bool|null $active
+ * @property string|null $active_from Formatted for display
+ * @property string|null $active_to Formatted for display
+ * @property string $name
+ * @property string|null $page_title
+ * @property string $code
+ * @property string|null $preview_text
+ * @property Markup $preview_text_safe
+ * @property string|null $text
+ * @property Markup|null $text_safe
+ * @property int $view_count
+ * @property string|null $keywords
+ * @property string|null $description
+ * @property list<string> $tags
+ * @property string|null $created_at Formatted for display
+ * @property string|null $updated_at Formatted for display
+ * @property int|null $created_by
+ * @property int|null $updated_by
  * @property array $attached_files
  *
  * Computed properties
- * @property NewsSection $parentSection - Родительский раздел
- * @property User $author - Author
- * @property NewsVote $votes - Votes for the article
- * @property $url - URL адрес страницы просмотра статьи
- * @property $rating - Article rating
- * @property $current_vote - The user's current vote.
- * @property $comments_count
- * @property $votes_sum_vote
- * @property $display_date
+ * @property NewsSection|null $parentSection
+ * @property User|null $author
+ * @property \Illuminate\Database\Eloquent\Collection<int, NewsVote> $votes
+ * @property string $url
+ * @property int $rating
+ * @property int $current_vote
+ * @property int $comments_count
+ * @property int|null $votes_sum_vote
+ * @property string|null $display_date
  * @method NewsArticle search()
  * @method NewsArticle active()
  * @method NewsArticle lastDays($day_count)

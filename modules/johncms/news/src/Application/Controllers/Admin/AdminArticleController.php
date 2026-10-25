@@ -8,12 +8,14 @@ use Carbon\Carbon;
 use Johncms\Auth\CurrentUser;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
-use Johncms\Files\FileStore;
 use Johncms\Http\EditorImageUploadResponder;
 use Johncms\Http\ExceptionResponseFactory;
 use Johncms\Logs\DebugDetailsPolicy;
+use Johncms\Modules\News\Application\Exceptions\ArticleNotFoundException;
+use Johncms\Modules\News\Application\UseCases\DeleteArticleUseCase;
 use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
+use Johncms\Modules\News\Domain\Repository\NewsArticleRepositoryInterface;
 use Johncms\Modules\News\Domain\Models\NewsSearchIndex;
 use Johncms\Modules\News\Domain\Models\NewsSection;
 use Johncms\Http\Session;
@@ -36,6 +38,8 @@ final readonly class AdminArticleController
         private DebugDetailsPolicy $debugDetailsPolicy,
         private LoggerInterface $logger,
         private Session $session,
+        private DeleteArticleUseCase $deleteArticle,
+        private NewsArticleRepositoryInterface $articles,
     ) {
     }
 
@@ -247,50 +251,38 @@ final readonly class AdminArticleController
     }
 
     /**
-     * Delete section
-     *
-     * @param int $article_id
-     * @param Request $request
-     * @param FileStore $files
+     * Deleting an article: the confirmation with a token of its own, and the deletion once the
+     * token comes back.
      */
-    public function del(int $article_id, Request $request, FileStore $files): Response | ViewResponse
+    public function del(int $article_id, Request $request): Response | ViewResponse
     {
         $this->addSectionBreadcrumbs();
 
-        $data = [];
-        // Get the section to delete
-        try {
-            $article = (new NewsArticle())->findOrFail($article_id);
-        } catch (ModelNotFoundException $exception) {
-            $this->logger->error($exception->getMessage(), ['exception' => $exception]);
-            return $this->exceptionResponses->internalServerError($exception, $this->debugDetailsPolicy->allowed());
+        $article = $this->articles->findById($article_id);
+        if ($article === null) {
+            // A missing article answers as an error of the server, as it always has.
+            return $this->notFound(new ArticleNotFoundException('The article #' . $article_id . ' does not exist.'));
         }
 
         $post = $request->request->all();
         $sessionToken = $this->session->get('delete_token');
 
-        // Checking the data and deleting the section
         if (
             isset($post['delete_token'], $sessionToken) &&
             $sessionToken === $post['delete_token'] &&
             $request->getMethod() === 'POST'
         ) {
-            // Delete article
             try {
-                if (! empty($article->attached_files)) {
-                    $files->deleteMany($article->attached_files);
-                }
-                $article->delete();
-            } catch (\Exception $exception) {
-                $this->logger->error($exception->getMessage(), ['exception' => $exception]);
-                return $this->exceptionResponses->internalServerError($exception, $this->debugDetailsPolicy->allowed());
+                $deleted = $this->deleteArticle->execute($article_id);
+            } catch (ArticleNotFoundException $exception) {
+                return $this->notFound($exception);
             }
 
             $this->session->flash('success_message', __('The article was successfully deleted'));
-            return new RedirectResponse('/admin/news/content/' . $article->section_id);
+            return new RedirectResponse('/admin/news/content/' . $deleted->section_id);
         }
 
-        $data['article'] = $article;
+        $data = ['article' => $article];
 
         // Generate the token
         $data['delete_token'] = uniqid('', true);
@@ -302,6 +294,13 @@ final readonly class AdminArticleController
             '@news/admin/delete-confirm.twig',
             $data + $this->menu(__('News')) + ['section' => null, 'article' => null]
         );
+    }
+
+    private function notFound(ArticleNotFoundException $exception): Response
+    {
+        $this->logger->error($exception->getMessage(), ['exception' => $exception]);
+
+        return $this->exceptionResponses->internalServerError($exception, $this->debugDetailsPolicy->allowed());
     }
 
     public function loadFile(Request $request, EditorImageUploadResponder $responder): JsonResponse

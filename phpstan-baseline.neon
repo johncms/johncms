@@ -2247,7 +2247,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$section_id\.$#'
 			identifier: property.notFound
-			count: 4
+			count: 3
 			path: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php
 
 		-
@@ -2307,7 +2307,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$parent\.$#'
 			identifier: property.notFound
-			count: 4
+			count: 3
 			path: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php
 
 		-
@@ -2319,12 +2319,6 @@ parameters:
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$text\.$#'
 			identifier: property.notFound
-			count: 1
-			path: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php
-
-		-
-			message: '#^Parameter \#1 \$section of method Johncms\\Modules\\News\\Application\\Section\:\:getCachedSubsections\(\) expects Johncms\\Modules\\News\\Domain\\Models\\NewsSection\|null, Illuminate\\Database\\Eloquent\\Model given\.$#'
-			identifier: argument.type
 			count: 1
 			path: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php
 
@@ -2419,18 +2413,6 @@ parameters:
 			path: modules/johncms/news/src/Application/Section.php
 
 		-
-			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsSection\:\:\$id\.$#'
-			identifier: property.notFound
-			count: 5
-			path: modules/johncms/news/src/Application/Section.php
-
-		-
-			message: '#^Argument of an invalid type Johncms\\Modules\\News\\Domain\\Models\\NewsSection supplied for foreach, only iterables are supported\.$#'
-			identifier: foreach.nonIterable
-			count: 1
-			path: modules/johncms/news/src/Application/Section.php
-
-		-
 			message: '#^Method Johncms\\Modules\\News\\Application\\Section\:\:checkPath\(\) should return array\<Johncms\\Modules\\News\\Domain\\Models\\NewsSection\> but returns list\<Illuminate\\Database\\Eloquent\\Model\>\.$#'
 			identifier: return.type
 			count: 1
@@ -2461,48 +2443,6 @@ parameters:
 			path: modules/johncms/news/src/Application/Utils/Helpers.php
 
 		-
-			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsSection\:\:\$id\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/news/src/Application/Utils/Helpers.php
-
-		-
-			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsSection\:\:\$name\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/news/src/Application/Utils/Helpers.php
-
-		-
-			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsArticle\:\:\$code\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsArticle\:\:\$created_at\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsArticle\:\:\$preview_text\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsArticle\:\:\$text\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsArticle\:\:\$votes_sum_vote\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
 			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsVote\:\:\$vote\.$#'
 			identifier: property.notFound
 			count: 1
@@ -2511,162 +2451,6 @@ parameters:
 		-
 			message: '#^Method Johncms\\Modules\\News\\Domain\\Models\\NewsArticle\:\:scopeSearch\(\) should return Illuminate\\Database\\Eloquent\\Builder but returns Illuminate\\Database\\Query\\Builder\.$#'
 			identifier: return.type
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$active \- Активность\)\: Unexpected token "\$active", expected type at offset 149 on line 6$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$active_from \- Дата начала активности\)\: Unexpected token "\$active_from", expected type at offset 193 on line 7$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$active_to \- Дата завершения активности\)\: Unexpected token "\$active_to", expected type at offset 264 on line 8$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$code \- Символьный код\)\: Unexpected token "\$code", expected type at offset 442 on line 11$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$comments_count\)\: Unexpected token "\$comments_count", expected type at offset 1686 on line 33$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$created_at \- Дата создания\)\: Unexpected token "\$created_at", expected type at offset 1048 on line 20$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$created_by \- Автор\)\: Unexpected token "\$created_by", expected type at offset 1156 on line 22$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$current_vote \- The user''s current vote\.\)\: Unexpected token "\$current_vote", expected type at offset 1632 on line 32$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$description \- Описание\)\: Unexpected token "\$description", expected type at offset 977 on line 18$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$display_date\)\: Unexpected token "\$display_date", expected type at offset 1744 on line 35$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$id \- Идентификатор\)\: Unexpected token "\$id", expected type at offset 38 on line 4$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$keywords \- Ключевые слова\)\: Unexpected token "\$keywords", expected type at offset 924 on line 17$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$name \- Название\)\: Unexpected token "\$name", expected type at offset 341 on line 9$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$page_title \- Заголовок страницы\)\: Unexpected token "\$page_title", expected type at offset 379 on line 10$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$preview_text \- Краткое описание статьи в списке\)\: Unexpected token "\$preview_text", expected type at offset 491 on line 12$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$preview_text_safe \- Краткое описание статьи в списке в безопасном виде\)\: Unexpected token "\$preview_text_safe", expected type at offset 581 on line 13$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$rating \- Article rating\)\: Unexpected token "\$rating", expected type at offset 1594 on line 31$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$section_id \- Родительский раздел\)\: Unexpected token "\$section_id", expected type at offset 84 on line 5$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$tags \- Tags\)\: Unexpected token "\$tags", expected type at offset 1022 on line 19$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$text \- Текст с описанием\)\: Unexpected token "\$text", expected type at offset 709 on line 14$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$text_safe \- Текст с описанием в безопасном виде\)\: Unexpected token "\$text_safe", expected type at offset 763 on line 15$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$updated_at \- Дата изменения\)\: Unexpected token "\$updated_at", expected type at offset 1101 on line 21$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$updated_by \- Пользователь, изменивший запись\)\: Unexpected token "\$updated_by", expected type at offset 1194 on line 23$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$url \- URL адрес страницы просмотра статьи\)\: Unexpected token "\$url", expected type at offset 1510 on line 30$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$view_count \- Количество просмотров\)\: Unexpected token "\$view_count", expected type at offset 855 on line 16$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$votes_sum_vote\)\: Unexpected token "\$votes_sum_vote", expected type at offset 1715 on line 34$#'
-			identifier: phpDoc.parseError
 			count: 1
 			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
@@ -2721,72 +2505,6 @@ parameters:
 			identifier: phpDoc.parseError
 			count: 1
 			path: modules/johncms/news/src/Domain/Models/NewsSearchIndex.php
-
-		-
-			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsSection\:\:\$code\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsSection.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$code \- Символьный код раздела\)\: Unexpected token "\$code", expected type at offset 198 on line 7$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsSection.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$created_at \- Дата создания\)\: Unexpected token "\$created_at", expected type at offset 414 on line 11$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsSection.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$description \- Описание\)\: Unexpected token "\$description", expected type at offset 369 on line 10$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsSection.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$id \- Идентификатор\)\: Unexpected token "\$id", expected type at offset 38 on line 4$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsSection.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$keywords \- Ключевые слова\)\: Unexpected token "\$keywords", expected type at offset 316 on line 9$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsSection.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$name \- Название раздела\)\: Unexpected token "\$name", expected type at offset 145 on line 6$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsSection.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$parent \- Родительский раздел\)\: Unexpected token "\$parent", expected type at offset 84 on line 5$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsSection.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$text \- Текст с описанием\)\: Unexpected token "\$text", expected type at offset 262 on line 8$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsSection.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$updated_at \- Дата изменения\)\: Unexpected token "\$updated_at", expected type at offset 467 on line 12$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsSection.php
-
-		-
-			message: '#^PHPDoc tag @property has invalid value \(\$url \- Ссылка на страницу просмотра раздела\)\: Unexpected token "\$url", expected type at offset 677 on line 16$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: modules/johncms/news/src/Domain/Models/NewsSection.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$article_id \- Идентификатор статьи\)\: Unexpected token "\$article_id", expected type at offset 84 on line 5$#'
