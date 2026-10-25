@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Modules\Online\UseCases;
 
+use Gettext\Translator;
+use Gettext\TranslatorFunctions;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Online\Application\DTO\OnlineItemDTO;
 use Johncms\Modules\Online\Application\UseCases\GetOnlineUsersUseCase;
@@ -23,6 +25,9 @@ final class GetOnlineUsersUseCaseTest extends TestCase
     {
         $this->repository = $this->createMock(OnlineUserRepositoryInterface::class);
         $this->placeFormatter = $this->createMock(UserPlaceFormatterInterface::class);
+        // The time on the site is written out through the gettext helpers, which nothing has
+        // registered in an isolated unit test.
+        TranslatorFunctions::register(new Translator());
     }
 
     public function testCountDelegatesToRepository(): void

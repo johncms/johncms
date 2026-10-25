@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Validator;
 
+use Gettext\Translator;
+use Gettext\TranslatorFunctions;
 use Johncms\Validator\RuleCompiler;
 use Johncms\Validator\RuleConstraintFactoryInterface;
 use Johncms\Validator\Rules\RequiresValueInterface;
@@ -17,6 +19,13 @@ use Symfony\Component\Validator\Constraints\Sequentially;
 
 final class RuleCompilerTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        // The guard against an empty value names its message through the gettext helpers, which
+        // nothing has registered in an isolated unit test.
+        TranslatorFunctions::register(new Translator());
+    }
+
     /**
      * The rules of a field run in order and stop at the first failure, the way the previous
      * engine did — otherwise one input starts showing an error per rule.

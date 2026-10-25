@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Modules\Guestbook\Forms;
 
+use Gettext\Translator;
+use Gettext\TranslatorFunctions;
 use Johncms\Captcha\CaptchaManager;
 use Johncms\Captcha\CaptchaProviderRegistry;
 use Johncms\Captcha\Providers\ImageCaptchaProvider;
@@ -27,6 +29,9 @@ final class GuestbookFormTest extends TestCase
     protected function setUp(): void
     {
         ConfigRepository::init([]);
+        // The rules of the form name their messages through the gettext helpers, which nothing
+        // has registered in an isolated unit test.
+        TranslatorFunctions::register(new Translator());
     }
 
     public function testFormDataIsTrimmedAndNormalized(): void
