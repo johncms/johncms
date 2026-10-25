@@ -6,14 +6,12 @@ msgstr ""
 msgid "The requested article was not found."
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:48
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:303
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:32
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:34
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:42
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:96
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:41
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:257
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:41
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:44
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:33
+#: modules/johncms/news/src/Application/Controllers/Admin/DeleteArticleController.php:52
+#: modules/johncms/news/src/Application/Controllers/Admin/DeleteSectionController.php:55
+#: modules/johncms/news/src/Application/Controllers/Admin/NewsListController.php:72
 #: modules/johncms/news/src/Application/Controllers/ArticleController.php:33
 #: modules/johncms/news/src/Application/Controllers/SearchController.php:34
 #: modules/johncms/news/src/Application/Controllers/SectionController.php:35
@@ -24,84 +22,89 @@ msgstr ""
 msgid "News"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:49
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:44
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:42
-msgid "Section list"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:63
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:78
-#: modules/johncms/news/templates/admin/content.twig:36
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:55
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:70
+#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:109
+#: modules/johncms/news/templates/admin/index.twig:32
 msgid "Add article"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:110
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:210
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:102
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:202
 msgid "The article name cannot be empty"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:140
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:132
 msgid "The article was created successfully"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:143
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:240
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:135
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:232
 msgid "An article with this code already exists"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:163
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:155
 msgid "Edit article"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:237
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:229
 msgid "The article was updated successfully"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:289
-msgid "The article was successfully deleted"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:99
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:100
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:161
-#: modules/johncms/news/templates/admin/index.twig:29
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:47
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:48
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:109
+#: modules/johncms/news/templates/admin/index.twig:24
 msgid "Settings"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:134
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:82
 msgid "Settings saved!"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:57
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:72
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:48
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:63
 msgid "Create section"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:94
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:172
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:85
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:163
 msgid "The section name cannot be empty"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:120
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:111
 msgid "The section was created successfully"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:123
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:194
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:114
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:185
 msgid "A section with this code already exists"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:143
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:144
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:134
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:135
 msgid "Edit section"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:191
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:182
 msgid "The section was updated successfully"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:243
+#: modules/johncms/news/src/Application/Controllers/Admin/DeleteArticleController.php:51
+#: modules/johncms/news/templates/admin/delete-article-dialog.twig:10
+msgid "Delete article"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Controllers/Admin/DeleteArticleController.php:71
+msgid "The article was successfully deleted"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Controllers/Admin/DeleteSectionController.php:54
+#: modules/johncms/news/templates/admin/delete-section-dialog.twig:12
+msgid "Delete section"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Controllers/Admin/DeleteSectionController.php:74
 msgid "The section was successfully deleted"
 msgstr ""
 
@@ -134,6 +137,7 @@ msgid "Access denied"
 msgstr ""
 
 #: modules/johncms/news/src/Application/Controllers/SearchController.php:36
+#: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:48
 msgid "Search"
 msgstr ""
 
@@ -164,6 +168,86 @@ msgstr ""
 
 #: modules/johncms/news/src/Application/Section.php:79
 msgid "The requested section was not found."
+msgstr ""
+
+#: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:93
+#: modules/johncms/news/templates/admin/components/sections-table.twig:13
+msgid "Articles"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:94
+msgid "Sections"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:118
+msgid "All sections"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:119
+#: modules/johncms/news/templates/admin/components/articles-table.twig:33
+msgid "Root"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:130
+#: modules/johncms/news/templates/admin/components/articles-table.twig:12
+#: modules/johncms/news/templates/admin/components/sections-table.twig:11
+msgid "Section"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:138
+msgid "Any"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:144
+#: modules/johncms/news/templates/admin/components/articles-table.twig:13
+msgid "Status"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:153
+msgid "Anybody"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:159
+#: modules/johncms/news/templates/admin/components/articles-table.twig:14
+msgid "Author"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:190
+msgid "Published"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:191
+msgid "Draft"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:192
+msgid "Scheduled"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:193
+msgid "Expired"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:71
+#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:107
+msgid "Edit"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:72
+#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:110
+msgid "Open on the site"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:73
+#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:111
+#: modules/johncms/news/templates/admin/delete-article-dialog.twig:24
+#: modules/johncms/news/templates/admin/delete-section-dialog.twig:38
+#: modules/johncms/news/templates/public/article.twig:64
+msgid "Delete"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:108
+msgid "Articles of the section"
 msgstr ""
 
 #: modules/johncms/news/src/Application/Services/NewsPermissions.php:35
@@ -336,86 +420,90 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: modules/johncms/news/templates/admin/content.twig:37
-msgid "Add section"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/content.twig:45
-#: modules/johncms/news/templates/admin/content.twig:81
-msgid "Name"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/content.twig:46
-#: modules/johncms/news/templates/admin/content.twig:68
-#: modules/johncms/news/templates/admin/content.twig:82
-msgid "Code"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/content.twig:47
-#: modules/johncms/news/templates/admin/content.twig:69
-#: modules/johncms/news/templates/admin/content.twig:83
-msgid "Type"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/content.twig:48
-#: modules/johncms/news/templates/admin/content.twig:70
-#: modules/johncms/news/templates/admin/content.twig:84
-msgid "Created at"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/content.twig:49
-#: modules/johncms/news/templates/admin/content.twig:71
-#: modules/johncms/news/templates/admin/content.twig:85
-msgid "Updated at"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/content.twig:55
-#: modules/johncms/news/templates/public/article.twig:68
-#: modules/johncms/news/templates/public/index.twig:43
-msgid "The list is empty"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/content.twig:69
-msgid "Section"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/content.twig:83
+#: modules/johncms/news/templates/admin/components/articles-table.twig:11
 msgid "Article"
 msgstr ""
 
-#: modules/johncms/news/templates/admin/content.twig:20
-msgid "Edit"
+#: modules/johncms/news/templates/admin/components/articles-table.twig:15
+msgid "Views"
 msgstr ""
 
-#: modules/johncms/news/templates/admin/content.twig:21
-#: modules/johncms/news/templates/admin/delete-confirm.twig:29
-#: modules/johncms/news/templates/public/article.twig:64
-msgid "Delete"
+#: modules/johncms/news/templates/admin/components/articles-table.twig:16
+#: modules/johncms/news/templates/admin/components/sections-table.twig:14
+msgid "Created"
 msgstr ""
 
-#: modules/johncms/news/templates/admin/delete-confirm.twig:14
-msgid "Confirm the action"
+#: modules/johncms/news/templates/admin/components/articles-table.twig:17
+#: modules/johncms/news/templates/admin/components/sections-table.twig:15
+msgid "Updated"
 msgstr ""
 
-#: modules/johncms/news/templates/admin/delete-confirm.twig:21
-msgid "Section:"
+#: modules/johncms/news/templates/admin/components/articles-table.twig:18
+#: modules/johncms/news/templates/admin/components/articles-table.twig:65
+#: modules/johncms/news/templates/admin/components/sections-table.twig:16
+#: modules/johncms/news/templates/admin/components/sections-table.twig:37
+msgid "Actions"
 msgstr ""
 
-#: modules/johncms/news/templates/admin/delete-confirm.twig:24
-msgid "Article:"
+#: modules/johncms/news/templates/admin/components/articles-table.twig:59
+msgid "%d comment"
+msgid_plural "%d comments"
+msgstr[0] ""
+
+#: modules/johncms/news/templates/admin/components/sections-table.twig:12
+msgid "Code"
 msgstr ""
 
-#: modules/johncms/news/templates/admin/delete-confirm.twig:26
-msgid "Do you really want to delete?"
+#: modules/johncms/news/templates/admin/delete-article-dialog.twig:18
+msgid "The article is deleted together with the files attached to it."
 msgstr ""
 
-#: modules/johncms/news/templates/admin/delete-confirm.twig:30
+#: modules/johncms/news/templates/admin/delete-article-dialog.twig:21
+#: modules/johncms/news/templates/admin/delete-section-dialog.twig:35
 #: modules/johncms/news/templates/admin/settings.twig:125
 msgid "Cancel"
 msgstr ""
 
-#: modules/johncms/news/templates/admin/index.twig:17
-msgid "Content management"
+#: modules/johncms/news/templates/admin/delete-section-dialog.twig:25
+msgid "%d section under it"
+msgid_plural "%d sections under it"
+msgstr[0] ""
+
+#: modules/johncms/news/templates/admin/delete-section-dialog.twig:28
+msgid "%d article"
+msgid_plural "%d articles"
+msgstr[0] ""
+
+#: modules/johncms/news/templates/admin/delete-section-dialog.twig:32
+msgid "The section is deleted together with everything under it."
+msgstr ""
+
+#: modules/johncms/news/templates/admin/index.twig:28
+msgid "Add section"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/index.twig:46
+msgid "Search the news"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/index.twig:47
+msgid "Name, code or ID"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/results.twig:17
+msgid "No articles"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/results.twig:17
+msgid "No sections"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/results.twig:18
+msgid "Change the search or reset the filters."
+msgstr ""
+
+#: modules/johncms/news/templates/admin/results.twig:29
+msgid "Found: %s"
 msgstr ""
 
 #: modules/johncms/news/templates/admin/section-form.twig:23
@@ -510,6 +598,11 @@ msgstr ""
 
 #: modules/johncms/news/templates/public/article.twig:67
 msgid "Comments"
+msgstr ""
+
+#: modules/johncms/news/templates/public/article.twig:68
+#: modules/johncms/news/templates/public/index.twig:43
+msgid "The list is empty"
 msgstr ""
 
 #: modules/johncms/news/templates/public/article.twig:78

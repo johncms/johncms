@@ -4,13 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Controllers\Admin;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Johncms\Http\Pagination\PaginationFactory;
-use Johncms\Http\Pagination\PaginationGuard;
-use Johncms\Modules\News\Application\Utils\Helpers;
-use Johncms\Modules\News\Domain\Models\NewsArticle;
-use Johncms\Modules\News\Domain\Models\NewsSection;
 use Johncms\Http\Session;
+use Johncms\Modules\News\Application\Services\NewsListControlsMapper;
+use Johncms\Modules\News\Domain\ValueObjects\NewsListFilter;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
@@ -21,68 +17,20 @@ final readonly class AdminController
 {
     public function __construct(
         private NavChain $navChain,
-        private PaginationFactory $paginationFactory,
-        private PaginationGuard $paginationGuard,
+        private NewsListControlsMapper $controls,
         private Session $session,
     ) {
     }
 
-    public function index(): ViewResponse
-    {
-        $this->navChain->add(__('News'), '/admin/news/');
-
-        return new ViewResponse('@news/admin/index.twig', $this->menu(__('News')));
-    }
-
     /**
-     * List of sections and articles
+     * The level of the tree the list used to show: the list narrowed to that section now, the
+     * whole list for the root. The forms of the articles and the sections still return here.
      */
-    public function section(int $section_id = 0): ViewResponse
+    public function content(int $section_id = 0): RedirectResponse
     {
-        $this->navChain->add(__('News'), '/admin/news/');
+        $filter = $section_id > 0 ? new NewsListFilter(section: $section_id) : new NewsListFilter();
 
-        $title = __('Section list');
-        $this->navChain->add($title, '/admin/news/content/');
-
-        if (! empty($section_id)) {
-            try {
-                $current_section = (new NewsSection())->findOrFail($section_id);
-                $title = $current_section->name;
-                Helpers::buildAdminBreadcrumbs($current_section->parentSection);
-                // Adding the current section to the navigation chain
-                $this->navChain->add($current_section->name);
-            } catch (ModelNotFoundException $exception) {
-                pageNotFound();
-            }
-        }
-
-        $data = ['messages' => ''];
-        $flashMessage = $this->session->getFlash('success_message');
-        if (! empty($flashMessage)) {
-            $data['messages'] = $flashMessage;
-        }
-
-        $data['sections'] = (new NewsSection())->where('parent', $section_id)->get();
-
-        $pagination = $this->paginationFactory->create(
-            (new NewsArticle())->where('section_id', $section_id)->count()
-        );
-
-        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
-        if ($redirectUrl !== null) {
-            redirect($redirectUrl);
-        }
-
-        $data['articles'] = (new NewsArticle())
-            ->where('section_id', $section_id)
-            ->orderByDesc('id')
-            ->offset($pagination->getOffset())
-            ->limit($pagination->getPerPage())
-            ->get();
-        $data['pagination'] = $pagination->render();
-        $data['current_section'] = $section_id;
-
-        return new ViewResponse('@news/admin/content.twig', $this->menu($title) + $data);
+        return new RedirectResponse($this->controls->url($filter));
     }
 
     /**

@@ -1,0 +1,43 @@
+{#
+    The sections of the list of the news.
+
+    @param array rows Built by NewsListRowMapper::sections().
+    @param array sort The links of the sortable columns.
+#}
+<table class="table table-hover admin-news-table">
+    <thead>
+        <tr>
+            {% include '@admin/components/ui/sort-header.twig' with {title: '#', link: sort.id} only %}
+            {% include '@admin/components/ui/sort-header.twig' with {title: __('Section'), link: sort.name} only %}
+            <th scope="col">{{ __('Code') }}</th>
+            {% include '@admin/components/ui/sort-header.twig' with {title: __('Articles'), link: sort.articles, class: 'text-end'} only %}
+            {% include '@admin/components/ui/sort-header.twig' with {title: __('Created'), link: sort.created} only %}
+            {% include '@admin/components/ui/sort-header.twig' with {title: __('Updated'), link: sort.updated} only %}
+            <th scope="col"><span class="visually-hidden">{{ __('Actions') }}</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for section in rows %}
+            <tr>
+                <td class="admin-news-table__id">{{ section.id }}</td>
+                <td>
+                    <a class="admin-news-table__name" href="{{ section.edit_url }}">{{ section.name }}</a>
+                    {% if section.parents %}
+                        <div class="admin-news-table__sub">{{ section.parents }}</div>
+                    {% endif %}
+                </td>
+                <td class="admin-news-table__code">{{ section.code }}</td>
+                <td class="text-end">
+                    <a class="admin-news-table__number" href="{{ section.articles_url }}">{{ section.articles|format_number }}</a>
+                </td>
+                <td class="admin-news-table__date">{{ section.created ? section.created|display_date : '—' }}</td>
+                <td class="admin-news-table__date">{{ section.updated ? section.updated|display_date : '—' }}</td>
+                <td>
+                    <div class="admin-news-table__actions">
+                        {% include '@admin/components/ui/row-actions.twig' with {actions: section.actions, label: __('Actions')} only %}
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

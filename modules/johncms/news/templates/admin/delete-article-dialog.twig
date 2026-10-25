@@ -1,0 +1,27 @@
+{#
+    Deleting an article. Answered to the modal of the panel as it is, and put into a page of its own
+    (delete-article.twig) for a plain visit.
+
+    @var string name
+    @var string form_action
+    @var string back_url    Where the list was; the form returns there.
+#}
+{% embed '@admin/components/ui/dialog.twig' with {
+    title: __('Delete article'),
+    action: form_action,
+    close_url: back_url,
+    name: name,
+} only %}
+    {% block body %}
+        <input type="hidden" name="back" value="{{ close_url }}">
+        <p class="fw-semibold">{{ name }}</p>
+        <div class="alert alert-danger mb-0">{{ __('The article is deleted together with the files attached to it.') }}</div>
+    {% endblock %}
+    {% block footer %}
+        <a href="{{ close_url }}" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</a>
+        <button type="submit" class="btn btn-danger">
+            {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+            {{ __('Delete') }}
+        </button>
+    {% endblock %}
+{% endembed %}

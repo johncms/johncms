@@ -1,35 +1,61 @@
 {#
-    What the news module offers to manage.
+    The news in the panel: every article, or every section, flat, each with the path of its
+    section.
+
+    The page is a live list (src/admin/js/live-list.js): the regions are drawn by templates of their
+    own, and news::admin/live puts them back in place as the search is typed or a filter is picked.
+
+    @var string       tab             articles | sections
+    @var array        controls        Built by NewsListControlsMapper.
+    @var array        rows            Built by NewsListRowMapper, for the tab.
+    @var string       search
+    @var int          total           What the filter lets through.
+    @var \Twig\Markup pagination
+    @var string       add_article_url
+    @var string       add_section_url
+    @var string       settings_url
+    @var string       success_message Empty unless an action has just been performed.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
+{% block page_actions %}
+    <a class="btn btn-secondary" href="{{ settings_url }}">
+        {% include '@admin/components/ui/icon.twig' with {name: 'settings', size: 14} only %}
+        {{ __('Settings') }}
+    </a>
+    <a class="btn btn-secondary" href="{{ add_section_url }}">
+        {% include '@admin/components/ui/icon.twig' with {name: 'folder', size: 14} only %}
+        {{ __('Add section') }}
+    </a>
+    <a class="btn btn-primary" href="{{ add_article_url }}">
+        {% include '@admin/components/ui/icon.twig' with {name: 'plus', size: 14} only %}
+        {{ __('Add article') }}
+    </a>
+{% endblock %}
+
 {% block content %}
-    <div class="mobile_tiles">
-        <div class="row">
-            <div class="col-6 col-sm-4 mt-3 tile">
-                <a href="/admin/news/content/" class="card border text-center">
-                    <div class="card-body">
-                        <div class="icon_with_badge d-inline-block">
-                            <svg class="icon-40">
-                                <use xlink:href="{{ asset('icons/sprite.svg') }}#forum"/>
-                            </svg>
-                        </div>
-                        <div class="mt-2 tile_name">{{ __('Content management') }}</div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-6 col-sm-4 mt-3 tile">
-                <a href="/admin/news/settings/" class="card border text-center">
-                    <div class="card-body">
-                        <div class="icon_with_badge d-inline-block">
-                            <svg class="icon-40">
-                                <use xlink:href="{{ asset('icons/sprite.svg') }}#settings"/>
-                            </svg>
-                        </div>
-                        <div class="mt-2 tile_name">{{ __('Settings') }}</div>
-                    </div>
-                </a>
-            </div>
-        </div>
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+
+    <div data-live-list>
+        {% include '@admin/components/list-tabs.twig' with {tabs: controls.tabs} only %}
+
+        <form class="admin-toolbar" method="get" action="{{ controls.action }}" role="search" data-live-list-form>
+            {% include '@admin/components/ui/search-field.twig' with {
+                name: 'q',
+                value: search,
+                label: __('Search the news'),
+                placeholder: __('Name, code or ID'),
+            } only %}
+            {% include '@admin/components/list-state.twig' with {controls: controls} only %}
+            {% include '@admin/components/list-filters.twig' with {controls: controls} only %}
+        </form>
+
+        {% include '@news/admin/results.twig' with {
+            tab: tab,
+            controls: controls,
+            rows: rows,
+            total: total,
+            pagination: pagination,
+        } only %}
     </div>
 {% endblock %}

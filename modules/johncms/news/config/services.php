@@ -19,6 +19,7 @@ return static function (ContainerConfigurator $container): void {
     )
         ->exclude(
             [
+                dirname(__DIR__) . '/src/Application/DTO',
                 dirname(__DIR__) . '/src/Application/Exceptions',
             ]
         )

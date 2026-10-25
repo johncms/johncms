@@ -2263,18 +2263,6 @@ parameters:
 			path: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name\.$#'
-			identifier: property.notFound
-			count: 2
-			path: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$parentSection\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$code\.$#'
 			identifier: property.notFound
 			count: 1

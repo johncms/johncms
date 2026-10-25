@@ -34,12 +34,6 @@ msgstr "Запрошенная статья не найдена."
 msgid "News"
 msgstr "Новости"
 
-#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:43
-#: modules/news/src/Application/Controllers/Admin/AdminController.php:52
-#: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:35
-msgid "Section list"
-msgstr "Список разделов"
-
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:58
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:59
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:76
@@ -343,22 +337,6 @@ msgstr "Код раздела"
 msgid "Text after a list"
 msgstr "Текст после списка"
 
-#: modules/news/templates/admin/del.phtml:11
-msgid "Confirm the action"
-msgstr "Подтвердите действие"
-
-#: modules/news/templates/admin/del.phtml:20
-msgid "Section:"
-msgstr "Раздел:"
-
-#: modules/news/templates/admin/del.phtml:23
-msgid "Article:"
-msgstr "Статья:"
-
-#: modules/news/templates/admin/del.phtml:25
-msgid "Do you really want to delete?"
-msgstr "Действительно хотите удалить?"
-
 #: modules/news/templates/admin/del.phtml:28
 #: modules/news/templates/admin/sections.phtml:70
 #: modules/news/templates/admin/sections.phtml:97
@@ -371,42 +349,15 @@ msgstr "Удалить"
 msgid "Cancel"
 msgstr "Отмена"
 
-#: modules/news/templates/admin/index.phtml:22
-msgid "Content management"
-msgstr "Управление содержимым"
-
 #: modules/news/templates/admin/sections.phtml:40
 msgid "Add section"
 msgstr "Добавить раздел"
-
-#: modules/news/templates/admin/sections.phtml:48
-#: modules/news/templates/admin/sections.phtml:102
-msgid "Name"
-msgstr "Название"
 
 #: modules/news/templates/admin/sections.phtml:49
 #: modules/news/templates/admin/sections.phtml:78
 #: modules/news/templates/admin/sections.phtml:103
 msgid "Code"
 msgstr "Код"
-
-#: modules/news/templates/admin/sections.phtml:50
-#: modules/news/templates/admin/sections.phtml:79
-#: modules/news/templates/admin/sections.phtml:104
-msgid "Type"
-msgstr "Тип"
-
-#: modules/news/templates/admin/sections.phtml:51
-#: modules/news/templates/admin/sections.phtml:80
-#: modules/news/templates/admin/sections.phtml:105
-msgid "Created at"
-msgstr "Дата создания"
-
-#: modules/news/templates/admin/sections.phtml:52
-#: modules/news/templates/admin/sections.phtml:81
-#: modules/news/templates/admin/sections.phtml:106
-msgid "Updated at"
-msgstr "Дата изменения"
 
 #: modules/news/templates/admin/sections.phtml:69
 #: modules/news/templates/admin/sections.phtml:96
@@ -541,3 +492,108 @@ msgstr "Управлять новостями"
 
 msgid "News archive"
 msgstr "Архив новостей"
+
+msgid "%d article"
+msgid_plural "%d articles"
+msgstr[0] "%d статья"
+msgstr[1] "%d статьи"
+msgstr[2] "%d статей"
+msgstr[3] "%d статьи"
+
+msgid "%d comment"
+msgid_plural "%d comments"
+msgstr[0] "%d комментарий"
+msgstr[1] "%d комментария"
+msgstr[2] "%d комментариев"
+msgstr[3] "%d комментария"
+
+msgid "%d section under it"
+msgid_plural "%d sections under it"
+msgstr[0] "%d вложенный раздел"
+msgstr[1] "%d вложенных раздела"
+msgstr[2] "%d вложенных разделов"
+msgstr[3] "%d вложенных раздела"
+
+msgid "Actions"
+msgstr "Действия"
+
+msgid "All sections"
+msgstr "Все разделы"
+
+msgid "Any"
+msgstr "Любой"
+
+msgid "Anybody"
+msgstr "Любой"
+
+msgid "Articles"
+msgstr "Статьи"
+
+msgid "Articles of the section"
+msgstr "Статьи раздела"
+
+msgid "Author"
+msgstr "Автор"
+
+msgid "Change the search or reset the filters."
+msgstr "Измените поиск или сбросьте фильтры."
+
+msgid "Created"
+msgstr "Создано"
+
+msgid "Delete article"
+msgstr "Удалить статью"
+
+msgid "Delete section"
+msgstr "Удалить раздел"
+
+msgid "Draft"
+msgstr "Черновик"
+
+msgid "Expired"
+msgstr "Истекло"
+
+msgid "Found: %s"
+msgstr "Найдено: %s"
+
+msgid "Name, code or ID"
+msgstr "Название, код или ID"
+
+msgid "No articles"
+msgstr "Статей нет"
+
+msgid "No sections"
+msgstr "Разделов нет"
+
+msgid "Open on the site"
+msgstr "Открыть на сайте"
+
+msgid "Published"
+msgstr "Опубликовано"
+
+msgid "Root"
+msgstr "Корень"
+
+msgid "Scheduled"
+msgstr "Запланировано"
+
+msgid "Search the news"
+msgstr "Поиск по новостям"
+
+msgid "Sections"
+msgstr "Разделы"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "The article is deleted together with the files attached to it."
+msgstr "Статья удаляется вместе с прикреплёнными к ней файлами."
+
+msgid "The section is deleted together with everything under it."
+msgstr "Раздел удаляется вместе со всем, что в нём лежит."
+
+msgid "Updated"
+msgstr "Изменено"
+
+msgid "Views"
+msgstr "Просмотры"

@@ -1,0 +1,20 @@
+{#
+    The regions of the list of the news, as the live list asks for them: each replaces the region
+    of the same name on the page. A fragment, so it extends nothing.
+
+    @var string       tab
+    @var array        controls
+    @var array        rows
+    @var int          total
+    @var \Twig\Markup pagination
+#}
+{% include '@admin/components/list-tabs.twig' with {tabs: controls.tabs} only %}
+{% include '@admin/components/list-state.twig' with {controls: controls} only %}
+{% include '@admin/components/list-filters.twig' with {controls: controls} only %}
+{% include '@news/admin/results.twig' with {
+    tab: tab,
+    controls: controls,
+    rows: rows,
+    total: total,
+    pagination: pagination,
+} only %}

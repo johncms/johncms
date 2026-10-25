@@ -1,0 +1,71 @@
+{#
+    The articles of the list of the news.
+
+    @param array rows Built by NewsListRowMapper::articles().
+    @param array sort The links of the sortable columns.
+#}
+<table class="table table-hover admin-news-table">
+    <thead>
+        <tr>
+            {% include '@admin/components/ui/sort-header.twig' with {title: '#', link: sort.id} only %}
+            {% include '@admin/components/ui/sort-header.twig' with {title: __('Article'), link: sort.name} only %}
+            <th scope="col">{{ __('Section') }}</th>
+            <th scope="col">{{ __('Status') }}</th>
+            <th scope="col">{{ __('Author') }}</th>
+            {% include '@admin/components/ui/sort-header.twig' with {title: __('Views'), link: sort.views, class: 'text-end'} only %}
+            {% include '@admin/components/ui/sort-header.twig' with {title: __('Created'), link: sort.created} only %}
+            {% include '@admin/components/ui/sort-header.twig' with {title: __('Updated'), link: sort.updated} only %}
+            <th scope="col"><span class="visually-hidden">{{ __('Actions') }}</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for article in rows %}
+            <tr>
+                <td class="admin-news-table__id">{{ article.id }}</td>
+                <td>
+                    <a class="admin-news-table__name" href="{{ article.edit_url }}">{{ article.name }}</a>
+                    <div class="admin-news-table__sub">{{ article.code }}</div>
+                </td>
+                <td>
+                    {% if article.section_url %}
+                        <a class="admin-news-table__section" href="{{ article.section_url }}">{{ article.section }}</a>
+                    {% else %}
+                        <span class="text-body-tertiary">{{ __('Root') }}</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if article.status == 'published' %}
+                        <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ article.status_title }}</span>
+                    {% elseif article.status == 'scheduled' %}
+                        <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis badge-dot">{{ article.status_title }}</span>
+                    {% elseif article.status == 'expired' %}
+                        <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis badge-dot">{{ article.status_title }}</span>
+                    {% else %}
+                        <span class="badge rounded-pill text-bg-light badge-dot">{{ article.status_title }}</span>
+                    {% endif %}
+                    {% if article.status_date %}
+                        <div class="admin-news-table__sub">{{ article.status_date|display_date }}</div>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if article.author_url %}
+                        <a href="{{ article.author_url }}">{{ article.author }}</a>
+                    {% else %}
+                        <span class="text-body-tertiary">—</span>
+                    {% endif %}
+                </td>
+                <td class="text-end">
+                    <div class="admin-news-table__number">{{ article.views|format_number }}</div>
+                    <div class="admin-news-table__sub">{{ n__('%d comment', '%d comments', article.comments)|format(article.comments) }}</div>
+                </td>
+                <td class="admin-news-table__date">{{ article.created ? article.created|display_date : '—' }}</td>
+                <td class="admin-news-table__date">{{ article.updated ? article.updated|display_date : '—' }}</td>
+                <td>
+                    <div class="admin-news-table__actions">
+                        {% include '@admin/components/ui/row-actions.twig' with {actions: article.actions, label: __('Actions')} only %}
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

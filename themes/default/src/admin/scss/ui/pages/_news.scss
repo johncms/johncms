@@ -1,0 +1,57 @@
+// The list of the news (news::admin/index).
+
+.admin-news-table {
+  td {
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  td:nth-child(2) {
+    width: 100%;
+    min-width: 16rem;
+    white-space: normal;
+  }
+}
+
+.admin-news-table__id,
+.admin-news-table__code,
+.admin-news-table__number {
+  font-family: $ui-font-mono;
+  font-variant-numeric: tabular-nums;
+}
+
+.admin-news-table__id {
+  color: var(--fg-dim);
+}
+
+.admin-news-table__name {
+  font-weight: 600;
+  color: var(--fg);
+
+  &:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+}
+
+.admin-news-table__section {
+  color: var(--fg-muted);
+}
+
+.admin-news-table__sub {
+  margin-top: 2px;
+  font-family: $ui-font-mono;
+  font-size: 0.6875rem;
+  color: var(--fg-dim);
+}
+
+.admin-news-table__date {
+  font-family: $ui-font-mono;
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+}
+
+.admin-news-table__actions {
+  display: flex;
+  justify-content: flex-end;
+}

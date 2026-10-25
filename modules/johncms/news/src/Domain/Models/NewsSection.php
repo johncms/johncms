@@ -26,6 +26,7 @@ use Johncms\Modules\News\Application\Section;
  * @property NewsSection|null $parentSection
  * @property \Illuminate\Database\Eloquent\Collection<int, NewsSection> $childSections
  * @property string $url
+ * @property int $articles_count When the query counted them
  */
 class NewsSection extends Model
 {
@@ -58,6 +59,14 @@ class NewsSection extends Model
     public function childSections(): HasMany
     {
         return $this->hasMany(__CLASS__, 'parent', 'id');
+    }
+
+    /**
+     * The articles standing in the section itself, not in the sections under it.
+     */
+    public function articles(): HasMany
+    {
+        return $this->hasMany(NewsArticle::class, 'section_id', 'id');
     }
 
     /**

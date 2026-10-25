@@ -6,19 +6,13 @@ namespace Johncms\Modules\News\Application\Controllers\Admin;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
-use Johncms\Http\ExceptionResponseFactory;
-use Johncms\Logs\DebugDetailsPolicy;
-use Johncms\Modules\News\Application\Exceptions\SectionNotFoundException;
 use Johncms\Modules\News\Application\Section;
-use Johncms\Modules\News\Application\UseCases\DeleteSectionUseCase;
 use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Modules\News\Domain\Models\NewsSection;
-use Johncms\Modules\News\Domain\Repository\NewsSectionRepositoryInterface;
 use Johncms\Http\Session;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -26,12 +20,7 @@ final readonly class AdminSectionController
 {
     public function __construct(
         private NavChain $navChain,
-        private ExceptionResponseFactory $exceptionResponses,
-        private DebugDetailsPolicy $debugDetailsPolicy,
-        private LoggerInterface $logger,
         private Session $session,
-        private DeleteSectionUseCase $deleteSection,
-        private NewsSectionRepositoryInterface $sections,
     ) {
     }
 
@@ -41,8 +30,7 @@ final readonly class AdminSectionController
      */
     private function addSectionBreadcrumbs(): void
     {
-        $this->navChain->add(__('News'), '/admin/news/');
-        $this->navChain->add(__('Section list'), '/admin/news/content/');
+        $this->navChain->add(__('News'), '/admin/news');
     }
 
     /**
@@ -201,59 +189,6 @@ final readonly class AdminSectionController
         $data['errors'] = $errors;
 
         return new ViewResponse('@news/admin/section-form.twig', $this->menu($pageTitle) + $data);
-    }
-
-    /**
-     * Deleting a section with everything under it: the confirmation with a token of its own, and
-     * the deletion once the token comes back.
-     */
-    public function del(int $section_id, Request $request): Response | ViewResponse
-    {
-        $this->addSectionBreadcrumbs();
-
-        $section = $this->sections->findById($section_id);
-        if ($section === null) {
-            // A missing section answers as an error of the server, as it always has.
-            return $this->notFound(new SectionNotFoundException('The section #' . $section_id . ' does not exist.'));
-        }
-
-        $post = $request->request->all();
-        $sessionToken = $this->session->get('delete_token');
-
-        if (
-            isset($post['delete_token'], $sessionToken) &&
-            $sessionToken === $post['delete_token'] &&
-            $request->getMethod() === 'POST'
-        ) {
-            try {
-                $deleted = $this->deleteSection->execute($section_id);
-            } catch (SectionNotFoundException $exception) {
-                return $this->notFound($exception);
-            }
-
-            $this->session->flash('success_message', __('The section was successfully deleted'));
-            return new RedirectResponse('/admin/news/content/' . $deleted->parent);
-        }
-
-        $data = ['section' => $section];
-
-        // Generate the token
-        $data['delete_token'] = uniqid('', true);
-        $this->session->set('delete_token', $data['delete_token']);
-
-        $data['action_url'] = '/admin/news/del_section/' . $section_id;
-
-        return new ViewResponse(
-            '@news/admin/delete-confirm.twig',
-            $data + $this->menu(__('News')) + ['section' => null, 'article' => null]
-        );
-    }
-
-    private function notFound(SectionNotFoundException $exception): Response
-    {
-        $this->logger->error($exception->getMessage(), ['exception' => $exception]);
-
-        return $this->exceptionResponses->internalServerError($exception, $this->debugDetailsPolicy->allowed());
     }
 
     /**

@@ -1,0 +1,34 @@
+{#
+    What the filter lets through: the chips of what is applied, the table of the tab and the pages.
+
+    @param string       tab        articles | sections
+    @param array        controls
+    @param array        rows       Built by NewsListRowMapper.
+    @param int          total
+    @param \Twig\Markup pagination
+#}
+<div class="admin-list-results" data-live-list-region="results">
+    {% include '@admin/components/ui/filter-chips.twig' with {chips: controls.chips, clear_url: controls.clear_url} only %}
+
+    <div class="card">
+        {% if rows is empty %}
+            {% include '@admin/components/ui/empty-state.twig' with {
+                icon: tab == 'articles' ? 'newspaper' : 'folder',
+                title: tab == 'articles' ? __('No articles') : __('No sections'),
+                description: controls.chips is empty ? '' : __('Change the search or reset the filters.'),
+            } only %}
+        {% else %}
+            <div class="table-responsive">
+                {% if tab == 'articles' %}
+                    {% include '@news/admin/components/articles-table.twig' with {rows: rows, sort: controls.sort} only %}
+                {% else %}
+                    {% include '@news/admin/components/sections-table.twig' with {rows: rows, sort: controls.sort} only %}
+                {% endif %}
+            </div>
+            <div class="card-footer admin-list-footer">
+                <span class="admin-list-footer__total">{{ __('Found: %s')|format(total|format_number) }}</span>
+                <div class="pagination-no-padding">{{ pagination }}</div>
+            </div>
+        {% endif %}
+    </div>
+</div>

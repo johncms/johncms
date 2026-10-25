@@ -29,4 +29,21 @@ final class SectionTreeTest extends TestCase
 
         self::assertSame([1, 2], $tree->subtreeOf(1));
     }
+
+    public function testAPathRunsFromTheTopDown(): void
+    {
+        $tree = new SectionTree([1 => 0, 2 => 1, 3 => 2], [1 => 'Releases', 2 => '9.x', 3 => '9.9']);
+
+        self::assertSame(['Releases', '9.x', '9.9'], $tree->pathOf(3));
+        self::assertSame([], $tree->pathOf(0));
+    }
+
+    public function testTheOrderPutsEverySectionUnderItsParentByName(): void
+    {
+        $tree = new SectionTree([1 => 0, 2 => 1, 3 => 0, 4 => 1, 5 => 99], [1 => 'Releases', 2 => 'b', 3 => 'Guides', 4 => 'a', 5 => 'Lost']);
+
+        // A section whose parent is gone comes last.
+        self::assertSame([3, 1, 4, 2, 5], $tree->ordered());
+        self::assertSame([1, 3], $tree->childrenOf(0));
+    }
 }
