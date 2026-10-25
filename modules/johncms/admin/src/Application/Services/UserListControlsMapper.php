@@ -28,6 +28,7 @@ final readonly class UserListControlsMapper
     public function __construct(
         private UserListFilterMapper $filterMapper,
         private RegistrationSettings $registration,
+        private ListFilterControl $control,
     ) {
     }
 
@@ -152,7 +153,7 @@ final readonly class UserListControlsMapper
             $options[] = ['title' => $role->display_name, 'url' => $this->url($filter->withRole(false, $role->id)), 'active' => $filter->roleId === $role->id];
         }
 
-        return $this->control('role', __('Role'), $options, $this->url($filter->withRole(false, null)));
+        return $this->control->build('role', __('Role'), $options, $this->url($filter->withRole(false, null)));
     }
 
     /**
@@ -173,28 +174,7 @@ final readonly class UserListControlsMapper
             $options[] = ['title' => $title, 'url' => $this->url($with($case)), 'active' => $case === $current];
         }
 
-        return $this->control($name, $label, $options, $this->url($with($default)));
-    }
-
-    /**
-     * @param list<array<string, mixed>> $options
-     * @return array<string, mixed>
-     */
-    private function control(string $name, string $label, array $options, string $clearUrl): array
-    {
-        $active = array_values(array_filter($options, static fn (array $option): bool => $option['active']));
-        $current = $active[0] ?? $options[0];
-        // The first option is "any": choosing it is no filter at all.
-        $applied = $current !== $options[0];
-
-        return [
-            'name'    => $name,
-            'label'   => $label,
-            'value'   => $current['title'],
-            'applied' => $applied,
-            'options' => $options,
-            'chip'    => $applied ? ['label' => $label, 'value' => $current['title'], 'url' => $clearUrl] : null,
-        ];
+        return $this->control->build($name, $label, $options, $this->url($with($default)));
     }
 
     /**

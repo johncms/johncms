@@ -104,7 +104,7 @@ reference:
 <div data-live-list>
     <form method="get" action="/admin/users" data-live-list-form>
         {% include '@admin/components/ui/search-field.twig' with {…} only %}
-        {% include '@admin/users/state.twig' with {…} only %}   {# data-live-list-region="state" #}
+        {% include '@admin/components/list-state.twig' with {…} only %}   {# data-live-list-region="state" #}
     </form>
     {% include '@admin/users/results.twig' with {…} only %}     {# data-live-list-region="results" #}
 </div>

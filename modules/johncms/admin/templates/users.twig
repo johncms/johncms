@@ -39,8 +39,8 @@
                 label: __('Search users'),
                 placeholder: __('Nickname, e-mail, ID or IP'),
             } only %}
-            {% include '@admin/users/state.twig' with {controls: controls} only %}
-            {% include '@admin/users/filters.twig' with {controls: controls} only %}
+            {% include '@admin/components/list-state.twig' with {controls: controls} only %}
+            {% include '@admin/components/list-filters.twig' with {controls: controls} only %}
         </form>
 
         {% include '@admin/users/results.twig' with {
