@@ -1,0 +1,24 @@
+{#
+    The tabs of a live list, each with the number of what it holds, and room beside them for what
+    can be done to the tab that is open. Shared by the lists of the panel; meant for {% embed %}
+    when there is something in the actions block.
+
+    @param array tabs title, url, active, count, tone (danger for a number that asks for attention).
+
+    Blocks: actions.
+#}
+<div class="admin-list-tabs" data-live-list-region="tabs">
+    <ul class="nav nav-tabs flex-grow-1">
+        {% for tab in tabs %}
+            <li class="nav-item">
+                <a class="nav-link{{ tab.active ? ' active' }}" href="{{ tab.url }}"{% if tab.active %} aria-current="page"{% endif %}>
+                    {{ tab.title }}
+                    {% if tab.count %}
+                        <span class="badge {{ tab.tone == 'danger' ? 'text-bg-danger' : 'text-bg-light' }}">{{ tab.count|format_number }}</span>
+                    {% endif %}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    {% block actions %}{% endblock %}
+</div>
