@@ -76,7 +76,6 @@
       'Maintenance' => 'Обслуживание',
       'System check' => 'Проверка системы',
       'Amnesty has been successful' => 'Амнистия проведена успешно',
-      'All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)' => 'Разбанены все пользователи, которые имели активные Баны (кроме банов &quot;До отмены&quot;)',
       'Amnesty' => 'Амнистия',
       'Ban Panel' => 'Бан панель',
       'Violations' => 'Нарушения',
@@ -634,6 +633,7 @@
       'Grant the amnesty' => 'Объявить амнистию',
       'Every ban in force ends now, except those given until lifted. The history of violations stays.' => 'Все действующие баны, кроме бессрочных, заканчиваются сейчас. История нарушений остаётся.',
       'Every ban ends and the history of violations is deleted for good. The karma the bans cost comes back.' => 'Все баны заканчиваются, история нарушений удаляется навсегда. Карма, снятая за баны, возвращается.',
+      'Every ban in force was lifted, except those given until lifted' => 'Все действующие баны сняты, кроме бессрочных',
     ),
   ),
 );

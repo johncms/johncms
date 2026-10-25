@@ -37,6 +37,21 @@ final class AmnestyTest extends FunctionalTestCase
         self::assertNotNull(Ban::query()->find($finished), 'The history stays.');
     }
 
+    /**
+     * The message is plain text: the page escapes it, so an entity written into it would reach the
+     * visitor as "&quot;".
+     */
+    public function testThePanelSaysWhatTheAmnestyDid(): void
+    {
+        $supervisor = FunctionalUserFactory::createSupervisor();
+        $this->postForm('/admin/bans/amnesty', ['term' => '0'], $supervisor);
+
+        $page = (string) $this->handleRequest('/admin/bans', cookies: $this->actingAs($supervisor))->getContent();
+
+        self::assertMatchesRegularExpression('/<div class="alert alert-success[^"]*"[^>]*>/', $page);
+        self::assertStringNotContainsString('&amp;quot;', $page);
+    }
+
     public function testClearingDeletesEveryBanAndGivesBackTheKarmaTheyCost(): void
     {
         $member = FunctionalUserFactory::create(['karma_minus' => 10 + 3]);

@@ -56,7 +56,7 @@ final readonly class AmnestyController
 
         $this->session->flash('success_message', $clearDatabase
             ? __('Amnesty has been successful')
-            : __('All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)'));
+            : __('Every ban in force was lifted, except those given until lifted'));
         redirect(BanListControlsMapper::PATH);
     }
 }

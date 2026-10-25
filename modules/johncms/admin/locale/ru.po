@@ -437,10 +437,6 @@ msgstr "Проверка системы"
 msgid "Amnesty has been successful"
 msgstr "Амнистия проведена успешно"
 
-#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:44
-msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
-msgstr "Разбанены все пользователи, которые имели активные Баны (кроме банов &quot;До отмены&quot;)"
-
 #: modules/admin/src/Application/Controllers/Users/AmnestyController.php:60
 #: modules/admin/src/Application/UseCases/ApplyAmnestyUseCase.php:28
 #: modules/admin/templates/ban_panel.phtml:41
@@ -2457,3 +2453,6 @@ msgstr "Все действующие баны, кроме бессрочных,
 
 msgid "Every ban ends and the history of violations is deleted for good. The karma the bans cost comes back."
 msgstr "Все баны заканчиваются, история нарушений удаляется навсегда. Карма, снятая за баны, возвращается."
+
+msgid "Every ban in force was lifted, except those given until lifted"
+msgstr "Все действующие баны сняты, кроме бессрочных"

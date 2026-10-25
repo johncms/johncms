@@ -888,7 +888,7 @@ msgid "Amnesty has been successful"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Users/AmnestyController.php:59
-msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
+msgid "Every ban in force was lifted, except those given until lifted"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Users/DeleteUserController.php:41
