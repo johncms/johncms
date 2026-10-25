@@ -17,7 +17,9 @@ final class EloquentKarmaRepository implements KarmaRepositoryInterface
 
     public function resetAll(): void
     {
-        Karma::query()->truncate();
+        // A delete rather than a truncate: MySQL commits the transaction around a truncate, so the
+        // clearing could not be undone together with the rest of what the request did.
+        Karma::query()->delete();
         User::query()->update(['karma_plus' => 0, 'karma_minus' => 0]);
     }
 }
