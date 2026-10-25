@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Admin;
 
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Users\Ban;
 use Johncms\Users\Bans\BanKind;
 use Johncms\Users\User;
@@ -115,7 +116,44 @@ final class BanPanelTest extends FunctionalTestCase
         self::assertStringStartsWith('<form class="modal-content" method="post" action="/admin/bans/amnesty">', trim((string) $response->getContent()));
     }
 
-    private function ban(User $user, BanKind $kind, int $until): int
+    public function testALiftIsOfferedForABanInForceToWhoeverMayLift(): void
+    {
+        $inForce = $this->ban(FunctionalUserFactory::create(), BanKind::FORUM, time() + 3600);
+        $finished = $this->ban(FunctionalUserFactory::create(), BanKind::FORUM, time() - 3600);
+        $moderator = FunctionalUserFactory::createWithPermissions([CorePermissions::ADMIN_ACCESS, CorePermissions::USERS_BAN_MANAGE], level: 60);
+
+        $forSupervisor = $this->listOf('/admin/bans?status=all');
+        $forModerator = $this->listOf('/admin/bans?status=all', $moderator);
+
+        self::assertStringContainsString('/bans/' . $inForce . '/lift?back=', $forSupervisor);
+        self::assertStringNotContainsString('/bans/' . $finished . '/lift', $forSupervisor);
+        self::assertStringNotContainsString('/lift?back=', $forModerator, 'Lifting a ban is a permission of its own.');
+    }
+
+    public function testWhoGaveABanIsShownToWhoeverGivesThem(): void
+    {
+        $this->ban(FunctionalUserFactory::create(), BanKind::FORUM, time() + 3600, by: 'Elrond');
+        $staff = FunctionalUserFactory::createWithPermissions([CorePermissions::ADMIN_ACCESS], level: 20);
+
+        self::assertStringContainsString('Elrond', $this->listOf('/admin/bans'));
+        self::assertStringNotContainsString('Elrond', $this->listOf('/admin/bans', $staff));
+    }
+
+    public function testTheLiftOpenedFromThePanelClosesToIt(): void
+    {
+        $member = FunctionalUserFactory::create();
+        $ban = $this->ban($member, BanKind::FORUM, time() + 3600);
+
+        $response = $this->handleRequest(
+            '/admin/users/' . $member->id . '/bans/' . $ban . '/lift?back=' . rawurlencode('/admin/bans?status=all'),
+            server: ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'],
+            cookies: $this->actingAs(FunctionalUserFactory::createSupervisor())
+        );
+
+        self::assertStringContainsString('href="/admin/bans?status=all" class="btn-close"', (string) $response->getContent());
+    }
+
+    private function ban(User $user, BanKind $kind, int $until, string $by = 'admin'): int
     {
         return Fixture::insert('cms_ban_users', [
             'user_id'    => $user->id,
@@ -123,16 +161,16 @@ final class BanPanelTest extends FunctionalTestCase
             'ban_while'  => $until - 86400,
             'ban_type'   => $kind->value,
             'ban_reason' => 'Test',
-            'ban_who'    => 'admin',
+            'ban_who'    => $by,
         ]);
     }
 
-    private function listOf(string $uri): string
+    private function listOf(string $uri, ?User $viewer = null): string
     {
         $response = $this->handleRequest(
             $uri,
             server: ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'],
-            cookies: $this->actingAs(FunctionalUserFactory::createSupervisor())
+            cookies: $this->actingAs($viewer ?? FunctionalUserFactory::createSupervisor())
         );
 
         self::assertSame(Response::HTTP_OK, $response->getStatusCode());
