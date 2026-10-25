@@ -60,7 +60,6 @@ return static function (RouteCollection $router): void {
     $adminGroup = $router->group('', function (RouteCollection $r): void {
         $r->get('/admin', DashboardController::class)->name('admin.index');
         $r->get('/admin/users', UserListController::class)->name('admin.users');
-        $r->get('/admin/users/cleanup', [UserCleanupController::class, 'index'])->name('admin.users.cleanup');
         $r->get('/admin/users/{id:number}', UserCardController::class)->name('admin.users.view');
         // Who may change which account is decided by the use cases: the permission and the place
         // in the hierarchy, as for the profile of the site.
@@ -80,7 +79,6 @@ return static function (RouteCollection $router): void {
         $r->post('/admin/users/{id:number}/bans/{banId:number}/lift', [UserBansController::class, 'lift'])->name('admin.users.bans.lift.run');
         $r->get('/admin/users/{id:number}/bans/{banId:number}/delete', [UserBansController::class, 'deleteConfirm'])->name('admin.users.bans.delete');
         $r->post('/admin/users/{id:number}/bans/{banId:number}/delete', [UserBansController::class, 'delete'])->name('admin.users.bans.delete.run');
-        $r->post('/admin/users/cleanup', [UserCleanupController::class, 'clean'])->name('admin.users.cleanup.run');
         // Who may open these is decided by the admin.roles.manage permission rather than by the
         // group: an administrator holds it, and a role standing above the visitor's own is
         // listed but not opened.
@@ -216,6 +214,9 @@ return static function (RouteCollection $router): void {
 
             $sr->get('/admin/users/{id:number}/delete', [DeleteUserController::class, 'index'])->name('admin.users.delete');
             $sr->post('/admin/users/{id:number}/delete', [DeleteUserController::class, 'delete'])->name('admin.users.delete.run');
+            $sr->get('/admin/users/cleanup', [UserCleanupController::class, 'index'])->name('admin.users.cleanup');
+            $sr->get('/admin/users/cleanup/confirm', [UserCleanupController::class, 'confirm'])->name('admin.users.cleanup.confirm');
+            $sr->post('/admin/users/cleanup', [UserCleanupController::class, 'clean'])->name('admin.users.cleanup.run');
 
             $sr->get('/admin/languages', [LanguagesController::class, 'index'])->name('admin.languages');
             $sr->post('/admin/languages', [LanguagesController::class, 'save'])->name('admin.languages.save');

@@ -1,30 +1,87 @@
 {#
-    Removing the profiles that were registered long ago and never used.
+    Removing the accounts that were registered long ago and never used: who goes, what goes with
+    them, and the button that asks for the deletion in a dialog (users/cleanup-dialog.twig).
 
-    @var int    total
-    @var string form_action
-    @var string error_message   Empty unless the last run failed.
+    @var int    total           The accounts the cleanup would remove now.
+    @var string confirm_url
     @var string success_message Empty unless a run has just succeeded.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
 {% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
 
-    <div class="alert alert-danger">
-        <div class="pb-2">
-            {{ __('This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them.')|raw }}
-            <div>
-                {{ __('Total') }}: <b>{{ total }}</b>
+    <p class="text-body-secondary">
+        {{ __('The cleanup removes the accounts that were registered long ago, have not been seen for months and left next to nothing on the site.') }}
+    </p>
+
+    <div class="row g-3">
+        <div class="col-lg-8 d-flex flex-column gap-3">
+            <div class="card">
+                <div class="card-header">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'filter', size: 15, class: 'text-body-tertiary'} only %}
+                    <span class="flex-grow-1">{{ __('Who is removed') }}</span>
+                </div>
+                <div class="card-body">
+                    {% include '@admin/components/ui/facts.twig' with {items: [
+                        {label: __('Registered'), value: __('more than 6 months ago')},
+                        {label: __('Last visit'), value: __('more than 5 months ago')},
+                        {label: __('Forum'), value: __('no posts')},
+                        {label: __('Guestbook'), value: __('fewer than 10 posts')},
+                        {label: __('Comments'), value: __('fewer than 10')},
+                    ]} only %}
+                </div>
+                <div class="card-footer d-flex align-items-center gap-2 text-body-secondary">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'shield-check', size: 15, class: 'text-success'} only %}
+                    {{ __('An account holding a role is staff and is never removed, however quiet.') }}
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 15, class: 'text-body-tertiary'} only %}
+                    <span class="flex-grow-1">{{ __('What goes with them') }}</span>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0 row row-cols-1 row-cols-md-2 g-2">
+                        {% for item in [
+                            {icon: 'user-x', text: __('The account, its bans and the history of its addresses')},
+                            {icon: 'image', text: __('The photo album with its files')},
+                            {icon: 'book-open', text: __('The guestbook of the account')},
+                            {icon: 'mail', text: __('Personal messages and contacts')},
+                            {icon: 'thumbs-up', text: __('The karma votes about the account')},
+                            {icon: 'message-square', text: __('Its comments and guestbook posts')},
+                            {icon: 'messages-square', text: __('The marks of what it has read in the forum')},
+                        ] %}
+                            <li class="d-flex align-items-center gap-2">
+                                {% include '@admin/components/ui/icon.twig' with {name: item.icon, size: 15, class: 'text-body-tertiary'} only %}
+                                {{ item.text }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
         </div>
-        <div>
-            <form action="{{ form_action }}" method="post">
-                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                <button type="submit" class="btn btn-danger"{% if total == 0 %} disabled{% endif %}>{{ __('Delete') }}</button>
-                <a href="/admin/" class="btn btn-outline-secondary">{{ __('Cancel') }}</a>
-            </form>
+
+        <div class="col-lg-4 d-flex flex-column gap-3">
+            {% include '@admin/components/ui/stat-card.twig' with {label: __('To be removed'), value: total, tone: total > 0 ? 'danger' : ''} only %}
+            <div class="card">
+                {% if total > 0 %}
+                    <div class="card-body d-flex flex-column gap-3">
+                        <div class="text-body-secondary">{{ __('The accounts are deleted for good. This cannot be undone.') }}</div>
+                        <a class="btn btn-danger" href="{{ confirm_url }}" data-admin-modal>
+                            {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+                            {{ __('Delete inactive accounts') }}
+                        </a>
+                    </div>
+                {% else %}
+                    {% include '@admin/components/ui/empty-state.twig' with {
+                        icon: 'circle-check',
+                        title: __('Nothing to clean up'),
+                        description: __('No account meets the conditions now.'),
+                    } only %}
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}

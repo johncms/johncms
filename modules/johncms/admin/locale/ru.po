@@ -510,10 +510,6 @@ msgstr "Удалены все неподтвержденные регистра�
 msgid "Administration"
 msgstr "Администрация"
 
-#: modules/admin/src/Application/Controllers/Users/UserCleanupController.php:42
-msgid "Inactive profiles deleted"
-msgstr "Неактивные профили удалены"
-
 #: modules/admin/src/Application/Controllers/Users/UserCleanupController.php:58
 #: modules/admin/templates/sidebar-admin-menu.phtml:104
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:104
@@ -1522,10 +1518,6 @@ msgstr "База данных"
 msgid "Recommended parameters"
 msgstr "Рекомендуемые параметры"
 
-#: modules/admin/templates/user_clean_confirm.phtml:23
-msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
-msgstr "К данной категории относятся профили, зарегистрированные более 6 месяцев назад, с датой последнего визита более 5 месяцев назад и с нулевой активностью.<br>Смело можете их удалить."
-
 #: modules/admin/templates/userlist.phtml:30
 msgid "List is empty"
 msgstr "Список пуст"
@@ -2463,3 +2455,78 @@ msgstr "или"
 
 msgid "via"
 msgstr "через"
+
+msgid "Delete inactive accounts"
+msgstr "Удалить неактивные аккаунты"
+
+msgid "%d account deleted"
+msgid_plural "%d accounts deleted"
+msgstr[0] "Удалён %d аккаунт"
+msgstr[1] "Удалено %d аккаунта"
+msgstr[2] "Удалено %d аккаунтов"
+
+msgid "The cleanup removes the accounts that were registered long ago, have not been seen for months and left next to nothing on the site."
+msgstr "Очистка удаляет аккаунты, которые зарегистрированы давно, не появлялись на сайте месяцами и почти ничего после себя не оставили."
+
+msgid "Who is removed"
+msgstr "Кто удаляется"
+
+msgid "more than 6 months ago"
+msgstr "более 6 месяцев назад"
+
+msgid "more than 5 months ago"
+msgstr "более 5 месяцев назад"
+
+msgid "no posts"
+msgstr "ни одного сообщения"
+
+msgid "fewer than 10 posts"
+msgstr "меньше 10 сообщений"
+
+msgid "fewer than 10"
+msgstr "меньше 10"
+
+msgid "An account holding a role is staff and is never removed, however quiet."
+msgstr "Аккаунт с ролью — это персонал, и он не удаляется, даже если давно молчит."
+
+msgid "What goes with them"
+msgstr "Что удаляется вместе с ними"
+
+msgid "The account, its bans and the history of its addresses"
+msgstr "Сам аккаунт, его баны и история адресов"
+
+msgid "The photo album with its files"
+msgstr "Фотоальбом вместе с файлами"
+
+msgid "The guestbook of the account"
+msgstr "Гостевая книга аккаунта"
+
+msgid "Personal messages and contacts"
+msgstr "Личные сообщения и контакты"
+
+msgid "The karma votes about the account"
+msgstr "Голоса кармы за аккаунт"
+
+msgid "Its comments and guestbook posts"
+msgstr "Его комментарии и сообщения в гостевых"
+
+msgid "The marks of what it has read in the forum"
+msgstr "Отметки прочитанного на форуме"
+
+msgid "To be removed"
+msgstr "К удалению"
+
+msgid "The accounts are deleted for good. This cannot be undone."
+msgstr "Аккаунты удаляются навсегда. Это нельзя отменить."
+
+msgid "Nothing to clean up"
+msgstr "Чистить нечего"
+
+msgid "No account meets the conditions now."
+msgstr "Сейчас ни один аккаунт не подходит под условия."
+
+msgid "%d account is removed together with everything it left on the site."
+msgid_plural "%d accounts are removed together with everything they left on the site."
+msgstr[0] "Будет удалён %d аккаунт вместе со всем, что он оставил на сайте."
+msgstr[1] "Будет удалено %d аккаунта вместе со всем, что они оставили на сайте."
+msgstr[2] "Будет удалено %d аккаунтов вместе со всем, что они оставили на сайте."

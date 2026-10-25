@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Admin;
 
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\UserRole;
 use Johncms\Users\IpHistory;
 use Johncms\Users\User;
@@ -28,7 +29,30 @@ final class UserCleanupTest extends FunctionalTestCase
         $response = $this->handleRequest('/admin/users/cleanup', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()));
 
         self::assertSame(Response::HTTP_OK, $response->getStatusCode());
-        self::assertStringContainsString('<b>2</b>', (string) $response->getContent());
+        self::assertStringContainsString('<span class="admin-stat__value">2</span>', (string) $response->getContent());
+        self::assertStringContainsString('href="/admin/users/cleanup/confirm" data-admin-modal', (string) $response->getContent());
+    }
+
+    public function testTheModalGetsTheDialogThatPostsTheCleanup(): void
+    {
+        $this->forgotten();
+
+        $response = $this->handleRequest(
+            '/admin/users/cleanup/confirm',
+            server: ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'],
+            cookies: $this->actingAs(FunctionalUserFactory::createSupervisor())
+        );
+
+        self::assertSame(Response::HTTP_OK, $response->getStatusCode());
+        self::assertStringStartsWith('<form class="modal-content" method="post" action="/admin/users/cleanup">', trim((string) $response->getContent()));
+    }
+
+    public function testWithNobodyToRemoveTheDialogOffersNoDeletion(): void
+    {
+        $response = $this->handleRequest('/admin/users/cleanup/confirm', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()));
+
+        self::assertSame(Response::HTTP_OK, $response->getStatusCode());
+        self::assertStringNotContainsString('<form class="modal-content"', (string) $response->getContent());
     }
 
     public function testOnlyTheForgottenAccountsAreRemoved(): void
@@ -61,6 +85,19 @@ final class UserCleanupTest extends FunctionalTestCase
         $this->postForm('/admin/users/cleanup', [], FunctionalUserFactory::createSupervisor());
 
         self::assertNull(User::query()->find($former->id));
+    }
+
+    public function testAModeratorOfThePanelMayNeitherOpenNorRunTheCleanup(): void
+    {
+        $forgotten = $this->forgotten();
+        $moderator = FunctionalUserFactory::createWithPermissions([CorePermissions::ADMIN_ACCESS], level: 60);
+
+        $page = $this->handleRequest('/admin/users/cleanup', cookies: $this->actingAs($moderator));
+        $run = $this->postForm('/admin/users/cleanup', [], $moderator);
+
+        self::assertSame(Response::HTTP_FORBIDDEN, $page->getStatusCode());
+        self::assertSame(Response::HTTP_FORBIDDEN, $run->getStatusCode());
+        self::assertNotNull(User::query()->find($forgotten->id));
     }
 
     /**

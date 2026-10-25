@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * The gate of everything that changes the site as a whole: system settings, IP bans, karma,
- * counters, languages, maintenance, deleting an account.
+ * counters, languages, maintenance, deleting an account and the cleanup of inactive ones.
  *
  * Self-contained: the middleware of the surrounding admin group does not reach into a nested
  * group, so a guest and a visitor without the permission are answered here as well.

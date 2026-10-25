@@ -1,0 +1,32 @@
+{#
+    Confirming the cleanup of the inactive accounts. Answered to the modal of the panel as it is,
+    and put into a page of its own (users-cleanup-confirm.twig) for a plain visit.
+
+    @var int    total       The accounts the cleanup would remove now.
+    @var string form_action
+    @var string back_url
+#}
+{% embed '@admin/components/ui/dialog.twig' with {
+    title: __('Delete inactive accounts'),
+    action: total > 0 ? form_action : '',
+    close_url: back_url,
+    total: total,
+} only %}
+    {% block body %}
+        {% if total > 0 %}
+            <p>{{ n__('%d account is removed together with everything it left on the site.', '%d accounts are removed together with everything they left on the site.', total)|format(total) }}</p>
+            <div class="alert alert-danger mb-0">{{ __('The accounts are deleted for good. This cannot be undone.') }}</div>
+        {% else %}
+            <p class="mb-0 text-body-secondary">{{ __('No account meets the conditions now.') }}</p>
+        {% endif %}
+    {% endblock %}
+    {% block footer %}
+        <a href="{{ close_url }}" class="btn btn-secondary" data-bs-dismiss="modal">{{ total > 0 ? __('Cancel') : __('Close') }}</a>
+        {% if total > 0 %}
+            <button type="submit" class="btn btn-danger">
+                {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+                {{ __('Delete') }}
+            </button>
+        {% endif %}
+    {% endblock %}
+{% endembed %}
