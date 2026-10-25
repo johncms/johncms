@@ -1,77 +1,147 @@
 {#
-    A section of the news, new or existing.
+    A section of the news, new or saved: the name and the code on the left with the text of the
+    section, its place in the tree and the fields for the search engines on the right.
 
-    @var string page_title
-    @var string action_url
-    @var string back_url
-    @var array  fields Values of the form, keyed by field name.
-    @var array  errors Validation messages, empty on the first render.
+    @var string form_action
+    @var array  fields          Values of the form, keyed by field name.
+    @var array  errors          Field => messages, from the last attempt.
+    @var list   parents         id, title — the root and every section it can go under.
+    @var array  facts           id, created, updated; null for a new one.
+    @var string site_url        The section on the site; empty for a new one.
+    @var string articles_url    The list of its articles; empty for a new one.
+    @var string list_url        The sections beside it.
+    @var string success_message Empty unless a save has just succeeded.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
+{% macro field(name, label, fields, errors, help) %}
+    <label class="form-label" for="section-{{ name }}">{{ label }}</label>
+    <input type="text" class="form-control{{ errors[name] is defined ? ' is-invalid' }}" id="section-{{ name }}" name="{{ name }}" value="{{ fields[name] }}" maxlength="255"
+        {%- if help %} aria-describedby="section-{{ name }}-help"{% endif %}>
+    {% include '@theme/components/field-errors.twig' with {errors: errors[name]|default([])} only %}
+    {% if help %}
+        <div class="form-text" id="section-{{ name }}-help">{{ help }}</div>
+    {% endif %}
+{% endmacro %}
+
+{% block page_actions %}
+    {% if articles_url %}
+        <a class="btn btn-secondary" href="{{ articles_url }}">
+            {% include '@admin/components/ui/icon.twig' with {name: 'file-text', size: 14} only %}
+            {{ __('Articles of the section') }}
+        </a>
+    {% endif %}
+    {% if site_url %}
+        <a class="btn btn-secondary" href="{{ site_url }}" target="_blank" rel="noopener">
+            {% include '@admin/components/ui/icon.twig' with {name: 'external-link', size: 14} only %}
+            {{ __('Open on the site') }}
+        </a>
+    {% endif %}
+    <button type="submit" class="btn btn-primary" form="section-form">
+        {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
+        {{ __('Save') }}
+    </button>
+{% endblock %}
+
 {% block content %}
+    {% import _self as form %}
+
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
     {% if errors is not empty %}
-        <div>
-            {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
-        </div>
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: __('The section is not saved: check the fields marked below.')} only %}
     {% endif %}
 
-    <h4 class="card-title">{{ page_title }}</h4>
-    <form action="{{ action_url }}" method="post">
+    <form method="post" action="{{ form_action }}" id="section-form" class="admin-news-form">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-        <div class="form-group">
-            <label for="title">{{ __('Section name') }}</label>
-            <input type="text"
-                   class="form-control"
-                   maxlength="255"
-                   name="name"
-                   id="title"
-                   required
-                   value="{{ fields.name }}"
-                   placeholder="{{ __('Section name') }}"
-            >
+
+        <div class="row g-3">
+            <div class="col-xl-8 d-flex flex-column gap-3">
+                <div class="card">
+                    <div class="card-body d-flex flex-column gap-3">
+                        <div>
+                            <label class="form-label" for="section-name">{{ __('Section name') }}</label>
+                            <input type="text" class="form-control form-control-lg{{ errors.name is defined ? ' is-invalid' }}" id="section-name" name="name" value="{{ fields.name }}" maxlength="255" required>
+                            {% include '@theme/components/field-errors.twig' with {errors: errors.name|default([])} only %}
+                        </div>
+                        <div>
+                            <label class="form-label" for="section-code">{{ __('Section code') }}</label>
+                            <input type="text" class="form-control font-monospace{{ errors.code is defined ? ' is-invalid' }}" id="section-code" name="code" value="{{ fields.code }}" maxlength="255" aria-describedby="section-code-help">
+                            {% include '@theme/components/field-errors.twig' with {errors: errors.code|default([])} only %}
+                            <div class="form-text" id="section-code-help">{{ __('A part of the address of the section and of its articles. Left empty, it is made of the name.') }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'file-text', size: 15, class: 'text-body-tertiary'} only %}
+                        {{ __('Text after a list') }}
+                    </div>
+                    <div class="card-body">
+                        <textarea class="form-control{{ errors.text is defined ? ' is-invalid' }}" id="section-text" name="text" rows="6" aria-label="{{ __('Text after a list') }}">{{ fields.text }}</textarea>
+                        {% include '@theme/components/field-errors.twig' with {errors: errors.text|default([])} only %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 d-flex flex-column gap-3">
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'folder', size: 15, class: 'text-body-tertiary'} only %}
+                        {{ __('Place in the tree') }}
+                    </div>
+                    <div class="card-body">
+                        <label class="form-label" for="section-parent">{{ __('Parent section') }}</label>
+                        <select class="form-select{{ errors.parent is defined ? ' is-invalid' }}" id="section-parent" name="parent" aria-describedby="section-parent-help">
+                            {% for parent in parents %}
+                                <option value="{{ parent.id }}"{% if parent.id == fields.parent %} selected{% endif %}>{{ parent.title }}</option>
+                            {% endfor %}
+                        </select>
+                        {% include '@theme/components/field-errors.twig' with {errors: errors.parent|default([])} only %}
+                        <div class="form-text" id="section-parent-help">{{ __('The section moves with everything under it.') }}</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'globe', size: 15, class: 'text-body-tertiary'} only %}
+                        {{ __('Search engines') }}
+                    </div>
+                    <div class="card-body d-flex flex-column gap-3">
+                        <div>{{ form.field('keywords', __('Keywords'), fields, errors, '') }}</div>
+                        <div>
+                            <label class="form-label" for="section-description">{{ __('Description') }}</label>
+                            <textarea class="form-control{{ errors.description is defined ? ' is-invalid' }}" id="section-description" name="description" rows="3" maxlength="255">{{ fields.description }}</textarea>
+                            {% include '@theme/components/field-errors.twig' with {errors: errors.description|default([])} only %}
+                        </div>
+                    </div>
+                </div>
+
+                {% if facts %}
+                    <div class="card">
+                        <div class="card-header">
+                            {% include '@admin/components/ui/icon.twig' with {name: 'info', size: 15, class: 'text-body-tertiary'} only %}
+                            {{ __('About the section') }}
+                        </div>
+                        <div class="card-body">
+                            {% include '@admin/components/ui/facts.twig' with {items: [
+                                {label: 'ID', value: '#' ~ facts.id},
+                                {label: __('Created'), value: facts.created ? facts.created|display_date : ''},
+                                {label: __('Updated'), value: facts.updated ? facts.updated|display_date : ''},
+                            ]} only %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
         </div>
-        <div class="form-group">
-            <label for="code">{{ __('Section code') }}</label>
-            <input type="text"
-                   class="form-control"
-                   maxlength="255"
-                   name="code"
-                   id="code"
-                   value="{{ fields.code }}"
-                   placeholder="{{ __('Section code') }}"
-            >
-            <div class="small text-muted">{{ __('Leave it empty for automatic generation') }}</div>
-        </div>
-        <div class="form-group">
-            <label for="keywords">{{ __('Keywords') }}</label>
-            <input type="text"
-                   class="form-control"
-                   maxlength="255"
-                   name="keywords"
-                   id="keywords"
-                   value="{{ fields.keywords }}"
-                   placeholder="{{ __('Keywords') }}"
-            >
-        </div>
-        <div class="form-group">
-            <label for="description">{{ __('Description') }}</label>
-            <input type="text"
-                   class="form-control"
-                   maxlength="255"
-                   name="description"
-                   id="description"
-                   value="{{ fields.description }}"
-                   placeholder="{{ __('Description') }}"
-            >
-        </div>
-        <div class="form-group">
-            <label for="text">{{ __('Text after a list') }}</label>
-            <textarea id="text" class="form-control" name="text">{{ fields.text }}</textarea>
-        </div>
-        <div>
-            <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
-            <a href="{{ back_url }}" class="btn btn-outline-primary ms-2">{{ __('Back') }}</a>
+
+        <div class="admin-news-form__actions">
+            <a class="btn btn-secondary" href="{{ list_url }}">{{ __('Cancel') }}</a>
+            <button type="submit" class="btn btn-secondary" name="close" value="1">{{ __('Save and close') }}</button>
+            <button type="submit" class="btn btn-primary">
+                {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
+                {{ __('Save') }}
+            </button>
         </div>
     </form>
 {% endblock %}

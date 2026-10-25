@@ -256,11 +256,6 @@ msgstr "Окончание активности"
 msgid "Article code"
 msgstr "Символьный код"
 
-#: modules/news/templates/admin/add_article.phtml:80
-#: modules/news/templates/admin/add_section.phtml:39
-msgid "Leave it empty for automatic generation"
-msgstr "Оставьте пустым для автоматической генерации"
-
 #: modules/news/templates/admin/add_article.phtml:83
 #: modules/news/templates/admin/add_article.phtml:90
 #: modules/news/templates/admin/add_section.phtml:42
@@ -644,3 +639,21 @@ msgstr "дд.мм.гггг чч:мм"
 
 msgid "Choose one of the sections, not this one or a section under it"
 msgstr "Выберите один из разделов, но не этот и не вложенный в него"
+
+msgid "A part of the address of the section and of its articles. Left empty, it is made of the name."
+msgstr "Часть адреса раздела и его статей. Если оставить пустым, код составится из названия."
+
+msgid "About the section"
+msgstr "О разделе"
+
+msgid "Parent section"
+msgstr "Родительский раздел"
+
+msgid "Place in the tree"
+msgstr "Место в дереве"
+
+msgid "The section is not saved: check the fields marked below."
+msgstr "Раздел не сохранён: проверьте отмеченные поля."
+
+msgid "The section moves with everything under it."
+msgstr "Раздел переносится вместе со всем, что в нём лежит."

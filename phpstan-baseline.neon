@@ -2299,12 +2299,6 @@ parameters:
 			path: modules/johncms/news/src/Application/Sitemap/NewsUrlsProvider.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/news/src/Application/Utils/Helpers.php
-
-		-
 			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsVote\:\:\$vote\.$#'
 			identifier: property.notFound
 			count: 1

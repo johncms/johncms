@@ -56,15 +56,15 @@
   justify-content: flex-end;
 }
 
-// The form of an article (news::admin/article-form).
+// The forms of an article and of a section (news::admin/article-form, section-form).
 
-.admin-article-form {
+.admin-news-form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.admin-article-form__status {
+.admin-news-form__status {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -73,7 +73,7 @@
   border-top: 1px solid var(--border);
 }
 
-.admin-article-form__actions {
+.admin-news-form__actions {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -81,6 +81,6 @@
 }
 
 // The card names the editor already: the label the component always draws stays out.
-.admin-article-form .card-body > .vue_app label:empty {
+.admin-news-form .card-body > .vue_app label:empty {
   display: none;
 }

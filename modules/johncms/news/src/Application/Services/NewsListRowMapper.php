@@ -91,7 +91,7 @@ final readonly class NewsListRowMapper
             // The sections above it; the name itself is the title of the row.
             array_pop($path);
             $articlesUrl = $this->controls->url(new NewsListFilter(tab: NewsListTab::ARTICLES, section: $section->id));
-            $editUrl = '/admin/news/edit_section/' . $section->id;
+            $editUrl = '/admin/news/sections/' . $section->id . '/edit';
 
             $rows[] = [
                 'id'           => $section->id,

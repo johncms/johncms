@@ -53,7 +53,7 @@
         {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: __('The article is not saved: check the fields marked below.')} only %}
     {% endif %}
 
-    <form method="post" action="{{ form_action }}" id="article-form" class="admin-article-form">
+    <form method="post" action="{{ form_action }}" id="article-form" class="admin-news-form">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
 
         <div class="row g-3">
@@ -130,7 +130,7 @@
                             {{ form.date('active_to', __('Active to'), fields, errors) }}
                             <div class="form-text">{{ __('Left empty, the article is shown from the moment it is saved and with no end.') }}</div>
                         </div>
-                        <div class="admin-article-form__status">
+                        <div class="admin-news-form__status">
                             {% if status.status == 'published' %}
                                 <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ status.title }}</span>
                             {% elseif status.status == 'scheduled' %}
@@ -210,7 +210,7 @@
             </div>
         </div>
 
-        <div class="admin-article-form__actions">
+        <div class="admin-news-form__actions">
             <a class="btn btn-secondary" href="{{ list_url }}">{{ __('Cancel') }}</a>
             <button type="submit" class="btn btn-secondary" name="close" value="1">{{ __('Save and close') }}</button>
             <button type="submit" class="btn btn-primary">

@@ -135,8 +135,8 @@ final class AdminNewsListTest extends FunctionalTestCase
 
         $content = $this->page('/admin/news?tab=sections');
 
-        self::assertStringContainsString('href="/admin/news/edit_section/' . $releases . '"', $content);
-        self::assertStringContainsString('href="/admin/news/edit_section/' . $nested . '"', $content);
+        self::assertStringContainsString('href="/admin/news/sections/' . $releases . '/edit"', $content);
+        self::assertStringContainsString('href="/admin/news/sections/' . $nested . '/edit"', $content);
         // The number of the articles leads to them.
         self::assertStringContainsString('href="/admin/news?section=' . $releases . '">2</a>', $content);
     }
@@ -149,9 +149,9 @@ final class AdminNewsListTest extends FunctionalTestCase
 
         $content = $this->page('/admin/news?tab=sections&section=' . $releases);
 
-        self::assertStringContainsString('href="/admin/news/edit_section/' . $nested . '"', $content);
-        self::assertStringNotContainsString('href="/admin/news/edit_section/' . $releases . '"', $content);
-        self::assertStringNotContainsString('href="/admin/news/edit_section/' . $other . '"', $content);
+        self::assertStringContainsString('href="/admin/news/sections/' . $nested . '/edit"', $content);
+        self::assertStringNotContainsString('href="/admin/news/sections/' . $releases . '/edit"', $content);
+        self::assertStringNotContainsString('href="/admin/news/sections/' . $other . '/edit"', $content);
     }
 
     public function testTheLiveListGetsItsRegionsAlone(): void
