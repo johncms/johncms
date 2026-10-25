@@ -85,18 +85,6 @@ parameters:
 			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentIpBanRepository.php
 
 		-
-			message: '#^Call to an undefined static method Illuminate\\Database\\Capsule\\Manager\:\:raw\(\)\.$#'
-			identifier: staticMethod.notFound
-			count: 3
-			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentIpSearchRepository.php
-
-		-
-			message: '#^Method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentIpSearchRepository\:\:historyQuery\(\) should return Illuminate\\Database\\Eloquent\\Builder\<Johncms\\Users\\User\> but returns Illuminate\\Database\\Query\\Builder\.$#'
-			identifier: return.type
-			count: 1
-			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentIpSearchRepository.php
-
-		-
 			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Album\\Application\\Controllers\\EditPhotoController should not depend on Johncms\\Modules\\Album\\Infrastructure\\Storage\\AlbumPhotoStorage$#'
 			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
 			count: 1
