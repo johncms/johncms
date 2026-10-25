@@ -827,7 +827,7 @@ msgid "You have no rights to ban in this section"
 msgstr ""
 
 #: system/src/Users/Bans/BanManager.php:69
-#: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:179
+#: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:183
 msgid "You do not have enought rights to ban this user"
 msgstr ""
 

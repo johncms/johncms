@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
-use Johncms\Modules\Admin\Application\UseCases\ApplyAmnestyUseCase;
-use Johncms\Http\View\ViewResponse;
-use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
+use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\Admin\Application\Services\BanListControlsMapper;
+use Johncms\Modules\Admin\Application\UseCases\ApplyAmnestyUseCase;
+use Johncms\NavChain;
 
+/**
+ * The amnesty. The choice is a dialog: the modal of the panel asks for it with X-Requested-With
+ * and gets the dialog alone, a plain visit gets it as a page.
+ */
 final readonly class AmnestyController
 {
     private const URL = '/admin/bans/amnesty';
@@ -21,9 +26,27 @@ final readonly class AmnestyController
     ) {
     }
 
-    public function form(): ViewResponse
+    public function form(Request $request): ViewResponse
     {
-        return $this->renderForm();
+        $data = [
+            'form_action' => self::URL,
+            'back_url'    => BanListControlsMapper::PATH,
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            return new ViewResponse('@admin/bans/amnesty-dialog.twig', $data);
+        }
+
+        $title = __('Amnesty');
+        $this->navChain->add(__('Ban Panel'), BanListControlsMapper::PATH);
+        $this->navChain->add($title);
+
+        return new ViewResponse('@admin/amnesty.twig', [
+            // The dialog carries the heading itself.
+            'title'    => $title,
+            'usr_menu' => ['ban_panel' => true],
+            'dialog'   => $data,
+        ]);
     }
 
     public function apply(Request $request): ViewResponse
@@ -34,24 +57,6 @@ final readonly class AmnestyController
         $this->session->flash('success_message', $clearDatabase
             ? __('Amnesty has been successful')
             : __('All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)'));
-        redirect('/admin/bans');
-    }
-
-    private function renderForm(?string $errorMessage = null): ViewResponse
-    {
-        $title = __('Amnesty');
-        $this->navChain->add(__('Ban Panel'), '/admin/bans');
-        $this->navChain->add($title);
-
-        return new ViewResponse(
-            '@admin/amnesty.twig',
-            [
-                'title'         => $title,
-                'page_title'    => $title,
-                'usr_menu'      => ['ban_panel' => true],
-                'form_action'   => self::URL,
-                'error_message' => $errorMessage,
-            ]
-        );
+        redirect(BanListControlsMapper::PATH);
     }
 }

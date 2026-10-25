@@ -1,0 +1,80 @@
+{#
+    The accounts the filter lets through: the chips of what is applied, the table and the pages.
+
+    @param array        controls
+    @param array        bans       Rows built by BanListRowMapper.
+    @param int          total
+    @param \Twig\Markup pagination
+#}
+<div class="admin-list-results" data-live-list-region="results">
+    {% include '@admin/components/ui/filter-chips.twig' with {chips: controls.chips, clear_url: controls.clear_url} only %}
+
+    <div class="card">
+        {% if bans is empty %}
+            {% include '@admin/components/ui/empty-state.twig' with {
+                icon: 'shield-check',
+                title: __('Nobody is banned'),
+                description: controls.chips is empty ? '' : __('Change the search or reset the filters.'),
+            } only %}
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-hover admin-users-table admin-bans-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ __('User') }}</th>
+                            {% include '@admin/components/ui/sort-header.twig' with {title: __('Ban'), link: controls.sort.time} only %}
+                            <th scope="col">{{ __('Reason') }}</th>
+                            <th scope="col">{{ __('Given') }}</th>
+                            {% include '@admin/components/ui/sort-header.twig' with {title: __('Violations'), link: controls.sort.violations, class: 'text-end'} only %}
+                            <th scope="col"><span class="visually-hidden">{{ __('Actions') }}</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ban in bans %}
+                            <tr>
+                                <td>
+                                    {% include '@admin/components/ui/user-cell.twig' with {
+                                        id: ban.id,
+                                        name: ban.name,
+                                        url: ban.url,
+                                        online: ban.online,
+                                        roles: [],
+                                        sub: '',
+                                    } only %}
+                                </td>
+                                <td>
+                                    {% if ban.active %}
+                                        <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis badge-dot">{{ ban.kind }}</span>
+                                        <div class="admin-users-table__sub">{{ __('%s left')|format(ban.remains) }}</div>
+                                    {% else %}
+                                        <span class="badge rounded-pill text-bg-light badge-dot">{{ ban.kind }}</span>
+                                        <div class="admin-users-table__sub">{{ __('until %s')|format(ban.ends|display_date) }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="admin-bans__reason">{{ ban.reason }}</td>
+                                <td>
+                                    <div class="admin-users-table__date">{{ ban.started|display_date }}</div>
+                                    {% if ban.author %}
+                                        <div class="admin-users-table__sub">{{ ban.author }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end">
+                                    <a class="admin-bans-table__count" href="{{ ban.bans_url }}">{{ ban.violations|format_number }}</a>
+                                </td>
+                                <td>
+                                    <div class="admin-users-table__actions">
+                                        {% include '@admin/components/ui/row-actions.twig' with {actions: ban.actions, label: __('Actions')} only %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer admin-list-footer">
+                <span class="admin-list-footer__total">{{ __('Found: %s')|format(total|format_number) }}</span>
+                <div class="pagination-no-padding">{{ pagination }}</div>
+            </div>
+        {% endif %}
+    </div>
+</div>

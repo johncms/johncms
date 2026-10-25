@@ -1,0 +1,51 @@
+{#
+    The ban panel: the accounts under a ban now, or everybody who has had one.
+
+    A live list, as the list of users (src/admin/js/live-list.js): the regions are drawn by
+    templates of their own, and admin::bans/live puts them back in place as the search is typed
+    or a filter is picked.
+
+    @var array        controls        Built by BanListControlsMapper.
+    @var array        bans            Rows built by BanListRowMapper.
+    @var string       search
+    @var int          total           Accounts the filter lets through.
+    @var \Twig\Markup pagination
+    @var string       amnesty_url     Empty when the visitor may not grant an amnesty.
+    @var string       success_message Empty unless an action has just been performed.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block page_actions %}
+    {% if amnesty_url %}
+        <a class="btn btn-secondary" href="{{ amnesty_url }}" data-admin-modal>
+            {% include '@admin/components/ui/icon.twig' with {name: 'shield-check', size: 14} only %}
+            {{ __('Amnesty') }}
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+
+    <div data-live-list>
+        {% include '@admin/components/list-tabs.twig' with {tabs: controls.tabs} only %}
+
+        <form class="admin-toolbar" method="get" action="{{ controls.action }}" role="search" data-live-list-form>
+            {% include '@admin/components/ui/search-field.twig' with {
+                name: 'q',
+                value: search,
+                label: __('Search the banned'),
+                placeholder: __('Nickname or ID'),
+            } only %}
+            {% include '@admin/components/list-state.twig' with {controls: controls} only %}
+            {% include '@admin/components/list-filters.twig' with {controls: controls} only %}
+        </form>
+
+        {% include '@admin/bans/results.twig' with {
+            controls: controls,
+            bans: bans,
+            total: total,
+            pagination: pagination,
+        } only %}
+    </div>
+{% endblock %}

@@ -110,9 +110,6 @@ return static function (RouteCollection $router): void {
             ->name('admin.ip_search.mode')
             ->requirements(['mode' => 'history']);
         $r->get('/admin/bans', BanListController::class)->name('admin.bans');
-        $r->get('/admin/bans/{sort}', BanListController::class)
-            ->name('admin.bans.sort')
-            ->requirements(['sort' => 'by-violations']);
         $r->get('/admin/antiflood', [AntifloodSettingsController::class, 'form'])->name('admin.antiflood');
         $r->post('/admin/antiflood', [AntifloodSettingsController::class, 'save'])->name('admin.antiflood.save');
         $r->post('/admin/registrations/approve', [RegistrationModerationController::class, 'approve'])->name('admin.registrations.approve');

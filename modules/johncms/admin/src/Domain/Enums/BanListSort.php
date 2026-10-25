@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Domain\Enums;
 
 /**
- * Сортировка списка банов.
+ * What the ban panel is ordered by, always the most first: the ban that ends last, or the
+ * account with the most violations.
  */
 enum BanListSort: string
 {
@@ -13,7 +14,7 @@ enum BanListSort: string
     case VIOLATIONS = 'violations';
 
     /**
-     * Колонка/алиас выборки для ORDER BY.
+     * The column of the selection the list is ordered by.
      */
     public function column(): string
     {

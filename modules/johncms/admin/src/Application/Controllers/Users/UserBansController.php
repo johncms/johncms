@@ -12,6 +12,7 @@ use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Admin\Application\Exceptions\UserNotFoundException;
+use Johncms\Modules\Admin\Application\Services\BanListControlsMapper;
 use Johncms\Modules\Admin\Application\Services\UserBansMapper;
 use Johncms\Modules\Admin\Application\Services\UserCardMapper;
 use Johncms\Modules\Admin\Application\UseCases\GetUserBansUseCase;
@@ -28,6 +29,9 @@ use Johncms\Users\User;
  * The bans of an account in the panel: the history, and giving, lifting and deleting them by the
  * rules the profile of the site follows too (BanManager, BanAccess). Giving one and every removal
  * open as dialogs; a plain visit gets each as a page.
+ *
+ * A removal returns to the bans of the account, or to the ban panel when it was opened there and
+ * says so in "back".
  */
 final readonly class UserBansController
 {
@@ -121,12 +125,12 @@ final readonly class UserBansController
         ]);
     }
 
-    public function lift(int $id, int $banId): ViewResponse
+    public function lift(Request $request, int $id, int $banId): ViewResponse
     {
         return $this->act($id, $banId, true, function (User $user, int $banId): void {
             $this->bans->lift($this->bans->findActive($user->id, $banId));
             $this->session->flash('success_message', __('Ban terminated'));
-        });
+        }, $request->body('back'));
     }
 
     public function deleteConfirm(Request $request, int $id, int $banId): ViewResponse
@@ -139,12 +143,12 @@ final readonly class UserBansController
         ]);
     }
 
-    public function delete(int $id, int $banId): ViewResponse
+    public function delete(Request $request, int $id, int $banId): ViewResponse
     {
         return $this->act($id, $banId, false, function (User $user, int $banId): void {
             $this->bans->delete($this->bans->find($user->id, $banId));
             $this->session->flash('success_message', __('Ban deleted'));
-        });
+        }, $request->body('back'));
     }
 
     public function clearConfirm(Request $request, int $id): ViewResponse
@@ -245,7 +249,7 @@ final readonly class UserBansController
             return $this->refused($e->getMessage(), $dialog);
         }
 
-        $back = '/admin/users/' . $user->id . '/bans';
+        $back = $this->returnUrl($request->queryParam('back'), $user->id);
         $data = $describe($user, (int) $banId) + [
             'user'     => ['id' => $user->id, 'name' => $user->name],
             'fields'   => [],
@@ -264,8 +268,9 @@ final readonly class UserBansController
 
     /**
      * @param callable(User, int): void $action
+     * @param string                    $back   Where the removal was opened from, see returnUrl().
      */
-    private function act(int $id, ?int $banId, bool $lifting, callable $action): ViewResponse
+    private function act(int $id, ?int $banId, bool $lifting, callable $action, string $back = ''): ViewResponse
     {
         try {
             $user = $this->guarded($id, $lifting);
@@ -278,7 +283,19 @@ final readonly class UserBansController
             return $this->refused($e->getMessage(), false);
         }
 
-        redirect('/admin/users/' . $user->id . '/bans');
+        redirect($this->returnUrl($back, $user->id));
+    }
+
+    /**
+     * Where a removal returns to: the ban panel, on the page and filter it was opened at, or the
+     * bans of the account. Any other address is not followed, so a form cannot be made to lead
+     * somewhere else.
+     */
+    private function returnUrl(string $back, int $userId): string
+    {
+        $panel = BanListControlsMapper::PATH;
+
+        return $back === $panel || str_starts_with($back, $panel . '?') ? $back : '/admin/users/' . $userId . '/bans';
     }
 
     /**

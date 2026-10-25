@@ -1,0 +1,37 @@
+{#
+    The amnesty: lifting every ban in force, or wiping the history of bans as well. Answered to
+    the modal of the panel as it is, and put into a page of its own (amnesty.twig) for a plain
+    visit.
+
+    @var string form_action
+    @var string back_url
+#}
+{% embed '@admin/components/ui/dialog.twig' with {
+    title: __('Amnesty'),
+    action: form_action,
+    close_url: back_url,
+} only %}
+    {% block body %}
+        <div class="form-check mb-2">
+            <input type="radio" class="form-check-input" id="amnesty-lift" name="term" value="0" checked>
+            <label class="form-check-label" for="amnesty-lift">
+                {{ __('Unban all') }}
+                <span class="form-text d-block mt-0">{{ __('Every ban in force ends now, except those given until lifted. The history of violations stays.') }}</span>
+            </label>
+        </div>
+        <div class="form-check">
+            <input type="radio" class="form-check-input" id="amnesty-clear" name="term" value="1">
+            <label class="form-check-label" for="amnesty-clear">
+                {{ __('Clear Ban database') }}
+                <span class="form-text d-block mt-0">{{ __('Every ban ends, and the history of violations is deleted for good.') }}</span>
+            </label>
+        </div>
+    {% endblock %}
+    {% block footer %}
+        <a href="{{ close_url }}" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</a>
+        <button type="submit" class="btn btn-danger">
+            {% include '@admin/components/ui/icon.twig' with {name: 'shield-check', size: 14} only %}
+            {{ __('Grant the amnesty') }}
+        </button>
+    {% endblock %}
+{% endembed %}

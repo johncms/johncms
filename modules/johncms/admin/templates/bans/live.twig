@@ -1,0 +1,18 @@
+{#
+    The regions of the ban panel, as the live list asks for them: each replaces the region of the
+    same name on the page. A fragment, so it extends nothing.
+
+    @var array        controls
+    @var array        bans
+    @var int          total
+    @var \Twig\Markup pagination
+#}
+{% include '@admin/components/list-tabs.twig' with {tabs: controls.tabs} only %}
+{% include '@admin/components/list-state.twig' with {controls: controls} only %}
+{% include '@admin/components/list-filters.twig' with {controls: controls} only %}
+{% include '@admin/bans/results.twig' with {
+    controls: controls,
+    bans: bans,
+    total: total,
+    pagination: pagination,
+} only %}
