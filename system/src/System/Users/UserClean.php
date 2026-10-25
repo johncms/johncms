@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\System\Users;
 
+use Johncms\Auth\AuthTables;
 use Johncms\Storage\StorageInterface;
 use PDO;
 
@@ -33,6 +34,10 @@ class UserClean
         $this->db->exec("DELETE FROM `cms_ban_users` WHERE `user_id` = '" . $cleanId . "'");
         // Удаляем историю IP
         $this->db->exec("DELETE FROM `cms_users_iphistory` WHERE `user_id` = '" . $cleanId . "'");
+        // The authentication tables have no foreign keys, so what belongs to the account goes by hand
+        foreach ([AuthTables::USER_ROLES, AuthTables::USER_IDENTITIES, AuthTables::AUTH_SESSIONS, AuthTables::PASSWORD_RESET_TOKENS] as $table) {
+            $this->db->exec('DELETE FROM `' . $table . '` WHERE `user_id` = ' . $cleanId);
+        }
         // Удаляем пользователя
         $this->db->exec("DELETE FROM `users` WHERE `id` = '" . $cleanId . "'");
     }

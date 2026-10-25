@@ -4,9 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Admin;
 
+use Johncms\Auth\AuthTables;
+use Johncms\Auth\Authorization\UserRole;
+use Johncms\Auth\External\UserIdentity;
+use Johncms\Auth\Password\PasswordResetToken;
+use Johncms\Auth\Session\AuthSession;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Functional\FunctionalTestCase;
+use Tests\Support\Fixture;
 use Tests\Support\FunctionalUserFactory;
 
 /**
@@ -60,6 +66,23 @@ final class DeleteUserDialogTest extends FunctionalTestCase
         self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
         self::assertSame('/admin/users?q=Tester&page=2', $response->headers->get('Location'));
         self::assertNull(User::query()->find($member->id));
+    }
+
+    public function testWhatTheAccountHeldInTheAuthTablesGoesWithIt(): void
+    {
+        $member = FunctionalUserFactory::create();
+        FunctionalUserFactory::grant($member->id, FunctionalUserFactory::createRole([], 5)->slug);
+        Fixture::insert(AuthTables::USER_IDENTITIES, ['user_id' => $member->id, 'provider' => 'test', 'provider_user_id' => 'deleted-' . $member->id]);
+        Fixture::insert(AuthTables::AUTH_SESSIONS, ['user_id' => $member->id, 'token_hash' => hash('sha256', 'session-' . $member->id)]);
+        Fixture::insert(AuthTables::PASSWORD_RESET_TOKENS, ['user_id' => $member->id, 'token_hash' => hash('sha256', 'reset-' . $member->id)]);
+
+        $this->delete($member, '/admin/users');
+
+        self::assertNull(User::query()->find($member->id));
+        self::assertSame(0, UserRole::query()->where('user_id', '=', $member->id)->count());
+        self::assertSame(0, UserIdentity::query()->where('user_id', '=', $member->id)->count());
+        self::assertSame(0, AuthSession::query()->where('user_id', '=', $member->id)->count());
+        self::assertSame(0, PasswordResetToken::query()->where('user_id', '=', $member->id)->count());
     }
 
     public function testAReturnAddressOutsideTheListIsNotFollowed(): void
