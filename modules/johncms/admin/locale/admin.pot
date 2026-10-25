@@ -55,7 +55,6 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:50
 #: modules/johncms/admin/templates/ip-ban-search.twig:23
 #: modules/johncms/admin/templates/ip-bans.twig:57
-#: modules/johncms/admin/templates/ip-search.twig:28
 #: modules/johncms/admin/templates/ip-whois.twig:17
 #: modules/johncms/admin/templates/style-guide.twig:150
 #: modules/johncms/admin/templates/style-guide/examples/filter-chips.twig:3
@@ -73,7 +72,6 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:384
 #: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:136
 #: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:139
-#: modules/johncms/admin/src/Application/Services/AdminUserRowMapper.php:102
 #: modules/johncms/admin/src/Application/Services/UserActionsMapper.php:61
 #: modules/johncms/admin/src/Application/Services/UserCardMapper.php:114
 #: modules/johncms/admin/templates/style-guide/examples/dropdown.twig:16
@@ -472,17 +470,16 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpSearchController.php:51
-#: modules/johncms/admin/templates/ip-search.twig:24
-#: modules/johncms/admin/templates/ip-search.twig:26
+#: modules/johncms/admin/src/Application/Controllers/Ip/IpSearchController.php:71
+#: modules/johncms/admin/templates/ip-search.twig:31
 msgid "Search IP"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpSearchController.php:72
+#: modules/johncms/admin/src/Application/Controllers/Ip/IpSearchController.php:93
 msgid "Actual IP"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpSearchController.php:77
+#: modules/johncms/admin/src/Application/Controllers/Ip/IpSearchController.php:94
 msgid "IP history"
 msgstr ""
 
@@ -1202,14 +1199,10 @@ msgstr ""
 msgid "Read the sign-in log"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Services/AdminUserRowMapper.php:82
-#: modules/johncms/admin/src/Application/Services/UserActionsMapper.php:82
-msgid "Browse as this user"
-msgstr ""
-
 #: modules/johncms/admin/src/Application/Services/AuthLogControlsMapper.php:38
 #: modules/johncms/admin/templates/auth-log/results.twig:32
 #: modules/johncms/admin/templates/bans/results.twig:24
+#: modules/johncms/admin/templates/ip-search/results.twig:38
 #: modules/johncms/admin/templates/style-guide/examples/dropdown.twig:6
 #: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:14
 #: modules/johncms/admin/templates/style-guide/examples/sort-header.twig:5
@@ -1296,6 +1289,10 @@ msgstr ""
 
 #: modules/johncms/admin/src/Application/Services/UserActionsMapper.php:57
 msgid "Open on the site"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Services/UserActionsMapper.php:82
+msgid "Browse as this user"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Services/UserActionsMapper.php:93
@@ -1577,7 +1574,6 @@ msgstr ""
 #: modules/johncms/admin/templates/ads.twig:75
 #: modules/johncms/admin/templates/counters.twig:46
 #: modules/johncms/admin/templates/ip-bans.twig:46
-#: modules/johncms/admin/templates/ip-search.twig:57
 msgid "Total:"
 msgstr ""
 
@@ -1591,7 +1587,6 @@ msgstr ""
 #: modules/johncms/admin/templates/file-integrity-scan-result.twig:25
 #: modules/johncms/admin/templates/ip-ban-detail.twig:52
 #: modules/johncms/admin/templates/ip-bans.twig:63
-#: modules/johncms/admin/templates/ip-search.twig:61
 #: modules/johncms/admin/templates/languages-manage.twig:63
 #: modules/johncms/admin/templates/role-form.twig:27
 msgid "Back"
@@ -1654,6 +1649,7 @@ msgstr ""
 
 #: modules/johncms/admin/templates/auth-log/results.twig:75
 #: modules/johncms/admin/templates/bans/results.twig:75
+#: modules/johncms/admin/templates/ip-search/results.twig:85
 #: modules/johncms/admin/templates/user/bans.twig:15
 #: modules/johncms/admin/templates/user/view.twig:157
 #: modules/johncms/admin/templates/users/results.twig:103
@@ -1712,6 +1708,8 @@ msgstr ""
 
 #: modules/johncms/admin/templates/bans/results.twig:29
 #: modules/johncms/admin/templates/bans/results.twig:66
+#: modules/johncms/admin/templates/ip-search/results.twig:44
+#: modules/johncms/admin/templates/ip-search/results.twig:76
 #: modules/johncms/admin/templates/roles.twig:33
 #: modules/johncms/admin/templates/style-guide/examples/row-actions.twig:3
 #: modules/johncms/admin/templates/user/bans.twig:45
@@ -2036,32 +2034,58 @@ msgid "Unban all IP"
 msgstr ""
 
 #: modules/johncms/admin/templates/ip-search.twig:32
-msgid "Sample queries:"
+msgid "Address, range or mask"
 msgstr ""
 
-#: modules/johncms/admin/templates/ip-search.twig:33
-msgid "Search for a single address"
+#: modules/johncms/admin/templates/ip-search.twig:37
+msgid "or"
 msgstr ""
 
-#: modules/johncms/admin/templates/ip-search.twig:34
-msgid "Search a range address (forbidden to use mask symbol *)"
+#: modules/johncms/admin/templates/ip-search/results.twig:18
+msgid "Not an address yet"
 msgstr ""
 
-#: modules/johncms/admin/templates/ip-search.twig:35
-msgid "Search mask. Will be found all subnet addresses starting with 0 and ending with 255"
+#: modules/johncms/admin/templates/ip-search/results.twig:24
+msgid "Who came from an address"
 msgstr ""
 
-#: modules/johncms/admin/templates/ip-search.twig:44
-msgid "At your request, nothing found"
+#: modules/johncms/admin/templates/ip-search/results.twig:25
+msgid "Type an address, a range of them or a mask with * in place of a number."
 msgstr ""
 
-#: modules/johncms/admin/templates/ip-search.twig:46
-#: modules/johncms/admin/templates/ip-whois.twig:23
-msgid "Search results"
+#: modules/johncms/admin/templates/ip-search/results.twig:30
+#: modules/johncms/admin/templates/style-guide/examples/empty-state.twig:4
+#: modules/johncms/admin/templates/users/results.twig:17
+msgid "Nobody found"
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-search/results.twig:31
+msgid "Look in the history of the addresses: the accounts may have moved on."
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-search/results.twig:41
+msgid "Browser"
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-search/results.twig:43
+msgid "Came from it"
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-search/results.twig:43
+#: modules/johncms/admin/templates/user/view.twig:43
+msgid "Last visit"
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-search/results.twig:65
+msgid "via"
 msgstr ""
 
 #: modules/johncms/admin/templates/ip-whois.twig:13
 msgid "IP Address"
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-whois.twig:23
+msgid "Search results"
 msgstr ""
 
 #: modules/johncms/admin/templates/karma.twig:19
@@ -2724,11 +2748,6 @@ msgstr ""
 msgid "The account is deleted for good. This cannot be undone."
 msgstr ""
 
-#: modules/johncms/admin/templates/style-guide/examples/empty-state.twig:4
-#: modules/johncms/admin/templates/users/results.twig:17
-msgid "Nobody found"
-msgstr ""
-
 #: modules/johncms/admin/templates/style-guide/examples/facts.twig:6
 #: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:7
 #: modules/johncms/admin/templates/user/edit.twig:39
@@ -2947,10 +2966,6 @@ msgstr ""
 #: modules/johncms/admin/templates/user/view.twig:33
 #: modules/johncms/admin/templates/users/results.twig:69
 msgid "Active"
-msgstr ""
-
-#: modules/johncms/admin/templates/user/view.twig:43
-msgid "Last visit"
 msgstr ""
 
 #: modules/johncms/admin/templates/user/view.twig:54

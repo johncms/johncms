@@ -151,3 +151,18 @@
   font-family: $ui-font-mono;
   font-weight: 700;
 }
+
+// The search by an address (admin::ip-search).
+
+.admin-ip-search__hint {
+  font-size: 0.75rem;
+  color: var(--fg-dim);
+}
+
+.admin-ip-search__browser {
+  max-width: 18rem;
+  overflow: hidden;
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+  text-overflow: ellipsis;
+}

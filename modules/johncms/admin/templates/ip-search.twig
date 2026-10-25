@@ -1,63 +1,52 @@
 {#
-    Looking visitors up by address, in the current addresses or in the history.
+    Looking accounts up by an address, a range or a mask, in the addresses they have now or in
+    their history.
+
+    A live list, as the list of users (src/admin/js/live-list.js): the results follow the search
+    as it is typed, and admin::ip-search/live puts the regions back in place. An address typed
+    half way is not an error yet, so what is wrong with the search is said quietly in place of the
+    results rather than in red above them.
 
     @var string       search
-    @var array        items      Rows prepared by AdminUserRowMapper.
-    @var array        errors     What is wrong with the query, empty when it is fine.
-    @var array        filters    Modes to switch between: name, url, active.
+    @var string       mode        actual | history
+    @var string       form_action
+    @var array        tabs        title, url, active, count, tone.
+    @var array        users       Rows built by IpSearchRowMapper.
+    @var bool         searched    Whether a valid search was made.
+    @var array        errors      What is wrong with the search, empty when it is fine.
+    @var bool         show_origin Whether the visitor may see the addresses and the browsers.
     @var int          total
-    @var int          per_page
     @var \Twig\Markup pagination
 #}
 {% extends '@admin/layouts/default.twig' %}
 
 {% block content %}
-    <div class="btn-group mb-3" role="group">
-        {% for filter in filters %}
-            <a href="{{ filter.url }}" class="btn btn-outline-secondary {{ filter.active ? 'active' : '' }}">{{ filter.name }}</a>
-        {% endfor %}
-    </div>
+    <div data-live-list>
+        {% include '@admin/components/list-tabs.twig' with {tabs: tabs} only %}
 
-    <div class="row">
-        <div class="col-md-6">
-            <form action="/admin/ip-search" method="get" class="mb-3">
-                <label for="search">{{ __('Search IP') }}</label>
-                <div class="input-group">
-                    <input type="text" name="search" id="search" class="form-control" placeholder="{{ __('Search IP') }}" value="{{ search }}">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="submit">{{ __('Search') }}</button>
-                    </div>
-                </div>
-                <div class="text-muted mb-2 small">
-                    <b>{{ __('Sample queries:') }}</b><br>
-                    <div><span class="fw-bold">10.5.7.1</span> &mdash; {{ __('Search for a single address') }}</div>
-                    <div><span class="fw-bold">10.5.7.1-10.5.7.100</span> &mdash; {{ __('Search a range address (forbidden to use mask symbol *)') }}</div>
-                    <div><span class="fw-bold">10.5.*.*</span> &mdash; {{ __('Search mask. Will be found all subnet addresses starting with 0 and ending with 255') }}</div>
-                </div>
-            </form>
-        </div>
-    </div>
+        <form class="admin-toolbar" method="get" action="{{ form_action }}" role="search" data-live-list-form>
+            {% include '@admin/components/ui/search-field.twig' with {
+                name: 'search',
+                value: search,
+                label: __('Search IP'),
+                placeholder: __('Address, range or mask'),
+            } only %}
+            <div class="admin-ip-search__hint">
+                <span class="font-monospace">10.5.7.1</span>,
+                <span class="font-monospace">10.5.7.1-10.5.7.100</span>
+                {{ __('or') }}
+                <span class="font-monospace">10.5.*.*</span>
+            </div>
+        </form>
 
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
-
-    {% if errors is empty and search and items is empty %}
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('At your request, nothing found')} only %}
-    {% elseif items is not empty %}
-        <h2>{{ __('Search results') }}</h2>
-        {% for item in items %}
-            {% include '@admin/components/user-row.twig' with {item: item} only %}
-        {% endfor %}
-    {% endif %}
-
-    <div class="mt-4">
-        {% if total > per_page %}
-            <div>{{ pagination }}</div>
-        {% endif %}
-        {% if total > 0 %}
-            <div>{{ __('Total:') }} {{ total }}</div>
-        {% endif %}
-    </div>
-    <div>
-        <a href="/admin">{{ __('Back') }}</a>
+        {% include '@admin/ip-search/results.twig' with {
+            mode: mode,
+            users: users,
+            searched: searched,
+            errors: errors,
+            show_origin: show_origin,
+            total: total,
+            pagination: pagination,
+        } only %}
     </div>
 {% endblock %}

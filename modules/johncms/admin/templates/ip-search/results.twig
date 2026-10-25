@@ -1,0 +1,90 @@
+{#
+    The accounts found, or what to type when nothing has been searched for yet or the search is no
+    address.
+
+    @param string       mode
+    @param array        users
+    @param bool         searched
+    @param array        errors
+    @param bool         show_origin
+    @param int          total
+    @param \Twig\Markup pagination
+#}
+<div class="admin-list-results" data-live-list-region="results">
+    <div class="card">
+        {% if errors is not empty %}
+            {% include '@admin/components/ui/empty-state.twig' with {
+                icon: 'circle-alert',
+                title: __('Not an address yet'),
+                description: errors|join(' '),
+            } only %}
+        {% elseif not searched %}
+            {% include '@admin/components/ui/empty-state.twig' with {
+                icon: 'search',
+                title: __('Who came from an address'),
+                description: __('Type an address, a range of them or a mask with * in place of a number.'),
+            } only %}
+        {% elseif users is empty %}
+            {% include '@admin/components/ui/empty-state.twig' with {
+                icon: 'users',
+                title: __('Nobody found'),
+                description: mode == 'actual' ? __('Look in the history of the addresses: the accounts may have moved on.') : '',
+            } only %}
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-hover admin-users-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ __('User') }}</th>
+                            {% if show_origin %}
+                                <th scope="col">IP</th>
+                                <th scope="col">{{ __('Browser') }}</th>
+                            {% endif %}
+                            <th scope="col">{{ mode == 'history' ? __('Came from it') : __('Last visit') }}</th>
+                            <th scope="col"><span class="visually-hidden">{{ __('Actions') }}</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>
+                                    {% include '@admin/components/ui/user-cell.twig' with {
+                                        id: user.id,
+                                        name: user.name,
+                                        url: user.url,
+                                        online: user.online,
+                                        roles: [],
+                                        sub: '',
+                                    } only %}
+                                </td>
+                                {% if show_origin %}
+                                    <td>
+                                        <a class="font-monospace" href="{{ user.ip_url }}">{{ user.ip }}</a>
+                                        {% if user.proxy %}
+                                            <div class="admin-users-table__sub">
+                                                {{ __('via') }} <a href="{{ user.proxy_url }}">{{ user.proxy }}</a>
+                                            </div>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="admin-ip-search__browser" title="{{ user.browser }}">{{ user.browser }}</div>
+                                    </td>
+                                {% endif %}
+                                <td class="admin-users-table__date">{{ user.time ? user.time|display_date : '—' }}</td>
+                                <td>
+                                    <div class="admin-users-table__actions">
+                                        {% include '@admin/components/ui/row-actions.twig' with {actions: user.actions, label: __('Actions')} only %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer admin-list-footer">
+                <span class="admin-list-footer__total">{{ __('Found: %s')|format(total|format_number) }}</span>
+                <div class="pagination-no-padding">{{ pagination }}</div>
+            </div>
+        {% endif %}
+    </div>
+</div>

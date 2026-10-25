@@ -1,0 +1,23 @@
+{#
+    The regions of the search by an address, as the live list asks for them: each replaces the
+    region of the same name on the page. A fragment, so it extends nothing.
+
+    @var string       mode
+    @var array        tabs
+    @var array        users
+    @var bool         searched
+    @var array        errors
+    @var bool         show_origin
+    @var int          total
+    @var \Twig\Markup pagination
+#}
+{% include '@admin/components/list-tabs.twig' with {tabs: tabs} only %}
+{% include '@admin/ip-search/results.twig' with {
+    mode: mode,
+    users: users,
+    searched: searched,
+    errors: errors,
+    show_origin: show_origin,
+    total: total,
+    pagination: pagination,
+} only %}

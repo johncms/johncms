@@ -1379,26 +1379,6 @@ msgstr "Удалить IP"
 msgid "Confirm all"
 msgstr "Подтвердить всех"
 
-#: modules/admin/templates/search_ip.phtml:33
-msgid "Sample queries:"
-msgstr "Примеры запросов:"
-
-#: modules/admin/templates/search_ip.phtml:34
-msgid "Search for a single address"
-msgstr "Искать один адрес"
-
-#: modules/admin/templates/search_ip.phtml:35
-msgid "Search a range address (forbidden to use mask symbol *)"
-msgstr "Поиск по диапазону адресов (запрещено использовать символ маски *)"
-
-#: modules/admin/templates/search_ip.phtml:36
-msgid "Search mask. Will be found all subnet addresses starting with 0 and ending with 255"
-msgstr "Поиск по маске. Будут найдены все адреса подсети, начиная с 0 и заканчивая 255"
-
-#: modules/admin/templates/search_ip.phtml:47
-msgid "At your request, nothing found"
-msgstr "По вашему запросу ничего не найдено"
-
 #: modules/admin/templates/settings.phtml:27
 msgid "Common Settings"
 msgstr "Общие настройки"
@@ -2456,3 +2436,30 @@ msgstr "Все баны заканчиваются, история наруше�
 
 msgid "Every ban in force was lifted, except those given until lifted"
 msgstr "Все действующие баны сняты, кроме бессрочных"
+
+msgid "Address, range or mask"
+msgstr "Адрес, диапазон или маска"
+
+msgid "Browser"
+msgstr "Браузер"
+
+msgid "Came from it"
+msgstr "Заходил с него"
+
+msgid "Look in the history of the addresses: the accounts may have moved on."
+msgstr "Поищите в истории адресов: возможно, аккаунты уже сменили адрес."
+
+msgid "Type an address, a range of them or a mask with * in place of a number."
+msgstr "Введите адрес, диапазон адресов или маску со * вместо числа."
+
+msgid "Not an address yet"
+msgstr "Пока это не адрес"
+
+msgid "Who came from an address"
+msgstr "Кто заходил с адреса"
+
+msgid "or"
+msgstr "или"
+
+msgid "via"
+msgstr "через"
