@@ -82,7 +82,7 @@ final readonly class NewsListController
             'title'           => $meta->title,
             'page_title'      => $title,
             'module_menu'     => ['news' => true],
-            'add_article_url' => '/admin/news/add_article/' . $section,
+            'add_article_url' => '/admin/news/articles/new' . ($section !== NewsListFilter::ROOT ? '?section=' . $section : ''),
             'add_section_url' => '/admin/news/add_section/' . $section,
             'settings_url'    => '/admin/news/settings/',
             'success_message' => (string) $this->session->getFlash('success_message'),

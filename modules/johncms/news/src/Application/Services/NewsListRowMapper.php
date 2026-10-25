@@ -44,7 +44,7 @@ final readonly class NewsListRowMapper
             $to = $this->date($article->getRawOriginal('active_to'));
             $status = ArticleStatus::of((bool) $article->active, $from, $to, $now);
             $section = (int) $article->section_id;
-            $editUrl = '/admin/news/edit_article/' . $article->id . '/';
+            $editUrl = '/admin/news/articles/' . $article->id . '/edit';
 
             $rows[] = [
                 'id'           => $article->id,
@@ -106,7 +106,7 @@ final readonly class NewsListRowMapper
                 'actions'      => [
                     $this->action('get', $editUrl, __('Edit'), 'pencil'),
                     $this->action('get', $articlesUrl, __('Articles of the section'), 'file-text'),
-                    $this->action('get', '/admin/news/add_article/' . $section->id, __('Add article'), 'plus'),
+                    $this->action('get', '/admin/news/articles/new?section=' . $section->id, __('Add article'), 'plus'),
                     $this->action('get', $section->url, __('Open on the site'), 'external-link'),
                     $this->action('get', '/admin/news/sections/' . $section->id . '/delete?back=' . rawurlencode($listUrl), __('Delete'), 'trash-2', danger: true, dialog: true),
                 ],

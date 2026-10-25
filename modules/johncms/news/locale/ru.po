@@ -598,3 +598,51 @@ msgstr "Выберите один из разделов"
 
 msgid "Enter the date as dd.mm.yyyy hh:mm"
 msgstr "Введите дату в виде дд.мм.гггг чч:мм"
+
+msgid "About the article"
+msgstr "О статье"
+
+msgid "Hidden since %s"
+msgstr "Скрыта с %s"
+
+msgid "In the lists of the news and on the home page"
+msgstr "В списках новостей и на главной"
+
+msgid "Left empty, the article is shown from the moment it is saved and with no end."
+msgstr "Если оставить пустыми, статья показывается с момента сохранения и без окончания."
+
+msgid "Left empty, the name of the article is the title."
+msgstr "Если оставить пустым, заголовком будет название статьи."
+
+msgid "Publication"
+msgstr "Публикация"
+
+msgid "Save and close"
+msgstr "Сохранить и закрыть"
+
+msgid "Search engines"
+msgstr "Поисковики"
+
+msgid "Section and tags"
+msgstr "Раздел и теги"
+
+msgid "Seen by nobody on the site"
+msgstr "На сайте её никто не видит"
+
+msgid "Shown from %s"
+msgstr "Показывается с %s"
+
+msgid "Shown on the site"
+msgstr "Показывается на сайте"
+
+msgid "Switched off, the article is a draft that nobody on the site sees."
+msgstr "Если выключить, статья станет черновиком, который на сайте никто не видит."
+
+msgid "The article is not saved: check the fields marked below."
+msgstr "Статья не сохранена: проверьте отмеченные поля."
+
+msgid "The last part of the address of the article. Left empty, it is made of the name."
+msgstr "Последняя часть адреса статьи. Если оставить пустым, код составится из названия."
+
+msgid "dd.mm.yyyy hh:mm"
+msgstr "дд.мм.гггг чч:мм"

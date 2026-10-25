@@ -1,139 +1,222 @@
 {#
-    An article, new or existing.
+    An article, new or saved: the name and the texts on the left, how and where it is published on
+    the right.
 
-    @var string page_title
-    @var string action_url
-    @var string back_url
-    @var array  fields Values of the form, keyed by field name.
-    @var array  errors Validation messages, empty on the first render.
+    @var string form_action
+    @var array  fields          Values of the form, keyed by field name.
+    @var array  errors          Field => messages, from the last attempt.
+    @var list   sections        id, title — the root and every section by its path.
+    @var array  status          status, title, date — what saving the form gives.
+    @var array  facts           id, author, author_url, created, updated, views; null for a new one.
+    @var string site_url        The article on the site; empty for a new one.
+    @var string list_url        The list of the section of the article.
+    @var string upload_url      Where the editor uploads the pictures of the text.
+    @var string success_message Empty unless a save has just succeeded.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
+{% macro field(name, label, fields, errors, help) %}
+    <label class="form-label" for="article-{{ name }}">{{ label }}</label>
+    <input type="text" class="form-control{{ errors[name] is defined ? ' is-invalid' }}" id="article-{{ name }}" name="{{ name }}" value="{{ fields[name] }}" maxlength="255"
+        {%- if help %} aria-describedby="article-{{ name }}-help"{% endif %}>
+    {% include '@theme/components/field-errors.twig' with {errors: errors[name]|default([])} only %}
+    {% if help %}
+        <div class="form-text" id="article-{{ name }}-help">{{ help }}</div>
+    {% endif %}
+{% endmacro %}
+
+{% macro date(name, label, fields, errors) %}
+    <label class="form-label" for="article-{{ name }}">{{ label }}</label>
+    <input type="text" class="form-control flatpickr_time{{ errors[name] is defined ? ' is-invalid' }}" id="article-{{ name }}" name="{{ name }}" value="{{ fields[name] }}"
+           placeholder="{{ __('dd.mm.yyyy hh:mm') }}" autocomplete="off">
+    {% include '@theme/components/field-errors.twig' with {errors: errors[name]|default([])} only %}
+{% endmacro %}
+
+{% block page_actions %}
+    {% if site_url %}
+        <a class="btn btn-secondary" href="{{ site_url }}" target="_blank" rel="noopener">
+            {% include '@admin/components/ui/icon.twig' with {name: 'external-link', size: 14} only %}
+            {{ __('Open on the site') }}
+        </a>
+    {% endif %}
+    <button type="submit" class="btn btn-primary" form="article-form">
+        {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
+        {{ __('Save') }}
+    </button>
+{% endblock %}
+
 {% block content %}
+    {% import _self as form %}
+
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
     {% if errors is not empty %}
-        <div>
-            {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
-        </div>
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: __('The article is not saved: check the fields marked below.')} only %}
     {% endif %}
 
-    <h4 class="card-title">{{ page_title }}</h4>
-    <form action="{{ action_url }}" method="post">
+    <form method="post" action="{{ form_action }}" id="article-form" class="admin-article-form">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-        <div class="form-group">
-            <input type="hidden" name="active" value="0">
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" name="active" value="1" id="active"{% if fields.active %} checked{% endif %}>
-                <label class="form-check-label" for="active">{{ __('Active') }}</label>
+
+        <div class="row g-3">
+            <div class="col-xl-8 d-flex flex-column gap-3">
+                <div class="card">
+                    <div class="card-body d-flex flex-column gap-3">
+                        <div>
+                            <label class="form-label" for="article-name">{{ __('Article name') }}</label>
+                            <input type="text" class="form-control form-control-lg{{ errors.name is defined ? ' is-invalid' }}" id="article-name" name="name" value="{{ fields.name }}" maxlength="255" required>
+                            {% include '@theme/components/field-errors.twig' with {errors: errors.name|default([])} only %}
+                        </div>
+                        <div>
+                            <label class="form-label" for="article-code">{{ __('Article code') }}</label>
+                            <input type="text" class="form-control font-monospace{{ errors.code is defined ? ' is-invalid' }}" id="article-code" name="code" value="{{ fields.code }}" maxlength="255" aria-describedby="article-code-help">
+                            {% include '@theme/components/field-errors.twig' with {errors: errors.code|default([])} only %}
+                            <div class="form-text" id="article-code-help">{{ __('The last part of the address of the article. Left empty, it is made of the name.') }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'file-text', size: 15, class: 'text-body-tertiary'} only %}
+                        <span class="flex-grow-1">{{ __('Preview text') }}</span>
+                        <span class="small fw-normal text-body-secondary">{{ __('In the lists of the news and on the home page') }}</span>
+                    </div>
+                    <div class="card-body">
+                        {% include '@theme/components/editor.twig' with {
+                            name: 'preview_text',
+                            id: 'article-preview-text',
+                            label: '',
+                            value: fields.preview_text,
+                            errors: errors.preview_text|default([])|join(' '),
+                        } only %}
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'newspaper', size: 15, class: 'text-body-tertiary'} only %}
+                        {{ __('Text') }}
+                    </div>
+                    <div class="card-body">
+                        {% include '@theme/components/editor.twig' with {
+                            name: 'text',
+                            id: 'article-text',
+                            label: '',
+                            value: fields.text,
+                            errors: errors.text|default([])|join(' '),
+                            upload_url: upload_url,
+                            allow_upload: true,
+                        } only %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 d-flex flex-column gap-3">
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'send', size: 15, class: 'text-body-tertiary'} only %}
+                        {{ __('Publication') }}
+                    </div>
+                    <div class="card-body d-flex flex-column gap-3">
+                        <div class="form-check form-switch">
+                            <input type="hidden" name="active" value="0">
+                            <input class="form-check-input" type="checkbox" role="switch" id="article-active" name="active" value="1"{% if fields.active %} checked{% endif %}>
+                            <label class="form-check-label" for="article-active">
+                                {{ __('Active') }}
+                                <span class="form-text d-block mt-0">{{ __('Switched off, the article is a draft that nobody on the site sees.') }}</span>
+                            </label>
+                        </div>
+                        <div>{{ form.date('active_from', __('Active from'), fields, errors) }}</div>
+                        <div>
+                            {{ form.date('active_to', __('Active to'), fields, errors) }}
+                            <div class="form-text">{{ __('Left empty, the article is shown from the moment it is saved and with no end.') }}</div>
+                        </div>
+                        <div class="admin-article-form__status">
+                            {% if status.status == 'published' %}
+                                <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ status.title }}</span>
+                            {% elseif status.status == 'scheduled' %}
+                                <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis badge-dot">{{ status.title }}</span>
+                            {% elseif status.status == 'expired' %}
+                                <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis badge-dot">{{ status.title }}</span>
+                            {% else %}
+                                <span class="badge rounded-pill text-bg-light badge-dot">{{ status.title }}</span>
+                            {% endif %}
+                            <span class="form-text mt-0">
+                                {% if status.status == 'scheduled' %}
+                                    {{ __('Shown from %s')|format(status.date|display_date) }}
+                                {% elseif status.status == 'expired' %}
+                                    {{ __('Hidden since %s')|format(status.date|display_date) }}
+                                {% elseif status.status == 'published' %}
+                                    {{ __('Shown on the site') }}
+                                {% else %}
+                                    {{ __('Seen by nobody on the site') }}
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'folder', size: 15, class: 'text-body-tertiary'} only %}
+                        {{ __('Section and tags') }}
+                    </div>
+                    <div class="card-body d-flex flex-column gap-3">
+                        <div>
+                            <label class="form-label" for="article-section">{{ __('Section') }}</label>
+                            <select class="form-select{{ errors.section_id is defined ? ' is-invalid' }}" id="article-section" name="section_id">
+                                {% for section in sections %}
+                                    <option value="{{ section.id }}"{% if section.id == fields.section_id %} selected{% endif %}>{{ section.title }}</option>
+                                {% endfor %}
+                            </select>
+                            {% include '@theme/components/field-errors.twig' with {errors: errors.section_id|default([])} only %}
+                        </div>
+                        <div>{{ form.field('tags', __('Tags'), fields, errors, __('Enter words or phrases separated by commas')) }}</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'globe', size: 15, class: 'text-body-tertiary'} only %}
+                        {{ __('Search engines') }}
+                    </div>
+                    <div class="card-body d-flex flex-column gap-3">
+                        <div>{{ form.field('page_title', __('Page title'), fields, errors, __('Left empty, the name of the article is the title.')) }}</div>
+                        <div>{{ form.field('keywords', __('Keywords'), fields, errors, '') }}</div>
+                        <div>
+                            <label class="form-label" for="article-description">{{ __('Description') }}</label>
+                            <textarea class="form-control{{ errors.description is defined ? ' is-invalid' }}" id="article-description" name="description" rows="3" maxlength="255">{{ fields.description }}</textarea>
+                            {% include '@theme/components/field-errors.twig' with {errors: errors.description|default([])} only %}
+                        </div>
+                    </div>
+                </div>
+
+                {% if facts %}
+                    <div class="card">
+                        <div class="card-header">
+                            {% include '@admin/components/ui/icon.twig' with {name: 'info', size: 15, class: 'text-body-tertiary'} only %}
+                            {{ __('About the article') }}
+                        </div>
+                        <div class="card-body">
+                            {% include '@admin/components/ui/facts.twig' with {items: [
+                                {label: 'ID', value: '#' ~ facts.id},
+                                {label: __('Author'), value: facts.author},
+                                {label: __('Created'), value: facts.created ? facts.created|display_date : ''},
+                                {label: __('Updated'), value: facts.updated ? facts.updated|display_date : ''},
+                                {label: __('Views'), value: facts.views|format_number},
+                            ]} only %}
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
-        <div class="form-group">
-            <label for="name">{{ __('Article name') }}</label>
-            <input type="text"
-                   class="form-control"
-                   maxlength="255"
-                   name="name"
-                   id="name"
-                   required
-                   value="{{ fields.name }}"
-                   placeholder="{{ __('Article name') }}"
-            >
-        </div>
-        <div class="form-group">
-            <label for="page_title">{{ __('Page title') }}</label>
-            <input type="text"
-                   class="form-control"
-                   maxlength="255"
-                   name="page_title"
-                   id="page_title"
-                   required
-                   value="{{ fields.page_title }}"
-                   placeholder="{{ __('Page title') }}"
-            >
-        </div>
-        <div class="form-group">
-            <label for="date_active_from">{{ __('Active from') }}</label>
-            <input type="text"
-                   class="form-control flatpickr_time"
-                   name="active_from"
-                   id="active_from"
-                   required
-                   value="{{ fields.active_from }}"
-                   placeholder="{{ __('Active from') }}"
-            >
-        </div>
-        <div class="form-group">
-            <label for="date_active_to">{{ __('Active to') }}</label>
-            <input type="text"
-                   class="form-control flatpickr_time"
-                   name="active_to"
-                   id="active_to"
-                   required
-                   value="{{ fields.active_to }}"
-                   placeholder="{{ __('Active to') }}"
-            >
-        </div>
-        <div class="form-group">
-            <label for="code">{{ __('Article code') }}</label>
-            <input type="text"
-                   class="form-control"
-                   maxlength="255"
-                   name="code"
-                   id="code"
-                   value="{{ fields.code }}"
-                   placeholder="{{ __('Article code') }}"
-            >
-            <div class="small text-muted">{{ __('Leave it empty for automatic generation') }}</div>
-        </div>
-        <div class="form-group">
-            <label for="keywords">{{ __('Keywords') }}</label>
-            <input type="text"
-                   class="form-control"
-                   maxlength="255"
-                   name="keywords"
-                   id="keywords"
-                   value="{{ fields.keywords }}"
-                   placeholder="{{ __('Keywords') }}"
-            >
-        </div>
-        <div class="form-group">
-            <label for="description">{{ __('Description') }}</label>
-            <input type="text"
-                   class="form-control"
-                   maxlength="255"
-                   name="description"
-                   id="description"
-                   value="{{ fields.description }}"
-                   placeholder="{{ __('Description') }}"
-            >
-        </div>
-        <div class="form-group">
-            <label for="tags">{{ __('Tags') }}</label>
-            <input type="text"
-                   class="form-control"
-                   maxlength="255"
-                   name="tags"
-                   id="tags"
-                   value="{{ fields.tags }}"
-                   placeholder="{{ __('Tags') }}"
-            >
-            <div class="small text-muted">{{ __('Enter words or phrases separated by commas') }}</div>
-        </div>
 
-        {% include '@theme/components/editor.twig' with {
-            name: 'preview_text',
-            label: __('Preview text'),
-            value: fields.preview_text
-        } only %}
-
-        {% include '@theme/components/editor.twig' with {
-            name: 'text',
-            label: __('Text'),
-            value: fields.text
-        } only %}
-
-        <div>
-            <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
-            <a href="{{ back_url }}" class="btn btn-outline-primary ms-2">{{ __('Back') }}</a>
+        <div class="admin-article-form__actions">
+            <a class="btn btn-secondary" href="{{ list_url }}">{{ __('Cancel') }}</a>
+            <button type="submit" class="btn btn-secondary" name="close" value="1">{{ __('Save and close') }}</button>
+            <button type="submit" class="btn btn-primary">
+                {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
+                {{ __('Save') }}
+            </button>
         </div>
     </form>
 {% endblock %}

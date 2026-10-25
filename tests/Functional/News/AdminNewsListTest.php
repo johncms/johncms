@@ -187,7 +187,7 @@ final class AdminNewsListTest extends FunctionalTestCase
 
     private function editLink(int $article): string
     {
-        return 'href="/admin/news/edit_article/' . $article . '/"';
+        return 'href="/admin/news/articles/' . $article . '/edit"';
     }
 
     private function page(string $uri): string

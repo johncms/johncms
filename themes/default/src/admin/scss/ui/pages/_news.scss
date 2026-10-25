@@ -55,3 +55,32 @@
   display: flex;
   justify-content: flex-end;
 }
+
+// The form of an article (news::admin/article-form).
+
+.admin-article-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.admin-article-form__status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.admin-article-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+// The card names the editor already: the label the component always draws stays out.
+.admin-article-form .card-body > .vue_app label:empty {
+  display: none;
+}

@@ -6,14 +6,10 @@ msgstr ""
 msgid "The requested article was not found."
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:51
-msgid "The article was created successfully"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:59
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:97
 #: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:44
 #: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:33
+#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:148
+#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:163
 #: modules/johncms/news/src/Application/Controllers/Admin/DeleteArticleController.php:52
 #: modules/johncms/news/src/Application/Controllers/Admin/DeleteSectionController.php:55
 #: modules/johncms/news/src/Application/Controllers/Admin/NewsListController.php:74
@@ -25,21 +21,6 @@ msgstr ""
 #: modules/johncms/news/src/Application/Services/NewsPermissions.php:29
 #: modules/johncms/news/templates/homepage/latest.twig:8
 msgid "News"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:60
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:62
-#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:109
-#: modules/johncms/news/templates/admin/index.twig:32
-msgid "Add article"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:89
-msgid "The article was updated successfully"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:101
-msgid "Edit article"
 msgstr ""
 
 #: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:47
@@ -79,6 +60,24 @@ msgstr ""
 
 #: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:182
 msgid "The section was updated successfully"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:62
+msgid "The article was created successfully"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:84
+msgid "The article was updated successfully"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:147
+#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:109
+#: modules/johncms/news/templates/admin/index.twig:32
+msgid "Add article"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:166
+msgid "Edit article"
 msgstr ""
 
 #: modules/johncms/news/src/Application/Controllers/Admin/DeleteArticleController.php:51
@@ -161,6 +160,12 @@ msgstr ""
 msgid "The requested section was not found."
 msgstr ""
 
+#: modules/johncms/news/src/Application/Services/ArticleFormMapper.php:76
+#: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:119
+#: modules/johncms/news/templates/admin/components/articles-table.twig:33
+msgid "Root"
+msgstr ""
+
 #: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:93
 #: modules/johncms/news/templates/admin/components/sections-table.twig:13
 msgid "Articles"
@@ -174,12 +179,8 @@ msgstr ""
 msgid "All sections"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:119
-#: modules/johncms/news/templates/admin/components/articles-table.twig:33
-msgid "Root"
-msgstr ""
-
 #: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:130
+#: modules/johncms/news/templates/admin/article-form.twig:165
 #: modules/johncms/news/templates/admin/components/articles-table.twig:12
 #: modules/johncms/news/templates/admin/components/sections-table.twig:11
 msgid "Section"
@@ -199,6 +200,7 @@ msgid "Anybody"
 msgstr ""
 
 #: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:159
+#: modules/johncms/news/templates/admin/article-form.twig:202
 #: modules/johncms/news/templates/admin/components/articles-table.twig:14
 msgid "Author"
 msgstr ""
@@ -226,6 +228,7 @@ msgstr ""
 
 #: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:72
 #: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:110
+#: modules/johncms/news/templates/admin/article-form.twig:39
 msgid "Open on the site"
 msgstr ""
 
@@ -337,42 +340,106 @@ msgstr ""
 msgid "<p>Thanks for completing the work so quickly!</p>"
 msgstr ""
 
-#: modules/johncms/news/templates/admin/article-form.twig:26
-msgid "Active"
+#: modules/johncms/news/templates/admin/article-form.twig:44
+#: modules/johncms/news/templates/admin/article-form.twig:218
+#: modules/johncms/news/templates/admin/section-form.twig:73
+#: modules/johncms/news/templates/admin/settings.twig:124
+msgid "Save"
 msgstr ""
 
-#: modules/johncms/news/templates/admin/article-form.twig:30
-#: modules/johncms/news/templates/admin/article-form.twig:38
+#: modules/johncms/news/templates/admin/article-form.twig:53
+msgid "The article is not saved: check the fields marked below."
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:64
 msgid "Article name"
 msgstr ""
 
-#: modules/johncms/news/templates/admin/article-form.twig:42
-#: modules/johncms/news/templates/admin/article-form.twig:50
-msgid "Page title"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/article-form.twig:54
-#: modules/johncms/news/templates/admin/article-form.twig:61
-msgid "Active from"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/article-form.twig:65
-#: modules/johncms/news/templates/admin/article-form.twig:72
-msgid "Active to"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/article-form.twig:76
-#: modules/johncms/news/templates/admin/article-form.twig:83
+#: modules/johncms/news/templates/admin/article-form.twig:69
 msgid "Article code"
 msgstr ""
 
-#: modules/johncms/news/templates/admin/article-form.twig:85
-#: modules/johncms/news/templates/admin/section-form.twig:44
-msgid "Leave it empty for automatic generation"
+#: modules/johncms/news/templates/admin/article-form.twig:72
+msgid "The last part of the address of the article. Left empty, it is made of the name."
 msgstr ""
 
-#: modules/johncms/news/templates/admin/article-form.twig:88
-#: modules/johncms/news/templates/admin/article-form.twig:95
+#: modules/johncms/news/templates/admin/article-form.twig:80
+msgid "Preview text"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:81
+msgid "In the lists of the news and on the home page"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:97
+msgid "Text"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:117
+msgid "Publication"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:124
+msgid "Active"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:125
+msgid "Switched off, the article is a draft that nobody on the site sees."
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:128
+msgid "Active from"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:130
+msgid "Active to"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:131
+msgid "Left empty, the article is shown from the moment it is saved and with no end."
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:145
+msgid "Shown from %s"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:147
+msgid "Hidden since %s"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:149
+msgid "Shown on the site"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:151
+msgid "Seen by nobody on the site"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:161
+msgid "Section and tags"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:173
+msgid "Tags"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:173
+msgid "Enter words or phrases separated by commas"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:180
+msgid "Search engines"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:183
+msgid "Page title"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:183
+msgid "Left empty, the name of the article is the title."
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:184
 #: modules/johncms/news/templates/admin/section-form.twig:47
 #: modules/johncms/news/templates/admin/section-form.twig:54
 #: modules/johncms/news/templates/admin/settings.twig:47
@@ -384,8 +451,7 @@ msgstr ""
 msgid "Keywords"
 msgstr ""
 
-#: modules/johncms/news/templates/admin/article-form.twig:99
-#: modules/johncms/news/templates/admin/article-form.twig:106
+#: modules/johncms/news/templates/admin/article-form.twig:186
 #: modules/johncms/news/templates/admin/section-form.twig:58
 #: modules/johncms/news/templates/admin/section-form.twig:65
 #: modules/johncms/news/templates/admin/settings.twig:58
@@ -394,51 +460,44 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: modules/johncms/news/templates/admin/article-form.twig:110
-#: modules/johncms/news/templates/admin/article-form.twig:117
-msgid "Tags"
+#: modules/johncms/news/templates/admin/article-form.twig:197
+msgid "About the article"
 msgstr ""
 
-#: modules/johncms/news/templates/admin/article-form.twig:119
-msgid "Enter words or phrases separated by commas"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/article-form.twig:124
-msgid "Preview text"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/article-form.twig:130
-msgid "Text"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/article-form.twig:135
-#: modules/johncms/news/templates/admin/section-form.twig:73
-#: modules/johncms/news/templates/admin/settings.twig:124
-msgid "Save"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/article-form.twig:136
-#: modules/johncms/news/templates/admin/section-form.twig:74
-#: modules/johncms/news/templates/public/article.twig:84
-msgid "Back"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/components/articles-table.twig:11
-msgid "Article"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/components/articles-table.twig:15
-msgid "Views"
-msgstr ""
-
+#: modules/johncms/news/templates/admin/article-form.twig:203
 #: modules/johncms/news/templates/admin/components/articles-table.twig:16
 #: modules/johncms/news/templates/admin/components/sections-table.twig:14
 msgid "Created"
 msgstr ""
 
+#: modules/johncms/news/templates/admin/article-form.twig:204
 #: modules/johncms/news/templates/admin/components/articles-table.twig:17
 #: modules/johncms/news/templates/admin/components/sections-table.twig:15
 msgid "Updated"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:205
+#: modules/johncms/news/templates/admin/components/articles-table.twig:15
+msgid "Views"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:214
+#: modules/johncms/news/templates/admin/delete-article-dialog.twig:21
+#: modules/johncms/news/templates/admin/delete-section-dialog.twig:35
+#: modules/johncms/news/templates/admin/settings.twig:125
+msgid "Cancel"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:215
+msgid "Save and close"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:31
+msgid "dd.mm.yyyy hh:mm"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/components/articles-table.twig:11
+msgid "Article"
 msgstr ""
 
 #: modules/johncms/news/templates/admin/components/articles-table.twig:18
@@ -459,12 +518,6 @@ msgstr ""
 
 #: modules/johncms/news/templates/admin/delete-article-dialog.twig:18
 msgid "The article is deleted together with the files attached to it."
-msgstr ""
-
-#: modules/johncms/news/templates/admin/delete-article-dialog.twig:21
-#: modules/johncms/news/templates/admin/delete-section-dialog.twig:35
-#: modules/johncms/news/templates/admin/settings.twig:125
-msgid "Cancel"
 msgstr ""
 
 #: modules/johncms/news/templates/admin/delete-section-dialog.twig:25
@@ -519,8 +572,17 @@ msgstr ""
 msgid "Section code"
 msgstr ""
 
+#: modules/johncms/news/templates/admin/section-form.twig:44
+msgid "Leave it empty for automatic generation"
+msgstr ""
+
 #: modules/johncms/news/templates/admin/section-form.twig:69
 msgid "Text after a list"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/section-form.twig:74
+#: modules/johncms/news/templates/public/article.twig:84
+msgid "Back"
 msgstr ""
 
 #: modules/johncms/news/templates/admin/settings.twig:16
