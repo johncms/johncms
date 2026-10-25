@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Modules\Admin\UseCases;
 
+use Gettext\Translator;
+use Gettext\TranslatorFunctions;
 use Johncms\Modules\Admin\Application\DTO\RoleListItemDTO;
 use Johncms\Modules\Admin\Application\UseCases\GetRoleListUseCase;
 use PHPUnit\Framework\TestCase;
@@ -21,6 +23,9 @@ final class GetRoleListUseCaseTest extends TestCase
     protected function setUp(): void
     {
         $this->bootDatabase();
+        // A built-in role is named through the gettext helpers, which nothing has registered in
+        // an isolated unit test.
+        TranslatorFunctions::register(new Translator());
 
         $this->roles = new FakeRoleRepository();
         $this->useCase = new GetRoleListUseCase($this->roles);
