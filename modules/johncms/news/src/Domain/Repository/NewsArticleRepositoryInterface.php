@@ -44,6 +44,27 @@ interface NewsArticleRepositoryInterface
      */
     public function countInSections(array $sectionIds): int;
 
+    /**
+     * Whether another article of the section holds the code. 0 is the root, where the articles
+     * stored without a section stand as well.
+     */
+    public function isCodeTaken(string $code, int $sectionId, ?int $exceptId = null): bool;
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    public function create(array $attributes): NewsArticle;
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    public function update(NewsArticle $article, array $attributes): void;
+
+    /**
+     * The text the search of the news looks the article up by.
+     */
+    public function index(int $articleId, string $text): void;
+
     public function delete(NewsArticle $article): void;
 
     /**

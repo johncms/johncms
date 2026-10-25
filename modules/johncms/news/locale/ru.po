@@ -41,11 +41,6 @@ msgstr "Новости"
 msgid "Add article"
 msgstr "Добавить статью"
 
-#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:108
-#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:213
-msgid "The article name cannot be empty"
-msgstr "Название статьи не может быть пустым"
-
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:138
 msgid "The article was created successfully"
 msgstr "Статья успешно создана"
@@ -597,3 +592,9 @@ msgstr "Изменено"
 
 msgid "Views"
 msgstr "Просмотры"
+
+msgid "Choose one of the sections"
+msgstr "Выберите один из разделов"
+
+msgid "Enter the date as dd.mm.yyyy hh:mm"
+msgstr "Введите дату в виде дд.мм.гггг чч:мм"

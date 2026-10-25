@@ -29,6 +29,11 @@ final readonly class SectionTree
         $this->children = $children;
     }
 
+    public function has(int $id): bool
+    {
+        return isset($this->parents[$id]);
+    }
+
     /**
      * The section and everything under it, the section first.
      *

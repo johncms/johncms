@@ -6,12 +6,17 @@ msgstr ""
 msgid "The requested article was not found."
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:41
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:51
+msgid "The article was created successfully"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:59
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:97
 #: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:44
 #: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:33
 #: modules/johncms/news/src/Application/Controllers/Admin/DeleteArticleController.php:52
 #: modules/johncms/news/src/Application/Controllers/Admin/DeleteSectionController.php:55
-#: modules/johncms/news/src/Application/Controllers/Admin/NewsListController.php:72
+#: modules/johncms/news/src/Application/Controllers/Admin/NewsListController.php:74
 #: modules/johncms/news/src/Application/Controllers/ArticleController.php:33
 #: modules/johncms/news/src/Application/Controllers/SearchController.php:34
 #: modules/johncms/news/src/Application/Controllers/SectionController.php:35
@@ -22,33 +27,19 @@ msgstr ""
 msgid "News"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:55
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:70
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:60
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:62
 #: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:109
 #: modules/johncms/news/templates/admin/index.twig:32
 msgid "Add article"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:102
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:202
-msgid "The article name cannot be empty"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:132
-msgid "The article was created successfully"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:135
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:232
-msgid "An article with this code already exists"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:155
-msgid "Edit article"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:229
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:89
 msgid "The article was updated successfully"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:101
+msgid "Edit article"
 msgstr ""
 
 #: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:47
@@ -260,6 +251,18 @@ msgstr ""
 
 #: modules/johncms/news/src/Application/Services/NewsPermissions.php:51
 msgid "Manage the news"
+msgstr ""
+
+#: modules/johncms/news/src/Application/UseCases/SaveArticleUseCase.php:99
+msgid "Choose one of the sections"
+msgstr ""
+
+#: modules/johncms/news/src/Application/UseCases/SaveArticleUseCase.php:103
+msgid "An article with this code already exists"
+msgstr ""
+
+#: modules/johncms/news/src/Application/UseCases/SaveArticleUseCase.php:133
+msgid "Enter the date as dd.mm.yyyy hh:mm"
 msgstr ""
 
 #: modules/johncms/news/src/Install/Installer.php:36

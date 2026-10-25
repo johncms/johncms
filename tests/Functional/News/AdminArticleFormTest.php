@@ -95,6 +95,29 @@ final class AdminArticleFormTest extends FunctionalTestCase
         self::assertSame(2, NewsArticle::query()->where('code', 'taken')->count());
     }
 
+    public function testACodeTakenAtTheRootIsRefused(): void
+    {
+        $this->article('Taken', 'taken', 0);
+        $this->article('Stored without a section', 'taken-too', 0, ['section_id' => null]);
+        $supervisor = FunctionalUserFactory::createSupervisor();
+
+        $first = $this->postForm('/admin/news/add_article/0', ['name' => 'Another', 'code' => 'taken'], $supervisor);
+        $second = $this->postForm('/admin/news/add_article/0', ['name' => 'Another', 'code' => 'taken-too'], $supervisor);
+
+        self::assertSame(Response::HTTP_OK, $first->getStatusCode());
+        self::assertSame(Response::HTTP_OK, $second->getStatusCode());
+        self::assertSame(1, NewsArticle::query()->where('code', 'taken')->count());
+        self::assertSame(1, NewsArticle::query()->where('code', 'taken-too')->count());
+    }
+
+    public function testADateThatIsNotOneIsRefused(): void
+    {
+        $response = $this->postForm('/admin/news/add_article/0', ['name' => 'Dated', 'active_from' => '31.02.2026 10:00'], FunctionalUserFactory::createSupervisor());
+
+        self::assertSame(Response::HTTP_OK, $response->getStatusCode());
+        self::assertFalse(NewsArticle::query()->where('code', 'dated')->exists());
+    }
+
     public function testAnUnknownSectionToAddToIsNotFound(): void
     {
         $response = $this->handleRequest('/admin/news/add_article/999', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()));

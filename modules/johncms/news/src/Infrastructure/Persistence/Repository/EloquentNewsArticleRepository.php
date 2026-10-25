@@ -11,6 +11,7 @@ use Johncms\Modules\Admin\Domain\Enums\SortDirection;
 use Johncms\Modules\News\Domain\Enums\ArticleStatus;
 use Johncms\Modules\News\Domain\Enums\NewsListSort;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
+use Johncms\Modules\News\Domain\Models\NewsSearchIndex;
 use Johncms\Modules\News\Domain\Repository\NewsArticleRepositoryInterface;
 use Johncms\Modules\News\Domain\ValueObjects\NewsListFilter;
 use Johncms\Users\User;
@@ -69,6 +70,38 @@ final class EloquentNewsArticleRepository implements NewsArticleRepositoryInterf
         }
 
         return NewsArticle::query()->whereIn('section_id', $sectionIds)->count();
+    }
+
+    public function isCodeTaken(string $code, int $sectionId, ?int $exceptId = null): bool
+    {
+        $query = NewsArticle::query()->where('code', $code);
+
+        if ($sectionId === NewsListFilter::ROOT) {
+            $query->where(static fn (Builder $query) => $query->where('section_id', 0)->orWhereNull('section_id'));
+        } else {
+            $query->where('section_id', $sectionId);
+        }
+
+        if ($exceptId !== null) {
+            $query->where('id', '!=', $exceptId);
+        }
+
+        return $query->exists();
+    }
+
+    public function create(array $attributes): NewsArticle
+    {
+        return NewsArticle::query()->create($attributes);
+    }
+
+    public function update(NewsArticle $article, array $attributes): void
+    {
+        $article->update($attributes);
+    }
+
+    public function index(int $articleId, string $text): void
+    {
+        NewsSearchIndex::query()->updateOrCreate(['article_id' => $articleId], ['text' => $text]);
     }
 
     public function delete(NewsArticle $article): void

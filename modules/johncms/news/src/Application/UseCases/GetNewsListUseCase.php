@@ -21,7 +21,7 @@ use Johncms\Users\User;
  * page at a time, and what the controls around it need — the tree for the paths, the authors.
  *
  * The section of the filter is turned into the ids of its subtree here, from the tree the caller
- * got from tree(): the repositories only ever see a list of ids.
+ * got from GetSectionTreeUseCase: the repositories only ever see a list of ids.
  */
 final readonly class GetNewsListUseCase
 {
@@ -29,11 +29,6 @@ final readonly class GetNewsListUseCase
         private NewsArticleRepositoryInterface $articles,
         private NewsSectionRepositoryInterface $sections,
     ) {
-    }
-
-    public function tree(): SectionTree
-    {
-        return new SectionTree($this->sections->getParents(), $this->sections->getNames());
     }
 
     /**

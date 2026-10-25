@@ -15,6 +15,7 @@ use Johncms\Modules\News\Application\Services\NewsListControlsMapper;
 use Johncms\Modules\News\Application\Services\NewsListFilterMapper;
 use Johncms\Modules\News\Application\Services\NewsListRowMapper;
 use Johncms\Modules\News\Application\UseCases\GetNewsListUseCase;
+use Johncms\Modules\News\Application\UseCases\GetSectionTreeUseCase;
 use Johncms\Modules\News\Domain\Enums\NewsListTab;
 use Johncms\Modules\News\Domain\ValueObjects\NewsListFilter;
 use Johncms\NavChain;
@@ -31,6 +32,7 @@ final readonly class NewsListController
     public function __construct(
         private NavChain $navChain,
         private GetNewsListUseCase $getList,
+        private GetSectionTreeUseCase $getTree,
         private NewsListFilterMapper $filterMapper,
         private NewsListControlsMapper $controlsMapper,
         private NewsListRowMapper $rowMapper,
@@ -43,7 +45,7 @@ final readonly class NewsListController
     public function __invoke(Request $request): ViewResponse
     {
         $filter = $this->filterMapper->fromQuery($request->query->all());
-        $tree = $this->getList->tree();
+        $tree = $this->getTree->execute();
         $pagination = $this->paginationFactory->create($this->getList->count($filter, $tree));
 
         $redirectUrl = $this->paginationGuard->redirectUrl($pagination);

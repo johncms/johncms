@@ -4,21 +4,20 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Controllers\Admin;
 
-use Carbon\Carbon;
 use Johncms\Auth\CurrentUser;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Str;
 use Johncms\Http\EditorImageUploadResponder;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
+use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\News\Application\DTO\ArticleFormDTO;
+use Johncms\Modules\News\Application\Exceptions\ArticleFormException;
+use Johncms\Modules\News\Application\Exceptions\ArticleNotFoundException;
+use Johncms\Modules\News\Application\UseCases\GetArticleUseCase;
+use Johncms\Modules\News\Application\UseCases\GetSectionTreeUseCase;
+use Johncms\Modules\News\Application\UseCases\SaveArticleUseCase;
 use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
-use Johncms\Modules\News\Domain\Models\NewsSearchIndex;
-use Johncms\Modules\News\Domain\Models\NewsSection;
-use Johncms\Http\Session;
 use Johncms\NavChain;
-use Johncms\Http\Request;
-use Johncms\Http\View\ViewResponse;
-use Johncms\System\Utility\EditorContentNormalizer;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,220 +26,164 @@ final readonly class AdminArticleController
 {
     public function __construct(
         private NavChain $navChain,
-        private EditorContentNormalizer $editorContentNormalizer,
+        private GetArticleUseCase $getArticle,
+        private GetSectionTreeUseCase $getTree,
+        private SaveArticleUseCase $saveArticle,
         private Session $session,
     ) {
     }
 
     /**
-     * The links every page of the news section sits under. Added by the page rather than by
-     * the constructor: the chain belongs to the request being served.
-     */
-    private function addSectionBreadcrumbs(): void
-    {
-        $this->navChain->add(__('News'), '/admin/news');
-    }
-
-    /**
-     * Article creation page
-     *
-     * @param Request $request
-     * @param int $section_id
-     * @return Response
+     * Adding an article to the section of the address.
      */
     public function add(Request $request, CurrentUser $user, int $section_id = 0): Response | ViewResponse
     {
-        $this->addSectionBreadcrumbs();
-
-        $pageTitle = __('Add article');
-
-        if (! empty($section_id)) {
-            try {
-                $current_section = (new NewsSection())->findOrFail($section_id);
-
-                Helpers::buildAdminBreadcrumbs($current_section->parentSection);
-
-                // Adding the current section to the navigation chain
-                $this->navChain->add($current_section->name, '/admin/news/content/' . $current_section->id);
-            } catch (ModelNotFoundException $exception) {
-                pageNotFound();
-            }
-        }
-
-        $this->navChain->add(__('Add article'));
-
-        $data = [
-            'action_url' => '/admin/news/add_article/' . $section_id,
-            'back_url'   => '/admin/news/content/' . $section_id,
-            'section_id' => $section_id,
-            'fields'     => [
-                'active'       => $request->bodyInt('active', 1),
-                'section_id'   => $section_id,
-                'active_from'  => htmlspecialchars($request->body('active_from', '')),
-                'active_to'    => htmlspecialchars($request->body('active_to', '')),
-                'name'         => $request->body('name', ''),
-                'page_title'   => $request->body('page_title', ''),
-                'code'         => $request->body('code', ''),
-                'keywords'     => $request->body('keywords', ''),
-                'description'  => $request->body('description', ''),
-                'tags'         => $request->body('tags', ''),
-                'preview_text' => $request->body('preview_text', ''),
-                'text'         => $request->body('text', ''),
-            ],
-        ];
-
-        $data['fields'] = array_map('trim', $data['fields']);
-        $data['fields']['attached_files'] = (array) $request->bodyInts('attached_files');
-
-        $errors = [];
-        // Processing the sent data from the form.
-        if ($request->getMethod() === 'POST') {
-            $data['fields']['preview_text'] = $this->editorContentNormalizer->trimEdgeEmptyBlocks($data['fields']['preview_text']);
-            $data['fields']['text'] = $this->editorContentNormalizer->trimEdgeEmptyBlocks($data['fields']['text']);
-
-            if (empty($data['fields']['name'])) {
-                $errors[] = __('The article name cannot be empty');
-            }
-
-            // Code generation
-            if (empty($data['fields']['code'])) {
-                $data['fields']['code'] = Str::slug($data['fields']['name']);
-            } else {
-                $data['fields']['code'] = Str::slug($data['fields']['code']);
-            }
-
-            if (empty($errors)) {
-                $check = false;
-                if (! empty($section_id)) {
-                    $check = (new NewsArticle())
-                        ->where('code', $data['fields']['code'])
-                        ->where('section_id', $section_id)
-                        ->first();
-                }
-
-                if (! $check) {
-                    $data['fields']['created_by'] = $user->id();
-                    $created_article = (new NewsArticle())->create($data['fields']);
-
-                    $search_text = $created_article->getRawOriginal('name') . strip_tags(' ' . $created_article->getRawOriginal('preview_text') . ' ' . $created_article->getRawOriginal('text'));
-                    (new NewsSearchIndex())->create(
-                        [
-                            'article_id' => $created_article->id,
-                            'text'       => $search_text,
-                        ]
-                    );
-                    $this->session->flash('success_message', __('The article was created successfully'));
-                    return new RedirectResponse('/admin/news/content/' . $section_id);
-                }
-                $errors[] = __('An article with this code already exists');
-            }
-        }
-
-        $data['errors'] = $errors;
-
-        return new ViewResponse('@news/admin/article-form.twig', $this->menu($pageTitle) + $data);
-    }
-
-    /**
-     * The edit article page
-     *
-     * @param int $article_id
-     * @param Request $request
-     * @return Response
-     */
-    public function edit(int $article_id, Request $request, CurrentUser $user): Response | ViewResponse
-    {
-        $this->addSectionBreadcrumbs();
-
-        $pageTitle = __('Edit article');
-
-        try {
-            $article = (new NewsArticle())->findOrFail($article_id);
-        } catch (ModelNotFoundException $exception) {
+        if ($section_id !== 0 && ! $this->getTree->execute()->has($section_id)) {
             pageNotFound();
         }
 
+        $form = $this->form($request, $section_id);
+        $errors = [];
+
+        if ($request->getMethod() === 'POST') {
+            try {
+                $this->saveArticle->create($form, $user->id());
+                $this->session->flash('success_message', __('The article was created successfully'));
+
+                return new RedirectResponse('/admin/news/content/' . $section_id);
+            } catch (ArticleFormException $e) {
+                $errors = $e->errors;
+            }
+        }
+
+        $this->navChain->add(__('News'), '/admin/news');
+        $this->navChain->add(__('Add article'));
+
+        return new ViewResponse('@news/admin/article-form.twig', $this->menu(__('Add article')) + [
+            'action_url' => '/admin/news/add_article/' . $section_id,
+            'back_url'   => '/admin/news/content/' . $section_id,
+            'section_id' => $section_id,
+            'fields'     => $this->fields($form),
+            'errors'     => $this->flatten($errors),
+        ]);
+    }
+
+    /**
+     * Changing an article; the section it stands in stays.
+     */
+    public function edit(int $article_id, Request $request, CurrentUser $user): Response | ViewResponse
+    {
+        try {
+            $article = $this->getArticle->execute($article_id);
+        } catch (ArticleNotFoundException) {
+            pageNotFound();
+        }
+
+        $sectionId = (int) $article->section_id;
+        $form = $request->getMethod() === 'POST' ? $this->form($request, $sectionId) : $this->formOf($article);
+        $errors = [];
+
+        if ($request->getMethod() === 'POST') {
+            try {
+                $this->saveArticle->update($article, $form, $user->id());
+                $this->session->flash('success_message', __('The article was updated successfully'));
+
+                return new RedirectResponse('/admin/news/content/' . $sectionId . '/');
+            } catch (ArticleFormException $e) {
+                $errors = $e->errors;
+            }
+        }
+
+        $this->navChain->add(__('News'), '/admin/news');
         Helpers::buildAdminBreadcrumbs($article->parentSection);
         $this->navChain->add($article->name);
 
-        if (! empty($article->getRawOriginal('active_from'))) {
-            $active_from = Carbon::parse($article->getRawOriginal('active_from'))->format('d.m.Y H:i');
-        }
-        if (! empty($article->getRawOriginal('active_to'))) {
-            $active_to = Carbon::parse($article->getRawOriginal('active_to'))->format('d.m.Y H:i');
-        }
-
-        $data = [
+        return new ViewResponse('@news/admin/article-form.twig', $this->menu(__('Edit article')) + [
             'action_url' => '/admin/news/edit_article/' . $article->id . '/',
-            'back_url'   => '/admin/news/content/' . $article->section_id . '/',
-            'article_id' => $article_id,
-            'fields'     => [
-                'active'       => $request->bodyInt('active', (int) $article->active),
-                'active_from'  => htmlspecialchars($request->body('active_from', $active_from ?? '')),
-                'active_to'    => htmlspecialchars($request->body('active_to', $active_to ?? '')),
-                'name'         => $request->body('name', (string) $article->name),
-                'page_title'   => $request->body('page_title', (string) $article->page_title),
-                'code'         => $request->body('code', (string) $article->code),
-                'keywords'     => $request->body('keywords', (string) $article->keywords),
-                'description'  => $request->body('description', (string) $article->description),
-                'tags'         => $request->body('tags', implode(', ', $article->tags)),
-                'preview_text' => $request->body('preview_text', (string) $article->preview_text),
-                'text'         => $request->body('text', (string) $article->text),
-            ],
-        ];
-
-        $data['fields'] = array_map('trim', $data['fields']);
-        $data['fields']['attached_files'] = (array) $request->bodyInts('attached_files');
-
-        $errors = [];
-        // Processing the sent data from the form.
-        if ($request->getMethod() === 'POST') {
-            $data['fields']['preview_text'] = $this->editorContentNormalizer->trimEdgeEmptyBlocks($data['fields']['preview_text']);
-            $data['fields']['text'] = $this->editorContentNormalizer->trimEdgeEmptyBlocks($data['fields']['text']);
-
-            if (empty($data['fields']['name'])) {
-                $errors[] = __('The article name cannot be empty');
-            }
-
-            // Code generation
-            if (empty($data['fields']['code'])) {
-                $data['fields']['code'] = Str::slug($data['fields']['name']);
-            } else {
-                $data['fields']['code'] = Str::slug($data['fields']['code']);
-            }
-
-            if (empty($errors)) {
-                $check = (new NewsArticle())
-                    ->where('code', $data['fields']['code'])
-                    ->where('section_id', $article->section_id)
-                    ->where('id', '!=', $article->id)
-                    ->first();
-
-                if (! $check) {
-                    $data['fields']['updated_by'] = $user->id();
-                    $data['fields']['attached_files'] = array_merge((array) $article->attached_files, $data['fields']['attached_files']);
-                    $article->update($data['fields']);
-
-                    $search_text = $data['fields']['name'] . strip_tags(' ' . $data['fields']['preview_text'] . ' ' . $data['fields']['text']);
-                    (new NewsSearchIndex())->updateOrCreate(
-                        ['article_id' => $article->id],
-                        ['text' => $search_text]
-                    );
-                    $this->session->flash('success_message', __('The article was updated successfully'));
-                    return new RedirectResponse('/admin/news/content/' . $article->section_id . '/');
-                }
-                $errors[] = __('An article with this code already exists');
-            }
-        }
-
-        $data['errors'] = $errors;
-
-        return new ViewResponse('@news/admin/article-form.twig', $this->menu($pageTitle) + $data);
+            'back_url'   => '/admin/news/content/' . $sectionId . '/',
+            'article_id' => $article->id,
+            'fields'     => $this->fields($form),
+            'errors'     => $this->flatten($errors),
+        ]);
     }
 
     public function loadFile(Request $request, EditorImageUploadResponder $responder): JsonResponse
     {
         return $responder->store($request, 'news', 'news');
+    }
+
+    private function form(Request $request, int $sectionId): ArticleFormDTO
+    {
+        return new ArticleFormDTO(
+            active: $request->bodyInt('active', 1) === 1,
+            sectionId: $sectionId,
+            name: $request->body('name'),
+            code: $request->body('code'),
+            pageTitle: $request->body('page_title'),
+            activeFrom: $request->body('active_from'),
+            activeTo: $request->body('active_to'),
+            keywords: $request->body('keywords'),
+            description: $request->body('description'),
+            tags: $request->body('tags'),
+            previewText: $request->body('preview_text'),
+            text: $request->body('text'),
+            attachedFiles: array_values((array) $request->bodyInts('attached_files')),
+        );
+    }
+
+    private function formOf(NewsArticle $article): ArticleFormDTO
+    {
+        return new ArticleFormDTO(
+            active: (bool) $article->active,
+            sectionId: (int) $article->section_id,
+            name: $article->name,
+            code: $article->code,
+            pageTitle: (string) $article->page_title,
+            activeFrom: $this->date($article->getRawOriginal('active_from')),
+            activeTo: $this->date($article->getRawOriginal('active_to')),
+            keywords: (string) $article->keywords,
+            description: (string) $article->description,
+            tags: implode(', ', $article->tags),
+            previewText: (string) $article->getRawOriginal('preview_text'),
+            text: (string) $article->getRawOriginal('text'),
+        );
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function fields(ArticleFormDTO $form): array
+    {
+        return [
+            'active'       => (int) $form->active,
+            'section_id'   => $form->sectionId,
+            'active_from'  => $form->activeFrom,
+            'active_to'    => $form->activeTo,
+            'name'         => $form->name,
+            'page_title'   => $form->pageTitle,
+            'code'         => $form->code,
+            'keywords'     => $form->keywords,
+            'description'  => $form->description,
+            'tags'         => $form->tags,
+            'preview_text' => $form->previewText,
+            'text'         => $form->text,
+        ];
+    }
+
+    private function date(mixed $raw): string
+    {
+        $timestamp = is_string($raw) && $raw !== '' ? strtotime($raw) : false;
+
+        return $timestamp !== false ? date(SaveArticleUseCase::DATE_FORMAT, $timestamp) : '';
+    }
+
+    /**
+     * @param array<string, list<string>> $errors
+     * @return list<string>
+     */
+    private function flatten(array $errors): array
+    {
+        return array_merge(...array_values($errors));
     }
 
     /**

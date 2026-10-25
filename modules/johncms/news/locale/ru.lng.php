@@ -8,7 +8,6 @@
       'The requested article was not found.' => 'Запрошенная статья не найдена.',
       'News' => 'Новости',
       'Add article' => 'Добавить статью',
-      'The article name cannot be empty' => 'Название статьи не может быть пустым',
       'The article was created successfully' => 'Статья успешно создана',
       'An article with this code already exists' => 'Статья с таким кодом уже существует',
       'Edit article' => 'Редактировать статью',
@@ -157,6 +156,8 @@
       'The section is deleted together with everything under it.' => 'Раздел удаляется вместе со всем, что в нём лежит.',
       'Updated' => 'Изменено',
       'Views' => 'Просмотры',
+      'Choose one of the sections' => 'Выберите один из разделов',
+      'Enter the date as dd.mm.yyyy hh:mm' => 'Введите дату в виде дд.мм.гггг чч:мм',
     ),
   ),
 );
