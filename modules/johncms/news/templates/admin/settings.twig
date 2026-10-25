@@ -1,129 +1,132 @@
 {#
-    The settings of the news module.
+    The settings of the news: the block of the home page and the meta tags of the pages of the
+    module.
 
-    @var array  current_settings Current values, keyed by setting name.
+    @var \Johncms\Modules\News\Application\DTO\NewsSettingsDTO settings
+    @var array  errors          Field => messages, from the last attempt.
     @var string form_action
-    @var string back_url
-    @var string message          Empty unless a save has just succeeded.
+    @var string list_url
+    @var int    max_quantity
+    @var int    max_days
+    @var string error_message   Empty unless the configuration could not be written.
+    @var string success_message Empty unless a save has just succeeded.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
+{% macro text(name, label, value, errors, max, help) %}
+    <label class="form-label" for="news-{{ name }}">{{ label }}</label>
+    <input type="text" class="form-control{{ errors[name] is defined ? ' is-invalid' }}" id="news-{{ name }}" name="{{ name }}" value="{{ value }}" maxlength="{{ max }}"
+        {%- if help %} aria-describedby="news-{{ name }}-help"{% endif %}>
+    {% include '@theme/components/field-errors.twig' with {errors: errors[name]|default([])} only %}
+    {% if help %}
+        <div class="form-text" id="news-{{ name }}-help">{{ help }}</div>
+    {% endif %}
+{% endmacro %}
+
+{% macro textarea(name, label, value, errors) %}
+    <label class="form-label" for="news-{{ name }}">{{ label }}</label>
+    <textarea class="form-control{{ errors[name] is defined ? ' is-invalid' }}" id="news-{{ name }}" name="{{ name }}" rows="2" maxlength="1000">{{ value }}</textarea>
+    {% include '@theme/components/field-errors.twig' with {errors: errors[name]|default([])} only %}
+{% endmacro %}
+
 {% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: message} only %}
+    {% import _self as form %}
 
-    <form action="{{ form_action }}" method="post">
-        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-        <h4 class="mt-3 fw-bold">{{ __('Home page settings') }}</h4>
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: error_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+    {% if errors is not empty %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: __('The settings are not saved: check the fields marked below.')} only %}
+    {% endif %}
 
-        <div class="form-check mb-1">
-            <input type="checkbox" class="form-check-input" name="homepage_show" value="1"
-                   id="homepage_show"{% if current_settings.homepage_show %} checked{% endif %}>
-            <label class="form-check-label" for="homepage_show">{{ __('Show on home page') }}</label>
-        </div>
+    <div class="row">
+        <div class="col-xxl-9">
+            <form method="post" action="{{ form_action }}" class="d-flex flex-column gap-3">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
 
-        <div class="form-group">
-            <label for="homepage_quantity">{{ __('Quantity of news') }}</label>
-            <input type="text" name="homepage_quantity" class="form-control" id="homepage_quantity" value="{{ current_settings.homepage_quantity }}">
-        </div>
-        <div class="form-group">
-            <label for="homepage_days">{{ __('How many days to show?') }}</label>
-            <input type="text" name="homepage_days" class="form-control" id="homepage_days" value="{{ current_settings.homepage_days }}">
-            <div class="text-muted small">{{ __('0 - always display.') }}</div>
-        </div>
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'house', size: 15, class: 'text-body-tertiary'} only %}
+                        {{ __('Home page settings') }}
+                    </div>
+                    <div class="card-body row g-3">
+                        <div class="col-12">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" name="homepage_show" value="1" id="homepage_show"{% if settings.homepageShow %} checked{% endif %}>
+                                <label class="form-check-label" for="homepage_show">
+                                    {{ __('Show on home page') }}
+                                    <span class="form-text d-block mt-0">{{ __('The latest articles in a block of the home page.') }}</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="news-homepage_quantity">{{ __('Quantity of news') }}</label>
+                            <div class="input-group has-validation">
+                                <input type="number" class="form-control{{ errors.homepage_quantity is defined ? ' is-invalid' }}" id="news-homepage_quantity" name="homepage_quantity" value="{{ settings.homepageQuantity }}" min="1" max="{{ max_quantity }}" aria-describedby="news-homepage_quantity-help">
+                                <span class="input-group-text">{{ __('articles') }}</span>
+                                {% include '@theme/components/field-errors.twig' with {errors: errors.homepage_quantity|default([])} only %}
+                            </div>
+                            <div class="form-text" id="news-homepage_quantity-help">{{ __('From %d to %d')|format(1, max_quantity) }}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="news-homepage_days">{{ __('How many days to show?') }}</label>
+                            <div class="input-group has-validation">
+                                <input type="number" class="form-control{{ errors.homepage_days is defined ? ' is-invalid' }}" id="news-homepage_days" name="homepage_days" value="{{ settings.homepageDays }}" min="0" max="{{ max_days }}" aria-describedby="news-homepage_days-help">
+                                <span class="input-group-text">{{ __('days') }}</span>
+                                {% include '@theme/components/field-errors.twig' with {errors: errors.homepage_days|default([])} only %}
+                            </div>
+                            <div class="form-text" id="news-homepage_days-help">{{ __('An article older than this leaves the block. 0 - always display.') }}</div>
+                        </div>
+                    </div>
+                </div>
 
-        <h4 class="mt-3 fw-bold">{{ __('Meta tags for the main page') }}</h4>
-        <div class="form-group">
-            <label for="title">{{ __('Module name') }}</label>
-            <input type="text"
-                   class="form-control"
-                   maxlength="250"
-                   name="title"
-                   id="title"
-                   value="{{ current_settings.title }}"
-                   placeholder="{{ __('Module name') }}"
-            >
-        </div>
-        <div class="form-group">
-            <label for="meta_keywords">{{ __('Keywords') }}</label>
-            <input type="text"
-                   class="form-control"
-                   maxlength="500"
-                   name="meta_keywords"
-                   id="meta_keywords"
-                   value="{{ current_settings.meta_keywords }}"
-                   placeholder="{{ __('Keywords') }}"
-            >
-        </div>
-        <div class="form-group">
-            <label for="meta_description">{{ __('Description') }}</label>
-            <textarea id="meta_description" class="form-control" name="meta_description">{{ current_settings.meta_description }}</textarea>
-        </div>
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'newspaper', size: 15, class: 'text-body-tertiary'} only %}
+                        {{ __('Meta tags for the main page') }}
+                    </div>
+                    <div class="card-body d-flex flex-column gap-3">
+                        <div>{{ form.text('title', __('Module name'), settings.title, errors, 250, '') }}</div>
+                        <div>{{ form.text('meta_keywords', __('Keywords'), settings.metaKeywords, errors, 500, '') }}</div>
+                        <div>{{ form.textarea('meta_description', __('Description'), settings.metaDescription, errors) }}</div>
+                    </div>
+                </div>
 
-        <h4 class="mt-3 fw-bold">{{ __('Meta tag templates for sections') }}</h4>
-        <div class="form-group">
-            <label for="section_title">{{ __('Title') }}</label>
-            <input type="text"
-                   class="form-control"
-                   maxlength="250"
-                   name="section_title"
-                   id="section_title"
-                   value="{{ current_settings.section_title }}"
-                   placeholder="{{ __('Title') }}"
-            >
-        </div>
-        <div class="form-group">
-            <label for="section_meta_keywords">{{ __('Keywords') }}</label>
-            <input type="text"
-                   class="form-control"
-                   maxlength="500"
-                   name="section_meta_keywords"
-                   id="section_meta_keywords"
-                   value="{{ current_settings.section_meta_keywords }}"
-                   placeholder="{{ __('Keywords') }}"
-            >
-        </div>
-        <div class="form-group">
-            <label for="section_meta_description">{{ __('Description') }}</label>
-            <textarea id="section_meta_description"
-                      class="form-control"
-                      name="section_meta_description">{{ current_settings.section_meta_description }}</textarea>
-        </div>
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'folder', size: 15, class: 'text-body-tertiary'} only %}
+                        <span class="flex-grow-1">{{ __('Meta tag templates for sections') }}</span>
+                        <span class="small fw-normal text-body-secondary">{{ __('%s is replaced with the name of the section')|format('#section_name#') }}</span>
+                    </div>
+                    <div class="card-body d-flex flex-column gap-3">
+                        <div class="form-text mt-0">{{ __('The title is always made of the template; the keywords and the description of it, where the section has none of its own.') }}</div>
+                        <div>{{ form.text('section_title', __('Title'), settings.sectionTitle, errors, 250, '') }}</div>
+                        <div>{{ form.text('section_meta_keywords', __('Keywords'), settings.sectionMetaKeywords, errors, 500, '') }}</div>
+                        <div>{{ form.textarea('section_meta_description', __('Description'), settings.sectionMetaDescription, errors) }}</div>
+                    </div>
+                </div>
 
-        <h4 class="mt-3 fw-bold">{{ __('Meta tag templates for articles') }}</h4>
-        <div class="form-group">
-            <label for="article_title">{{ __('Title') }}</label>
-            <input type="text"
-                   class="form-control"
-                   maxlength="250"
-                   name="article_title"
-                   id="article_title"
-                   value="{{ current_settings.article_title }}"
-                   placeholder="{{ __('Title') }}"
-            >
-        </div>
-        <div class="form-group">
-            <label for="article_meta_keywords">{{ __('Keywords') }}</label>
-            <input type="text"
-                   class="form-control"
-                   maxlength="500"
-                   name="article_meta_keywords"
-                   id="article_meta_keywords"
-                   value="{{ current_settings.article_meta_keywords }}"
-                   placeholder="{{ __('Keywords') }}"
-            >
-        </div>
-        <div class="form-group">
-            <label for="article_meta_description">{{ __('Description') }}</label>
-            <textarea id="article_meta_description"
-                      class="form-control"
-                      name="article_meta_description">{{ current_settings.article_meta_description }}</textarea>
-        </div>
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'file-text', size: 15, class: 'text-body-tertiary'} only %}
+                        <span class="flex-grow-1">{{ __('Meta tag templates for articles') }}</span>
+                        <span class="small fw-normal text-body-secondary">{{ __('%s is replaced with the name of the article')|format('#article_name#') }}</span>
+                    </div>
+                    <div class="card-body d-flex flex-column gap-3">
+                        <div class="form-text mt-0">{{ __('Used where the article has no title, keywords or description of its own.') }}</div>
+                        <div>{{ form.text('article_title', __('Title'), settings.articleTitle, errors, 250, '') }}</div>
+                        <div>{{ form.text('article_meta_keywords', __('Keywords'), settings.articleMetaKeywords, errors, 500, '') }}</div>
+                        <div>{{ form.textarea('article_meta_description', __('Description'), settings.articleMetaDescription, errors) }}</div>
+                    </div>
+                </div>
 
-        <div class="d-flex flex-wrap justify-content-between">
-            <div class="mb-1 me-1">
-                <input type="submit" name="submit" value="{{ __('Save') }}" class="btn btn-primary"/>
-                <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
-            </div>
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="{{ list_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+                    <button type="submit" class="btn btn-primary">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
+                        {{ __('Save') }}
+                    </button>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 {% endblock %}

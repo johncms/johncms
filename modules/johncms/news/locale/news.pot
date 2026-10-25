@@ -6,14 +6,28 @@ msgstr ""
 msgid "The requested article was not found."
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:44
-#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:148
-#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:163
+#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:61
+msgid "The article was created successfully"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:83
+msgid "The article was updated successfully"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:130
+#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:109
+#: modules/johncms/news/templates/admin/index.twig:32
+msgid "Add article"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:131
+#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:146
 #: modules/johncms/news/src/Application/Controllers/Admin/DeleteArticleController.php:52
 #: modules/johncms/news/src/Application/Controllers/Admin/DeleteSectionController.php:55
 #: modules/johncms/news/src/Application/Controllers/Admin/NewsListController.php:74
-#: modules/johncms/news/src/Application/Controllers/Admin/SectionFormController.php:146
-#: modules/johncms/news/src/Application/Controllers/Admin/SectionFormController.php:162
+#: modules/johncms/news/src/Application/Controllers/Admin/NewsSettingsController.php:73
+#: modules/johncms/news/src/Application/Controllers/Admin/SectionFormController.php:129
+#: modules/johncms/news/src/Application/Controllers/Admin/SectionFormController.php:145
 #: modules/johncms/news/src/Application/Controllers/ArticleController.php:33
 #: modules/johncms/news/src/Application/Controllers/SearchController.php:34
 #: modules/johncms/news/src/Application/Controllers/SectionController.php:35
@@ -24,32 +38,7 @@ msgstr ""
 msgid "News"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:47
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:48
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:109
-#: modules/johncms/news/templates/admin/index.twig:24
-msgid "Settings"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:82
-msgid "Settings saved!"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:62
-msgid "The article was created successfully"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:84
-msgid "The article was updated successfully"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:147
-#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:109
-#: modules/johncms/news/templates/admin/index.twig:32
-msgid "Add article"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:166
+#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:149
 msgid "Edit article"
 msgstr ""
 
@@ -71,19 +60,36 @@ msgstr ""
 msgid "The section was successfully deleted"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/SectionFormController.php:61
+#: modules/johncms/news/src/Application/Controllers/Admin/NewsSettingsController.php:60
+msgid "ERROR: Can not write file `news.local.php`"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Controllers/Admin/NewsSettingsController.php:63
+msgid "Settings saved!"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Controllers/Admin/NewsSettingsController.php:72
+#: modules/johncms/news/templates/admin/index.twig:24
+msgid "Settings"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Controllers/Admin/NewsSettingsController.php:78
+msgid "News settings"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Controllers/Admin/SectionFormController.php:60
 msgid "The section was created successfully"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/SectionFormController.php:83
+#: modules/johncms/news/src/Application/Controllers/Admin/SectionFormController.php:82
 msgid "The section was updated successfully"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/SectionFormController.php:145
+#: modules/johncms/news/src/Application/Controllers/Admin/SectionFormController.php:128
 msgid "Create section"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/SectionFormController.php:165
+#: modules/johncms/news/src/Application/Controllers/Admin/SectionFormController.php:148
 msgid "Edit section"
 msgstr ""
 
@@ -344,7 +350,7 @@ msgstr ""
 #: modules/johncms/news/templates/admin/article-form.twig:218
 #: modules/johncms/news/templates/admin/section-form.twig:42
 #: modules/johncms/news/templates/admin/section-form.twig:143
-#: modules/johncms/news/templates/admin/settings.twig:124
+#: modules/johncms/news/templates/admin/settings.twig:126
 msgid "Save"
 msgstr ""
 
@@ -438,25 +444,27 @@ msgid "Page title"
 msgstr ""
 
 #: modules/johncms/news/templates/admin/article-form.twig:183
-msgid "Left empty, the name of the article is the title."
+msgid "Left empty, the title is made of the template in the settings of the news."
 msgstr ""
 
 #: modules/johncms/news/templates/admin/article-form.twig:184
 #: modules/johncms/news/templates/admin/section-form.twig:111
-#: modules/johncms/news/templates/admin/settings.twig:47
-#: modules/johncms/news/templates/admin/settings.twig:54
-#: modules/johncms/news/templates/admin/settings.twig:75
-#: modules/johncms/news/templates/admin/settings.twig:82
-#: modules/johncms/news/templates/admin/settings.twig:105
-#: modules/johncms/news/templates/admin/settings.twig:112
+#: modules/johncms/news/templates/admin/settings.twig:89
+#: modules/johncms/news/templates/admin/settings.twig:103
+#: modules/johncms/news/templates/admin/settings.twig:117
 msgid "Keywords"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/article-form.twig:184
+#: modules/johncms/news/templates/admin/section-form.twig:111
+msgid "Left empty, they are made of the template in the settings of the news."
 msgstr ""
 
 #: modules/johncms/news/templates/admin/article-form.twig:186
 #: modules/johncms/news/templates/admin/section-form.twig:113
-#: modules/johncms/news/templates/admin/settings.twig:58
-#: modules/johncms/news/templates/admin/settings.twig:86
-#: modules/johncms/news/templates/admin/settings.twig:116
+#: modules/johncms/news/templates/admin/settings.twig:90
+#: modules/johncms/news/templates/admin/settings.twig:104
+#: modules/johncms/news/templates/admin/settings.twig:118
 msgid "Description"
 msgstr ""
 
@@ -487,7 +495,7 @@ msgstr ""
 #: modules/johncms/news/templates/admin/delete-article-dialog.twig:21
 #: modules/johncms/news/templates/admin/delete-section-dialog.twig:35
 #: modules/johncms/news/templates/admin/section-form.twig:139
-#: modules/johncms/news/templates/admin/settings.twig:125
+#: modules/johncms/news/templates/admin/settings.twig:123
 msgid "Cancel"
 msgstr ""
 
@@ -603,48 +611,81 @@ msgstr ""
 msgid "About the section"
 msgstr ""
 
-#: modules/johncms/news/templates/admin/settings.twig:16
+#: modules/johncms/news/templates/admin/settings.twig:38
+msgid "The settings are not saved: check the fields marked below."
+msgstr ""
+
+#: modules/johncms/news/templates/admin/settings.twig:49
 msgid "Home page settings"
 msgstr ""
 
-#: modules/johncms/news/templates/admin/settings.twig:21
+#: modules/johncms/news/templates/admin/settings.twig:56
 msgid "Show on home page"
 msgstr ""
 
-#: modules/johncms/news/templates/admin/settings.twig:25
-msgid "Quantity of news"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/settings.twig:29
-msgid "How many days to show?"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/settings.twig:31
-msgid "0 - always display."
-msgstr ""
-
-#: modules/johncms/news/templates/admin/settings.twig:34
-msgid "Meta tags for the main page"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/settings.twig:36
-#: modules/johncms/news/templates/admin/settings.twig:43
-msgid "Module name"
+#: modules/johncms/news/templates/admin/settings.twig:57
+msgid "The latest articles in a block of the home page."
 msgstr ""
 
 #: modules/johncms/news/templates/admin/settings.twig:62
+msgid "Quantity of news"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/settings.twig:65
+msgid "articles"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/settings.twig:68
+msgid "From %d to %d"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/settings.twig:71
+msgid "How many days to show?"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/settings.twig:74
+msgid "days"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/settings.twig:77
+msgid "An article older than this leaves the block. 0 - always display."
+msgstr ""
+
+#: modules/johncms/news/templates/admin/settings.twig:85
+msgid "Meta tags for the main page"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/settings.twig:88
+msgid "Module name"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/settings.twig:97
 msgid "Meta tag templates for sections"
 msgstr ""
 
-#: modules/johncms/news/templates/admin/settings.twig:64
-#: modules/johncms/news/templates/admin/settings.twig:71
-#: modules/johncms/news/templates/admin/settings.twig:94
+#: modules/johncms/news/templates/admin/settings.twig:98
+msgid "%s is replaced with the name of the section"
+msgstr ""
+
 #: modules/johncms/news/templates/admin/settings.twig:101
+msgid "The title is always made of the template; the keywords and the description of it, where the section has none of its own."
+msgstr ""
+
+#: modules/johncms/news/templates/admin/settings.twig:102
+#: modules/johncms/news/templates/admin/settings.twig:116
 msgid "Title"
 msgstr ""
 
-#: modules/johncms/news/templates/admin/settings.twig:92
+#: modules/johncms/news/templates/admin/settings.twig:111
 msgid "Meta tag templates for articles"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/settings.twig:112
+msgid "%s is replaced with the name of the article"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/settings.twig:115
+msgid "Used where the article has no title, keywords or description of its own."
 msgstr ""
 
 #: modules/johncms/news/templates/public/article.twig:16

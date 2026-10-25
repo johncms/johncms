@@ -180,8 +180,8 @@
                         {{ __('Search engines') }}
                     </div>
                     <div class="card-body d-flex flex-column gap-3">
-                        <div>{{ form.field('page_title', __('Page title'), fields, errors, __('Left empty, the name of the article is the title.')) }}</div>
-                        <div>{{ form.field('keywords', __('Keywords'), fields, errors, '') }}</div>
+                        <div>{{ form.field('page_title', __('Page title'), fields, errors, __('Left empty, the title is made of the template in the settings of the news.')) }}</div>
+                        <div>{{ form.field('keywords', __('Keywords'), fields, errors, __('Left empty, they are made of the template in the settings of the news.')) }}</div>
                         <div>
                             <label class="form-label" for="article-description">{{ __('Description') }}</label>
                             <textarea class="form-control{{ errors.description is defined ? ' is-invalid' }}" id="article-description" name="description" rows="3" maxlength="255">{{ fields.description }}</textarea>

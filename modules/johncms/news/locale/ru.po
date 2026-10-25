@@ -379,10 +379,6 @@ msgstr "Количество новостей"
 msgid "How many days to show?"
 msgstr "Сколько дней показывать?"
 
-#: modules/news/templates/admin/settings.phtml:45
-msgid "0 - always display."
-msgstr "0 - отображать всегда."
-
 #: modules/news/templates/admin/settings.phtml:48
 msgid "Meta tags for the main page"
 msgstr "Мета-теги для главной страницы"
@@ -601,9 +597,6 @@ msgstr "В списках новостей и на главной"
 msgid "Left empty, the article is shown from the moment it is saved and with no end."
 msgstr "Если оставить пустыми, статья показывается с момента сохранения и без окончания."
 
-msgid "Left empty, the name of the article is the title."
-msgstr "Если оставить пустым, заголовком будет название статьи."
-
 msgid "Publication"
 msgstr "Публикация"
 
@@ -657,3 +650,45 @@ msgstr "Раздел не сохранён: проверьте отмеченн�
 
 msgid "The section moves with everything under it."
 msgstr "Раздел переносится вместе со всем, что в нём лежит."
+
+msgid "%s is replaced with the name of the article"
+msgstr "%s заменяется названием статьи"
+
+msgid "%s is replaced with the name of the section"
+msgstr "%s заменяется названием раздела"
+
+msgid "An article older than this leaves the block. 0 - always display."
+msgstr "Статья старше этого срока уходит из блока. 0 — показывать всегда."
+
+msgid "ERROR: Can not write file `news.local.php`"
+msgstr "ОШИБКА: не удалось записать файл `news.local.php`"
+
+msgid "From %d to %d"
+msgstr "От %d до %d"
+
+msgid "Left empty, the title is made of the template in the settings of the news."
+msgstr "Если оставить пустым, заголовок составится по шаблону из настроек новостей."
+
+msgid "Left empty, they are made of the template in the settings of the news."
+msgstr "Если оставить пустыми, они составятся по шаблону из настроек новостей."
+
+msgid "News settings"
+msgstr "Настройки новостей"
+
+msgid "The latest articles in a block of the home page."
+msgstr "Последние статьи в блоке на главной странице."
+
+msgid "The settings are not saved: check the fields marked below."
+msgstr "Настройки не сохранены: проверьте отмеченные поля."
+
+msgid "The title is always made of the template; the keywords and the description of it, where the section has none of its own."
+msgstr "Заголовок всегда составляется по шаблону, а ключевые слова и описание — если у раздела нет своих."
+
+msgid "Used where the article has no title, keywords or description of its own."
+msgstr "Используются, если у статьи нет своего заголовка, ключевых слов или описания."
+
+msgid "articles"
+msgstr "статей"
+
+msgid "days"
+msgstr "дней"

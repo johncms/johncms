@@ -108,7 +108,7 @@
                         {{ __('Search engines') }}
                     </div>
                     <div class="card-body d-flex flex-column gap-3">
-                        <div>{{ form.field('keywords', __('Keywords'), fields, errors, '') }}</div>
+                        <div>{{ form.field('keywords', __('Keywords'), fields, errors, __('Left empty, they are made of the template in the settings of the news.')) }}</div>
                         <div>
                             <label class="form-label" for="section-description">{{ __('Description') }}</label>
                             <textarea class="form-control{{ errors.description is defined ? ' is-invalid' }}" id="section-description" name="description" rows="3" maxlength="255">{{ fields.description }}</textarea>

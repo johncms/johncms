@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use Johncms\Modules\News\Application\Controllers\Admin\AdminController;
 use Johncms\Modules\News\Application\Controllers\Admin\ArticleFormController;
 use Johncms\Modules\News\Application\Controllers\Admin\ArticleUploadController;
 use Johncms\Modules\News\Application\Controllers\Admin\DeleteArticleController;
 use Johncms\Modules\News\Application\Controllers\Admin\DeleteSectionController;
 use Johncms\Modules\News\Application\Controllers\Admin\NewsListController;
+use Johncms\Modules\News\Application\Controllers\Admin\NewsSettingsController;
 use Johncms\Modules\News\Application\Controllers\Admin\SectionFormController;
 use Johncms\Modules\News\Application\Controllers\ArticleController;
 use Johncms\Modules\News\Application\Controllers\CommentsController;
@@ -32,7 +32,8 @@ return static function (RouteCollection $router): void {
 
     $admin = $router->group('', function (RouteCollection $router): void {
         $router->get('/admin/news', NewsListController::class)->name('news.admin.index');
-        $router->map(['GET', 'POST'], '/admin/news/settings', [AdminController::class, 'settings'])->name('news.admin.settings');
+        $router->get('/admin/news/settings', [NewsSettingsController::class, 'form'])->name('news.admin.settings');
+        $router->post('/admin/news/settings', [NewsSettingsController::class, 'save'])->name('news.admin.settings.save');
         $router->get('/admin/news/articles/new', [ArticleFormController::class, 'create'])->name('news.admin.add_article');
         $router->post('/admin/news/articles/new', [ArticleFormController::class, 'store'])->name('news.admin.add_article.store');
         $router->get('/admin/news/articles/{id:number}/edit', [ArticleFormController::class, 'edit'])->name('news.admin.edit_article');
