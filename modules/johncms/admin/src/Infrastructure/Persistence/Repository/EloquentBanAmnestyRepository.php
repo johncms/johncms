@@ -11,11 +11,6 @@ final class EloquentBanAmnestyRepository implements BanAmnestyRepositoryInterfac
 {
     private const MONTH = 2592000;
 
-    public function clearAllBans(): void
-    {
-        Ban::query()->truncate();
-    }
-
     public function unbanActiveShortTerm(string $reason): void
     {
         $now = time();

@@ -633,7 +633,7 @@
       'Nobody is banned' => 'Забаненных нет',
       'Grant the amnesty' => 'Объявить амнистию',
       'Every ban in force ends now, except those given until lifted. The history of violations stays.' => 'Все действующие баны, кроме бессрочных, заканчиваются сейчас. История нарушений остаётся.',
-      'Every ban ends, and the history of violations is deleted for good.' => 'Все баны заканчиваются, а история нарушений удаляется навсегда.',
+      'Every ban ends and the history of violations is deleted for good. The karma the bans cost comes back.' => 'Все баны заканчиваются, история нарушений удаляется навсегда. Карма, снятая за баны, возвращается.',
     ),
   ),
 );

@@ -2455,5 +2455,5 @@ msgstr "Объявить амнистию"
 msgid "Every ban in force ends now, except those given until lifted. The history of violations stays."
 msgstr "Все действующие баны, кроме бессрочных, заканчиваются сейчас. История нарушений остаётся."
 
-msgid "Every ban ends, and the history of violations is deleted for good."
-msgstr "Все баны заканчиваются, а история нарушений удаляется навсегда."
+msgid "Every ban ends and the history of violations is deleted for good. The karma the bans cost comes back."
+msgstr "Все баны заканчиваются, история нарушений удаляется навсегда. Карма, снятая за баны, возвращается."

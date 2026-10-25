@@ -55,6 +55,14 @@ interface BanRepositoryInterface
     public function getFinishedForUser(int $userId, int $time): Collection;
 
     /**
+     * Every ban of every account, read a portion at a time, so a site with a long history does not
+     * load it whole.
+     *
+     * @return iterable<Ban>
+     */
+    public function eachBan(): iterable;
+
+    /**
      * The karma a ban costs: a vote of the system against the account, and its points taken
      * from the karma of the account.
      */

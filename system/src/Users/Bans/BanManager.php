@@ -144,6 +144,17 @@ final readonly class BanManager
     }
 
     /**
+     * Deletes every ban of every account, those in force too, each the way deleting it alone
+     * does — the karma it cost comes back. What the amnesty that clears the history does.
+     */
+    public function clearAll(): void
+    {
+        foreach ($this->bans->eachBan() as $ban) {
+            $this->delete($ban);
+        }
+    }
+
+    /**
      * A ban of one section is worth a day; the general ban of an account is worth a month; longer
      * than that is for whoever may also lift one.
      */

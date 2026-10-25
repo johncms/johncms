@@ -79,6 +79,16 @@ final class EloquentBanRepository implements BanRepositoryInterface
             ->get();
     }
 
+    /**
+     * By the id, so deleting the bans already read does not shift the portions still to come.
+     *
+     * @return iterable<Ban>
+     */
+    public function eachBan(): iterable
+    {
+        return Ban::query()->lazyById(200);
+    }
+
     public function addKarmaPenalty(int $userId, int $points, int $time, string $voterName, string $reason): void
     {
         Karma::query()->create([

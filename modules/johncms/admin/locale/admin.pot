@@ -877,7 +877,7 @@ msgid "Recommended parameters"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Users/AmnestyController.php:40
-#: modules/johncms/admin/src/Application/UseCases/ApplyAmnestyUseCase.php:28
+#: modules/johncms/admin/src/Application/UseCases/ApplyAmnestyUseCase.php:30
 #: modules/johncms/admin/templates/bans.twig:22
 #: modules/johncms/admin/templates/bans/amnesty-dialog.twig:10
 msgid "Amnesty"
@@ -1681,7 +1681,7 @@ msgid "Clear Ban database"
 msgstr ""
 
 #: modules/johncms/admin/templates/bans/amnesty-dialog.twig:26
-msgid "Every ban ends, and the history of violations is deleted for good."
+msgid "Every ban ends and the history of violations is deleted for good. The karma the bans cost comes back."
 msgstr ""
 
 #: modules/johncms/admin/templates/bans/amnesty-dialog.twig:34
