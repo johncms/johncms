@@ -41,6 +41,13 @@ final readonly class UpdateProfileUseCase
 
         $formData = $command->toFormData();
 
+        // The gender is a field of the panel: the profile form of an ordinary user does not carry
+        // it, so an empty value keeps the stored one. An administrator who checks no radio keeps
+        // it as well — the legacy form defaulted to the stored value too.
+        if ($formData['sex'] === '') {
+            $formData['sex'] = $profileUser->sex;
+        }
+
         // Everything a visitor may leave blank says so explicitly: under the new null policy a
         // field carrying a rule is required unless the rule allows an empty value.
         $validationRules = [
