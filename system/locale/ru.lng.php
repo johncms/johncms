@@ -323,6 +323,7 @@ The number is shown so that support for the old scheme is not removed while it i
       'The nickname needs at least one letter or digit' => 'В нике должна быть хотя бы одна буква или цифра',
       'The account has not been approved yet, so nobody can sign in to it' => 'Аккаунт ещё не одобрен, войти под ним нельзя',
       'The account has not confirmed its e-mail, so nobody can sign in to it' => 'Аккаунт не подтвердил e-mail, войти под ним нельзя',
+      'Your account has been created. Follow the link we sent to your e-mail to activate it.' => 'Аккаунт создан. Чтобы активировать его, перейдите по ссылке из письма, которое мы отправили на ваш e-mail.',
     ),
   ),
 );

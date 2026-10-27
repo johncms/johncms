@@ -29,4 +29,13 @@ enum ExternalAuthStatus
 
     /** Registration is closed on this site, so a provider may let existing accounts in and no more. */
     case RegistrationClosed;
+
+    /**
+     * The account is there but the site wants its address confirmed first — the same refusal a
+     * password gets, so a provider is not a way around the confirmation.
+     */
+    case EmailNotConfirmed;
+
+    /** The account is there but still waits for an administrator. */
+    case ModerationPending;
 }

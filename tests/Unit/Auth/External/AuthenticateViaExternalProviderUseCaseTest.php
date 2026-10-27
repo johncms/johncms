@@ -20,6 +20,8 @@ use Johncms\Auth\Authorization\Voters\RolePermissionVoter;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentRoleRepository;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentUserIdentityRepository;
 use Johncms\Auth\AuthTables;
+use Johncms\Auth\RegistrationSettings;
+use Johncms\Config\ConfigRepository;
 use Johncms\Users\User;
 use Gettext\Translator;
 use Gettext\TranslatorFunctions;
@@ -53,6 +55,7 @@ final class AuthenticateViaExternalProviderUseCaseTest extends TestCase
         $this->createUsersTable();
 
         $this->eventLogger = new RecordingAuthEventLogger();
+        ConfigRepository::init(['johncms' => ['user_email_confirmation' => 0]]);
     }
 
     protected function tearDown(): void
@@ -161,6 +164,54 @@ final class AuthenticateViaExternalProviderUseCaseTest extends TestCase
         self::assertSame(424, mb_strlen((string) $link->avatar_url));
     }
 
+    /**
+     * A provider is not a way around the confirmation the password sign-in asks for: a session
+     * opened for such an account is one the rest of the site treats as nobody.
+     */
+    public function testAnAccountThatNeverConfirmedItsAddressIsNotSignedIn(): void
+    {
+        ConfigRepository::init(['johncms' => ['user_email_confirmation' => 1]]);
+        $user = $this->createUser(confirmed: false);
+        $this->useCase()->link($user->id, self::PROVIDER, $this->identity('42'));
+
+        $result = $this->useCase()->execute(self::PROVIDER, $this->identity('42'));
+
+        self::assertSame(ExternalAuthStatus::EmailNotConfirmed, $result->status);
+        self::assertNotContains('oauth.login', $this->eventLogger->events());
+    }
+
+    public function testTheAddressIsNotAskedForWhenTheSiteDoesNotConfirmAddresses(): void
+    {
+        $user = $this->createUser(confirmed: false);
+        $this->useCase()->link($user->id, self::PROVIDER, $this->identity('42'));
+
+        $result = $this->useCase()->execute(self::PROVIDER, $this->identity('42'));
+
+        self::assertSame(ExternalAuthStatus::SignedIn, $result->status);
+    }
+
+    public function testAnAccountAwaitingApprovalIsNotSignedIn(): void
+    {
+        $user = $this->createUser(approved: false);
+        $this->useCase()->link($user->id, self::PROVIDER, $this->identity('42'));
+
+        $result = $this->useCase()->execute(self::PROVIDER, $this->identity('42'));
+
+        self::assertSame(ExternalAuthStatus::ModerationPending, $result->status);
+    }
+
+    public function testAnAccountMatchedByAddressStillWaitsForApproval(): void
+    {
+        $this->createUser(email: 'owner@example.com', confirmed: true, approved: false);
+
+        $result = $this->useCase()->execute(
+            self::PROVIDER,
+            $this->identity('42', email: 'owner@example.com', verified: true)
+        );
+
+        self::assertSame(ExternalAuthStatus::ModerationPending, $result->status);
+    }
+
     public function testSigningInThroughAProviderIsRecorded(): void
     {
         $user = $this->createUser();
@@ -192,7 +243,8 @@ final class AuthenticateViaExternalProviderUseCaseTest extends TestCase
             new EloquentUserIdentityRepository(),
             new AccessChecker(CurrentUserFactory::guest(), [new RolePermissionVoter()]),
             new PermissionResolver($roles),
-            $this->eventLogger
+            $this->eventLogger,
+            new RegistrationSettings()
         );
     }
 
@@ -201,13 +253,14 @@ final class AuthenticateViaExternalProviderUseCaseTest extends TestCase
         return new ExternalIdentityDTO($id, $email, $verified, 'nickname');
     }
 
-    private function createUser(?string $email = null, bool $confirmed = false): User
+    private function createUser(?string $email = null, bool $confirmed = false, bool $approved = true): User
     {
         $user = new User();
         $user->fill(
             [
                 'name'            => 'user-' . uniqid(),
                 'mail'            => $email ?? '',
+                'preg'            => $approved ? 1 : 0,
                 'email_confirmed' => $confirmed ? 1 : null,
             ]
         );
@@ -225,6 +278,7 @@ final class AuthenticateViaExternalProviderUseCaseTest extends TestCase
                 $table->string('name')->default('');
                 $table->string('mail')->default('');
                 $table->string('password')->default('');
+                $table->boolean('preg')->default(0);
                 $table->boolean('email_confirmed')->nullable();
             }
         );

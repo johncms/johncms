@@ -71,8 +71,10 @@ msgid "Library"
 msgstr ""
 
 #: config/places.global.php:21
-#: system/src/Http/Controller/ExternalAuthController.php:313
-#: system/src/Http/Controller/ExternalAuthController.php:326
+#: system/src/Http/Controller/ExternalAuthController.php:215
+#: system/src/Http/Controller/ExternalAuthController.php:220
+#: system/src/Http/Controller/ExternalAuthController.php:340
+#: system/src/Http/Controller/ExternalAuthController.php:353
 #: themes/default/templates/components/sidebar-user-menu.twig:69
 msgid "Login"
 msgstr ""
@@ -400,7 +402,7 @@ msgstr ""
 msgid "The service refused the sign-in"
 msgstr ""
 
-#: system/src/Auth/External/AuthenticateViaExternalProviderUseCase.php:64
+#: system/src/Auth/External/AuthenticateViaExternalProviderUseCase.php:72
 msgid "This email address is already registered. Sign in with your password to link the account."
 msgstr ""
 
@@ -408,7 +410,7 @@ msgstr ""
 #: system/src/Auth/External/OAuthStateStorage.php:104
 #: system/src/Http/Controller/ExternalAuthController.php:131
 #: system/src/Http/Controller/ExternalAuthController.php:142
-#: system/src/Http/Controller/ExternalAuthController.php:217
+#: system/src/Http/Controller/ExternalAuthController.php:239
 msgid "The sign-in attempt has expired, please try again"
 msgstr ""
 
@@ -419,6 +421,12 @@ msgstr ""
 #: system/src/Auth/External/Providers/VkProvider.php:79
 #: system/src/Http/Controller/ExternalAuthController.php:112
 msgid "The service did not return an account identifier"
+msgstr ""
+
+#: system/src/Auth/External/RegisterViaExternalProviderUseCase.php:124
+#: themes/default/templates/emails/registration.twig:10
+#: themes/default/templates/emails/registration.txt.twig:10
+msgid "Registration on the website"
 msgstr ""
 
 #: system/src/Auth/External/UnlinkExternalIdentityUseCase.php:47
@@ -706,20 +714,33 @@ msgstr ""
 msgid "This sign-in service is not available"
 msgstr ""
 
-#: system/src/Http/Controller/ExternalAuthController.php:182
+#: system/src/Http/Controller/ExternalAuthController.php:185
+#: system/src/Http/Controller/ExternalAuthController.php:194
 #: themes/default/templates/components/sidebar-user-menu.twig:77
 msgid "Registration"
 msgstr ""
 
-#: system/src/Http/Controller/ExternalAuthController.php:182
+#: system/src/Http/Controller/ExternalAuthController.php:186
+msgid "Your account has been created. Follow the link we sent to your e-mail to activate it."
+msgstr ""
+
+#: system/src/Http/Controller/ExternalAuthController.php:194
 msgid "Your account is awaiting approval"
 msgstr ""
 
-#: system/src/Http/Controller/ExternalAuthController.php:200
+#: system/src/Http/Controller/ExternalAuthController.php:212
 msgid "Registration is closed on this site"
 msgstr ""
 
-#: system/src/Http/Controller/ExternalAuthController.php:280
+#: system/src/Http/Controller/ExternalAuthController.php:216
+msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
+msgstr ""
+
+#: system/src/Http/Controller/ExternalAuthController.php:221
+msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
+msgstr ""
+
+#: system/src/Http/Controller/ExternalAuthController.php:302
 msgid "Finish signing up"
 msgstr ""
 
@@ -1082,11 +1103,6 @@ msgstr ""
 #: themes/default/templates/emails/layout.twig:122
 #: themes/default/templates/emails/layout.txt.twig:18
 msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."
-msgstr ""
-
-#: themes/default/templates/emails/registration.twig:10
-#: themes/default/templates/emails/registration.txt.twig:10
-msgid "Registration on the website"
 msgstr ""
 
 #: themes/default/templates/emails/registration.twig:15

@@ -16,6 +16,7 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\PermissionResolver;
 use Johncms\Auth\Events\AuthEventLoggerInterface;
 use Johncms\Auth\Identity;
+use Johncms\Auth\RegistrationSettings;
 use Johncms\Users\User;
 
 /**
@@ -37,6 +38,7 @@ final readonly class AuthenticateViaExternalProviderUseCase
         private AccessCheckerInterface $accessChecker,
         private PermissionResolver $permissions,
         private AuthEventLoggerInterface $eventLogger,
+        private RegistrationSettings $registrationSettings,
     ) {
     }
 
@@ -46,6 +48,12 @@ final readonly class AuthenticateViaExternalProviderUseCase
         $linked = $this->identities->findByProviderUser($provider, $identity->providerUserId);
 
         if ($linked !== null) {
+            $refusal = $this->refusal(User::query()->find($linked->user_id));
+
+            if ($refusal !== null) {
+                return new ExternalAuthResultDTO($refusal, $linked->user_id);
+            }
+
             $this->identities->touchLogin($linked->id, $now);
             $this->eventLogger->log('oauth.login', $linked->user_id, ['provider' => $provider]);
 
@@ -66,6 +74,13 @@ final readonly class AuthenticateViaExternalProviderUseCase
             }
 
             $this->link($existing->id, $provider, $identity, $now);
+
+            $refusal = $this->refusal($existing);
+
+            if ($refusal !== null) {
+                return new ExternalAuthResultDTO($refusal, $existing->id);
+            }
+
             $this->eventLogger->log('oauth.login', $existing->id, ['provider' => $provider]);
 
             return new ExternalAuthResultDTO(ExternalAuthStatus::SignedIn, $existing->id);
@@ -116,6 +131,27 @@ final readonly class AuthenticateViaExternalProviderUseCase
     private static function clip(?string $value, int $length): ?string
     {
         return $value === null ? null : mb_substr($value, 0, $length);
+    }
+
+    /**
+     * What stops the account from signing in, asked the way the password sign-in asks it: a
+     * session opened past these would be one the rest of the site treats as nobody.
+     */
+    private function refusal(?User $user): ?ExternalAuthStatus
+    {
+        if ($user === null) {
+            return null;
+        }
+
+        if ($this->registrationSettings->awaitsEmailConfirmation($user)) {
+            return ExternalAuthStatus::EmailNotConfirmed;
+        }
+
+        if (! $user->preg) {
+            return ExternalAuthStatus::ModerationPending;
+        }
+
+        return null;
     }
 
     private function findByEmail(?string $email): ?User

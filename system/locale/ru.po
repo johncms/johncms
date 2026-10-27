@@ -1242,3 +1242,6 @@ msgstr "Аккаунт ещё не одобрен, войти под ним не
 
 msgid "The account has not confirmed its e-mail, so nobody can sign in to it"
 msgstr "Аккаунт не подтвердил e-mail, войти под ним нельзя"
+
+msgid "Your account has been created. Follow the link we sent to your e-mail to activate it."
+msgstr "Аккаунт создан. Чтобы активировать его, перейдите по ссылке из письма, которое мы отправили на ваш e-mail."

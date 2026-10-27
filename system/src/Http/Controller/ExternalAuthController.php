@@ -145,7 +145,11 @@ final readonly class ExternalAuthController
         $identity = $pending['identity'];
         $fields = [
             'name'  => trim($request->body('name', '')),
-            'email' => trim($request->body('email', '')) ?: (string) $identity->email,
+            // An address the provider vouches for is shown read-only, and taken from the identity
+            // rather than from the form: the attribute stops nobody who edits the request.
+            'email' => $this->emailKnown($identity)
+                ? (string) $identity->email
+                : (trim($request->body('email', '')) ?: (string) $identity->email),
         ];
 
         $result = $this->validator->validate(
@@ -176,6 +180,14 @@ final readonly class ExternalAuthController
 
         $this->session->remove(self::PENDING_KEY);
 
+        if ($this->registrationSettings->awaitsEmailConfirmation($user)) {
+            return $this->result(
+                __('Registration'),
+                __('Your account has been created. Follow the link we sent to your e-mail to activate it.'),
+                'alert-info'
+            );
+        }
+
         if (! $user->preg) {
             // Registrations wait for an administrator on this site, so there is nothing to sign
             // into yet.
@@ -199,6 +211,16 @@ final readonly class ExternalAuthController
             ExternalAuthStatus::SignedIn => $this->signIn($request, (int) $result->userId),
             ExternalAuthStatus::RegistrationClosed => $this->failure(__('Registration is closed on this site')),
             ExternalAuthStatus::NeedsProfile => $this->askForProfile($provider, $identity),
+            ExternalAuthStatus::EmailNotConfirmed => $this->result(
+                __('Login'),
+                __('You didn\'t confirm your email address. Please check your email and follow the instructions in it.'),
+                'alert-info'
+            ),
+            ExternalAuthStatus::ModerationPending => $this->result(
+                __('Login'),
+                __('Sorry, but your request for registration is not considered yet. Please, be patient.'),
+                'alert-info'
+            ),
         };
     }
 
@@ -288,9 +310,14 @@ final readonly class ExternalAuthController
                 'errors'      => $errors,
                 'name'        => $fields['name'] ?? (string) $identity->nickname,
                 'email'       => $fields['email'] ?? (string) $identity->email,
-                'email_known' => $identity->email !== null && $identity->emailVerified,
+                'email_known' => $this->emailKnown($identity),
             ]
         );
+    }
+
+    private function emailKnown(ExternalIdentityDTO $identity): bool
+    {
+        return $identity->email !== null && $identity->emailVerified;
     }
 
     /**
