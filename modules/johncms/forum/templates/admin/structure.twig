@@ -28,7 +28,7 @@
                 </div>
             </div>
             {% if item.description %}
-                <div class="small text-muted">{{ item.description }}</div>
+                <div class="small text-muted">{{ item.description|nl2br }}</div>
             {% endif %}
             <div class="mt-2">
                 <a href="{{ item.edit_url }}">{{ __('Edit') }}</a>

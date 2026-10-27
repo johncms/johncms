@@ -42,7 +42,7 @@
                 </div>
             {% endif %}
             {% if section.description %}
-                <div class="small pt-2 text-muted">{{ section.description }}</div>
+                <div class="small pt-2 text-muted">{{ section.description|nl2br }}</div>
             {% endif %}
         </div>
     {% endfor %}
