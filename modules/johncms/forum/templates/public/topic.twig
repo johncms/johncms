@@ -8,7 +8,7 @@
     @var first_post       \Johncms\Modules\Forum\Domain\Models\ForumMessage Null when there is nothing to pin.
     @var topic_vote       \Johncms\Modules\Forum\Domain\Models\ForumVote    Null when the topic has no poll.
     @var poll_data        array        results, show_form, clip
-    @var curators_array   array
+    @var curators         array        id, name of each curator of the topic
     @var write_access     bool
     @var quick_reply      bool         The visitor asked for the editor right on the page.
     @var reply_above      bool         The reply form goes above the posts.
@@ -264,9 +264,12 @@
         {% endif %}
     </div>
 
-    {% if curators_array %}
+    {% if curators %}
         <div class="alert alert-secondary">
-            {{ __('Curators') }}: {{ curators_array|join(', ') }}
+            {{ __('Curators') }}:
+            {% for curator in curators %}
+                <a href="/profile/{{ curator.id }}">{{ curator.name }}</a>{% if not loop.last %},{% endif %}
+            {% endfor %}
         </div>
     {% endif %}
 

@@ -211,11 +211,9 @@ final readonly class ViewForumTopicUseCase
             $this->session->set('token', $token);
         }
 
-        $curatorsArray = [];
-        if (! empty($topic->curators)) {
-            foreach ($topic->curators as $key => $value) {
-                $curatorsArray[] = '<a href="/profile/' . $key . '">' . $value . '</a>';
-            }
+        $curators = [];
+        foreach ((array) $topic->curators as $userId => $userName) {
+            $curators[] = ['id' => $userId, 'name' => $userName];
         }
 
         $canonical = config('johncms.homeurl') . $this->topicPathService->getTopicUrl($topic, $page > 1 ? $page : null);
@@ -225,7 +223,7 @@ final readonly class ViewForumTopicUseCase
                 'first_post'       => $firstMessage,
                 'topic'            => $topic,
                 'topic_vote'       => $topicVote,
-                'curators_array'   => $curatorsArray,
+                'curators'         => $curators,
                 'view_count'       => $topic->view_count,
                 'page'             => $page,
                 'id'               => $topic->id,
