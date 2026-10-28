@@ -24,11 +24,12 @@ final readonly class AssetRuntime implements RuntimeExtensionInterface
     }
 
     /**
-     * The avatar of a user, or the placeholder icon of the theme when there is none.
+     * The avatar of a user, or the placeholder icon of the theme when there is none
+     * or the author is not a user at all (null id).
      */
-    public function avatar(int $userId): string
+    public function avatar(?int $userId): string
     {
-        $avatar = $this->userImages->avatarUrl($userId);
+        $avatar = $userId === null ? '' : $this->userImages->avatarUrl($userId);
 
         return $avatar === '' ? $this->assets->url('icons/user.svg') : $avatar;
     }
