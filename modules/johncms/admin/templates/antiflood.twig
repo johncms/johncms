@@ -11,15 +11,15 @@
 {% extends '@admin/layouts/default.twig' %}
 
 {% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: error_message} only %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
-
-    <p class="text-body-secondary">
-        {{ __('The antiflood makes a visitor wait between two posts. The delay is different by day and by night, and the mode decides which of them applies.') }}
-    </p>
-
     <div class="row">
         <div class="col-xxl-9">
+            {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: error_message} only %}
+            {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+
+            <p class="text-body-secondary">
+                {{ __('The antiflood makes a visitor wait between two posts. The delay is different by day and by night, and the mode decides which of them applies.') }}
+            </p>
+
             <form action="{{ form_action }}" method="post" class="d-flex flex-column gap-3">
                 <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
 

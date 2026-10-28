@@ -11,15 +11,17 @@
 {% extends '@admin/layouts/default.twig' %}
 
 {% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: error_message} only %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
-
-    <p class="text-body-secondary">
-        {{ __('The karma is what the users think of each other: a vote gives an account plus or minus points and may say why.') }}
-    </p>
-
     <div class="row">
         <div class="col-xxl-9 d-flex flex-column gap-3">
+            <div>
+                {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: error_message} only %}
+                {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+
+                <p class="text-body-secondary mb-0">
+                    {{ __('The karma is what the users think of each other: a vote gives an account plus or minus points and may say why.') }}
+                </p>
+            </div>
+
             <form action="{{ form_action }}" method="post" class="d-flex flex-column gap-3">
                 <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
 

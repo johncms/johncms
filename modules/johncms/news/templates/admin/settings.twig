@@ -32,14 +32,14 @@
 {% block content %}
     {% import _self as form %}
 
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: error_message} only %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
-    {% if errors is not empty %}
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: __('The settings are not saved: check the fields marked below.')} only %}
-    {% endif %}
-
     <div class="row">
         <div class="col-xxl-9">
+            {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: error_message} only %}
+            {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+            {% if errors is not empty %}
+                {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: __('The settings are not saved: check the fields marked below.')} only %}
+            {% endif %}
+
             <form method="post" action="{{ form_action }}" class="d-flex flex-column gap-3">
                 <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
 
