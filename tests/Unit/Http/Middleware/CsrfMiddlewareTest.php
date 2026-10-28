@@ -11,6 +11,7 @@ use Johncms\Http\Middleware\CsrfMiddleware;
 use Johncms\Http\Request;
 use Johncms\Http\RequestPathNormalizer;
 use Johncms\Http\Session;
+use Johncms\Http\SessionFactory;
 use Johncms\Security\Csrf;
 use Johncms\Security\CsrfExemptions;
 use Johncms\View\RendererInterface;
@@ -93,12 +94,41 @@ final class CsrfMiddlewareTest extends TestCase
         );
     }
 
-    public function testAFailureIsLogged(): void
+    public function testAFailureIsLoggedWithWhoSentIt(): void
     {
-        $logger = $this->createMock(LoggerInterface::class);
-        $logger->expects(self::once())->method('warning');
+        $request = Request::create('/registration/', 'POST', server: [
+            'REMOTE_ADDR'     => '203.0.113.7',
+            'HTTP_USER_AGENT' => 'SpamBot/1.0',
+            'HTTP_REFERER'    => 'http://example.com/registration/',
+        ]);
 
-        $this->handle($this->postRequest(), logger: $logger);
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects(self::once())->method('warning')->with(
+            self::anything(),
+            [
+                'url'            => '/registration/',
+                'method'         => 'POST',
+                'referer'        => 'http://example.com/registration/',
+                'ip'             => '203.0.113.7',
+                'user_agent'     => 'SpamBot/1.0',
+                'session_cookie' => false,
+            ],
+        );
+
+        $this->handle($request, logger: $logger);
+    }
+
+    public function testAFailureSaysTheVisitorCameWithASession(): void
+    {
+        $request = Request::create('/guestbook', 'POST', cookies: [SessionFactory::SESSION_NAME => 'expired']);
+
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects(self::once())->method('warning')->with(
+            self::anything(),
+            self::callback(static fn (array $context): bool => $context['session_cookie'] === true),
+        );
+
+        $this->handle($request, logger: $logger);
     }
 
     /**

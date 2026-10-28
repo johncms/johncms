@@ -7,6 +7,7 @@ namespace Johncms\Http\Middleware;
 use Johncms\Http\ExceptionResponseFactory;
 use Johncms\Http\Request;
 use Johncms\Http\RequestPathNormalizer;
+use Johncms\Http\SessionFactory;
 use Johncms\Router\MiddlewareInterface;
 use Johncms\Security\Csrf;
 use Johncms\Security\CsrfExemptions;
@@ -52,10 +53,15 @@ final readonly class CsrfMiddleware implements MiddlewareInterface
             return $next($request);
         }
 
+        // Who sent it tells a robot posting the form blind from a visitor whose session ran out:
+        // the robot usually comes without the cookie of a session at all.
         $this->logger->warning('The CSRF token of the request is missing or invalid', [
-            'url'     => $request->getRequestUri(),
-            'method'  => $request->getMethod(),
-            'referer' => $request->headers->get('Referer'),
+            'url'            => $request->getRequestUri(),
+            'method'         => $request->getMethod(),
+            'referer'        => $request->headers->get('Referer'),
+            'ip'             => $request->getClientIp(),
+            'user_agent'     => $request->headers->get('User-Agent'),
+            'session_cookie' => $request->cookies->has(SessionFactory::SESSION_NAME),
         ]);
 
         return $this->exceptionResponses->csrfTokenMismatch($this->wantsJson($request));

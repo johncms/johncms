@@ -26,7 +26,8 @@ use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
  */
 final class SessionFactory
 {
-    private const SESSION_NAME = 'SESID';
+    /** The name of the cookie that carries the session. */
+    public const SESSION_NAME = 'SESID';
 
     public function __invoke(): Session
     {
