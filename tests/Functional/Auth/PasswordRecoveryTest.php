@@ -28,4 +28,15 @@ final class PasswordRecoveryTest extends FunctionalTestCase
         self::assertSame(6, strlen($password));
         self::assertTrue($this->container()->get(PasswordHasherInterface::class)->verify($password, User::query()->findOrFail($user->id)->password));
     }
+
+    public function testTheLineBreakOfTheSuccessMessageIsMarkupNotText(): void
+    {
+        $user = FunctionalUserFactory::create(['mail' => 'frodo@example.com']);
+        $code = $this->container()->get(PasswordResetTokens::class)->issue($user->id);
+
+        $page = (string) $this->handleRequest('/password-recovery/' . $user->id . '/' . $code, 'POST', $this->withCsrfToken())->getContent();
+
+        self::assertMatchesRegularExpression('#<div class="alert alert-success">[^<]+<br>[^<]+</div>#', $page);
+        self::assertStringNotContainsString('&lt;br&gt;', $page);
+    }
 }

@@ -15,6 +15,7 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Validator\Rules\Captcha;
 use Johncms\Validator\ValidatorInterface;
+use Twig\Markup;
 
 final readonly class RestorePasswordController
 {
@@ -119,7 +120,7 @@ final readonly class RestorePasswordController
             [
                 'title'         => __('Restore password'),
                 'type'          => 'alert-success',
-                'message'       => __('Password successfully changed.<br>New password sent to your E-mail address.'),
+                'message'       => new Markup(__('Password successfully changed.<br>New password sent to your E-mail address.'), 'UTF-8'),
                 'back_url'      => '/login',
                 'back_url_name' => __('Continue'),
             ]
