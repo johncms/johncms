@@ -18,6 +18,7 @@ use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use RuntimeException;
 use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
 use Johncms\Storage\StorageException;
+use Twig\Markup;
 
 final readonly class AttachFileToPostUseCase
 {
@@ -60,7 +61,11 @@ final readonly class AttachFileToPostUseCase
         $extensionsCollection = new Collection($extensions);
         $allExtensions = $extensionsCollection->flatten();
         if ($allExtensions->search($extension, true) === false) {
-            $errors[] = __('The forbidden file format.<br>You can upload files of the following extension') . ':<br>' . $allExtensions->implode(', ');
+            $errors[] = new Markup(
+                __('The forbidden file format.<br>You can upload files of the following extension') . ':<br>'
+                . htmlspecialchars($allExtensions->implode(', ')),
+                'UTF-8'
+            );
         }
 
         $fileName = (string) $fileInfo->getCleanName();

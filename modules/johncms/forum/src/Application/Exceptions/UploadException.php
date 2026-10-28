@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Exceptions;
 
+use Twig\Markup;
+
 final class UploadException extends ForumValidationException
 {
     /**
-     * @param array<int, string> $errors
+     * @param array<int, string|Markup> $errors
      */
     public function __construct(private array $errors)
     {
@@ -15,7 +17,7 @@ final class UploadException extends ForumValidationException
     }
 
     /**
-     * @return array<int, string>
+     * @return array<int, string|Markup>
      */
     public function getErrors(): array
     {
