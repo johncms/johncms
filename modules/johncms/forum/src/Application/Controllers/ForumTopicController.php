@@ -8,6 +8,7 @@ use Johncms\Modules\Forum\Application\Services\UnreadTopicsCounter;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
@@ -82,6 +83,7 @@ final readonly class ForumTopicController
             $page
         );
 
+        $meta = new PageMeta($result->title, $page, $result->viewData['topic']->calculated_meta_description);
         $filterSuffix = $page > 1 ? '?page=' . $page : '';
         $canModerate = $this->accessChecker->allows(ForumPermissions::TOPIC_MODERATE);
 
@@ -91,13 +93,10 @@ final readonly class ForumTopicController
                 $result->viewData,
                 [
                     'canonical'        => $result->canonical,
-                    'title'            => $this->buildTopicDocumentTitle($result->title, $page),
+                    'title'            => $meta->title,
                     'page_title'       => $result->title,
                     'keywords'         => $result->viewData['topic']->calculated_meta_keywords,
-                    'description'      => $this->buildTopicDescription(
-                        (string) $result->viewData['topic']->calculated_meta_description,
-                        $page
-                    ),
+                    'description'      => $meta->description,
                     'pagination'       => $pagination->hasPages() ? $pagination->render() : null,
                     'unread_count'     => ShortNumberFormatter::format($this->unreadTopics->count()),
                     'reply_url'        => '/forum/new-message/' . $result->viewData['id'] . '/' . $filterSuffix,
@@ -144,23 +143,5 @@ final readonly class ForumTopicController
         }
 
         return array_merge($default, $settings);
-    }
-
-    private function buildTopicDocumentTitle(string $topicTitle, int $page): string
-    {
-        if ($page <= 1) {
-            return $topicTitle;
-        }
-
-        return $topicTitle . ' — ' . d__('system', 'Page') . ' ' . $page;
-    }
-
-    private function buildTopicDescription(string $description, int $page): string
-    {
-        if ($page <= 1 || $description === '') {
-            return $description;
-        }
-
-        return $description . ' — ' . d__('system', 'Page') . ' ' . $page;
     }
 }

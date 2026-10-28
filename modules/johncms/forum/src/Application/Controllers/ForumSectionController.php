@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Modules\Forum\Application\Services\UnreadTopicsCounter;
+use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
@@ -65,6 +66,10 @@ final readonly class ForumSectionController
         if ($result->template === '@forum/public/topics.twig') {
             $pagination = $this->paginationFactory->create((int) $result->viewData['total'], null, 'page', $page);
             $extra['pagination'] = $pagination->hasPages() ? $pagination->render() : null;
+
+            $meta = new PageMeta($result->section->name, $page, $result->section->calculated_meta_description);
+            $extra['title'] = $meta->title;
+            $extra['description'] = $meta->description;
         }
 
         return new ViewResponse($result->template, array_merge($result->viewData, $extra));
