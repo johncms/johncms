@@ -10,7 +10,7 @@
         {% for chip in chips %}
             <a class="admin-chip" href="{{ chip.url }}" aria-label="{{ d__('admin', 'Remove the filter') }}: {{ chip.label }} {{ chip.value }}">
                 <span class="admin-chip__label">{{ chip.label }}:</span>
-                <span class="admin-chip__value">{{ chip.value }}</span>
+                <span class="admin-chip__value" title="{{ chip.value }}">{{ chip.value }}</span>
                 {% include '@admin/components/ui/icon.twig' with {name: 'x', size: 12, class: 'admin-chip__remove'} only %}
             </a>
         {% endfor %}

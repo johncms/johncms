@@ -10,7 +10,7 @@
 <div class="dropdown">
     <button type="button" class="admin-filter{{ applied ? ' admin-filter--applied' }}" data-bs-toggle="dropdown" aria-expanded="false">
         <span class="admin-filter__label">{{ label }}:</span>
-        <span class="admin-filter__value">{{ value }}</span>
+        <span class="admin-filter__value" title="{{ value }}">{{ value }}</span>
         {% include '@admin/components/ui/icon.twig' with {name: 'chevron-down', size: 12} only %}
     </button>
     <ul class="dropdown-menu">
