@@ -110,6 +110,13 @@
     flex: none;
     margin-left: auto;
   }
+
+  // On a phone a filter is as large as the search above it, whose text grows there so that the
+  // phone does not zoom into it.
+  @include media-breakpoint-down(md) {
+    padding: 0.4375rem 0.75rem;
+    font-size: 1rem;
+  }
 }
 
 .admin-filter__label {
