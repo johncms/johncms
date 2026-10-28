@@ -1165,10 +1165,10 @@ parameters:
 			path: modules/johncms/downloads/src/Infrastructure/Persistence/Repository/DownloadFileRepository.php
 
 		-
-			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\Controllers\\Admin\\ForumStructureController should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\Controllers\\Admin\\DeleteSectionController should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
 			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
 			count: 1
-			path: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php
+			path: modules/johncms/forum/src/Application/Controllers/Admin/DeleteSectionController.php
 
 		-
 			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
@@ -1386,23 +1386,8 @@ parameters:
 			count: 1
 			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumStructureRepository.php
 
-		-
-			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumStructureRepository\:\:categoriesForMove\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
-			identifier: return.type
-			count: 1
-			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumStructureRepository.php
 
-		-
-			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumStructureRepository\:\:sectionsForMove\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
-			identifier: return.type
-			count: 1
-			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumStructureRepository.php
 
-		-
-			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumStructureRepository\:\:topLevelExcept\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
-			identifier: return.type
-			count: 1
-			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumStructureRepository.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<Johncms\\Modules\\Forum\\Domain\\Models\\ForumTopic\>\:\:read\(\)\.$#'

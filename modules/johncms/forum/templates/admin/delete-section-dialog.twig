@@ -1,0 +1,89 @@
+{#
+    Deleting a section of the forum. Answered to the modal of the panel as it is, and put into a
+    page of its own (delete-section.twig) for a plain visit or a choice that was not accepted.
+
+    An empty section is only confirmed. A full one says what it holds and where that goes: the
+    sections to another section of sections or to the root, the topics to another section of
+    topics, or, for whoever may destroy the structure, away with the section.
+
+    @var string title
+    @var string name
+    @var bool   holds_topics
+    @var int    sections     The sections right under it.
+    @var int    topics       Its topics, the hidden ones included.
+    @var bool   empty
+    @var list   targets      id, title — where what it holds can go.
+    @var bool   can_destroy  The topics may be deleted with the section.
+    @var string error        Empty unless the last choice was not accepted.
+    @var string form_action
+    @var string back_url     The tree of the forum.
+#}
+{% embed '@admin/components/ui/dialog.twig' with {
+    title: title,
+    action: form_action,
+    close_url: back_url,
+    name: name,
+    holds_topics: holds_topics,
+    sections: sections,
+    topics: topics,
+    empty: empty,
+    targets: targets,
+    can_destroy: can_destroy,
+    error: error,
+} only %}
+    {% block body %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: error} only %}
+        <p class="fw-semibold">{{ name }}</p>
+
+        {% if empty %}
+            <div class="alert alert-danger mb-0">{{ __('The section is empty and is deleted for good.') }}</div>
+        {% else %}
+            <p>
+                {% if holds_topics %}
+                    {{ n__('It holds %d topic.', 'It holds %d topics.', topics)|format(topics) }}
+                {% else %}
+                    {{ n__('It holds %d section.', 'It holds %d sections.', sections)|format(sections) }}
+                {% endif %}
+            </p>
+
+            {% if targets is not empty %}
+                {% set move_label = holds_topics ? __('Move the topics to') : __('Move the sections to') %}
+                {% if can_destroy %}
+                    <div class="form-check mb-2">
+                        <input type="radio" class="form-check-input" name="mode" value="move" id="delete-mode-move" checked>
+                        <label class="form-check-label" for="delete-mode-move">{{ move_label }}</label>
+                    </div>
+                {% else %}
+                    <label class="form-label" for="delete-target">{{ move_label }}</label>
+                {% endif %}
+                <select class="form-select" name="target" id="delete-target" aria-describedby="delete-target-help">
+                    {% for target in targets %}
+                        <option value="{{ target.id }}">{{ target.title }}</option>
+                    {% endfor %}
+                </select>
+                <div class="form-text mb-3" id="delete-target-help">
+                    {{ holds_topics ? __('The topics keep their posts and files.') : __('They go to the end of the chosen section, with everything in them.') }}
+                </div>
+            {% elseif not can_destroy %}
+                <div class="alert alert-warning mb-0">{{ __('There is no other section of topics to move them to: add one first.') }}</div>
+            {% endif %}
+
+            {% if can_destroy %}
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" name="mode" value="destroy" id="delete-mode-destroy"{% if targets is empty %} checked{% endif %}>
+                    <label class="form-check-label" for="delete-mode-destroy">
+                        {{ __('Delete the topics with the section') }}
+                        <span class="form-text d-block mt-0 text-danger">{{ __('Their posts, polls and files go too. This cannot be undone.') }}</span>
+                    </label>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endblock %}
+    {% block footer %}
+        <a href="{{ close_url }}" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</a>
+        <button type="submit" class="btn btn-danger"{% if not empty and targets is empty and not can_destroy %} disabled{% endif %}>
+            {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+            {{ __('Delete') }}
+        </button>
+    {% endblock %}
+{% endembed %}

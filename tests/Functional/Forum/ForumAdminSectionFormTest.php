@@ -114,6 +114,8 @@ final class ForumAdminSectionFormTest extends FunctionalTestCase
         $response = $this->postForm('/admin/forum/sections/new', $this->fields(['name' => 'A category', 'parent' => 0, 'section_type' => 0, 'close' => 1]), $this->admin);
 
         self::assertSame('/admin/forum', $response->headers->get('Location'));
+        $tree = $this->handleRequest('/admin/forum', cookies: $this->actingAs($this->admin));
+        self::assertStringContainsString('Раздел создан', (string) $tree->getContent(), 'The tree says what happened.');
     }
 
     public function testAnEmptyOrderPutsAnEditedSectionAtTheEnd(): void

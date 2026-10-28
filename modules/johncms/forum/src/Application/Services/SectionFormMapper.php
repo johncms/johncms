@@ -6,7 +6,6 @@ namespace Johncms\Modules\Forum\Application\Services;
 
 use Illuminate\Support\Collection;
 use Johncms\Modules\Forum\Application\DTO\SectionFormDTO;
-use Johncms\Modules\Forum\Application\UseCases\SaveForumSectionUseCase;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 
 /**
@@ -16,6 +15,11 @@ use Johncms\Modules\Forum\Domain\Models\ForumSection;
  */
 final readonly class SectionFormMapper
 {
+    public function __construct(
+        private ForumTreeOptions $treeOptions,
+    ) {
+    }
+
     public function fromSection(ForumSection $section): SectionFormDTO
     {
         return new SectionFormDTO(
@@ -56,15 +60,7 @@ final readonly class SectionFormMapper
      */
     public function parentOptions(Collection $sections, ?int $sectionId): array
     {
-        $children = [];
-        foreach ($sections as $section) {
-            $children[(int) $section->parent][] = $section;
-        }
-
-        return [
-            ['id' => 0, 'title' => __('The root: a category')],
-            ...$this->branch($children, 0, [], $sectionId),
-        ];
+        return $this->treeOptions->sectionHolders($sections, $sectionId);
     }
 
     /**
@@ -73,8 +69,8 @@ final readonly class SectionFormMapper
     public function typeOptions(): array
     {
         return [
-            ['value' => SaveForumSectionUseCase::TYPE_SECTIONS, 'label' => __('Sections'), 'hint' => __('A folder for other sections; no topics are started in it.')],
-            ['value' => SaveForumSectionUseCase::TYPE_TOPICS, 'label' => __('Topics'), 'hint' => __('Members start topics in it.')],
+            ['value' => ForumTreeOptions::TYPE_SECTIONS, 'label' => __('Sections'), 'hint' => __('A folder for other sections; no topics are started in it.')],
+            ['value' => ForumTreeOptions::TYPE_TOPICS, 'label' => __('Topics'), 'hint' => __('Members start topics in it.')],
         ];
     }
 
@@ -104,27 +100,5 @@ final readonly class SectionFormMapper
             'sections' => $sections,
             'topics'   => $topics,
         ];
-    }
-
-    /**
-     * @param array<int, list<ForumSection>> $children
-     * @param list<string>                   $path
-     * @return list<array{id: int, title: string}>
-     */
-    private function branch(array $children, int $parent, array $path, ?int $sectionId): array
-    {
-        $options = [];
-
-        foreach ($children[$parent] ?? [] as $section) {
-            if ($section->id === $sectionId || (int) $section->section_type === SaveForumSectionUseCase::TYPE_TOPICS) {
-                continue;
-            }
-
-            $own = [...$path, $section->name];
-            $options[] = ['id' => $section->id, 'title' => implode(' › ', $own)];
-            array_push($options, ...$this->branch($children, $section->id, $own, $sectionId));
-        }
-
-        return $options;
     }
 }

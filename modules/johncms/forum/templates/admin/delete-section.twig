@@ -1,0 +1,11 @@
+{#
+    Deleting a section of the forum, as a page: what the link to the dialog leads to without the
+    script that opens it in the modal, and what a choice that was not accepted comes back to.
+
+    @var array dialog What delete-section-dialog.twig is given.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@admin/components/ui/dialog-page.twig' with {dialog: '@forum/admin/delete-section-dialog.twig', data: dialog} only %}
+{% endblock %}

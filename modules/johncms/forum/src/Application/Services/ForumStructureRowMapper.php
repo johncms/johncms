@@ -15,8 +15,6 @@ use Johncms\Modules\Forum\Domain\Models\ForumSection;
  */
 final readonly class ForumStructureRowMapper
 {
-    private const string URL = '/admin/forum/structure';
-
     /**
      * @param Collection<int, ForumSection> $sections Every section, in the order of sort.
      * @return list<array<string, mixed>>
@@ -60,7 +58,7 @@ final readonly class ForumStructureRowMapper
             $actions[] = $this->action('/admin/forum/sections/new?parent=' . $section->id, __('Add subsection'), 'folder-plus');
         }
         $actions[] = $this->action($section->url, __('Open on the site'), 'external-link');
-        $actions[] = $this->action(self::URL . '/' . $section->id . '/delete', __('Delete'), 'trash-2', danger: true);
+        $actions[] = $this->action('/admin/forum/sections/' . $section->id . '/delete', __('Delete'), 'trash-2', danger: true, dialog: true);
 
         return [
             'id'           => $section->id,
@@ -85,8 +83,8 @@ final readonly class ForumStructureRowMapper
     /**
      * @return array<string, mixed>
      */
-    private function action(string $url, string $title, string $icon, bool $danger = false): array
+    private function action(string $url, string $title, string $icon, bool $danger = false, bool $dialog = false): array
     {
-        return ['method' => 'get', 'url' => $url, 'title' => $title, 'icon' => $icon, 'danger' => $danger, 'dialog' => false, 'fields' => []];
+        return ['method' => 'get', 'url' => $url, 'title' => $title, 'icon' => $icon, 'danger' => $danger, 'dialog' => $dialog, 'fields' => []];
     }
 }

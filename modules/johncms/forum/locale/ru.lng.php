@@ -360,6 +360,31 @@
       'The section was saved' => 'Раздел сохранён',
       'What the section holds' => 'Что содержит раздел',
       'Who writes in it' => 'Кто в нём пишет',
+      'Choose where what the section holds goes' => 'Выберите, куда перенести содержимое раздела',
+      'Delete the topics with the section' => 'Удалить темы вместе с разделом',
+      'It holds %d section.' => 
+      array (
+        0 => 'В нём %d подраздел.',
+        1 => 'В нём %d подраздела.',
+        2 => 'В нём %d подразделов.',
+        3 => 'В нём %d подразделов.',
+      ),
+      'It holds %d topic.' => 
+      array (
+        0 => 'В нём %d тема.',
+        1 => 'В нём %d темы.',
+        2 => 'В нём %d тем.',
+        3 => 'В нём %d тем.',
+      ),
+      'Move the sections to' => 'Перенести подразделы в',
+      'Move the topics to' => 'Перенести темы в',
+      'Only the owner of the structure deletes topics with their section' => 'Удалять темы вместе с разделом может только владелец структуры',
+      'Their posts, polls and files go too. This cannot be undone.' => 'Вместе с ними удалятся сообщения, опросы и файлы. Это нельзя отменить.',
+      'There is no other section of topics to move them to: add one first.' => 'Темы некуда перенести: сначала добавьте другой раздел для тем.',
+      'The section is empty and is deleted for good.' => 'Раздел пуст и будет удалён насовсем.',
+      'The section was deleted' => 'Раздел удалён',
+      'The topics keep their posts and files.' => 'Темы сохранят свои сообщения и файлы.',
+      'They go to the end of the chosen section, with everything in them.' => 'Они встанут в конец выбранного раздела со всем содержимым.',
     ),
   ),
 );

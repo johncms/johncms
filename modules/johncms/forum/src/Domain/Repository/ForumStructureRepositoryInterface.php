@@ -45,27 +45,6 @@ interface ForumStructureRepositoryInterface
      */
     public function countTopics(int $sectionId): int;
 
-    /**
-     * Where a category can be moved to: every category but the one being moved.
-     *
-     * @return Collection<int, ForumSection>
-     */
-    public function categoriesForMove(int $excludeId): Collection;
-
-    /**
-     * Where the topics of a section can go: the other sections of the same category.
-     *
-     * @return Collection<int, ForumSection>
-     */
-    public function sectionsForMove(int $parentRef, int $excludeId): Collection;
-
-    /**
-     * The top-level categories, except the one given.
-     *
-     * @return Collection<int, ForumSection>
-     */
-    public function topLevelExcept(int $excludeId): Collection;
-
     public function moveSubsectionsToCategory(int $fromCategoryId, int $toCategoryId): void;
 
     public function moveTopicsToSection(int $fromSectionId, int $toSectionId): void;

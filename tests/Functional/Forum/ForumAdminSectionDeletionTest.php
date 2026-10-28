@@ -24,11 +24,16 @@ final class ForumAdminSectionDeletionTest extends FunctionalTestCase
     {
         $section = $this->section('Empty', 0, 1, 1);
 
-        $response = $this->postForm('/admin/forum/structure/' . $section . '/delete', [], $this->admin());
+        $admin = $this->admin();
+
+        $response = $this->postForm('/admin/forum/sections/' . $section . '/delete', [], $admin);
 
         self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
         self::assertSame('/admin/forum', $response->headers->get('Location'));
         self::assertFalse(ForumSection::query()->whereKey($section)->exists());
+
+        $tree = $this->handleRequest('/admin/forum', cookies: $this->actingAs($admin));
+        self::assertStringContainsString('Раздел удалён', (string) $tree->getContent(), 'The tree says what happened.');
     }
 
     public function testTheSectionsOfADeletedSectionGoToTheEndOfAnother(): void
@@ -39,7 +44,7 @@ final class ForumAdminSectionDeletionTest extends FunctionalTestCase
         $child = $this->section('A child', $deleted, 1, 1);
         $file = Fixture::insert('cms_forum_files', ['cat' => $deleted, 'subcat' => $child, 'filename' => 'a.txt']);
 
-        $this->postForm('/admin/forum/structure/' . $deleted . '/delete', ['category' => $target], $this->admin());
+        $this->postForm('/admin/forum/sections/' . $deleted . '/delete', ['target' => $target], $this->admin());
 
         self::assertFalse(ForumSection::query()->whereKey($deleted)->exists());
         $moved = ForumSection::query()->findOrFail($child);
@@ -56,7 +61,7 @@ final class ForumAdminSectionDeletionTest extends FunctionalTestCase
         $topic = Fixture::insert('forum_topic', ['section_id' => $deleted, 'name' => 'A topic', 'slug' => 'a-topic']);
         $file = Fixture::insert('cms_forum_files', ['cat' => $category, 'subcat' => $deleted, 'topic' => $topic, 'filename' => 'a.txt']);
 
-        $this->postForm('/admin/forum/structure/' . $deleted . '/delete', ['subcat' => $target], $this->admin());
+        $this->postForm('/admin/forum/sections/' . $deleted . '/delete', ['target' => $target, 'mode' => 'move'], $this->admin());
 
         self::assertFalse(ForumSection::query()->whereKey($deleted)->exists());
         self::assertSame($target, (int) $this->column('forum_topic', $topic, 'section_id'));
@@ -68,7 +73,7 @@ final class ForumAdminSectionDeletionTest extends FunctionalTestCase
         $section = $this->section('Full', 0, 1, 1);
         Fixture::insert('forum_topic', ['section_id' => $section, 'name' => 'A topic', 'slug' => 'a-topic']);
 
-        $this->postForm('/admin/forum/structure/' . $section . '/delete', ['delete' => 1], $this->admin());
+        $this->postForm('/admin/forum/sections/' . $section . '/delete', ['mode' => 'destroy'], $this->admin());
 
         self::assertTrue(ForumSection::query()->whereKey($section)->exists());
     }
@@ -80,7 +85,7 @@ final class ForumAdminSectionDeletionTest extends FunctionalTestCase
         $topic = Fixture::insert('forum_topic', ['section_id' => $section, 'name' => 'A topic', 'slug' => 'a-topic']);
         $message = Fixture::insert('forum_messages', ['topic_id' => $topic, 'text' => 'Hello']);
 
-        $this->postForm('/admin/forum/structure/' . $section . '/delete', ['delete' => 1], $owner);
+        $this->postForm('/admin/forum/sections/' . $section . '/delete', ['mode' => 'destroy'], $owner);
 
         self::assertFalse(ForumSection::query()->whereKey($section)->exists());
         self::assertNull($this->column('forum_topic', $topic, 'id'));
@@ -99,7 +104,7 @@ final class ForumAdminSectionDeletionTest extends FunctionalTestCase
         $topic = Fixture::insert('forum_topic', ['section_id' => $deleted, 'name' => 'A hidden topic', 'slug' => 'a-hidden-topic', 'deleted' => 1]);
         $file = Fixture::insert('cms_forum_files', ['cat' => $category, 'subcat' => $deleted, 'topic' => $topic, 'filename' => 'a.txt', 'del' => 1]);
 
-        $this->postForm('/admin/forum/structure/' . $deleted . '/delete', ['subcat' => $target], $this->admin());
+        $this->postForm('/admin/forum/sections/' . $deleted . '/delete', ['target' => $target, 'mode' => 'move'], $this->admin());
 
         self::assertFalse(ForumSection::query()->whereKey($deleted)->exists());
         self::assertSame($target, (int) $this->column('forum_topic', $topic, 'section_id'));
@@ -113,11 +118,63 @@ final class ForumAdminSectionDeletionTest extends FunctionalTestCase
         $topic = Fixture::insert('forum_topic', ['section_id' => $section, 'name' => 'A hidden topic', 'slug' => 'a-hidden-topic', 'deleted' => 1]);
         $message = Fixture::insert('forum_messages', ['topic_id' => $topic, 'text' => 'Hello', 'deleted' => 1]);
 
-        $this->postForm('/admin/forum/structure/' . $section . '/delete', ['delete' => 1], $owner);
+        $this->postForm('/admin/forum/sections/' . $section . '/delete', ['mode' => 'destroy'], $owner);
 
         self::assertFalse(ForumSection::query()->whereKey($section)->exists());
         self::assertNull($this->column('forum_topic', $topic, 'id'));
         self::assertNull($this->column('forum_messages', $message, 'id'));
+    }
+
+    public function testTheDialogSaysWhatTheSectionHoldsAndWhereItCanGo(): void
+    {
+        $category = $this->section('A category', 0, 0, 1);
+        $deleted = $this->section('Deleted', $category, 1, 1);
+        $this->section('Target', $category, 1, 2);
+        $this->section('Holds sections', $category, 0, 3);
+        Fixture::insert('forum_topic', ['section_id' => $deleted, 'name' => 'A topic', 'slug' => 'a-topic']);
+
+        $response = $this->handleRequest(
+            '/admin/forum/sections/' . $deleted . '/delete',
+            server: ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'],
+            cookies: $this->actingAs($this->admin()),
+        );
+
+        $body = (string) $response->getContent();
+        self::assertStringStartsWith('<form class="modal-content"', trim($body), 'The modal gets the dialog alone.');
+        self::assertStringContainsString('В нём 1 тема.', $body);
+        self::assertStringContainsString('>A category › Target</option>', $body);
+        self::assertStringNotContainsString('Holds sections</option>', $body, 'Topics go only to a section of topics.');
+        self::assertStringNotContainsString('value="destroy"', $body, 'Deleting the topics is not offered to whoever may not.');
+    }
+
+    public function testSectionsCannotGoUnderTheSectionThatIsDeleted(): void
+    {
+        $deleted = $this->section('Deleted', 0, 0, 1);
+        $child = $this->section('A child', $deleted, 0, 1);
+
+        $response = $this->postForm('/admin/forum/sections/' . $deleted . '/delete', ['target' => $child], $this->admin());
+
+        self::assertSame(Response::HTTP_OK, $response->getStatusCode(), 'The dialog comes back as a page.');
+        self::assertTrue(ForumSection::query()->whereKey($deleted)->exists());
+        self::assertSame($deleted, (int) ForumSection::query()->findOrFail($child)->parent);
+    }
+
+    public function testTheSectionsOfADeletedCategoryCanBecomeCategories(): void
+    {
+        $deleted = $this->section('Deleted', 0, 0, 1);
+        $child = $this->section('A child', $deleted, 1, 1);
+
+        $this->postForm('/admin/forum/sections/' . $deleted . '/delete', ['target' => 0], $this->admin());
+
+        self::assertFalse(ForumSection::query()->whereKey($deleted)->exists());
+        self::assertSame(0, (int) ForumSection::query()->findOrFail($child)->parent);
+    }
+
+    public function testAMissingSectionHasNothingToDelete(): void
+    {
+        $response = $this->handleRequest('/admin/forum/sections/999999/delete', cookies: $this->actingAs($this->admin()));
+
+        self::assertSame(Response::HTTP_NOT_FOUND, $response->getStatusCode());
     }
 
     private function admin(): User

@@ -6,6 +6,7 @@ namespace Johncms\Modules\Forum\Application\Controllers\Admin;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Http\Session;
 use Johncms\Modules\Forum\Application\Services\ForumStructureRowMapper;
 use Johncms\Modules\Forum\Application\UseCases\GetForumDashboardUseCase;
 use Johncms\Modules\Forum\Domain\Repository\ForumStructureRepositoryInterface;
@@ -23,6 +24,7 @@ final readonly class ForumDashboardController
         private GetForumDashboardUseCase $getDashboard,
         private ForumStructureRepositoryInterface $structure,
         private ForumStructureRowMapper $rowMapper,
+        private Session $session,
     ) {
     }
 
@@ -42,6 +44,8 @@ final readonly class ForumDashboardController
             'hidden_posts_url'  => '/admin/forum/hidden-posts',
             // The settings are for the site owner only.
             'settings_url'      => $this->accessChecker->allows(CorePermissions::ADMIN_SETTINGS_MANAGE) ? '/admin/forum/settings' : '',
+            // A section deleted or closed after saving reports here.
+            'success_message'   => (string) $this->session->getFlash('success_message'),
         ]);
     }
 }

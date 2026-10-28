@@ -7,6 +7,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 use Johncms\Modules\Forum\Application\DTO\SectionFormDTO;
 use Johncms\Modules\Forum\Application\Exceptions\SectionFormException;
 use Johncms\Modules\Forum\Application\Services\ForumSlugGenerator;
+use Johncms\Modules\Forum\Application\Services\ForumTreeOptions;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\Modules\Forum\Domain\Repository\ForumStructureRepositoryInterface;
 use Johncms\Validator\Rules\StringLength;
@@ -23,15 +24,13 @@ use Johncms\Validator\ValidatorInterface;
  */
 final readonly class SaveForumSectionUseCase
 {
-    public const int TYPE_SECTIONS = 0;
-    public const int TYPE_TOPICS = 1;
-
     /** The ways a section can be written in, by the value of its access column. */
     public const array ACCESS = [0, 1, 2, 4];
 
     public function __construct(
         private ForumStructureRepositoryInterface $repository,
         private ForumSlugGenerator $slugGenerator,
+        private ForumTreeOptions $treeOptions,
         private ValidatorInterface $validator,
     ) {
     }
@@ -87,7 +86,7 @@ final readonly class SaveForumSectionUseCase
             'meta_description' => [new StringLength(max: 500, allowEmpty: true)],
         ]);
 
-        if (! in_array($form->sectionType, [self::TYPE_SECTIONS, self::TYPE_TOPICS], true)) {
+        if (! in_array($form->sectionType, [ForumTreeOptions::TYPE_SECTIONS, ForumTreeOptions::TYPE_TOPICS], true)) {
             $result = $result->withError('section_type', __('Choose what the section holds'));
         }
 
@@ -112,35 +111,11 @@ final readonly class SaveForumSectionUseCase
 
     private function checkParent(ValidationResult $result, int $parentId, ?ForumSection $section): ValidationResult
     {
-        if ($parentId === 0) {
-            return $result;
-        }
+        $allowed = array_column($this->treeOptions->sectionHolders($this->repository->tree(), $section?->id), 'id');
 
-        $parent = $this->repository->find($parentId);
-        if ($parent === null || (int) $parent->section_type === self::TYPE_TOPICS || ($section !== null && $this->isWithin($parent, $section->id))) {
-            return $result->withError('parent', __('Choose a section that holds sections, not this one or a section under it'));
-        }
-
-        return $result;
-    }
-
-    /**
-     * Whether a section is the given one or stands somewhere under it.
-     */
-    private function isWithin(ForumSection $candidate, int $sectionId): bool
-    {
-        $seen = [];
-        $current = $candidate;
-
-        while ($current !== null && ! isset($seen[$current->id])) {
-            if ($current->id === $sectionId) {
-                return true;
-            }
-            $seen[$current->id] = true;
-            $current = (int) $current->parent > 0 ? $this->repository->find((int) $current->parent) : null;
-        }
-
-        return false;
+        return in_array($parentId, $allowed, true)
+            ? $result
+            : $result->withError('parent', __('Choose a section that holds sections, not this one or a section under it'));
     }
 
     /**
@@ -152,11 +127,11 @@ final readonly class SaveForumSectionUseCase
             return $result;
         }
 
-        if ($type === self::TYPE_TOPICS && $this->repository->countChildSections($section->id) > 0) {
+        if ($type === ForumTreeOptions::TYPE_TOPICS && $this->repository->countChildSections($section->id) > 0) {
             return $result->withError('section_type', __('The section holds sections: move them out before it can hold topics'));
         }
 
-        if ($type === self::TYPE_SECTIONS && $this->repository->countTopics($section->id) > 0) {
+        if ($type === ForumTreeOptions::TYPE_SECTIONS && $this->repository->countTopics($section->id) > 0) {
             return $result->withError('section_type', __('The section holds topics: move them out before it can hold sections'));
         }
 

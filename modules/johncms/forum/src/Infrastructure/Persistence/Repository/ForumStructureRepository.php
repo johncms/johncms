@@ -86,33 +86,6 @@ final class ForumStructureRepository implements ForumStructureRepositoryInterfac
         return ForumTopic::query()->withoutGlobalScope('access')->where('section_id', $sectionId)->count();
     }
 
-    public function categoriesForMove(int $excludeId): Collection
-    {
-        return ForumSection::query()
-            ->where(fn ($query) => $query->where('section_type', '!=', 1)->orWhereNull('section_type'))
-            ->where('id', '!=', $excludeId)
-            ->orderBy('sort')
-            ->get();
-    }
-
-    public function sectionsForMove(int $parentRef, int $excludeId): Collection
-    {
-        return ForumSection::query()
-            ->where('parent', $parentRef)
-            ->where('id', '!=', $excludeId)
-            ->orderBy('sort')
-            ->get();
-    }
-
-    public function topLevelExcept(int $excludeId): Collection
-    {
-        return ForumSection::query()
-            ->where('parent', 0)
-            ->where('id', '!=', $excludeId)
-            ->orderBy('sort')
-            ->get();
-    }
-
     public function moveSubsectionsToCategory(int $fromCategoryId, int $toCategoryId): void
     {
         $sort = (int) ForumSection::query()->where('parent', $toCategoryId)->max('sort');

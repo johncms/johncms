@@ -8,6 +8,7 @@
     @var string hidden_topics_url
     @var string hidden_posts_url
     @var string settings_url      Empty unless the visitor may change the settings.
+    @var string success_message   Empty unless an action has just been performed.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
@@ -25,6 +26,8 @@
 {% endblock %}
 
 {% block content %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+
     <div class="admin-stats">
         {% include '@admin/components/ui/stat-card.twig' with {label: __('Topics'), value: counters.total_thm} only %}
         {% include '@admin/components/ui/stat-card.twig' with {label: __('Messages'), value: counters.total_msg} only %}

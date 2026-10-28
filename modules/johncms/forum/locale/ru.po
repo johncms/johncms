@@ -1647,3 +1647,50 @@ msgstr "Что содержит раздел"
 
 msgid "Who writes in it"
 msgstr "Кто в нём пишет"
+
+msgid "Choose where what the section holds goes"
+msgstr "Выберите, куда перенести содержимое раздела"
+
+msgid "Delete the topics with the section"
+msgstr "Удалить темы вместе с разделом"
+
+msgid "It holds %d section."
+msgid_plural "It holds %d sections."
+msgstr[0] "В нём %d подраздел."
+msgstr[1] "В нём %d подраздела."
+msgstr[2] "В нём %d подразделов."
+msgstr[3] "В нём %d подразделов."
+
+msgid "It holds %d topic."
+msgid_plural "It holds %d topics."
+msgstr[0] "В нём %d тема."
+msgstr[1] "В нём %d темы."
+msgstr[2] "В нём %d тем."
+msgstr[3] "В нём %d тем."
+
+msgid "Move the sections to"
+msgstr "Перенести подразделы в"
+
+msgid "Move the topics to"
+msgstr "Перенести темы в"
+
+msgid "Only the owner of the structure deletes topics with their section"
+msgstr "Удалять темы вместе с разделом может только владелец структуры"
+
+msgid "Their posts, polls and files go too. This cannot be undone."
+msgstr "Вместе с ними удалятся сообщения, опросы и файлы. Это нельзя отменить."
+
+msgid "There is no other section of topics to move them to: add one first."
+msgstr "Темы некуда перенести: сначала добавьте другой раздел для тем."
+
+msgid "The section is empty and is deleted for good."
+msgstr "Раздел пуст и будет удалён насовсем."
+
+msgid "The section was deleted"
+msgstr "Раздел удалён"
+
+msgid "The topics keep their posts and files."
+msgstr "Темы сохранят свои сообщения и файлы."
+
+msgid "They go to the end of the chosen section, with everything in them."
+msgstr "Они встанут в конец выбранного раздела со всем содержимым."

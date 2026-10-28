@@ -104,8 +104,6 @@ msgid "Add Poll"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/AddVoteController.php:44
-#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:98
-#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:117
 #: modules/johncms/forum/src/Application/Controllers/ChangeTopicController.php:39
 #: modules/johncms/forum/src/Application/Controllers/ClearFilterByAuthorController.php:35
 #: modules/johncms/forum/src/Application/Controllers/DeleteVoteController.php:43
@@ -146,10 +144,13 @@ msgstr ""
 msgid "Answer"
 msgstr ""
 
+#: modules/johncms/forum/src/Application/Controllers/Admin/DeleteSectionController.php:70
+msgid "The section was deleted"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/DeleteSectionController.php:107
 #: modules/johncms/forum/src/Application/Controllers/Admin/ForumDashboardController.php:31
 #: modules/johncms/forum/src/Application/Controllers/Admin/ForumSettingsController.php:56
-#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:46
-#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:150
 #: modules/johncms/forum/src/Application/Controllers/Admin/HiddenPostsController.php:47
 #: modules/johncms/forum/src/Application/Controllers/Admin/HiddenTopicsController.php:47
 #: modules/johncms/forum/src/Application/Controllers/Admin/SectionFormController.php:112
@@ -192,6 +193,14 @@ msgstr ""
 msgid "Forum"
 msgstr ""
 
+#: modules/johncms/forum/src/Application/Controllers/Admin/DeleteSectionController.php:120
+msgid "Delete category"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/DeleteSectionController.php:120
+msgid "Delete section"
+msgstr ""
+
 #: modules/johncms/forum/src/Application/Controllers/Admin/ForumSettingsController.php:46
 msgid "ERROR: Can not write file `forum.local.php`"
 msgstr ""
@@ -202,18 +211,6 @@ msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/Admin/ForumSettingsController.php:55
 msgid "Forum Settings"
-msgstr ""
-
-#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:45
-msgid "Delete section"
-msgstr ""
-
-#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:45
-msgid "Delete category"
-msgstr ""
-
-#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:106
-msgid "Access denied"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/Admin/HiddenPostsController.php:46
@@ -642,23 +639,22 @@ msgstr ""
 msgid "Empty the lists of hidden topics and posts"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumStructureRowMapper.php:58
+#: modules/johncms/forum/src/Application/Services/ForumStructureRowMapper.php:56
 #: modules/johncms/forum/templates/public/components/message.twig:170
 msgid "Edit"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumStructureRowMapper.php:60
+#: modules/johncms/forum/src/Application/Services/ForumStructureRowMapper.php:58
 msgid "Add subsection"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumStructureRowMapper.php:62
+#: modules/johncms/forum/src/Application/Services/ForumStructureRowMapper.php:60
 #: modules/johncms/forum/templates/admin/section-form.twig:39
 msgid "Open on the site"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumStructureRowMapper.php:63
-#: modules/johncms/forum/templates/admin/section-delete-confirm.twig:17
-#: modules/johncms/forum/templates/admin/section-move-topics.twig:46
+#: modules/johncms/forum/src/Application/Services/ForumStructureRowMapper.php:61
+#: modules/johncms/forum/templates/admin/delete-section-dialog.twig:86
 #: modules/johncms/forum/templates/public/bulk-delete-posts.twig:22
 #: modules/johncms/forum/templates/public/components/message.twig:126
 #: modules/johncms/forum/templates/public/components/message.twig:171
@@ -670,19 +666,23 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumStructureRowMapper.php:74
-#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:88
+#: modules/johncms/forum/src/Application/Services/ForumStructureRowMapper.php:72
+#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:84
 msgid "Authors are curators"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumStructureRowMapper.php:75
-#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:89
+#: modules/johncms/forum/src/Application/Services/ForumStructureRowMapper.php:73
+#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:85
 msgid "Authors edit the first post"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumStructureRowMapper.php:76
-#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:90
+#: modules/johncms/forum/src/Application/Services/ForumStructureRowMapper.php:74
+#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:86
 msgid "Only for reading"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Services/ForumTreeOptions.php:29
+msgid "The root: a category"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:99
@@ -732,48 +732,44 @@ msgstr ""
 msgid "Guest"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:65
-msgid "The root: a category"
-msgstr ""
-
-#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:76
+#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:72
 #: modules/johncms/forum/templates/admin/section-form.twig:153
 #: modules/johncms/forum/templates/admin/settings.twig:35
 msgid "Sections"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:76
+#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:72
 msgid "A folder for other sections; no topics are started in it."
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:77
+#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:73
 #: modules/johncms/forum/templates/admin/index.twig:29
 #: modules/johncms/forum/templates/admin/section-form.twig:154
 #: modules/johncms/forum/templates/admin/settings.twig:46
 msgid "Topics"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:77
+#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:73
 msgid "Members start topics in it."
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:87
+#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:83
 msgid "Common access"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:87
+#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:83
 msgid "Members write as everywhere on the forum."
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:88
+#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:84
 msgid "The author of a new topic becomes its curator."
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:89
+#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:85
 msgid "The author of a topic can edit its first post at any time, not only while it is the last."
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:90
+#: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:86
 msgid "Nobody but the moderators writes in it."
 msgstr ""
 
@@ -783,6 +779,14 @@ msgstr ""
 
 #: modules/johncms/forum/src/Application/UseCases/AttachFileToPostUseCase.php:65
 msgid "The forbidden file format.<br>You can upload files of the following extension"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/UseCases/DeleteForumSectionUseCase.php:65
+msgid "Only the owner of the structure deletes topics with their section"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/UseCases/DeleteForumSectionUseCase.php:75
+msgid "Choose where what the section holds goes"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:35
@@ -801,23 +805,23 @@ msgstr ""
 msgid "You cannot edit your posts after 5 minutes"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/UseCases/SaveForumSectionUseCase.php:91
+#: modules/johncms/forum/src/Application/UseCases/SaveForumSectionUseCase.php:90
 msgid "Choose what the section holds"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/UseCases/SaveForumSectionUseCase.php:95
+#: modules/johncms/forum/src/Application/UseCases/SaveForumSectionUseCase.php:94
 msgid "Choose who writes in the section"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/UseCases/SaveForumSectionUseCase.php:121
+#: modules/johncms/forum/src/Application/UseCases/SaveForumSectionUseCase.php:118
 msgid "Choose a section that holds sections, not this one or a section under it"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/UseCases/SaveForumSectionUseCase.php:156
+#: modules/johncms/forum/src/Application/UseCases/SaveForumSectionUseCase.php:131
 msgid "The section holds sections: move them out before it can hold topics"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/UseCases/SaveForumSectionUseCase.php:160
+#: modules/johncms/forum/src/Application/UseCases/SaveForumSectionUseCase.php:135
 msgid "The section holds topics: move them out before it can hold sections"
 msgstr ""
 
@@ -921,17 +925,52 @@ msgstr ""
 msgid "<p>We are glad to welcome you to our website :)</p><p>Let's get acquainted!</p>"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/hidden-posts.twig:17
-#: modules/johncms/forum/templates/admin/hidden-topics.twig:17
-msgid "Filtered:"
+#: modules/johncms/forum/templates/admin/delete-section-dialog.twig:39
+msgid "The section is empty and is deleted for good."
 msgstr ""
 
+#: modules/johncms/forum/templates/admin/delete-section-dialog.twig:43
+msgid "It holds %d topic."
+msgid_plural "It holds %d topics."
+msgstr[0] ""
+
+#: modules/johncms/forum/templates/admin/delete-section-dialog.twig:45
+msgid "It holds %d section."
+msgid_plural "It holds %d sections."
+msgstr[0] ""
+
+#: modules/johncms/forum/templates/admin/delete-section-dialog.twig:50
+msgid "Move the topics to"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/delete-section-dialog.twig:50
+msgid "Move the sections to"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/delete-section-dialog.twig:65
+msgid "The topics keep their posts and files."
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/delete-section-dialog.twig:65
+msgid "They go to the end of the chosen section, with everything in them."
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/delete-section-dialog.twig:68
+msgid "There is no other section of topics to move them to: add one first."
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/delete-section-dialog.twig:75
+msgid "Delete the topics with the section"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/delete-section-dialog.twig:76
+msgid "Their posts, polls and files go too. This cannot be undone."
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/delete-section-dialog.twig:83
 #: modules/johncms/forum/templates/admin/hidden-posts.twig:18
 #: modules/johncms/forum/templates/admin/hidden-topics.twig:18
-#: modules/johncms/forum/templates/admin/section-delete-confirm.twig:19
 #: modules/johncms/forum/templates/admin/section-form.twig:163
-#: modules/johncms/forum/templates/admin/section-move-sections.twig:33
-#: modules/johncms/forum/templates/admin/section-move-topics.twig:48
 #: modules/johncms/forum/templates/public/bulk-delete-posts.twig:23
 #: modules/johncms/forum/templates/public/clear-search-history.twig:17
 #: modules/johncms/forum/templates/public/delete-poll-answer.twig:16
@@ -941,6 +980,11 @@ msgstr ""
 #: modules/johncms/forum/templates/public/delete-topic.twig:32
 #: modules/johncms/forum/templates/public/restore-post.twig:18
 msgid "Cancel"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/hidden-posts.twig:17
+#: modules/johncms/forum/templates/admin/hidden-topics.twig:17
+msgid "Filtered:"
 msgstr ""
 
 #: modules/johncms/forum/templates/admin/hidden-posts.twig:43
@@ -1051,14 +1095,6 @@ msgid "%d section"
 msgid_plural "%d sections"
 msgstr[0] ""
 
-#: modules/johncms/forum/templates/admin/section-delete-confirm.twig:12
-#: modules/johncms/forum/templates/public/bulk-delete-posts.twig:13
-#: modules/johncms/forum/templates/public/delete-post-file.twig:12
-#: modules/johncms/forum/templates/public/delete-post.twig:19
-#: modules/johncms/forum/templates/public/delete-topic.twig:15
-msgid "Do you really want to delete?"
-msgstr ""
-
 #: modules/johncms/forum/templates/admin/section-form.twig:44
 #: modules/johncms/forum/templates/admin/section-form.twig:167
 #: modules/johncms/forum/templates/admin/settings.twig:58
@@ -1140,58 +1176,6 @@ msgstr ""
 
 #: modules/johncms/forum/templates/admin/section-form.twig:164
 msgid "Save and close"
-msgstr ""
-
-#: modules/johncms/forum/templates/admin/section-move-sections.twig:15
-msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
-msgstr ""
-
-#: modules/johncms/forum/templates/admin/section-move-sections.twig:22
-#: modules/johncms/forum/templates/public/move-topic.twig:17
-msgid "Category"
-msgstr ""
-
-#: modules/johncms/forum/templates/admin/section-move-sections.twig:29
-msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
-msgstr ""
-
-#: modules/johncms/forum/templates/admin/section-move-sections.twig:32
-#: modules/johncms/forum/templates/admin/section-move-topics.twig:39
-#: modules/johncms/forum/templates/public/move-topic.twig:35
-msgid "Move"
-msgstr ""
-
-#: modules/johncms/forum/templates/admin/section-move-sections.twig:38
-#: modules/johncms/forum/templates/admin/section-move-topics.twig:43
-msgid "Complete removal"
-msgstr ""
-
-#: modules/johncms/forum/templates/admin/section-move-sections.twig:40
-msgid "If you want to destroy all the information, first remove"
-msgstr ""
-
-#: modules/johncms/forum/templates/admin/section-move-sections.twig:41
-msgid "subsections"
-msgstr ""
-
-#: modules/johncms/forum/templates/admin/section-move-topics.twig:16
-msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
-msgstr ""
-
-#: modules/johncms/forum/templates/admin/section-move-topics.twig:22
-msgid "Select section"
-msgstr ""
-
-#: modules/johncms/forum/templates/admin/section-move-topics.twig:29
-msgid "Other category"
-msgstr ""
-
-#: modules/johncms/forum/templates/admin/section-move-topics.twig:36
-msgid "All the topics and files will be moved to selected section. Old section will be deleted."
-msgstr ""
-
-#: modules/johncms/forum/templates/admin/section-move-topics.twig:44
-msgid "WARNING! All the information will be deleted"
 msgstr ""
 
 #: modules/johncms/forum/templates/admin/settings.twig:19
@@ -1302,6 +1286,13 @@ msgstr ""
 #: modules/johncms/forum/templates/public/add-poll.twig:38
 #: modules/johncms/forum/templates/public/edit-poll.twig:49
 msgid "Delete last"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/bulk-delete-posts.twig:13
+#: modules/johncms/forum/templates/public/delete-post-file.twig:12
+#: modules/johncms/forum/templates/public/delete-post.twig:19
+#: modules/johncms/forum/templates/public/delete-topic.twig:15
+msgid "Do you really want to delete?"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/change-topic.twig:18
@@ -1446,12 +1437,20 @@ msgstr ""
 msgid "Cancel Filter"
 msgstr ""
 
+#: modules/johncms/forum/templates/public/move-topic.twig:17
+msgid "Category"
+msgstr ""
+
 #: modules/johncms/forum/templates/public/move-topic.twig:22
 msgid "New section"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/move-topic.twig:31
 msgid "Category is empty"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/move-topic.twig:35
+msgid "Move"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/move-topic.twig:40
