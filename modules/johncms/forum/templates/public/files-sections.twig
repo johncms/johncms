@@ -7,6 +7,11 @@
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block meta %}
+    {{ parent() }}
+    <meta name="robots" content="noindex,follow">
+{% endblock %}
+
 {% block content %}
     {% if new_count %}
         <div class="border-top border-bottom mb-3">

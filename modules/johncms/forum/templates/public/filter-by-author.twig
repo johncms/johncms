@@ -10,6 +10,11 @@
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block meta %}
+    {{ parent() }}
+    <meta name="robots" content="noindex,follow">
+{% endblock %}
+
 {% block content %}
     {% if saved %}
         <div class="alert alert-success">{{ __('Changes saved') }}</div>
