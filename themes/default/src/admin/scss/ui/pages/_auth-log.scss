@@ -5,22 +5,12 @@
     white-space: nowrap;
   }
 
-  // The details and the event wrap, so a long path or a long name does not push the table
-  // past the card.
+  // The details wrap, so a long path does not push the table past the card. The event stays on
+  // one line: a badge broken over several lines loses its shape.
   td.admin-log-table__details {
     min-width: 12rem;
     white-space: normal;
     overflow-wrap: anywhere;
-  }
-}
-
-td.admin-log-table__event {
-  white-space: normal;
-
-  .badge {
-    max-width: 16rem;
-    white-space: normal;
-    text-align: left;
   }
 }
 
