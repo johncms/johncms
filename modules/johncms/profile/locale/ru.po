@@ -381,6 +381,10 @@ msgstr "Настройки"
 msgid "Statistic"
 msgstr "Статистика"
 
+#: modules/johncms/profile/src/Application/Middlewares/AuthorizedUserMiddleware.php:28
+msgid "For registered users only"
+msgstr "Только для зарегистрированных посетителей"
+
 #: modules/profile/src/Application/UseCases/BanUserUseCase.php:28
 msgid "Reason not specified"
 msgstr "Причина не указана"

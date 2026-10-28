@@ -67,6 +67,7 @@
       'Mail' => 'Почта',
       'Settings' => 'Настройки',
       'Statistic' => 'Статистика',
+      'For registered users only' => 'Только для зарегистрированных посетителей',
       'Reason not specified' => 'Причина не указана',
       'There is no required data' => 'Отсутствуют необходимые данные',
       'You have no rights to ban in this section' => 'Вы не имеете права банить не в своем разделе',
