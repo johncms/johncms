@@ -6,8 +6,9 @@
     @var files_name   string
     @var files_count  int
 #}
-{# The visitor is here, so they may read; the banner is about what they may not do. #}
-{% if not can('forum.post') %}
+{# The visitor is here, so they may read; the banner is about what they may not do. A guest is
+   told nothing: writing takes signing in, and that goes without saying. #}
+{% if app.user.isValid and not can('forum.post') %}
     <div class="alert alert-danger">{{ __('Read only') }}</div>
 {% endif %}
 
