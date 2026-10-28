@@ -13,6 +13,7 @@ import '../scss/app.scss';
 import './jquery.magnific-popup';
 import './shell';
 import './live-list';
+import './tabs';
 import './role-permissions';
 import './modal';
 import './prism';

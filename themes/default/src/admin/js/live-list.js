@@ -19,7 +19,8 @@
  * once. The answer is the same address rendered as a fragment — the server sees the request is
  * not a navigation by X-Requested-With — which holds the regions again: each one replaces the
  * region of the same name. The address of the page follows, so a reload, a bookmark and the back
- * button land on the same list.
+ * button land on the same list. Once the regions are in place the root fires live-list:update,
+ * which bubbles, for what has to be set up on them again.
  *
  * Nothing here is needed for the list to work: without the script, or when a request fails, the
  * form and the links lead to the same addresses as plain pages.
@@ -106,6 +107,7 @@ function initLiveList(root) {
       }
 
       syncFields(finalUrl);
+      root.dispatchEvent(new CustomEvent('live-list:update', {bubbles: true}));
     } catch (error) {
       if (error.name !== 'AbortError') {
         window.location.assign(url);
