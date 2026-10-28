@@ -350,6 +350,10 @@ msgstr ""
 msgid "Statistic"
 msgstr ""
 
+#: modules/johncms/profile/src/Application/Middlewares/AuthorizedUserMiddleware.php:28
+msgid "For registered users only"
+msgstr ""
+
 #: modules/johncms/profile/src/Application/Notifications/BanNotificationProvider.php:29
 #: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:206
 msgid "Ban"
@@ -480,11 +484,11 @@ msgstr ""
 msgid "You have exceeded the limit of votes. New voices will be added %s"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/UpdateProfileUseCase.php:116
+#: modules/johncms/profile/src/Application/UseCases/UpdateProfileUseCase.php:123
 msgid "Confirm email change"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/UpdateProfileUseCase.php:133
+#: modules/johncms/profile/src/Application/UseCases/UpdateProfileUseCase.php:140
 msgid "The procedure for changing the email address was started"
 msgstr ""
 

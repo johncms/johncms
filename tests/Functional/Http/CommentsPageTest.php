@@ -80,7 +80,7 @@ final class CommentsPageTest extends FunctionalTestCase
     }
 
     /**
-     * The guestbook of a profile answers a guest with a 404 — AuthorizedUserMiddleware — so this
+     * The guestbook of a profile refuses a guest with a 403 — AuthorizedUserMiddleware — so this
      * one is opened by a signed-in visitor as well.
      */
     public function testProfileGuestbookPage(): void

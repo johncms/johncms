@@ -76,6 +76,7 @@ msgstr ""
 #: system/src/Http/Controller/ExternalAuthController.php:340
 #: system/src/Http/Controller/ExternalAuthController.php:353
 #: themes/default/templates/components/sidebar-user-menu.twig:69
+#: themes/default/templates/pages/errors/403.twig:17
 msgid "Login"
 msgstr ""
 
@@ -803,7 +804,7 @@ msgstr ""
 
 #: system/src/NavChain.php:76
 #: themes/default/templates/admin/pages/errors/403.twig:21
-#: themes/default/templates/pages/errors/403.twig:16
+#: themes/default/templates/pages/errors/403.twig:19
 msgid "Home"
 msgstr ""
 

@@ -13,7 +13,10 @@
             {% if message %}
                 <p class="h2">{{ message }}</p>
             {% endif %}
-            <a href="/" class="btn btn-primary mt-3">{{ __('Home') }}</a>
+            {% if not app.user.isValid %}
+                <a href="/login/" class="btn btn-primary mt-3 me-2">{{ __('Login') }}</a>
+            {% endif %}
+            <a href="/" class="btn {{ app.user.isValid ? 'btn-primary' : 'btn-outline-primary' }} mt-3">{{ __('Home') }}</a>
         </div>
     </div>
 {% endblock %}
