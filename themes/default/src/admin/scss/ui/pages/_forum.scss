@@ -89,3 +89,114 @@
   justify-content: flex-end;
   gap: 0.5rem;
 }
+
+// The hidden content of the forum (forum::admin/hidden): a post is a block with its author, its
+// topic and an excerpt of its text, a topic a row of a table.
+
+.admin-hidden-post {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.875rem 1rem;
+
+  & + & {
+    border-top: 1px solid var(--border);
+  }
+}
+
+.admin-hidden-post__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+// The topic the post was written in, on a line of its own above the text.
+.admin-hidden-post__topic {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  min-width: 0;
+  font-size: 0.8125rem;
+  color: var(--fg-dim);
+
+  > a {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  > .admin-icon {
+    flex: none;
+  }
+}
+
+.admin-hidden-post__text {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 0.875rem;
+  color: var(--fg-muted);
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+}
+
+.admin-hidden-post__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  font-size: 0.75rem;
+  color: var(--fg-dim);
+}
+
+// The user agent takes what is left of the line, or a line of its own when little is left, and is
+// cut short only when even that is not enough.
+.admin-hidden-post__browser {
+  flex: 1 1 12rem;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-hidden-topics {
+  td {
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  td:first-child {
+    width: 100%;
+    min-width: 14rem;
+    white-space: normal;
+  }
+}
+
+.admin-hidden-topics__name {
+  font-weight: 600;
+  color: var(--fg);
+
+  &:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+}
+
+.admin-hidden-topics__sub {
+  margin-top: 2px;
+  font-size: 0.75rem;
+  color: var(--fg-dim);
+}
+
+.admin-hidden-topics__date {
+  font-family: $ui-font-mono;
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+}
+
+.admin-hidden-topics__actions {
+  display: flex;
+  justify-content: flex-end;
+}

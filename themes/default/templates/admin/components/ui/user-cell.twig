@@ -4,7 +4,7 @@
 
     @param int    id     The account, for its avatar.
     @param string name
-    @param string url    The profile.
+    @param string url    The profile; empty for a guest, whose name is not a link.
     @param bool   online
     @param array  roles  The titles of the roles granted to the account.
     @param string sub    The line under the name, an e-mail for instance; empty for none.
@@ -19,7 +19,11 @@
     </span>
     <span class="admin-user__main">
         <span class="admin-user__name">
-            <a class="admin-user__link" href="{{ url }}">{{ name }}</a>
+            {% if url %}
+                <a class="admin-user__link" href="{{ url }}">{{ name }}</a>
+            {% else %}
+                <span class="admin-user__link">{{ name }}</span>
+            {% endif %}
             {% for role in roles|default([]) %}
                 <span class="admin-user__role">{{ role }}</span>
             {% endfor %}

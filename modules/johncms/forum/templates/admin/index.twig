@@ -5,8 +5,9 @@
     @var array  counters          Totals, keyed by what they count.
     @var array  rows              Built by ForumStructureRowMapper.
     @var string add_category_url
-    @var string hidden_topics_url
+    @var bool   show_hidden       Whether the visitor may see the hidden content.
     @var string hidden_posts_url
+    @var string hidden_topics_url
     @var string settings_url      Empty unless the visitor may change the settings.
     @var string success_message   Empty unless an action has just been performed.
 #}
@@ -32,8 +33,10 @@
         {% include '@admin/components/ui/stat-card.twig' with {label: __('Topics'), value: counters.total_thm} only %}
         {% include '@admin/components/ui/stat-card.twig' with {label: __('Messages'), value: counters.total_msg} only %}
         {% include '@admin/components/ui/stat-card.twig' with {label: __('Files'), value: counters.total_files} only %}
-        {% include '@admin/components/ui/stat-card.twig' with {label: __('Hidden topics'), value: counters.total_thm_del, url: hidden_topics_url, tone: counters.total_thm_del ? 'danger' : ''} only %}
-        {% include '@admin/components/ui/stat-card.twig' with {label: __('Hidden posts'), value: counters.total_msg_del, url: hidden_posts_url, tone: counters.total_msg_del ? 'danger' : ''} only %}
+        {% if show_hidden %}
+            {% include '@admin/components/ui/stat-card.twig' with {label: __('Hidden posts'), value: counters.total_msg_del, url: hidden_posts_url, tone: counters.total_msg_del ? 'danger' : ''} only %}
+            {% include '@admin/components/ui/stat-card.twig' with {label: __('Hidden topics'), value: counters.total_thm_del, url: hidden_topics_url, tone: counters.total_thm_del ? 'danger' : ''} only %}
+        {% endif %}
     </div>
 
     <div class="card">

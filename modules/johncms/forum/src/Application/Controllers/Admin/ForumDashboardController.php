@@ -7,6 +7,7 @@ namespace Johncms\Modules\Forum\Application\Controllers\Admin;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Http\Session;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Services\ForumStructureRowMapper;
 use Johncms\Modules\Forum\Application\UseCases\GetForumDashboardUseCase;
 use Johncms\Modules\Forum\Domain\Repository\ForumStructureRepositoryInterface;
@@ -40,8 +41,10 @@ final readonly class ForumDashboardController
             'counters'          => $this->getDashboard->execute(),
             'rows'              => $this->rowMapper->map($this->structure->tree()),
             'add_category_url'  => '/admin/forum/sections/new',
-            'hidden_topics_url' => '/admin/forum/hidden-topics',
-            'hidden_posts_url'  => '/admin/forum/hidden-posts',
+            // The hidden content is for whoever may see it; the others get no numbers of it either.
+            'show_hidden'       => $this->accessChecker->allows(ForumPermissions::DELETED_VIEW),
+            'hidden_posts_url'  => '/admin/forum/hidden',
+            'hidden_topics_url' => '/admin/forum/hidden?tab=topics',
             // The settings are for the site owner only.
             'settings_url'      => $this->accessChecker->allows(CorePermissions::ADMIN_SETTINGS_MANAGE) ? '/admin/forum/settings' : '',
             // A section deleted or closed after saving reports here.

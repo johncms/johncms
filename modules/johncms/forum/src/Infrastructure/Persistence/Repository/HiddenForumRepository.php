@@ -6,107 +6,163 @@ namespace Johncms\Modules\Forum\Infrastructure\Persistence\Repository;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Johncms\Modules\Forum\Domain\Repository\HiddenForumRepositoryInterface;
+use Johncms\Modules\Forum\Domain\Enums\HiddenListTab;
 use Johncms\Modules\Forum\Domain\Models\ForumFile;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
+use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
+use Johncms\Modules\Forum\Domain\Repository\HiddenForumRepositoryInterface;
+use Johncms\Modules\Forum\Domain\ValueObjects\HiddenListFilter;
+use Johncms\Users\User;
 
+/**
+ * The scopes that hide deleted topics, posts and files from a reader do not apply here: hidden
+ * content is what this list is about.
+ */
 final class HiddenForumRepository implements HiddenForumRepositoryInterface
 {
-    public function countTopics(?int $userId, ?int $sectionId): int
+    public function count(HiddenListFilter $filter): int
     {
-        return $this->topicsQuery($userId, $sectionId)->count();
+        return $this->query($filter)->count();
     }
 
-    /**
-     * @return Collection<int, ForumTopic>
-     */
-    public function getTopics(?int $userId, ?int $sectionId, int $limit, int $offset): Collection
+    public function totals(): array
     {
-        return $this->topicsQuery($userId, $sectionId)
+        return [
+            HiddenListTab::POSTS->value  => $this->query(new HiddenListFilter(HiddenListTab::POSTS))->count(),
+            HiddenListTab::TOPICS->value => $this->query(new HiddenListFilter(HiddenListTab::TOPICS))->count(),
+        ];
+    }
+
+    public function posts(HiddenListFilter $filter, int $limit, int $offset): Collection
+    {
+        return $this->postsQuery($filter)
+            ->with([
+                'topic' => static fn ($query) => $query->withoutGlobalScope('access'),
+                'topic.section',
+                'user',
+            ])
             ->orderByDesc('id')
             ->offset($offset)
             ->limit($limit)
             ->get();
     }
 
-    public function topicAttachmentFilenames(?int $userId, ?int $sectionId): array
+    public function topics(HiddenListFilter $filter, int $limit, int $offset): Collection
     {
-        $topicIds = $this->topicsQuery($userId, $sectionId)->pluck('id')->all();
-
-        return $topicIds === []
-            ? []
-            : ForumFile::query()->whereIn('topic', $topicIds)->pluck('filename')->all();
-    }
-
-    public function deleteTopics(?int $userId, ?int $sectionId): void
-    {
-        $topicIds = $this->topicsQuery($userId, $sectionId)->pluck('id')->all();
-        if ($topicIds === []) {
-            return;
-        }
-
-        ForumFile::query()->whereIn('topic', $topicIds)->delete();
-        ForumMessage::query()->whereIn('topic_id', $topicIds)->delete();
-        ForumTopic::query()->whereIn('id', $topicIds)->delete();
-    }
-
-    public function countPosts(?int $topicId, ?int $userId): int
-    {
-        return $this->postsQuery($topicId, $userId)->count();
-    }
-
-    /**
-     * @return Collection<int, ForumMessage>
-     */
-    public function getPosts(?int $topicId, ?int $userId, int $limit, int $offset): Collection
-    {
-        return $this->postsQuery($topicId, $userId)
+        return $this->topicsQuery($filter)
+            ->with('section')
             ->orderByDesc('id')
             ->offset($offset)
             ->limit($limit)
             ->get();
     }
 
-    public function postAttachmentFilenames(?int $topicId, ?int $userId): array
+    public function hiders(HiddenListTab $tab): array
     {
-        $postIds = $this->postsQuery($topicId, $userId)->pluck('id')->all();
-
-        return $postIds === []
-            ? []
-            : ForumFile::query()->whereIn('post', $postIds)->pluck('filename')->all();
+        return $this->query(new HiddenListFilter($tab))
+            ->where('deleted_by', '!=', '')
+            ->distinct()
+            ->orderBy('deleted_by')
+            ->pluck('deleted_by')
+            ->all();
     }
 
-    public function deletePosts(?int $topicId, ?int $userId): void
+    public function authorName(int $userId): ?string
     {
-        $postIds = $this->postsQuery($topicId, $userId)->pluck('id')->all();
-        if ($postIds === []) {
+        return User::query()->whereKey($userId)->value('name');
+    }
+
+    public function topicName(int $topicId): ?string
+    {
+        return ForumTopic::query()->withoutGlobalScope('access')->whereKey($topicId)->value('name');
+    }
+
+    public function sectionName(int $sectionId): ?string
+    {
+        return ForumSection::query()->whereKey($sectionId)->value('name');
+    }
+
+    public function attachmentFilenames(HiddenListFilter $filter): array
+    {
+        $ids = $this->query($filter)->pluck('id')->all();
+        if ($ids === []) {
+            return [];
+        }
+
+        return ForumFile::query()
+            ->withoutGlobalScope('access')
+            ->whereIn($filter->tab === HiddenListTab::POSTS ? 'post' : 'topic', $ids)
+            ->pluck('filename')
+            ->all();
+    }
+
+    public function delete(HiddenListFilter $filter): void
+    {
+        $ids = $this->query($filter)->pluck('id')->all();
+        if ($ids === []) {
             return;
         }
 
-        ForumFile::query()->whereIn('post', $postIds)->delete();
-        ForumMessage::query()->whereIn('id', $postIds)->delete();
+        if ($filter->tab === HiddenListTab::POSTS) {
+            ForumFile::query()->withoutGlobalScope('access')->whereIn('post', $ids)->delete();
+            ForumMessage::query()->withoutGlobalScope('access')->whereIn('id', $ids)->delete();
+
+            return;
+        }
+
+        ForumFile::query()->withoutGlobalScope('access')->whereIn('topic', $ids)->delete();
+        ForumMessage::query()->withoutGlobalScope('access')->whereIn('topic_id', $ids)->delete();
+        ForumTopic::query()->withoutGlobalScope('access')->whereIn('id', $ids)->delete();
     }
 
     /**
-     * @return Builder<ForumTopic>
+     * @return Builder<ForumMessage>|Builder<ForumTopic>
      */
-    private function topicsQuery(?int $userId, ?int $sectionId): Builder
+    private function query(HiddenListFilter $filter): Builder
     {
-        return ForumTopic::query()
-            ->where('deleted', 1)
-            ->when($userId !== null, fn (Builder $q) => $q->where('user_id', $userId))
-            ->when($sectionId !== null, fn (Builder $q) => $q->where('section_id', $sectionId));
+        return $filter->tab === HiddenListTab::POSTS ? $this->postsQuery($filter) : $this->topicsQuery($filter);
     }
 
     /**
      * @return Builder<ForumMessage>
      */
-    private function postsQuery(?int $topicId, ?int $userId): Builder
+    private function postsQuery(HiddenListFilter $filter): Builder
     {
         return ForumMessage::query()
+            ->withoutGlobalScope('access')
             ->where('deleted', 1)
-            ->when($topicId !== null, fn (Builder $q) => $q->where('topic_id', $topicId))
-            ->when($userId !== null, fn (Builder $q) => $q->where('user_id', $userId));
+            ->when($filter->author !== null, static fn (Builder $query) => $query->where('user_id', $filter->author))
+            ->when($filter->topic !== null, static fn (Builder $query) => $query->where('topic_id', $filter->topic))
+            ->when($filter->hiddenBy !== null, static fn (Builder $query) => $query->where('deleted_by', $filter->hiddenBy))
+            ->when($filter->search !== '', function (Builder $query) use ($filter): void {
+                $like = $this->like($filter->search);
+                $query->where(static function (Builder $search) use ($like): void {
+                    $search->where('user_name', 'like', $like)
+                        ->orWhereHas('topic', static fn (Builder $topic) => $topic->withoutGlobalScope('access')->where('name', 'like', $like));
+                });
+            });
+    }
+
+    /**
+     * @return Builder<ForumTopic>
+     */
+    private function topicsQuery(HiddenListFilter $filter): Builder
+    {
+        return ForumTopic::query()
+            ->withoutGlobalScope('access')
+            ->where('deleted', 1)
+            ->when($filter->author !== null, static fn (Builder $query) => $query->where('user_id', $filter->author))
+            ->when($filter->section !== null, static fn (Builder $query) => $query->where('section_id', $filter->section))
+            ->when($filter->hiddenBy !== null, static fn (Builder $query) => $query->where('deleted_by', $filter->hiddenBy))
+            ->when($filter->search !== '', function (Builder $query) use ($filter): void {
+                $like = $this->like($filter->search);
+                $query->where(static fn (Builder $search) => $search->where('name', 'like', $like)->orWhere('user_name', 'like', $like));
+            });
+    }
+
+    private function like(string $search): string
+    {
+        return '%' . addcslashes($search, '%_\\') . '%';
     }
 }

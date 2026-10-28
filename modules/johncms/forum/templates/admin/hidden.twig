@@ -1,0 +1,46 @@
+{#
+    The hidden posts and topics of the forum, a tab each: searched, narrowed to an author, a topic,
+    a section or to who hid them, and emptied for good by whoever may.
+
+    The page is a live list (src/admin/js/live-list.js): the regions below are drawn by templates
+    of their own, and forum::admin/hidden-live puts them back in place as a search is typed or a
+    filter is picked.
+
+    @var string       tab             posts | topics
+    @var array        controls        Built by HiddenListControlsMapper.
+    @var array        rows            Built by HiddenListRowMapper, for the tab.
+    @var string       search
+    @var int          total           What the filter lets through.
+    @var \Twig\Markup pagination
+    @var string       purge_url       Empty unless the visitor may empty the list and it holds anything.
+    @var string       success_message Empty unless an action has just been performed.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+
+    <div data-live-list>
+        {% include '@admin/components/list-tabs.twig' with {tabs: controls.tabs} only %}
+
+        <form class="admin-toolbar" method="get" action="{{ controls.action }}" role="search" data-live-list-form>
+            {% include '@admin/components/ui/search-field.twig' with {
+                name: 'q',
+                value: search,
+                label: __('Search the hidden'),
+                placeholder: __('Author or topic'),
+            } only %}
+            {% include '@admin/components/list-state.twig' with {controls: controls} only %}
+            {% include '@admin/components/list-filters.twig' with {controls: controls} only %}
+        </form>
+
+        {% include '@forum/admin/hidden-results.twig' with {
+            tab: tab,
+            controls: controls,
+            rows: rows,
+            total: total,
+            pagination: pagination,
+            purge_url: purge_url,
+        } only %}
+    </div>
+{% endblock %}

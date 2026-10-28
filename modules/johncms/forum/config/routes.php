@@ -8,8 +8,8 @@ use Johncms\Modules\Admin\Application\Middlewares\SuperAdminAccessMiddleware;
 use Johncms\Modules\Forum\Application\Controllers\Admin\DeleteSectionController;
 use Johncms\Modules\Forum\Application\Controllers\Admin\ForumDashboardController;
 use Johncms\Modules\Forum\Application\Controllers\Admin\ForumSettingsController;
-use Johncms\Modules\Forum\Application\Controllers\Admin\HiddenPostsController;
-use Johncms\Modules\Forum\Application\Controllers\Admin\HiddenTopicsController;
+use Johncms\Modules\Forum\Application\Controllers\Admin\HiddenListController;
+use Johncms\Modules\Forum\Application\Controllers\Admin\PurgeHiddenController;
 use Johncms\Modules\Forum\Application\Controllers\Admin\SectionFormController;
 use Johncms\Modules\Forum\Application\Controllers\AddFileController;
 use Johncms\Modules\Forum\Application\Controllers\AddVoteController;
@@ -48,6 +48,7 @@ use Johncms\Modules\Forum\Application\Controllers\SubmitVoteController;
 use Johncms\Modules\Forum\Application\Controllers\TopicsPeriodController;
 use Johncms\Modules\Forum\Application\Controllers\UnreadTopicsController;
 use Johncms\Modules\Forum\Application\Controllers\UploadFileController;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Controllers\ViewForumVisitorsController;
 use Johncms\Modules\Forum\Application\Controllers\ViewTopicVisitorsController;
 use Johncms\Modules\Forum\Application\Middlewares\ForumAccessMiddleware;
@@ -66,10 +67,15 @@ return static function (RouteCollection $router): void {
         $r->post('/admin/forum/sections/{id:number}/edit', [SectionFormController::class, 'update'])->name('admin.forum.sections.update');
         $r->get('/admin/forum/sections/{id:number}/delete', [DeleteSectionController::class, 'index'])->name('admin.forum.sections.delete');
         $r->post('/admin/forum/sections/{id:number}/delete', [DeleteSectionController::class, 'delete'])->name('admin.forum.sections.delete.run');
-        $r->get('/admin/forum/hidden-topics', [HiddenTopicsController::class, 'index'])->name('admin.forum.hidden_topics');
-        $r->post('/admin/forum/hidden-topics/delete', [HiddenTopicsController::class, 'deleteAll'])->name('admin.forum.hidden_topics.delete');
-        $r->get('/admin/forum/hidden-posts', [HiddenPostsController::class, 'index'])->name('admin.forum.hidden_posts');
-        $r->post('/admin/forum/hidden-posts/delete', [HiddenPostsController::class, 'deleteAll'])->name('admin.forum.hidden_posts.delete');
+        $r->get('/admin/forum/hidden', HiddenListController::class)
+            ->name('admin.forum.hidden')
+            ->permission(ForumPermissions::DELETED_VIEW);
+        $r->get('/admin/forum/hidden/purge', [PurgeHiddenController::class, 'index'])
+            ->name('admin.forum.hidden.purge')
+            ->permission(ForumPermissions::HIDDEN_PURGE);
+        $r->post('/admin/forum/hidden/purge', [PurgeHiddenController::class, 'purge'])
+            ->name('admin.forum.hidden.purge.run')
+            ->permission(ForumPermissions::HIDDEN_PURGE);
 
         // The settings change the site as a whole, so they ask for more than "may open the
         // panel". Group settings do not propagate into a nested group: this one declares its

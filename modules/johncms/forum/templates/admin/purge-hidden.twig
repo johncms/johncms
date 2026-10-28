@@ -1,0 +1,11 @@
+{#
+    Emptying the list of hidden posts or topics, as a page: what the link to the dialog leads to
+    without the script that opens it in the modal.
+
+    @var array dialog What purge-hidden-dialog.twig is given.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@admin/components/ui/dialog-page.twig' with {dialog: '@forum/admin/purge-hidden-dialog.twig', data: dialog} only %}
+{% endblock %}

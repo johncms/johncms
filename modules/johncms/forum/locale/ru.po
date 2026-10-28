@@ -1712,3 +1712,83 @@ msgstr "Используются, если у раздела нет своих �
 
 msgid "Used where the topic has no keywords or description of its own."
 msgstr "Используются, если у темы нет своих ключевых слов или описания."
+
+msgid "Anybody"
+msgstr "Кто угодно"
+
+msgid "Author or topic"
+msgstr "Автор или тема"
+
+msgid "Change the search or reset the filters."
+msgstr "Измените поиск или сбросьте фильтры."
+
+msgid "Delete the hidden posts"
+msgstr "Удалить скрытые сообщения"
+
+msgid "Delete the hidden topics"
+msgstr "Удалить скрытые темы"
+
+msgid "Delete what is found"
+msgstr "Удалить найденное"
+
+msgid "%d hidden post"
+msgid_plural "%d hidden posts"
+msgstr[0] "%d скрытое сообщение"
+msgstr[1] "%d скрытых сообщения"
+msgstr[2] "%d скрытых сообщений"
+msgstr[3] "%d скрытых сообщений"
+
+msgid "%d hidden topic"
+msgid_plural "%d hidden topics"
+msgstr[0] "%d скрытая тема"
+msgstr[1] "%d скрытые темы"
+msgstr[2] "%d скрытых тем"
+msgstr[3] "%d скрытых тем"
+
+msgid "Found: %s"
+msgstr "Найдено: %s"
+
+msgid "Hidden"
+msgstr "Скрытое"
+
+msgid "Hidden by"
+msgstr "Скрыл"
+
+msgid "Hidden by %s"
+msgstr "Скрыл: %s"
+
+msgid "No hidden posts"
+msgstr "Скрытых сообщений нет"
+
+msgid "No hidden topics"
+msgstr "Скрытых тем нет"
+
+msgid "Only this author"
+msgstr "Только этот автор"
+
+msgid "Only this section"
+msgstr "Только этот раздел"
+
+msgid "Only this topic"
+msgstr "Только эта тема"
+
+msgid "Open in the topic"
+msgstr "Открыть в теме"
+
+msgid "Posts"
+msgstr "Сообщения"
+
+msgid "Search the hidden"
+msgstr "Поиск по скрытому"
+
+msgid "The hidden posts were deleted"
+msgstr "Скрытые сообщения удалены"
+
+msgid "The hidden topics were deleted"
+msgstr "Скрытые темы удалены"
+
+msgid "They are deleted for good with their files. This cannot be undone."
+msgstr "Они удалятся насовсем вместе с файлами. Это нельзя отменить."
+
+msgid "They are deleted for good with their posts and files. This cannot be undone."
+msgstr "Они удалятся насовсем вместе с сообщениями и файлами. Это нельзя отменить."

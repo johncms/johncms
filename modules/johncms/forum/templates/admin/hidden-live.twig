@@ -1,0 +1,22 @@
+{#
+    The regions of the list of the hidden content of the forum, as the live list asks for them: each
+    replaces the region of the same name on the page. A fragment, so it extends nothing.
+
+    @var string       tab
+    @var array        controls
+    @var array        rows
+    @var int          total
+    @var \Twig\Markup pagination
+    @var string       purge_url
+#}
+{% include '@admin/components/list-tabs.twig' with {tabs: controls.tabs} only %}
+{% include '@admin/components/list-state.twig' with {controls: controls} only %}
+{% include '@admin/components/list-filters.twig' with {controls: controls} only %}
+{% include '@forum/admin/hidden-results.twig' with {
+    tab: tab,
+    controls: controls,
+    rows: rows,
+    total: total,
+    pagination: pagination,
+    purge_url: purge_url,
+} only %}

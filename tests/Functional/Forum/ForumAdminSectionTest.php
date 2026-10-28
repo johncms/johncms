@@ -21,8 +21,6 @@ final class ForumAdminSectionTest extends FunctionalTestCase
     public static function screenProvider(): iterable
     {
         yield 'forum' => ['/admin/forum'];
-        yield 'hidden topics' => ['/admin/forum/hidden-topics'];
-        yield 'hidden posts' => ['/admin/forum/hidden-posts'];
     }
 
     #[DataProvider('screenProvider')]

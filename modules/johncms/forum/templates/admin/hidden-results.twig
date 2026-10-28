@@ -1,0 +1,120 @@
+{#
+    What the filter lets through: the chips of what is applied, the posts or the topics, the pages
+    and the button that empties what is found.
+
+    A post shows its author, its topic and an excerpt of its text, since what it said is what a
+    moderator decides on; a topic is a row of a table.
+
+    @param string       tab        posts | topics
+    @param array        controls
+    @param array        rows       Built by HiddenListRowMapper.
+    @param int          total
+    @param \Twig\Markup pagination
+    @param string       purge_url  Empty unless the visitor may empty the list and it holds anything.
+#}
+<div class="admin-list-results" data-live-list-region="results">
+    {% include '@admin/components/ui/filter-chips.twig' with {chips: controls.chips, clear_url: controls.clear_url} only %}
+
+    <div class="card">
+        {% if rows is empty %}
+            {% include '@admin/components/ui/empty-state.twig' with {
+                icon: 'eye-off',
+                title: tab == 'posts' ? __('No hidden posts') : __('No hidden topics'),
+                description: controls.chips is empty ? '' : __('Change the search or reset the filters.'),
+            } only %}
+        {% elseif tab == 'posts' %}
+            <div class="admin-hidden-posts">
+                {% for row in rows %}
+                    <article class="admin-hidden-post">
+                        <div class="admin-hidden-post__head">
+                            {% include '@admin/components/ui/user-cell.twig' with {
+                                id: row.author.id,
+                                name: row.author.name,
+                                url: row.author.url,
+                                online: row.author.online,
+                                sub: row.date|display_date,
+                            } only %}
+                            {% include '@admin/components/ui/row-actions.twig' with {actions: row.actions, label: __('Actions')} only %}
+                        </div>
+                        {% if row.topic_name %}
+                            <div class="admin-hidden-post__topic">
+                                {% include '@admin/components/ui/icon.twig' with {name: 'message-square', size: 13} only %}
+                                <a href="{{ row.topic_url }}">{{ row.topic_name }}</a>
+                            </div>
+                        {% endif %}
+                        <div class="admin-hidden-post__text">{{ row.excerpt }}</div>
+                        <div class="admin-hidden-post__meta">
+                            {% if row.hidden_by %}
+                                <span>{{ __('Hidden by %s')|format(row.hidden_by) }}</span>
+                            {% endif %}
+                            {% if row.origin and row.origin.ip %}
+                                <span class="font-monospace">
+                                    <a href="{{ row.origin.ip_url }}">{{ row.origin.ip }}</a>
+                                    {%- if row.origin.proxy %} / <a href="{{ row.origin.proxy_url }}">{{ row.origin.proxy }}</a>{% endif %}
+                                </span>
+                            {% endif %}
+                            {% if row.origin and row.origin.browser %}
+                                <span class="admin-hidden-post__browser" title="{{ row.origin.browser }}">{{ row.origin.browser }}</span>
+                            {% endif %}
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-hover admin-hidden-topics">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ __('Topic') }}</th>
+                            <th scope="col">{{ __('Author') }}</th>
+                            <th scope="col" class="text-end">{{ __('Messages') }}</th>
+                            <th scope="col">{{ __('Last post') }}</th>
+                            <th scope="col">{{ __('Hidden by') }}</th>
+                            <th scope="col"><span class="visually-hidden">{{ __('Actions') }}</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in rows %}
+                            <tr>
+                                <td>
+                                    <a class="admin-hidden-topics__name" href="{{ row.url }}">{{ row.name }}</a>
+                                    {% if row.section_name %}
+                                        <div class="admin-hidden-topics__sub">{{ row.section_name }}</div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% include '@admin/components/ui/user-cell.twig' with {
+                                        id: row.author.id,
+                                        name: row.author.name,
+                                        url: row.author.url,
+                                        online: row.author.online,
+                                    } only %}
+                                </td>
+                                <td class="text-end font-monospace">{{ row.posts|format_number }}</td>
+                                <td class="admin-hidden-topics__date">{{ row.date ? row.date|display_date : '—' }}</td>
+                                <td>{{ row.hidden_by }}</td>
+                                <td>
+                                    <div class="admin-hidden-topics__actions">
+                                        {% include '@admin/components/ui/row-actions.twig' with {actions: row.actions, label: __('Actions')} only %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+        {% if rows is not empty %}
+            <div class="card-footer admin-list-footer">
+                <span class="admin-list-footer__total">{{ __('Found: %s')|format(total|format_number) }}</span>
+                <div class="pagination-no-padding">{{ pagination }}</div>
+                {% if purge_url %}
+                    <a class="btn btn-outline-danger btn-sm" href="{{ purge_url }}" data-admin-modal>
+                        {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+                        {{ __('Delete what is found') }}
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>

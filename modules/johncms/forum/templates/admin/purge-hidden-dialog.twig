@@ -1,0 +1,47 @@
+{#
+    Emptying the list of hidden posts or topics for good. Answered to the modal of the panel as it
+    is, and put into a page of its own (purge-hidden.twig) for a plain visit.
+
+    @var string tab         posts | topics
+    @var int    count       What goes.
+    @var list   chips       label, value — what the list is narrowed to; empty for all of it.
+    @var string form_action Carries the filter in its query string.
+    @var string back_url    The list as it was.
+#}
+{% embed '@admin/components/ui/dialog.twig' with {
+    title: tab == 'posts' ? __('Delete the hidden posts') : __('Delete the hidden topics'),
+    action: form_action,
+    close_url: back_url,
+    tab: tab,
+    count: count,
+    chips: chips,
+} only %}
+    {% block body %}
+        <p class="fw-semibold">
+            {% if tab == 'posts' %}
+                {{ n__('%d hidden post', '%d hidden posts', count)|format(count) }}
+            {% else %}
+                {{ n__('%d hidden topic', '%d hidden topics', count)|format(count) }}
+            {% endif %}
+        </p>
+        {% if chips is not empty %}
+            <ul class="mb-3">
+                {% for chip in chips %}
+                    <li>{{ chip.label }}: {{ chip.value }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <div class="alert alert-danger mb-0">
+            {{ tab == 'posts'
+                ? __('They are deleted for good with their files. This cannot be undone.')
+                : __('They are deleted for good with their posts and files. This cannot be undone.') }}
+        </div>
+    {% endblock %}
+    {% block footer %}
+        <a href="{{ close_url }}" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</a>
+        <button type="submit" class="btn btn-danger"{% if count == 0 %} disabled{% endif %}>
+            {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+            {{ __('Delete') }}
+        </button>
+    {% endblock %}
+{% endembed %}
