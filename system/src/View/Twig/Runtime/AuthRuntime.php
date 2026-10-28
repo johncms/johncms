@@ -9,6 +9,7 @@ use Johncms\Auth\CurrentUser;
 use Johncms\Auth\External\ExternalIdentityProviderInterface;
 use Johncms\Auth\External\ExternalIdentityProviderRegistry;
 use Johncms\Auth\Impersonation\ImpersonationBannerDTO;
+use Johncms\Users\ProfileLinksInterface;
 use Twig\Extension\RuntimeExtensionInterface;
 
 final readonly class AuthRuntime implements RuntimeExtensionInterface
@@ -17,12 +18,21 @@ final readonly class AuthRuntime implements RuntimeExtensionInterface
         private AccessCheckerInterface $accessChecker,
         private CurrentUser $currentUser,
         private ExternalIdentityProviderRegistry $providers,
+        private ProfileLinksInterface $profileLinks,
     ) {
     }
 
     public function can(string $permission, mixed $subject = null): bool
     {
         return $this->accessChecker->allows($permission, $subject);
+    }
+
+    /**
+     * Where the name of an author leads, or null to draw the name without a link.
+     */
+    public function profileUrl(int $userId): ?string
+    {
+        return $this->profileLinks->urlOf($userId);
     }
 
     /**

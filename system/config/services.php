@@ -110,6 +110,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface as SymfonyValidator
 use Johncms\Utils\DateFormatterInterface;
 use Johncms\Users\IgnoreListChecker;
 use Johncms\Users\IgnoreListCheckerInterface;
+use Johncms\Users\ProfileLinks;
+use Johncms\Users\ProfileLinksInterface;
 use Johncms\Users\UserPlaceFormatter;
 use Johncms\Users\UserPlaceFormatterInterface;
 use Johncms\Sitemap\SitemapGenerator;
@@ -438,6 +440,7 @@ return static function (ContainerConfigurator $container): void {
         ->arg('$providers', tagged_iterator('johncms.visitor_place_provider'));
     $services->alias(UserPlaceFormatterInterface::class, UserPlaceFormatter::class);
     $services->set(IgnoreListCheckerInterface::class, IgnoreListChecker::class);
+    $services->set(ProfileLinksInterface::class, ProfileLinks::class)->autowire();
     $services->set(DateFormatterInterface::class, DateFormatter::class)->autowire();
     $services->set(NavChain::class)->factory([NavChain::class, 'create']);
     // Which library resizes the pictures is settled here and nowhere else: everything that

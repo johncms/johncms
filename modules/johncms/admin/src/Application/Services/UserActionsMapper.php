@@ -10,6 +10,7 @@ use Johncms\Auth\CurrentUser;
 use Johncms\Auth\RegistrationSettings;
 use Johncms\Modules\Admin\Application\Access\UserEditAccess;
 use Johncms\Users\Bans\BanAccess;
+use Johncms\Users\ProfileLinksInterface;
 use Johncms\Users\User;
 
 /**
@@ -28,7 +29,7 @@ final readonly class UserActionsMapper
     public function __construct(
         private CurrentUser $currentUser,
         private AccessCheckerInterface $accessChecker,
-        private PublicProfileLinks $profiles,
+        private ProfileLinksInterface $profiles,
         private UserEditAccess $editAccess,
         private BanAccess $banAccess,
         private RegistrationSettings $registration,
