@@ -49,6 +49,20 @@ final class CacheClearCommandTest extends TestCase
         self::assertDirectoryDoesNotExist($this->cachePath . '/schedule');
     }
 
+    public function testExecuteAcceptsCachePathWithTrailingSeparator(): void
+    {
+        mkdir($this->cachePath . '/app/a/b', 0777, true);
+        file_put_contents($this->cachePath . '/app/a/b/entry', 'value');
+
+        $tester = new CommandTester(new CacheClearCommand($this->cachePath . DIRECTORY_SEPARATOR));
+
+        $exitCode = $tester->execute([]);
+
+        self::assertSame(0, $exitCode);
+        self::assertStringContainsString('Removed 1 files and 3 directories.', $tester->getDisplay());
+        self::assertDirectoryDoesNotExist($this->cachePath . '/app');
+    }
+
     public function testExecuteReturnsSuccessWhenCacheDirectoryDoesNotExist(): void
     {
         rmdir($this->cachePath);

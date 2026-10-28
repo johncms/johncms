@@ -62,9 +62,13 @@ final class CacheClearCommand extends Command
         $filesRemoved = 0;
         $directoriesRemoved = 0;
 
-        $items = scandir($directory);
+        $items = @scandir($directory);
         if ($items === false) {
-            throw new RuntimeException(sprintf('Cannot read cache directory "%s".', $directory));
+            if (! is_dir($directory)) {
+                return [0, 0];
+            }
+
+            throw new RuntimeException(sprintf('Cannot read cache directory "%s": %s', $directory, $this->lastError()));
         }
 
         foreach ($items as $item) {
@@ -72,11 +76,18 @@ final class CacheClearCommand extends Command
                 continue;
             }
 
-            $path = $directory . DIRECTORY_SEPARATOR . $item;
+            $path = $this->path($directory, $item);
 
             if (is_link($path) || is_file($path)) {
-                if (! unlink($path)) {
-                    throw new RuntimeException(sprintf('Failed to remove cache file "%s".', $path));
+                if (! @unlink($path)) {
+                    $error = $this->lastError();
+
+                    // The running site may prune the same entry while the command walks the tree.
+                    if (! is_link($path) && ! file_exists($path)) {
+                        continue;
+                    }
+
+                    throw new RuntimeException(sprintf('Failed to remove cache file "%s": %s', $path, $error));
                 }
 
                 ++$filesRemoved;
@@ -91,13 +102,39 @@ final class CacheClearCommand extends Command
             $filesRemoved += $nestedFilesRemoved;
             $directoriesRemoved += $nestedDirectoriesRemoved;
 
-            if (! rmdir($path)) {
-                throw new RuntimeException(sprintf('Failed to remove cache directory "%s".', $path));
+            if (! @rmdir($path)) {
+                $error = $this->lastError();
+
+                // Requests of the running site write fresh entries while the command clears the
+                // directory; those are new cache, not a failure, so the directory stays. A
+                // directory that is already gone is not a failure either.
+                if (! $this->isEmptyDirectory($path)) {
+                    continue;
+                }
+
+                throw new RuntimeException(sprintf('Failed to remove cache directory "%s": %s', $path, $error));
             }
 
             ++$directoriesRemoved;
         }
 
         return [$filesRemoved, $directoriesRemoved];
+    }
+
+    private function isEmptyDirectory(string $directory): bool
+    {
+        $items = @scandir($directory);
+
+        return $items !== false && array_diff($items, ['.', '..']) === [];
+    }
+
+    private function lastError(): string
+    {
+        return error_get_last()['message'] ?? 'unknown error';
+    }
+
+    private function path(string $directory, string $item): string
+    {
+        return rtrim($directory, '/\\') . DIRECTORY_SEPARATOR . $item;
     }
 }
