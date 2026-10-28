@@ -14,6 +14,7 @@ namespace Johncms;
 
 use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\CurrentUser;
+use Johncms\Users\ProfileLinksInterface;
 use Johncms\Users\User;
 
 class UserProperties
@@ -22,10 +23,13 @@ class UserProperties
 
     private StaffTitles $staffTitles;
 
+    private ProfileLinksInterface $profileLinks;
+
     public function __construct()
     {
         $this->current_user = di(CurrentUser::class);
         $this->staffTitles = di(StaffTitles::class);
+        $this->profileLinks = di(ProfileLinksInterface::class);
     }
 
     /**
@@ -43,8 +47,8 @@ class UserProperties
         $userId = (int) ($user_data['user_id'] ?? $user_data['id'] ?? 0);
 
         $data_array['user_profile_link'] = '';
-        if ($userId > 0 && $this->current_user->id() !== $userId && $this->current_user->isValid()) {
-            $data_array['user_profile_link'] = '/profile/' . $userId;
+        if ($this->current_user->id() !== $userId) {
+            $data_array['user_profile_link'] = $this->profileLinks->urlOf($userId) ?? '';
         }
 
         $data_array['ip'] = long2ip((int) $user_data['ip']);

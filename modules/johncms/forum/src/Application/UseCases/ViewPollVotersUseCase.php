@@ -10,6 +10,7 @@ use Johncms\Modules\Forum\Application\DTO\PollVotersQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\PollVotersResultDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
+use Johncms\Users\ProfileLinksInterface;
 
 final readonly class ViewPollVotersUseCase
 {
@@ -17,6 +18,7 @@ final readonly class ViewPollVotersUseCase
         private StaffTitles $staffTitles,
         private ForumVoteRepositoryInterface $voteRepository,
         private CurrentUser $currentUser,
+        private ProfileLinksInterface $profileLinks,
     ) {
     }
 
@@ -61,8 +63,8 @@ final readonly class ViewPollVotersUseCase
 
         foreach ($rows as $row) {
             $row['user_profile_link'] = '';
-            if (! empty($row['id']) && $this->currentUser->isValid() && $this->currentUser->id() !== (int) $row['id']) {
-                $row['user_profile_link'] = '/profile/' . $row['id'];
+            if ($this->currentUser->id() !== (int) ($row['id'] ?? 0)) {
+                $row['user_profile_link'] = $this->profileLinks->urlOf((int) ($row['id'] ?? 0)) ?? '';
             }
 
             $row['user_rights_name'] = $this->staffTitles->titleFor((int) ($row['id'] ?? 0));

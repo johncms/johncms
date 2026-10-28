@@ -17,6 +17,7 @@ use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Content\ContentContext;
 use Johncms\Content\ContentRendererInterface;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Users\ProfileLinksInterface;
 use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
 use Twig\Markup;
@@ -168,10 +169,10 @@ trait MessageMutators
      */
     public function getUserProfileLinkAttribute(): string
     {
-        if ($this->current_user->is_valid && $this->user_id !== $this->current_user->id) {
-            return $this->user_data->profile_url;
+        if ($this->user_id === $this->current_user->id) {
+            return '';
         }
-        return '';
+        return di(ProfileLinksInterface::class)->urlOf($this->user_id) ?? '';
     }
 
     /**

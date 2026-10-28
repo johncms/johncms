@@ -13,6 +13,7 @@ use Johncms\Modules\Downloads\Application\Exceptions\UserNotFoundException;
 use Johncms\Modules\Downloads\Application\UseCases\ViewUserFilesUseCase;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
+use Johncms\Users\ProfileLinksInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class UserFilesController
@@ -20,6 +21,7 @@ final readonly class UserFilesController
     public function __construct(
         private NavChain $navChain,
         private CurrentUser $currentUser,
+        private ProfileLinksInterface $profileLinks,
         private ViewUserFilesUseCase $useCase,
         private FilePresenter $filePresenter,
         private PaginationFactory $paginationFactory,
@@ -58,8 +60,8 @@ final readonly class UserFilesController
             'id'                      => $profileUser->id,
             'name'                    => $profileUser->name,
             'user_is_online'          => $profileUser->is_online,
-            'user_profile_link'       => ($this->currentUser->isValid() && $this->currentUser->id() !== $profileUser->id)
-                ? $profileUser->profile_url
+            'user_profile_link'       => $this->currentUser->id() !== $profileUser->id
+                ? $this->profileLinks->urlOf($profileUser->id) ?? ''
                 : '',
             'search_ip_url'           => $profileUser->search_ip_url,
             'ip'                      => $profileUser->ip,

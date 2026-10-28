@@ -22,6 +22,7 @@ use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Utils\DateFormatterInterface;
 use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
+use Johncms\Users\ProfileLinksInterface;
 
 final readonly class ViewForumFilesUseCase
 {
@@ -34,6 +35,7 @@ final readonly class ViewForumFilesUseCase
         private DateFormatterInterface $dateFormatter,
         private ContentRendererInterface $content,
         private CurrentUser $currentUser,
+        private ProfileLinksInterface $profileLinks,
         private AccessCheckerInterface $accessChecker,
         private ForumAttachmentStorage $attachments,
     ) {
@@ -273,8 +275,8 @@ final readonly class ViewForumFilesUseCase
             $row['user_is_online'] = time() <= (int) ($row['lastdate'] ?? 0) + 300;
             $row['user_profile_link'] = '';
 
-            if ($this->currentUser->isValid() && $this->currentUser->id() !== (int) $row['user_id']) {
-                $row['user_profile_link'] = '/profile/' . $row['user_id'];
+            if ($this->currentUser->id() !== (int) $row['user_id']) {
+                $row['user_profile_link'] = $this->profileLinks->urlOf((int) $row['user_id']) ?? '';
             }
 
             $row['user_rights_name'] = $this->staffTitles->titleFor((int) $row['user_id']);

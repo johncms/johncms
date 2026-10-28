@@ -11,12 +11,14 @@ use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\UseCases\ViewTopUsersUseCase;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
+use Johncms\Users\ProfileLinksInterface;
 
 final readonly class TopUsersController
 {
     public function __construct(
         private NavChain $navChain,
         private CurrentUser $currentUser,
+        private ProfileLinksInterface $profileLinks,
         private ViewTopUsersUseCase $useCase,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
@@ -40,7 +42,7 @@ final readonly class TopUsersController
                 'id'                      => $userModel->id,
                 'name'                    => $userModel->name,
                 'user_is_online'          => $userModel->is_online,
-                'user_profile_link'       => ($this->currentUser->isValid() && $this->currentUser->id() !== $userModel->id) ? $userModel->profile_url : '',
+                'user_profile_link'       => $this->currentUser->id() !== $userModel->id ? $this->profileLinks->urlOf($userModel->id) ?? '' : '',
                 'files_url'               => '/downloads/user-files/' . $userModel->id . '/',
                 'files_count'             => $userModel->files_count,
                 'search_ip_url'           => $userModel->search_ip_url,

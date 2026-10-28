@@ -20,6 +20,7 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Domain\Models\ForumFile;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
+use Johncms\Users\ProfileLinksInterface;
 use Johncms\Utils\DateFormatterInterface;
 
 final readonly class ViewPostUseCase
@@ -28,6 +29,7 @@ final readonly class ViewPostUseCase
         private ForumMessageRepositoryInterface $messageRepository,
         private ForumTopicPathService $topicPathService,
         private CurrentUser $currentUser,
+        private ProfileLinksInterface $profileLinks,
         private DateFormatterInterface $dateFormatter,
         private AccessCheckerInterface $accessChecker,
     ) {
@@ -165,15 +167,11 @@ final readonly class ViewPostUseCase
 
     private function getProfileUrl(ForumMessage $message): string
     {
-        if (! $this->currentUser->isValid() || $message->user_id === null) {
+        if ($message->user_id === null || $this->currentUser->id() === $message->user_id) {
             return '';
         }
 
-        if ($this->currentUser->id() === $message->user_id) {
-            return '';
-        }
-
-        return '/profile/' . $message->user_id;
+        return $this->profileLinks->urlOf($message->user_id) ?? '';
     }
 
     private function getMessagePage(ForumMessage $message, array $forumSettings): int
