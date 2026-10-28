@@ -46,10 +46,7 @@ class UserProperties
         // account, under a different key.
         $userId = (int) ($user_data['user_id'] ?? $user_data['id'] ?? 0);
 
-        $data_array['user_profile_link'] = '';
-        if ($this->current_user->id() !== $userId) {
-            $data_array['user_profile_link'] = $this->profileLinks->urlOf($userId) ?? '';
-        }
+        $data_array['user_profile_link'] = $this->profileLinks->urlOf($userId) ?? '';
 
         $data_array['ip'] = long2ip((int) $user_data['ip']);
         $data_array['search_ip_url'] = '/admin/ip-search?ip=' . long2ip((int) $user_data['ip']);

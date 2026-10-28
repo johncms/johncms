@@ -169,9 +169,6 @@ trait MessageMutators
      */
     public function getUserProfileLinkAttribute(): string
     {
-        if ($this->user_id === $this->current_user->id) {
-            return '';
-        }
         return di(ProfileLinksInterface::class)->urlOf($this->user_id) ?? '';
     }
 

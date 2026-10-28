@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Johncms\Auth\CurrentUser;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -17,7 +16,6 @@ final readonly class TopUsersController
 {
     public function __construct(
         private NavChain $navChain,
-        private CurrentUser $currentUser,
         private ProfileLinksInterface $profileLinks,
         private ViewTopUsersUseCase $useCase,
         private PaginationFactory $paginationFactory,
@@ -42,7 +40,7 @@ final readonly class TopUsersController
                 'id'                      => $userModel->id,
                 'name'                    => $userModel->name,
                 'user_is_online'          => $userModel->is_online,
-                'user_profile_link'       => $this->currentUser->id() !== $userModel->id ? $this->profileLinks->urlOf($userModel->id) ?? '' : '',
+                'user_profile_link'       => $this->profileLinks->urlOf($userModel->id) ?? '',
                 'files_url'               => '/downloads/user-files/' . $userModel->id . '/',
                 'files_count'             => $userModel->files_count,
                 'search_ip_url'           => $userModel->search_ip_url,

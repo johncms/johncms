@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
@@ -20,7 +19,6 @@ final readonly class UserFilesController
 {
     public function __construct(
         private NavChain $navChain,
-        private CurrentUser $currentUser,
         private ProfileLinksInterface $profileLinks,
         private ViewUserFilesUseCase $useCase,
         private FilePresenter $filePresenter,
@@ -60,9 +58,7 @@ final readonly class UserFilesController
             'id'                      => $profileUser->id,
             'name'                    => $profileUser->name,
             'user_is_online'          => $profileUser->is_online,
-            'user_profile_link'       => $this->currentUser->id() !== $profileUser->id
-                ? $this->profileLinks->urlOf($profileUser->id) ?? ''
-                : '',
+            'user_profile_link'       => $this->profileLinks->urlOf($profileUser->id) ?? '',
             'search_ip_url'           => $profileUser->search_ip_url,
             'ip'                      => $profileUser->ip,
             'search_ip_via_proxy_url' => $profileUser->search_ip_via_proxy_url,

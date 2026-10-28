@@ -167,11 +167,7 @@ final readonly class ViewPostUseCase
 
     private function getProfileUrl(ForumMessage $message): string
     {
-        if ($message->user_id === null || $this->currentUser->id() === $message->user_id) {
-            return '';
-        }
-
-        return $this->profileLinks->urlOf($message->user_id) ?? '';
+        return $message->user_id === null ? '' : $this->profileLinks->urlOf($message->user_id) ?? '';
     }
 
     private function getMessagePage(ForumMessage $message, array $forumSettings): int

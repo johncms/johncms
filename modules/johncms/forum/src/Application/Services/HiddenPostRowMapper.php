@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Services;
 
-use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Users\ProfileLinksInterface;
 use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
 use Johncms\Utils\PlainTextFormatter;
@@ -22,7 +22,7 @@ final readonly class HiddenPostRowMapper
     public function __construct(
         private DateFormatterInterface $dateFormatter,
         private ForumTopicPathService $topicPath,
-        private CurrentUser $currentUser,
+        private ProfileLinksInterface $profileLinks,
         private AccessCheckerInterface $accessChecker,
     ) {
     }
@@ -82,6 +82,6 @@ final readonly class HiddenPostRowMapper
 
     private function profileLink(?int $userId): string
     {
-        return $userId && $this->currentUser->id() !== $userId ? '/profile/' . $userId : '';
+        return $userId === null ? '' : $this->profileLinks->urlOf($userId) ?? '';
     }
 }

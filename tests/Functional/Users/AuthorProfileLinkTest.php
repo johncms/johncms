@@ -25,6 +25,14 @@ final class AuthorProfileLinkTest extends FunctionalTestCase
         self::assertStringContainsString($this->link($author), $this->page('/guestbook', FunctionalUserFactory::create()));
     }
 
+    public function testAMemberIsLedToTheirOwnProfileAsWell(): void
+    {
+        $author = FunctionalUserFactory::create(['name' => 'Bilbo']);
+        Fixture::insert('guest', ['user_id' => $author->id, 'name' => 'Bilbo', 'text' => 'Hello', 'time' => time()]);
+
+        self::assertStringContainsString($this->link($author), $this->page('/guestbook', $author));
+    }
+
     public function testAGuestSeesTheVisitorsOnlineWithoutALink(): void
     {
         $member = FunctionalUserFactory::create(['lastdate' => time()]);

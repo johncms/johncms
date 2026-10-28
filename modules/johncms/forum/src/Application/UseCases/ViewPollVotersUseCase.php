@@ -62,10 +62,7 @@ final readonly class ViewPollVotersUseCase
         $this->staffTitles->preload(array_map(static fn (array $row): int => (int) ($row['id'] ?? 0), $rows));
 
         foreach ($rows as $row) {
-            $row['user_profile_link'] = '';
-            if ($this->currentUser->id() !== (int) ($row['id'] ?? 0)) {
-                $row['user_profile_link'] = $this->profileLinks->urlOf((int) ($row['id'] ?? 0)) ?? '';
-            }
+            $row['user_profile_link'] = $this->profileLinks->urlOf((int) ($row['id'] ?? 0)) ?? '';
 
             $row['user_rights_name'] = $this->staffTitles->titleFor((int) ($row['id'] ?? 0));
             $row['user_is_online'] = $currentTime <= (int) ($row['lastdate'] ?? 0) + 300;

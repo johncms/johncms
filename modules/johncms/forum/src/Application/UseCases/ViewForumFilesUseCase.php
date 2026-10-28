@@ -273,11 +273,7 @@ final readonly class ViewForumFilesUseCase
             $row['post_text'] = $text;
             $row['post_time'] = $this->dateFormatter->format((int) $row['time']);
             $row['user_is_online'] = time() <= (int) ($row['lastdate'] ?? 0) + 300;
-            $row['user_profile_link'] = '';
-
-            if ($this->currentUser->id() !== (int) $row['user_id']) {
-                $row['user_profile_link'] = $this->profileLinks->urlOf((int) $row['user_id']) ?? '';
-            }
+            $row['user_profile_link'] = $this->profileLinks->urlOf((int) $row['user_id']) ?? '';
 
             $row['user_rights_name'] = $this->staffTitles->titleFor((int) $row['user_id']);
             $row['user_name'] = $row['name'];

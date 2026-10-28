@@ -4,8 +4,7 @@
     @param User   item
     @param string active_tab Which activity counter to show, empty on the plain lists.
 #}
-{% set is_self = app.user.isValid and app.user.id == item.id %}
-{% set profile_link = is_self ? null : profile_url(item.id) %}
+{% set profile_link = profile_url(item.id) %}
 <div class="new_post-item">
     <div class="new_post-header d-flex justify-content-between">
         <div class="post-user">

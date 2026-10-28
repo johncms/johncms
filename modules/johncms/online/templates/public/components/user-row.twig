@@ -14,7 +14,7 @@
         </div>
         <div class="overflow-auto flex-grow-1">
             <div class="user-name">
-                {% if item.profileUrl and not (app.user.isValid and app.user.id == item.id) %}
+                {% if item.profileUrl %}
                     <a href="{{ item.profileUrl }}" class="user-login me-2">{{ item.name }}</a>
                 {% else %}
                     <a class="user-login me-2">{{ item.name }}</a>
