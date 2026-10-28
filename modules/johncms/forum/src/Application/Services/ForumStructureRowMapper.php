@@ -53,11 +53,11 @@ final readonly class ForumStructureRowMapper
     private function row(ForumSection $section, int $depth): array
     {
         $holdsTopics = $section->section_type === 1;
-        $editUrl = self::URL . '/' . $section->id . '/edit';
+        $editUrl = '/admin/forum/sections/' . $section->id . '/edit';
 
         $actions = [$this->action($editUrl, __('Edit'), 'pencil')];
         if (! $holdsTopics) {
-            $actions[] = $this->action(self::URL . '/new?parent=' . $section->id, __('Add subsection'), 'folder-plus');
+            $actions[] = $this->action('/admin/forum/sections/new?parent=' . $section->id, __('Add subsection'), 'folder-plus');
         }
         $actions[] = $this->action($section->url, __('Open on the site'), 'external-link');
         $actions[] = $this->action(self::URL . '/' . $section->id . '/delete', __('Delete'), 'trash-2', danger: true);

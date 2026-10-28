@@ -37,7 +37,7 @@ final readonly class ForumDashboardController
             'module_menu'       => ['forum' => true],
             'counters'          => $this->getDashboard->execute(),
             'rows'              => $this->rowMapper->map($this->structure->tree()),
-            'add_category_url'  => '/admin/forum/structure/new',
+            'add_category_url'  => '/admin/forum/sections/new',
             'hidden_topics_url' => '/admin/forum/hidden-topics',
             'hidden_posts_url'  => '/admin/forum/hidden-posts',
             // The settings are for the site owner only.

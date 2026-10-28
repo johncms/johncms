@@ -74,3 +74,18 @@
   display: flex;
   justify-content: flex-end;
 }
+
+// The form of a section (forum::admin/section-form).
+
+.admin-forum-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.admin-forum-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}

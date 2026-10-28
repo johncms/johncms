@@ -1467,7 +1467,7 @@ msgid "Sections"
 msgstr "Разделы"
 
 msgid "Topics"
-msgstr "Темы "
+msgstr "Темы"
 
 msgid "Messages"
 msgstr "Сообщения"
@@ -1566,3 +1566,84 @@ msgstr[0] "%d раздел"
 msgstr[1] "%d раздела"
 msgstr[2] "%d разделов"
 msgstr[3] "%d разделов"
+
+msgid "About the section"
+msgstr "О разделе"
+
+msgid "Address"
+msgstr "Адрес"
+
+msgid "A folder for other sections; no topics are started in it."
+msgstr "Папка для других разделов, темы в ней не создаются."
+
+msgid "Choose a section that holds sections, not this one or a section under it"
+msgstr "Выберите раздел для подразделов — не этот и не вложенный в него"
+
+msgid "Choose what the section holds"
+msgstr "Выберите, что содержит раздел"
+
+msgid "Choose who writes in the section"
+msgstr "Выберите, кто пишет в разделе"
+
+msgid "Left empty, they are made of the templates in the settings of the forum."
+msgstr "Если оставить пустыми, они берутся из шаблонов в настройках форума."
+
+msgid "Members start topics in it."
+msgstr "Пользователи создают в нём темы."
+
+msgid "Members write as everywhere on the forum."
+msgstr "Пользователи пишут, как везде на форуме."
+
+msgid "Nobody but the moderators writes in it."
+msgstr "Писать в нём могут только модераторы."
+
+msgid "Parent section"
+msgstr "Родительский раздел"
+
+msgid "Place in the tree"
+msgstr "Место в структуре"
+
+msgid "Save and close"
+msgstr "Сохранить и закрыть"
+
+msgid "Search engines"
+msgstr "Поисковые системы"
+
+msgid "Shown under the name of the section on the forum. Optional."
+msgstr "Показывается под названием раздела на форуме. Необязательно."
+
+msgid "Smaller goes higher. Left empty, the section goes to the end."
+msgstr "Чем меньше, тем выше. Если оставить пустым, раздел встанет в конец."
+
+msgid "The author of a new topic becomes its curator."
+msgstr "Автор новой темы становится её куратором."
+
+msgid "The author of a topic can edit its first post at any time, not only while it is the last."
+msgstr "Автор темы может править её первый пост в любой момент, а не только пока он последний."
+
+msgid "The root: a category"
+msgstr "Корень: категория"
+
+msgid "The section holds sections: move them out before it can hold topics"
+msgstr "В разделе есть подразделы: переместите их, чтобы он мог содержать темы"
+
+msgid "The section holds topics: move them out before it can hold sections"
+msgstr "В разделе есть темы: переместите их, чтобы он мог содержать подразделы"
+
+msgid "The section is not saved: check the fields marked below."
+msgstr "Раздел не сохранён: проверьте отмеченные ниже поля."
+
+msgid "The section moves with everything in it and goes to the end of its new parent."
+msgstr "Раздел переносится со всем содержимым и встаёт в конец нового родителя."
+
+msgid "The section was created"
+msgstr "Раздел создан"
+
+msgid "The section was saved"
+msgstr "Раздел сохранён"
+
+msgid "What the section holds"
+msgstr "Что содержит раздел"
+
+msgid "Who writes in it"
+msgstr "Кто в нём пишет"

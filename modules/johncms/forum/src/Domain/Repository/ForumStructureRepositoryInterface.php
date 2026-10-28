@@ -24,12 +24,25 @@ interface ForumStructureRepositoryInterface
     /**
      * @param array<string, mixed> $attributes
      */
-    public function create(array $attributes): void;
+    public function create(array $attributes): ForumSection;
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    public function update(ForumSection $section, array $attributes): void;
+
+    /**
+     * The files of a section are filed under its parent as well; they follow it when it moves.
+     */
+    public function moveSectionFiles(int $sectionId, int $fromParentId, int $toParentId): void;
 
     public function slugExists(string $slug, int $parentId, ?int $excludeId): bool;
 
     public function countChildSections(int $id): int;
 
+    /**
+     * Every topic of the section, the hidden ones included.
+     */
     public function countTopics(int $sectionId): int;
 
     /**

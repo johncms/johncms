@@ -44,9 +44,22 @@ final class ForumStructureRepository implements ForumStructureRepositoryInterfac
         return (int) ForumSection::query()->where('parent', $parentId)->max('sort') + 1;
     }
 
-    public function create(array $attributes): void
+    public function create(array $attributes): ForumSection
     {
-        ForumSection::query()->create($attributes);
+        return ForumSection::query()->create($attributes);
+    }
+
+    public function update(ForumSection $section, array $attributes): void
+    {
+        $section->update($attributes);
+    }
+
+    public function moveSectionFiles(int $sectionId, int $fromParentId, int $toParentId): void
+    {
+        ForumFile::query()
+            ->where('cat', $fromParentId)
+            ->where('subcat', $sectionId)
+            ->update(['cat' => $toParentId]);
     }
 
     public function slugExists(string $slug, int $parentId, ?int $excludeId): bool
@@ -65,7 +78,7 @@ final class ForumStructureRepository implements ForumStructureRepositoryInterfac
 
     public function countTopics(int $sectionId): int
     {
-        return ForumTopic::query()->where('section_id', $sectionId)->count();
+        return ForumTopic::query()->withoutGlobalScope('access')->where('section_id', $sectionId)->count();
     }
 
     public function categoriesForMove(int $excludeId): Collection

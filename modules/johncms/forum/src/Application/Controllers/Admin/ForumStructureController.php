@@ -5,19 +5,13 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers\Admin;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
-use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
-use Johncms\Modules\Forum\Application\UseCases\AddForumSectionUseCase;
 use Johncms\Modules\Forum\Application\UseCases\DeleteForumSectionUseCase;
-use Johncms\Modules\Forum\Application\UseCases\EditForumSectionUseCase;
 use Johncms\Modules\Forum\Domain\Repository\ForumStructureRepositoryInterface;
-use Johncms\Modules\Forum\Application\Services\ForumSectionTreeService;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Validator\Rules\StringLength;
-use Johncms\Validator\ValidatorInterface;
 use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
 
 final readonly class ForumStructureController
@@ -29,116 +23,11 @@ final readonly class ForumStructureController
 
     public function __construct(
         private NavChain $navChain,
-        private ForumSectionTreeService $sectionTree,
-        private CurrentUser $currentUser,
         private AccessCheckerInterface $accessChecker,
         private ForumStructureRepositoryInterface $repository,
-        private AddForumSectionUseCase $addSection,
-        private EditForumSectionUseCase $editSection,
         private DeleteForumSectionUseCase $deleteSection,
-        private ValidatorInterface $validator,
         private ForumAttachmentStorage $attachments,
     ) {
-    }
-
-    /**
-     * @param list<string> $errors
-     */
-    public function addForm(Request $request, array $errors = []): ViewResponse
-    {
-        $parentId = $request->queryInt('parent');
-        $parentName = '';
-        if ($parentId > 0) {
-            $parent = $this->repository->find($parentId);
-            if ($parent === null) {
-                return $this->error(__('Invalid ID'));
-            }
-            $parentName = $parent->name;
-        }
-
-        $title = $parentId ? __('Add Section') : __('Add Category');
-        $this->navChain->add(__('Forum'), self::LIST_URL);
-        $this->navChain->add($title);
-
-        return new ViewResponse('@forum/admin/section-form.twig', $this->menu($title) + [
-            'parent_id'           => $parentId ?: null,
-            'parent_section_name' => $parentName,
-            'form_action'         => self::URL . '/new' . ($parentId ? '?parent=' . $parentId : ''),
-            'back_url'            => self::LIST_URL,
-            'field_height'        => $this->currentUser->user()->config->fieldHeight,
-            'errors'              => $errors,
-            'access_options'      => $this->accessOptions(),
-            'type_options'        => $this->sectionTypeOptions(),
-        ]);
-    }
-
-    public function add(Request $request): ViewResponse
-    {
-        $parentId = $request->queryInt('parent');
-        $name = trim($request->body('name', ''));
-        $description = trim($request->body('desc', ''));
-
-        $errors = [];
-        if ($name === '') {
-            $errors[] = __('You have not entered Title');
-        } elseif (mb_strlen($name) < 2 || mb_strlen($name) > 30) {
-            $errors[] = __('Title') . ': ' . __('Invalid length');
-        }
-        if ($description !== '' && mb_strlen($description) < 2) {
-            $errors[] = __('Description should be at least 2 characters in length');
-        }
-        if ($errors !== []) {
-            return $this->addForm($request, $errors);
-        }
-
-        $this->addSection->execute(
-            $parentId,
-            $name,
-            $description,
-            abs($request->bodyInt('allow')),
-            $request->bodyInt('section_type'),
-        );
-
-        redirect(self::LIST_URL);
-    }
-
-    public function editForm(int $id): ViewResponse
-    {
-        $section = $this->repository->find($id);
-        if ($section === null) {
-            return $this->error(__('Invalid ID'));
-        }
-
-        return $this->renderEditForm($section, $this->fieldsFromSection($section), []);
-    }
-
-    public function edit(Request $request, int $id): ViewResponse
-    {
-        $section = $this->repository->find($id);
-        if ($section === null) {
-            redirect(self::LIST_URL);
-        }
-
-        $fields = $this->fieldsFromRequest($request, $section);
-        $result = $this->validator->validate(
-            ['name' => $fields['name']],
-            ['name' => [new StringLength(min: 2, max: 150)]]
-        );
-
-        $cycle = $this->editSection->wouldCreateCycle($section->id, (int) $fields['parent']);
-
-        if (! $cycle && $result->isValid()) {
-            $this->editSection->execute($section, $fields);
-            redirect(self::LIST_URL);
-        }
-
-        // A cycle is a domain failure discovered outside the ruleset, and it joins the result
-        // rather than turning it back into a plain array.
-        if ($cycle) {
-            $result = $result->withError('parent', __('Please select a valid parent'));
-        }
-
-        return $this->renderEditForm($section, $fields, $result->getErrors());
     }
 
     public function deleteConfirm(Request $request, int $id): ViewResponse
@@ -231,66 +120,6 @@ final readonly class ForumStructureController
         redirect(self::LIST_URL);
     }
 
-    private function renderEditForm(ForumSection $section, array $fields, array $errors): ViewResponse
-    {
-        $title = __('Edit Section');
-        $this->navChain->add(__('Forum'), self::LIST_URL);
-        $this->navChain->add($title);
-
-        $categories = [['id' => 0, 'name' => ' - ', 'selected' => empty($section->parent)]];
-        foreach ($this->sectionTree->getFlatTree() as $item) {
-            $categories[] = [
-                'id'       => $item['id'],
-                'name'     => $item['name'],
-                'selected' => $item['id'] === (int) $section->parent,
-            ];
-        }
-
-        return new ViewResponse('@forum/admin/section-edit.twig', $this->menu($title) + [
-            'item'           => $fields,
-            'errors'         => $errors,
-            'categories'     => $categories,
-            'access_options' => $this->accessOptions(),
-            'type_options'   => $this->sectionTypeOptions(),
-            'form_action'    => self::URL . '/' . $section->id . '/edit',
-            'back_url'       => self::LIST_URL,
-        ]);
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    private function fieldsFromSection(ForumSection $section): array
-    {
-        return [
-            'name'             => $section->name,
-            'description'      => $section->description,
-            'sort'             => $section->sort ?? 100,
-            'section_type'     => (int) ($section->section_type ?? 0),
-            'parent'           => (int) ($section->parent ?? 0),
-            'access'           => (int) ($section->access ?? 0),
-            'meta_description' => $section->meta_description ?? '',
-            'meta_keywords'    => $section->meta_keywords ?? '',
-        ];
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    private function fieldsFromRequest(Request $request, ForumSection $section): array
-    {
-        return [
-            'name'             => trim($request->body('name', (string) $section->name)),
-            'description'      => trim($request->body('description', (string) $section->description)),
-            'sort'             => $request->bodyInt('sort', $section->sort ?? 100),
-            'section_type'     => $request->bodyInt('section_type', (int) ($section->section_type ?? 0)),
-            'parent'           => $request->bodyInt('parent', (int) ($section->parent ?? 0)),
-            'access'           => $request->bodyInt('access', (int) ($section->access ?? 0)),
-            'meta_description' => trim($request->body('meta_description', $section->meta_description ?? '')),
-            'meta_keywords'    => trim($request->body('meta_keywords', $section->meta_keywords ?? '')),
-        ];
-    }
-
     /**
      * @param \Illuminate\Support\Collection<int, ForumSection> $sections
      * @return list<array{id: int, name: string, selected: bool}>
@@ -302,30 +131,6 @@ final readonly class ForumStructureController
             'name'     => $section->name,
             'selected' => $section->id === (int) $currentParent,
         ])->all();
-    }
-
-    /**
-     * @return list<array{value: int, label: string}>
-     */
-    private function accessOptions(): array
-    {
-        return [
-            ['value' => 0, 'label' => __('Common access')],
-            ['value' => 1, 'label' => __('Assign the newly created authors as curators')],
-            ['value' => 2, 'label' => __('Allow authors to edit the 1st post')],
-            ['value' => 4, 'label' => __('Only for reading')],
-        ];
-    }
-
-    /**
-     * @return list<array{value: int, label: string}>
-     */
-    private function sectionTypeOptions(): array
-    {
-        return [
-            ['value' => 0, 'label' => __('For subsections')],
-            ['value' => 1, 'label' => __('For topics')],
-        ];
     }
 
     /**

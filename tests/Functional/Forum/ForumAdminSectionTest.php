@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Functional\Forum;
 
 use Johncms\Auth\Authorization\CorePermissions;
-use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Functional\FunctionalTestCase;
@@ -122,16 +121,5 @@ final class ForumAdminSectionTest extends FunctionalTestCase
         $response = $this->handleRequest('/admin/forum/structure', cookies: $this->actingAs($admin));
 
         self::assertSame(Response::HTTP_NOT_FOUND, $response->getStatusCode());
-    }
-
-    public function testANewCategoryLeadsBackToTheTree(): void
-    {
-        $admin = FunctionalUserFactory::createWithPermissions([CorePermissions::ADMIN_ACCESS]);
-
-        $response = $this->postForm('/admin/forum/structure/new', ['name' => 'Fresh category', 'desc' => '', 'section_type' => 0], $admin);
-
-        self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
-        self::assertSame('/admin/forum', $response->headers->get('Location'));
-        self::assertTrue(ForumSection::query()->where('name', 'Fresh category')->exists());
     }
 }

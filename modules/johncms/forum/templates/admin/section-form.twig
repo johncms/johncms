@@ -1,58 +1,171 @@
 {#
-    A new category, or a new section of one.
+    A section of the forum, new or saved: the name, the description and what the section is on the
+    left; its place in the tree, the fields for the search engines and the facts on the right.
 
-    @var int    parent_id           Null when a top-level category is being added.
-    @var string parent_section_name
     @var string form_action
-    @var string back_url
-    @var int    field_height        Rows of the description field, from the settings of the visitor.
-    @var array  errors              Validation messages, empty on the first render.
-    @var array  access_options      Access modes of a section: value, label.
-    @var array  type_options        Section types: value, label.
+    @var array  fields          Values of the form, keyed by field name.
+    @var array  errors          Field => messages, from the last attempt.
+    @var list   parents         id, title — the root and every section it can go under.
+    @var list   type_options    value, label, hint — what the section holds.
+    @var list   access_options  value, label, hint — who writes in it.
+    @var array  facts           id, slug, sections, topics; null for a new one.
+    @var string site_url        The section on the site; empty for a new one.
+    @var string list_url        The tree of the forum.
+    @var string success_message Empty unless a save has just succeeded.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
-{% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: errors} only %}
-
-    <form action="{{ form_action }}" method="post">
-        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-        {% if parent_id %}
-            <h3>{{ __('Parent section:') }} {{ parent_section_name }}</h3>
-        {% endif %}
-        <div class="form-group">
-            <label for="name">{{ __('Title') }}</label>
-            <input type="text" name="name" class="form-control" id="name" placeholder="{{ __('Title') }}" required>
-            <div class="text-muted small">{{ __('Min. 2, Max. 30 characters') }}</div>
-        </div>
-
-        <div class="form-group">
-            <label for="desc">{{ __('Description') }}</label>
-            <textarea class="form-control" rows="{{ field_height }}" name="desc" id="desc"></textarea>
-            <div class="small text-muted">{{ __('Optional field') }}<br>{{ __('Min. 2, Max. 500 characters') }}</div>
-        </div>
-
-        {% if parent_id %}
-            <h3>{{ __('Common access') }}</h3>
-            {% for option in access_options %}
+{% macro choices(name, options, value, errors) %}
+    <div class="row g-3">
+        {% for option in options %}
+            <div class="col-md-6">
                 <div class="form-check">
-                    <input type="radio" id="allow{{ option.value }}" name="allow" value="{{ option.value }}" class="form-check-input"{% if loop.first %} checked="checked"{% endif %}>
-                    <label class="form-check-label" for="allow{{ option.value }}">{{ option.label }}</label>
+                    <input type="radio" class="form-check-input{{ errors[name] is defined ? ' is-invalid' }}" name="{{ name }}" value="{{ option.value }}" id="section-{{ name }}-{{ option.value }}"{% if value == option.value %} checked{% endif %}>
+                    <label class="form-check-label" for="section-{{ name }}-{{ option.value }}">
+                        {{ option.label }}
+                        <span class="form-text d-block mt-0">{{ option.hint }}</span>
+                    </label>
                 </div>
-            {% endfor %}
-        {% endif %}
-
-        <h3 class="mt-3">{{ __('Section type') }}</h3>
-        {% for option in type_options %}
-            <div class="form-check">
-                <input type="radio" id="section_type{{ option.value }}" name="section_type" value="{{ option.value }}" class="form-check-input"{% if loop.first %} checked="checked"{% endif %}>
-                <label class="form-check-label" for="section_type{{ option.value }}">{{ option.label }}</label>
             </div>
         {% endfor %}
+    </div>
+    {% include '@theme/components/field-errors.twig' with {errors: errors[name]|default([])} only %}
+{% endmacro %}
 
-        <div class="mt-3">
-            <input type="submit" value="{{ __('Add') }}" class="btn btn-primary">
-            <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+{% block page_actions %}
+    {% if site_url %}
+        <a class="btn btn-secondary" href="{{ site_url }}" target="_blank" rel="noopener">
+            {% include '@admin/components/ui/icon.twig' with {name: 'external-link', size: 14} only %}
+            {{ __('Open on the site') }}
+        </a>
+    {% endif %}
+    <button type="submit" class="btn btn-primary" form="section-form">
+        {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
+        {{ __('Save') }}
+    </button>
+{% endblock %}
+
+{% block content %}
+    {% import _self as form %}
+
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+    {% if errors is not empty %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: __('The section is not saved: check the fields marked below.')} only %}
+    {% endif %}
+
+    <form method="post" action="{{ form_action }}" id="section-form" class="admin-forum-form">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+
+        <div class="row g-3">
+            <div class="col-xl-8 d-flex flex-column gap-3">
+                <div class="card">
+                    <div class="card-body d-flex flex-column gap-3">
+                        <div>
+                            <label class="form-label" for="section-name">{{ __('Title') }}</label>
+                            <input type="text" class="form-control form-control-lg{{ errors.name is defined ? ' is-invalid' }}" id="section-name" name="name" value="{{ fields.name }}" maxlength="150" required>
+                            {% include '@theme/components/field-errors.twig' with {errors: errors.name|default([])} only %}
+                        </div>
+                        <div>
+                            <label class="form-label" for="section-description">{{ __('Description') }}</label>
+                            <textarea class="form-control{{ errors.description is defined ? ' is-invalid' }}" id="section-description" name="description" rows="3" maxlength="500" aria-describedby="section-description-help">{{ fields.description }}</textarea>
+                            {% include '@theme/components/field-errors.twig' with {errors: errors.description|default([])} only %}
+                            <div class="form-text" id="section-description-help">{{ __('Shown under the name of the section on the forum. Optional.') }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'folder', size: 15, class: 'text-body-tertiary'} only %}
+                        {{ __('What the section holds') }}
+                    </div>
+                    <div class="card-body">
+                        {{ form.choices('section_type', type_options, fields.section_type, errors) }}
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'lock', size: 15, class: 'text-body-tertiary'} only %}
+                        {{ __('Who writes in it') }}
+                    </div>
+                    <div class="card-body">
+                        {{ form.choices('access', access_options, fields.access, errors) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 d-flex flex-column gap-3">
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'folder', size: 15, class: 'text-body-tertiary'} only %}
+                        {{ __('Place in the tree') }}
+                    </div>
+                    <div class="card-body d-flex flex-column gap-3">
+                        <div>
+                            <label class="form-label" for="section-parent">{{ __('Parent section') }}</label>
+                            <select class="form-select{{ errors.parent is defined ? ' is-invalid' }}" id="section-parent" name="parent" aria-describedby="section-parent-help">
+                                {% for parent in parents %}
+                                    <option value="{{ parent.id }}"{% if parent.id == fields.parent %} selected{% endif %}>{{ parent.title }}</option>
+                                {% endfor %}
+                            </select>
+                            {% include '@theme/components/field-errors.twig' with {errors: errors.parent|default([])} only %}
+                            <div class="form-text" id="section-parent-help">{{ __('The section moves with everything in it and goes to the end of its new parent.') }}</div>
+                        </div>
+                        <div>
+                            <label class="form-label" for="section-sort">{{ __('Order') }}</label>
+                            <input type="number" class="form-control font-monospace" id="section-sort" name="sort" value="{{ fields.sort }}" min="0" aria-describedby="section-sort-help">
+                            <div class="form-text" id="section-sort-help">{{ __('Smaller goes higher. Left empty, the section goes to the end.') }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'globe', size: 15, class: 'text-body-tertiary'} only %}
+                        {{ __('Search engines') }}
+                    </div>
+                    <div class="card-body d-flex flex-column gap-3">
+                        <div>
+                            <label class="form-label" for="section-meta_keywords">{{ __('Meta keywords') }}</label>
+                            <input type="text" class="form-control{{ errors.meta_keywords is defined ? ' is-invalid' }}" id="section-meta_keywords" name="meta_keywords" value="{{ fields.meta_keywords }}" maxlength="255">
+                            {% include '@theme/components/field-errors.twig' with {errors: errors.meta_keywords|default([])} only %}
+                        </div>
+                        <div>
+                            <label class="form-label" for="section-meta_description">{{ __('Meta description') }}</label>
+                            <textarea class="form-control{{ errors.meta_description is defined ? ' is-invalid' }}" id="section-meta_description" name="meta_description" rows="3" maxlength="500" aria-describedby="section-meta-help">{{ fields.meta_description }}</textarea>
+                            {% include '@theme/components/field-errors.twig' with {errors: errors.meta_description|default([])} only %}
+                            <div class="form-text" id="section-meta-help">{{ __('Left empty, they are made of the templates in the settings of the forum.') }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if facts %}
+                    <div class="card">
+                        <div class="card-header">
+                            {% include '@admin/components/ui/icon.twig' with {name: 'info', size: 15, class: 'text-body-tertiary'} only %}
+                            {{ __('About the section') }}
+                        </div>
+                        <div class="card-body">
+                            {% include '@admin/components/ui/facts.twig' with {items: [
+                                {label: 'ID', value: '#' ~ facts.id},
+                                {label: __('Address'), value: facts.slug},
+                                {label: __('Sections'), value: facts.sections|format_number},
+                                {label: __('Topics'), value: facts.topics|format_number},
+                            ]} only %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="admin-forum-form__actions">
+            <a class="btn btn-secondary" href="{{ list_url }}">{{ __('Cancel') }}</a>
+            <button type="submit" class="btn btn-secondary" name="close" value="1">{{ __('Save and close') }}</button>
+            <button type="submit" class="btn btn-primary">
+                {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
+                {{ __('Save') }}
+            </button>
         </div>
     </form>
 {% endblock %}

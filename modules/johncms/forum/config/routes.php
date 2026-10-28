@@ -10,6 +10,7 @@ use Johncms\Modules\Forum\Application\Controllers\Admin\ForumSettingsController;
 use Johncms\Modules\Forum\Application\Controllers\Admin\ForumStructureController;
 use Johncms\Modules\Forum\Application\Controllers\Admin\HiddenPostsController;
 use Johncms\Modules\Forum\Application\Controllers\Admin\HiddenTopicsController;
+use Johncms\Modules\Forum\Application\Controllers\Admin\SectionFormController;
 use Johncms\Modules\Forum\Application\Controllers\AddFileController;
 use Johncms\Modules\Forum\Application\Controllers\AddVoteController;
 use Johncms\Modules\Forum\Application\Controllers\BulkDeletePostsController;
@@ -59,10 +60,10 @@ return static function (RouteCollection $router): void {
     // site", not "may this visitor read the forum".
     $adminGroup = $router->group('', function (RouteCollection $r): void {
         $r->get('/admin/forum', ForumDashboardController::class)->name('admin.forum');
-        $r->get('/admin/forum/structure/new', [ForumStructureController::class, 'addForm'])->name('admin.forum.structure.new');
-        $r->post('/admin/forum/structure/new', [ForumStructureController::class, 'add'])->name('admin.forum.structure.add');
-        $r->get('/admin/forum/structure/{id:number}/edit', [ForumStructureController::class, 'editForm'])->name('admin.forum.structure.edit');
-        $r->post('/admin/forum/structure/{id:number}/edit', [ForumStructureController::class, 'edit'])->name('admin.forum.structure.update');
+        $r->get('/admin/forum/sections/new', [SectionFormController::class, 'create'])->name('admin.forum.sections.new');
+        $r->post('/admin/forum/sections/new', [SectionFormController::class, 'store'])->name('admin.forum.sections.store');
+        $r->get('/admin/forum/sections/{id:number}/edit', [SectionFormController::class, 'edit'])->name('admin.forum.sections.edit');
+        $r->post('/admin/forum/sections/{id:number}/edit', [SectionFormController::class, 'update'])->name('admin.forum.sections.update');
         $r->get('/admin/forum/structure/{id:number}/delete', [ForumStructureController::class, 'deleteConfirm'])->name('admin.forum.structure.delete_confirm');
         $r->post('/admin/forum/structure/{id:number}/delete', [ForumStructureController::class, 'delete'])->name('admin.forum.structure.delete');
         $r->get('/admin/forum/hidden-topics', [HiddenTopicsController::class, 'index'])->name('admin.forum.hidden_topics');
