@@ -9,6 +9,7 @@ use Johncms\Modules\Mail\Application\Exceptions\ContactNotFoundException;
 use Johncms\Modules\Mail\Application\UseCases\DeleteContactUseCase;
 use Johncms\Modules\Mail\Application\UseCases\GetDeleteContactContextUseCase;
 use Johncms\NavChain;
+use Twig\Markup;
 
 final readonly class DeleteContactController
 {
@@ -34,7 +35,10 @@ final readonly class DeleteContactController
 
         $data = [
             'form_action'     => '/mail/delete-contact/' . $id,
-            'message'         => __('When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?'),
+            'message'         => new Markup(
+                __('When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?'),
+                'UTF-8'
+            ),
             'back_url'        => $context->backUrl,
             'submit_btn_name' => __('Delete'),
         ];
