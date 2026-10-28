@@ -21,7 +21,7 @@ use Tests\Support\FunctionalUserFactory;
 final class SectionCountersTest extends FunctionalTestCase
 {
     private const array SECTIONS = [
-        '/news/', '/forum/', '/guestbook/ga', '/downloads/', '/library/', '/community/', '/album/', '/help/', '/contacts/',
+        '/news/', '/forum/', '/guestbook/ga', '/downloads/', '/library/', '/community/', '/help/', '/contacts/',
     ];
 
     public function testAGuestIsShownTheSectionsOfTheSite(): void
@@ -34,6 +34,12 @@ final class SectionCountersTest extends FunctionalTestCase
 
         self::assertArrayNotHasKey('/admin/', $menu);
         self::assertArrayNotHasKey('/guestbook/ga?do=set', $menu);
+    }
+
+    public function testTheAlbumsAreShownOnlyToAMemberAsTheyAreClosedToAGuest(): void
+    {
+        self::assertArrayNotHasKey('/album/', $this->menu($this->page('/')));
+        self::assertArrayHasKey('/album/', $this->menu($this->page('/', FunctionalUserFactory::create())));
     }
 
     public function testTheStaffAreShownThePanelAndTheChatOfTheAdministration(): void
@@ -81,7 +87,7 @@ final class SectionCountersTest extends FunctionalTestCase
         Fixture::insert('library_texts', ['name' => 'New', 'premod' => 1, 'time' => time()]);
         Fixture::insert('cms_album_files', ['user_id' => 1, 'access' => 4, 'time' => time()]);
 
-        $menu = $this->menu($this->page('/'));
+        $menu = $this->menu($this->page('/', FunctionalUserFactory::create()));
 
         self::assertSame('+ 1', $menu['/downloads/']);
         self::assertSame('+ 1', $menu['/library/']);

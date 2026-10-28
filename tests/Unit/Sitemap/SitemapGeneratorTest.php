@@ -58,7 +58,6 @@ final class SitemapGeneratorTest extends TestCase
                 'https://example.com/downloads/',
                 'https://example.com/library/',
                 'https://example.com/help/',
-                'https://example.com/album',
                 'https://example.com/online/',
             ],
             $this->locations('sitemap-core-1.xml')
