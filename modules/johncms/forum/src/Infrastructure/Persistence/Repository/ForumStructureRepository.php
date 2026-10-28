@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Infrastructure\Persistence\Repository;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Johncms\Modules\Forum\Domain\Repository\ForumStructureRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Models\ForumFile;
@@ -16,22 +17,20 @@ use Johncms\Modules\Forum\Domain\Models\ForumVoteUser;
 
 final class ForumStructureRepository implements ForumStructureRepositoryInterface
 {
-    public function categories(): Collection
+    public function tree(): Collection
     {
         return ForumSection::query()
-            ->where('parent', 0)
-            ->orWhereNull('parent')
             ->orderBy('sort')
-            ->withCount('subsections')
-            ->get();
-    }
-
-    public function subsections(int $parentId): Collection
-    {
-        return ForumSection::query()
-            ->where('parent', $parentId)
-            ->orderBy('sort')
-            ->withCount('subsections')
+            ->orderBy('id')
+            ->withCount([
+                'subsections',
+                // The topics a reader sees: the scope that hides deleted ones depends on who asks.
+                'topics' => static fn (Builder $query): Builder => $query
+                    ->withoutGlobalScope('access')
+                    ->where(static function (Builder $visible): void {
+                        $visible->where('deleted', '!=', 1)->orWhereNull('deleted');
+                    }),
+            ])
             ->get();
     }
 

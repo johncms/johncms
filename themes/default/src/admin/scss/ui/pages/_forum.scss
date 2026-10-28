@@ -1,0 +1,76 @@
+// The tree of the forum (forum::admin/index): every section under its parent, indented by how deep
+// it stands; a top-level category reads as the head of what follows it.
+
+.admin-forum-tree {
+  td {
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  td:first-child {
+    width: 100%;
+    min-width: 16rem;
+    white-space: normal;
+  }
+}
+
+.admin-forum-tree__section {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  padding-left: calc(var(--depth, 0) * 1.5rem);
+}
+
+.admin-forum-tree__icon {
+  flex: none;
+  margin-top: 0.125rem;
+  color: var(--fg-dim);
+}
+
+.admin-forum-tree__text {
+  min-width: 0;
+}
+
+.admin-forum-tree__name {
+  color: var(--fg);
+
+  &:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+}
+
+.admin-forum-tree__description {
+  margin-top: 2px;
+  font-size: 0.75rem;
+  color: var(--fg-dim);
+}
+
+.admin-forum-tree__root {
+  > td {
+    background-color: color-mix(in oklab, var(--fg) 2.5%, transparent);
+  }
+
+  .admin-forum-tree__name {
+    font-weight: 600;
+  }
+
+  .admin-forum-tree__icon {
+    color: var(--fg-muted);
+  }
+}
+
+.admin-forum-tree__count {
+  color: var(--fg-muted);
+}
+
+.admin-forum-tree__sort {
+  font-family: $ui-font-mono;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-dim);
+}
+
+.admin-forum-tree__actions {
+  display: flex;
+  justify-content: flex-end;
+}

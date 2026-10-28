@@ -1,0 +1,98 @@
+{#
+    The forum in the panel: what it holds, and the whole tree of its sections, each under its
+    parent and indented by how deep it stands.
+
+    @var array  counters          Totals, keyed by what they count.
+    @var array  rows              Built by ForumStructureRowMapper.
+    @var string add_category_url
+    @var string hidden_topics_url
+    @var string hidden_posts_url
+    @var string settings_url      Empty unless the visitor may change the settings.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block page_actions %}
+    {% if settings_url %}
+        <a class="btn btn-secondary" href="{{ settings_url }}">
+            {% include '@admin/components/ui/icon.twig' with {name: 'settings', size: 14} only %}
+            {{ __('Settings') }}
+        </a>
+    {% endif %}
+    <a class="btn btn-primary" href="{{ add_category_url }}">
+        {% include '@admin/components/ui/icon.twig' with {name: 'plus', size: 14} only %}
+        {{ __('Add Category') }}
+    </a>
+{% endblock %}
+
+{% block content %}
+    <div class="admin-stats">
+        {% include '@admin/components/ui/stat-card.twig' with {label: __('Topics'), value: counters.total_thm} only %}
+        {% include '@admin/components/ui/stat-card.twig' with {label: __('Messages'), value: counters.total_msg} only %}
+        {% include '@admin/components/ui/stat-card.twig' with {label: __('Files'), value: counters.total_files} only %}
+        {% include '@admin/components/ui/stat-card.twig' with {label: __('Hidden topics'), value: counters.total_thm_del, url: hidden_topics_url, tone: counters.total_thm_del ? 'danger' : ''} only %}
+        {% include '@admin/components/ui/stat-card.twig' with {label: __('Hidden posts'), value: counters.total_msg_del, url: hidden_posts_url, tone: counters.total_msg_del ? 'danger' : ''} only %}
+    </div>
+
+    <div class="card">
+        {% if rows is empty %}
+            {% include '@admin/components/ui/empty-state.twig' with {
+                icon: 'messages-square',
+                title: __('The forum has no sections yet'),
+                description: __('Start with a category: the sections of the forum go into it.'),
+            } only %}
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-hover admin-forum-tree">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ __('Section') }}</th>
+                            <th scope="col">{{ __('Contents') }}</th>
+                            <th scope="col">{{ __('Access') }}</th>
+                            <th scope="col" class="text-end">{{ __('Order') }}</th>
+                            <th scope="col"><span class="visually-hidden">{{ __('Actions') }}</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in rows %}
+                            <tr class="{{ row.depth == 0 ? 'admin-forum-tree__root' }}">
+                                <td>
+                                    <div class="admin-forum-tree__section" style="--depth: {{ row.depth }}">
+                                        {% include '@admin/components/ui/icon.twig' with {
+                                            name: row.holds_topics ? 'message-square' : 'folder',
+                                            size: 15,
+                                            class: 'admin-forum-tree__icon',
+                                        } only %}
+                                        <div class="admin-forum-tree__text">
+                                            <a class="admin-forum-tree__name" href="{{ row.edit_url }}">{{ row.name }}</a>
+                                            {% if row.description %}
+                                                <div class="admin-forum-tree__description">{{ row.description }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="admin-forum-tree__count">
+                                    {% if row.holds_topics %}
+                                        {{ n__('%d topic', '%d topics', row.count)|format(row.count) }}
+                                    {% else %}
+                                        {{ n__('%d section', '%d sections', row.count)|format(row.count) }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if row.access %}
+                                        <span class="badge rounded-pill badge-dot {{ row.read_only ? 'bg-warning-subtle text-warning-emphasis' : 'text-bg-light' }}">{{ row.access }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="admin-forum-tree__sort text-end">{{ row.sort }}</td>
+                                <td>
+                                    <div class="admin-forum-tree__actions">
+                                        {% include '@admin/components/ui/row-actions.twig' with {actions: row.actions, label: __('Actions')} only %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

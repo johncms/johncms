@@ -1383,7 +1383,7 @@ parameters:
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Query\\Builder\:\:withCount\(\)\.$#'
 			identifier: method.notFound
-			count: 2
+			count: 1
 			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumStructureRepository.php
 
 		-

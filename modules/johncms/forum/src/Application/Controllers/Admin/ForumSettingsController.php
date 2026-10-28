@@ -53,7 +53,7 @@ final readonly class ForumSettingsController
     private function renderForm(string $errorMessage = ''): ViewResponse
     {
         $title = __('Forum Settings');
-        $this->navChain->add(__('Forum Management'), '/admin/forum');
+        $this->navChain->add(__('Forum'), '/admin/forum');
         $this->navChain->add($title);
 
         return new ViewResponse('@forum/admin/settings.twig', [

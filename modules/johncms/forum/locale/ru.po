@@ -1522,3 +1522,47 @@ msgstr "Очищать списки скрытых тем и сообщений"
 
 msgid "New forum posts"
 msgstr "Новые сообщения на форуме"
+
+msgid "Add subsection"
+msgstr "Добавить подраздел"
+
+msgid "Open on the site"
+msgstr "Открыть на сайте"
+
+msgid "Authors are curators"
+msgstr "Авторы — кураторы"
+
+msgid "Authors edit the first post"
+msgstr "Автор правит первый пост"
+
+msgid "The forum has no sections yet"
+msgstr "На форуме пока нет разделов"
+
+msgid "Start with a category: the sections of the forum go into it."
+msgstr "Начните с категории: в неё входят разделы форума."
+
+msgid "Section"
+msgstr "Раздел"
+
+msgid "Contents"
+msgstr "Содержимое"
+
+msgid "Access"
+msgstr "Доступ"
+
+msgid "Actions"
+msgstr "Действия"
+
+msgid "%d topic"
+msgid_plural "%d topics"
+msgstr[0] "%d тема"
+msgstr[1] "%d темы"
+msgstr[2] "%d тем"
+msgstr[3] "%d тем"
+
+msgid "%d section"
+msgid_plural "%d sections"
+msgstr[0] "%d раздел"
+msgstr[1] "%d раздела"
+msgstr[2] "%d разделов"
+msgstr[3] "%d разделов"

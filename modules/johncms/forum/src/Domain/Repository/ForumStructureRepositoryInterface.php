@@ -10,18 +10,12 @@ use Johncms\Modules\Forum\Domain\Models\ForumSection;
 interface ForumStructureRepositoryInterface
 {
     /**
-     * The top-level categories (parent = 0 or null), each with the number of sections in it.
+     * Every section of the forum in the order of sort, each with the number of sections in it and
+     * of the topics in it that are not hidden.
      *
      * @return Collection<int, ForumSection>
      */
-    public function categories(): Collection;
-
-    /**
-     * The sections of one category, each with the number of sections nested in it.
-     *
-     * @return Collection<int, ForumSection>
-     */
-    public function subsections(int $parentId): Collection;
+    public function tree(): Collection;
 
     public function find(int $id): ?ForumSection;
 

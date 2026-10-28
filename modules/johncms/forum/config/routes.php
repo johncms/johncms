@@ -59,7 +59,6 @@ return static function (RouteCollection $router): void {
     // site", not "may this visitor read the forum".
     $adminGroup = $router->group('', function (RouteCollection $r): void {
         $r->get('/admin/forum', ForumDashboardController::class)->name('admin.forum');
-        $r->get('/admin/forum/structure', [ForumStructureController::class, 'structure'])->name('admin.forum.structure');
         $r->get('/admin/forum/structure/new', [ForumStructureController::class, 'addForm'])->name('admin.forum.structure.new');
         $r->post('/admin/forum/structure/new', [ForumStructureController::class, 'add'])->name('admin.forum.structure.add');
         $r->get('/admin/forum/structure/{id:number}/edit', [ForumStructureController::class, 'editForm'])->name('admin.forum.structure.edit');

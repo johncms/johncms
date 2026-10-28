@@ -44,7 +44,7 @@ final readonly class HiddenTopicsController
         $total = $pagination->getTotal();
 
         $title = __('Hidden topics');
-        $this->navChain->add(__('Forum Management'), '/admin/forum');
+        $this->navChain->add(__('Forum'), '/admin/forum');
         $this->navChain->add($title);
 
         $meta = new PageMeta($title, $pagination->getCurrentPage());

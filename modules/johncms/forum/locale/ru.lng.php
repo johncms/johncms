@@ -309,6 +309,30 @@
       'Delete a forum section with everything in it' => 'Удалять раздел форума вместе со всем содержимым',
       'Empty the lists of hidden topics and posts' => 'Очищать списки скрытых тем и сообщений',
       'New forum posts' => 'Новые сообщения на форуме',
+      'Add subsection' => 'Добавить подраздел',
+      'Open on the site' => 'Открыть на сайте',
+      'Authors are curators' => 'Авторы — кураторы',
+      'Authors edit the first post' => 'Автор правит первый пост',
+      'The forum has no sections yet' => 'На форуме пока нет разделов',
+      'Start with a category: the sections of the forum go into it.' => 'Начните с категории: в неё входят разделы форума.',
+      'Section' => 'Раздел',
+      'Contents' => 'Содержимое',
+      'Access' => 'Доступ',
+      'Actions' => 'Действия',
+      '%d topic' => 
+      array (
+        0 => '%d тема',
+        1 => '%d темы',
+        2 => '%d тем',
+        3 => '%d тем',
+      ),
+      '%d section' => 
+      array (
+        0 => '%d раздел',
+        1 => '%d раздела',
+        2 => '%d разделов',
+        3 => '%d разделов',
+      ),
     ),
   ),
 );
