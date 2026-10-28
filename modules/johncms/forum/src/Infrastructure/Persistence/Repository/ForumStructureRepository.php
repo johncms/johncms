@@ -15,6 +15,10 @@ use Johncms\Modules\Forum\Domain\Models\ForumUnread;
 use Johncms\Modules\Forum\Domain\Models\ForumVote;
 use Johncms\Modules\Forum\Domain\Models\ForumVoteUser;
 
+/**
+ * The structure works on every row: moving or deleting a section takes along the topics, posts
+ * and files hidden from readers as well, so the scopes that hide them do not apply here.
+ */
 final class ForumStructureRepository implements ForumStructureRepositoryInterface
 {
     public function tree(): Collection
@@ -57,6 +61,7 @@ final class ForumStructureRepository implements ForumStructureRepositoryInterfac
     public function moveSectionFiles(int $sectionId, int $fromParentId, int $toParentId): void
     {
         ForumFile::query()
+            ->withoutGlobalScope('access')
             ->where('cat', $fromParentId)
             ->where('subcat', $sectionId)
             ->update(['cat' => $toParentId]);
@@ -119,14 +124,14 @@ final class ForumStructureRepository implements ForumStructureRepositoryInterfac
             $child->save();
         }
 
-        ForumFile::query()->where('cat', $fromCategoryId)->update(['cat' => $toCategoryId]);
+        ForumFile::query()->withoutGlobalScope('access')->where('cat', $fromCategoryId)->update(['cat' => $toCategoryId]);
         $this->deleteSection($fromCategoryId);
     }
 
     public function moveTopicsToSection(int $fromSectionId, int $toSectionId): void
     {
-        ForumTopic::query()->where('section_id', $fromSectionId)->update(['section_id' => $toSectionId]);
-        ForumFile::query()->where('subcat', $fromSectionId)->update(['subcat' => $toSectionId]);
+        ForumTopic::query()->withoutGlobalScope('access')->where('section_id', $fromSectionId)->update(['section_id' => $toSectionId]);
+        ForumFile::query()->withoutGlobalScope('access')->where('subcat', $fromSectionId)->update(['subcat' => $toSectionId]);
         $this->deleteSection($fromSectionId);
     }
 
@@ -137,22 +142,22 @@ final class ForumStructureRepository implements ForumStructureRepositoryInterfac
 
     public function attachedFilenames(int $sectionId): array
     {
-        return ForumFile::query()->where('subcat', $sectionId)->pluck('filename')->all();
+        return ForumFile::query()->withoutGlobalScope('access')->where('subcat', $sectionId)->pluck('filename')->all();
     }
 
     public function deleteSectionCascade(int $id): void
     {
-        ForumFile::query()->where('subcat', $id)->delete();
+        ForumFile::query()->withoutGlobalScope('access')->where('subcat', $id)->delete();
 
-        $topicIds = ForumTopic::query()->where('section_id', $id)->pluck('id')->all();
+        $topicIds = ForumTopic::query()->withoutGlobalScope('access')->where('section_id', $id)->pluck('id')->all();
         if ($topicIds !== []) {
-            ForumMessage::query()->whereIn('topic_id', $topicIds)->delete();
+            ForumMessage::query()->withoutGlobalScope('access')->whereIn('topic_id', $topicIds)->delete();
             ForumVote::query()->whereIn('topic', $topicIds)->delete();
             ForumVoteUser::query()->whereIn('topic', $topicIds)->delete();
             ForumUnread::query()->whereIn('topic_id', $topicIds)->delete();
         }
 
-        ForumTopic::query()->where('section_id', $id)->delete();
+        ForumTopic::query()->withoutGlobalScope('access')->where('section_id', $id)->delete();
         $this->deleteSection($id);
     }
 }

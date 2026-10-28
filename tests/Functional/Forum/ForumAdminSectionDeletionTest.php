@@ -87,6 +87,39 @@ final class ForumAdminSectionDeletionTest extends FunctionalTestCase
         self::assertNull($this->column('forum_messages', $message, 'id'));
     }
 
+    /**
+     * A moderator sees what is hidden, an administrator of the panel may not; the structure moves
+     * and deletes it all the same, or a hidden topic would stay behind without a section.
+     */
+    public function testHiddenTopicsAndFilesMoveWithTheOthers(): void
+    {
+        $category = $this->section('A category', 0, 0, 1);
+        $deleted = $this->section('Deleted', $category, 1, 1);
+        $target = $this->section('Target', $category, 1, 2);
+        $topic = Fixture::insert('forum_topic', ['section_id' => $deleted, 'name' => 'A hidden topic', 'slug' => 'a-hidden-topic', 'deleted' => 1]);
+        $file = Fixture::insert('cms_forum_files', ['cat' => $category, 'subcat' => $deleted, 'topic' => $topic, 'filename' => 'a.txt', 'del' => 1]);
+
+        $this->postForm('/admin/forum/structure/' . $deleted . '/delete', ['subcat' => $target], $this->admin());
+
+        self::assertFalse(ForumSection::query()->whereKey($deleted)->exists());
+        self::assertSame($target, (int) $this->column('forum_topic', $topic, 'section_id'));
+        self::assertSame($target, (int) $this->column('cms_forum_files', $file, 'subcat'));
+    }
+
+    public function testHiddenTopicsAndPostsGoWithADeletedSection(): void
+    {
+        $owner = FunctionalUserFactory::createWithPermissions([CorePermissions::ADMIN_ACCESS, ForumPermissions::STRUCTURE_DESTROY]);
+        $section = $this->section('Full', 0, 1, 1);
+        $topic = Fixture::insert('forum_topic', ['section_id' => $section, 'name' => 'A hidden topic', 'slug' => 'a-hidden-topic', 'deleted' => 1]);
+        $message = Fixture::insert('forum_messages', ['topic_id' => $topic, 'text' => 'Hello', 'deleted' => 1]);
+
+        $this->postForm('/admin/forum/structure/' . $section . '/delete', ['delete' => 1], $owner);
+
+        self::assertFalse(ForumSection::query()->whereKey($section)->exists());
+        self::assertNull($this->column('forum_topic', $topic, 'id'));
+        self::assertNull($this->column('forum_messages', $message, 'id'));
+    }
+
     private function admin(): User
     {
         return FunctionalUserFactory::createWithPermissions([CorePermissions::ADMIN_ACCESS]);
