@@ -74,7 +74,8 @@ final readonly class CommentsController
             'data'           => $comments->map(
                 static function (NewsComments $comment) use ($assets, $current_user, $content, $canModerate, $staffTitles, $profileLinks) {
                     $user = $comment->user;
-                    $user_data = [];
+                    // An author whose account is gone still gets the placeholder avatar.
+                    $user_data = ['avatar' => $assets->avatar(null)];
                     if ($user) {
                         $user_data = [
                             'id'          => $user->id,

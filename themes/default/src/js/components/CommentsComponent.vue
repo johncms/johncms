@@ -10,6 +10,9 @@
               <img :src="message.user.avatar" class="img-fluid" alt=".">
             </div>
           </a>
+          <div class="avatar" v-else>
+            <img :src="message.user.avatar" class="img-fluid" alt=".">
+          </div>
           <span class="user-status shadow" :class="message.user.is_online ? 'online' : 'offline'"></span>
           <div v-if="message.user.rights_name"
                class="post-of-user"
