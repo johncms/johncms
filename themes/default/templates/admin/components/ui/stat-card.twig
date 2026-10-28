@@ -1,5 +1,6 @@
 {#
-    A number above a list, leading to the list it counts.
+    A number above a list, leading to the list it counts. A card that leads somewhere carries an
+    arrow in its corner, so it reads as a link beside cards that are numbers alone.
 
     @param string label
     @param int    value
@@ -16,6 +17,9 @@
 {% endif %}
         <span class="admin-stat__label">{{ label }}</span>
         <span class="admin-stat__value">{{ value|format_number }}</span>
+        {% if url %}
+            {% include '@admin/components/ui/icon.twig' with {name: 'arrow-up-right', size: 14, class: 'admin-stat__arrow'} only %}
+        {% endif %}
 {% if url %}
     </a>
 {% else %}

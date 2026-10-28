@@ -8,6 +8,7 @@
 }
 
 .admin-stat {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -25,6 +26,24 @@ a.admin-stat:hover {
   color: var(--fg);
   text-decoration: none;
   transform: translateY(-1px);
+}
+
+// The mark of a card that is a link; the label keeps clear of it.
+.admin-stat__arrow {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  color: var(--fg-dim);
+  transition: color 0.12s, transform 0.12s;
+}
+
+a.admin-stat .admin-stat__label {
+  padding-right: 1.25rem;
+}
+
+a.admin-stat:hover .admin-stat__arrow {
+  color: var(--accent);
+  transform: translate(1px, -1px);
 }
 
 .admin-stat__label {
