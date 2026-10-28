@@ -15,7 +15,11 @@
   --bs-dropdown-item-border-radius: 0.3125rem;
   --bs-dropdown-box-shadow: 0 12px 32px rgb(0 0 0 / 0.14);
 
+  // As wide as its longest item, but never wider than a narrow screen: an item that does not fit
+  // breaks onto the next line instead of pushing the page sideways.
+  width: max-content;
   min-width: 12.5rem;
+  max-width: calc(100vw - 2rem);
   box-shadow: var(--bs-dropdown-box-shadow);
 
   @include ui-when-dark {
@@ -27,6 +31,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  white-space: normal;
 
   // A destructive item keeps its color under the pointer and takes a tint of it.
   &.text-danger:hover,
