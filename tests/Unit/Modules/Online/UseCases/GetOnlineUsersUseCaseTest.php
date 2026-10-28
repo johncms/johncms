@@ -14,6 +14,7 @@ use Johncms\Users\UserPlaceFormatterInterface;
 use Johncms\Users\User;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Tests\Support\FakeProfileLinks;
 use Twig\Markup;
 
 final class GetOnlineUsersUseCaseTest extends TestCase
@@ -68,6 +69,6 @@ final class GetOnlineUsersUseCaseTest extends TestCase
 
     private function makeUseCase(): GetOnlineUsersUseCase
     {
-        return new GetOnlineUsersUseCase($this->repository, $this->placeFormatter);
+        return new GetOnlineUsersUseCase($this->repository, $this->placeFormatter, new FakeProfileLinks());
     }
 }

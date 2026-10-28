@@ -16,6 +16,7 @@ use Johncms\Modules\Downloads\Application\UseCases\ViewCommentsReviewUseCase;
 use Johncms\NavChain;
 use Johncms\Security\HtmlSanitizerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
+use Johncms\Users\ProfileLinksInterface;
 use Johncms\Utils\DateFormatterInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Markup;
@@ -33,6 +34,7 @@ final readonly class CommentsReviewController
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
         private HtmlSanitizerInterface $sanitizer,
+        private ProfileLinksInterface $profileLinks,
     ) {
     }
 
@@ -72,7 +74,7 @@ final readonly class CommentsReviewController
 
             $replyText = null;
             $replyTime = '';
-            $replyAuthorUrl = '';
+            $replyAuthorUrl = null;
             $replyAuthorName = '';
             if (! empty($comment->reply)) {
                 $reply = $this->sanitizer->sanitize($comment->reply);
@@ -81,7 +83,7 @@ final readonly class CommentsReviewController
                 $replyIsOfStaff = (bool) ($attrs['reply_staff'] ?? (($attrs['reply_rights'] ?? 0) >= 1));
                 $replyText = new Markup($this->smiliesRenderer->render($reply, $replyIsOfStaff), 'UTF-8');
                 $replyTime = $this->dateFormatter->format($attrs['reply_time']);
-                $replyAuthorUrl = '/profile/' . $attrs['reply_id'];
+                $replyAuthorUrl = $this->profileLinks->urlOf((int) $attrs['reply_id']);
                 $replyAuthorName = $attrs['reply_name'];
             }
 

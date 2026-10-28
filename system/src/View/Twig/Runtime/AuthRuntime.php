@@ -28,11 +28,12 @@ final readonly class AuthRuntime implements RuntimeExtensionInterface
     }
 
     /**
-     * Where the name of an author leads, or null to draw the name without a link.
+     * Where the name of an author leads, or null to draw the name without a link. An author
+     * without an account comes as null.
      */
-    public function profileUrl(int $userId): ?string
+    public function profileUrl(?int $userId): ?string
     {
-        return $this->profileLinks->urlOf($userId);
+        return $userId === null ? null : $this->profileLinks->urlOf($userId);
     }
 
     /**

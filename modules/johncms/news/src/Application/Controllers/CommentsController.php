@@ -20,6 +20,7 @@ use Johncms\Http\Request;
 use Johncms\Modules\News\Application\Services\NewsPermissions;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Modules\News\Domain\Models\NewsComments;
+use Johncms\Users\ProfileLinksInterface;
 use Johncms\Users\User;
 use Johncms\View\Twig\Runtime\AssetRuntime;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,6 +32,7 @@ final readonly class CommentsController
         private StaffTitles $staffTitles,
         private AccessCheckerInterface $accessChecker,
         private PaginationFactory $paginationFactory,
+        private ProfileLinksInterface $profileLinks,
     ) {
     }
 
@@ -65,11 +67,12 @@ final readonly class CommentsController
 
         $canModerate = $this->accessChecker->allows(NewsPermissions::COMMENTS_MODERATE);
         $staffTitles = $this->staffTitles;
+        $profileLinks = $this->profileLinks;
 
         $array = [
             'current_page'   => $currentPage,
             'data'           => $comments->map(
-                static function (NewsComments $comment) use ($assets, $current_user, $content, $canModerate, $staffTitles) {
+                static function (NewsComments $comment) use ($assets, $current_user, $content, $canModerate, $staffTitles, $profileLinks) {
                     $user = $comment->user;
                     $user_data = [];
                     if ($user) {
@@ -79,7 +82,7 @@ final readonly class CommentsController
                             'status'      => $user->status,
                             'is_online'   => $user->is_online,
                             'rights_name' => $user->rights_name,
-                            'profile_url' => $user->profile_url,
+                            'profile_url' => $profileLinks->urlOf($user->id) ?? '',
                             'avatar'      => $assets->avatar((int) $user->id),
                         ];
                     }

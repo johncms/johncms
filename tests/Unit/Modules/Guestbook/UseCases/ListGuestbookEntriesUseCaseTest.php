@@ -30,6 +30,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Tests\Support\FakeAccessChecker;
 use Tests\Support\FakeAuthenticator;
+use Tests\Support\FakeProfileLinks;
 use Tests\Support\FakeRoleRepository;
 use Tests\Support\FakeUserRepository;
 use Tests\Support\IdentityFactory;
@@ -180,6 +181,7 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
             $accessChecker,
             new RoleLevels($this->roles),
             new StaffTitles($this->roles),
+            new FakeProfileLinks(),
         );
     }
 

@@ -15,7 +15,13 @@
         <div class="meta text-muted">
             <div class="mt-3">{{ __('Published:') }} {{ article.display_date }}</div>
             {% if article.author %}
-                <div class="mt-1">{{ __('Author:') }} <a href="{{ article.author.profile_url }}" rel="nofollow">{{ article.author.name }}</a></div>
+                <div class="mt-1">{{ __('Author:') }}
+                    {% if profile_url(article.author.id) %}
+                        <a href="{{ profile_url(article.author.id) }}" rel="nofollow">{{ article.author.name }}</a>
+                    {% else %}
+                        {{ article.author.name }}
+                    {% endif %}
+                </div>
             {% endif %}
             {% if article.tags is not empty %}
                 <div class="mt-1">

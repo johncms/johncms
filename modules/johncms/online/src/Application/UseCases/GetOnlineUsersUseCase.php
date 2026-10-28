@@ -6,6 +6,7 @@ namespace Johncms\Modules\Online\Application\UseCases;
 
 use Johncms\Modules\Online\Application\DTO\OnlineItemDTO;
 use Johncms\Modules\Online\Domain\Repository\OnlineUserRepositoryInterface;
+use Johncms\Users\ProfileLinksInterface;
 use Johncms\Users\User;
 use Johncms\Users\UserPlaceFormatterInterface;
 use Johncms\Utils\DurationFormatter;
@@ -15,6 +16,7 @@ final readonly class GetOnlineUsersUseCase
     public function __construct(
         private OnlineUserRepositoryInterface $repository,
         private UserPlaceFormatterInterface $userPlaceFormatter,
+        private ProfileLinksInterface $profileLinks,
     ) {
     }
 
@@ -33,7 +35,7 @@ final readonly class GetOnlineUsersUseCase
                 id:                  $user->id,
                 name:                $user->name,
                 isOnline:            $user->is_online,
-                profileUrl:          $user->profile_url,
+                profileUrl:          $this->profileLinks->urlOf($user->id) ?? '',
                 displayDate:         $user->movings . ' - ' . DurationFormatter::format(time() - $user->sestime),
                 placeName:           $this->userPlaceFormatter->format((string) $user->place),
                 ip:                  $user->ip,

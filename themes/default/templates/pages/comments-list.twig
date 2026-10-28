@@ -79,7 +79,7 @@
                     {{ item.post_text }}
                     {% if item.reply_text %}
                         <div class="alert alert-warning mt-2 mb-n2">
-                            <b><a href="{{ item.reply_author_url }}">{{ item.reply_author_name }}</a></b> {{ item.reply_time }}<br>
+                            <b>{% if item.reply_author_url %}<a href="{{ item.reply_author_url }}">{{ item.reply_author_name }}</a>{% else %}{{ item.reply_author_name }}{% endif %}</b> {{ item.reply_time }}<br>
                             {{ item.reply_text }}
                         </div>
                     {% endif %}

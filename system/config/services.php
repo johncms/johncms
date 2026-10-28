@@ -440,7 +440,8 @@ return static function (ContainerConfigurator $container): void {
         ->arg('$providers', tagged_iterator('johncms.visitor_place_provider'));
     $services->alias(UserPlaceFormatterInterface::class, UserPlaceFormatter::class);
     $services->set(IgnoreListCheckerInterface::class, IgnoreListChecker::class);
-    $services->set(ProfileLinksInterface::class, ProfileLinks::class)->autowire();
+    // Public: the legacy comments (Comments) fetch it from the container by name.
+    $services->set(ProfileLinksInterface::class, ProfileLinks::class)->autowire()->public();
     $services->set(DateFormatterInterface::class, DateFormatter::class)->autowire();
     $services->set(NavChain::class)->factory([NavChain::class, 'create']);
     // Which library resizes the pictures is settled here and nowhere else: everything that

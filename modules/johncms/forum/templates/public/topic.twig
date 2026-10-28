@@ -268,7 +268,7 @@
         <div class="alert alert-secondary">
             {{ __('Curators') }}:
             {% for curator in curators %}
-                <a href="/profile/{{ curator.id }}">{{ curator.name }}</a>{% if not loop.last %},{% endif %}
+                {% if profile_url(curator.id) %}<a href="{{ profile_url(curator.id) }}">{{ curator.name }}</a>{% else %}{{ curator.name }}{% endif %}{% if not loop.last %},{% endif %}
             {% endfor %}
         </div>
     {% endif %}

@@ -27,6 +27,7 @@ use Johncms\Http\Session;
 use Johncms\Http\Environment;
 use Johncms\Users\User;
 use Johncms\Users\IgnoreListCheckerInterface;
+use Johncms\Users\ProfileLinksInterface;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\Utils\DateFormatterInterface;
 use Johncms\View\RendererInterface;
@@ -78,6 +79,8 @@ class Comments
     private AccessCheckerInterface $accessChecker;
 
     private CurrentUser $currentUser;
+
+    private ProfileLinksInterface $profileLinks;
 
     private RoleLevels $roleLevels;
 
@@ -140,6 +143,7 @@ class Comments
         $this->systemUser = $container->get(CurrentUser::class)->user();
         $this->accessChecker = $container->get(AccessCheckerInterface::class);
         $this->currentUser = $container->get(CurrentUser::class);
+        $this->profileLinks = $container->get(ProfileLinksInterface::class);
         $this->roleLevels = $container->get(RoleLevels::class);
         $this->staffTitles = $container->get(StaffTitles::class);
         $this->view = di(RendererInterface::class);
@@ -496,7 +500,7 @@ class Comments
                                 new ContentContext(adminSmilies: $this->replyIsOfStaff($attributes))
                             );
                             $res['reply_time'] = $this->dateFormatter->format($attributes['reply_time']);
-                            $res['reply_author_url'] = '/profile/' . $attributes['reply_id'];
+                            $res['reply_author_url'] = $this->profileLinks->urlOf((int) $attributes['reply_id']);
                             $res['reply_author_name'] = $attributes['reply_name'];
                         }
                         $items[] = $res;

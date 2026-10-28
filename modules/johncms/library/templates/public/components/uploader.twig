@@ -5,8 +5,9 @@
     @param string name
     @param string date    Already formatted for the current locale.
 #}
-{%- if user_id -%}
-    <a href="/profile/{{ user_id }}">{{ name }}</a>
+{%- set profile_link = user_id ? profile_url(user_id) : null -%}
+{%- if profile_link -%}
+    <a href="{{ profile_link }}">{{ name }}</a>
 {%- else -%}
     {{ name }}
 {%- endif %} ({{ date }})

@@ -14,10 +14,10 @@
         </div>
         <div class="overflow-auto flex-grow-1">
             <div class="user-name">
-                {% if app.user.isValid and app.user.id == item.id %}
-                    <a class="user-login me-2">{{ item.name }}</a>
-                {% else %}
+                {% if item.profileUrl and not (app.user.isValid and app.user.id == item.id) %}
                     <a href="{{ item.profileUrl }}" class="user-login me-2">{{ item.name }}</a>
+                {% else %}
+                    <a class="user-login me-2">{{ item.name }}</a>
                 {% endif %}
                 <span class="text-muted">{{ item.displayDate }}</span>
             </div>

@@ -6,6 +6,7 @@ namespace Johncms\Modules\Online\Application\UseCases;
 
 use Johncms\Modules\Online\Application\DTO\OnlineItemDTO;
 use Johncms\Modules\Online\Domain\Repository\OnlineUserRepositoryInterface;
+use Johncms\Users\ProfileLinksInterface;
 use Johncms\Users\User;
 use Johncms\Users\UserPlaceFormatterInterface;
 use Johncms\Utils\DateFormatterInterface;
@@ -16,6 +17,7 @@ final readonly class GetUsersHistoryUseCase
         private OnlineUserRepositoryInterface $repository,
         private DateFormatterInterface $dateFormatter,
         private UserPlaceFormatterInterface $userPlaceFormatter,
+        private ProfileLinksInterface $profileLinks,
     ) {
     }
 
@@ -34,7 +36,7 @@ final readonly class GetUsersHistoryUseCase
                 id:                  $user->id,
                 name:                $user->name,
                 isOnline:            $user->is_online,
-                profileUrl:          $user->profile_url,
+                profileUrl:          $this->profileLinks->urlOf($user->id) ?? '',
                 displayDate:         $this->dateFormatter->format($user->sestime),
                 placeName:           $this->userPlaceFormatter->format((string) $user->place),
                 ip:                  $user->ip,

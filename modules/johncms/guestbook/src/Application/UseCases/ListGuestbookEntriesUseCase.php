@@ -17,6 +17,7 @@ use Johncms\Modules\Guestbook\Application\Services\GuestbookEntryTextFormatter;
 use Johncms\Modules\Guestbook\Application\Services\GuestbookPermissions;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Modules\Guestbook\Domain\Repository\GuestbookEntryRepositoryInterface;
+use Johncms\Users\ProfileLinksInterface;
 use Johncms\Users\User;
 
 final readonly class ListGuestbookEntriesUseCase
@@ -29,6 +30,7 @@ final readonly class ListGuestbookEntriesUseCase
         private AccessCheckerInterface $accessChecker,
         private RoleLevels $roleLevels,
         private StaffTitles $staffTitles,
+        private ProfileLinksInterface $profileLinks,
     ) {
     }
 
@@ -82,7 +84,7 @@ final readonly class ListGuestbookEntriesUseCase
 
         return new GuestbookEntryUserDTO(
             id:         $user->id,
-            profileUrl: $user->profile_url,
+            profileUrl: $this->profileLinks->urlOf($user->id) ?? '',
             rightsName: $this->staffTitles->titleFor((int) $user->id),
             status:     $user->status,
         );

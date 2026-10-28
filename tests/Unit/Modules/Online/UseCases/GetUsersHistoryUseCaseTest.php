@@ -13,6 +13,7 @@ use Johncms\Users\UserPlaceFormatterInterface;
 use Johncms\Users\User;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Tests\Support\FakeProfileLinks;
 use Twig\Markup;
 
 final class GetUsersHistoryUseCaseTest extends TestCase
@@ -64,6 +65,6 @@ final class GetUsersHistoryUseCaseTest extends TestCase
 
     private function makeUseCase(): GetUsersHistoryUseCase
     {
-        return new GetUsersHistoryUseCase($this->repository, $this->dateFormatter, $this->placeFormatter);
+        return new GetUsersHistoryUseCase($this->repository, $this->dateFormatter, $this->placeFormatter, new FakeProfileLinks());
     }
 }

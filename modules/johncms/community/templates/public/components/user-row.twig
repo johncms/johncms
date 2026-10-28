@@ -5,15 +5,16 @@
     @param string active_tab Which activity counter to show, empty on the plain lists.
 #}
 {% set is_self = app.user.isValid and app.user.id == item.id %}
+{% set profile_link = is_self ? null : profile_url(item.id) %}
 <div class="new_post-item">
     <div class="new_post-header d-flex justify-content-between">
         <div class="post-user">
-            {% if is_self %}
+            {% if not profile_link %}
                 <div class="avatar">
                     <img src="{{ avatar(item.id) }}" class="img-fluid" alt=".">
                 </div>
             {% else %}
-                <a href="{{ item.profile_url }}">
+                <a href="{{ profile_link }}">
                     <div class="avatar">
                         <img src="{{ avatar(item.id) }}" class="img-fluid" alt=".">
                     </div>
@@ -34,10 +35,10 @@
         </div>
         <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
             <div class="w-100">
-                {% if is_self %}
+                {% if not profile_link %}
                     <div class="user-name d-inline me-2">{{ item.name }}</div>
                 {% else %}
-                    <a href="{{ item.profile_url }}"><span class="user-name d-inline me-2">{{ item.name }}</span></a>
+                    <a href="{{ profile_link }}"><span class="user-name d-inline me-2">{{ item.name }}</span></a>
                 {% endif %}
             </div>
             {% if item.status %}

@@ -47,7 +47,12 @@
                 </div>
             </div>
             <div class="small pt-2 text-muted">
-                {{ __('Author') }}: <a href="/profile/{{ result.user_id }}" class="me-2">{{ result.user_name }}</a>
+                {{ __('Author') }}:
+                {% if profile_url(result.user_id) %}
+                    <a href="{{ profile_url(result.user_id) }}" class="me-2">{{ result.user_name }}</a>
+                {% else %}
+                    <span class="me-2">{{ result.user_name }}</span>
+                {% endif %}
                 <span class="me-2">{{ result.formatted_date }}</span>
                 {% if result.post_url %}
                     <a href="{{ result.post_url }}">{{ __('Go to Message') }}</a>
