@@ -18,37 +18,15 @@ use PDO;
 
 class PdoFactory
 {
+    public function __construct(
+        private readonly Capsule $capsule,
+    ) {
+    }
+
     public function __invoke(): PDO
     {
-        $config = config('pdo', []);
-
-        $capsule = new Capsule();
-        $capsule->addConnection(
-            [
-                'driver'    => $config['db_driver'] ?? 'mysql',
-                'host'      => $config['db_host'] ?? 'localhost',
-                'port'      => $config['db_port'] ?? '3306',
-                'database'  => $config['db_name'] ?? 'johncms',
-                'username'  => $config['db_user'] ?? 'root',
-                'password'  => $config['db_pass'] ?? '',
-                'charset'   => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
-                'prefix'    => '',
-                'timezone'  => '+00:00',
-                'strict'    => DB_STRICT_MODE,
-                'engine'    => 'InnoDB ROW_FORMAT=DYNAMIC',
-            ]
-        );
-
-        $capsule->setAsGlobal();
-        $capsule->bootEloquent();
-
-        if (DEBUG) {
-            $capsule->getDatabaseManager()->enableQueryLog();
-        }
-
         try {
-            return $capsule->getDatabaseManager()->getPdo();
+            return $this->capsule->getDatabaseManager()->getPdo();
         } catch (Exception $exception) {
             echo '<b>Error connecting to the database server:</b><br>' . $exception->getMessage();
 

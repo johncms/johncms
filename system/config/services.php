@@ -46,6 +46,7 @@ use Johncms\Cache\CacheSettingsFactory;
 use Johncms\Captcha\CaptchaProviderRegistry;
 use Johncms\Counters;
 use Johncms\CountersFactory;
+use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Builder as SchemaBuilder;
 use Johncms\Database\ConnectionInterface;
 use Johncms\Database\Migrations\DatabaseMigrationRepository;
@@ -58,6 +59,7 @@ use Johncms\Database\Migrations\PendingMigrations;
 use Johncms\Database\Migrations\ModuleMigrationSourceProvider;
 use Johncms\Database\Migrations\SystemMigrationSourceProvider;
 use Johncms\Database\PdoConnection;
+use Johncms\Database\CapsuleFactory;
 use Johncms\Database\PdoFactory;
 use Johncms\Database\Schema\Adapters\BlueprintCompiler;
 use Johncms\Database\Schema\Adapters\IlluminateSchema;
@@ -356,6 +358,9 @@ return static function (ContainerConfigurator $container): void {
     // The session storage depends on the runtime (native under HTTP, in-memory in the console),
     // so the facade is built by a factory instead of being autowired from its constructor.
     $services->set(Session::class)->factory(service(SessionFactory::class));
+    // Configuring Eloquent and connecting to the database are two services: the console boots
+    // the capsule for every command, while the connection opens only for the ones that query.
+    $services->set(Capsule::class)->factory(service(CapsuleFactory::class));
     $services->set(\PDO::class, PdoFactory::class)->factory(service(PdoFactory::class));
     // Creating and altering tables: a handful of console commands and the installer.
     $services->set(SchemaBuilder::class)->factory(service(SchemaBuilderFactory::class));

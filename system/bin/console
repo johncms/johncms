@@ -3,6 +3,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Container\PSRContainerFactory;
 use Johncms\Logs\GlobalErrorHandler;
 use Psr\Log\LoggerInterface;
@@ -21,6 +22,11 @@ $logger = $container->get(LoggerInterface::class);
     logger: $logger,
     container: $container
 ))->registerHandlers();
+
+// Eloquent is booted for every command, not left to whoever builds PDO first: commands are built
+// lazily, and one that works through models alone would otherwise find no connection. Booting
+// does not connect, so the commands that never query still run without a database.
+$container->get(Capsule::class);
 
 try {
     $application = $container->get(Application::class);
