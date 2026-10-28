@@ -1482,7 +1482,7 @@ msgid "Common settings"
 msgstr "Общие настройки"
 
 msgid "Show file counters"
-msgstr "Показать счетчики файлов"
+msgstr "Показывать счётчики файлов"
 
 msgid "SEO settings"
 msgstr "Настройки SEO"
@@ -1503,13 +1503,13 @@ msgid "Section description"
 msgstr "Описание раздела"
 
 msgid "Topic keywords"
-msgstr "Ключевые слова топиков"
+msgstr "Ключевые слова темы"
 
 msgid "Macros available: #name#"
 msgstr "Доступные макросы: #name#"
 
 msgid "Topic description"
-msgstr "Описание топиков"
+msgstr "Описание темы"
 
 msgid "View"
 msgstr "Просмотреть"
@@ -1694,3 +1694,21 @@ msgstr "Темы сохранят свои сообщения и файлы."
 
 msgid "They go to the end of the chosen section, with everything in them."
 msgstr "Они встанут в конец выбранного раздела со всем содержимым."
+
+msgid "Meta tags for the main page"
+msgstr "Мета-теги главной страницы форума"
+
+msgid "Meta tag templates for sections"
+msgstr "Шаблоны мета-тегов для разделов"
+
+msgid "Meta tag templates for topics"
+msgstr "Шаблоны мета-тегов для тем"
+
+msgid "The number of attached files on the main page of the forum, in its sections and topics."
+msgstr "Число прикреплённых файлов на главной форума, в разделах и темах."
+
+msgid "Used where the section has no keywords or description of its own."
+msgstr "Используются, если у раздела нет своих ключевых слов или описания."
+
+msgid "Used where the topic has no keywords or description of its own."
+msgstr "Используются, если у темы нет своих ключевых слов или описания."

@@ -18,6 +18,24 @@ final readonly class ForumSettingsDTO
     }
 
     /**
+     * The settings as the configuration holds them; a key it lacks is empty.
+     *
+     * @param array<string, mixed> $settings
+     */
+    public static function fromArray(array $settings): self
+    {
+        return new self(
+            fileCounters: (bool) ($settings['file_counters'] ?? false),
+            topicKeywords: (string) ($settings['topic_keywords'] ?? ''),
+            topicDescription: (string) ($settings['topic_description'] ?? ''),
+            sectionKeywords: (string) ($settings['section_keywords'] ?? ''),
+            sectionDescription: (string) ($settings['section_description'] ?? ''),
+            forumKeywords: (string) ($settings['forum_keywords'] ?? ''),
+            forumDescription: (string) ($settings['forum_description'] ?? ''),
+        );
+    }
+
+    /**
      * @return array<string, mixed>
      */
     public function toArray(): array

@@ -149,8 +149,8 @@ msgid "The section was deleted"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/Admin/DeleteSectionController.php:107
-#: modules/johncms/forum/src/Application/Controllers/Admin/ForumDashboardController.php:31
-#: modules/johncms/forum/src/Application/Controllers/Admin/ForumSettingsController.php:56
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumDashboardController.php:33
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumSettingsController.php:58
 #: modules/johncms/forum/src/Application/Controllers/Admin/HiddenPostsController.php:47
 #: modules/johncms/forum/src/Application/Controllers/Admin/HiddenTopicsController.php:47
 #: modules/johncms/forum/src/Application/Controllers/Admin/SectionFormController.php:112
@@ -201,20 +201,20 @@ msgstr ""
 msgid "Delete section"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/Admin/ForumSettingsController.php:46
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumSettingsController.php:48
 msgid "ERROR: Can not write file `forum.local.php`"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/Admin/ForumSettingsController.php:49
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumSettingsController.php:51
 msgid "Settings are saved successfully"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/Admin/ForumSettingsController.php:55
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumSettingsController.php:57
 msgid "Forum Settings"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/Admin/HiddenPostsController.php:46
-#: modules/johncms/forum/templates/admin/index.twig:33
+#: modules/johncms/forum/templates/admin/index.twig:36
 msgid "Hidden posts"
 msgstr ""
 
@@ -231,7 +231,7 @@ msgid "by author"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/Admin/HiddenTopicsController.php:46
-#: modules/johncms/forum/templates/admin/index.twig:32
+#: modules/johncms/forum/templates/admin/index.twig:35
 msgid "Hidden topics"
 msgstr ""
 
@@ -253,7 +253,7 @@ msgid "Add Section"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/Admin/SectionFormController.php:111
-#: modules/johncms/forum/templates/admin/index.twig:23
+#: modules/johncms/forum/templates/admin/index.twig:24
 msgid "Add Category"
 msgstr ""
 
@@ -734,7 +734,6 @@ msgstr ""
 
 #: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:72
 #: modules/johncms/forum/templates/admin/section-form.twig:153
-#: modules/johncms/forum/templates/admin/settings.twig:35
 msgid "Sections"
 msgstr ""
 
@@ -743,9 +742,8 @@ msgid "A folder for other sections; no topics are started in it."
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:73
-#: modules/johncms/forum/templates/admin/index.twig:29
+#: modules/johncms/forum/templates/admin/index.twig:32
 #: modules/johncms/forum/templates/admin/section-form.twig:154
-#: modules/johncms/forum/templates/admin/settings.twig:46
 msgid "Topics"
 msgstr ""
 
@@ -971,6 +969,7 @@ msgstr ""
 #: modules/johncms/forum/templates/admin/hidden-posts.twig:18
 #: modules/johncms/forum/templates/admin/hidden-topics.twig:18
 #: modules/johncms/forum/templates/admin/section-form.twig:163
+#: modules/johncms/forum/templates/admin/settings.twig:90
 #: modules/johncms/forum/templates/public/bulk-delete-posts.twig:23
 #: modules/johncms/forum/templates/public/clear-search-history.twig:17
 #: modules/johncms/forum/templates/public/delete-poll-answer.twig:16
@@ -1042,62 +1041,63 @@ msgstr ""
 msgid "Topic deleted:"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/index.twig:18
+#: modules/johncms/forum/templates/admin/index.twig:19
 msgid "Settings"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/index.twig:30
+#: modules/johncms/forum/templates/admin/index.twig:33
 msgid "Messages"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/index.twig:31
+#: modules/johncms/forum/templates/admin/index.twig:34
 #: modules/johncms/forum/templates/public/index.twig:16
 msgid "Files"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/index.twig:40
+#: modules/johncms/forum/templates/admin/index.twig:43
 msgid "The forum has no sections yet"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/index.twig:41
+#: modules/johncms/forum/templates/admin/index.twig:44
 msgid "Start with a category: the sections of the forum go into it."
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/index.twig:48
+#: modules/johncms/forum/templates/admin/index.twig:51
 msgid "Section"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/index.twig:49
+#: modules/johncms/forum/templates/admin/index.twig:52
 msgid "Contents"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/index.twig:50
+#: modules/johncms/forum/templates/admin/index.twig:53
 msgid "Access"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/index.twig:51
+#: modules/johncms/forum/templates/admin/index.twig:54
 #: modules/johncms/forum/templates/admin/section-form.twig:116
 msgid "Order"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/index.twig:52
-#: modules/johncms/forum/templates/admin/index.twig:88
+#: modules/johncms/forum/templates/admin/index.twig:55
+#: modules/johncms/forum/templates/admin/index.twig:91
 msgid "Actions"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/index.twig:75
+#: modules/johncms/forum/templates/admin/index.twig:78
 msgid "%d topic"
 msgid_plural "%d topics"
 msgstr[0] ""
 
-#: modules/johncms/forum/templates/admin/index.twig:77
+#: modules/johncms/forum/templates/admin/index.twig:80
 msgid "%d section"
 msgid_plural "%d sections"
 msgstr[0] ""
 
 #: modules/johncms/forum/templates/admin/section-form.twig:44
 #: modules/johncms/forum/templates/admin/section-form.twig:167
-#: modules/johncms/forum/templates/admin/settings.twig:58
+#: modules/johncms/forum/templates/admin/settings.twig:21
+#: modules/johncms/forum/templates/admin/settings.twig:93
 #: modules/johncms/forum/templates/public/add-poll.twig:42
 #: modules/johncms/forum/templates/public/change-topic.twig:40
 #: modules/johncms/forum/templates/public/edit-poll.twig:53
@@ -1178,49 +1178,67 @@ msgstr ""
 msgid "Save and close"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/settings.twig:19
+#: modules/johncms/forum/templates/admin/settings.twig:39
 msgid "Common settings"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/settings.twig:22
+#: modules/johncms/forum/templates/admin/settings.twig:45
 msgid "Show file counters"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/settings.twig:26
-msgid "SEO settings"
+#: modules/johncms/forum/templates/admin/settings.twig:46
+msgid "The number of attached files on the main page of the forum, in its sections and topics."
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/settings.twig:28
+#: modules/johncms/forum/templates/admin/settings.twig:55
+msgid "Meta tags for the main page"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/settings.twig:58
 msgid "Forum keywords"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/settings.twig:32
+#: modules/johncms/forum/templates/admin/settings.twig:59
 msgid "Forum description"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/settings.twig:37
-msgid "Section keywords"
+#: modules/johncms/forum/templates/admin/settings.twig:66
+msgid "Meta tag templates for sections"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/settings.twig:39
-#: modules/johncms/forum/templates/admin/settings.twig:44
+#: modules/johncms/forum/templates/admin/settings.twig:67
 msgid "Macros available: #name#, #description#"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/settings.twig:42
+#: modules/johncms/forum/templates/admin/settings.twig:70
+msgid "Used where the section has no keywords or description of its own."
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/settings.twig:71
+msgid "Section keywords"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/settings.twig:72
 msgid "Section description"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/settings.twig:48
-msgid "Topic keywords"
+#: modules/johncms/forum/templates/admin/settings.twig:79
+msgid "Meta tag templates for topics"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/settings.twig:50
-#: modules/johncms/forum/templates/admin/settings.twig:55
+#: modules/johncms/forum/templates/admin/settings.twig:80
 msgid "Macros available: #name#"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/settings.twig:53
+#: modules/johncms/forum/templates/admin/settings.twig:83
+msgid "Used where the topic has no keywords or description of its own."
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/settings.twig:84
+msgid "Topic keywords"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/settings.twig:85
 msgid "Topic description"
 msgstr ""
 

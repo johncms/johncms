@@ -56,6 +56,29 @@ final class ForumAdminSectionTest extends FunctionalTestCase
         self::assertSame(Response::HTTP_FORBIDDEN, $response->getStatusCode());
     }
 
+    /**
+     * Saving writes config/autoload/forum.local.php, so only what the form shows is checked here.
+     */
+    public function testTheSettingsShowWhatIsConfigured(): void
+    {
+        $owner = FunctionalUserFactory::createWithPermissions([CorePermissions::ADMIN_ACCESS, CorePermissions::ADMIN_SETTINGS_MANAGE]);
+
+        $body = $this->withConfig(
+            ['forum' => ['settings' => [
+                'file_counters'       => 1,
+                'forum_keywords'      => 'forum, talk',
+                'section_description' => 'About #name#',
+                'topic_keywords'      => '#name#, topic',
+            ]]],
+            fn (): string => (string) $this->handleRequest('/admin/forum/settings', cookies: $this->actingAs($owner))->getContent(),
+        );
+
+        self::assertMatchesRegularExpression('~id="forum-file_counters" checked~', $body);
+        self::assertStringContainsString('>forum, talk</textarea>', $body);
+        self::assertStringContainsString('>About #name#</textarea>', $body);
+        self::assertStringContainsString('>#name#, topic</textarea>', $body);
+    }
+
     public function testTheOwnerOfTheSiteOpensTheSettings(): void
     {
         $owner = FunctionalUserFactory::createWithPermissions([

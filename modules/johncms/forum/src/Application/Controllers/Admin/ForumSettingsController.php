@@ -7,6 +7,7 @@ namespace Johncms\Modules\Forum\Application\Controllers\Admin;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
 use Johncms\Modules\Forum\Application\DTO\ForumSettingsDTO;
 use Johncms\Modules\Forum\Application\UseCases\UpdateForumSettingsUseCase;
+use Johncms\Modules\Forum\Domain\Repository\ForumConfigRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
@@ -19,6 +20,7 @@ final readonly class ForumSettingsController
     public function __construct(
         private NavChain $navChain,
         private UpdateForumSettingsUseCase $updateForumSettings,
+        private ForumConfigRepositoryInterface $configRepository,
         private Session $session,
     ) {
     }
@@ -60,8 +62,9 @@ final readonly class ForumSettingsController
             'title'           => $title,
             'page_title'      => $title,
             'module_menu'     => ['forum' => true],
-            'settings'        => (array) config('forum.settings', []),
+            'settings'        => ForumSettingsDTO::fromArray($this->configRepository->getSettings()),
             'form_action'     => self::URL,
+            'list_url'        => '/admin/forum',
             'error_message'   => $errorMessage,
             'success_message' => (string) $this->session->getFlash('success_message'),
         ]);
