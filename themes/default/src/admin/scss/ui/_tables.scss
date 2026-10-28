@@ -28,3 +28,9 @@
 .table > tbody > tr.table-active > :first-child {
   box-shadow: inset 2px 0 0 var(--accent), inset 0 0 0 9999px var(--bs-table-bg-state, var(--bs-table-bg-type, var(--bs-table-accent-bg)));
 }
+
+// The scrolling box holds what is positioned inside the table. Without it a .visually-hidden
+// label of a cell is placed against the card, escapes the scroll and widens the whole page.
+.table-responsive {
+  position: relative;
+}
