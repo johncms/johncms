@@ -307,6 +307,18 @@ msgstr "Барактын үстүнкү бөлүгүндө"
 msgid "At the bottom of the page"
 msgstr "Барактын астыңкы бөлүгүндө"
 
+msgid "Above the site menu."
+msgstr "Сайттын менюсунун үстүндө."
+
+msgid "Below the site menu."
+msgstr "Сайттын менюсунан кийин."
+
+msgid "At the start of the page content."
+msgstr "Барактын мазмунунун башында."
+
+msgid "After the page content."
+msgstr "Барактын мазмунунан кийин."
+
 #: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:74
 msgid "Antiflood Settings"
 msgstr "Антифлудду орнотуу"
@@ -608,6 +620,15 @@ msgstr "Башкы бетте гана"
 msgid "On all, except Homepage"
 msgstr "Башкы бетинен башка, бардык беттерде"
 
+msgid "Show on the homepage and every other page."
+msgstr "Башкы бетте жана калган бардык беттерде көрсөтүү."
+
+msgid "Show on the homepage only."
+msgstr "Башкы бетте гана көрсөтүү."
+
+msgid "Show on every page except the homepage."
+msgstr "Башкы беттен башка бардык беттерде көрсөтүү."
+
 #: modules/admin/src/Application/Services/AdRowMapper.php:120
 #: modules/admin/templates/ads_add.phtml:60
 msgid "Everyone"
@@ -617,6 +638,15 @@ msgstr "Баары"
 #: modules/admin/templates/ads_add.phtml:64
 msgid "Guests"
 msgstr "Коноктор"
+
+msgid "Visitors who are signed in and guests can see this link."
+msgstr "Бул шилтемени кирген колдонуучулар да, коноктор да көрө алышат."
+
+msgid "Show this link only to visitors who are not signed in."
+msgstr "Бул шилтемени сайтка кире элек конокторго гана көрсөтүү."
+
+msgid "Show this link only to signed-in users."
+msgstr "Бул шилтемени сайтка кирген колдонуучуларга гана көрсөтүү."
 
 #: modules/admin/src/Application/Services/AdRowMapper.php:120
 #: modules/admin/templates/ads_add.phtml:68
@@ -936,6 +966,9 @@ msgstr "Жашыруу"
 #: modules/admin/templates/ads_index.phtml:74
 msgid "Delete inactive links"
 msgstr "Аракетсиз шилтемелерди өчүрүү"
+
+msgid "Inactive links deleted"
+msgstr "Активдүү эмес шилтемелер өчүрүлдү"
 
 #: modules/admin/templates/amnesty.phtml:24
 msgid "Unban all"

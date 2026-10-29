@@ -61,6 +61,7 @@ final readonly class AdsController
             'add_url'    => self::URL . '/new',
             'clear_url'  => self::URL . '/clear',
             'pagination' => $pagination->render(),
+            'success_message' => (string) $this->session->getFlash('success_message'),
         ]);
     }
 
@@ -139,21 +140,31 @@ final readonly class AdsController
         redirect(self::URL . '?type=' . $type);
     }
 
-    public function clearConfirm(): ViewResponse
+    public function clearConfirm(Request $request): ViewResponse
     {
-        $title = __('Advertisement');
-        $this->navChain->add($title, self::URL);
-
-        return new ViewResponse('@admin/ad-confirm.twig', $this->menu($title, $title) + [
+        $title = __('Delete inactive links');
+        $data = [
             'message'     => __('Are you sure you want to delete all inactive links?'),
             'form_action' => self::URL . '/clear',
             'back_url'    => self::URL,
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            return new ViewResponse('@admin/ad-clear-dialog.twig', $data);
+        }
+
+        $this->navChain->add(__('Advertisement'), self::URL);
+        $this->navChain->add($title);
+
+        return new ViewResponse('@admin/ad-clear-confirm.twig', $this->menu($title, $title) + [
+            'dialog' => $data,
         ]);
     }
 
     public function clear(): ViewResponse
     {
         $this->manageAd->deleteInactive();
+        $this->session->flash('success_message', __('Inactive links deleted'));
 
         redirect(self::URL);
     }
@@ -296,44 +307,44 @@ final readonly class AdsController
     }
 
     /**
-     * @return list<array{value: int, label: string}>
+     * @return list<array{value: int, label: string, hint: string}>
      */
     private function audienceOptions(): array
     {
         return [
-            ['value' => 0, 'label' => __('Everyone')],
-            ['value' => 1, 'label' => __('Guests')],
-            ['value' => 2, 'label' => __('Users')],
+            ['value' => 0, 'label' => __('Everyone'), 'hint' => __('Visitors who are signed in and guests can see this link.')],
+            ['value' => 1, 'label' => __('Guests'), 'hint' => __('Show this link only to visitors who are not signed in.')],
+            ['value' => 2, 'label' => __('Users'), 'hint' => __('Show this link only to signed-in users.')],
         ];
     }
 
     /**
-     * @return list<array{value: int, label: string}>
+     * @return list<array{value: int, label: string, hint: string}>
      */
     private function placeOptions(): array
     {
         return [
-            ['value' => 0, 'label' => __('Before the menu')],
-            ['value' => 1, 'label' => __('After the menu')],
-            ['value' => 2, 'label' => __('At the top of the page')],
-            ['value' => 3, 'label' => __('At the bottom of the page')],
+            ['value' => 0, 'label' => __('Before the menu'), 'hint' => __('Above the site menu.')],
+            ['value' => 1, 'label' => __('After the menu'), 'hint' => __('Below the site menu.')],
+            ['value' => 2, 'label' => __('At the top of the page'), 'hint' => __('At the start of the page content.')],
+            ['value' => 3, 'label' => __('At the bottom of the page'), 'hint' => __('After the page content.')],
         ];
     }
 
     /**
-     * @return list<array{value: int, label: string}>
+     * @return list<array{value: int, label: string, hint: string}>
      */
     private function layoutOptions(): array
     {
         return [
-            ['value' => 0, 'label' => __('All pages')],
-            ['value' => 1, 'label' => __('Only on Homepage')],
-            ['value' => 2, 'label' => __('On all, except Homepage')],
+            ['value' => 0, 'label' => __('All pages'), 'hint' => __('Show on the homepage and every other page.')],
+            ['value' => 1, 'label' => __('Only on Homepage'), 'hint' => __('Show on the homepage only.')],
+            ['value' => 2, 'label' => __('On all, except Homepage'), 'hint' => __('Show on every page except the homepage.')],
         ];
     }
 
     /**
-     * @return list<array{url: string, name: string, active: bool}>
+     * @return list<array{url: string, title: string, active: bool, count: int, tone: string}>
      */
     private function filters(int $type): array
     {
@@ -341,8 +352,10 @@ final readonly class AdsController
         foreach ($this->placeOptions() as $option) {
             $filters[] = [
                 'url'    => $option['value'] === 0 ? self::URL : self::URL . '?type=' . $option['value'],
-                'name'   => $option['label'],
+                'title'  => $option['label'],
                 'active' => $type === $option['value'],
+                'count'  => 0,
+                'tone'   => '',
             ];
         }
 

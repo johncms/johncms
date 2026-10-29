@@ -1,0 +1,77 @@
+// Advertising links (admin::ads) and their forms.
+
+.admin-ads-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-bottom: 1rem;
+}
+
+.admin-ads-table {
+  td {
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  td:first-child {
+    width: 100%;
+    min-width: 18rem;
+    white-space: normal;
+  }
+}
+
+.admin-ads-table__link {
+  > a {
+    color: var(--fg);
+    font-weight: 600;
+
+    &:hover {
+      color: var(--accent);
+      text-decoration: none;
+    }
+  }
+}
+
+.admin-ads-table__url,
+.admin-ads-table__sub {
+  margin-top: .2rem;
+  color: var(--fg-dim);
+  font-size: .75rem;
+  overflow-wrap: anywhere;
+}
+
+.admin-ads-table__url {
+  font-family: $ui-font-mono;
+}
+
+.admin-ads-table__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: .25rem;
+}
+
+.admin-ad-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.admin-ad-confirm {
+  max-width: 34rem;
+  margin-inline: auto;
+
+  .card-body {
+    padding: 2rem;
+  }
+}
+
+.admin-ad-confirm__icon {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-bottom: 1rem;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--bs-danger-text-emphasis);
+  background: var(--bs-danger-bg-subtle);
+}

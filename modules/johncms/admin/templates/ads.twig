@@ -1,87 +1,120 @@
 {#
-    The list of the advertising links of one place.
+    The advertising links of one place.
 
     @var array        items      Rows prepared by AdRowMapper.
     @var int          total
     @var int          per_page
-    @var array        filters    Places to switch between: url, name, active.
+    @var array        filters    Tabs for the places: title, url, active, count, tone.
     @var string       add_url
     @var string       clear_url
+    @var int          type
     @var \Twig\Markup pagination
+    @var string       success_message Empty unless an action has just succeeded.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
-{% macro mini_form(action, label, class, csrf_token) %}
-    <form method="post" action="{{ action }}" class="d-inline me-2">
+{% macro mini_form(action, label, icon, danger, csrf_token) %}
+    <form method="post" action="{{ action }}" class="d-inline">
         <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-        <button type="submit" class="{{ class }}">{{ label }}</button>
+        <button type="submit" class="btn btn-outline-{{ danger ? 'danger' : 'secondary' }} btn-icon btn-sm" title="{{ label }}" aria-label="{{ label }}">
+            {% include '@admin/components/ui/icon.twig' with {name: icon, size: 14} only %}
+        </button>
     </form>
 {% endmacro %}
 
+{% block page_actions %}
+    <a class="btn btn-outline-danger" href="{{ clear_url }}" data-admin-modal>
+        {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+        {{ __('Delete inactive links') }}
+    </a>
+    <a class="btn btn-primary" href="{{ add_url }}">
+        {% include '@admin/components/ui/icon.twig' with {name: 'plus', size: 14} only %}
+        {{ __('Add link') }}
+    </a>
+{% endblock %}
+
 {% block content %}
-    {% import _self as forms %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
 
-    <div class="mb-3">
-        {% for filter in filters %}
-            <a href="{{ filter.url }}" class="btn btn-outline-secondary mt-1{% if filter.active %} active{% endif %}">{{ filter.name }}</a>
-        {% endfor %}
-    </div>
+    {% include '@admin/components/list-tabs.twig' with {tabs: filters} only %}
 
-    {% if items is empty %}
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
-    {% endif %}
-
-    {% for item in items %}
-        <div class="new_post-item without_avatar">
-            <div class="d-flex justify-content-between align-items-center">
-                <a href="{{ item.link }}" class="h3" target="_blank" rel="noopener noreferrer">{{ item.name }}</a>
-                <div>
-                    {% if item.active %}
-                        <span class="badge rounded-pill bg-success">{{ __('On') }}</span>
-                    {% else %}
-                        <span class="badge rounded-pill bg-danger">{{ __('Off') }}</span>
-                    {% endif %}
-                </div>
+    <div class="card">
+        {% if items is empty %}
+            {% include '@admin/components/ui/empty-state.twig' with {
+                icon: 'megaphone',
+                title: __('The list is empty'),
+                description: '',
+            } only %}
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-hover admin-ads-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ __('Link') }}</th>
+                            <th scope="col">{{ __('Disposition') }}</th>
+                            <th scope="col">{{ __('Layout') }}</th>
+                            <th scope="col">{{ __('Show') }}</th>
+                            <th scope="col">{{ __('Agreement') }}</th>
+                            <th scope="col">{{ __('Remains') }}</th>
+                            <th scope="col">{{ __('Status') }}</th>
+                            <th scope="col"><span class="visually-hidden">{{ __('Actions') }}</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% import _self as forms %}
+                        {% for item in items %}
+                            <tr>
+                                <td class="admin-ads-table__link">
+                                    <a href="{{ item.link }}" target="_blank" rel="noopener noreferrer">
+                                        {{ item.name }}
+                                    </a>
+                                    <div class="admin-ads-table__url">{{ item.link }}</div>
+                                    <div class="admin-ads-table__sub">{{ __('Start date') }}: {{ item.display_time }}</div>
+                                    {% if item.styles %}<div class="admin-ads-table__sub">{{ item.styles }}</div>{% endif %}
+                                </td>
+                                <td>{{ item.place }}</td>
+                                <td>{{ item.layout }}</td>
+                                <td>{{ item.show_for }}</td>
+                                <td>{{ item.agreement ?: '—' }}</td>
+                                <td>{{ item.remains ?: '—' }}</td>
+                                <td>
+                                    {% if item.active %}
+                                        <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ __('On') }}</span>
+                                    {% else %}
+                                        <span class="badge rounded-pill text-bg-light badge-dot">{{ __('Off') }}</span>
+                                    {% endif %}
+                                    <div class="admin-ads-table__sub">{{ item.direct_link ? __('Direct Link') : __('Redirect') }}</div>
+                                </td>
+                                <td>
+                                    <div class="admin-ads-table__actions">
+                                        {{ forms.mini_form('/admin/ads/' ~ item.id ~ '/up', __('Up'), 'arrow-up', false, app.csrf_token) }}
+                                        {{ forms.mini_form('/admin/ads/' ~ item.id ~ '/down', __('Down'), 'arrow-down', false, app.csrf_token) }}
+                                        <a href="/admin/ads/{{ item.id }}/edit" class="btn btn-outline-secondary btn-icon btn-sm" title="{{ __('Edit') }}" aria-label="{{ __('Edit') }}">
+                                            {% include '@admin/components/ui/icon.twig' with {name: 'pencil', size: 14} only %}
+                                        </a>
+                                        <a href="/admin/ads/{{ item.id }}/delete" class="btn btn-outline-danger btn-icon btn-sm" title="{{ __('Delete') }}" aria-label="{{ __('Delete') }}">
+                                            {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+                                        </a>
+                                        {{ forms.mini_form(
+                                            '/admin/ads/' ~ item.id ~ '/toggle',
+                                            item.active ? __('Hide') : __('Show'),
+                                            item.active ? 'eye-off' : 'eye',
+                                            false,
+                                            app.csrf_token
+                                        ) }}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-            <div class="post-body small">
-                <div>{{ __('Start date') }}: {{ item.display_time }}</div>
-                <div>{{ __('Disposition') }}: {{ item.place }}</div>
-                <div>{{ __('Show') }}: {{ item.show_for }}</div>
-                <div>{{ __('Agreement') }}: {{ item.agreement }}</div>
-                <div>{{ __('Remains') }}: {{ item.remains }}</div>
-                <div>{{ __('Link type') }}: {{ item.direct_link ? __('Direct Link') : __('Redirect') }}</div>
-                <div>{{ __('Style settings') }}: {{ item.styles is empty ? __('Default') : item.styles }}</div>
+            <div class="card-footer admin-list-footer">
+                <span class="admin-list-footer__total">{{ __('Total:') }} {{ total|format_number }}</span>
+                {% if total > per_page %}
+                    <div class="pagination-no-padding">{{ pagination }}</div>
+                {% endif %}
             </div>
-            <div class="d-flex align-items-center mt-1">
-                {{ forms.mini_form('/admin/ads/' ~ item.id ~ '/up', __('Up'), 'btn btn-link p-0', app.csrf_token) }}
-                {{ forms.mini_form('/admin/ads/' ~ item.id ~ '/down', __('Down'), 'btn btn-link p-0', app.csrf_token) }}
-                <a href="/admin/ads/{{ item.id }}/edit" class="me-2">{{ __('Edit') }}</a>
-                <a href="/admin/ads/{{ item.id }}/delete" class="text-danger me-2">{{ __('Delete') }}</a>
-                {{ forms.mini_form(
-                    '/admin/ads/' ~ item.id ~ '/toggle',
-                    item.active ? __('Hide') : __('Show'),
-                    'btn btn-link p-0 text-danger',
-                    app.csrf_token
-                ) }}
-            </div>
-        </div>
-    {% endfor %}
-
-    <div class="mt-4">
-        {% if total > per_page %}
-            <div>{{ pagination }}</div>
         {% endif %}
-        {% if total > 0 %}
-            <div>{{ __('Total:') }} {{ total }}</div>
-        {% endif %}
-    </div>
-    <div>
-        <div class="mb-3 mt-2">
-            <a href="{{ add_url }}" class="btn btn-primary btn-sm">{{ __('Add link') }}</a>
-            <a href="{{ clear_url }}" class="btn btn-danger btn-sm">{{ __('Delete inactive links') }}</a>
-        </div>
-        <div>
-            <a href="/admin/">{{ __('Back') }}</a>
-        </div>
     </div>
 {% endblock %}

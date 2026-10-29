@@ -8,16 +8,23 @@
 {% extends '@admin/layouts/default.twig' %}
 
 {% block content %}
-    <div class="alert alert-danger">
-        <div class="pb-2">
-            {{ message }}
-        </div>
-        <div class="d-flex">
-            <form action="{{ form_action }}" method="post" class="me-2">
-                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                <button type="submit" class="btn btn-danger btn-sm">{{ __('Delete') }}</button>
-            </form>
-            <a href="{{ back_url }}" class="btn btn-outline-secondary btn-sm">{{ __('Cancel') }}</a>
+    <div class="card admin-ad-confirm">
+        <div class="card-body">
+            <div class="admin-ad-confirm__icon">
+                {% include '@admin/components/ui/icon.twig' with {name: 'triangle-alert', size: 22} only %}
+            </div>
+            <h2 class="h5">{{ __('Delete') }}</h2>
+            <p class="text-body-secondary">{{ message }}</p>
+            <div class="d-flex flex-wrap gap-2">
+                <form action="{{ form_action }}" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                    <button type="submit" class="btn btn-danger">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+                        {{ __('Delete') }}
+                    </button>
+                </form>
+                <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -46,7 +46,8 @@ final readonly class AdRowMapper
             'active'       => $ad->to === 0,
             'direct_link'  => $ad->show === 1,
             'display_time' => $this->dateFormatter->format($ad->time),
-            'place'        => $this->placeLabels()[$ad->layout] ?? '',
+            'place'        => $this->placementLabels()[$ad->type] ?? '',
+            'layout'       => $this->layoutLabels()[$ad->layout] ?? '',
             'show_for'     => $this->audienceLabels()[$ad->view] ?? '',
             'agreement'    => $this->agreement($ad),
             'remains'      => $this->remains($ad),
@@ -108,7 +109,18 @@ final readonly class AdRowMapper
     /**
      * @return array<int, string>
      */
-    private function placeLabels(): array
+    private function placementLabels(): array
+    {
+        return [
+            __('Before the menu'),
+            __('After the menu'),
+            __('At the top of the page'),
+            __('At the bottom of the page'),
+        ];
+    }
+
+    /** @return array<int, string> */
+    private function layoutLabels(): array
     {
         return [__('All pages'), __('Only on Homepage'), __('On all, except Homepage')];
     }

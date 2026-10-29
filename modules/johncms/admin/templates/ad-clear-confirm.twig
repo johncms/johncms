@@ -1,0 +1,10 @@
+{#
+    Confirmation of clearing inactive advertising links as a page for a plain visit.
+
+    @var array dialog What ad-clear-dialog.twig is given.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@admin/components/ui/dialog-page.twig' with {dialog: '@admin/ad-clear-dialog.twig', data: dialog} only %}
+{% endblock %}

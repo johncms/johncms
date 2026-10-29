@@ -306,6 +306,18 @@ msgstr "В верхней части страницы"
 msgid "At the bottom of the page"
 msgstr "Внизу страницы"
 
+msgid "Above the site menu."
+msgstr "Над меню сайта."
+
+msgid "Below the site menu."
+msgstr "Под меню сайта."
+
+msgid "At the start of the page content."
+msgstr "В начале содержимого страницы."
+
+msgid "After the page content."
+msgstr "После содержимого страницы."
+
 #: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:74
 msgid "Antiflood Settings"
 msgstr "Настройка антифлуда"
@@ -586,6 +598,15 @@ msgstr "Только на главной странице"
 msgid "On all, except Homepage"
 msgstr "На всех, кроме главной страницы"
 
+msgid "Show on the homepage and every other page."
+msgstr "Показывать на главной и на всех остальных страницах."
+
+msgid "Show on the homepage only."
+msgstr "Показывать только на главной странице."
+
+msgid "Show on every page except the homepage."
+msgstr "Показывать на всех страницах, кроме главной."
+
 #: modules/admin/src/Application/Services/AdRowMapper.php:120
 #: modules/admin/templates/ads_add.phtml:60
 msgid "Everyone"
@@ -595,6 +616,15 @@ msgstr "Всем"
 #: modules/admin/templates/ads_add.phtml:64
 msgid "Guests"
 msgstr "Гости"
+
+msgid "Visitors who are signed in and guests can see this link."
+msgstr "Эту ссылку видят и гости, и зарегистрированные пользователи."
+
+msgid "Show this link only to visitors who are not signed in."
+msgstr "Показывать ссылку только незарегистрированным посетителям."
+
+msgid "Show this link only to signed-in users."
+msgstr "Показывать ссылку только авторизованным пользователям."
 
 #: modules/admin/src/Application/Services/AdRowMapper.php:120
 #: modules/admin/templates/ads_add.phtml:68
@@ -914,6 +944,9 @@ msgstr "Скрыть"
 #: modules/admin/templates/ads_index.phtml:74
 msgid "Delete inactive links"
 msgstr "Удалить неактивные ссылки"
+
+msgid "Inactive links deleted"
+msgstr "Неактивные ссылки удалены"
 
 #: modules/admin/templates/amnesty.phtml:24
 msgid "Unban all"
