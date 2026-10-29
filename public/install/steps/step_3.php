@@ -110,6 +110,9 @@ if ($request->getMethod() === 'POST') {
                 di(SchemaInterface::class)->setDefaultStringLength(191);
             }
 
+            // Recreate the selected database from scratch, matching the legacy installer.
+            Capsule::schema()->dropAllTables();
+
             // The schema of the core and of every module, from the same migrations an existing
             // site is brought up to date with: there is no second description to drift from.
             di(Migrator::class)->run();
