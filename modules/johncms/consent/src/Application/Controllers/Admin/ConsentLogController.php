@@ -46,6 +46,7 @@ final readonly class ConsentLogController
             'user_id'       => $entry->user_id,
             'consent_id'    => $entry->consent_id,
             'consent_title' => $entry->consent !== null ? $this->titleFormatter->toPlainText($entry->consent->title) : null,
+            'context'       => $entry->consent?->context,
             'version'       => $entry->version,
             'ip_address'    => $entry->ip_address,
             'accepted_at'   => $entry->accepted_at?->format('Y-m-d H:i:s'),
@@ -58,6 +59,8 @@ final readonly class ConsentLogController
         ] + [
             'items'      => $items,
             'back_url'   => '/admin/consents',
+            'total'      => $total,
+            'per_page'   => $pagination->getPerPage(),
             'pagination' => $pagination->render(),
         ]);
     }

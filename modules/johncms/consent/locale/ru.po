@@ -215,4 +215,59 @@ msgstr ""
 "Полный текст согласия, отображается на отдельной странице. Оставьте поле "
 "пустым, если у согласия нет собственной страницы: тогда рядом с чекбоксом "
 "будет показан только заголовок, без ссылки на текст."
+msgid "Consent details"
+msgstr "Параметры согласия"
+
+msgid "The form where the consent is shown. Pick a suggestion or enter your own context."
+msgstr "Форма, в которой отображается согласие. Выберите вариант или укажите свой контекст."
+
+msgid "Visitors see the consent text in this language."
+msgstr "Текст согласия будет показан посетителям на этом языке."
+
+msgid "Shown next to the checkbox. Simple HTML is allowed, for example links:"
+msgstr "Отображается рядом с флажком. Можно использовать простой HTML, например ссылки:"
+
+msgid "Consent text"
+msgstr "Текст согласия"
+
+msgid "Full text shown on a separate page. Leave empty if the checkbox should contain no link to a separate text page."
+msgstr "Полный текст на отдельной странице. Оставьте поле пустым, если не нужно добавлять ссылку на отдельную страницу."
+
+msgid "Behavior"
+msgstr "Настройки поведения"
+
+msgid "Change the version when the consent text or terms change."
+msgstr "Измените версию, если изменились текст или условия согласия."
+
+msgid "Required consent"
+msgstr "Обязательное согласие"
+
+msgid "When enabled, the form cannot be submitted until the visitor accepts this consent."
+msgstr "Если включено, форму нельзя отправить без согласия посетителя."
+
+msgid "Inactive consents are not shown in forms."
+msgstr "Неактивные согласия не отображаются в формах."
+
+msgid "Add a consent to request and record user approval."
+msgstr "Добавьте согласие, чтобы запрашивать его у пользователей и сохранять ответы."
+
+msgid "Optional"
+msgstr "Необязательное"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Actions"
+msgstr "Действия"
+
+msgid "Inactive"
+msgstr "Неактивно"
+
+msgid "Cookie banner settings"
+msgstr "Настройки баннера cookie"
+msgid "Back to consents"
+msgstr "К списку согласий"
+
+msgid "Consent acceptance records will appear here."
+msgstr "Здесь будут отображаться записи о принятых согласиях."
 

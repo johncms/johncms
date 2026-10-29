@@ -11,12 +11,24 @@
 #}
 {% extends '@admin/layouts/default.twig' %}
 
+{% block page_actions %}
+    <button type="submit" form="cookie-banner-form" class="btn btn-primary">
+        {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
+        {{ __('Save') }}
+    </button>
+{% endblock %}
+
 {% block content %}
-    <div style="max-width: 720px">
+    <div class="card">
+        <div class="card-header d-flex align-items-center gap-2">
+            {% include '@admin/components/ui/icon.twig' with {name: 'cookie', size: 16} only %}
+            <h2 class="h6 mb-0">{{ __('Cookie banner settings') }}</h2>
+        </div>
+        <div class="card-body">
         {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
         {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
 
-        <form method="post" action="{{ form_action }}">
+        <form id="cookie-banner-form" method="post" action="{{ form_action }}">
             <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
 
             <div class="form-check mb-3">
@@ -65,7 +77,7 @@
                        value="{{ version }}">
             </div>
 
-            <input type="submit" class="btn btn-primary btn-lg mt-2 mb-2" name="submit" value="{{ __('Save') }}">
         </form>
+        </div>
     </div>
 {% endblock %}

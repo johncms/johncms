@@ -36,15 +36,8 @@ final readonly class ConsentDeleteController
             redirect(self::URL);
         }
 
-        $title = __('Delete consent') . ': ' . $consent->title;
-        $this->navChain->add(__('Consents'), self::URL);
-        $this->navChain->add($title);
-
-        return new ViewResponse('@consent/admin/delete-confirm.twig', [
-            'title'       => $title,
-            'page_title'  => $title,
-            'module_menu' => ['consents' => true],
-        ] + [
+        $title = __('Delete consent');
+        $data = [
             'consent'     => [
                 'title'   => $consent->title,
                 'context' => $consent->context,
@@ -52,6 +45,19 @@ final readonly class ConsentDeleteController
             ],
             'form_action' => self::URL . '/' . $consent->id . '/delete',
             'back_url'    => self::URL,
-        ]);
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            return new ViewResponse('@consent/admin/delete-dialog.twig', $data);
+        }
+
+        $this->navChain->add(__('Consents'), self::URL);
+        $this->navChain->add($title);
+
+        return new ViewResponse('@consent/admin/delete-confirm.twig', [
+            'title'       => $title,
+            'page_title'  => $title,
+            'module_menu' => ['consents' => true],
+        ] + ['dialog' => $data]);
     }
 }

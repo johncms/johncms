@@ -3,97 +3,87 @@
 
     @var string form_action
     @var string back_url
-    @var array  fields    Values of the form, keyed by field name.
-    @var array  errors    Validation messages, keyed by field name.
-    @var array  contexts  Forms a consent may belong to: code, name.
-    @var array  languages Languages a consent may be written in: code, name.
+    @var array  fields
+    @var array  errors
+    @var array  contexts
+    @var array  languages
+    @var bool   edit_form
 #}
 {% extends '@admin/layouts/default.twig' %}
 
 {% block content %}
-    <div style="max-width: 720px">
-        <form method="post" action="{{ form_action }}">
-            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+    <form method="post" action="{{ form_action }}" class="admin-form">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
 
-            <div class="form-group">
-                <label for="context">{{ __('Context') }}</label>
-                <input type="text"
-                       id="context"
-                       name="context"
-                       list="context_list"
-                       class="form-control {% if errors.context|default([]) is not empty %}is-invalid{% endif %}"
-                       value="{{ fields.context }}">
-                <datalist id="context_list">
-                    {% for context in contexts %}
-                        <option value="{{ context.code }}" label="{{ context.name }}"></option>
-                    {% endfor %}
-                </datalist>
-                {% include '@theme/components/field-errors.twig' with {errors: errors.context|default([])} only %}
-                <div class="text-muted small">{{ __('The form where the consent is shown. Pick one of the suggestions or type the context of your own form.') }}</div>
+        <div class="card mb-3">
+            <div class="card-header d-flex align-items-center gap-2">
+                {% include '@admin/components/ui/icon.twig' with {name: 'file-text', size: 16} only %}
+                <h2 class="h6 mb-0">{{ __('Consent details') }}</h2>
             </div>
-
-            <div class="form-group">
-                <label for="language">{{ __('Language') }}</label>
-                <select id="language"
-                        name="language"
-                        class="form-control col-sm-3 {% if errors.language|default([]) is not empty %}is-invalid{% endif %}">
-                    {% for language in languages %}
-                        <option value="{{ language.code }}"{% if fields.language == language.code %} selected{% endif %}>
-                            {{ language.name }} ({{ language.code }})
-                        </option>
-                    {% endfor %}
-                </select>
-                {% if errors.language|default([]) is not empty %}
-                    <div class="invalid-feedback d-block">{{ errors.language|join(', ') }}</div>
-                {% endif %}
-            </div>
-
-            <div class="form-group">
-                <label for="title">{{ __('Title') }}</label>
-                <textarea rows="3"
-                          id="title"
-                          name="title"
-                          class="form-control {% if errors.title|default([]) is not empty %}is-invalid{% endif %}">{{ fields.title }}</textarea>
-                {% include '@theme/components/field-errors.twig' with {errors: errors.title|default([])} only %}
-                <div class="text-muted small">
-                    {{ __('Shown next to the checkbox in the form. HTML is allowed, for example links to other pages:') }}
-                    <code>{{ 'I have read the <a href="/offer/">Public offer</a>'|e }}</code>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="context">{{ __('Context') }}</label>
+                        <input type="text" id="context" name="context" list="context_list" class="form-control {% if errors.context|default([]) is not empty %}is-invalid{% endif %}" value="{{ fields.context }}">
+                        <datalist id="context_list">{% for context in contexts %}<option value="{{ context.code }}" label="{{ context.name }}"></option>{% endfor %}</datalist>
+                        {% include '@theme/components/field-errors.twig' with {errors: errors.context|default([])} only %}
+                        <div class="form-text">{{ __('The form where the consent is shown. Pick a suggestion or enter your own context.') }}</div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="language">{{ __('Language') }}</label>
+                        <select id="language" name="language" class="form-select {% if errors.language|default([]) is not empty %}is-invalid{% endif %}">
+                            {% for language in languages %}<option value="{{ language.code }}"{% if fields.language == language.code %} selected{% endif %}>{{ language.name }} ({{ language.code }})</option>{% endfor %}
+                        </select>
+                        {% include '@theme/components/field-errors.twig' with {errors: errors.language|default([])} only %}
+                        <div class="form-text">{{ __('Visitors see the consent text in this language.') }}</div>
+                    </div>
+                </div>
+                <div class="form-group mb-0">
+                    <label for="title">{{ __('Title') }}</label>
+                    <textarea rows="3" id="title" name="title" class="form-control {% if errors.title|default([]) is not empty %}is-invalid{% endif %}">{{ fields.title }}</textarea>
+                    {% include '@theme/components/field-errors.twig' with {errors: errors.title|default([])} only %}
+                    <div class="form-text">{{ __('Shown next to the checkbox. Simple HTML is allowed, for example links:') }} <code>{{ 'I have read the <a href="/offer/">Public offer</a>'|e }}</code></div>
                 </div>
             </div>
+        </div>
 
-            {% include '@theme/components/editor.twig' with {
-                name: 'text',
-                label: __('Text'),
-                value: fields.text,
-                errors: errors.text|default([])|join(', ')
-            } only %}
-
-            <div class="text-muted small mb-3">
-                {{ __('Full text of the consent, shown on a separate page. Leave it empty if the consent has no page of its own: then the checkbox shows only the title, without a link to the text.') }}
+        <div class="card mb-3">
+            <div class="card-header d-flex align-items-center gap-2">
+                {% include '@admin/components/ui/icon.twig' with {name: 'book-open', size: 16} only %}
+                <h2 class="h6 mb-0">{{ __('Consent text') }}</h2>
             </div>
-
-            <div class="form-group">
-                <label for="version">{{ __('Version') }}</label>
-                <input type="text"
-                       id="version"
-                       name="version"
-                       class="form-control col-sm-3 {% if errors.version|default([]) is not empty %}is-invalid{% endif %}"
-                       value="{{ fields.version }}">
-                {% include '@theme/components/field-errors.twig' with {errors: errors.version|default([])} only %}
+            <div class="card-body">
+                {% include '@theme/components/editor.twig' with {name: 'text', label: __('Text'), value: fields.text, errors: errors.text|default([])|join(', ')} only %}
+                <div class="form-text">{{ __('Full text shown on a separate page. Leave empty if the checkbox should contain no link to a separate text page.') }}</div>
             </div>
+        </div>
 
-            <div class="form-check mb-2">
-                <input type="checkbox" class="form-check-input" name="is_required" value="1" id="is_required"{% if fields.is_required %} checked{% endif %}>
-                <label class="form-check-label" for="is_required">{{ __('Required (blocks the form without the checkbox)') }}</label>
+        <div class="card mb-3">
+            <div class="card-header d-flex align-items-center gap-2">
+                {% include '@admin/components/ui/icon.twig' with {name: 'settings', size: 16} only %}
+                <h2 class="h6 mb-0">{{ __('Behavior') }}</h2>
             </div>
-
-            <div class="form-check mb-3">
-                <input type="checkbox" class="form-check-input" name="is_active" value="1" id="is_active"{% if fields.is_active %} checked{% endif %}>
-                <label class="form-check-label" for="is_active">{{ __('Active') }}</label>
+            <div class="card-body">
+                <div class="form-group col-md-4">
+                    <label for="version">{{ __('Version') }}</label>
+                    <input type="text" id="version" name="version" class="form-control {% if errors.version|default([]) is not empty %}is-invalid{% endif %}" value="{{ fields.version }}">
+                    {% include '@theme/components/field-errors.twig' with {errors: errors.version|default([])} only %}
+                    <div class="form-text">{{ __('Change the version when the consent text or terms change.') }}</div>
+                </div>
+                <div class="form-check form-switch mb-3">
+                    <input type="checkbox" class="form-check-input" role="switch" name="is_required" value="1" id="is_required"{% if fields.is_required %} checked{% endif %}>
+                    <label class="form-check-label fw-semibold" for="is_required">{{ __('Required consent') }}</label>
+                    <div class="form-text">{{ __('When enabled, the form cannot be submitted until the visitor accepts this consent.') }}</div>
+                </div>
+                <div class="form-check form-switch">
+                    <input type="checkbox" class="form-check-input" role="switch" name="is_active" value="1" id="is_active"{% if fields.is_active %} checked{% endif %}>
+                    <label class="form-check-label fw-semibold" for="is_active">{{ __('Active') }}</label>
+                    <div class="form-text">{{ __('Inactive consents are not shown in forms.') }}</div>
+                </div>
             </div>
+        </div>
 
-            <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
-            <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
-        </form>
-    </div>
+        <button type="submit" class="btn btn-primary">{% include '@admin/components/ui/icon.twig' with {name: 'check', size: 14} only %} {{ __('Save') }}</button>
+        <a href="{{ back_url }}" class="btn btn-outline-secondary">{{ __('Cancel') }}</a>
+    </form>
 {% endblock %}

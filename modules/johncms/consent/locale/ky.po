@@ -207,4 +207,59 @@ msgstr "Коноктор"
 #: modules/consent/templates/admin/log.phtml:54
 msgid "Back"
 msgstr "Артка"
+msgid "Consent details"
+msgstr "Макулдуктун параметрлери"
+
+msgid "The form where the consent is shown. Pick a suggestion or enter your own context."
+msgstr "Макулдук көрсөтүлө турган форма. Сунушту тандаңыз же өз контекстиңизди жазыңыз."
+
+msgid "Visitors see the consent text in this language."
+msgstr "Коноктор макулдук текстин ушул тилде көрүшөт."
+
+msgid "Shown next to the checkbox. Simple HTML is allowed, for example links:"
+msgstr "Белги кутучасынын жанында көрсөтүлөт. Шилтемелер сыяктуу жөнөкөй HTML колдонсо болот:"
+
+msgid "Consent text"
+msgstr "Макулдуктун тексти"
+
+msgid "Full text shown on a separate page. Leave empty if the checkbox should contain no link to a separate text page."
+msgstr "Өзүнчө баракта көрсөтүлүүчү толук текст. Өзүнчө баракка шилтеме кереги жок болсо, бош калтырыңыз."
+
+msgid "Behavior"
+msgstr "Жүрүм-турум"
+
+msgid "Change the version when the consent text or terms change."
+msgstr "Макулдук тексти же шарттары өзгөргөндө версиясын жаңыртыңыз."
+
+msgid "Required consent"
+msgstr "Милдеттүү макулдук"
+
+msgid "When enabled, the form cannot be submitted until the visitor accepts this consent."
+msgstr "Күйгүзүлгөндө, конок макулдук бермейинче форманы жөнөтө албайт."
+
+msgid "Inactive consents are not shown in forms."
+msgstr "Жигерсиз макулдуктар формаларда көрсөтүлбөйт."
+
+msgid "Add a consent to request and record user approval."
+msgstr "Колдонуучунун макулдугун суроо жана каттоо үчүн макулдук кошуңуз."
+
+msgid "Optional"
+msgstr "Милдеттүү эмес"
+
+msgid "Status"
+msgstr "Абалы"
+
+msgid "Actions"
+msgstr "Аракеттер"
+
+msgid "Inactive"
+msgstr "Жигерсиз"
+
+msgid "Cookie banner settings"
+msgstr "Cookie баннеринин жөндөөлөрү"
+msgid "Back to consents"
+msgstr "Макулдуктардын тизмесине кайтуу"
+
+msgid "Consent acceptance records will appear here."
+msgstr "Бул жерде кабыл алынган макулдуктар көрсөтүлөт."
 

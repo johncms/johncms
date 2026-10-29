@@ -70,6 +70,8 @@ final readonly class ConsentListController
             'module_menu' => ['consents' => true],
         ] + [
             'items'           => $items,
+            'total'           => $total,
+            'per_page'        => $pagination->getPerPage(),
             'create_url'      => self::URL . '/create',
             'log_url'         => self::URL . '/log',
             'pagination'      => $pagination->render(),

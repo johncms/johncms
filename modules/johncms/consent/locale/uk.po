@@ -185,4 +185,59 @@ msgstr "Гість"
 #: modules/consent/templates/admin/log.phtml:54
 msgid "Back"
 msgstr "Назад"
+msgid "Consent details"
+msgstr "Параметри згоди"
+
+msgid "The form where the consent is shown. Pick a suggestion or enter your own context."
+msgstr "Форма, у якій відображається згода. Виберіть варіант або вкажіть власний контекст."
+
+msgid "Visitors see the consent text in this language."
+msgstr "Відвідувачі бачитимуть текст згоди цією мовою."
+
+msgid "Shown next to the checkbox. Simple HTML is allowed, for example links:"
+msgstr "Відображається поруч із прапорцем. Можна використовувати простий HTML, наприклад посилання:"
+
+msgid "Consent text"
+msgstr "Текст згоди"
+
+msgid "Full text shown on a separate page. Leave empty if the checkbox should contain no link to a separate text page."
+msgstr "Повний текст на окремій сторінці. Залиште поле порожнім, якщо не потрібно додавати посилання на окрему сторінку."
+
+msgid "Behavior"
+msgstr "Поведінка"
+
+msgid "Change the version when the consent text or terms change."
+msgstr "Змініть версію, якщо змінився текст або умови згоди."
+
+msgid "Required consent"
+msgstr "Обов’язкова згода"
+
+msgid "When enabled, the form cannot be submitted until the visitor accepts this consent."
+msgstr "Якщо ввімкнено, форму не можна надіслати без згоди відвідувача."
+
+msgid "Inactive consents are not shown in forms."
+msgstr "Неактивні згоди не відображаються у формах."
+
+msgid "Add a consent to request and record user approval."
+msgstr "Додайте згоду, щоб запитувати її у користувачів і зберігати відповіді."
+
+msgid "Optional"
+msgstr "Необов’язкова"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Actions"
+msgstr "Дії"
+
+msgid "Inactive"
+msgstr "Неактивна"
+
+msgid "Cookie banner settings"
+msgstr "Налаштування банера cookie"
+msgid "Back to consents"
+msgstr "До списку згод"
+
+msgid "Consent acceptance records will appear here."
+msgstr "Тут відображатимуться записи про прийняті згоди."
 

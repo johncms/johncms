@@ -1,75 +1,76 @@
 {#
     The consents the site asks for.
 
-    @var array        items           Rows: context, language, language_name, title, version,
-                                      is_required, is_active, view_url, edit_url, delete_url.
-    @var string       create_url
-    @var string       log_url
+    @var array  items
+    @var string create_url
+    @var string log_url
+    @var string success_message
+    @var int    total
+    @var int    per_page
     @var \Twig\Markup pagination
-    @var string       success_message Empty unless an action has just been performed.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
+{% block page_actions %}
+    <a href="{{ log_url }}" class="btn btn-outline-secondary">
+        {% include '@admin/components/ui/icon.twig' with {name: 'clipboard-check', size: 14} only %}
+        {{ __('Consent log') }}
+    </a>
+    <a href="{{ create_url }}" class="btn btn-primary">
+        {% include '@admin/components/ui/icon.twig' with {name: 'plus', size: 14} only %}
+        {{ __('Add consent') }}
+    </a>
+{% endblock %}
+
 {% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
 
-    <div class="mb-3">
-        <a href="{{ create_url }}" class="btn btn-primary">{{ __('Add consent') }}</a>
-        <a href="{{ log_url }}" class="btn btn-secondary">{{ __('Consent log') }}</a>
-    </div>
-
-    {% if items is empty %}
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
-    {% else %}
-        <div class="table-responsive">
-            <table class="table table-sm align-middle">
-                <thead>
-                <tr>
-                    <th>{{ __('Context') }}</th>
-                    <th>{{ __('Language') }}</th>
-                    <th>{{ __('Title') }}</th>
-                    <th>{{ __('Version') }}</th>
-                    <th>{{ __('Required') }}</th>
-                    <th>{{ __('Active') }}</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for item in items %}
+    <div class="card">
+        {% if items is empty %}
+            {% include '@admin/components/ui/empty-state.twig' with {
+                icon: 'shield-check',
+                title: __('The list is empty'),
+                description: __('Add a consent to request and record user approval.'),
+            } only %}
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
                     <tr>
-                        <td><code>{{ item.context }}</code></td>
-                        <td>{{ item.language_name }} ({{ item.language }})</td>
-                        <td>
-                            {% if item.view_url %}
-                                <a href="{{ item.view_url }}" target="_blank">{{ item.title }}</a>
-                            {% else %}
-                                {{ item.title }}
-                            {% endif %}
-                        </td>
-                        <td>{{ item.version }}</td>
-                        <td>
-                            {% if item.is_required %}
-                                <span class="badge text-bg-warning">{{ __('Yes') }}</span>
-                            {% else %}
-                                <span class="badge text-bg-light border">{{ __('No') }}</span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if item.is_active %}
-                                <span class="badge text-bg-success">{{ __('Yes') }}</span>
-                            {% else %}
-                                <span class="badge text-bg-secondary">{{ __('No') }}</span>
-                            {% endif %}
-                        </td>
-                        <td class="text-nowrap">
-                            <a href="{{ item.edit_url }}">{{ __('Edit') }}</a>
-                            <a href="{{ item.delete_url }}" class="text-danger ms-2">{{ __('Delete') }}</a>
-                        </td>
+                        <th scope="col">{{ __('Context') }}</th>
+                        <th scope="col">{{ __('Language') }}</th>
+                        <th scope="col">{{ __('Title') }}</th>
+                        <th scope="col">{{ __('Version') }}</th>
+                        <th scope="col">{{ __('Required') }}</th>
+                        <th scope="col">{{ __('Status') }}</th>
+                        <th scope="col"><span class="visually-hidden">{{ __('Actions') }}</span></th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {{ pagination }}
-    {% endif %}
+                    </thead>
+                    <tbody>
+                    {% for item in items %}
+                        <tr>
+                            <td><code>{{ item.context }}</code></td>
+                            <td>{{ item.language_name }} <span class="text-muted">({{ item.language }})</span></td>
+                            <td>
+                                {% if item.view_url %}<a href="{{ item.view_url }}" target="_blank" rel="noopener noreferrer">{{ item.title }}</a>{% else %}{{ item.title }}{% endif %}
+                            </td>
+                            <td>{{ item.version }}</td>
+                            <td>
+                                {% if item.is_required %}<span class="badge rounded-pill bg-warning-subtle text-warning-emphasis">{{ __('Required') }}</span>{% else %}<span class="text-muted">{{ __('Optional') }}</span>{% endif %}
+                            </td>
+                            <td>
+                                {% if item.is_active %}<span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ __('Active') }}</span>{% else %}<span class="badge rounded-pill text-bg-light badge-dot">{{ __('Inactive') }}</span>{% endif %}
+                            </td>
+                            <td class="text-nowrap">
+                                <a href="{{ item.edit_url }}" class="btn btn-outline-secondary btn-icon btn-sm" title="{{ __('Edit') }}" aria-label="{{ __('Edit') }}">{% include '@admin/components/ui/icon.twig' with {name: 'pencil', size: 14} only %}</a>
+                                <a href="{{ item.delete_url }}" class="btn btn-outline-danger btn-icon btn-sm ms-1" title="{{ __('Delete') }}" aria-label="{{ __('Delete') }}" data-admin-modal>{% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer admin-list-footer"><span class="admin-list-footer__total">{{ __('Total:') }} {{ total|format_number }}</span>{% if total > per_page %}<div class="pagination-no-padding">{{ pagination }}</div>{% endif %}</div>
+        {% endif %}
+    </div>
 {% endblock %}
