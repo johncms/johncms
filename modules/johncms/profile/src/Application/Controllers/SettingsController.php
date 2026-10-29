@@ -15,6 +15,7 @@ use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
+use Johncms\System\i18n\LocaleResolver;
 
 final readonly class SettingsController
 {
@@ -25,6 +26,7 @@ final readonly class SettingsController
         private ForumSettingsUseCase $forumSettingsUseCase,
         private MailSettingsUseCase $mailSettingsUseCase,
         private Session $session,
+        private LocaleResolver $localeResolver,
     ) {
     }
 
@@ -64,7 +66,7 @@ final readonly class SettingsController
 
         $selectedLng = $this->userSettingsUseCase->save($command, $this->currentUser->user());
         if ($selectedLng !== null) {
-            $this->session->set('lng', $selectedLng);
+            $this->localeResolver->remember($selectedLng);
         }
 
         $this->session->flash('set_ok', true);
