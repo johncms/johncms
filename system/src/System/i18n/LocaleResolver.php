@@ -45,11 +45,8 @@ final readonly class LocaleResolver
         // unparsable one would answer a language question with an exception.
         $requestedLocale = $this->request()->query->getString('setlng') ?: null;
 
-        if ($requestedLocale !== null && array_key_exists($requestedLocale, $localeList)) {
-            $locale = trim($requestedLocale);
-            $this->session->set('lng', $locale);
-
-            return $locale;
+        if ($requestedLocale !== null && $this->remember($requestedLocale)) {
+            return $requestedLocale;
         }
 
         if ($this->session->has('lng') && array_key_exists($this->session->get('lng'), $localeList)) {
@@ -65,6 +62,21 @@ final readonly class LocaleResolver
         }
 
         return $systemLocale;
+    }
+
+    /**
+     * Keeps the visitor's choice for the rest of the session, so that the requests that follow
+     * resolve to it. A locale the site does not have is refused and leaves the session untouched.
+     */
+    public function remember(string $locale): bool
+    {
+        if (! array_key_exists($locale, config('johncms.lng_list', []))) {
+            return false;
+        }
+
+        $this->session->set('lng', $locale);
+
+        return true;
     }
 
     private function request(): Request

@@ -25,12 +25,13 @@ final class LanguageSwitchTest extends FunctionalTestCase
         });
     }
 
-    public function testALanguageTheSiteDoesNotHaveIsIgnored(): void
+    public function testALanguageTheSiteDoesNotHaveKeepsThePreviousChoice(): void
     {
         $this->withConfig(['johncms' => ['lng' => 'en', 'lng_list' => self::LANGUAGES]], function (): void {
+            $this->handleRequest('/language/', 'POST', $this->withCsrfToken(['setlng' => 'ru']));
             $this->handleRequest('/language/', 'POST', $this->withCsrfToken(['setlng' => 'klingon']));
 
-            self::assertStringContainsString('<html lang="en"', (string) $this->handleRequest('/')->getContent());
+            self::assertStringContainsString('<html lang="ru"', (string) $this->handleRequest('/')->getContent());
         });
     }
 }
