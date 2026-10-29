@@ -3,70 +3,28 @@
 
     @var array        items           Rows (ContactMessageListItemDTO): id, name, email, preview,
                                       status, createdAt.
-    @var array        filters         Statuses to switch between: value, title.
-    @var string       current_status  Empty when everything is shown.
-    @var string       base_url
-    @var int          new_count
+    @var array        filters         Tabs prepared for the live list.
     @var \Twig\Markup pagination
     @var string       success_message Empty unless an action has just been performed.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
 {% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
 
-    <div class="mb-3">
-        {% for filter in filters %}
-            <a href="{{ base_url }}{% if filter.value %}?status={{ filter.value }}{% endif %}"
-               class="btn btn-sm {{ current_status == filter.value ? 'btn-primary' : 'btn-outline-primary' }}">
-                {{ filter.title }}
-                {% if filter.value == 'new' and new_count > 0 %}
-                    <span class="badge text-bg-danger">{{ new_count }}</span>
-                {% endif %}
-            </a>
-        {% endfor %}
+    <div data-live-list>
+        {% include '@admin/components/list-tabs.twig' with {tabs: filters} only %}
+        {% include '@contacts/admin/results.twig' with {items: items, pagination: pagination} only %}
     </div>
 
-    {% if items is empty %}
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
-    {% else %}
-        <div class="table-responsive">
-            <table class="table table-sm align-middle">
-                <thead>
-                <tr>
-                    <th>{{ __('Date') }}</th>
-                    <th>{{ __('Sender') }}</th>
-                    <th>{{ __('Message') }}</th>
-                    <th>{{ __('Status') }}</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for item in items %}
-                    <tr>
-                        <td class="text-nowrap">{{ item.createdAt }}</td>
-                        <td>
-                            {{ item.name }}
-                            <div class="text-muted small">{{ item.email }}</div>
-                        </td>
-                        <td>
-                            <a href="{{ base_url }}/{{ item.id }}">{{ item.preview }}</a>
-                        </td>
-                        <td>
-                            {% if item.status.value == 'new' %}
-                                <span class="badge text-bg-danger">{{ __('New') }}</span>
-                            {% else %}
-                                <span class="badge text-bg-success">{{ __('Processed') }}</span>
-                            {% endif %}
-                        </td>
-                        <td class="text-nowrap">
-                            <a href="{{ base_url }}/{{ item.id }}/delete" class="text-danger">{{ __('Delete') }}</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+    <template data-admin-offcanvas-loading-template>
+        <div class="offcanvas-body d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-body-tertiary" role="status">
+                <span class="visually-hidden">{{ d__('admin', 'Loading') }}</span>
+            </div>
         </div>
-        {{ pagination }}
-    {% endif %}
+    </template>
+    <div class="offcanvas offcanvas-end contact-message-offcanvas" tabindex="-1" id="contact-message-offcanvas"
+         aria-labelledby="contact-message-offcanvas-title" data-admin-offcanvas-panel>
+    </div>
 {% endblock %}

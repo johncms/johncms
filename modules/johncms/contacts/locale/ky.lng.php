@@ -1,0 +1,36 @@
+<?php return array (
+  'domain' => 'contacts',
+  'plural-forms' => NULL,
+  'messages' => 
+  array (
+    '' => 
+    array (
+      'Record deleted' => 'Жазуу өчүрүлдү',
+      'Delete message' => 'Билдирүүнү өчүрүү',
+      'Contacts' => 'Байланыштар',
+      'Contact messages' => 'Байланыш билдирүүлөрү',
+      'All' => 'Баары',
+      'New' => 'Жаңы',
+      'Processed' => 'Иштетилген',
+      'The message is marked as processed' => 'Билдирүү иштетилди деп белгиленди',
+      'Message from %s' => '%sден келген билдирүү',
+      'Are you sure you want to delete this message?' => 'Бул билдирүүнү чын эле өчүрөсүзбү?',
+      'Cancel' => 'Жокко чыгаруу',
+      'Delete' => 'Өчүрүү',
+      'Actions' => 'Аракеттер',
+      'View' => 'Көрүү',
+      'Contact message' => 'Байланыш билдирүүсү',
+      'Technical information' => 'Техникалык маалымат',
+      'Browser' => 'Браузер',
+      'Sender' => 'Жөнөтүүчү',
+      'Message' => 'Билдирүү',
+      'IP address' => 'IP-дарек',
+      'Mark as processed' => 'Иштетилди деп белгилөө',
+      'Date' => 'Дата',
+      'Status' => 'Абалы',
+      'The list is empty' => 'Тизме бош',
+      'Back' => 'Артка',
+      'E-mail' => 'E-mail',
+    ),
+  ),
+);

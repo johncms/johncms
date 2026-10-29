@@ -1,0 +1,36 @@
+<?php return array (
+  'domain' => 'contacts',
+  'plural-forms' => NULL,
+  'messages' => 
+  array (
+    '' => 
+    array (
+      'Record deleted' => 'Înregistrarea a fost ștearsă',
+      'Delete message' => 'Ștergere mesaj',
+      'Contacts' => 'Contacte',
+      'Contact messages' => 'Mesaje de contact',
+      'All' => 'Toate',
+      'New' => 'Noi',
+      'Processed' => 'Procesate',
+      'The message is marked as processed' => 'Mesajul a fost marcat ca procesat',
+      'Message from %s' => 'Mesaj de la %s',
+      'Are you sure you want to delete this message?' => 'Sunteți sigur că doriți să ștergeți acest mesaj?',
+      'Cancel' => 'Anulează',
+      'Delete' => 'Șterge',
+      'Actions' => 'Acțiuni',
+      'View' => 'Vizualizează',
+      'Contact message' => 'Mesaj de contact',
+      'Technical information' => 'Informații tehnice',
+      'Browser' => 'Browser',
+      'Sender' => 'Expeditor',
+      'Message' => 'Mesaj',
+      'IP address' => 'Adresa IP',
+      'Mark as processed' => 'Marchează ca procesat',
+      'Date' => 'Data',
+      'Status' => 'Stare',
+      'The list is empty' => 'Lista este goală',
+      'Back' => 'Înapoi',
+      'E-mail' => 'E-mail',
+    ),
+  ),
+);

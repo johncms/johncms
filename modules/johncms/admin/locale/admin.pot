@@ -263,6 +263,7 @@ msgstr ""
 #: themes/default/templates/admin/components/ui/dialog.twig:25
 #: themes/default/templates/admin/pages/result-dialog.twig:15
 #: modules/johncms/admin/templates/users/cleanup-dialog.twig:24
+#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:17
 msgid "Close"
 msgstr ""
 
@@ -294,6 +295,7 @@ msgid "Collapse the menu"
 msgstr ""
 
 #: themes/default/templates/admin/layouts/default.twig:101
+#: modules/johncms/contacts/templates/admin/messages.twig:23
 msgid "Loading"
 msgstr ""
 

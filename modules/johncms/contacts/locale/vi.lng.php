@@ -1,0 +1,36 @@
+<?php return array (
+  'domain' => 'contacts',
+  'plural-forms' => NULL,
+  'messages' => 
+  array (
+    '' => 
+    array (
+      'Record deleted' => 'Đã xóa bản ghi',
+      'Delete message' => 'Xóa tin nhắn',
+      'Contacts' => 'Liên hệ',
+      'Contact messages' => 'Tin nhắn liên hệ',
+      'All' => 'Tất cả',
+      'New' => 'Mới',
+      'Processed' => 'Đã xử lý',
+      'The message is marked as processed' => 'Tin nhắn đã được đánh dấu là đã xử lý',
+      'Message from %s' => 'Tin nhắn từ %s',
+      'Are you sure you want to delete this message?' => 'Bạn có chắc muốn xóa tin nhắn này không?',
+      'Cancel' => 'Hủy',
+      'Delete' => 'Xóa',
+      'Actions' => 'Thao tác',
+      'View' => 'Xem',
+      'Contact message' => 'Tin nhắn liên hệ',
+      'Technical information' => 'Thông tin kỹ thuật',
+      'Browser' => 'Trình duyệt',
+      'Sender' => 'Người gửi',
+      'Message' => 'Tin nhắn',
+      'IP address' => 'Địa chỉ IP',
+      'Mark as processed' => 'Đánh dấu đã xử lý',
+      'Date' => 'Ngày',
+      'Status' => 'Trạng thái',
+      'The list is empty' => 'Danh sách trống',
+      'Back' => 'Quay lại',
+      'E-mail' => 'E-mail',
+    ),
+  ),
+);

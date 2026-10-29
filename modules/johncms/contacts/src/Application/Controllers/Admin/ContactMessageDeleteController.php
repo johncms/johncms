@@ -37,21 +37,23 @@ final readonly class ContactMessageDeleteController
         }
 
         $title = __('Delete message');
+        $dialog = [
+            'message'     => $message,
+            'form_action' => self::URL . '/' . $message->id . '/delete',
+            'back_url'    => self::URL . '/' . $message->id,
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            return new ViewResponse('@contacts/admin/message-delete-dialog.twig', $dialog);
+        }
+
         $this->navChain->add(__('Contacts'), '/admin/contacts');
         $this->navChain->add(__('Contact messages'), self::URL);
         $this->navChain->add($title);
 
-        return new ViewResponse(
-            '@contacts/admin/message-delete-confirm.twig',
-            [
-                'title'       => $title,
-                'page_title'  => $title,
-                'module_menu' => ['contacts' => true],
-            ] + [
-                'message'    => $message,
-                'form_action' => self::URL . '/' . $message->id . '/delete',
-                'back_url'   => self::URL . '/' . $message->id,
-            ]
-        );
+        return new ViewResponse('@contacts/admin/message-delete-confirm.twig', [
+            'title'  => $title,
+            'dialog' => $dialog,
+        ]);
     }
 }

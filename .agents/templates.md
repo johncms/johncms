@@ -96,8 +96,8 @@ live in `themes/<theme>/templates/admin/components/ui/` and are shown with their
 
 ## Live lists (the panel)
 
-A list of the panel can follow its search and filters without reloading the page —
-`src/admin/js/live-list.js` does it for any markup that asks, and `admin::users` is the
+For admin lists with tabs, search or filters, use the live-list pattern so they update without a
+full page reload. `src/admin/js/live-list.js` handles the markup below; `admin::users` is the
 reference:
 
 ```twig
@@ -138,6 +138,13 @@ dialog, not a page — `admin::users/delete-dialog` is the reference:
   links with `data-bs-dismiss="modal"`: they close the modal, and lead back on the page.
 * The form posts as any form does and redirects. Where it returns to comes from the caller
   (`back`), checked against the pages it may lead to — never followed as it is.
+
+## Offcanvas details (the panel)
+
+Use an offcanvas to inspect a record while keeping its admin list in view. Mark detail links with
+`data-admin-offcanvas`, include a panel on the list page, and have the controller return the
+panel contents for XHR requests and the full page for ordinary visits. Forms in the panel post
+normally and redirect back to the list so its state and flash messages refresh.
 
 ## Traps
 

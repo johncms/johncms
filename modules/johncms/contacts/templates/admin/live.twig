@@ -1,0 +1,9 @@
+{#
+    The regions replaced when a contact message filter changes.
+
+    @var array filters
+    @var array items
+    @var \Twig\Markup pagination
+#}
+{% include '@admin/components/list-tabs.twig' with {tabs: filters} only %}
+{% include '@contacts/admin/results.twig' with {items: items, pagination: pagination} only %}

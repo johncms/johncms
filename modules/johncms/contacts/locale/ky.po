@@ -1,0 +1,83 @@
+msgid ""
+msgstr ""
+"X-Domain: contacts\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: ky\n"
+
+msgid "Record deleted"
+msgstr "Жазуу өчүрүлдү"
+
+msgid "Delete message"
+msgstr "Билдирүүнү өчүрүү"
+
+msgid "Contacts"
+msgstr "Байланыштар"
+
+msgid "Contact messages"
+msgstr "Байланыш билдирүүлөрү"
+
+msgid "All"
+msgstr "Баары"
+
+msgid "New"
+msgstr "Жаңы"
+
+msgid "Processed"
+msgstr "Иштетилген"
+
+msgid "The message is marked as processed"
+msgstr "Билдирүү иштетилди деп белгиленди"
+
+msgid "Message from %s"
+msgstr "%sден келген билдирүү"
+
+msgid "Are you sure you want to delete this message?"
+msgstr "Бул билдирүүнү чын эле өчүрөсүзбү?"
+
+msgid "Cancel"
+msgstr "Жокко чыгаруу"
+
+msgid "Delete"
+msgstr "Өчүрүү"
+
+msgid "Actions"
+msgstr "Аракеттер"
+
+msgid "View"
+msgstr "Көрүү"
+
+msgid "Contact message"
+msgstr "Байланыш билдирүүсү"
+
+msgid "Technical information"
+msgstr "Техникалык маалымат"
+
+msgid "Browser"
+msgstr "Браузер"
+
+msgid "Sender"
+msgstr "Жөнөтүүчү"
+
+msgid "Message"
+msgstr "Билдирүү"
+
+msgid "IP address"
+msgstr "IP-дарек"
+
+msgid "Mark as processed"
+msgstr "Иштетилди деп белгилөө"
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Status"
+msgstr "Абалы"
+
+msgid "The list is empty"
+msgstr "Тизме бош"
+
+msgid "Back"
+msgstr "Артка"
+
+msgid "E-mail"
+msgstr "E-mail"

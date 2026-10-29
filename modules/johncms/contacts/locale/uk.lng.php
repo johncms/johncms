@@ -1,0 +1,36 @@
+<?php return array (
+  'domain' => 'contacts',
+  'plural-forms' => NULL,
+  'messages' => 
+  array (
+    '' => 
+    array (
+      'Record deleted' => 'Запис видалено',
+      'Delete message' => 'Видалення звернення',
+      'Contacts' => 'Контакти',
+      'Contact messages' => 'Звернення',
+      'All' => 'Усі',
+      'New' => 'Нові',
+      'Processed' => 'Опрацьовані',
+      'The message is marked as processed' => 'Повідомлення позначено як опрацьоване',
+      'Message from %s' => 'Повідомлення від %s',
+      'Are you sure you want to delete this message?' => 'Ви справді бажаєте видалити це повідомлення?',
+      'Cancel' => 'Скасувати',
+      'Delete' => 'Видалити',
+      'Actions' => 'Дії',
+      'View' => 'Переглянути',
+      'Contact message' => 'Звернення',
+      'Technical information' => 'Технічна інформація',
+      'Browser' => 'Браузер',
+      'Sender' => 'Відправник',
+      'Message' => 'Повідомлення',
+      'IP address' => 'IP-адреса',
+      'Mark as processed' => 'Позначити як опрацьоване',
+      'Date' => 'Дата',
+      'Status' => 'Статус',
+      'The list is empty' => 'Список порожній',
+      'Back' => 'Назад',
+      'E-mail' => 'E-mail',
+    ),
+  ),
+);

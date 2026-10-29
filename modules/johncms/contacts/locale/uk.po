@@ -1,0 +1,83 @@
+msgid ""
+msgstr ""
+"X-Domain: contacts\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: uk\n"
+
+msgid "Record deleted"
+msgstr "Запис видалено"
+
+msgid "Delete message"
+msgstr "Видалення звернення"
+
+msgid "Contacts"
+msgstr "Контакти"
+
+msgid "Contact messages"
+msgstr "Звернення"
+
+msgid "All"
+msgstr "Усі"
+
+msgid "New"
+msgstr "Нові"
+
+msgid "Processed"
+msgstr "Опрацьовані"
+
+msgid "The message is marked as processed"
+msgstr "Повідомлення позначено як опрацьоване"
+
+msgid "Message from %s"
+msgstr "Повідомлення від %s"
+
+msgid "Are you sure you want to delete this message?"
+msgstr "Ви справді бажаєте видалити це повідомлення?"
+
+msgid "Cancel"
+msgstr "Скасувати"
+
+msgid "Delete"
+msgstr "Видалити"
+
+msgid "Actions"
+msgstr "Дії"
+
+msgid "View"
+msgstr "Переглянути"
+
+msgid "Contact message"
+msgstr "Звернення"
+
+msgid "Technical information"
+msgstr "Технічна інформація"
+
+msgid "Browser"
+msgstr "Браузер"
+
+msgid "Sender"
+msgstr "Відправник"
+
+msgid "Message"
+msgstr "Повідомлення"
+
+msgid "IP address"
+msgstr "IP-адреса"
+
+msgid "Mark as processed"
+msgstr "Позначити як опрацьоване"
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "The list is empty"
+msgstr "Список порожній"
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "E-mail"
+msgstr "E-mail"

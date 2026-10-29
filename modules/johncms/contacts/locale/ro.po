@@ -1,0 +1,83 @@
+msgid ""
+msgstr ""
+"X-Domain: contacts\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: ro\n"
+
+msgid "Record deleted"
+msgstr "Înregistrarea a fost ștearsă"
+
+msgid "Delete message"
+msgstr "Ștergere mesaj"
+
+msgid "Contacts"
+msgstr "Contacte"
+
+msgid "Contact messages"
+msgstr "Mesaje de contact"
+
+msgid "All"
+msgstr "Toate"
+
+msgid "New"
+msgstr "Noi"
+
+msgid "Processed"
+msgstr "Procesate"
+
+msgid "The message is marked as processed"
+msgstr "Mesajul a fost marcat ca procesat"
+
+msgid "Message from %s"
+msgstr "Mesaj de la %s"
+
+msgid "Are you sure you want to delete this message?"
+msgstr "Sunteți sigur că doriți să ștergeți acest mesaj?"
+
+msgid "Cancel"
+msgstr "Anulează"
+
+msgid "Delete"
+msgstr "Șterge"
+
+msgid "Actions"
+msgstr "Acțiuni"
+
+msgid "View"
+msgstr "Vizualizează"
+
+msgid "Contact message"
+msgstr "Mesaj de contact"
+
+msgid "Technical information"
+msgstr "Informații tehnice"
+
+msgid "Browser"
+msgstr "Browser"
+
+msgid "Sender"
+msgstr "Expeditor"
+
+msgid "Message"
+msgstr "Mesaj"
+
+msgid "IP address"
+msgstr "Adresa IP"
+
+msgid "Mark as processed"
+msgstr "Marchează ca procesat"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Status"
+msgstr "Stare"
+
+msgid "The list is empty"
+msgstr "Lista este goală"
+
+msgid "Back"
+msgstr "Înapoi"
+
+msgid "E-mail"
+msgstr "E-mail"

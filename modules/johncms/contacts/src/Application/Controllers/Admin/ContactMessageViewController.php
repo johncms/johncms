@@ -34,7 +34,7 @@ final readonly class ContactMessageViewController
         if ($request->getMethod() === 'POST') {
             $this->markProcessed->execute($message);
             $this->session->flash('success_message', __('The message is marked as processed'));
-            redirect(self::URL . '/' . $message->id);
+            redirect(self::URL);
         }
 
         $title = __('Message from %s', $message->name);
@@ -42,24 +42,28 @@ final readonly class ContactMessageViewController
         $this->navChain->add(__('Contact messages'), self::URL);
         $this->navChain->add($title);
 
-        $successMessage = $this->session->getFlash('success_message');
+        $data = [
+            'message'      => $message,
+            'is_processed' => $message->status === ContactMessageStatus::Processed,
+            'created_at'   => $message->created_at?->format('d.m.Y H:i') ?? '',
+            'processed_at' => $message->processed_at?->format('d.m.Y H:i') ?? '',
+            'back_url'     => self::URL,
+            'process_url'  => self::URL . '/' . $message->id,
+            'delete_url'   => self::URL . '/' . $message->id . '/delete',
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            return new ViewResponse('@contacts/admin/message-offcanvas.twig', $data + ['title' => $title]);
+        }
 
         return new ViewResponse(
             '@contacts/admin/message.twig',
             [
-                'title'       => $title,
-                'page_title'  => $title,
-                'module_menu' => ['contacts' => true],
-            ] + [
-                'message'         => $message,
-                'is_processed'    => $message->status === ContactMessageStatus::Processed,
-                'created_at'      => $message->created_at?->format('d.m.Y H:i') ?? '',
-                'processed_at'    => $message->processed_at?->format('d.m.Y H:i') ?? '',
-                'back_url'        => self::URL,
-                'process_url'     => self::URL . '/' . $message->id,
-                'delete_url'      => self::URL . '/' . $message->id . '/delete',
-                'success_message' => $successMessage,
-            ]
+                'title'           => $title,
+                'page_title'      => $title,
+                'module_menu'     => ['contacts' => true],
+                'success_message' => $this->session->getFlash('success_message'),
+            ] + $data
         );
     }
 }

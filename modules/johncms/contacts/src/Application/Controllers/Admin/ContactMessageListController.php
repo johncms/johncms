@@ -42,37 +42,56 @@ final readonly class ContactMessageListController
         $this->navChain->add(__('Contacts'), '/admin/contacts');
         $this->navChain->add($title, self::URL);
 
-        $successMessage = $this->session->getFlash('success_message');
+        $newCount = $this->messages->count(ContactMessageStatus::New);
+        $data = [
+            'items'      => $this->messages->getPage($pagination->getPerPage(), $pagination->getOffset(), $status),
+            'filters'    => $this->filters($status?->value ?? '', $newCount),
+            'pagination' => $pagination->render(),
+        ];
 
+        if ($request->isXmlHttpRequest()) {
+            return new ViewResponse('@contacts/admin/live.twig', $data);
+        }
+
+        $successMessage = $this->session->getFlash('success_message');
         $meta = new PageMeta($title, $pagination->getCurrentPage());
 
-        return new ViewResponse(
-            '@contacts/admin/messages.twig',
-            [
-                'title'       => $meta->title,
-                'page_title'  => $title,
-                'module_menu' => ['contacts' => true],
-            ] + [
-                'items'           => $this->messages->getPage($pagination->getPerPage(), $pagination->getOffset(), $status),
-                'filters'         => $this->filters(),
-                'pagination'      => $pagination->render(),
-                'current_status'  => $status?->value ?? '',
-                'base_url'        => self::URL,
-                'new_count'       => $this->messages->count(ContactMessageStatus::New),
-                'success_message' => $successMessage,
-            ]
-        );
+        return new ViewResponse('@contacts/admin/messages.twig', $data + [
+            'title'           => $meta->title,
+            'page_title'      => $title,
+            'module_menu'     => ['contacts' => true],
+            'base_url'        => self::URL,
+            'success_message' => $successMessage,
+        ]);
     }
 
     /**
-     * @return list<array{value: string, title: string}>
+     * @return list<array{title: string, url: string, active: bool, count: int, tone: string}>
      */
-    private function filters(): array
+    private function filters(string $currentStatus, int $newCount): array
     {
         return [
-            ['value' => '', 'title' => __('All')],
-            ['value' => ContactMessageStatus::New->value, 'title' => __('New')],
-            ['value' => ContactMessageStatus::Processed->value, 'title' => __('Processed')],
+            [
+                'title' => __('All'),
+                'url' => self::URL,
+                'active' => $currentStatus === '',
+                'count' => 0,
+                'tone' => 'default',
+            ],
+            [
+                'title' => __('New'),
+                'url' => self::URL . '?status=' . ContactMessageStatus::New->value,
+                'active' => $currentStatus === ContactMessageStatus::New->value,
+                'count' => $newCount,
+                'tone' => 'danger',
+            ],
+            [
+                'title' => __('Processed'),
+                'url' => self::URL . '?status=' . ContactMessageStatus::Processed->value,
+                'active' => $currentStatus === ContactMessageStatus::Processed->value,
+                'count' => 0,
+                'tone' => 'default',
+            ],
         ];
     }
 }

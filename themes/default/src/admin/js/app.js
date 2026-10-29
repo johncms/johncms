@@ -16,6 +16,7 @@ import './live-list';
 import './tabs';
 import './role-permissions';
 import './modal';
+import './offcanvas';
 import './prism';
 import './forum';
 import './modals';

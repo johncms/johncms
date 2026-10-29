@@ -12,59 +12,77 @@
 #}
 {% extends '@admin/layouts/default.twig' %}
 
+{% block page_actions %}
+    <a href="{{ back_url }}" class="btn btn-outline-secondary">
+        {% include '@admin/components/ui/icon.twig' with {name: 'arrow-left', size: 14} only %}
+        {{ __('Back') }}
+    </a>
+    {% if not is_processed %}
+        <form method="post" action="{{ process_url }}" class="d-inline">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+            <button type="submit" class="btn btn-primary">{{ __('Mark as processed') }}</button>
+        </form>
+    {% endif %}
+    <a href="{{ delete_url }}" class="btn btn-outline-danger" data-admin-modal>
+        {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+        {{ __('Delete') }}
+    </a>
+{% endblock %}
+
 {% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
 
-    <div class="card mb-3">
-        <div class="card-body">
-            <dl class="row mb-0">
-                <dt class="col-sm-3">{{ __('Date') }}</dt>
-                <dd class="col-sm-9">{{ created_at }}</dd>
-
-                <dt class="col-sm-3">{{ __('Sender') }}</dt>
-                <dd class="col-sm-9">{{ message.name }}</dd>
-
-                <dt class="col-sm-3">{{ __('E-mail') }}</dt>
-                <dd class="col-sm-9">
-                    <a href="mailto:{{ message.email }}">{{ message.email }}</a>
-                </dd>
-
-                <dt class="col-sm-3">{{ __('Status') }}</dt>
-                <dd class="col-sm-9">
-                    {% if is_processed %}
-                        <span class="badge text-bg-success">{{ __('Processed') }}</span>
-                        {% if processed_at %}
-                            <span class="text-muted small">{{ processed_at }}</span>
+    <div class="row g-3">
+        <div class="col-lg-8">
+            <section class="card h-100">
+                <div class="card-header d-flex align-items-center gap-2">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'message-square', size: 16} only %}
+                    <h2 class="h6 mb-0">{{ __('Message') }}</h2>
+                    <span class="ms-auto">
+                        {% if is_processed %}
+                            <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ __('Processed') }}</span>
+                        {% else %}
+                            <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis badge-dot">{{ __('New') }}</span>
                         {% endif %}
-                    {% else %}
-                        <span class="badge text-bg-danger">{{ __('New') }}</span>
-                    {% endif %}
-                </dd>
-
-                <dt class="col-sm-3">{{ __('IP address') }}</dt>
-                <dd class="col-sm-9">
-                    {{ message.ip_address }}
-                    {% if message.user_agent %}
-                        <div class="text-muted small">{{ message.user_agent }}</div>
-                    {% endif %}
-                </dd>
-
-                <dt class="col-sm-3">{{ __('Message') }}</dt>
-                <dd class="col-sm-9 mb-0">{{ message.message|nl2br }}</dd>
-            </dl>
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="text-body-secondary small mb-3">{{ created_at }}</div>
+                    <div class="contact-message-page__body">{{ message.message|nl2br }}</div>
+                </div>
+            </section>
         </div>
-    </div>
 
-    <div class="d-flex gap-2">
-        <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Back') }}</a>
+        <div class="col-lg-4 d-flex flex-column gap-3">
+            <section class="card">
+                <div class="card-header">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'user', size: 16} only %}
+                    <span class="ms-1">{{ __('Sender') }}</span>
+                </div>
+                <div class="card-body">
+                    {% include '@admin/components/ui/facts.twig' with {items: [
+                        {label: __('Sender'), value: message.name},
+                    ]} only %}
+                    <a href="mailto:{{ message.email }}" class="btn btn-outline-secondary btn-sm mt-3">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'mail', size: 14} only %}
+                        {{ message.email }}
+                    </a>
+                </div>
+            </section>
 
-        {% if not is_processed %}
-            <form method="post" action="{{ process_url }}">
-                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                <button type="submit" class="btn btn-primary">{{ __('Mark as processed') }}</button>
-            </form>
-        {% endif %}
-
-        <a href="{{ delete_url }}" class="btn btn-danger">{{ __('Delete') }}</a>
+            <section class="card">
+                <div class="card-header">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'info', size: 16} only %}
+                    <span class="ms-1">{{ __('Technical information') }}</span>
+                </div>
+                <div class="card-body">
+                    {% include '@admin/components/ui/facts.twig' with {items: [
+                        {label: __('IP address'), value: message.ip_address},
+                        {label: __('Browser'), value: message.user_agent},
+                        {label: __('Processed'), value: processed_at},
+                    ]} only %}
+                </div>
+            </section>
+        </div>
     </div>
 {% endblock %}

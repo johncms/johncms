@@ -142,3 +142,18 @@ msgstr "Введите код проверки"
 
 msgid "Send"
 msgstr "Отправить"
+
+msgid "Actions"
+msgstr "Действия"
+
+msgid "View"
+msgstr "Просмотреть"
+
+msgid "Contact message"
+msgstr "Обращение"
+
+msgid "Technical information"
+msgstr "Техническая информация"
+
+msgid "Browser"
+msgstr "Браузер"

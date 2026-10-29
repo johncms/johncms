@@ -51,6 +51,11 @@
       'Verification code' => 'Код проверки',
       'Enter verification code' => 'Введите код проверки',
       'Send' => 'Отправить',
+      'Actions' => 'Действия',
+      'View' => 'Просмотреть',
+      'Contact message' => 'Обращение',
+      'Technical information' => 'Техническая информация',
+      'Browser' => 'Браузер',
     ),
   ),
 );
