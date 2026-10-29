@@ -32,6 +32,11 @@ final class EloquentNewsSectionRepository implements NewsSectionRepositoryInterf
         return NewsSection::query()->pluck('name', 'id')->all();
     }
 
+    public function getAllWithArticleCounts(): Collection
+    {
+        return NewsSection::query()->withCount('articles')->get();
+    }
+
     public function countAll(): int
     {
         return NewsSection::query()->count();

@@ -1,18 +1,17 @@
 {#
     The sections of the list of the news.
 
-    @param array rows Built by NewsListRowMapper::sections().
-    @param array sort The links of the sortable columns.
+    @param array rows Built by NewsListRowMapper::sectionTree().
 #}
 <table class="table table-hover admin-news-table">
     <thead>
         <tr>
-            {% include '@admin/components/ui/sort-header.twig' with {title: '#', link: sort.id} only %}
-            {% include '@admin/components/ui/sort-header.twig' with {title: __('Section'), link: sort.name} only %}
+            <th scope="col">#</th>
+            <th scope="col">{{ __('Section') }}</th>
             <th scope="col">{{ __('Code') }}</th>
-            {% include '@admin/components/ui/sort-header.twig' with {title: __('Articles'), link: sort.articles, class: 'text-end'} only %}
-            {% include '@admin/components/ui/sort-header.twig' with {title: __('Created'), link: sort.created} only %}
-            {% include '@admin/components/ui/sort-header.twig' with {title: __('Updated'), link: sort.updated} only %}
+            <th scope="col" class="text-end">{{ __('Articles') }}</th>
+            <th scope="col">{{ __('Created') }}</th>
+            <th scope="col">{{ __('Updated') }}</th>
             <th scope="col"><span class="visually-hidden">{{ __('Actions') }}</span></th>
         </tr>
     </thead>
@@ -21,7 +20,10 @@
             <tr>
                 <td class="admin-news-table__id">{{ section.id }}</td>
                 <td>
-                    <a class="admin-news-table__name" href="{{ section.edit_url }}">{{ section.name }}</a>
+                    <div class="admin-news-tree__section" style="--depth: {{ section.depth }}">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'folder', size: 15, class: 'admin-news-tree__icon'} only %}
+                        <a class="admin-news-table__name" href="{{ section.edit_url }}">{{ section.name }}</a>
+                    </div>
                     {% if section.parents %}
                         <div class="admin-news-table__sub">{{ section.parents }}</div>
                     {% endif %}

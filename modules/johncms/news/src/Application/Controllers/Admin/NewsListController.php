@@ -46,25 +46,28 @@ final readonly class NewsListController
     {
         $filter = $this->filterMapper->fromQuery($request->query->all());
         $tree = $this->getTree->execute();
-        $pagination = $this->paginationFactory->create($this->getList->count($filter, $tree));
+        $articles = $filter->tab === NewsListTab::ARTICLES;
+        $pagination = $articles ? $this->paginationFactory->create($this->getList->count($filter, $tree)) : null;
 
-        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
-        if ($redirectUrl !== null) {
-            redirect($redirectUrl);
+        if ($pagination !== null) {
+            $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+            if ($redirectUrl !== null) {
+                redirect($redirectUrl);
+            }
         }
 
-        $listUrl = $pagination->getUrl($pagination->getCurrentPage());
-        $articles = $filter->tab === NewsListTab::ARTICLES;
+        $listUrl = $pagination?->getUrl($pagination->getCurrentPage()) ?? $this->controlsMapper->url($filter);
+        $sectionRows = $articles ? [] : $this->rowMapper->sectionTree($this->getList->getAllSectionsWithArticleCounts(), $tree, $filter, $listUrl);
 
         $data = [
             'tab'        => $filter->tab->value,
             'rows'       => $articles
                 ? $this->rowMapper->articles($this->getList->getArticles($filter, $tree, $pagination->getPerPage(), $pagination->getOffset()), $tree, $listUrl)
-                : $this->rowMapper->sections($this->getList->getSections($filter, $tree, $pagination->getPerPage(), $pagination->getOffset()), $tree, $listUrl),
+                : $sectionRows,
             'controls'   => $this->controlsMapper->map($filter, $this->getList->tabCounts(), $tree, $articles ? $this->getList->authors() : new Collection()),
             'search'     => $filter->search,
-            'total'      => $pagination->getTotal(),
-            'pagination' => $pagination->render(),
+            'total'      => $pagination?->getTotal() ?? count($sectionRows),
+            'pagination' => $pagination?->render(),
         ];
 
         if ($request->isXmlHttpRequest()) {
@@ -74,7 +77,7 @@ final readonly class NewsListController
         $title = __('News');
         $this->navChain->add($title);
 
-        $meta = new PageMeta($title, $pagination->getCurrentPage());
+        $meta = new PageMeta($title, $pagination?->getCurrentPage() ?? 1);
         // A new article or section goes into the section the list is narrowed to.
         $section = $filter->section ?? NewsListFilter::ROOT;
 

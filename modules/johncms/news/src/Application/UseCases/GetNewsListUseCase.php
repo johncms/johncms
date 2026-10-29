@@ -67,6 +67,12 @@ final readonly class GetNewsListUseCase
         return $this->sections->getList($filter, $this->sectionIds($filter, $tree), $limit, $offset);
     }
 
+    /** @return Collection<int, NewsSection> */
+    public function getAllSectionsWithArticleCounts(): Collection
+    {
+        return $this->sections->getAllWithArticleCounts();
+    }
+
     /**
      * @return Collection<int, User>
      */

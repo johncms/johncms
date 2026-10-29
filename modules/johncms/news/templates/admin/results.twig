@@ -22,13 +22,15 @@
                 {% if tab == 'articles' %}
                     {% include '@news/admin/components/articles-table.twig' with {rows: rows, sort: controls.sort} only %}
                 {% else %}
-                    {% include '@news/admin/components/sections-table.twig' with {rows: rows, sort: controls.sort} only %}
+                    {% include '@news/admin/components/sections-table.twig' with {rows: rows} only %}
                 {% endif %}
             </div>
-            <div class="card-footer admin-list-footer">
-                <span class="admin-list-footer__total">{{ __('Found: %s')|format(total|format_number) }}</span>
-                <div class="pagination-no-padding">{{ pagination }}</div>
-            </div>
+            {% if tab == 'articles' %}
+                <div class="card-footer admin-list-footer">
+                    <span class="admin-list-footer__total">{{ __('Found: %s')|format(total|format_number) }}</span>
+                    <div class="pagination-no-padding">{{ pagination }}</div>
+                </div>
+            {% endif %}
         {% endif %}
     </div>
 </div>

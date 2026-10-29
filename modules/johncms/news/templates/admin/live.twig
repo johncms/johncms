@@ -6,7 +6,7 @@
     @var array        controls
     @var array        rows
     @var int          total
-    @var \Twig\Markup pagination
+    @var \Twig\Markup|null pagination
 #}
 {% include '@admin/components/list-tabs.twig' with {tabs: controls.tabs} only %}
 {% include '@admin/components/list-state.twig' with {controls: controls} only %}

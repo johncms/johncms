@@ -39,7 +39,7 @@ final readonly class NewsListFilterMapper
             section: $this->number($query, 'section'),
             status: $articles ? ArticleStatus::tryFrom($this->string($query, 'status')) : null,
             author: $articles ? $this->number($query, 'author') : null,
-            sort: NewsListSort::tryFrom($this->string($query, 'sort')),
+            sort: $articles ? NewsListSort::tryFrom($this->string($query, 'sort')) : null,
             direction: SortDirection::tryFrom($this->string($query, 'dir')),
         );
     }

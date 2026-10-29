@@ -26,6 +26,9 @@ interface NewsSectionRepositoryInterface
      */
     public function getNames(): array;
 
+    /** @return Collection<int, NewsSection> Every section with its article count. */
+    public function getAllWithArticleCounts(): Collection;
+
     public function countAll(): int;
 
     /**

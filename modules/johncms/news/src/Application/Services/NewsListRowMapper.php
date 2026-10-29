@@ -117,6 +117,76 @@ final readonly class NewsListRowMapper
     }
 
     /**
+     * @param Collection<int, NewsSection> $sections Every section, with its article count.
+     * @return list<array<string, mixed>> Matching sections, their parents, and their depth.
+     */
+    public function sectionTree(Collection $sections, SectionTree $tree, NewsListFilter $filter, string $listUrl): array
+    {
+        $byId = [];
+        foreach ($sections as $section) {
+            $byId[$section->id] = $section;
+        }
+
+        $inScope = match ($filter->section) {
+            null => array_keys($byId),
+            NewsListFilter::ROOT => $tree->childrenOf(NewsListFilter::ROOT),
+            default => array_slice($tree->subtreeOf($filter->section), 1),
+        };
+        $visible = [];
+
+        foreach ($inScope as $id) {
+            $section = $byId[$id] ?? null;
+            if ($section === null || ! $this->matchesSectionSearch($section, $filter->search)) {
+                continue;
+            }
+
+            $visible[$id] = true;
+            if ($filter->search === '') {
+                continue;
+            }
+
+            $currentId = $id;
+            $seen = [$currentId => true];
+            while (isset($byId[$currentId])) {
+                $currentId = (int) ($section->parent ?? 0);
+                if ($currentId === 0 || ! isset($byId[$currentId]) || isset($seen[$currentId])) {
+                    break;
+                }
+                $seen[$currentId] = true;
+                $visible[$currentId] = true;
+                $section = $byId[$currentId];
+            }
+        }
+
+        $ordered = [];
+        foreach ($tree->ordered() as $id) {
+            if (isset($visible[$id], $byId[$id])) {
+                $ordered[] = $byId[$id];
+            }
+        }
+
+        $rows = $this->sections(new Collection($ordered), $tree, $listUrl);
+        foreach ($rows as &$row) {
+            $row['parents'] = '';
+            $row['depth'] = max(0, count($tree->pathOf($row['id'])) - 1);
+        }
+        unset($row);
+
+        return $rows;
+    }
+
+    private function matchesSectionSearch(NewsSection $section, string $search): bool
+    {
+        if ($search === '') {
+            return true;
+        }
+
+        return str_contains(mb_strtolower($section->name), mb_strtolower($search))
+            || str_contains(mb_strtolower($section->code), mb_strtolower($search))
+            || (ctype_digit($search) && $section->id === (int) $search);
+    }
+
+    /**
      * @return array<string, mixed>
      */
     private function action(string $method, string $url, string $title, string $icon, bool $danger = false, bool $dialog = false): array
