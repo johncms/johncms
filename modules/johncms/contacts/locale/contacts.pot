@@ -14,16 +14,18 @@ msgstr ""
 #: modules/johncms/contacts/src/Application/Controllers/Admin/ContactMessageDeleteController.php:50
 #: modules/johncms/contacts/src/Application/Controllers/Admin/ContactMessageListController.php:42
 #: modules/johncms/contacts/src/Application/Controllers/Admin/ContactMessageViewController.php:41
-#: modules/johncms/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:116
+#: modules/johncms/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:123
 #: modules/johncms/contacts/src/Application/Controllers/ContactsController.php:43
 #: modules/johncms/contacts/src/Application/Menu/ContactsMenuItemProvider.php:15
+#: modules/johncms/contacts/templates/admin/settings.twig:38
+#: modules/johncms/contacts/templates/admin/settings.twig:102
 msgid "Contacts"
 msgstr ""
 
 #: modules/johncms/contacts/src/Application/Controllers/Admin/ContactMessageDeleteController.php:51
 #: modules/johncms/contacts/src/Application/Controllers/Admin/ContactMessageListController.php:41
 #: modules/johncms/contacts/src/Application/Controllers/Admin/ContactMessageViewController.php:42
-#: modules/johncms/contacts/templates/admin/settings.twig:21
+#: modules/johncms/contacts/templates/admin/settings.twig:18
 msgid "Contact messages"
 msgstr ""
 
@@ -56,25 +58,25 @@ msgstr ""
 msgid "Message from %s"
 msgstr ""
 
-#: modules/johncms/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:41
+#: modules/johncms/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:43
 msgid "ERROR: Can not write file `system.local.php`"
 msgstr ""
 
-#: modules/johncms/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:44
+#: modules/johncms/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:48
 msgid "Changes saved successfully"
 msgstr ""
 
-#: modules/johncms/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:143
+#: modules/johncms/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:154
 #: modules/johncms/contacts/templates/public/index.twig:42
 msgid "Address"
 msgstr ""
 
-#: modules/johncms/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:144
+#: modules/johncms/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:155
 #: modules/johncms/contacts/templates/public/index.twig:47
 msgid "Working hours"
 msgstr ""
 
-#: modules/johncms/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:145
+#: modules/johncms/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:156
 msgid "Text above the contact information"
 msgstr ""
 
@@ -167,37 +169,43 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/settings.twig:34
-msgid "Enable feedback form"
+#: modules/johncms/contacts/templates/admin/settings.twig:22
+msgid "Save"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/settings.twig:38
-msgid "E-mail for notifications"
-msgstr ""
-
-#: modules/johncms/contacts/templates/admin/settings.twig:39
-msgid "Leave empty to use the site e-mail from the system settings."
-msgstr ""
-
-#: modules/johncms/contacts/templates/admin/settings.twig:48
+#: modules/johncms/contacts/templates/admin/settings.twig:106
 msgid "Public e-mail"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/settings.twig:57
+#: modules/johncms/contacts/templates/admin/settings.twig:111
 #: modules/johncms/contacts/templates/public/index.twig:35
 msgid "Phone"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/settings.twig:66
+#: modules/johncms/contacts/templates/admin/settings.twig:121
+#: modules/johncms/contacts/templates/public/index.twig:65
+msgid "Feedback form"
+msgstr ""
+
+#: modules/johncms/contacts/templates/admin/settings.twig:128
+msgid "Enable feedback form"
+msgstr ""
+
+#: modules/johncms/contacts/templates/admin/settings.twig:130
+msgid "E-mail for notifications"
+msgstr ""
+
+#: modules/johncms/contacts/templates/admin/settings.twig:133
+msgid "Leave empty to use the site e-mail from the system settings."
+msgstr ""
+
+#: modules/johncms/contacts/templates/admin/settings.twig:140
+#: modules/johncms/contacts/templates/admin/settings.twig:143
 msgid "Social networks and messengers"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/settings.twig:67
+#: modules/johncms/contacts/templates/admin/settings.twig:145
 msgid "One link per line in the format: Title|https://example.com"
-msgstr ""
-
-#: modules/johncms/contacts/templates/admin/settings.twig:101
-msgid "Save"
 msgstr ""
 
 #: modules/johncms/contacts/templates/public/index.twig:28
@@ -206,10 +214,6 @@ msgstr ""
 
 #: modules/johncms/contacts/templates/public/index.twig:52
 msgid "We are on the web"
-msgstr ""
-
-#: modules/johncms/contacts/templates/public/index.twig:65
-msgid "Feedback form"
 msgstr ""
 
 #: modules/johncms/contacts/templates/public/index.twig:71

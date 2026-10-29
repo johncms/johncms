@@ -12,93 +12,140 @@
 #}
 {% extends '@admin/layouts/default.twig' %}
 
+{% block page_actions %}
+    <a href="{{ messages_url }}" class="btn btn-outline-secondary">
+        {% include '@admin/components/ui/icon.twig' with {name: 'messages-square', size: 14} only %}
+        {{ __('Contact messages') }}
+    </a>
+    <button type="submit" form="contacts-settings-form" class="btn btn-primary" name="submit">
+        {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
+        {{ __('Save') }}
+    </button>
+{% endblock %}
+
 {% block content %}
-    <div style="max-width: 720px">
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: error_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
 
-        <div class="mb-3">
-            <a href="{{ messages_url }}" class="btn btn-secondary">{{ __('Contact messages') }}</a>
-        </div>
+    <form method="post" action="{{ form_action }}" id="contacts-settings-form">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
 
-        <form method="post" action="{{ form_action }}">
-            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-
-            <div class="form-check mb-3">
-                <input type="checkbox"
-                       class="form-check-input"
-                       name="contacts_form_enabled"
-                       value="1"
-                       id="contacts_form_enabled"
-                       {% if settings.formEnabled %}checked="checked"{% endif %}>
-                <label class="form-check-label" for="contacts_form_enabled">{{ __('Enable feedback form') }}</label>
-            </div>
-
-            <div class="form-group">
-                <label for="contacts_notify_email">{{ __('E-mail for notifications') }}</label>
-                <div class="text-muted small mb-2">{{ __('Leave empty to use the site e-mail from the system settings.') }}</div>
-                <input type="email"
-                       class="form-control"
-                       name="contacts_notify_email"
-                       id="contacts_notify_email"
-                       value="{{ settings.notifyEmail }}">
-            </div>
-
-            <div class="form-group">
-                <label for="contacts_email">{{ __('Public e-mail') }}</label>
-                <input type="email"
-                       class="form-control"
-                       name="contacts_email"
-                       id="contacts_email"
-                       value="{{ settings.email }}">
-            </div>
-
-            <div class="form-group">
-                <label for="contacts_phone">{{ __('Phone') }}</label>
-                <input type="text"
-                       class="form-control"
-                       name="contacts_phone"
-                       id="contacts_phone"
-                       value="{{ settings.phone }}">
-            </div>
-
-            <div class="form-group">
-                <label for="contacts_socials">{{ __('Social networks and messengers') }}</label>
-                <div class="text-muted small mb-2">{{ __('One link per line in the format: Title|https://example.com') }}</div>
-                <textarea rows="4"
-                          class="form-control"
-                          name="contacts_socials"
-                          id="contacts_socials">{{ socials }}</textarea>
-            </div>
-
-            {% for field in multilingual_fields %}
-                <div class="form-group">
-                    <label>{{ field.label }}</label>
-                    <ul class="nav nav-tabs" role="tablist">
-                        {% for language in languages %}
-                            <li class="nav-item">
-                                <a class="nav-link {% if loop.first %}active{% endif %}"
-                                   data-bs-toggle="tab"
-                                   href="#{{ field.name }}_{{ language.code }}"
-                                   role="tab">{{ language.name }} ({{ language.code }})</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    <div class="tab-content border border-top-0 p-3">
-                        {% for language in languages %}
-                            <div class="tab-pane fade {% if loop.first %}show active{% endif %}"
-                                 id="{{ field.name }}_{{ language.code }}"
-                                 role="tabpanel">
-                                <textarea rows="3"
-                                          class="form-control"
-                                          name="{{ field.name }}[{{ language.code }}]">{{ field.values[language.code]|default('') }}</textarea>
-                            </div>
-                        {% endfor %}
+        <div class="row g-3 contacts-settings">
+            <div class="col-lg-8">
+                <section class="card h-100">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'languages', size: 16} only %}
+                        <h2 class="h6 mb-0 ms-2">{{ __('Contacts') }}</h2>
                     </div>
-                </div>
-            {% endfor %}
+                    <div class="card-body">
+                        <div class="dropdown contacts-settings__language-dropdown" data-contacts-language-switch>
+                            <input type="hidden" name="contacts_language" value="{{ active_language }}" data-contacts-language-value>
+                            <button type="button" class="admin-filter" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="admin-filter__label">{{ d__('admin', 'Languages') }}:</span>
+                                <span class="admin-filter__value" data-contacts-language-label>
+                                    {% for language in languages %}
+                                        {% if active_language == language.code %}{{ language.name }} ({{ language.code }}){% endif %}
+                                    {% endfor %}
+                                </span>
+                                {% include '@admin/components/ui/icon.twig' with {name: 'chevron-down', size: 12} only %}
+                            </button>
+                            <ul class="dropdown-menu">
+                                {% for language in languages %}
+                                    <li>
+                                        <button type="button"
+                                                class="dropdown-item{% if active_language == language.code %} active{% endif %}"
+                                                data-contacts-language-option
+                                                data-language-code="{{ language.code }}"
+                                                data-language-label="{{ language.name }} ({{ language.code }})"
+                                                aria-pressed="{{ active_language == language.code ? 'true' : 'false' }}">
+                                            <span class="admin-filter__check">
+                                                {% if active_language == language.code %}
+                                                    {% include '@admin/components/ui/icon.twig' with {name: 'check', size: 13} only %}
+                                                {% endif %}
+                                            </span>
+                                            {{ language.name }} <span class="text-body-tertiary">({{ language.code }})</span>
+                                        </button>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <template data-contacts-language-check>
+                                {% include '@admin/components/ui/icon.twig' with {name: 'check', size: 13} only %}
+                            </template>
+                        </div>
 
-            <input type="submit" class="btn btn-primary btn-lg mt-2 mb-2" name="submit" value="{{ __('Save') }}">
-        </form>
-    </div>
+                        <div class="pt-3">
+                            {% for language in languages %}
+                                <div class="contacts-settings__language-panel"
+                                     id="contacts-language-{{ language.code }}"
+                                     data-contacts-language-panel
+                                     {% if active_language != language.code %}hidden{% endif %}>
+                                    {% for field in multilingual_fields %}
+                                        <div class="mb-4{% if loop.last %} mb-0{% endif %}">
+                                            <label class="form-label" for="{{ field.name }}_{{ language.code }}">{{ field.label }}</label>
+                                            <textarea class="form-control"
+                                                      id="{{ field.name }}_{{ language.code }}"
+                                                      name="{{ field.name }}[{{ language.code }}]"
+                                                      rows="{{ field.name == 'contacts_text' ? 4 : 2 }}">{{ field.values[language.code]|default('') }}</textarea>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-lg-4 d-flex flex-column gap-3">
+                <section class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'mail', size: 16} only %}
+                        <h2 class="h6 mb-0 ms-2">{{ __('Contacts') }}</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label" for="contacts_email">{{ __('Public e-mail') }}</label>
+                            <input type="email" class="form-control" name="contacts_email" id="contacts_email"
+                                   value="{{ settings.email }}" autocomplete="email">
+                        </div>
+                        <div>
+                            <label class="form-label" for="contacts_phone">{{ __('Phone') }}</label>
+                            <input type="tel" class="form-control" name="contacts_phone" id="contacts_phone"
+                                   value="{{ settings.phone }}" autocomplete="tel">
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'message-square', size: 16} only %}
+                        <h2 class="h6 mb-0 ms-2">{{ __('Feedback form') }}</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" role="switch"
+                                   name="contacts_form_enabled" value="1" id="contacts_form_enabled"
+                                   {% if settings.formEnabled %}checked{% endif %}>
+                            <label class="form-check-label" for="contacts_form_enabled">{{ __('Enable feedback form') }}</label>
+                        </div>
+                        <label class="form-label" for="contacts_notify_email">{{ __('E-mail for notifications') }}</label>
+                        <input type="email" class="form-control" name="contacts_notify_email" id="contacts_notify_email"
+                               value="{{ settings.notifyEmail }}" autocomplete="email">
+                        <div class="form-text">{{ __('Leave empty to use the site e-mail from the system settings.') }}</div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <div class="card-header">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'network', size: 16} only %}
+                        <h2 class="h6 mb-0 ms-2">{{ __('Social networks and messengers') }}</h2>
+                    </div>
+                    <div class="card-body">
+                        <label class="form-label" for="contacts_socials">{{ __('Social networks and messengers') }}</label>
+                        <textarea class="form-control font-monospace" rows="5" name="contacts_socials" id="contacts_socials">{{ socials }}</textarea>
+                        <div class="form-text">{{ __('One link per line in the format: Title|https://example.com') }}</div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </form>
 {% endblock %}

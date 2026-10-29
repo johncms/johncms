@@ -521,6 +521,7 @@ msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:60
 #: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:144
+#: modules/johncms/contacts/templates/admin/settings.twig:44
 msgid "Languages"
 msgstr ""
 

@@ -38,7 +38,11 @@ final readonly class ContactSettingsController
         try {
             $this->updateSettings->execute($settings);
         } catch (ConfigWriteException) {
-            return $this->renderForm($settings, __('ERROR: Can not write file `system.local.php`'));
+            return $this->renderForm(
+                $settings,
+                __('ERROR: Can not write file `system.local.php`'),
+                $request->body('contacts_language')
+            );
         }
 
         $this->session->flash('success_message', __('Changes saved successfully'));
@@ -111,8 +115,11 @@ final readonly class ContactSettingsController
         return array_keys(config('johncms')['lng_list'] ?? []);
     }
 
-    private function renderForm(ContactSettingsDTO $settings, ?string $errorMessage = null): ViewResponse
-    {
+    private function renderForm(
+        ContactSettingsDTO $settings,
+        ?string $errorMessage = null,
+        string $activeLanguage = ''
+    ): ViewResponse {
         $title = __('Contacts');
         $this->navChain->add($title, self::URL);
 
@@ -121,6 +128,9 @@ final readonly class ContactSettingsController
         $languages = [];
         foreach (config('johncms')['lng_list'] ?? [] as $code => $data) {
             $languages[] = ['code' => $code, 'name' => $data['name'] ?? $code];
+        }
+        if (! in_array($activeLanguage, array_column($languages, 'code'), true)) {
+            $activeLanguage = $languages[0]['code'] ?? '';
         }
 
         $socials = implode(
@@ -138,6 +148,7 @@ final readonly class ContactSettingsController
                 'form_action'     => self::URL,
                 'messages_url'    => self::URL . '/messages',
                 'languages'       => $languages,
+                'active_language' => $activeLanguage,
                 'settings'        => $settings,
                 'multilingual_fields' => [
                     ['name' => 'contacts_address', 'label' => __('Address'), 'values' => $settings->addresses],

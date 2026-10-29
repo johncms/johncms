@@ -50,3 +50,12 @@
     color: var(--fg);
   }
 }
+
+.contacts-settings__language-dropdown {
+  width: fit-content;
+  max-width: 100%;
+
+  .admin-filter {
+    max-width: 100%;
+  }
+}

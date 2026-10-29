@@ -17,6 +17,7 @@ import './tabs';
 import './role-permissions';
 import './modal';
 import './offcanvas';
+import './contacts-settings-language';
 import './prism';
 import './forum';
 import './modals';
