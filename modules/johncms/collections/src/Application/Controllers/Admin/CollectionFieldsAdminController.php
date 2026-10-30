@@ -218,6 +218,7 @@ final readonly class CollectionFieldsAdminController
             'type'     => $request->body('type', ''),
             'required' => $request->hasBody('required') ? 1 : 0,
             'multiple' => $request->hasBody('multiple') ? 1 : 0,
+            'in_list'  => $request->hasBody('in_list') ? 1 : 0,
             'sort'     => $request->bodyInt('sort', 100),
         ];
     }
@@ -233,6 +234,7 @@ final readonly class CollectionFieldsAdminController
             'type'     => $field->type->value,
             'required' => $field->required ? 1 : 0,
             'multiple' => $field->multiple ? 1 : 0,
+            'in_list'  => $field->in_list ? 1 : 0,
             'sort'     => $field->sort,
         ];
     }
@@ -248,6 +250,7 @@ final readonly class CollectionFieldsAdminController
             'type'     => FieldType::String_->value,
             'required' => 0,
             'multiple' => 0,
+            'in_list'  => 0,
             'sort'     => 100,
         ];
     }
@@ -264,6 +267,7 @@ final readonly class CollectionFieldsAdminController
             type: FieldType::from((string) $fields['type']),
             required: (bool) $fields['required'],
             multiple: (bool) $fields['multiple'],
+            inList: (bool) $fields['in_list'],
             sort: (int) $fields['sort'],
         );
     }

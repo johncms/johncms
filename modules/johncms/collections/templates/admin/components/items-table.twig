@@ -1,0 +1,65 @@
+{#
+    The items of a collection.
+
+    @param array        rows         Built by ItemListRowMapper.
+    @param list<string> columns      The names of the fields shown as columns, in the order of the
+                                     values of a row.
+    @param bool         has_sections
+#}
+<table class="table table-hover align-middle admin-collection-items">
+    <thead>
+        <tr>
+            <th scope="col">{{ __('Item') }}</th>
+            {% if has_sections %}
+                <th scope="col" class="d-none d-md-table-cell">{{ __('Section') }}</th>
+            {% endif %}
+            {% for column in columns %}
+                <th scope="col" class="d-none d-lg-table-cell">{{ column }}</th>
+            {% endfor %}
+            <th scope="col">{{ __('Status') }}</th>
+            <th scope="col" class="d-none d-md-table-cell">{{ __('Updated') }}</th>
+            <th scope="col"><span class="visually-hidden">{{ __('Actions') }}</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+            <tr>
+                <td>
+                    <a class="admin-collection-items__name" href="{{ row.edit_url }}">{{ row.name }}</a>
+                    <div class="admin-collection-items__code">{{ row.code }}</div>
+                </td>
+                {% if has_sections %}
+                    <td class="admin-collection-items__section d-none d-md-table-cell">{{ row.section ?: '—' }}</td>
+                {% endif %}
+                {% for value in row.values %}
+                    <td class="d-none d-lg-table-cell{{ value.kind == 'number' ? ' text-end admin-collection-items__number' }}">
+                        {% if value.kind == 'empty' %}
+                            <span class="text-body-tertiary">—</span>
+                        {% elseif value.kind == 'yes_no' %}
+                            {{ value.value ? __('Yes') : __('No') }}
+                        {% elseif value.kind == 'date' %}
+                            {{ value.value ? (value.with_time ? value.value|display_date : value.value|date('d.m.Y')) : '—' }}
+                        {% else %}
+                            {{ value.value }}
+                        {% endif %}
+                    </td>
+                {% endfor %}
+                <td>
+                    {% if row.status == 'published' %}
+                        <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ row.status_title }}</span>
+                    {% elseif row.status == 'scheduled' %}
+                        <span class="badge rounded-pill bg-info-subtle text-info-emphasis badge-dot">{{ row.status_title }}</span>
+                    {% elseif row.status == 'expired' %}
+                        <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis badge-dot">{{ row.status_title }}</span>
+                    {% else %}
+                        <span class="badge rounded-pill text-bg-light badge-dot">{{ row.status_title }}</span>
+                    {% endif %}
+                </td>
+                <td class="admin-collection-items__date d-none d-md-table-cell">{{ row.updated ? row.updated|display_date : '—' }}</td>
+                <td class="text-end">
+                    {% include '@admin/components/ui/row-actions.twig' with {actions: row.actions, label: __('Actions')} only %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

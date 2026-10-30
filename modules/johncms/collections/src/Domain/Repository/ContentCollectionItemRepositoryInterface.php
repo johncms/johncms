@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Domain\Repository;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
+use Johncms\Modules\Collections\Domain\ValueObjects\ItemListFilter;
 
 interface ContentCollectionItemRepositoryInterface
 {
@@ -52,4 +54,21 @@ interface ContentCollectionItemRepositoryInterface
     public function update(int $id, array $attributes): void;
 
     public function delete(int $id): void;
+
+    /**
+     * The items of the list of the panel: whatever their window, narrowed by the filter.
+     *
+     * @param list<int>|null $sectionIds The sections they may stand in, worked out by the caller
+     *                                   from the tree: null for any, ItemListFilter::WITHOUT_SECTION
+     *                                   among them for the items outside every section.
+     */
+    public function countForPanel(int $collectionId, ItemListFilter $filter, ?array $sectionIds, DateTimeInterface $now): int;
+
+    /**
+     * A page of them, in the order of the collection, each with its values and section.
+     *
+     * @param list<int>|null $sectionIds As for countForPanel().
+     * @return Collection<int, ContentCollectionItem>
+     */
+    public function getForPanel(int $collectionId, ItemListFilter $filter, ?array $sectionIds, DateTimeInterface $now, int $limit, int $offset): Collection;
 }

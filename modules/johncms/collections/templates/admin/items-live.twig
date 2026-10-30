@@ -1,0 +1,23 @@
+{#
+    The regions of the list of the items, as the live list asks for them: each replaces the region
+    of the same name on the page. A fragment, so it extends nothing.
+
+    @var array        controls
+    @var list<string> columns
+    @var bool         has_sections
+    @var array        rows
+    @var int          total
+    @var \Twig\Markup pagination
+    @var string       add_url
+#}
+{% include '@admin/components/list-state.twig' with {controls: controls} only %}
+{% include '@admin/components/list-filters.twig' with {controls: controls} only %}
+{% include '@collections/admin/items-results.twig' with {
+    controls: controls,
+    columns: columns,
+    has_sections: has_sections,
+    rows: rows,
+    total: total,
+    pagination: pagination,
+    add_url: add_url,
+} only %}

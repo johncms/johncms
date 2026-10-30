@@ -6,6 +6,7 @@
     @var string message     What deleting it does.
     @var string name        What is about to be deleted.
     @var array  facts       What goes with it: label, value; may be empty.
+    @var array  hidden      Fields posted with it, name => value; may be absent.
     @var string form_action
     @var string back_url
 #}
@@ -16,8 +17,12 @@
     message: message,
     name: name,
     facts: facts|default([]),
+    hidden: hidden|default({}),
 } only %}
     {% block body %}
+        {% for field, value in hidden %}
+            <input type="hidden" name="{{ field }}" value="{{ value }}">
+        {% endfor %}
         <p class="mb-2">{{ message }}</p>
         <div class="fw-semibold">{{ name }}</div>
         {% if facts is not empty %}

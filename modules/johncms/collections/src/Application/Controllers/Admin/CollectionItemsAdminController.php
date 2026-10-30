@@ -9,7 +9,6 @@ use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
-use Johncms\Modules\Collections\Application\DTO\CollectionItemListItemDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemCodeAlreadyExistsException;
 use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionItemUseCase;
 use Johncms\Modules\Collections\Application\UseCases\ListCollectionItemsUseCase;
@@ -22,6 +21,9 @@ use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositor
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Modules\Collections\Application\Services\CollectionWorkspaceMapper;
+use Johncms\Modules\Collections\Application\Services\ItemListControlsMapper;
+use Johncms\Modules\Collections\Application\Services\ItemListFilterMapper;
+use Johncms\Modules\Collections\Application\Services\ItemListRowMapper;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
@@ -42,6 +44,9 @@ final readonly class CollectionItemsAdminController
         private Session $session,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
+        private ItemListFilterMapper $filterMapper,
+        private ItemListControlsMapper $controlsMapper,
+        private ItemListRowMapper $rowMapper,
     ) {
     }
 
@@ -52,27 +57,41 @@ final readonly class CollectionItemsAdminController
             return $this->collectionNotFound();
         }
 
-        $sectionId = $this->querySection($request);
-
-        $pagination = $this->paginationFactory->create($this->listItems->count($collection_id, $sectionId));
+        $filter = $this->filterMapper->fromQuery($request->query->all());
+        $tree = $this->listItems->sectionTree($collection_id);
+        $pagination = $this->paginationFactory->create($this->listItems->count($collection_id, $filter, $tree));
 
         $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
         if ($redirectUrl !== null) {
             redirect($redirectUrl);
         }
 
-        $items = $this->listItems->getPage($collection_id, $sectionId, $pagination->getPerPage(), $pagination->getOffset());
+        $listUrl = $pagination->getUrl($pagination->getCurrentPage());
+        $fields = $this->listItems->listedFields($collection_id);
+        $hasSections = $this->hasSections($collection);
+        $items = $this->listItems->getPage($collection_id, $filter, $tree, $pagination->getPerPage(), $pagination->getOffset());
+
+        $data = [
+            'controls'     => $this->controlsMapper->map($this->baseUrl($collection_id), $filter, $tree, $hasSections),
+            'columns'      => array_map(static fn ($field): string => $field->name, $fields),
+            'has_sections' => $hasSections,
+            'rows'         => $this->rowMapper->rows($items, $fields, $tree, $collection, $listUrl),
+            'search'       => $filter->search,
+            'total'        => $pagination->getTotal(),
+            'pagination'   => $pagination->render(),
+            'add_url'      => $this->baseUrl($collection_id) . '/new' . ($filter->section ? '?section=' . $filter->section : ''),
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            return new ViewResponse('@collections/admin/items-live.twig', $data);
+        }
 
         $this->breadcrumbs($collection);
-        $title = __('Items');
 
         return new ViewResponse('@collections/admin/items.twig', [
             'page_title' => $collection->name,
             'collection' => $this->workspace->head($collection, CollectionWorkspaceMapper::ITEMS),
-        ] + $this->menu($this->pageTitle($title, $pagination->getCurrentPage()), $collection->name) + [
-            'items'           => $this->mapRows($collection_id, $items),
-            'add_url'         => $this->baseUrl($collection_id) . '/new',
-            'pagination'      => $pagination->render(),
+        ] + $this->menu($this->pageTitle(__('Items'), $pagination->getCurrentPage()), $collection->name) + $data + [
             'success_message' => $this->session->getFlash('success_message') ?? '',
         ]);
     }
@@ -145,12 +164,14 @@ final readonly class CollectionItemsAdminController
             return $this->wrongData($collection_id);
         }
 
+        $back = $this->returnUrl($collection_id, $request->queryParam('back'));
         $dialog = [
             'title'       => __('Delete item'),
             'message'     => __('Are you sure you want to delete the item?'),
             'name'        => $item->name,
             'form_action' => $this->baseUrl($collection_id) . '/' . $id . '/delete',
-            'back_url'    => $this->baseUrl($collection_id),
+            'back_url'    => $back,
+            'hidden'      => ['back' => $back],
         ];
 
         if ($request->isXmlHttpRequest()) {
@@ -165,7 +186,7 @@ final readonly class CollectionItemsAdminController
         ]);
     }
 
-    public function delete(int $collection_id, int $id): ViewResponse
+    public function delete(Request $request, int $collection_id, int $id): ViewResponse
     {
         if ($this->collectionRepository->findById($collection_id) === null) {
             return $this->collectionNotFound();
@@ -176,7 +197,18 @@ final readonly class CollectionItemsAdminController
             $this->session->flash('success_message', __('Deleted successfully'));
         }
 
-        redirect($this->baseUrl($collection_id));
+        redirect($this->returnUrl($collection_id, $request->body('back')));
+    }
+
+    /**
+     * Where an action taken on the list returns to: the page of the list it was taken on, or the
+     * list itself. An address that is not one of the list is not followed.
+     */
+    private function returnUrl(int $collectionId, string $back): string
+    {
+        $list = $this->baseUrl($collectionId);
+
+        return $back === $list || str_starts_with($back, $list . '?') ? $back : $list;
     }
 
     private function findOwnedItem(int $collectionId, int $id): ?ContentCollectionItem
@@ -184,29 +216,6 @@ final readonly class CollectionItemsAdminController
         $item = $this->itemRepository->findById($id);
 
         return $item !== null && $item->collection_id === $collectionId ? $item : null;
-    }
-
-    /**
-     * @param list<CollectionItemListItemDTO> $items
-     * @return list<array<string, mixed>>
-     */
-    private function mapRows(int $collectionId, array $items): array
-    {
-        $base = $this->baseUrl($collectionId);
-
-        $rows = [];
-        foreach ($items as $item) {
-            $rows[] = [
-                'name'       => $item->name,
-                'code'       => $item->code,
-                'active'     => $item->active,
-                'sort'       => $item->sort,
-                'edit_url'   => $base . '/' . $item->id . '/edit',
-                'delete_url' => $base . '/' . $item->id . '/delete',
-            ];
-        }
-
-        return $rows;
     }
 
     /**

@@ -54,6 +54,12 @@
             <label class="form-check-label" for="multiple">{{ __('Allow multiple values') }}</label>
         </div>
 
+        <div class="form-check mt-2">
+            <input type="checkbox" class="form-check-input" name="in_list" value="1" id="in_list"{% if fields.in_list %} checked{% endif %}>
+            <label class="form-check-label" for="in_list">{{ __('Show in the list of items') }}</label>
+            <div class="form-text mt-0">{{ __('The value becomes a column of the list of the items in the panel.') }}</div>
+        </div>
+
         <div class="mt-3">
             <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
             <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>

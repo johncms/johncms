@@ -4,51 +4,75 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\UseCases;
 
-use Johncms\Modules\Collections\Application\DTO\CollectionItemListItemDTO;
+use DateTimeImmutable;
+use DateTimeInterface;
+use Illuminate\Database\Eloquent\Collection;
+use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
-use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Services\SectionTree;
+use Johncms\Modules\Collections\Domain\ValueObjects\ItemListFilter;
 
+/**
+ * The items of a collection in the panel, whatever their window, narrowed by the filter, and what
+ * the list around them needs: the tree of the sections and the fields shown as its columns.
+ *
+ * The section of the filter is turned into the ids of its subtree here: the repository only ever
+ * sees a list of ids.
+ */
 final readonly class ListCollectionItemsUseCase
 {
     public function __construct(
         private ContentCollectionItemRepositoryInterface $repository,
+        private ContentCollectionSectionRepositoryInterface $sections,
+        private ContentCollectionFieldRepositoryInterface $fields,
     ) {
     }
 
-    public function count(int $collectionId, ?int $sectionId): int
+    public function sectionTree(int $collectionId): SectionTree
     {
-        return $this->repository->countItems($this->query($collectionId, $sectionId));
+        return SectionTree::of($this->sections->getAllByCollection($collectionId));
     }
 
     /**
-     * @return list<CollectionItemListItemDTO>
+     * The fields the collection shows as columns of the list.
+     *
+     * @return list<ContentCollectionField>
      */
-    public function getPage(int $collectionId, ?int $sectionId, int $limit, int $offset): array
+    public function listedFields(int $collectionId): array
     {
-        $query = $this->query($collectionId, $sectionId, $limit, $offset);
-
-        return $this->repository->findItems($query)
-            ->map(static fn (ContentCollectionItem $item): CollectionItemListItemDTO => new CollectionItemListItemDTO(
-                id: $item->id,
-                code: $item->code,
-                name: $item->name,
-                active: $item->active,
-                sort: $item->sort,
-                sectionId: $item->section_id,
-            ))
+        return $this->fields->getByCollection($collectionId)
+            ->filter(static fn (ContentCollectionField $field): bool => $field->in_list)
+            ->values()
             ->all();
     }
 
-    private function query(int $collectionId, ?int $sectionId, ?int $limit = null, int $offset = 0): ContentCollectionItemQuery
+    public function count(int $collectionId, ItemListFilter $filter, SectionTree $tree, ?DateTimeInterface $now = null): int
     {
-        // Admin listing shows every item regardless of the publish window.
-        return new ContentCollectionItemQuery(
-            collectionId: $collectionId,
-            sectionId: $sectionId,
-            onlyActive: false,
-            limit: $limit,
-            offset: $offset,
-        );
+        return $this->repository->countForPanel($collectionId, $filter, $this->sectionIds($filter, $tree), $now ?? new DateTimeImmutable());
+    }
+
+    /**
+     * @return Collection<int, ContentCollectionItem>
+     */
+    public function getPage(int $collectionId, ItemListFilter $filter, SectionTree $tree, int $limit, int $offset, ?DateTimeInterface $now = null): Collection
+    {
+        return $this->repository->getForPanel($collectionId, $filter, $this->sectionIds($filter, $tree), $now ?? new DateTimeImmutable(), $limit, $offset);
+    }
+
+    /**
+     * The items of a section stand in it or under it; those without one, outside every section.
+     *
+     * @return list<int>|null
+     */
+    private function sectionIds(ItemListFilter $filter, SectionTree $tree): ?array
+    {
+        return match ($filter->section) {
+            null                            => null,
+            ItemListFilter::WITHOUT_SECTION => [ItemListFilter::WITHOUT_SECTION],
+            default                         => $tree->subtreeOf($filter->section),
+        };
     }
 }

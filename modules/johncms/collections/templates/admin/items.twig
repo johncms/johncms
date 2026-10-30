@@ -1,9 +1,19 @@
 {#
-    The items of a collection.
+    The items of a collection, a tab of it: a search, the section and the status, and a table with
+    the fields the collection shows as columns.
 
-    @var array        items           Rows: sort, name, code, active and the urls.
-    @var string       add_url
+    The page is a live list (src/admin/js/live-list.js): the regions are drawn by templates of their
+    own, and collections::admin/items-live puts them back in place as the search is typed or a
+    filter is picked.
+
+    @var array        controls     Built by ItemListControlsMapper.
+    @var list<string> columns      The names of the fields shown as columns.
+    @var bool         has_sections
+    @var array        rows         Built by ItemListRowMapper.
+    @var string       search
+    @var int          total        What the filter lets through.
     @var \Twig\Markup pagination
+    @var string       add_url
 
     The head of the collection comes from collection/layout.twig.
 #}
@@ -17,33 +27,26 @@
 {% endblock %}
 
 {% block collection_content %}
-    {% if items is empty %}
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
-    {% endif %}
+    <div data-live-list>
+        <form class="admin-toolbar" method="get" action="{{ controls.action }}" role="search" data-live-list-form>
+            {% include '@admin/components/ui/search-field.twig' with {
+                name: 'q',
+                value: search,
+                label: __('Search the items'),
+                placeholder: __('Name, code or ID'),
+            } only %}
+            {% include '@admin/components/list-state.twig' with {controls: controls} only %}
+            {% include '@admin/components/list-filters.twig' with {controls: controls} only %}
+        </form>
 
-    {% for item in items %}
-        <div class="new_post-item without_avatar">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center">
-                    <span class="text-muted me-1">[{{ item.sort }}]</span>
-                    <a href="{{ item.edit_url }}" class="h3 mb-0">{{ item.name }}</a>
-                    <span class="badge rounded-pill text-bg-light border ms-2">{{ item.code }}</span>
-                </div>
-                <div>
-                    {% if item.active %}
-                        <span class="badge rounded-pill bg-success">{{ __('On') }}</span>
-                    {% else %}
-                        <span class="badge rounded-pill bg-danger">{{ __('Off') }}</span>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="mt-2">
-                <a href="{{ item.edit_url }}">{{ __('Edit') }}</a>
-                <a href="{{ item.delete_url }}" class="text-danger ms-2" data-admin-modal>{{ __('Delete') }}</a>
-            </div>
-        </div>
-    {% endfor %}
-
-    <div class="mt-4">{{ pagination }}</div>
-
+        {% include '@collections/admin/items-results.twig' with {
+            controls: controls,
+            columns: columns,
+            has_sections: has_sections,
+            rows: rows,
+            total: total,
+            pagination: pagination,
+            add_url: add_url,
+        } only %}
+    </div>
 {% endblock %}

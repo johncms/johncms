@@ -22,6 +22,7 @@ use Johncms\Modules\Collections\Domain\Enums\FieldType;
  * @property FieldType $type
  * @property bool $required
  * @property bool $multiple
+ * @property bool $in_list Shown as a column of the list of the items in the panel.
  * @property int $sort
  * @property array|null $settings
  * @property string $created_at
@@ -40,6 +41,7 @@ final class ContentCollectionField extends Model
         'type',
         'required',
         'multiple',
+        'in_list',
         'sort',
         'settings',
     ];
@@ -49,6 +51,7 @@ final class ContentCollectionField extends Model
         'type'          => FieldType::class,
         'required'      => 'boolean',
         'multiple'      => 'boolean',
+        'in_list'       => 'boolean',
         'sort'          => 'integer',
         'settings'      => 'array',
         'created_at'    => FormattedDate::class,

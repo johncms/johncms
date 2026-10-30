@@ -5,13 +5,16 @@ declare(strict_types=1);
 namespace Johncms\Modules\Collections\Infrastructure\Persistence\Repository;
 
 use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Johncms\Modules\Collections\Domain\Enums\ItemStatus;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
+use Johncms\Modules\Collections\Domain\ValueObjects\ItemListFilter;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Query\ContentCollectionItemQueryCompiler;
 
 final class ContentCollectionItemRepository implements ContentCollectionItemRepositoryInterface
@@ -108,6 +111,67 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
         $sectionId === null ? $builder->whereNull('section_id') : $builder->where('section_id', $sectionId);
 
         return $builder->first();
+    }
+
+    public function countForPanel(int $collectionId, ItemListFilter $filter, ?array $sectionIds, DateTimeInterface $now): int
+    {
+        return $this->panelQuery($collectionId, $filter, $sectionIds, $now)->count();
+    }
+
+    public function getForPanel(int $collectionId, ItemListFilter $filter, ?array $sectionIds, DateTimeInterface $now, int $limit, int $offset): Collection
+    {
+        return $this->panelQuery($collectionId, $filter, $sectionIds, $now)
+            ->with(['values.field', 'section'])
+            ->orderBy('sort')
+            ->orderBy('id')
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
+    }
+
+    /**
+     * @param list<int>|null $sectionIds
+     * @return Builder<ContentCollectionItem>
+     */
+    private function panelQuery(int $collectionId, ItemListFilter $filter, ?array $sectionIds, DateTimeInterface $now): Builder
+    {
+        $builder = ContentCollectionItem::query()->where('collection_id', $collectionId);
+
+        if ($filter->search !== '') {
+            $search = $filter->search;
+            $builder->where(static function (Builder $query) use ($search): void {
+                $like = '%' . addcslashes($search, '%_\\') . '%';
+                $query->where('name', 'like', $like)->orWhere('code', 'like', $like);
+                if (ctype_digit($search)) {
+                    $query->orWhere('id', (int) $search);
+                }
+            });
+        }
+
+        if ($sectionIds !== null) {
+            $ids = array_values(array_filter($sectionIds, static fn (int $id): bool => $id !== ItemListFilter::WITHOUT_SECTION));
+            $outside = in_array(ItemListFilter::WITHOUT_SECTION, $sectionIds, true);
+            $builder->where(static function (Builder $query) use ($ids, $outside): void {
+                $query->whereIn('section_id', $ids);
+                if ($outside) {
+                    $query->orWhereNull('section_id');
+                }
+            });
+        }
+
+        match ($filter->status) {
+            null                  => null,
+            ItemStatus::HIDDEN    => $builder->where('active', false),
+            ItemStatus::SCHEDULED => $builder->where('active', true)->where('active_from', '>', $now),
+            ItemStatus::EXPIRED   => $builder->where('active', true)
+                ->where(static fn (Builder $q) => $q->whereNull('active_from')->orWhere('active_from', '<=', $now))
+                ->where('active_to', '<', $now),
+            ItemStatus::PUBLISHED => $builder->where('active', true)
+                ->where(static fn (Builder $q) => $q->whereNull('active_from')->orWhere('active_from', '<=', $now))
+                ->where(static fn (Builder $q) => $q->whereNull('active_to')->orWhere('active_to', '>=', $now)),
+        };
+
+        return $builder;
     }
 
     /**

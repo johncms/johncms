@@ -34,6 +34,7 @@ final readonly class SaveCollectionFieldUseCase
             'type'          => $dto->type->value,
             'required'      => $dto->required,
             'multiple'      => $dto->multiple,
+            'in_list'       => $dto->inList,
             'sort'          => $dto->sort,
         ];
 

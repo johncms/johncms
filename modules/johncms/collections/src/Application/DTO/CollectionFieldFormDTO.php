@@ -19,6 +19,7 @@ final readonly class CollectionFieldFormDTO
         public bool $required,
         public bool $multiple,
         public int $sort,
+        public bool $inList = false,
     ) {
     }
 }

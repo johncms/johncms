@@ -1,0 +1,40 @@
+{#
+    What the filter lets through: the chips of what is applied, the table and the pages.
+
+    @param array        controls
+    @param list<string> columns
+    @param bool         has_sections
+    @param array        rows
+    @param int          total
+    @param \Twig\Markup pagination
+    @param string       add_url
+#}
+<div class="admin-list-results" data-live-list-region="results">
+    {% include '@admin/components/ui/filter-chips.twig' with {chips: controls.chips, clear_url: controls.clear_url} only %}
+
+    <div class="card">
+        {% if rows is empty %}
+            {% include '@admin/components/ui/empty-state.twig' with {
+                icon: 'file-text',
+                title: controls.chips is empty ? __('There are no items yet') : __('Nothing found'),
+                description: controls.chips is empty ? '' : __('Change the search or reset the filters.'),
+            } only %}
+            {% if controls.chips is empty %}
+                <div class="text-center pb-4">
+                    <a href="{{ add_url }}" class="btn btn-outline-secondary">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'plus', size: 14} only %}
+                        {{ __('New item') }}
+                    </a>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="table-responsive">
+                {% include '@collections/admin/components/items-table.twig' with {rows: rows, columns: columns, has_sections: has_sections} only %}
+            </div>
+            <div class="card-footer admin-list-footer">
+                <span class="admin-list-footer__total">{{ __('Found: %s')|format(total|format_number) }}</span>
+                <div class="pagination-no-padding">{{ pagination }}</div>
+            </div>
+        {% endif %}
+    </div>
+</div>

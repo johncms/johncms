@@ -515,3 +515,63 @@ msgstr "Публичная"
 
 msgid "API only"
 msgstr "Только API"
+
+msgid "Search"
+msgstr "Поиск"
+
+msgid "Published"
+msgstr "Опубликован"
+
+msgid "Hidden"
+msgstr "Скрыт"
+
+msgid "Scheduled"
+msgstr "Запланирован"
+
+msgid "Expired"
+msgstr "Истёк"
+
+msgid "All sections"
+msgstr "Все разделы"
+
+msgid "Without a section"
+msgstr "Без раздела"
+
+msgid "Any"
+msgstr "Любой"
+
+msgid "Item"
+msgstr "Элемент"
+
+msgid "Updated"
+msgstr "Изменён"
+
+msgid "Yes"
+msgstr "Да"
+
+msgid "No"
+msgstr "Нет"
+
+msgid "Show in the list of items"
+msgstr "Показывать в списке элементов"
+
+msgid "The value becomes a column of the list of the items in the panel."
+msgstr "Значение поля станет колонкой списка элементов в админке."
+
+msgid "There are no items yet"
+msgstr "Элементов пока нет"
+
+msgid "Nothing found"
+msgstr "Ничего не найдено"
+
+msgid "Change the search or reset the filters."
+msgstr "Измените поиск или сбросьте фильтры."
+
+msgid "Found: %s"
+msgstr "Найдено: %s"
+
+msgid "Search the items"
+msgstr "Поиск элементов"
+
+msgid "Name, code or ID"
+msgstr "Название, код или ID"

@@ -5,48 +5,66 @@ declare(strict_types=1);
 namespace Tests\Unit\Modules\Collections\Application\UseCases;
 
 use Illuminate\Database\Eloquent\Collection;
-use Johncms\Modules\Collections\Application\DTO\CollectionItemListItemDTO;
 use Johncms\Modules\Collections\Application\UseCases\ListCollectionItemsUseCase;
-use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
-use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
+use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Services\SectionTree;
+use Johncms\Modules\Collections\Domain\ValueObjects\ItemListFilter;
 use PHPUnit\Framework\TestCase;
 
 final class ListCollectionItemsUseCaseTest extends TestCase
 {
-    public function testCountBuildsAdminQueryIncludingInactive(): void
+    public function testASectionNarrowsTheItemsToItsSubtree(): void
     {
         $repository = $this->createMock(ContentCollectionItemRepositoryInterface::class);
         $repository->expects(self::once())
-            ->method('countItems')
-            ->with(self::callback(static function (ContentCollectionItemQuery $query): bool {
-                return $query->collectionId === 1 && $query->sectionId === 4 && $query->onlyActive === false;
-            }))
-            ->willReturn(7);
+            ->method('countForPanel')
+            ->with(1, self::anything(), [2, 3, 4], self::anything())
+            ->willReturn(5);
 
-        self::assertSame(7, (new ListCollectionItemsUseCase($repository))->count(1, 4));
+        $tree = new SectionTree([2 => 0, 3 => 2, 4 => 3, 5 => 0]);
+
+        self::assertSame(5, $this->useCase($repository)->count(1, new ItemListFilter(section: 2), $tree));
     }
 
-    public function testGetPageMapsItemsToRowDtos(): void
+    public function testTheItemsWithoutASectionAndAnyAreToldApart(): void
     {
-        $item = new ContentCollectionItem(['code' => 'hello', 'name' => 'Hello', 'active' => false, 'sort' => 100, 'section_id' => 4]);
-        $item->id = 9;
-
         $repository = $this->createMock(ContentCollectionItemRepositoryInterface::class);
-        $repository->expects(self::once())
-            ->method('findItems')
-            ->with(self::callback(static function (ContentCollectionItemQuery $query): bool {
-                return $query->collectionId === 1 && $query->limit === 10 && $query->offset === 20;
-            }))
-            ->willReturn(new Collection([$item]));
+        $repository->expects(self::exactly(2))
+            ->method('getForPanel')
+            ->with(1, self::anything(), self::logicalOr(self::identicalTo([ItemListFilter::WITHOUT_SECTION]), self::isNull()), self::anything(), 10, 20)
+            ->willReturn(new Collection());
 
-        $rows = (new ListCollectionItemsUseCase($repository))->getPage(1, null, 10, 20);
+        $tree = new SectionTree([2 => 0]);
+        $useCase = $this->useCase($repository);
+        $useCase->getPage(1, new ItemListFilter(section: ItemListFilter::WITHOUT_SECTION), $tree, 10, 20);
+        $useCase->getPage(1, new ItemListFilter(), $tree, 10, 20);
+    }
 
-        self::assertCount(1, $rows);
-        self::assertInstanceOf(CollectionItemListItemDTO::class, $rows[0]);
-        self::assertSame(9, $rows[0]->id);
-        self::assertSame('hello', $rows[0]->code);
-        self::assertFalse($rows[0]->active);
-        self::assertSame(4, $rows[0]->sectionId);
+    public function testOnlyTheFieldsMarkedForTheListBecomeColumns(): void
+    {
+        $listed = new ContentCollectionField(['code' => 'price', 'in_list' => true]);
+        $hidden = new ContentCollectionField(['code' => 'body', 'in_list' => false]);
+        $fields = $this->createMock(ContentCollectionFieldRepositoryInterface::class);
+        $fields->method('getByCollection')->with(1)->willReturn(new Collection([$listed, $hidden]));
+
+        $useCase = new ListCollectionItemsUseCase(
+            $this->createMock(ContentCollectionItemRepositoryInterface::class),
+            $this->createMock(ContentCollectionSectionRepositoryInterface::class),
+            $fields,
+        );
+
+        self::assertSame([$listed], $useCase->listedFields(1));
+    }
+
+    private function useCase(ContentCollectionItemRepositoryInterface $repository): ListCollectionItemsUseCase
+    {
+        return new ListCollectionItemsUseCase(
+            $repository,
+            $this->createMock(ContentCollectionSectionRepositoryInterface::class),
+            $this->createMock(ContentCollectionFieldRepositoryInterface::class),
+        );
     }
 }

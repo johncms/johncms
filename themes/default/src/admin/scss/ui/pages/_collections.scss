@@ -34,3 +34,45 @@
   font-variant-numeric: tabular-nums;
   color: var(--fg-muted);
 }
+
+// The items of a collection (collections::admin/items).
+
+.admin-collection-items {
+  td {
+    white-space: nowrap;
+  }
+
+  td:first-child {
+    width: 100%;
+    min-width: 9rem;
+    white-space: normal;
+  }
+}
+
+.admin-collection-items__name {
+  font-weight: 600;
+  color: var(--fg);
+  overflow-wrap: anywhere;
+
+  &:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+}
+
+.admin-collection-items__code {
+  margin-top: 2px;
+  font-family: $ui-font-mono;
+  font-size: 0.75rem;
+  color: var(--fg-dim);
+}
+
+.admin-collection-items__section,
+.admin-collection-items__date {
+  color: var(--fg-muted);
+}
+
+.admin-collection-items__number {
+  font-family: $ui-font-mono;
+  font-variant-numeric: tabular-nums;
+}
