@@ -21,13 +21,6 @@ window.$ = window.jQuery = jquery;
 window.axios = axios;
 window._ = lodash;
 
-/**
- * Prism highlights automatically on load, which it does by inspecting
- * document.currentScript. That is null inside an ES module and makes the bundled
- * build throw, so it is switched to manual mode and ./app highlights explicitly.
- */
-window.Prism = { manual: true };
-
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**

@@ -10,7 +10,6 @@
 import './bootstrap';
 import '../scss/app.scss';
 
-import './jquery.magnific-popup';
 import './shell';
 import './live-list';
 import './tabs';
@@ -23,17 +22,10 @@ import './language-settings';
 import './copy-button';
 import './language-menu';
 import './ad-form-preview';
-import './prism';
-import './forum';
-import './slider';
-import './progress';
 import './main';
 
 import { createApp } from 'vue';
 import { Bootstrap5Pagination } from 'laravel-vue-pagination';
-
-// Prism is loaded in manual mode, see ./bootstrap.
-window.Prism.highlightAll();
 
 /**
  * The following block of code may be used to automatically register your
