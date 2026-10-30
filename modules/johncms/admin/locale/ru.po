@@ -3089,3 +3089,51 @@ msgstr "Укажите этот адрес в настройках прилож�
 
 msgid "Members who sign in through it: %d. Without another way in: %d — turning the service off locks them out."
 msgstr "Входят через этот сервис: %d. Без другого способа входа: %d — если выключить сервис, они не смогут войти."
+
+msgid "IP Whois"
+msgstr "Whois по IP"
+
+msgid "Look up"
+msgstr "Найти"
+
+msgid "IPv4 or IPv6. The answer comes from the regional internet registry the address belongs to."
+msgstr "IPv4 или IPv6. Ответ даёт региональный интернет-регистратор, которому принадлежит адрес."
+
+msgid "This is not an IP address."
+msgstr "Это не IP-адрес."
+
+msgid "This is a local or reserved address: it belongs to no network of the registries."
+msgstr "Это локальный или зарезервированный адрес: в сетях регистраторов его нет."
+
+msgid "The registries know nothing about this address."
+msgstr "Регистраторам ничего не известно об этом адресе."
+
+msgid "The registry did not answer. Try again later; if it never answers, the hosting may be blocking requests to other sites."
+msgstr "Регистратор не ответил. Попробуйте позже; если ответа нет никогда, возможно, хостинг запрещает запросы к другим сайтам."
+
+msgid "Members with this address"
+msgstr "Пользователи с этим адресом"
+
+msgid "Network"
+msgstr "Сеть"
+
+msgid "Range"
+msgstr "Диапазон"
+
+msgid "Holder"
+msgstr "Владелец"
+
+msgid "Country"
+msgstr "Страна"
+
+msgid "Abuse contact"
+msgstr "Адрес для жалоб"
+
+msgid "Updated"
+msgstr "Обновлено"
+
+msgid "Source"
+msgstr "Источник"
+
+msgid "Full answer of the registry"
+msgstr "Полный ответ регистратора"

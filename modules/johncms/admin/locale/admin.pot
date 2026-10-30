@@ -6,7 +6,6 @@ msgstr ""
 #: themes/default/templates/admin/layouts/default.twig:25
 #: themes/default/templates/admin/layouts/default.twig:29
 #: modules/johncms/admin/src/Application/Controllers/DashboardController.php:22
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpWhoisController.php:37
 #: modules/johncms/admin/src/Application/Menu/AdminPanelMenuItemProvider.php:21
 #: modules/johncms/admin/src/Application/Services/AdminPermissions.php:29
 #: modules/johncms/admin/templates/style-guide/examples/breadcrumbs.twig:5
@@ -49,7 +48,7 @@ msgstr ""
 msgid "Sign-in services"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:34
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:33
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:38
 #: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:134
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:375
@@ -71,16 +70,20 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:37
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:36
 #: modules/johncms/admin/src/Application/Services/AuthLogControlsMapper.php:42
 #: modules/johncms/admin/src/Application/Services/BanListControlsMapper.php:39
 #: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:50
-#: modules/johncms/admin/templates/ip-whois.twig:17
 #: modules/johncms/admin/templates/style-guide.twig:150
 #: modules/johncms/admin/templates/style-guide/examples/filter-chips.twig:3
 #: modules/johncms/admin/templates/style-guide/examples/input-group.twig:7
 #: modules/johncms/admin/templates/style-guide/examples/input-group.twig:8
 msgid "Search"
+msgstr ""
+
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:37
+#: modules/johncms/admin/src/Application/Controllers/Ip/IpWhoisController.php:26
+msgid "IP Whois"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:39
@@ -235,18 +238,13 @@ msgstr ""
 msgid "Style guide"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:75
-#: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:38
-msgid "Security"
-msgstr ""
-
 #: themes/default/templates/admin/components/topbar.twig:12
 msgid "Menu"
 msgstr ""
 
 #: themes/default/templates/admin/components/topbar.twig:69
-#: themes/default/templates/admin/layouts/default.twig:45
-#: themes/default/templates/admin/layouts/default.twig:47
+#: themes/default/templates/admin/layouts/default.twig:44
+#: themes/default/templates/admin/layouts/default.twig:46
 msgid "Back to the site"
 msgstr ""
 
@@ -324,8 +322,8 @@ msgid "default"
 msgstr ""
 
 #: themes/default/templates/admin/components/ui/user-cell.twig:17
-#: themes/default/templates/admin/layouts/default.twig:41
-#: themes/default/templates/admin/layouts/default.twig:43
+#: themes/default/templates/admin/layouts/default.twig:40
+#: themes/default/templates/admin/layouts/default.twig:42
 #: modules/johncms/admin/templates/style-guide/examples/badges.twig:11
 #: modules/johncms/admin/templates/style-guide/examples/pills.twig:6
 #: modules/johncms/admin/templates/style-guide/examples/table.twig:21
@@ -334,15 +332,15 @@ msgstr ""
 msgid "Online"
 msgstr ""
 
-#: themes/default/templates/admin/layouts/default.twig:50
+#: themes/default/templates/admin/layouts/default.twig:49
 msgid "Expand the menu"
 msgstr ""
 
-#: themes/default/templates/admin/layouts/default.twig:53
+#: themes/default/templates/admin/layouts/default.twig:52
 msgid "Collapse the menu"
 msgstr ""
 
-#: themes/default/templates/admin/layouts/default.twig:101
+#: themes/default/templates/admin/layouts/default.twig:100
 #: modules/johncms/contacts/templates/admin/messages.twig:24
 msgid "Loading"
 msgstr ""
@@ -882,6 +880,10 @@ msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:37
 msgid "Recommended parameters"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:38
+msgid "Security"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Users/AmnestyController.php:40
@@ -2138,12 +2140,75 @@ msgstr ""
 msgid "via"
 msgstr ""
 
-#: modules/johncms/admin/templates/ip-whois.twig:13
+#: modules/johncms/admin/templates/ip-whois.twig:15
 msgid "IP Address"
 msgstr ""
 
+#: modules/johncms/admin/templates/ip-whois.twig:20
+msgid "Look up"
+msgstr ""
+
 #: modules/johncms/admin/templates/ip-whois.twig:23
-msgid "Search results"
+msgid "IPv4 or IPv6. The answer comes from the regional internet registry the address belongs to."
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-whois.twig:27
+msgid "This is not an IP address."
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-whois.twig:29
+msgid "This is a local or reserved address: it belongs to no network of the registries."
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-whois.twig:31
+msgid "The registries know nothing about this address."
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-whois.twig:33
+msgid "The registry did not answer. Try again later; if it never answers, the hosting may be blocking requests to other sites."
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-whois.twig:45
+msgid "Members with this address"
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-whois.twig:51
+msgid "Network"
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-whois.twig:52
+msgid "Range"
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-whois.twig:53
+msgid "Holder"
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-whois.twig:54
+msgid "Country"
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-whois.twig:55
+msgid "Abuse contact"
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-whois.twig:56
+#: modules/johncms/admin/templates/style-guide/examples/facts.twig:8
+#: modules/johncms/admin/templates/user/view.twig:98
+#: modules/johncms/admin/templates/users-cleanup.twig:27
+msgid "Registered"
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-whois.twig:57
+msgid "Updated"
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-whois.twig:61
+msgid "Source"
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-whois.twig:63
+msgid "Full answer of the registry"
 msgstr ""
 
 #: modules/johncms/admin/templates/karma.twig:21
@@ -2971,12 +3036,6 @@ msgstr ""
 #: modules/johncms/admin/templates/user/edit.twig:53
 #: modules/johncms/admin/templates/user/view.twig:111
 msgid "City, Country"
-msgstr ""
-
-#: modules/johncms/admin/templates/style-guide/examples/facts.twig:8
-#: modules/johncms/admin/templates/user/view.twig:98
-#: modules/johncms/admin/templates/users-cleanup.twig:27
-msgid "Registered"
 msgstr ""
 
 #: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:3

@@ -1,33 +1,69 @@
 {#
-    The whois answers about one address.
+    Who an address belongs to: the network, its holder and where to complain, as the regional
+    registry of the internet has them.
 
-    @var string ip       The address asked about, empty until something is asked.
-    @var array  answers  Server name to the highlighted answer (\Twig\Markup).
+    @var string query        What was typed, kept in the field.
+    @var string ip           The address asked about, empty when none or not an address.
+    @var string state        empty | invalid | private | unknown | unavailable | found.
+    @var \Johncms\Modules\Admin\Domain\ValueObjects\IpRegistration|null registration
+    @var string search_url   The members seen with the address, empty without one.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
 {% block content %}
-    <form method="get">
-        <div class="input-group mb-3" style="max-width: 20rem">
-            <div class="input-group-prepend">
-                <span class="input-group-text">{{ __('IP Address') }}</span>
-            </div>
-            <input type="text" name="ip" class="form-control" value="{{ ip }}">
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="submit">{{ __('Search') }}</button>
-            </div>
+    <form method="get" class="mb-4" style="max-width: 32rem">
+        <label class="form-label" for="whois-ip">{{ __('IP Address') }}</label>
+        <div class="input-group">
+            <input type="text" name="ip" id="whois-ip" class="form-control font-monospace" value="{{ query }}" placeholder="203.0.113.7" required>
+            <button class="btn btn-primary" type="submit">
+                {% include '@admin/components/ui/icon.twig' with {name: 'search', size: 14} only %}
+                {{ __('Look up') }}
+            </button>
         </div>
+        <div class="form-text">{{ __('IPv4 or IPv6. The answer comes from the regional internet registry the address belongs to.') }}</div>
     </form>
 
-    {% if ip %}
-        <div class="h3">{{ __('Search results') }}</div>
-        <p>RESULTS FOUND: {{ answers|length }}</p>
-        {% for server, answer in answers %}
-            <p>
-                ------------- <br>
-                Lookup results for {{ ip }} from {{ server }} server:
-            </p>
-            <p>{{ answer }}</p>
-        {% endfor %}
+    {% if state == 'invalid' %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: __('This is not an IP address.')} only %}
+    {% elseif state == 'private' %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('This is a local or reserved address: it belongs to no network of the registries.')} only %}
+    {% elseif state == 'unknown' %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-warning', alert: __('The registries know nothing about this address.')} only %}
+    {% elseif state == 'unavailable' %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-warning', alert: __('The registry did not answer. Try again later; if it never answers, the hosting may be blocking requests to other sites.')} only %}
+    {% elseif state == 'found' %}
+        <section class="card" style="max-width: 48rem">
+            <div class="card-header d-flex align-items-center gap-2">
+                {% include '@admin/components/ui/icon.twig' with {name: 'network', size: 16} only %}
+                <h2 class="h6 mb-0"><code class="text-body">{{ registration.ip }}</code></h2>
+                {% if registration.country %}
+                    <span class="badge rounded-pill bg-secondary-subtle text-secondary-emphasis">{{ registration.country }}</span>
+                {% endif %}
+                {% if search_url %}
+                    <a href="{{ search_url }}" class="btn btn-outline-secondary btn-sm ms-auto">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'users', size: 14} only %}
+                        {{ __('Members with this address') }}
+                    </a>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                {% include '@admin/components/ui/facts.twig' with {items: [
+                    {label: __('Network'), value: registration.name, hint: registration.handle},
+                    {label: __('Range'), value: registration.range},
+                    {label: __('Holder'), value: registration.organisation},
+                    {label: __('Country'), value: registration.country},
+                    {label: __('Abuse contact'), value: registration.abuseEmail},
+                    {label: __('Registered'), value: registration.registeredAt},
+                    {label: __('Updated'), value: registration.updatedAt},
+                ], empty: ''} only %}
+            </div>
+            <div class="card-footer small text-body-secondary d-flex flex-wrap gap-2 justify-content-between">
+                <span>{{ __('Source') }}: {{ registration.registry }}</span>
+                <a href="{{ registration.sourceUrl }}" target="_blank" rel="noopener noreferrer">
+                    {{ __('Full answer of the registry') }}
+                    {% include '@admin/components/ui/icon.twig' with {name: 'external-link', size: 12} only %}
+                </a>
+            </div>
+        </section>
     {% endif %}
 {% endblock %}

@@ -24,7 +24,7 @@ use Johncms\Modules\Admin\Domain\Repository\UserEditRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\UserListRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Services\LanguageFilesManagerInterface;
 use Johncms\Modules\Admin\Domain\Services\ThemeListProviderInterface;
-use Johncms\Modules\Admin\Domain\Services\WhoisClientInterface;
+use Johncms\Modules\Admin\Domain\Services\IpRegistryInterface;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentAdRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentBanAmnestyRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentAuthLogRepository;
@@ -45,7 +45,7 @@ use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentUserCard
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentUserEditRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentUserListRepository;
 use Johncms\Modules\Admin\Infrastructure\Theme\FileSystemThemeListProvider;
-use Johncms\Modules\Admin\Infrastructure\Whois\SocketWhoisClient;
+use Johncms\Modules\Admin\Infrastructure\Rdap\RdapIpRegistry;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -75,7 +75,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(UserListRepositoryInterface::class, EloquentUserListRepository::class)->public();
     $services->set(UserCardRepositoryInterface::class, EloquentUserCardRepository::class)->public();
     $services->set(UserEditRepositoryInterface::class, EloquentUserEditRepository::class)->public();
-    $services->set(WhoisClientInterface::class, SocketWhoisClient::class)->public();
+    $services->set(IpRegistryInterface::class, RdapIpRegistry::class)->autowire()->public();
     $services->set(IpSearchRepositoryInterface::class, EloquentIpSearchRepository::class)->public();
     $services->set(BanListRepositoryInterface::class, EloquentBanListRepository::class)->public();
     $services->set(AuthLogRepositoryInterface::class, EloquentAuthLogRepository::class)->public();

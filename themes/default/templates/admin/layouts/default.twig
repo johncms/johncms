@@ -31,8 +31,7 @@
                     {% include '@admin/components/sidebar-admin-menu.twig' with {
                         usr_menu: usr_menu|default({}),
                         module_menu: module_menu|default({}),
-                        sys_menu: sys_menu|default({}),
-                        sec_menu: sec_menu|default({})
+                        sys_menu: sys_menu|default({})
                     } only %}
                 {% endblock %}
             </nav>

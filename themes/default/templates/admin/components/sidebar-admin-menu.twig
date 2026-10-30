@@ -8,7 +8,6 @@
     @var array usr_menu    The key of the active item of the "Users" section.
     @var array module_menu The same for the "Modules" section.
     @var array sys_menu    The same for the "System" section.
-    @var array sec_menu    The same for the "Security" section.
 #}
 {% set counters = admin_counters() %}
 {% set can_manage_site = can('admin.settings.manage') %}
@@ -35,6 +34,7 @@
         active: usr_menu,
         items: [
             {key: 'search_ip', url: '/admin/ip-search', icon: 'search', title: d__('admin', 'Search')},
+            {key: 'ip_whois', url: '/admin/ip-whois', icon: 'network', title: d__('admin', 'IP Whois')},
             {key: 'userlist', url: '/admin/users', icon: 'users', title: d__('admin', 'Users'), count: counters.registrations, tone: 'danger'},
             {key: 'roles', url: '/admin/roles', icon: 'key-round', title: d__('admin', 'Roles'), shown: can('admin.roles.manage')},
             {key: 'auth_log', url: '/admin/auth-log', icon: 'history', title: d__('admin', 'Sign-in log'), shown: can('admin.auth_log.view')},
@@ -69,13 +69,6 @@
             {key: 'system_check', url: '/admin/system_check/', icon: 'stethoscope', title: d__('admin', 'System check')},
             {key: 'maintenance', url: '/admin/maintenance', icon: 'wrench', title: d__('admin', 'Maintenance')},
             {key: 'style_guide', url: '/admin/style-guide', icon: 'palette', title: d__('admin', 'Style guide')},
-        ],
-    },
-    {
-        title: d__('admin', 'Security'),
-        active: sec_menu,
-        items: [
-            {key: 'ip_whois', url: '/admin/ip-whois', icon: 'network', title: 'IP Whois'},
         ],
     },
 ] %}
