@@ -8,19 +8,42 @@
     @param string cancel_url   Where the link back leads; empty for no link.
     @param string cancel_title Cancel by default.
     @param string submit_title Save by default.
-    @param bool   close        Add "Save and close", posted with close=1: the form returns to its
-                               list after saving instead of staying open.
+    @param bool   close        Offer "Save and close" in a menu beside Save, posted with close=1:
+                               the form returns to its list after saving instead of staying open.
+                               A menu rather than a third button keeps the row on one line on a
+                               phone and in the languages with long words.
     @param bool   sticky       Keep the footer in view while the form scrolls.
 #}
 <div class="admin-form-footer{{ sticky|default(false) ? ' admin-form-footer--sticky' }}">
     {% if cancel_url|default('') %}
         <a class="btn btn-outline-secondary" href="{{ cancel_url }}">{{ cancel_title|default(d__('admin', 'Cancel')) }}</a>
     {% endif %}
+    {% set form_attribute = form|default('') ? ' form="' ~ form|e('html_attr') ~ '"' : '' %}
     {% if close|default(false) %}
-        <button type="submit" class="btn btn-outline-secondary"{% if form|default('') %} form="{{ form }}"{% endif %} name="close" value="1">{{ d__('admin', 'Save and close') }}</button>
+        <div class="btn-group admin-form-footer__save">
+            <button type="submit" class="btn btn-primary"{{ form_attribute|raw }}>
+                {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
+                {{ submit_title|default(d__('admin', 'Save')) }}
+            </button>
+            {# Positioned absolutely, not fixed: the backdrop filter of a sticky footer makes the
+               footer the frame of a fixed menu, which then lands away from its button. #}
+            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                <span class="visually-hidden">{{ d__('admin', 'More ways to save') }}</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <button type="submit" class="dropdown-item"{{ form_attribute|raw }} name="close" value="1">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
+                        {{ d__('admin', 'Save and close') }}
+                    </button>
+                </li>
+            </ul>
+        </div>
+    {% else %}
+        <button type="submit" class="btn btn-primary"{{ form_attribute|raw }}>
+            {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
+            {{ submit_title|default(d__('admin', 'Save')) }}
+        </button>
     {% endif %}
-    <button type="submit" class="btn btn-primary"{% if form|default('') %} form="{{ form }}"{% endif %}>
-        {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
-        {{ submit_title|default(d__('admin', 'Save')) }}
-    </button>
 </div>

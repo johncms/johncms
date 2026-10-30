@@ -275,7 +275,7 @@ msgstr ""
 msgid "Reset filters"
 msgstr ""
 
-#: themes/default/templates/admin/components/ui/form-footer.twig:17
+#: themes/default/templates/admin/components/ui/form-footer.twig:19
 #: themes/default/templates/admin/pages/confirm-dialog.twig:44
 #: modules/johncms/admin/templates/ad-clear-dialog.twig:19
 #: modules/johncms/admin/templates/ad-delete-dialog.twig:28
@@ -304,11 +304,8 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: themes/default/templates/admin/components/ui/form-footer.twig:20
-msgid "Save and close"
-msgstr ""
-
-#: themes/default/templates/admin/components/ui/form-footer.twig:24
+#: themes/default/templates/admin/components/ui/form-footer.twig:26
+#: themes/default/templates/admin/components/ui/form-footer.twig:44
 #: modules/johncms/admin/templates/captcha-settings.twig:45
 #: modules/johncms/admin/templates/counter-preview.twig:51
 #: modules/johncms/admin/templates/editor-images.twig:64
@@ -319,6 +316,14 @@ msgstr ""
 #: modules/johncms/admin/templates/settings.twig:125
 #: modules/johncms/admin/templates/style-guide/examples/card.twig:16
 msgid "Save"
+msgstr ""
+
+#: themes/default/templates/admin/components/ui/form-footer.twig:30
+msgid "More ways to save"
+msgstr ""
+
+#: themes/default/templates/admin/components/ui/form-footer.twig:36
+msgid "Save and close"
 msgstr ""
 
 #: themes/default/templates/admin/components/ui/user-cell.twig:17

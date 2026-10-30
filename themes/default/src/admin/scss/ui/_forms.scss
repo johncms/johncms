@@ -156,6 +156,11 @@ body.dark {
     justify-content: center;
   }
 
+  // Save takes the width of its group; the arrow of the menu stays narrow.
+  .admin-form-footer__save > .btn:first-child {
+    flex: 1 1 auto;
+  }
+
   .admin-form-footer--sticky {
     margin-inline: -1rem;
     padding-inline: 1rem;

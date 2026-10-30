@@ -2727,3 +2727,6 @@ msgstr "Ссылка начата заново: переходы и дни сч�
 
 msgid "Save and close"
 msgstr "Сохранить и закрыть"
+
+msgid "More ways to save"
+msgstr "Другие варианты сохранения"

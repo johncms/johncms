@@ -1,2 +1,3 @@
-{# The buttons of a form under it. They name the form by its id, so the footer may stand outside the form element; a long form makes it sticky. #}
+{# The buttons of a form under it. They name the form by its id, so the footer may stand outside the form element; a long form makes it sticky. A form that returns to a list offers "Save and close" in the menu of Save. #}
 {% include '@admin/components/ui/form-footer.twig' with {form: 'style-guide-form', cancel_url: '#forms'} only %}
+{% include '@admin/components/ui/form-footer.twig' with {form: 'style-guide-form', cancel_url: '#forms', close: true} only %}
