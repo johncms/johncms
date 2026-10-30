@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Johncms\Security\BanIP;
 use Johncms\Http\Environment;
 use Johncms\System\i18n\Translator;
 
@@ -71,8 +70,6 @@ if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
 
     /** @var PDO $db */
     $db = $container->get(PDO::class);
-
-    (new BanIP())->checkBan();
 
     // System cleanup
     new Johncms\System\Utility\Cleanup($db);

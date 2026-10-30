@@ -55,24 +55,6 @@ parameters:
 			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentDashboardRepository.php
 
 		-
-			message: '#^Method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentIpBanRepository\:\:findByIp\(\) never returns Johncms\\Modules\\Admin\\Domain\\Models\\BanIp so it can be removed from the return type\.$#'
-			identifier: return.unusedType
-			count: 1
-			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentIpBanRepository.php
-
-		-
-			message: '#^Method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentIpBanRepository\:\:findByIp\(\) should return Johncms\\Modules\\Admin\\Domain\\Models\\BanIp\|null but returns stdClass\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentIpBanRepository.php
-
-		-
-			message: '#^Method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentIpBanRepository\:\:findConflicts\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Admin\\Domain\\Models\\BanIp\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
-			identifier: return.type
-			count: 1
-			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentIpBanRepository.php
-
-		-
 			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Album\\Application\\Controllers\\EditPhotoController should not depend on Johncms\\Modules\\Album\\Infrastructure\\Storage\\AlbumPhotoStorage$#'
 			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
 			count: 1

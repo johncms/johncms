@@ -72,12 +72,9 @@ msgid "Users"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:37
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:125
 #: modules/johncms/admin/src/Application/Services/AuthLogControlsMapper.php:42
 #: modules/johncms/admin/src/Application/Services/BanListControlsMapper.php:39
 #: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:50
-#: modules/johncms/admin/templates/ip-ban-search.twig:23
-#: modules/johncms/admin/templates/ip-bans.twig:57
 #: modules/johncms/admin/templates/ip-whois.twig:17
 #: modules/johncms/admin/templates/style-guide.twig:150
 #: modules/johncms/admin/templates/style-guide/examples/filter-chips.twig:3
@@ -243,18 +240,6 @@ msgstr ""
 msgid "Security"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:78
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:50
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:74
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:126
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:157
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:184
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:208
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:227
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:274
-msgid "Ban by IP"
-msgstr ""
-
 #: themes/default/templates/admin/components/topbar.twig:12
 msgid "Menu"
 msgstr ""
@@ -286,10 +271,6 @@ msgstr ""
 #: modules/johncms/admin/templates/ad-delete-dialog.twig:28
 #: modules/johncms/admin/templates/bans/amnesty-dialog.twig:31
 #: modules/johncms/admin/templates/counter-delete-dialog.twig:20
-#: modules/johncms/admin/templates/ip-ban-clear-confirm.twig:21
-#: modules/johncms/admin/templates/ip-ban-confirm.twig:44
-#: modules/johncms/admin/templates/ip-ban-form.twig:54
-#: modules/johncms/admin/templates/ip-ban-search.twig:24
 #: modules/johncms/admin/templates/karma/clear-dialog.twig:20
 #: modules/johncms/admin/templates/modules-confirm-dialog.twig:62
 #: modules/johncms/admin/templates/style-guide/examples/card.twig:15
@@ -305,7 +286,6 @@ msgstr ""
 
 #: themes/default/templates/admin/components/ui/form-footer.twig:26
 #: themes/default/templates/admin/components/ui/form-footer.twig:46
-#: modules/johncms/admin/templates/ip-ban-form.twig:53
 #: modules/johncms/admin/templates/style-guide/examples/card.twig:16
 msgid "Save"
 msgstr ""
@@ -445,66 +425,6 @@ msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/DashboardController.php:23
 msgid "Dashboard"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:73
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:207
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:226
-#: modules/johncms/admin/templates/ip-ban-confirm.twig:43
-msgid "Add Ban"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:108
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:138
-#: modules/johncms/admin/src/Application/Services/IpRangeParser.php:32
-#: modules/johncms/admin/src/Application/Services/IpRangeParser.php:79
-#: modules/johncms/admin/src/Application/UseCases/PrepareIpBanUseCase.php:24
-msgid "Invalid IP"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:143
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:153
-msgid "This address not in the database"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:156
-msgid "Ban details"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:166
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:244
-#: modules/johncms/admin/templates/user/edit.twig:31
-msgid "Not specified"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:188
-msgid "Are you sure you wan to unban all IP?"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:190
-msgid "Perform"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:216
-msgid "Address you entered conflicts with other who in the database"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:231
-msgid "Ban range address"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:232
-msgid "Ban on the subnet mask"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:233
-msgid "Ban IP address"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:243
-#: modules/johncms/admin/templates/languages.twig:29
-#: modules/johncms/admin/templates/languages.twig:44
-msgid "Default"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Ip/IpSearchController.php:71
@@ -1382,6 +1302,11 @@ msgstr ""
 msgid "On every page, its own code on the homepage"
 msgstr ""
 
+#: modules/johncms/admin/src/Application/Services/IpRangeParser.php:32
+#: modules/johncms/admin/src/Application/Services/IpRangeParser.php:79
+msgid "Invalid IP"
+msgstr ""
+
 #: modules/johncms/admin/src/Application/Services/IpRangeParser.php:48
 msgid "First IP is entered incorrectly"
 msgstr ""
@@ -1474,8 +1399,6 @@ msgid "Activity"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:44
-#: modules/johncms/admin/src/Domain/Enums/IpBanType.php:22
-#: modules/johncms/admin/templates/ip-ban-form.twig:27
 #: modules/johncms/admin/templates/settings.twig:117
 #: modules/johncms/admin/templates/style-guide/examples/sort-header.twig:6
 #: modules/johncms/admin/templates/users/results.twig:29
@@ -1559,20 +1482,6 @@ msgstr ""
 
 #: modules/johncms/admin/src/Application/UseCases/EnsureUserRoleAccessUseCase.php:30
 msgid "You cannot change the roles of somebody who outranks you"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/UseCases/PrepareIpBanUseCase.php:41
-msgid "Ban impossible. Your own IP address in the range"
-msgstr ""
-
-#: modules/johncms/admin/src/Domain/Enums/IpBanType.php:21
-#: modules/johncms/admin/templates/ip-ban-form.twig:31
-msgid "Redirect"
-msgstr ""
-
-#: modules/johncms/admin/src/Domain/Enums/IpBanType.php:23
-#: modules/johncms/admin/templates/ip-ban-form.twig:23
-msgid "Block"
 msgstr ""
 
 #: modules/johncms/admin/templates/ad-delete-dialog.twig:21
@@ -1685,7 +1594,6 @@ msgstr ""
 
 #: modules/johncms/admin/templates/ads.twig:40
 #: modules/johncms/admin/templates/external-providers.twig:22
-#: modules/johncms/admin/templates/ip-bans.twig:29
 msgid "The list is empty"
 msgstr ""
 
@@ -1777,7 +1685,6 @@ msgstr ""
 
 #: modules/johncms/admin/templates/ads.twig:129
 #: modules/johncms/admin/templates/counters.twig:73
-#: modules/johncms/admin/templates/ip-bans.twig:46
 #: modules/johncms/admin/templates/modules.twig:122
 msgid "Total:"
 msgstr ""
@@ -1904,9 +1811,6 @@ msgid "Nobody is banned"
 msgstr ""
 
 #: modules/johncms/admin/templates/bans/results.twig:26
-#: modules/johncms/admin/templates/ip-ban-confirm.twig:29
-#: modules/johncms/admin/templates/ip-ban-form.twig:41
-#: modules/johncms/admin/templates/ip-bans.twig:23
 #: modules/johncms/admin/templates/user/ban-dialog.twig:59
 #: modules/johncms/admin/templates/user/bans.twig:42
 msgid "Reason"
@@ -2186,103 +2090,6 @@ msgstr ""
 msgid "posts on the forum today"
 msgstr ""
 
-#: modules/johncms/admin/templates/ip-ban-confirm.twig:21
-msgid "Ban mode"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-ban-confirm.twig:24
-#: modules/johncms/admin/templates/ip-ban-form.twig:20
-msgid "Ban type"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-ban-confirm.twig:27
-msgid "Redirect URL:"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-ban-confirm.twig:39
-msgid "Please, check up correctness of the input data"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-ban-detail.twig:23
-msgid "Ban type:"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-ban-detail.twig:27
-msgid "Redirect to:"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-ban-detail.twig:31
-msgid "Reason:"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-ban-detail.twig:34
-msgid "Banned by:"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-ban-detail.twig:37
-msgid "Date:"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-ban-detail.twig:40
-msgid "Time:"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-ban-detail.twig:45
-msgid "Delete Ban"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-ban-detail.twig:52
-#: modules/johncms/admin/templates/ip-bans.twig:63
-#: modules/johncms/admin/templates/role-form.twig:27
-msgid "Back"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-ban-form.twig:16
-#: modules/johncms/admin/templates/ip-ban-form.twig:17
-#: modules/johncms/admin/templates/ip-ban-search.twig:16
-#: modules/johncms/admin/templates/ip-ban-search.twig:17
-#: modules/johncms/admin/templates/ip-bans.twig:22
-msgid "IP address"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-ban-form.twig:35
-#: modules/johncms/admin/templates/ip-ban-form.twig:36
-msgid "Redirect URL"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-ban-form.twig:37
-msgid "If the ban on Redirect, then specify the URL"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-ban-form.twig:46
-msgid "Example:"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-ban-form.twig:47
-msgid "Ban one address"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-ban-form.twig:48
-msgid "Ban range of address"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-ban-form.twig:49
-msgid "Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-ban-search.twig:20
-msgid "Enter a single address, mask and range are not allowed"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-bans.twig:54
-#: modules/johncms/admin/templates/style-guide/examples/buttons-sizes.twig:10
-msgid "Add"
-msgstr ""
-
-#: modules/johncms/admin/templates/ip-bans.twig:58
-msgid "Unban all IP"
-msgstr ""
-
 #: modules/johncms/admin/templates/ip-search.twig:32
 msgid "Address, range or mask"
 msgstr ""
@@ -2410,6 +2217,11 @@ msgstr ""
 
 #: modules/johncms/admin/templates/languages.twig:28
 msgid "Language"
+msgstr ""
+
+#: modules/johncms/admin/templates/languages.twig:29
+#: modules/johncms/admin/templates/languages.twig:44
+msgid "Default"
 msgstr ""
 
 #: modules/johncms/admin/templates/languages.twig:30
@@ -2661,6 +2473,10 @@ msgstr ""
 
 #: modules/johncms/admin/templates/modules.twig:81
 msgid "A system module cannot be switched off or removed."
+msgstr ""
+
+#: modules/johncms/admin/templates/role-form.twig:27
+msgid "Back"
 msgstr ""
 
 #: modules/johncms/admin/templates/role-form.twig:36
@@ -3123,6 +2939,10 @@ msgstr ""
 msgid "Draft"
 msgstr ""
 
+#: modules/johncms/admin/templates/style-guide/examples/buttons-sizes.twig:10
+msgid "Add"
+msgstr ""
+
 #: modules/johncms/admin/templates/style-guide/examples/card.twig:12
 #: modules/johncms/admin/templates/style-guide/examples/type.twig:6
 msgid "The text of a page: a description, a hint, a paragraph of help. 14px, the system font of the device."
@@ -3264,6 +3084,10 @@ msgstr ""
 #: modules/johncms/admin/templates/user/edit.twig:29
 #: modules/johncms/admin/templates/user/view.twig:109
 msgid "Gender"
+msgstr ""
+
+#: modules/johncms/admin/templates/user/edit.twig:31
+msgid "Not specified"
 msgstr ""
 
 #: modules/johncms/admin/templates/user/edit.twig:43

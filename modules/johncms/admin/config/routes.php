@@ -8,7 +8,6 @@ use Johncms\Modules\Admin\Application\Controllers\Settings\ExternalProvidersCont
 use Johncms\Modules\Admin\Application\Controllers\Access\RolesController;
 use Johncms\Modules\Admin\Application\Controllers\Access\UserRolesController;
 use Johncms\Modules\Admin\Application\Controllers\DashboardController;
-use Johncms\Modules\Admin\Application\Controllers\Ip\IpBanController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpSearchController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpWhoisController;
 use Johncms\Modules\Admin\Application\Controllers\Languages\LanguagesController;
@@ -170,17 +169,6 @@ return static function (RouteCollection $router): void {
                 ->name('admin.settings.captcha.save');
             $sr->get('/admin/antiflood', [AntifloodSettingsController::class, 'form'])->name('admin.antiflood');
             $sr->post('/admin/antiflood', [AntifloodSettingsController::class, 'save'])->name('admin.antiflood.save');
-
-            $sr->get('/admin/ip-bans', [IpBanController::class, 'index'])->name('admin.ip_bans');
-            $sr->get('/admin/ip-bans/new', [IpBanController::class, 'newForm'])->name('admin.ip_bans.new');
-            $sr->post('/admin/ip-bans/new', [IpBanController::class, 'prepare'])->name('admin.ip_bans.prepare');
-            $sr->post('/admin/ip-bans', [IpBanController::class, 'store'])->name('admin.ip_bans.store');
-            $sr->get('/admin/ip-bans/search', [IpBanController::class, 'searchForm'])->name('admin.ip_bans.search_form');
-            $sr->post('/admin/ip-bans/search', [IpBanController::class, 'search'])->name('admin.ip_bans.search');
-            $sr->get('/admin/ip-bans/clear', [IpBanController::class, 'clearConfirm'])->name('admin.ip_bans.clear_confirm');
-            $sr->post('/admin/ip-bans/clear', [IpBanController::class, 'clear'])->name('admin.ip_bans.clear');
-            $sr->get('/admin/ip-bans/{id:number}', [IpBanController::class, 'detail'])->name('admin.ip_bans.detail');
-            $sr->post('/admin/ip-bans/{id:number}/delete', [IpBanController::class, 'delete'])->name('admin.ip_bans.delete');
 
             $sr->get('/admin/counters', [CountersController::class, 'index'])->name('admin.counters');
             $sr->get('/admin/counters/new', [CountersController::class, 'newForm'])->name('admin.counters.new');
