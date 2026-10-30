@@ -175,6 +175,38 @@ final class AdsAdminTest extends FunctionalTestCase
         self::assertMatchesRegularExpression('#В верхней части страницы\s*<span class="badge text-bg-light">2</span>#u', (string) $response->getContent());
     }
 
+    public function testDeletingALinkAsksInTheDialogAndNamesTheLink(): void
+    {
+        $id = $this->ad(['name' => 'First title|Second title']);
+        $cookies = $this->actingAs(FunctionalUserFactory::createSupervisor());
+
+        $dialog = $this->handleRequest(
+            '/admin/ads/' . $id . '/delete?page=2',
+            server: ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'],
+            cookies: $cookies
+        );
+        $page = $this->handleRequest('/admin/ads/' . $id . '/delete', cookies: $cookies);
+
+        self::assertStringStartsWith('<form class="modal-content" method="post" action="/admin/ads/' . $id . '/delete">', trim((string) $dialog->getContent()));
+        self::assertStringContainsString('First title', (string) $dialog->getContent());
+        self::assertStringNotContainsString('Second title', (string) $dialog->getContent());
+        self::assertStringContainsString('name="page" value="2"', (string) $dialog->getContent());
+        self::assertStringContainsString('class="modal admin-dialog-page"', (string) $page->getContent());
+    }
+
+    public function testDeletingALinkSaysSo(): void
+    {
+        $id = $this->ad();
+        $cookies = $this->actingAs(FunctionalUserFactory::createSupervisor());
+
+        $response = $this->handleRequest('/admin/ads/' . $id . '/delete', 'POST', $this->withCsrfToken(), cookies: $cookies);
+        $list = $this->handleRequest('/admin/ads', cookies: $cookies);
+
+        self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
+        self::assertNull(Ad::query()->find($id));
+        self::assertStringContainsString('Ссылка удалена', (string) $list->getContent());
+    }
+
     /**
      * @param array<string, mixed> $attributes
      */

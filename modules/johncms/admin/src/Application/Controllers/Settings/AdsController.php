@@ -132,21 +132,32 @@ final readonly class AdsController
         redirect($this->listUrl($ad->type, $request->bodyInt('page', 1)));
     }
 
-    public function deleteConfirm(int $id): ViewResponse
+    public function deleteConfirm(Request $request, int $id): ViewResponse
     {
         $ad = $this->manageAd->find($id);
         if ($ad === null) {
             return $this->error(__('Wrong data'));
         }
 
-        $title = __('Delete');
+        $page = max(1, $request->queryInt('page', 1));
+        $data = [
+            'name'        => trim(explode('|', $ad->name)[0]),
+            'link'        => $ad->link,
+            'page'        => $page,
+            'form_action' => self::URL . '/' . $id . '/delete',
+            'back_url'    => $this->listUrl($ad->type, $page),
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            return new ViewResponse('@admin/ad-delete-dialog.twig', $data);
+        }
+
+        $title = __('Delete link');
         $this->navChain->add(__('Advertisement'), self::URL);
         $this->navChain->add($title);
 
-        return new ViewResponse('@admin/ad-confirm.twig', $this->menu($title, $title) + [
-            'message'     => __('Are you sure want to delete link?'),
-            'form_action' => self::URL . '/' . $id . '/delete',
-            'back_url'    => self::URL . '?type=' . $ad->type,
+        return new ViewResponse('@admin/ad-delete-confirm.twig', $this->menu($title, $title) + [
+            'dialog' => $data,
         ]);
     }
 

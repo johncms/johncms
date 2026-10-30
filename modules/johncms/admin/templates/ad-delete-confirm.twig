@@ -1,0 +1,10 @@
+{#
+    Confirmation of deleting an advertising link as a page for a plain visit.
+
+    @var array dialog What ad-delete-dialog.twig is given.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@admin/components/ui/dialog-page.twig' with {dialog: '@admin/ad-delete-dialog.twig', data: dialog} only %}
+{% endblock %}

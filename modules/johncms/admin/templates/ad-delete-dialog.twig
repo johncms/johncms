@@ -1,0 +1,34 @@
+{#
+    Confirming the removal of one advertising link. Answered to the modal as it is, and put into a
+    page of its own (ad-delete-confirm.twig) for a plain visit.
+
+    @var string name        The first title of the link.
+    @var string link        Where the link leads.
+    @var int    page        The page of the list to return to.
+    @var string form_action
+    @var string back_url
+#}
+{% embed '@admin/components/ui/dialog.twig' with {
+    title: __('Delete link'),
+    action: form_action,
+    close_url: back_url,
+    name: name,
+    link: link,
+    page: page,
+} only %}
+    {% block body %}
+        <input type="hidden" name="page" value="{{ page }}">
+        <p class="mb-2">{{ __('Are you sure want to delete link?') }}</p>
+        <div class="admin-ad-delete">
+            <div class="fw-semibold">{{ name }}</div>
+            <div class="admin-ad-delete__url">{{ link }}</div>
+        </div>
+    {% endblock %}
+    {% block footer %}
+        <a href="{{ close_url }}" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</a>
+        <button type="submit" class="btn btn-danger">
+            {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+            {{ __('Delete') }}
+        </button>
+    {% endblock %}
+{% endembed %}

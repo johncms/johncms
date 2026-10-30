@@ -121,22 +121,17 @@
   gap: 1rem;
 }
 
-.admin-ad-confirm {
-  max-width: 34rem;
-  margin-inline: auto;
-
-  .card-body {
-    padding: 2rem;
-  }
+.admin-ad-delete {
+  padding: .75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: .75rem;
+  background: var(--bg-inset);
+  overflow-wrap: anywhere;
 }
 
-.admin-ad-confirm__icon {
-  display: grid;
-  width: 2.75rem;
-  height: 2.75rem;
-  margin-bottom: 1rem;
-  place-items: center;
-  border-radius: 50%;
-  color: var(--bs-danger-text-emphasis);
-  background: var(--bs-danger-bg-subtle);
+.admin-ad-delete__url {
+  margin-top: .2rem;
+  color: var(--fg-dim);
+  font-family: $ui-font-mono;
+  font-size: .75rem;
 }

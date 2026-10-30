@@ -2676,3 +2676,6 @@ msgstr "Выше"
 
 msgid "Move down"
 msgstr "Ниже"
+
+msgid "Delete link"
+msgstr "Удалить ссылку"
