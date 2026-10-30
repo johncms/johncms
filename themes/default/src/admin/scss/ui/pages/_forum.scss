@@ -83,12 +83,6 @@
   gap: 1rem;
 }
 
-.admin-forum-form__actions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 0.5rem;
-}
 
 // The hidden content of the forum (forum::admin/hidden): a post is a block with its author, its
 // topic and an excerpt of its text, a topic a row of a table.

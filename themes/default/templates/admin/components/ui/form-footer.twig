@@ -1,17 +1,25 @@
 {#
-    The buttons of a form repeated under it, so a long form is finished where it ends. A sticky
-    footer stays at the bottom of the screen while the form scrolls — for the forms long enough
-    to need it.
+    The buttons that finish a form, under it: a link back and the button that saves. The form is
+    named by its id, so the footer may stand outside the form element. A sticky footer stays at
+    the bottom of the screen while the form scrolls — for the forms long enough to need it.
 
-    @param bool sticky Keep the footer in view while the form scrolls.
-
-    The other parameters are those of form-buttons.twig.
+    @param string form         The id of the form.
+    @param string cancel_url   Where the link back leads; empty for no link.
+    @param string cancel_title Cancel by default.
+    @param string submit_title Save by default.
+    @param bool   close        Add "Save and close", posted with close=1: the form returns to its
+                               list after saving instead of staying open.
+    @param bool   sticky       Keep the footer in view while the form scrolls.
 #}
 <div class="admin-form-footer{{ sticky|default(false) ? ' admin-form-footer--sticky' }}">
-    {% include '@admin/components/ui/form-buttons.twig' with {
-        form: form|default(''),
-        cancel_url: cancel_url|default(''),
-        cancel_title: cancel_title|default(''),
-        submit_title: submit_title|default(''),
-    } only %}
+    {% if cancel_url|default('') %}
+        <a class="btn btn-outline-secondary" href="{{ cancel_url }}">{{ cancel_title|default(d__('admin', 'Cancel')) }}</a>
+    {% endif %}
+    {% if close|default(false) %}
+        <button type="submit" class="btn btn-outline-secondary" form="{{ form }}" name="close" value="1">{{ d__('admin', 'Save and close') }}</button>
+    {% endif %}
+    <button type="submit" class="btn btn-primary" form="{{ form }}">
+        {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
+        {{ submit_title|default(d__('admin', 'Save')) }}
+    </button>
 </div>

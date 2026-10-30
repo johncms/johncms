@@ -764,7 +764,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Services/HiddenListControlsMapper.php:85
 #: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:73
 #: modules/johncms/forum/templates/admin/index.twig:33
-#: modules/johncms/forum/templates/admin/section-form.twig:151
+#: modules/johncms/forum/templates/admin/section-form.twig:150
 msgid "Topics"
 msgstr ""
 
@@ -790,7 +790,7 @@ msgid "Only this section"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:72
-#: modules/johncms/forum/templates/admin/section-form.twig:150
+#: modules/johncms/forum/templates/admin/section-form.twig:149
 msgid "Sections"
 msgstr ""
 
@@ -1018,7 +1018,6 @@ msgstr ""
 
 #: modules/johncms/forum/templates/admin/delete-section-dialog.twig:83
 #: modules/johncms/forum/templates/admin/purge-hidden-dialog.twig:41
-#: modules/johncms/forum/templates/admin/section-form.twig:160
 #: modules/johncms/forum/templates/admin/settings.twig:83
 #: modules/johncms/forum/templates/public/bulk-delete-posts.twig:23
 #: modules/johncms/forum/templates/public/clear-search-history.twig:17
@@ -1116,7 +1115,7 @@ msgid "Access"
 msgstr ""
 
 #: modules/johncms/forum/templates/admin/index.twig:57
-#: modules/johncms/forum/templates/admin/section-form.twig:113
+#: modules/johncms/forum/templates/admin/section-form.twig:112
 msgid "Order"
 msgstr ""
 
@@ -1148,86 +1147,73 @@ msgstr ""
 msgid "They are deleted for good with their posts and files. This cannot be undone."
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/section-form.twig:50
+#: modules/johncms/forum/templates/admin/section-form.twig:49
 msgid "The section is not saved: check the fields marked below."
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/section-form.twig:61
+#: modules/johncms/forum/templates/admin/section-form.twig:60
 #: modules/johncms/forum/templates/public/new-topic.twig:35
 msgid "Title"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/section-form.twig:66
+#: modules/johncms/forum/templates/admin/section-form.twig:65
 msgid "Description"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/section-form.twig:69
+#: modules/johncms/forum/templates/admin/section-form.twig:68
 msgid "Shown under the name of the section on the forum. Optional."
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/section-form.twig:77
+#: modules/johncms/forum/templates/admin/section-form.twig:76
 msgid "What the section holds"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/section-form.twig:87
+#: modules/johncms/forum/templates/admin/section-form.twig:86
 msgid "Who writes in it"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/section-form.twig:99
+#: modules/johncms/forum/templates/admin/section-form.twig:98
 msgid "Place in the tree"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/section-form.twig:103
+#: modules/johncms/forum/templates/admin/section-form.twig:102
 msgid "Parent section"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/section-form.twig:110
+#: modules/johncms/forum/templates/admin/section-form.twig:109
 msgid "The section moves with everything in it and goes to the end of its new parent."
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/section-form.twig:115
+#: modules/johncms/forum/templates/admin/section-form.twig:114
 msgid "Smaller goes higher. Left empty, the section goes to the end."
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/section-form.twig:123
+#: modules/johncms/forum/templates/admin/section-form.twig:122
 msgid "Search engines"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/section-form.twig:127
+#: modules/johncms/forum/templates/admin/section-form.twig:126
 #: modules/johncms/forum/templates/public/change-topic.twig:26
 #: modules/johncms/forum/templates/public/new-topic.twig:57
 msgid "Meta keywords"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/section-form.twig:132
+#: modules/johncms/forum/templates/admin/section-form.twig:131
 #: modules/johncms/forum/templates/public/change-topic.twig:33
 #: modules/johncms/forum/templates/public/new-topic.twig:53
 msgid "Meta description"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/section-form.twig:135
+#: modules/johncms/forum/templates/admin/section-form.twig:134
 msgid "Left empty, they are made of the templates in the settings of the forum."
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/section-form.twig:144
+#: modules/johncms/forum/templates/admin/section-form.twig:143
 msgid "About the section"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/section-form.twig:149
+#: modules/johncms/forum/templates/admin/section-form.twig:148
 msgid "Address"
-msgstr ""
-
-#: modules/johncms/forum/templates/admin/section-form.twig:161
-msgid "Save and close"
-msgstr ""
-
-#: modules/johncms/forum/templates/admin/section-form.twig:164
-#: modules/johncms/forum/templates/admin/settings.twig:86
-#: modules/johncms/forum/templates/public/add-poll.twig:42
-#: modules/johncms/forum/templates/public/change-topic.twig:40
-#: modules/johncms/forum/templates/public/edit-poll.twig:53
-#: modules/johncms/forum/templates/public/edit-post.twig:23
-msgid "Save"
 msgstr ""
 
 #: modules/johncms/forum/templates/admin/settings.twig:32
@@ -1292,6 +1278,14 @@ msgstr ""
 
 #: modules/johncms/forum/templates/admin/settings.twig:78
 msgid "Topic description"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/settings.twig:86
+#: modules/johncms/forum/templates/public/add-poll.twig:42
+#: modules/johncms/forum/templates/public/change-topic.twig:40
+#: modules/johncms/forum/templates/public/edit-poll.twig:53
+#: modules/johncms/forum/templates/public/edit-post.twig:23
+msgid "Save"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/add-file.twig:14

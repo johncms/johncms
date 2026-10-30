@@ -25,8 +25,6 @@
     {% if read_only %}
         {# Name, level and permissions are all out of reach: there is nothing to save. #}
         <a class="btn btn-secondary" href="{{ back_url }}">{{ __('Back') }}</a>
-    {% else %}
-        {% include '@admin/components/ui/form-buttons.twig' with {form: 'role-form', cancel_url: back_url} only %}
     {% endif %}
 {% endblock %}
 
@@ -137,17 +135,7 @@
         </div>
 
         {% if not read_only %}
-            <div class="admin-role-form__actions">
-                <a class="btn btn-secondary" href="{{ back_url }}">{{ __('Cancel') }}</a>
-                <button type="submit" class="btn btn-primary">
-                    {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
-                    {{ __('Save') }}
-                </button>
-            </div>
+            {% include '@admin/components/ui/form-footer.twig' with {form: 'role-form', cancel_url: back_url, sticky: true} only %}
         {% endif %}
     </form>
-
-    {% if not read_only %}
-        {% include '@admin/components/ui/form-footer.twig' with {form: 'role-form', cancel_url: back_url, sticky: true} only %}
-    {% endif %}
 {% endblock %}

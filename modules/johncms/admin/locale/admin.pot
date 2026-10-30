@@ -275,7 +275,7 @@ msgstr ""
 msgid "Reset filters"
 msgstr ""
 
-#: themes/default/templates/admin/components/ui/form-buttons.twig:11
+#: themes/default/templates/admin/components/ui/form-footer.twig:16
 #: themes/default/templates/admin/pages/confirm-dialog.twig:44
 #: modules/johncms/admin/templates/ad-clear-dialog.twig:19
 #: modules/johncms/admin/templates/ad-delete-dialog.twig:28
@@ -294,7 +294,6 @@ msgstr ""
 #: modules/johncms/admin/templates/karma/clear-dialog.twig:20
 #: modules/johncms/admin/templates/modules-confirm.twig:62
 #: modules/johncms/admin/templates/modules-upload.twig:30
-#: modules/johncms/admin/templates/role-form.twig:141
 #: modules/johncms/admin/templates/smilies.twig:21
 #: modules/johncms/admin/templates/style-guide/examples/card.twig:15
 #: modules/johncms/admin/templates/style-guide/examples/dialog.twig:13
@@ -309,7 +308,11 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: themes/default/templates/admin/components/ui/form-buttons.twig:16
+#: themes/default/templates/admin/components/ui/form-footer.twig:19
+msgid "Save and close"
+msgstr ""
+
+#: themes/default/templates/admin/components/ui/form-footer.twig:23
 #: modules/johncms/admin/templates/antiflood.twig:99
 #: modules/johncms/admin/templates/captcha-settings.twig:45
 #: modules/johncms/admin/templates/counter-preview.twig:51
@@ -319,7 +322,6 @@ msgstr ""
 #: modules/johncms/admin/templates/karma.twig:80
 #: modules/johncms/admin/templates/languages.twig:31
 #: modules/johncms/admin/templates/mail-settings.twig:104
-#: modules/johncms/admin/templates/role-form.twig:144
 #: modules/johncms/admin/templates/settings.twig:125
 #: modules/johncms/admin/templates/style-guide/examples/card.twig:16
 #: modules/johncms/admin/templates/user-roles.twig:85
@@ -536,7 +538,7 @@ msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:60
 #: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:144
-#: modules/johncms/contacts/templates/admin/settings.twig:55
+#: modules/johncms/contacts/templates/admin/settings.twig:54
 msgid "Languages"
 msgstr ""
 
@@ -1516,16 +1518,16 @@ msgstr ""
 msgid "Are you sure want to delete link?"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:52
+#: modules/johncms/admin/templates/ad-form.twig:48
 #: modules/johncms/admin/templates/ads.twig:54
 msgid "Link"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:55
+#: modules/johncms/admin/templates/ad-form.twig:51
 msgid "Address"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:60
+#: modules/johncms/admin/templates/ad-form.twig:56
 #: modules/johncms/admin/templates/counter-preview.twig:23
 #: modules/johncms/admin/templates/counter-view.twig:21
 #: modules/johncms/admin/templates/settings.twig:85
@@ -1534,89 +1536,89 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:63
+#: modules/johncms/admin/templates/ad-form.twig:59
 msgid "Several titles separated by | are shown in turn, one per page view."
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:66
+#: modules/johncms/admin/templates/ad-form.twig:62
 msgid "Color"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:69
+#: modules/johncms/admin/templates/ad-form.twig:65
 msgid "Pick a color"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:74
+#: modules/johncms/admin/templates/ad-form.twig:70
 msgid "Six hexadecimal digits. Leave it empty to keep the color of the theme."
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:80
+#: modules/johncms/admin/templates/ad-form.twig:76
 #: modules/johncms/admin/templates/ads.twig:56
 #: modules/johncms/admin/templates/ads.twig:78
 msgid "Limits"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:84
+#: modules/johncms/admin/templates/ad-form.twig:80
 msgid "Hits"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:86
+#: modules/johncms/admin/templates/ad-form.twig:82
 msgid "The link is hidden after this many clicks. 0 means no limit."
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:89
+#: modules/johncms/admin/templates/ad-form.twig:85
 msgid "Days"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:91
+#: modules/johncms/admin/templates/ad-form.twig:87
 msgid "The link is hidden this many days after it was added. 0 means no limit."
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:96
+#: modules/johncms/admin/templates/ad-form.twig:92
 msgid "Direct Link"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:97
+#: modules/johncms/admin/templates/ad-form.twig:93
 msgid "The link leads straight to the address: its clicks are not counted and the hit limit does not apply."
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:105
+#: modules/johncms/admin/templates/ad-form.twig:101
 msgid "Preview"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:110
+#: modules/johncms/admin/templates/ad-form.twig:106
 msgid "Title of the link"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:112
+#: modules/johncms/admin/templates/ad-form.twig:108
 msgid "This is how the link looks on the site; the colors of the theme may differ."
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:119
+#: modules/johncms/admin/templates/ad-form.twig:115
 msgid "Who sees it"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:126
+#: modules/johncms/admin/templates/ad-form.twig:122
 msgid "Place on the page"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:133
+#: modules/johncms/admin/templates/ad-form.twig:129
 msgid "Pages"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:140
+#: modules/johncms/admin/templates/ad-form.twig:136
 msgid "Styling links"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:142
+#: modules/johncms/admin/templates/ad-form.twig:138
 msgid "Bold"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:142
+#: modules/johncms/admin/templates/ad-form.twig:138
 msgid "Italic"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:142
+#: modules/johncms/admin/templates/ad-form.twig:138
 msgid "Underline"
 msgstr ""
 
@@ -2553,50 +2555,50 @@ msgstr ""
 msgid "Short name"
 msgstr ""
 
-#: modules/johncms/admin/templates/role-form.twig:38
+#: modules/johncms/admin/templates/role-form.twig:36
 msgid "Main"
 msgstr ""
 
-#: modules/johncms/admin/templates/role-form.twig:42
-#: modules/johncms/admin/templates/role-form.twig:65
+#: modules/johncms/admin/templates/role-form.twig:40
+#: modules/johncms/admin/templates/role-form.twig:63
 msgid "Role name"
 msgstr ""
 
-#: modules/johncms/admin/templates/role-form.twig:43
-#: modules/johncms/admin/templates/role-form.twig:54
+#: modules/johncms/admin/templates/role-form.twig:41
+#: modules/johncms/admin/templates/role-form.twig:52
 msgid "Identifier"
 msgstr ""
 
-#: modules/johncms/admin/templates/role-form.twig:44
-#: modules/johncms/admin/templates/role-form.twig:70
+#: modules/johncms/admin/templates/role-form.twig:42
+#: modules/johncms/admin/templates/role-form.twig:68
 #: modules/johncms/admin/templates/roles.twig:30
 #: modules/johncms/admin/templates/user-roles.twig:36
 msgid "Level"
 msgstr ""
 
-#: modules/johncms/admin/templates/role-form.twig:48
+#: modules/johncms/admin/templates/role-form.twig:46
 msgid "This is a built-in role: its name and its level are fixed, because the code refers to them. What it may do is yours to change."
 msgstr ""
 
-#: modules/johncms/admin/templates/role-form.twig:58
-#: modules/johncms/admin/templates/role-form.twig:61
+#: modules/johncms/admin/templates/role-form.twig:56
+#: modules/johncms/admin/templates/role-form.twig:59
 msgid "Used in code and cannot be changed later, for example: news-editor"
 msgstr ""
 
-#: modules/johncms/admin/templates/role-form.twig:73
+#: modules/johncms/admin/templates/role-form.twig:71
 msgid "Who outranks whom. A role cannot be placed above your own."
 msgstr ""
 
-#: modules/johncms/admin/templates/role-form.twig:84
+#: modules/johncms/admin/templates/role-form.twig:82
 #: modules/johncms/admin/templates/roles.twig:31
 msgid "Permissions"
 msgstr ""
 
-#: modules/johncms/admin/templates/role-form.twig:92
+#: modules/johncms/admin/templates/role-form.twig:90
 msgid "A role of this level is allowed everything, whatever is ticked, so the permissions are not shown for it. That is what keeps a site from locking itself out of its own admin panel."
 msgstr ""
 
-#: modules/johncms/admin/templates/role-form.twig:127
+#: modules/johncms/admin/templates/role-form.twig:125
 msgid "The role also carries permissions no installed module declares. They are kept as they are:"
 msgstr ""
 

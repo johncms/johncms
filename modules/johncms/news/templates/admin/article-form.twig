@@ -39,7 +39,6 @@
             {{ __('Open on the site') }}
         </a>
     {% endif %}
-    {% include '@admin/components/ui/form-buttons.twig' with {form: 'article-form'} only %}
 {% endblock %}
 
 {% block content %}
@@ -207,15 +206,6 @@
             </div>
         </div>
 
-        <div class="admin-news-form__actions">
-            <a class="btn btn-secondary" href="{{ list_url }}">{{ __('Cancel') }}</a>
-            <button type="submit" class="btn btn-secondary" name="close" value="1">{{ __('Save and close') }}</button>
-            <button type="submit" class="btn btn-primary">
-                {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
-                {{ __('Save') }}
-            </button>
-        </div>
+        {% include '@admin/components/ui/form-footer.twig' with {form: 'article-form', cancel_url: list_url, close: true, sticky: true} only %}
     </form>
-
-    {% include '@admin/components/ui/form-footer.twig' with {form: 'article-form', sticky: true} only %}
 {% endblock %}

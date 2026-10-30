@@ -11,10 +11,6 @@
 #}
 {% extends '@admin/layouts/default.twig' %}
 
-{% block page_actions %}
-    {% include '@admin/components/ui/form-buttons.twig' with {form: 'cookie-banner-form'} only %}
-{% endblock %}
-
 {% block content %}
     <div class="card">
         <div class="card-header d-flex align-items-center gap-2">

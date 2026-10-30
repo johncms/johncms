@@ -752,6 +752,7 @@
       'Pages' => 'Страницы',
       'Start over' => 'Начать заново',
       'The link starts over: its hits and days are counted anew, and it is shown.' => 'Ссылка начата заново: переходы и дни считаются с нуля, ссылка показывается.',
+      'Save and close' => 'Сохранить и закрыть',
     ),
   ),
 );

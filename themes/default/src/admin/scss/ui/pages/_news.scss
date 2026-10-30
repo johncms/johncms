@@ -86,12 +86,6 @@
   border-top: 1px solid var(--border);
 }
 
-.admin-news-form__actions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 0.5rem;
-}
 
 // The card names the editor already: the label the component always draws stays out.
 .admin-news-form .card-body > .vue_app label:empty {

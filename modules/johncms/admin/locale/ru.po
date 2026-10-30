@@ -2724,3 +2724,6 @@ msgstr "Начать заново"
 
 msgid "The link starts over: its hits and days are counted anew, and it is shown."
 msgstr "Ссылка начата заново: переходы и дни считаются с нуля, ссылка показывается."
+
+msgid "Save and close"
+msgstr "Сохранить и закрыть"

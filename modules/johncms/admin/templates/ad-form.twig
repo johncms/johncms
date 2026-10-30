@@ -33,10 +33,6 @@
     </div>
 {% endmacro %}
 
-{% block page_actions %}
-    {% include '@admin/components/ui/form-buttons.twig' with {form: 'ad-form', cancel_url: back_url} only %}
-{% endblock %}
-
 {% block content %}
     {% import _self as form %}
     {% set names = fields.name|split('|')|map(name => name|trim)|filter(name => name is not empty) %}
