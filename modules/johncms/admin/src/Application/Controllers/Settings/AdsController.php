@@ -126,8 +126,21 @@ final readonly class AdsController
             $shown = $this->manageAd->toggle($ad);
             $this->session->flash('success_message', $shown ? __('The link is shown') : __('The link is hidden'));
         } catch (AdLimitReachedException) {
-            $this->session->flash('error_message', __('The link has used up its hits or days. Raise the limit in its settings to show it again.'));
+            $this->session->flash('error_message', __('The link has used up its hits or days. Raise the limit in its settings or start it over to show it again.'));
         }
+
+        redirect($this->listUrl($ad->type, $request->bodyInt('page', 1)));
+    }
+
+    public function restart(Request $request, int $id): ViewResponse
+    {
+        $ad = $this->manageAd->find($id);
+        if ($ad === null) {
+            redirect(self::URL);
+        }
+
+        $this->manageAd->restart($ad);
+        $this->session->flash('success_message', __('The link starts over: its hits and days are counted anew, and it is shown.'));
 
         redirect($this->listUrl($ad->type, $request->bodyInt('page', 1)));
     }

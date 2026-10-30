@@ -207,6 +207,34 @@ final class AdsAdminTest extends FunctionalTestCase
         self::assertStringContainsString('Ссылка удалена', (string) $list->getContent());
     }
 
+    public function testStartingALinkOverCountsItsLimitsAnewAndShowsIt(): void
+    {
+        $id = $this->ad(['to' => 1, 'count' => 300, 'count_link' => 300, 'time' => time() - 86400 * 40, 'day' => 30]);
+        $cookies = $this->actingAs(FunctionalUserFactory::createSupervisor());
+
+        $response = $this->handleRequest('/admin/ads/' . $id . '/restart', 'POST', $this->withCsrfToken(), cookies: $cookies);
+        $list = $this->handleRequest('/admin/ads', cookies: $cookies);
+        $ad = Ad::query()->findOrFail($id);
+
+        self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
+        self::assertSame(0, $ad->to);
+        self::assertSame(0, $ad->count);
+        self::assertGreaterThan(time() - 60, $ad->time);
+        self::assertSame(300, $ad->count_link);
+        self::assertStringContainsString('Показывается', (string) $list->getContent());
+    }
+
+    public function testOnlyALinkWithLimitsCanBeStartedOver(): void
+    {
+        $limited = $this->ad(['count_link' => 100]);
+        $unlimited = $this->ad(['name' => 'Unlimited link']);
+
+        $content = (string) $this->handleRequest('/admin/ads', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()))->getContent();
+
+        self::assertStringContainsString('/admin/ads/' . $limited . '/restart', $content);
+        self::assertStringNotContainsString('/admin/ads/' . $unlimited . '/restart', $content);
+    }
+
     /**
      * @param array<string, mixed> $attributes
      */

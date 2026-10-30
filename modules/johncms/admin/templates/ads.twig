@@ -114,6 +114,9 @@
                                     {% elseif item.status == 'hidden' %}
                                         {% set actions = actions|merge([{method: 'post', url: '/admin/ads/' ~ item.id ~ '/toggle', title: __('Show'), icon: 'eye', danger: false, fields: {page: page}}]) %}
                                     {% endif %}
+                                    {% if item.has_limits %}
+                                        {% set actions = actions|merge([{method: 'post', url: '/admin/ads/' ~ item.id ~ '/restart', title: __('Start over'), icon: 'rotate-ccw', danger: false, fields: {page: page}}]) %}
+                                    {% endif %}
                                     {% set actions = actions|merge([{method: 'get', url: '/admin/ads/' ~ item.id ~ '/delete' ~ (page > 1 ? '?page=' ~ page : ''), title: __('Delete'), icon: 'trash-2', danger: true, dialog: true, fields: {}}]) %}
                                     {% include '@admin/components/ui/row-actions.twig' with {label: __('Actions'), actions: actions} only %}
                                 </td>

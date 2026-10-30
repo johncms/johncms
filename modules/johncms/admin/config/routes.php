@@ -127,6 +127,7 @@ return static function (RouteCollection $router): void {
         $r->post('/admin/ads/{id:number}/up', [AdsController::class, 'up'])->name('admin.ads.up');
         $r->post('/admin/ads/{id:number}/down', [AdsController::class, 'down'])->name('admin.ads.down');
         $r->post('/admin/ads/{id:number}/toggle', [AdsController::class, 'toggle'])->name('admin.ads.toggle');
+        $r->post('/admin/ads/{id:number}/restart', [AdsController::class, 'restart'])->name('admin.ads.restart');
         $r->get('/admin/ads/{id:number}/delete', [AdsController::class, 'deleteConfirm'])->name('admin.ads.delete_confirm');
         $r->post('/admin/ads/{id:number}/delete', [AdsController::class, 'delete'])->name('admin.ads.delete');
         // The modules of the site. Deliberately outside the super-admin group: installing a

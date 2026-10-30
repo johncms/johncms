@@ -62,6 +62,7 @@ final readonly class AdRowMapper
             'started_at'  => $this->dateFormatter->format($ad->time),
             'expires_at'  => $expiresAt === null ? '' : $this->dateFormatter->format($expiresAt),
             'status'      => $this->status($ad),
+            'has_limits'  => $ad->count_link > 0 || $expiresAt !== null,
         ];
     }
 

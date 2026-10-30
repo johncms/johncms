@@ -709,7 +709,7 @@
       'Enter the color as six hexadecimal digits, for example FF0000' => 'Укажите цвет шестью шестнадцатеричными цифрами, например FF0000',
       'The link is shown' => 'Ссылка показывается',
       'The link is hidden' => 'Ссылка скрыта',
-      'The link has used up its hits or days. Raise the limit in its settings to show it again.' => 'У ссылки закончились переходы или дни. Чтобы снова её показывать, увеличьте лимит в её настройках.',
+      'The link has used up its hits or days. Raise the limit in its settings or start it over to show it again.' => 'У ссылки закончились переходы или дни. Чтобы снова её показывать, увеличьте лимит в её настройках или начните её заново.',
       'The link is deleted' => 'Ссылка удалена',
       'There are no links in this place yet.' => 'В этом месте пока нет ссылок.',
       'Shown to' => 'Показ',
@@ -750,6 +750,8 @@
       'Who sees it' => 'Кому показывать',
       'Place on the page' => 'Место на странице',
       'Pages' => 'Страницы',
+      'Start over' => 'Начать заново',
+      'The link starts over: its hits and days are counted anew, and it is shown.' => 'Ссылка начата заново: переходы и дни считаются с нуля, ссылка показывается.',
     ),
   ),
 );

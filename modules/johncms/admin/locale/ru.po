@@ -2624,8 +2624,8 @@ msgstr "Ссылка показывается"
 msgid "The link is hidden"
 msgstr "Ссылка скрыта"
 
-msgid "The link has used up its hits or days. Raise the limit in its settings to show it again."
-msgstr "У ссылки закончились переходы или дни. Чтобы снова её показывать, увеличьте лимит в её настройках."
+msgid "The link has used up its hits or days. Raise the limit in its settings or start it over to show it again."
+msgstr "У ссылки закончились переходы или дни. Чтобы снова её показывать, увеличьте лимит в её настройках или начните её заново."
 
 msgid "The link is deleted"
 msgstr "Ссылка удалена"
@@ -2718,3 +2718,9 @@ msgstr "Место на странице"
 
 msgid "Pages"
 msgstr "Страницы"
+
+msgid "Start over"
+msgstr "Начать заново"
+
+msgid "The link starts over: its hits and days are counted anew, and it is shown."
+msgstr "Ссылка начата заново: переходы и дни считаются с нуля, ссылка показывается."

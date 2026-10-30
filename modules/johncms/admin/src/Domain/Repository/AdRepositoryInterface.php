@@ -41,6 +41,11 @@ interface AdRepositoryInterface
 
     public function toggleActive(int $id): void;
 
+    /**
+     * Counts the hits and the days of the link from zero again, starting now, and shows it.
+     */
+    public function restart(int $id, int $now): void;
+
     public function moveUp(int $id): void;
 
     public function moveDown(int $id): void;

@@ -46,6 +46,15 @@ final readonly class ManageAdUseCase
         return $ad->isHidden();
     }
 
+    /**
+     * Starts the limits of the link over: its hits and days are counted anew from now, and the
+     * link is shown again.
+     */
+    public function restart(Ad $ad): void
+    {
+        $this->repository->restart($ad->id, time());
+    }
+
     public function moveUp(int $id): void
     {
         $this->repository->moveUp($id);

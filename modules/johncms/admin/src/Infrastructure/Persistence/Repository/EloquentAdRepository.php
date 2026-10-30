@@ -79,6 +79,11 @@ final class EloquentAdRepository implements AdRepositoryInterface
         $ad->save();
     }
 
+    public function restart(int $id, int $now): void
+    {
+        Ad::query()->whereKey($id)->update(['count' => 0, 'time' => $now, 'to' => 0]);
+    }
+
     public function moveUp(int $id): void
     {
         $current = $this->findById($id);
