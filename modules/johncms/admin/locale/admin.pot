@@ -2433,22 +2433,23 @@ msgid "Language"
 msgstr ""
 
 #: modules/johncms/admin/templates/languages.twig:30
+#: modules/johncms/admin/templates/languages.twig:48
 msgid "On the site"
 msgstr ""
 
-#: modules/johncms/admin/templates/languages.twig:63
+#: modules/johncms/admin/templates/languages.twig:66
 msgid "How it works"
 msgstr ""
 
-#: modules/johncms/admin/templates/languages.twig:66
+#: modules/johncms/admin/templates/languages.twig:69
 msgid "The default language is the one a guest sees first. It is always on the site."
 msgstr ""
 
-#: modules/johncms/admin/templates/languages.twig:67
+#: modules/johncms/admin/templates/languages.twig:70
 msgid "A language turned off is not offered in the switch, in the profile and in the forms of the panel. Its files stay in place, so it can be turned on again at any time."
 msgstr ""
 
-#: modules/johncms/admin/templates/languages.twig:68
+#: modules/johncms/admin/templates/languages.twig:71
 msgid "A member who has chosen a language that is turned off sees the site in the default language."
 msgstr ""
 
@@ -2795,8 +2796,6 @@ msgstr ""
 
 #: modules/johncms/admin/templates/settings.twig:86
 #: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:25
-#: modules/johncms/admin/templates/system-check.twig:16
-#: modules/johncms/admin/templates/system-check.twig:24
 msgid "Description"
 msgstr ""
 
@@ -3222,13 +3221,16 @@ msgstr ""
 msgid "Nickname, e-mail, ID or IP"
 msgstr ""
 
-#: modules/johncms/admin/templates/system-check.twig:14
-msgid "Check name"
+#: modules/johncms/admin/templates/system-check.twig:60
+msgid "Some required checks failed: the site may not work correctly until they are fixed."
 msgstr ""
 
-#: modules/johncms/admin/templates/system-check.twig:15
-#: modules/johncms/admin/templates/system-check.twig:23
-msgid "Value"
+#: modules/johncms/admin/templates/system-check.twig:65
+msgid "Everything required is in place. Some recommendations are not followed, which may slow the site down."
+msgstr ""
+
+#: modules/johncms/admin/templates/system-check.twig:70
+msgid "The server meets every requirement of the system."
 msgstr ""
 
 #: modules/johncms/admin/templates/user-roles.twig:24

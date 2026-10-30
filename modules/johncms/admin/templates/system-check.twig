@@ -1,30 +1,84 @@
 {#
-    What the environment of the site supports.
+    What the environment of the site supports: a summary on top, then a card for each group of
+    checks, each check marked by how it went.
 
-    @var array sections Groups of checks: title and rows of name, value, description, error.
+    @var array sections Groups of checks: title, icon and rows of name, value, description, error,
+                        level (critical | warning | info: how much a failure matters).
 #}
 {% extends '@admin/layouts/default.twig' %}
 
-{% block content %}
-    {% for section in sections %}
-        <h2 class="mb-3">{{ section.title }}</h2>
-        <table class="table table-bordered responsive-table">
-            <thead>
-            <tr>
-                <th scope="col" style="width: 20%;">{{ __('Check name') }}</th>
-                <th scope="col">{{ __('Value') }}</th>
-                <th scope="col">{{ __('Description') }}</th>
-            </tr>
-            </thead>
-            <tbody>
+{% macro section_card(section) %}
+    {% set marks = {
+        ok: {icon: 'circle-check', tone: 'text-success'},
+        critical: {icon: 'circle-x', tone: 'text-danger'},
+        warning: {icon: 'triangle-alert', tone: 'text-warning'},
+        info: {icon: 'info', tone: 'text-info'},
+    } %}
+    <section class="card">
+        <div class="card-header">
+            {% include '@admin/components/ui/icon.twig' with {name: section.icon, size: 16} only %}
+            <h2 class="h6 mb-0 ms-2">{{ section.title }}</h2>
+        </div>
+        <ul class="list-group list-group-flush">
             {% for check in section.checks %}
-                <tr>
-                    <th scope="row">{{ check.name }}</th>
-                    <td data-title="{{ __('Value') }}" class="break-word {{ check.error ? 'text-danger' : 'text-success' }}">{{ check.value }}</td>
-                    <td data-title="{{ __('Description') }}">{{ check.description }}</td>
-                </tr>
+                {% set mark = marks[check.error ? check.level : 'ok'] %}
+                <li class="list-group-item d-flex gap-3 align-items-start">
+                    <span class="{{ mark.tone }} flex-shrink-0 admin-check-mark">
+                        {% include '@admin/components/ui/icon.twig' with {name: mark.icon, size: 18} only %}
+                    </span>
+                    <div class="flex-grow-1" style="min-width: 0">
+                        <div class="d-flex flex-wrap gap-2 justify-content-between align-items-baseline">
+                            <span class="fw-semibold">{{ check.name }}</span>
+                            <code class="text-body text-break small" data-check-value>{{ check.value }}</code>
+                        </div>
+                        <div class="form-text mt-1">{{ check.description }}</div>
+                    </div>
+                </li>
             {% endfor %}
-            </tbody>
-        </table>
+        </ul>
+    </section>
+{% endmacro %}
+
+{% block content %}
+    {% import _self as ui %}
+
+    {% set critical = 0 %}
+    {% set warnings = 0 %}
+    {% for section in sections %}
+        {% for check in section.checks|filter(check => check.error) %}
+            {% if check.level == 'critical' %}
+                {% set critical = critical + 1 %}
+            {% elseif check.level == 'warning' %}
+                {% set warnings = warnings + 1 %}
+            {% endif %}
+        {% endfor %}
     {% endfor %}
+
+    {% if critical > 0 %}
+        <div class="alert alert-danger d-flex gap-2 align-items-center" data-check-summary="critical">
+            {% include '@admin/components/ui/icon.twig' with {name: 'circle-x', size: 18} only %}
+            {{ __('Some required checks failed: the site may not work correctly until they are fixed.') }}
+        </div>
+    {% elseif warnings > 0 %}
+        <div class="alert alert-warning d-flex gap-2 align-items-center" data-check-summary="warning">
+            {% include '@admin/components/ui/icon.twig' with {name: 'triangle-alert', size: 18} only %}
+            {{ __('Everything required is in place. Some recommendations are not followed, which may slow the site down.') }}
+        </div>
+    {% else %}
+        <div class="alert alert-success d-flex gap-2 align-items-center" data-check-summary="ok">
+            {% include '@admin/components/ui/icon.twig' with {name: 'circle-check', size: 18} only %}
+            {{ __('The server meets every requirement of the system.') }}
+        </div>
+    {% endif %}
+
+    {% set halves = sections|batch((sections|length / 2)|round(0, 'ceil')) %}
+    <div class="row g-3 align-items-start">
+        {% for half in halves %}
+            <div class="col-lg-6 d-flex flex-column gap-3">
+                {% for section in half %}
+                    {{ ui.section_card(section) }}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

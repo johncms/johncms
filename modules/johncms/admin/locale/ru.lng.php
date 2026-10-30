@@ -859,6 +859,9 @@
       'The default language is the one a guest sees first. It is always on the site.' => 'Язык по умолчанию гость видит первым. Он всегда включён на сайте.',
       'A language turned off is not offered in the switch, in the profile and in the forms of the panel. Its files stay in place, so it can be turned on again at any time.' => 'Выключенный язык не предлагается в переключателе, в профиле и в формах панели. Его файлы остаются на месте, поэтому язык можно включить снова в любой момент.',
       'A member who has chosen a language that is turned off sees the site in the default language.' => 'Пользователь, выбравший выключенный язык, видит сайт на языке по умолчанию.',
+      'Some required checks failed: the site may not work correctly until they are fixed.' => 'Часть обязательных проверок не пройдена: пока это не исправлено, сайт может работать неправильно.',
+      'Everything required is in place. Some recommendations are not followed, which may slow the site down.' => 'Всё обязательное на месте. Часть рекомендаций не выполнена — сайт может работать медленнее.',
+      'The server meets every requirement of the system.' => 'Сервер отвечает всем требованиям системы.',
     ),
   ),
 );

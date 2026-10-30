@@ -32,10 +32,10 @@ final readonly class SystemCheckController
                 'page_title' => $title,
                 'sys_menu'   => ['system_check' => true],
                 'sections'   => [
-                    ['title' => __('Required parameters'), 'checks' => $this->rows($checker->checkExtensions())],
-                    ['title' => __('Database'), 'checks' => $this->rows($checker->checkDatabase())],
-                    ['title' => __('Recommended parameters'), 'checks' => $this->rows($checker->recommendations())],
-                    ['title' => __('Security'), 'checks' => $this->rows($checker->checkSecurity($audit))],
+                    ['title' => __('Required parameters'), 'icon' => 'package', 'checks' => $this->rows($checker->checkExtensions())],
+                    ['title' => __('Database'), 'icon' => 'database', 'checks' => $this->rows($checker->checkDatabase())],
+                    ['title' => __('Recommended parameters'), 'icon' => 'gauge', 'checks' => $this->rows($checker->recommendations())],
+                    ['title' => __('Security'), 'icon' => 'shield', 'checks' => $this->rows($checker->checkSecurity($audit))],
                 ],
             ]
         );
@@ -43,7 +43,9 @@ final readonly class SystemCheckController
 
     /**
      * A description explains how to fix the check and may carry a link to the manual, so it is
-     * markup by contract; the name and the value are plain text.
+     * markup by contract; the name and the value are plain text. A failed check is told by how much
+     * it matters: the site does not work without a critical one, a warning costs speed, and a
+     * note is only to know.
      *
      * @param array<int, array<string, mixed>> $checks
      * @return array<int, array<string, mixed>>
@@ -56,6 +58,11 @@ final readonly class SystemCheckController
                 'value'       => (string) $check['value'],
                 'description' => new Markup((string) $check['description'], 'UTF-8'),
                 'error'       => (bool) $check['error'],
+                'level'       => match ($check['error_level'] ?? SystemChecker::CRITICAL) {
+                    SystemChecker::WARNING => 'warning',
+                    SystemChecker::INFO    => 'info',
+                    default                => 'critical',
+                },
             ],
             $checks
         );

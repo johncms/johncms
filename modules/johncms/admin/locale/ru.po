@@ -3045,3 +3045,12 @@ msgstr "Выключенный язык не предлагается в пер�
 
 msgid "A member who has chosen a language that is turned off sees the site in the default language."
 msgstr "Пользователь, выбравший выключенный язык, видит сайт на языке по умолчанию."
+
+msgid "Some required checks failed: the site may not work correctly until they are fixed."
+msgstr "Часть обязательных проверок не пройдена: пока это не исправлено, сайт может работать неправильно."
+
+msgid "Everything required is in place. Some recommendations are not followed, which may slow the site down."
+msgstr "Всё обязательное на месте. Часть рекомендаций не выполнена — сайт может работать медленнее."
+
+msgid "The server meets every requirement of the system."
+msgstr "Сервер отвечает всем требованиям системы."

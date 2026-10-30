@@ -45,3 +45,9 @@
   background: currentColor;
   flex-shrink: 0;
 }
+
+// The mark of a check of the system: the icon sits on the line of the name.
+.admin-check-mark {
+  line-height: 1;
+  padding-top: 2px;
+}
