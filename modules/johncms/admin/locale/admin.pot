@@ -923,16 +923,22 @@ msgstr ""
 msgid "System Settings"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/System/EmoticonsController.php:37
+#: modules/johncms/admin/src/Application/Controllers/System/EmoticonsController.php:36
+#: modules/johncms/admin/src/Application/Controllers/System/EmoticonsController.php:49
 msgid "Error updating cache"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/System/EmoticonsController.php:40
 #, php-format
+msgid "The folders have changed, so the list of the smilies is built again. Pictures: %d."
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/System/EmoticonsController.php:52
+#, php-format
 msgid "The list of the smilies is built again. Pictures: %d."
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/System/EmoticonsController.php:46
+#: modules/johncms/admin/src/Application/Controllers/System/EmoticonsController.php:58
 msgid "Smilies"
 msgstr ""
 
@@ -2909,56 +2915,56 @@ msgstr ""
 msgid "The server accepts files up to %s: a larger limit here does not help."
 msgstr ""
 
-#: modules/johncms/admin/templates/smilies.twig:16
+#: modules/johncms/admin/templates/smilies.twig:17
 msgid "Catalogue on the site"
 msgstr ""
 
-#: modules/johncms/admin/templates/smilies.twig:20
-msgid "The list is built by itself; build it now if a picture does not show up."
+#: modules/johncms/admin/templates/smilies.twig:21
+msgid "The list is built again when this page is opened; build it now if a picture does not show up."
 msgstr ""
 
-#: modules/johncms/admin/templates/smilies.twig:22
+#: modules/johncms/admin/templates/smilies.twig:23
 msgid "Build the list again"
 msgstr ""
 
-#: modules/johncms/admin/templates/smilies.twig:60
+#: modules/johncms/admin/templates/smilies.twig:62
 msgid "How to add a smiley"
 msgstr ""
 
-#: modules/johncms/admin/templates/smilies.twig:63
-msgid "Put a picture (GIF, PNG or JPG) in one of the folders of %s. Its file name becomes the code; the list of the smilies picks it up by itself on the next page."
-msgstr ""
-
 #: modules/johncms/admin/templates/smilies.twig:65
-msgid "the simplest codes, without the closing colon: smile.gif is written :smile."
-msgstr ""
-
-#: modules/johncms/admin/templates/smilies.twig:66
-msgid "only the staff may use them."
+msgid "Put a picture (GIF, PNG or JPG) in one of the folders of %s. Its file name becomes the code. The site picks the new picture up when this page is opened."
 msgstr ""
 
 #: modules/johncms/admin/templates/smilies.twig:67
+msgid "the simplest codes, without the closing colon: smile.gif is written :smile."
+msgstr ""
+
+#: modules/johncms/admin/templates/smilies.twig:68
+msgid "only the staff may use them."
+msgstr ""
+
+#: modules/johncms/admin/templates/smilies.twig:69
 msgid "the categories of the catalogue; a code is written in Latin letters or in their Cyrillic spelling: kot.gif is :kot: and :кот:."
 msgstr ""
 
-#: modules/johncms/admin/templates/smilies.twig:73
-msgid "Simple"
-msgstr ""
-
-#: modules/johncms/admin/templates/smilies.twig:74
+#: modules/johncms/admin/templates/smilies.twig:77
 #: modules/johncms/admin/templates/user/edit.twig:86
 msgid "For the staff"
 msgstr ""
 
-#: modules/johncms/admin/templates/smilies.twig:75
+#: modules/johncms/admin/templates/smilies.twig:77
+msgid "Simple"
+msgstr ""
+
+#: modules/johncms/admin/templates/smilies.twig:83
 msgid "Categories of the catalogue"
 msgstr ""
 
-#: modules/johncms/admin/templates/smilies.twig:36
+#: modules/johncms/admin/templates/smilies.twig:38
 msgid "The folder is empty."
 msgstr ""
 
-#: modules/johncms/admin/templates/smilies.twig:46
+#: modules/johncms/admin/templates/smilies.twig:48
 msgid "Written as"
 msgstr ""
 

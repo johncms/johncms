@@ -849,6 +849,9 @@
       'Categories of the catalogue' => 'Категории каталога',
       'The folder is empty.' => 'Папка пуста.',
       'Written as' => 'Код:',
+      'The folders have changed, so the list of the smilies is built again. Pictures: %d.' => 'В папках появились изменения, поэтому список смайликов собран заново. Картинок: %d.',
+      'The list is built again when this page is opened; build it now if a picture does not show up.' => 'Список пересобирается при открытии этой страницы; соберите его сейчас, если картинка не появилась.',
+      'Put a picture (GIF, PNG or JPG) in one of the folders of %s. Its file name becomes the code. The site picks the new picture up when this page is opened.' => 'Положите картинку (GIF, PNG или JPG) в одну из папок %s. Имя файла станет кодом. Сайт подхватит новую картинку, когда вы откроете эту страницу.',
     ),
   ),
 );

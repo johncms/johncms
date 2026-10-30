@@ -12,6 +12,8 @@ namespace Johncms\Smilies;
  * - user/<category> — the categories of the catalogue, `:name:`.
  *
  * A picture is put in or taken out by hand, so the folders themselves are the list of the smilies.
+ * Listing them touches every folder: SmiliesMap keeps the result, and only the admin panel asks
+ * whether it is still fresh.
  */
 final readonly class SmileyFolders
 {

@@ -8,8 +8,11 @@ use Johncms\Utils\Transliterator;
 
 /**
  * The codes of the smilies and the pictures they stand for, taken from the folders and kept in a
- * cache file. The file is built again by itself whenever it is missing, of an older format, or older
- * than the folders, so a picture put in a folder is a smiley on the next request.
+ * cache file.
+ *
+ * Drawing the smilies reads the file only: it is built when it is missing or of an older format,
+ * but the folders are not looked at on every request. Whether a picture was put in since is asked
+ * by isStale(), which the admin panel does when its page of the smilies is opened.
  *
  * The pictures are kept as paths from the root of the site: the address of the site is added when
  * the smilies are drawn, so changing it does not leave the smilies pointing at the old one.
@@ -58,6 +61,17 @@ final class SmiliesMap
     }
 
     /**
+     * Whether a picture was put in, taken out or renamed since the cache was built, or there is no
+     * cache at all. Looks at every folder, so it is not for the requests of the site.
+     */
+    public function isStale(): bool
+    {
+        $modified = @filemtime($this->cachePath . self::CACHE_FILE);
+
+        return $modified === false || $modified < $this->folders->lastModified();
+    }
+
+    /**
      * Builds the map from the folders and keeps it, whatever the cache holds.
      *
      * @return array{usr: array<string, string>, adm: array<string, string>}
@@ -77,8 +91,7 @@ final class SmiliesMap
     private function read(): ?array
     {
         $file = $this->cachePath . self::CACHE_FILE;
-        $modified = @filemtime($file);
-        if ($modified === false || $modified < $this->folders->lastModified()) {
+        if (! is_file($file)) {
             return null;
         }
 

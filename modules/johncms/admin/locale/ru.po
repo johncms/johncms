@@ -3015,3 +3015,12 @@ msgstr "Папка пуста."
 
 msgid "Written as"
 msgstr "Код:"
+
+msgid "The folders have changed, so the list of the smilies is built again. Pictures: %d."
+msgstr "В папках появились изменения, поэтому список смайликов собран заново. Картинок: %d."
+
+msgid "The list is built again when this page is opened; build it now if a picture does not show up."
+msgstr "Список пересобирается при открытии этой страницы; соберите его сейчас, если картинка не появилась."
+
+msgid "Put a picture (GIF, PNG or JPG) in one of the folders of %s. Its file name becomes the code. The site picks the new picture up when this page is opened."
+msgstr "Положите картинку (GIF, PNG или JPG) в одну из папок %s. Имя файла станет кодом. Сайт подхватит новую картинку, когда вы откроете эту страницу."

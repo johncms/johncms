@@ -14,6 +14,17 @@ final readonly class RebuildSmiliesCacheUseCase
     }
 
     /**
+     * Builds the map again if the folders changed since it was built, and returns how many
+     * pictures it holds then; null when it is up to date.
+     *
+     * @throws SmiliesCacheWriteException
+     */
+    public function refreshIfStale(): ?int
+    {
+        return $this->smilies->isStale() ? $this->execute() : null;
+    }
+
+    /**
      * Builds the map of the smilies again and returns how many pictures it holds: a picture has
      * a Latin and a Cyrillic code, so the codes would count it twice.
      *

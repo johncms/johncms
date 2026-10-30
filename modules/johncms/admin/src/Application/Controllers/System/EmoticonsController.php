@@ -24,9 +24,21 @@ final readonly class EmoticonsController
     ) {
     }
 
+    /**
+     * The site does not look at the folders on its requests: a picture put in one is picked up
+     * here, when the page is opened.
+     */
     public function index(): ViewResponse
     {
-        return $this->renderPage();
+        try {
+            $total = $this->rebuildSmiliesCacheUseCase->refreshIfStale();
+        } catch (SmiliesCacheWriteException) {
+            return $this->renderPage(__('Error updating cache'));
+        }
+
+        return $this->renderPage(
+            successMessage: $total === null ? '' : sprintf(__('The folders have changed, so the list of the smilies is built again. Pictures: %d.'), $total)
+        );
     }
 
     public function rebuild(): ViewResponse
@@ -41,7 +53,7 @@ final readonly class EmoticonsController
         redirect(self::URL);
     }
 
-    private function renderPage(string $errorMessage = ''): ViewResponse
+    private function renderPage(string $errorMessage = '', string $successMessage = ''): ViewResponse
     {
         $title = __('Smilies');
         $this->navChain->add($title);
@@ -56,7 +68,7 @@ final readonly class EmoticonsController
                 'folders'         => $this->getFolders->execute(),
                 'catalog_url'     => '/help/smilies',
                 'error_message'   => $errorMessage,
-                'success_message' => (string) $this->session->getFlash('success_message'),
+                'success_message' => $successMessage ?: (string) $this->session->getFlash('success_message'),
             ]
         );
     }

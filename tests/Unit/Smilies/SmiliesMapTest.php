@@ -47,15 +47,25 @@ final class SmiliesMapTest extends TestCase
         self::assertFileExists($this->cache . SmiliesMap::CACHE_FILE);
     }
 
-    public function testAPicturePutInAFolderIsPickedUpWithoutARebuild(): void
+    public function testTheSiteDoesNotLookAtTheFoldersButTheStalenessIsTold(): void
     {
         $this->map()->get();
+        self::assertFalse($this->map()->isStale());
 
         touch($this->root . '/user/animals/pes.gif');
         // The folder is newer than the cache, as it is a moment after the file was written.
         touch($this->root . '/user/animals', time() + 5);
 
-        self::assertArrayHasKey(':pes:', $this->map()->get()['usr']);
+        self::assertArrayNotHasKey(':pes:', $this->map()->get()['usr']);
+        self::assertTrue($this->map()->isStale());
+        self::assertArrayHasKey(':pes:', $this->map()->rebuild()['usr']);
+    }
+
+    public function testAMissingCacheIsBuilt(): void
+    {
+        self::assertTrue($this->map()->isStale());
+        self::assertArrayHasKey(':smile', $this->map()->get()['usr']);
+        self::assertFalse($this->map()->isStale());
     }
 
     public function testACacheOfTheOldFormatIsBuiltAgain(): void
