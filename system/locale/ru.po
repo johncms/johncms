@@ -1251,3 +1251,93 @@ msgstr "Значение не соответствует ожидаемому ф
 
 msgid "Enter a full address that starts with http:// or https://"
 msgstr "Введите полный адрес, начинающийся с http:// или https://"
+
+msgid "Drop the columns of the old access system"
+msgstr "Удалить столбцы старой системы доступа"
+
+msgid "Deletes users.rights and the other leftovers of the numeric access levels. Refuses while anyone still has an access level and no role."
+msgstr "Удаляет users.rights и другие остатки числовых уровней доступа. Не выполняется, пока у кого-то есть уровень доступа без роли."
+
+msgid "Convert the old access system"
+msgstr "Перевести старую систему доступа"
+
+msgid "For a site coming from 9.9: gives every member of staff the role their access level stood for, and turns the per-module access settings into permissions. Does nothing once the old columns are gone."
+msgstr "Для сайта, перешедшего с 9.9: выдаёт каждому сотруднику роль, соответствующую его уровню доступа, и превращает настройки доступа модулей в права. Ничего не делает, если старых столбцов уже нет."
+
+msgid "Synchronise roles and permissions"
+msgstr "Синхронизировать роли и права"
+
+msgid "Creates the built-in roles of this version and grants them the permissions they are missing. Only adds, never takes away. Safe to run after every update."
+msgstr "Создаёт встроенные роли этой версии и выдаёт им недостающие права. Только добавляет и ничего не отнимает. Безопасно запускать после каждого обновления."
+
+msgid "Clear cache"
+msgstr "Очистить кэш"
+
+msgid "Remove all application cache files"
+msgstr "Удаляет все файлы кэша приложения."
+
+msgid "Clear the application cache"
+msgstr "Очистить кэш модулей"
+
+msgid "Removes what the modules cached. The compiled container, routes and templates are left alone."
+msgstr "Удаляет то, что закэшировали модули. Скомпилированный контейнер, маршруты и шаблоны не затрагиваются."
+
+msgid "Prune the application cache"
+msgstr "Почистить кэш модулей"
+
+msgid "Frees the space taken by cache entries that expired or were invalidated."
+msgstr "Освобождает место, занятое устаревшими и сброшенными записями кэша."
+
+msgid "Clean up sign-in data"
+msgstr "Очистить данные входа"
+
+msgid "Removes long-dead sessions, expired password recovery links and old audit entries."
+msgstr "Удаляет давно закончившиеся сессии, просроченные ссылки восстановления пароля и старые записи журнала."
+
+msgid "Clean up the mail queue"
+msgstr "Очистить очередь писем"
+
+msgid "Removes messages that were delivered long ago. Messages that could not be delivered are kept."
+msgstr "Удаляет давно доставленные письма. Недоставленные остаются."
+
+msgid "Generate sitemap"
+msgstr "Создать карту сайта"
+
+msgid "Generate sitemap and update robots.txt"
+msgstr "Создаёт карту сайта и обновляет robots.txt."
+
+msgid "Update the database"
+msgstr "Обновить базу данных"
+
+msgid "Brings the database up to what the files of the site expect. Safe to run more than once: what has already been applied is skipped."
+msgstr "Приводит базу данных в соответствие с файлами сайта. Можно запускать повторно: уже применённое пропускается."
+
+msgid "Install a module"
+msgstr "Установить модуль"
+
+msgid "Runs the migrations of a module and its installer."
+msgstr "Выполняет миграции модуля и его установщик."
+
+msgid "Publish the assets of the modules"
+msgstr "Опубликовать файлы модулей"
+
+msgid "Copies the styles, scripts and images of the installed modules into the document root."
+msgstr "Копирует стили, скрипты и картинки установленных модулей в публичную папку сайта."
+
+msgid "Refresh the list of modules"
+msgstr "Обновить список модулей"
+
+msgid "Writes down the modules of this release and forgets the ones whose files are gone. Installs nothing."
+msgstr "Записывает модули этого выпуска и забывает те, чьих файлов больше нет. Ничего не устанавливает."
+
+msgid "Remove a module"
+msgstr "Удалить модуль"
+
+msgid "Takes a module off the site; its files stay where they are."
+msgstr "Удаляет модуль с сайта; его файлы остаются на месте."
+
+msgid "Update a module"
+msgstr "Обновить модуль"
+
+msgid "Runs the migrations of a module and its update hook."
+msgstr "Выполняет миграции модуля и его обработчик обновления."

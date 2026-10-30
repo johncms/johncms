@@ -18,6 +18,11 @@ final readonly class AsAdminTask
          * has nothing to offer there — it is queued from wherever that argument comes from.
          */
         public bool $listed = true,
+        /**
+         * The translation domain of the title and the description: i18n:scan collects them into
+         * it, and the maintenance screen translates them with it.
+         */
+        public string $domain = 'system',
     ) {
     }
 }

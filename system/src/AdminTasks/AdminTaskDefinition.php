@@ -14,6 +14,8 @@ final readonly class AdminTaskDefinition
         public bool $background,
         /** A task that needs arguments has nothing to offer a screen of buttons. */
         public bool $listed = true,
+        /** The translation domain of the title and the description. */
+        public string $domain = 'system',
     ) {
     }
 

@@ -7,6 +7,7 @@ namespace Johncms\Console\Commands;
 use Gettext\Generator\PoGenerator;
 use Gettext\Scanner\PhpScanner;
 use Gettext\Translations;
+use Johncms\System\i18n\AdminTaskScanner;
 use Johncms\System\i18n\TwigScanner;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -63,6 +64,7 @@ final class I18nScanCommand extends Command
         }
 
         $twigScanner = new TwigScanner($this->twig, $translationsByDomain, $this->mailTwig);
+        $adminTaskScanner = new AdminTaskScanner($translationsByDomain);
         $scanner = new PhpScanner(...$translations);
         $scanner->setFunctions(
             [
@@ -96,6 +98,7 @@ final class I18nScanCommand extends Command
                 }
 
                 $scanner->scanFile($file);
+                $adminTaskScanner->scanFile($file);
             }
         }
 

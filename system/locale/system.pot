@@ -710,6 +710,126 @@ msgstr ""
 msgid "Message already exists"
 msgstr ""
 
+#: system/src/Console/Commands/AuthDropLegacyColumnsCommand.php:33
+msgid "Drop the columns of the old access system"
+msgstr ""
+
+#: system/src/Console/Commands/AuthDropLegacyColumnsCommand.php:33
+msgid "Deletes users.rights and the other leftovers of the numeric access levels. Refuses while anyone still has an access level and no role."
+msgstr ""
+
+#: system/src/Console/Commands/AuthMigrateLegacyAccessCommand.php:42
+msgid "Convert the old access system"
+msgstr ""
+
+#: system/src/Console/Commands/AuthMigrateLegacyAccessCommand.php:42
+msgid "For a site coming from 9.9: gives every member of staff the role their access level stood for, and turns the per-module access settings into permissions. Does nothing once the old columns are gone."
+msgstr ""
+
+#: system/src/Console/Commands/AuthSyncRolesCommand.php:37
+msgid "Synchronise roles and permissions"
+msgstr ""
+
+#: system/src/Console/Commands/AuthSyncRolesCommand.php:37
+msgid "Creates the built-in roles of this version and grants them the permissions they are missing. Only adds, never takes away. Safe to run after every update."
+msgstr ""
+
+#: system/src/Console/Commands/CacheClearCommand.php:20
+msgid "Clear cache"
+msgstr ""
+
+#: system/src/Console/Commands/CacheClearCommand.php:20
+msgid "Remove all application cache files"
+msgstr ""
+
+#: system/src/Console/Commands/CachePoolClearCommand.php:31
+msgid "Clear the application cache"
+msgstr ""
+
+#: system/src/Console/Commands/CachePoolClearCommand.php:31
+msgid "Removes what the modules cached. The compiled container, routes and templates are left alone."
+msgstr ""
+
+#: system/src/Console/Commands/CachePoolPruneCommand.php:34
+msgid "Prune the application cache"
+msgstr ""
+
+#: system/src/Console/Commands/CachePoolPruneCommand.php:34
+msgid "Frees the space taken by cache entries that expired or were invalidated."
+msgstr ""
+
+#: system/src/Console/Commands/CronCleanupAuthDataCommand.php:26
+msgid "Clean up sign-in data"
+msgstr ""
+
+#: system/src/Console/Commands/CronCleanupAuthDataCommand.php:26
+msgid "Removes long-dead sessions, expired password recovery links and old audit entries."
+msgstr ""
+
+#: system/src/Console/Commands/CronCleanupSentEmailsCommand.php:31
+msgid "Clean up the mail queue"
+msgstr ""
+
+#: system/src/Console/Commands/CronCleanupSentEmailsCommand.php:31
+msgid "Removes messages that were delivered long ago. Messages that could not be delivered are kept."
+msgstr ""
+
+#: system/src/Console/Commands/CronGenerateSitemapCommand.php:24
+msgid "Generate sitemap"
+msgstr ""
+
+#: system/src/Console/Commands/CronGenerateSitemapCommand.php:24
+msgid "Generate sitemap and update robots.txt"
+msgstr ""
+
+#: system/src/Console/Commands/MigrateCommand.php:30
+msgid "Update the database"
+msgstr ""
+
+#: system/src/Console/Commands/MigrateCommand.php:30
+msgid "Brings the database up to what the files of the site expect. Safe to run more than once: what has already been applied is skipped."
+msgstr ""
+
+#: system/src/Console/Commands/ModuleInstallCommand.php:33
+msgid "Install a module"
+msgstr ""
+
+#: system/src/Console/Commands/ModuleInstallCommand.php:33
+msgid "Runs the migrations of a module and its installer."
+msgstr ""
+
+#: system/src/Console/Commands/ModulePublishAssetsCommand.php:33
+msgid "Publish the assets of the modules"
+msgstr ""
+
+#: system/src/Console/Commands/ModulePublishAssetsCommand.php:33
+msgid "Copies the styles, scripts and images of the installed modules into the document root."
+msgstr ""
+
+#: system/src/Console/Commands/ModuleSyncCommand.php:36
+msgid "Refresh the list of modules"
+msgstr ""
+
+#: system/src/Console/Commands/ModuleSyncCommand.php:36
+msgid "Writes down the modules of this release and forgets the ones whose files are gone. Installs nothing."
+msgstr ""
+
+#: system/src/Console/Commands/ModuleUninstallCommand.php:28
+msgid "Remove a module"
+msgstr ""
+
+#: system/src/Console/Commands/ModuleUninstallCommand.php:28
+msgid "Takes a module off the site; its files stay where they are."
+msgstr ""
+
+#: system/src/Console/Commands/ModuleUpdateCommand.php:27
+msgid "Update a module"
+msgstr ""
+
+#: system/src/Console/Commands/ModuleUpdateCommand.php:27
+msgid "Runs the migrations of a module and its update hook."
+msgstr ""
+
 #: system/src/Http/Controller/ExternalAuthController.php:74
 #: system/src/Http/Controller/ExternalAuthController.php:94
 msgid "This sign-in service is not available"
@@ -1210,6 +1330,7 @@ msgid "We use cookies to improve the site. By continuing to use the site, you ag
 msgstr ""
 
 #: themes/default/templates/layouts/default.twig:179
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:58
 msgid "Accept"
 msgstr ""
 

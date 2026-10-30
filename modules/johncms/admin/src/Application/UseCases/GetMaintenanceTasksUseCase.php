@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Application\UseCases;
 
 use DateTimeImmutable;
+use Gettext\TranslatorFunctions;
 use DateTimeInterface;
 use Johncms\AdminTasks\AdminTaskRegistry;
 use Johncms\AdminTasks\FileAdminTaskStorage;
@@ -35,8 +36,8 @@ final readonly class GetMaintenanceTasksUseCase
 
             $tasks[] = new MaintenanceTaskDTO(
                 commandName: $definition->commandName,
-                title: $definition->title,
-                description: $definition->description,
+                title: $this->translate($definition->domain, $definition->title),
+                description: $definition->description === null ? null : $this->translate($definition->domain, $definition->description),
                 background: $definition->background,
                 status: $state?->status->value,
                 exitCode: $state?->exitCode,
@@ -46,6 +47,16 @@ final readonly class GetMaintenanceTasksUseCase
         }
 
         return $tasks;
+    }
+
+    /**
+     * The title and the description are written in English in the attribute, and i18n:scan
+     * collects them into the domain it names. Looked up through the translator rather than d__():
+     * the scanner takes every d__() call for a literal to extract.
+     */
+    private function translate(string $domain, string $original): string
+    {
+        return TranslatorFunctions::getTranslator()->dgettext($domain, $original);
     }
 
     private function formatDate(?string $date): ?string

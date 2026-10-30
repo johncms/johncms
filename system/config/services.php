@@ -339,6 +339,7 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/View/Theme/ThemeDTO.php',
                 // Built by the scan command with the translation set it fills, not by the container.
                 ROOT_PATH . 'system/src/System/i18n/TwigScanner.php',
+                ROOT_PATH . 'system/src/System/i18n/AdminTaskScanner.php',
             ]
         )
         ->autowire()

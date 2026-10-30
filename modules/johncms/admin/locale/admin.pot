@@ -2567,20 +2567,21 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
-#: modules/johncms/admin/templates/maintenance.twig:17
+#: modules/johncms/admin/templates/maintenance.twig:18
+msgid "There are no available tasks"
+msgstr ""
+
+#: modules/johncms/admin/templates/maintenance.twig:29
+#: modules/johncms/admin/templates/maintenance.twig:70
 msgid "Background tasks are started by the scheduler within a minute (a configured cron for \"schedule:run\" is required). Refresh the page to update the status."
 msgstr ""
 
-#: modules/johncms/admin/templates/maintenance.twig:26
+#: modules/johncms/admin/templates/maintenance.twig:31
 msgid "Background"
 msgstr ""
 
-#: modules/johncms/admin/templates/maintenance.twig:40
+#: modules/johncms/admin/templates/maintenance.twig:44
 msgid "Last run"
-msgstr ""
-
-#: modules/johncms/admin/templates/maintenance.twig:45
-msgid "Last output"
 msgstr ""
 
 #: modules/johncms/admin/templates/maintenance.twig:53
@@ -2591,8 +2592,8 @@ msgstr ""
 msgid "Run"
 msgstr ""
 
-#: modules/johncms/admin/templates/maintenance.twig:61
-msgid "There are no available tasks"
+#: modules/johncms/admin/templates/maintenance.twig:59
+msgid "Last output"
 msgstr ""
 
 #: modules/johncms/admin/templates/modules-confirm-dialog.twig:26
