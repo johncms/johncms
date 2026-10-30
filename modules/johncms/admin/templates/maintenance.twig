@@ -1,5 +1,6 @@
 {#
-    The maintenance tasks and what came of the last run of each.
+    The maintenance tasks and what came of the last run of each: one list, a row a task with its
+    button on the right and the output of the last run folded under it.
 
     @var array  tasks           Rows: command_name, title, description, background, status_label,
                                 status_class, pending, output, finished_at.
@@ -10,54 +11,64 @@
 {% extends '@admin/layouts/default.twig' %}
 
 {% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
-
-    <div class="alert alert-info shadow border-0">
-        {{ __('Background tasks are started by the scheduler within a minute (a configured cron for "schedule:run" is required). Refresh the page to update the status.') }}
-    </div>
-
-    {% for task in tasks %}
-        <div class="card mb-3 shadow border-0">
-            <div class="card-body">
-                <div class="d-flex flex-wrap align-items-center gap-2">
-                    <h5 class="card-title mb-0 me-auto">{{ task.title }}</h5>
-                    {% if task.background %}
-                        <span class="badge bg-secondary">{{ __('Background') }}</span>
-                    {% endif %}
-                    {% if task.status_label %}
-                        <span class="badge {{ task.status_class }}">
-                            {{ task.status_label }}
-                        </span>
-                    {% endif %}
-                </div>
-                {% if task.description %}
-                    <div class="text-muted small mt-1">{{ task.description }}</div>
-                {% endif %}
-                <div class="text-muted small mt-1">
-                    <code>{{ task.command_name }}</code>
-                    {% if task.finished_at %}
-                        &middot; {{ __('Last run') }}: {{ task.finished_at }}
-                    {% endif %}
-                </div>
-                {% if task.output %}
-                    <details class="mt-2">
-                        <summary class="small">{{ __('Last output') }}</summary>
-                        <pre class="small text-light p-2 rounded mt-1 mb-0" style="white-space: pre-wrap; background-color: #2d2d2d">{{ task.output }}</pre>
-                    </details>
-                {% endif %}
-                <form action="{{ form_action }}" method="post" class="mt-2">
-                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                    <input type="hidden" name="command" value="{{ task.command_name }}">
-                    <button type="submit" class="btn btn-primary btn-sm"{% if task.pending %} disabled{% endif %}>
-                        {{ task.background ? __('Queue the task') : __('Run') }}
-                    </button>
-                </form>
-            </div>
-        </div>
-    {% endfor %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: error_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
 
     {% if tasks is empty %}
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-warning shadow border-0', alert: __('There are no available tasks')} only %}
+        {% include '@admin/components/ui/empty-state.twig' with {icon: 'wrench', title: __('There are no available tasks'), description: ''} only %}
+    {% else %}
+        <section class="card">
+            <ul class="list-group list-group-flush">
+                {% for task in tasks %}
+                    <li class="list-group-item py-3">
+                        <div class="d-flex flex-column flex-md-row gap-2 gap-md-3 align-items-md-start">
+                            <div class="flex-grow-1" style="min-width: 0">
+                                <div class="d-flex flex-wrap align-items-center gap-2">
+                                    <span class="fw-semibold">{{ task.title }}</span>
+                                    {% if task.background %}
+                                        <span class="badge rounded-pill bg-secondary-subtle text-secondary-emphasis" title="{{ __('Background tasks are started by the scheduler within a minute (a configured cron for "schedule:run" is required). Refresh the page to update the status.') }}">
+                                            {% include '@admin/components/ui/icon.twig' with {name: 'clock', size: 12} only %}
+                                            {{ __('Background') }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                                {% if task.description %}
+                                    <div class="text-body-secondary small mt-1">{{ task.description }}</div>
+                                {% endif %}
+                                <div class="d-flex flex-wrap align-items-center gap-2 small mt-2">
+                                    <code>{{ task.command_name }}</code>
+                                    {% if task.status_label %}
+                                        <span class="badge rounded-pill badge-dot {{ task.status_class }}">{{ task.status_label }}</span>
+                                    {% endif %}
+                                    {% if task.finished_at %}
+                                        <span class="text-body-secondary">{{ __('Last run') }}: {{ task.finished_at }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <form action="{{ form_action }}" method="post" class="flex-shrink-0">
+                                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                                <input type="hidden" name="command" value="{{ task.command_name }}">
+                                <button type="submit" class="btn btn-outline-secondary btn-sm"{% if task.pending %} disabled{% endif %}>
+                                    {% include '@admin/components/ui/icon.twig' with {name: task.background ? 'clock' : 'play', size: 14} only %}
+                                    {{ task.background ? __('Queue the task') : __('Run') }}
+                                </button>
+                            </form>
+                        </div>
+                        {% if task.output %}
+                            <details class="mt-2">
+                                <summary class="small text-body-secondary">{{ __('Last output') }}</summary>
+                                <pre class="admin-task-output small mt-2 mb-0">{{ task.output }}</pre>
+                            </details>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        {% if tasks|filter(task => task.background) is not empty %}
+            <p class="form-text mt-3 mb-0">
+                {{ __('Background tasks are started by the scheduler within a minute (a configured cron for "schedule:run" is required). Refresh the page to update the status.') }}
+            </p>
+        {% endif %}
     {% endif %}
 {% endblock %}

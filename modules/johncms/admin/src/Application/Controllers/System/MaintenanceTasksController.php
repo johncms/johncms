@@ -89,10 +89,10 @@ final readonly class MaintenanceTasksController
     private function rows(array $tasks): array
     {
         $labels = [
-            'queued'  => ['label' => __('Queued'), 'class' => 'bg-info'],
-            'running' => ['label' => __('Running'), 'class' => 'bg-warning text-dark'],
-            'done'    => ['label' => __('Completed'), 'class' => 'bg-success'],
-            'failed'  => ['label' => __('Failed'), 'class' => 'bg-danger'],
+            'queued'  => ['label' => __('Queued'), 'class' => 'bg-info-subtle text-info-emphasis'],
+            'running' => ['label' => __('Running'), 'class' => 'bg-warning-subtle text-warning-emphasis'],
+            'done'    => ['label' => __('Completed'), 'class' => 'bg-success-subtle text-success-emphasis'],
+            'failed'  => ['label' => __('Failed'), 'class' => 'bg-danger-subtle text-danger-emphasis'],
         ];
 
         return array_map(
@@ -102,7 +102,7 @@ final readonly class MaintenanceTasksController
                 'description'  => (string) $task->description,
                 'background'   => $task->background,
                 'status_label' => $task->status === null ? '' : ($labels[$task->status]['label'] ?? $task->status),
-                'status_class' => $labels[$task->status ?? '']['class'] ?? 'bg-secondary',
+                'status_class' => $labels[$task->status ?? '']['class'] ?? 'bg-secondary-subtle text-secondary-emphasis',
                 'pending'      => $task->isPending(),
                 'output'       => $task->output,
                 'finished_at'  => (string) $task->finishedAt,

@@ -51,3 +51,14 @@
   line-height: 1;
   padding-top: 2px;
 }
+
+// The output of the last run of a maintenance task, as the console printed it.
+.admin-task-output {
+  white-space: pre-wrap;
+  padding: .75rem;
+  border-radius: var(--bs-border-radius);
+  background: var(--bs-tertiary-bg);
+  color: var(--bs-body-color);
+  max-height: 20rem;
+  overflow: auto;
+}
