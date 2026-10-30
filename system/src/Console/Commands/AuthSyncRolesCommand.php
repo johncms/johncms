@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Console\Commands;
 
+use Johncms\AdminTasks\AdminTaskGroup;
 use Johncms\AdminTasks\AsAdminTask;
 use Johncms\Auth\Authorization\DefaultPermissionsApplier;
 use Johncms\Auth\Authorization\RoleSeeder;
@@ -33,6 +34,8 @@ use Throwable;
 #[AsAdminTask(
     title: 'Synchronise roles and permissions',
     description: 'Creates the built-in roles of this version and grants them the permissions they are missing. Only adds, never takes away. Safe to run after every update.',
+    group: AdminTaskGroup::Update,
+    order: 2,
 )]
 final class AuthSyncRolesCommand extends Command
 {

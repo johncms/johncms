@@ -3054,3 +3054,24 @@ msgstr "Всё обязательное на месте. Часть рекоме
 
 msgid "The server meets every requirement of the system."
 msgstr "Сервер отвечает всем требованиям системы."
+
+msgid "Routine"
+msgstr "Регулярные"
+
+msgid "Cleaning up and the caches. Safe to run at any time."
+msgstr "Уборка и кэш. Можно запускать в любой момент."
+
+msgid "After an update"
+msgstr "После обновления"
+
+msgid "Run them once the files of the site have been updated."
+msgstr "Запускайте после того, как обновили файлы сайта."
+
+msgid "One-time: coming from 9.9"
+msgstr "Разовые: переход с 9.9"
+
+msgid "Only a site moved from version 9.9 needs them. Run them in this order."
+msgstr "Нужны только сайту, перешедшему с версии 9.9. Выполняйте по порядку."
+
+msgid "Run them in this order once the files of the site have been updated."
+msgstr "Запускайте по порядку после того, как обновили файлы сайта."

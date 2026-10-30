@@ -6,6 +6,7 @@ namespace Johncms\Modules\Admin\Application\Controllers\System;
 
 use Johncms\AdminTasks\AdminTaskBusyException;
 use Johncms\AdminTasks\AdminTaskRegistry;
+use Johncms\AdminTasks\AdminTaskGroup;
 use Johncms\AdminTasks\AdminTaskStatus;
 use Johncms\Modules\Admin\Application\DTO\MaintenanceTaskDTO;
 use Johncms\Http\Session;
@@ -74,12 +75,38 @@ final readonly class MaintenanceTasksController
                 'title'           => $title,
                 'page_title'      => $title,
                 'sys_menu'        => ['maintenance' => true],
-                'tasks'           => $this->rows($this->getTasks->execute()),
+                'groups'          => $this->groups($this->rows($this->getTasks->execute())),
                 'form_action'     => self::URL . '/run',
                 'error_message'   => $errorMessage,
                 'success_message' => (string) $this->session->getFlash('success_message'),
             ]
         );
+    }
+
+    /**
+     * The tasks under the group they belong to, in the order the groups are wanted; a group with
+     * no task is left out.
+     *
+     * @param list<array<string, mixed>> $rows
+     * @return list<array{key: string, title: string, hint: string, tasks: list<array<string, mixed>>}>
+     */
+    private function groups(array $rows): array
+    {
+        $groups = [
+            AdminTaskGroup::Routine->value   => [__('Routine'), __('Cleaning up and the caches. Safe to run at any time.')],
+            AdminTaskGroup::Update->value    => [__('After an update'), __('Run them in this order once the files of the site have been updated.')],
+            AdminTaskGroup::Migration->value => [__('One-time: coming from 9.9'), __('Only a site moved from version 9.9 needs them. Run them in this order.')],
+        ];
+
+        $result = [];
+        foreach ($groups as $key => [$title, $hint]) {
+            $tasks = array_values(array_filter($rows, static fn (array $row): bool => $row['group'] === $key));
+            if ($tasks !== []) {
+                $result[] = ['key' => $key, 'title' => $title, 'hint' => $hint, 'tasks' => $tasks];
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -101,6 +128,7 @@ final readonly class MaintenanceTasksController
                 'title'        => $task->title,
                 'description'  => (string) $task->description,
                 'background'   => $task->background,
+                'group'        => $task->group,
                 'status_label' => $task->status === null ? '' : ($labels[$task->status]['label'] ?? $task->status),
                 'status_class' => $labels[$task->status ?? '']['class'] ?? 'bg-secondary-subtle text-secondary-emphasis',
                 'pending'      => $task->isPending(),

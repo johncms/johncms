@@ -46,12 +46,14 @@ final readonly class AdminTaskRegistry
                 background: $adminTask->background,
                 listed: $adminTask->listed,
                 domain: $adminTask->domain,
+                group: $adminTask->group,
+                order: $adminTask->order,
             );
         }
 
         usort(
             $definitions,
-            static fn (AdminTaskDefinition $left, AdminTaskDefinition $right): int => $left->commandName <=> $right->commandName
+            static fn (AdminTaskDefinition $left, AdminTaskDefinition $right): int => [$left->order, $left->commandName] <=> [$right->order, $right->commandName]
         );
 
         return $definitions;

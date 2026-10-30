@@ -16,6 +16,8 @@ final readonly class AdminTaskDefinition
         public bool $listed = true,
         /** The translation domain of the title and the description. */
         public string $domain = 'system',
+        public AdminTaskGroup $group = AdminTaskGroup::Routine,
+        public int $order = 0,
     ) {
     }
 

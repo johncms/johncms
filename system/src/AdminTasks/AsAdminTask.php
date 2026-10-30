@@ -23,6 +23,9 @@ final readonly class AsAdminTask
          * it, and the maintenance screen translates them with it.
          */
         public string $domain = 'system',
+        public AdminTaskGroup $group = AdminTaskGroup::Routine,
+        /** The place of the task within its group, for steps that have to run in turn. */
+        public int $order = 0,
     ) {
     }
 }

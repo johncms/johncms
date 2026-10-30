@@ -11,6 +11,7 @@ final readonly class MaintenanceTaskDTO
         public string $title,
         public ?string $description,
         public bool $background,
+        public string $group,
         public ?string $status,
         public ?int $exitCode,
         public string $output,

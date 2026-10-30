@@ -39,6 +39,7 @@ final readonly class GetMaintenanceTasksUseCase
                 title: $this->translate($definition->domain, $definition->title),
                 description: $definition->description === null ? null : $this->translate($definition->domain, $definition->description),
                 background: $definition->background,
+                group: $definition->group->value,
                 status: $state?->status->value,
                 exitCode: $state?->exitCode,
                 output: $state?->output ?? '',

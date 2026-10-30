@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Console\Commands;
 
+use Johncms\AdminTasks\AdminTaskGroup;
 use Johncms\AdminTasks\AsAdminTask;
 use Johncms\Database\Migrations\ConsoleMigrationReporter;
 use Johncms\Database\Migrations\Migrator;
@@ -26,6 +27,7 @@ use Throwable;
     title: 'Update the database',
     description: 'Brings the database up to what the files of the site expect. Safe to run more than once: what has already been applied is skipped.',
     background: true,
+    group: AdminTaskGroup::Update,
 )]
 final class MigrateCommand extends Command
 {

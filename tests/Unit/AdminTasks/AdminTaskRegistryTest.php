@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\AdminTasks;
 
+use Johncms\AdminTasks\AdminTaskGroup;
 use Johncms\AdminTasks\AdminTaskRegistry;
 use Johncms\AdminTasks\AsAdminTask;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -39,6 +40,16 @@ final class AdminTaskRegistryTest extends TestCase
         self::assertNotNull((new AdminTaskRegistry([new UnlistedTaskCommand()]))->find('test:unlisted'));
     }
 
+    public function testATaskKeepsItsGroupAndStepsComeInTheirOrder(): void
+    {
+        $definitions = (new AdminTaskRegistry([new SecondStepCommand(), new ListedTaskCommand(), new FirstStepCommand()]))->all();
+
+        self::assertSame(['test:listed', 'test:z-first', 'test:a-second'], array_column($definitions, 'commandName'));
+        self::assertSame(AdminTaskGroup::Routine, $definitions[0]->group);
+        self::assertSame(AdminTaskGroup::Migration, $definitions[1]->group);
+        self::assertSame('system', $definitions[1]->domain);
+    }
+
     public function testACommandWithoutTheAttributeIsNotATask(): void
     {
         self::assertSame([], (new AdminTaskRegistry([new PlainCommand()]))->all());
@@ -54,6 +65,18 @@ final class ListedTaskCommand extends Command
 #[AsCommand(name: 'test:unlisted', description: 'Unlisted')]
 #[AsAdminTask(title: 'Unlisted task', background: true, listed: false)]
 final class UnlistedTaskCommand extends Command
+{
+}
+
+#[AsCommand(name: 'test:z-first', description: 'First step')]
+#[AsAdminTask(title: 'First step', group: AdminTaskGroup::Migration)]
+final class FirstStepCommand extends Command
+{
+}
+
+#[AsCommand(name: 'test:a-second', description: 'Second step')]
+#[AsAdminTask(title: 'Second step', group: AdminTaskGroup::Migration, order: 1)]
+final class SecondStepCommand extends Command
 {
 }
 

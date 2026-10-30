@@ -258,6 +258,7 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/AdminTasks/AdminTaskDefinition.php',
                 ROOT_PATH . 'system/src/AdminTasks/AdminTaskState.php',
                 ROOT_PATH . 'system/src/AdminTasks/AdminTaskStatus.php',
+                ROOT_PATH . 'system/src/AdminTasks/AdminTaskGroup.php',
                 ROOT_PATH . 'system/src/AdminTasks/AdminTaskBusyException.php',
                 ROOT_PATH . 'system/src/Scheduler/AsScheduledTask.php',
                 ROOT_PATH . 'system/src/Scheduler/ScheduledTaskDefinition.php',

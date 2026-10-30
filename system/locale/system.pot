@@ -710,27 +710,27 @@ msgstr ""
 msgid "Message already exists"
 msgstr ""
 
-#: system/src/Console/Commands/AuthDropLegacyColumnsCommand.php:33
+#: system/src/Console/Commands/AuthDropLegacyColumnsCommand.php:36
 msgid "Drop the columns of the old access system"
 msgstr ""
 
-#: system/src/Console/Commands/AuthDropLegacyColumnsCommand.php:33
+#: system/src/Console/Commands/AuthDropLegacyColumnsCommand.php:36
 msgid "Deletes users.rights and the other leftovers of the numeric access levels. Refuses while anyone still has an access level and no role."
 msgstr ""
 
-#: system/src/Console/Commands/AuthMigrateLegacyAccessCommand.php:42
+#: system/src/Console/Commands/AuthMigrateLegacyAccessCommand.php:44
 msgid "Convert the old access system"
 msgstr ""
 
-#: system/src/Console/Commands/AuthMigrateLegacyAccessCommand.php:42
+#: system/src/Console/Commands/AuthMigrateLegacyAccessCommand.php:44
 msgid "For a site coming from 9.9: gives every member of staff the role their access level stood for, and turns the per-module access settings into permissions. Does nothing once the old columns are gone."
 msgstr ""
 
-#: system/src/Console/Commands/AuthSyncRolesCommand.php:37
+#: system/src/Console/Commands/AuthSyncRolesCommand.php:40
 msgid "Synchronise roles and permissions"
 msgstr ""
 
-#: system/src/Console/Commands/AuthSyncRolesCommand.php:37
+#: system/src/Console/Commands/AuthSyncRolesCommand.php:40
 msgid "Creates the built-in roles of this version and grants them the permissions they are missing. Only adds, never takes away. Safe to run after every update."
 msgstr ""
 
@@ -782,11 +782,11 @@ msgstr ""
 msgid "Generate sitemap and update robots.txt"
 msgstr ""
 
-#: system/src/Console/Commands/MigrateCommand.php:30
+#: system/src/Console/Commands/MigrateCommand.php:32
 msgid "Update the database"
 msgstr ""
 
-#: system/src/Console/Commands/MigrateCommand.php:30
+#: system/src/Console/Commands/MigrateCommand.php:32
 msgid "Brings the database up to what the files of the site expect. Safe to run more than once: what has already been applied is skipped."
 msgstr ""
 
@@ -798,19 +798,19 @@ msgstr ""
 msgid "Runs the migrations of a module and its installer."
 msgstr ""
 
-#: system/src/Console/Commands/ModulePublishAssetsCommand.php:33
+#: system/src/Console/Commands/ModulePublishAssetsCommand.php:36
 msgid "Publish the assets of the modules"
 msgstr ""
 
-#: system/src/Console/Commands/ModulePublishAssetsCommand.php:33
+#: system/src/Console/Commands/ModulePublishAssetsCommand.php:36
 msgid "Copies the styles, scripts and images of the installed modules into the document root."
 msgstr ""
 
-#: system/src/Console/Commands/ModuleSyncCommand.php:36
+#: system/src/Console/Commands/ModuleSyncCommand.php:39
 msgid "Refresh the list of modules"
 msgstr ""
 
-#: system/src/Console/Commands/ModuleSyncCommand.php:36
+#: system/src/Console/Commands/ModuleSyncCommand.php:39
 msgid "Writes down the modules of this release and forgets the ones whose files are gone. Installs nothing."
 msgstr ""
 

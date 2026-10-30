@@ -1,9 +1,10 @@
 {#
-    The maintenance tasks and what came of the last run of each: one list, a row a task with its
-    button on the right and the output of the last run folded under it.
+    The maintenance tasks and what came of the last run of each: a card for each group, a row a
+    task with its button on the right and the output of the last run folded under it.
 
-    @var array  tasks           Rows: command_name, title, description, background, status_label,
-                                status_class, pending, output, finished_at.
+    @var array  groups          Groups of tasks: key (routine | update | migration), title, hint and
+                                rows of command_name, title, description, background, group,
+                                status_label, status_class, pending, output, finished_at.
     @var string form_action
     @var string error_message   Empty unless the last run failed.
     @var string success_message Empty unless a run has just succeeded.
@@ -14,58 +15,64 @@
     {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: error_message} only %}
     {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
 
-    {% if tasks is empty %}
+    {% if groups is empty %}
         {% include '@admin/components/ui/empty-state.twig' with {icon: 'wrench', title: __('There are no available tasks'), description: ''} only %}
     {% else %}
-        <section class="card">
-            <ul class="list-group list-group-flush">
-                {% for task in tasks %}
-                    <li class="list-group-item py-3">
-                        <div class="d-flex flex-column flex-md-row gap-2 gap-md-3 align-items-md-start">
-                            <div class="flex-grow-1" style="min-width: 0">
-                                <div class="d-flex flex-wrap align-items-center gap-2">
-                                    <span class="fw-semibold">{{ task.title }}</span>
-                                    {% if task.background %}
-                                        <span class="badge rounded-pill bg-secondary-subtle text-secondary-emphasis" title="{{ __('Background tasks are started by the scheduler within a minute (a configured cron for "schedule:run" is required). Refresh the page to update the status.') }}">
-                                            {% include '@admin/components/ui/icon.twig' with {name: 'clock', size: 12} only %}
-                                            {{ __('Background') }}
-                                        </span>
+        {% for group in groups %}
+            <section class="card mb-4{{ group.key == 'migration' ? ' border-warning-subtle' }}" data-task-group="{{ group.key }}">
+                <div class="card-header d-block">
+                    <h2 class="h6 mb-0">{{ group.title }}</h2>
+                    <div class="form-text mt-1">{{ group.hint }}</div>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for task in group.tasks %}
+                        <li class="list-group-item py-3">
+                            <div class="d-flex flex-column flex-md-row gap-2 gap-md-3 align-items-md-start">
+                                <div class="flex-grow-1" style="min-width: 0">
+                                    <div class="d-flex flex-wrap align-items-center gap-2">
+                                        <span class="fw-semibold">{{ task.title }}</span>
+                                        {% if task.background %}
+                                            <span class="badge rounded-pill bg-secondary-subtle text-secondary-emphasis" title="{{ __('Background tasks are started by the scheduler within a minute (a configured cron for "schedule:run" is required). Refresh the page to update the status.') }}">
+                                                {% include '@admin/components/ui/icon.twig' with {name: 'clock', size: 12} only %}
+                                                {{ __('Background') }}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    {% if task.description %}
+                                        <div class="text-body-secondary small mt-1">{{ task.description }}</div>
                                     {% endif %}
+                                    <div class="d-flex flex-wrap align-items-center gap-2 small mt-2">
+                                        <code>{{ task.command_name }}</code>
+                                        {% if task.status_label %}
+                                            <span class="badge rounded-pill badge-dot {{ task.status_class }}">{{ task.status_label }}</span>
+                                        {% endif %}
+                                        {% if task.finished_at %}
+                                            <span class="text-body-secondary">{{ __('Last run') }}: {{ task.finished_at }}</span>
+                                        {% endif %}
+                                    </div>
                                 </div>
-                                {% if task.description %}
-                                    <div class="text-body-secondary small mt-1">{{ task.description }}</div>
-                                {% endif %}
-                                <div class="d-flex flex-wrap align-items-center gap-2 small mt-2">
-                                    <code>{{ task.command_name }}</code>
-                                    {% if task.status_label %}
-                                        <span class="badge rounded-pill badge-dot {{ task.status_class }}">{{ task.status_label }}</span>
-                                    {% endif %}
-                                    {% if task.finished_at %}
-                                        <span class="text-body-secondary">{{ __('Last run') }}: {{ task.finished_at }}</span>
-                                    {% endif %}
-                                </div>
+                                <form action="{{ form_action }}" method="post" class="flex-shrink-0">
+                                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                                    <input type="hidden" name="command" value="{{ task.command_name }}">
+                                    <button type="submit" class="btn btn-outline-secondary btn-sm"{% if task.pending %} disabled{% endif %}>
+                                        {% include '@admin/components/ui/icon.twig' with {name: task.background ? 'clock' : 'play', size: 14} only %}
+                                        {{ task.background ? __('Queue the task') : __('Run') }}
+                                    </button>
+                                </form>
                             </div>
-                            <form action="{{ form_action }}" method="post" class="flex-shrink-0">
-                                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                                <input type="hidden" name="command" value="{{ task.command_name }}">
-                                <button type="submit" class="btn btn-outline-secondary btn-sm"{% if task.pending %} disabled{% endif %}>
-                                    {% include '@admin/components/ui/icon.twig' with {name: task.background ? 'clock' : 'play', size: 14} only %}
-                                    {{ task.background ? __('Queue the task') : __('Run') }}
-                                </button>
-                            </form>
-                        </div>
-                        {% if task.output %}
-                            <details class="mt-2">
-                                <summary class="small text-body-secondary">{{ __('Last output') }}</summary>
-                                <pre class="admin-task-output small mt-2 mb-0">{{ task.output }}</pre>
-                            </details>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
-        </section>
+                            {% if task.output %}
+                                <details class="mt-2">
+                                    <summary class="small text-body-secondary">{{ __('Last output') }}</summary>
+                                    <pre class="admin-task-output small mt-2 mb-0">{{ task.output }}</pre>
+                                </details>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        {% endfor %}
 
-        {% if tasks|filter(task => task.background) is not empty %}
+        {% if groups|filter(group => group.tasks|filter(task => task.background) is not empty) is not empty %}
             <p class="form-text mt-3 mb-0">
                 {{ __('Background tasks are started by the scheduler within a minute (a configured cron for "schedule:run" is required). Refresh the page to update the status.') }}
             </p>

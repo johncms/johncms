@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Console\Commands;
 
+use Johncms\AdminTasks\AdminTaskGroup;
 use Johncms\AdminTasks\AsAdminTask;
 use Johncms\Modules\ModuleAssetPublisher;
 use Johncms\Modules\ModuleRegistry;
@@ -29,6 +30,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsAdminTask(
     title: 'Publish the assets of the modules',
     description: 'Copies the styles, scripts and images of the installed modules into the document root.',
+    group: AdminTaskGroup::Update,
+    order: 3,
 )]
 final class ModulePublishAssetsCommand extends Command
 {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Console\Commands;
 
+use Johncms\AdminTasks\AdminTaskGroup;
 use Johncms\AdminTasks\AsAdminTask;
 use Johncms\Modules\ModuleRegistry;
 use Johncms\Modules\ModuleRepositoryInterface;
@@ -32,6 +33,8 @@ use Throwable;
 #[AsAdminTask(
     title: 'Refresh the list of modules',
     description: 'Writes down the modules of this release and forgets the ones whose files are gone. Installs nothing.',
+    group: AdminTaskGroup::Update,
+    order: 1,
 )]
 final class ModuleSyncCommand extends Command
 {

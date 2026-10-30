@@ -222,7 +222,7 @@ msgid "System check"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:70
-#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:68
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:69
 msgid "Maintenance"
 msgstr ""
 
@@ -584,8 +584,8 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:60
 #: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:71
 #: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:128
-#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:44
-#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:58
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:45
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:59
 #: modules/johncms/admin/src/Application/Controllers/Users/DeleteUserController.php:104
 #: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:247
 #: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:281
@@ -593,7 +593,7 @@ msgid "Wrong data"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:206
-#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:50
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:51
 msgid "The task has been queued and will start within a minute"
 msgstr ""
 
@@ -939,31 +939,55 @@ msgstr ""
 msgid "Snapshot successfully created"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:54
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:55
 msgid "The task has been completed"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:55
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:56
 msgid "The task has failed"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:60
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:61
 msgid "The task is already running"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:92
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:96
+msgid "Routine"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:96
+msgid "Cleaning up and the caches. Safe to run at any time."
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:97
+msgid "After an update"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:97
+msgid "Run them in this order once the files of the site have been updated."
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:98
+msgid "One-time: coming from 9.9"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:98
+msgid "Only a site moved from version 9.9 needs them. Run them in this order."
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:119
 msgid "Queued"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:93
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:120
 msgid "Running"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:94
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:121
 msgid "Completed"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:95
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:122
 msgid "Failed"
 msgstr ""
 
@@ -2567,32 +2591,32 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
-#: modules/johncms/admin/templates/maintenance.twig:18
+#: modules/johncms/admin/templates/maintenance.twig:19
 msgid "There are no available tasks"
 msgstr ""
 
-#: modules/johncms/admin/templates/maintenance.twig:29
-#: modules/johncms/admin/templates/maintenance.twig:70
+#: modules/johncms/admin/templates/maintenance.twig:35
+#: modules/johncms/admin/templates/maintenance.twig:77
 msgid "Background tasks are started by the scheduler within a minute (a configured cron for \"schedule:run\" is required). Refresh the page to update the status."
 msgstr ""
 
-#: modules/johncms/admin/templates/maintenance.twig:31
+#: modules/johncms/admin/templates/maintenance.twig:37
 msgid "Background"
 msgstr ""
 
-#: modules/johncms/admin/templates/maintenance.twig:44
+#: modules/johncms/admin/templates/maintenance.twig:50
 msgid "Last run"
 msgstr ""
 
-#: modules/johncms/admin/templates/maintenance.twig:53
+#: modules/johncms/admin/templates/maintenance.twig:59
 msgid "Queue the task"
 msgstr ""
 
-#: modules/johncms/admin/templates/maintenance.twig:53
+#: modules/johncms/admin/templates/maintenance.twig:59
 msgid "Run"
 msgstr ""
 
-#: modules/johncms/admin/templates/maintenance.twig:59
+#: modules/johncms/admin/templates/maintenance.twig:65
 msgid "Last output"
 msgstr ""
 

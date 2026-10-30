@@ -862,6 +862,13 @@
       'Some required checks failed: the site may not work correctly until they are fixed.' => 'Часть обязательных проверок не пройдена: пока это не исправлено, сайт может работать неправильно.',
       'Everything required is in place. Some recommendations are not followed, which may slow the site down.' => 'Всё обязательное на месте. Часть рекомендаций не выполнена — сайт может работать медленнее.',
       'The server meets every requirement of the system.' => 'Сервер отвечает всем требованиям системы.',
+      'Routine' => 'Регулярные',
+      'Cleaning up and the caches. Safe to run at any time.' => 'Уборка и кэш. Можно запускать в любой момент.',
+      'After an update' => 'После обновления',
+      'Run them once the files of the site have been updated.' => 'Запускайте после того, как обновили файлы сайта.',
+      'One-time: coming from 9.9' => 'Разовые: переход с 9.9',
+      'Only a site moved from version 9.9 needs them. Run them in this order.' => 'Нужны только сайту, перешедшему с версии 9.9. Выполняйте по порядку.',
+      'Run them in this order once the files of the site have been updated.' => 'Запускайте по порядку после того, как обновили файлы сайта.',
     ),
   ),
 );
