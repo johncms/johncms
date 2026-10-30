@@ -78,6 +78,37 @@ final class ConsentAdminTest extends FunctionalTestCase
         self::assertStringContainsString('admin-list-footer__total', $content);
     }
 
+    public function testConsentLogNamesAnExistingAccountAndKeepsTheIdOfADeletedOne(): void
+    {
+        $consent = Consent::query()->create([
+            'context' => 'registration',
+            'language' => 'ru',
+            'title' => 'Terms of service',
+            'text' => 'Full terms',
+            'version' => '2.0',
+            'is_required' => true,
+            'is_active' => true,
+        ]);
+        $member = FunctionalUserFactory::create(['name' => 'Consenting member']);
+        foreach ([$member->id, 987654] as $userId) {
+            ConsentLog::query()->create([
+                'user_id' => $userId,
+                'consent_id' => $consent->id,
+                'version' => '2.0',
+                'ip_address' => '192.0.2.12',
+                'accepted_at' => '2025-03-14 12:30:00',
+            ]);
+        }
+
+        $content = (string) $this->handleRequest('/admin/consents/log', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()))->getContent();
+
+        self::assertStringContainsString('Consenting member', $content);
+        self::assertStringContainsString('href="/profile/' . $member->id . '"', $content);
+        self::assertStringContainsString('987654', $content);
+        self::assertStringNotContainsString('href="/profile/987654"', $content);
+        self::assertStringContainsString('14 мар 2025', $content);
+    }
+
     public function testDeleteConfirmationSupportsModalAndPlainPage(): void
     {
         $consent = Consent::query()->create([

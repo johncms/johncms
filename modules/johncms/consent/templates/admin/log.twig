@@ -1,8 +1,9 @@
 {#
     Who accepted which consent and when.
 
-    @var array        items     Rows: id, user_id, consent_id, consent_title, context, version,
-                                ip_address, accepted_at.
+    @var array        items     Rows: id, user_id, user_name (null for a guest or an account
+                                deleted since), consent_id, consent_title, context, version,
+                                ip_address, accepted_at (formatted for display).
     @var string       back_url
     @var int          total
     @var int          per_page
@@ -43,17 +44,23 @@
                         <tr>
                             <td class="text-muted">{{ item.id }}</td>
                             <td>
-                                {% if item.user_id %}
+                                {% if item.user_name %}
                                     <a href="/profile/{{ item.user_id }}" class="text-nowrap">
                                         {% include '@admin/components/ui/icon.twig' with {name: 'user', size: 14} only %}
-                                        {{ item.user_id }}
+                                        {{ item.user_name }}
                                     </a>
+                                {% elseif item.user_id %}
+                                    {# The account is deleted: its id is all that is left, and there is no profile to open. #}
+                                    <span class="text-nowrap text-body-secondary">
+                                        {% include '@admin/components/ui/icon.twig' with {name: 'user', size: 14} only %}
+                                        {{ item.user_id }}
+                                    </span>
                                 {% else %}
                                     <span class="badge rounded-pill text-bg-light">{{ __('Guest') }}</span>
                                 {% endif %}
                             </td>
                             <td>
-                                <div class="fw-semibold">{{ item.consent_title ?? '#' ~ item.consent_id }}</div>
+                                <div class="fw-semibold">{{ item.consent_title ?? ('#' ~ item.consent_id) }}</div>
                                 {% if item.context %}<div class="small text-muted"><code>{{ item.context }}</code></div>{% endif %}
                             </td>
                             <td><span class="badge text-bg-light border">{{ item.version }}</span></td>

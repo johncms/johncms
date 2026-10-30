@@ -65,6 +65,7 @@
       'Inactive' => 'Неактивно',
       'Back to consents' => 'К списку согласий',
       'Consent acceptance records will appear here.' => 'Здесь будут отображаться записи о принятых согласиях.',
+      'Total:' => 'Всего:',
     ),
   ),
 );

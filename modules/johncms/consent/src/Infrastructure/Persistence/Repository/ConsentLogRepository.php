@@ -7,6 +7,7 @@ namespace Johncms\Modules\Consent\Infrastructure\Persistence\Repository;
 use Illuminate\Support\Collection;
 use Johncms\Modules\Consent\Domain\Models\ConsentLog;
 use Johncms\Modules\Consent\Domain\Repository\ConsentLogRepositoryInterface;
+use Johncms\Users\User;
 
 final class ConsentLogRepository implements ConsentLogRepositoryInterface
 {
@@ -28,5 +29,20 @@ final class ConsentLogRepository implements ConsentLogRepositoryInterface
     public function count(): int
     {
         return ConsentLog::query()->count();
+    }
+
+    public function namesOf(array $ids): array
+    {
+        if ($ids === []) {
+            return [];
+        }
+
+        /** @var array<int, string> $names */
+        $names = User::query()
+            ->whereIn('id', $ids)
+            ->pluck('name', 'id')
+            ->all();
+
+        return $names;
     }
 }

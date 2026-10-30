@@ -271,3 +271,6 @@ msgstr "К списку согласий"
 msgid "Consent acceptance records will appear here."
 msgstr "Здесь будут отображаться записи о принятых согласиях."
 
+
+msgid "Total:"
+msgstr "Всего:"

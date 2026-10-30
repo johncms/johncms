@@ -11,6 +11,7 @@ use Johncms\Modules\Consent\Domain\Models\ConsentLog;
 use Johncms\Modules\Consent\Domain\Repository\ConsentLogRepositoryInterface;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
+use Johncms\Utils\DateFormatterInterface;
 
 final readonly class ConsentLogController
 {
@@ -22,6 +23,7 @@ final readonly class ConsentLogController
         private ConsentTitleFormatter $titleFormatter,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
+        private DateFormatterInterface $dateFormatter,
     ) {
     }
 
@@ -40,16 +42,20 @@ final readonly class ConsentLogController
         }
 
         $entries = $this->repository->getPage($pagination->getPerPage(), $pagination->getOffset());
+        $names = $this->repository->namesOf(
+            array_values(array_unique(array_filter($entries->pluck('user_id')->all())))
+        );
 
         $items = $entries->map(fn (ConsentLog $entry): array => [
             'id'            => $entry->id,
             'user_id'       => $entry->user_id,
+            'user_name'     => $names[$entry->user_id] ?? null,
             'consent_id'    => $entry->consent_id,
             'consent_title' => $entry->consent !== null ? $this->titleFormatter->toPlainText($entry->consent->title) : null,
             'context'       => $entry->consent?->context,
             'version'       => $entry->version,
             'ip_address'    => $entry->ip_address,
-            'accepted_at'   => $entry->accepted_at?->format('Y-m-d H:i:s'),
+            'accepted_at'   => $entry->accepted_at === null ? '' : $this->dateFormatter->format($entry->accepted_at->getTimestamp()),
         ])->all();
 
         return new ViewResponse('@consent/admin/log.twig', [

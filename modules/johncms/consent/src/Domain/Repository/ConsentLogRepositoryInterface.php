@@ -22,4 +22,12 @@ interface ConsentLogRepositoryInterface
     public function getPage(int $limit, int $offset): Collection;
 
     public function count(): int;
+
+    /**
+     * Names of the accounts that still exist, keyed by id; a deleted account is absent.
+     *
+     * @param list<int> $ids
+     * @return array<int, string>
+     */
+    public function namesOf(array $ids): array;
 }

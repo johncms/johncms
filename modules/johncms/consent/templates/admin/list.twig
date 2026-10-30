@@ -61,7 +61,7 @@
                             <td>
                                 {% if item.is_active %}<span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ __('Active') }}</span>{% else %}<span class="badge rounded-pill text-bg-light badge-dot">{{ __('Inactive') }}</span>{% endif %}
                             </td>
-                            <td class="text-nowrap">
+                            <td class="text-end text-nowrap">
                                 <a href="{{ item.edit_url }}" class="btn btn-outline-secondary btn-icon btn-sm" title="{{ __('Edit') }}" aria-label="{{ __('Edit') }}">{% include '@admin/components/ui/icon.twig' with {name: 'pencil', size: 14} only %}</a>
                                 <a href="{{ item.delete_url }}" class="btn btn-outline-danger btn-icon btn-sm ms-1" title="{{ __('Delete') }}" aria-label="{{ __('Delete') }}" data-admin-modal>{% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}</a>
                             </td>
