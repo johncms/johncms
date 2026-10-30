@@ -92,6 +92,7 @@ final readonly class MailSettingsController
     private function renderForm(string $errorMessage = ''): ViewResponse
     {
         $title = __('Mail Settings');
+        $this->navChain->add(__('Settings'), '/admin/settings');
         $this->navChain->add($title);
 
         $config = config('mail') ?? [];
@@ -102,8 +103,8 @@ final readonly class MailSettingsController
             '@admin/mail-settings.twig',
             [
                 'title'      => $title,
-                'page_title' => $title,
-                'sys_menu'   => ['mail_settings' => true],
+                'page_title' => __('Settings'),
+                'sys_menu'   => ['settings' => true],
                 'settings'   => [
                     'dsn'              => (string) ($config['dsn'] ?? ''),
                     'transport'        => (string) ($config['transport'] ?? 'sendmail'),

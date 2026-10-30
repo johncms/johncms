@@ -1,0 +1,17 @@
+{#
+    The pages of the settings of the site, one tab each: they were separate items of the menu.
+
+    @param string active general | mail | images | captcha
+#}
+<ul class="nav nav-tabs">
+    {% for tab in [
+        {key: 'general', url: '/admin/settings', title: d__('admin', 'General')},
+        {key: 'mail', url: '/admin/settings/mail', title: d__('admin', 'Mail')},
+        {key: 'images', url: '/admin/settings/images', title: d__('admin', 'Images in the editor')},
+        {key: 'captcha', url: '/admin/settings/captcha', title: d__('admin', 'Captcha')},
+    ] %}
+        <li class="nav-item">
+            <a class="nav-link{{ tab.key == active ? ' active' }}" href="{{ tab.url }}"{% if tab.key == active %} aria-current="page"{% endif %}>{{ tab.title }}</a>
+        </li>
+    {% endfor %}
+</ul>

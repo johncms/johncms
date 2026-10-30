@@ -59,6 +59,7 @@ final readonly class EditorImageSettingsController
     private function renderForm(string $errorMessage = ''): ViewResponse
     {
         $title = __('Images in the editor');
+        $this->navChain->add(__('Settings'), '/admin/settings');
         $this->navChain->add($title);
 
         $serverLimit = $this->uploadLimits->maxUploadBytes();
@@ -67,8 +68,8 @@ final readonly class EditorImageSettingsController
             '@admin/editor-images.twig',
             [
                 'title'           => $title,
-                'page_title'      => $title,
-                'sys_menu'        => ['editor_images' => true],
+                'page_title'      => __('Settings'),
+                'sys_menu'        => ['settings' => true],
                 'settings'        => $this->settings(),
                 'format_options'  => $this->formatOptions(),
                 'server_limit'    => $serverLimit,

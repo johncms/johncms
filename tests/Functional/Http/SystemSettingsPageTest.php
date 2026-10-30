@@ -36,6 +36,16 @@ final class SystemSettingsPageTest extends FunctionalTestCase
         self::assertStringContainsString('admin-form-footer--sticky', $this->page());
     }
 
+    public function testTheSettingsAreTabsOfOnePage(): void
+    {
+        foreach (['/admin/settings' => '/admin/settings', '/admin/settings/mail' => '/admin/settings/mail'] as $page => $active) {
+            $content = (string) $this->handleRequest($page, cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()))->getContent();
+
+            self::assertMatchesRegularExpression('#class="nav-link active" href="' . preg_quote($active, '#') . '"\s*aria-current="page"#', $content, $page);
+            self::assertStringContainsString('href="/admin/settings/captcha"', $content, $page);
+        }
+    }
+
     private function page(): string
     {
         $response = $this->handleRequest('/admin/settings', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()));

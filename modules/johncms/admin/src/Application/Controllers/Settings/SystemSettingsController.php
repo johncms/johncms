@@ -79,7 +79,7 @@ final readonly class SystemSettingsController
     private function renderForm(string $errorMessage = ''): ViewResponse
     {
         $title = __('System Settings');
-        $this->navChain->add($title);
+        $this->navChain->add(__('Settings'));
 
         $timeShift = (int) config('johncms.timeshift', 0);
 
@@ -87,7 +87,7 @@ final readonly class SystemSettingsController
             '@admin/settings.twig',
             [
                 'title'           => $title,
-                'page_title'      => $title,
+                'page_title'      => __('Settings'),
                 'sys_menu'        => ['settings' => true],
                 'settings'        => $this->settings($timeShift),
                 'themes'          => $this->themeListProvider->getAvailable(),

@@ -2931,3 +2931,12 @@ msgstr "Для того, что загружают пользователи: ф�
 
 msgid "The server accepts files up to %s: a larger limit here does not help."
 msgstr "Сервер принимает файлы до %s: больший лимит здесь не поможет."
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "General"
+msgstr "Общие"
+
+msgid "Mail"
+msgstr "Почта"

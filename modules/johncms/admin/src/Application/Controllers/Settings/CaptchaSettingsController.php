@@ -58,14 +58,15 @@ final readonly class CaptchaSettingsController
     private function renderForm(string $errorMessage = ''): ViewResponse
     {
         $title = __('Captcha');
+        $this->navChain->add(__('Settings'), '/admin/settings');
         $this->navChain->add($title);
 
         return new ViewResponse(
             '@admin/captcha-settings.twig',
             [
                 'title'           => $title,
-                'page_title'      => $title,
-                'sys_menu'        => ['captcha_settings' => true],
+                'page_title'      => __('Settings'),
+                'sys_menu'        => ['settings' => true],
                 'form_action'     => self::URL,
                 'providers'       => $this->getSettings->execute(),
                 'error_message'   => $errorMessage,

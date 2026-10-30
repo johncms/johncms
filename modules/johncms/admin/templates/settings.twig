@@ -12,6 +12,10 @@
 #}
 {% extends '@admin/layouts/default.twig' %}
 
+{% block page_tabs %}
+    {% include '@admin/components/settings-tabs.twig' with {active: 'general'} only %}
+{% endblock %}
+
 {% macro card_head(icon, title) %}
     <div class="card-header">
         {% include '@admin/components/ui/icon.twig' with {name: icon, size: 16} only %}

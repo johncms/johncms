@@ -12,6 +12,10 @@
 #}
 {% extends '@admin/layouts/default.twig' %}
 
+{% block page_tabs %}
+    {% include '@admin/components/settings-tabs.twig' with {active: 'mail'} only %}
+{% endblock %}
+
 {% block content %}
     <div style="max-width: 640px">
         {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}

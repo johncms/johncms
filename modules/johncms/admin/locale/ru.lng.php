@@ -821,6 +821,9 @@
       'KB' => 'КБ',
       'For what members upload: files in the downloads, photos in the albums, attachments in the forum.' => 'Для того, что загружают пользователи: файлов в загрузках, фото в альбомах, вложений на форуме.',
       'The server accepts files up to %s: a larger limit here does not help.' => 'Сервер принимает файлы до %s: больший лимит здесь не поможет.',
+      'Settings' => 'Настройки',
+      'General' => 'Общие',
+      'Mail' => 'Почта',
     ),
   ),
 );

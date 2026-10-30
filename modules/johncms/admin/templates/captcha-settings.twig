@@ -8,6 +8,10 @@
 #}
 {% extends '@admin/layouts/default.twig' %}
 
+{% block page_tabs %}
+    {% include '@admin/components/settings-tabs.twig' with {active: 'captcha'} only %}
+{% endblock %}
+
 {% block content %}
     {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
     {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
