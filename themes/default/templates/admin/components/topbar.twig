@@ -17,10 +17,29 @@
 
     <div class="admin-topbar__actions">
         {% if languages|length > 1 %}
-            <button type="button" class="admin-topbar__btn" data-url="/language/" data-bs-toggle="modal" data-bs-target=".ajax_modal">
-                <img class="admin-topbar__flag" src="{{ asset('images/flags/' ~ app.locale|lower ~ '.svg') }}" alt="">
-                <span class="admin-topbar__btn-label">{{ languages[app.locale].name|default(app.locale) }}</span>
-            </button>
+            {# Links rather than a dialog: ?setlng= is read by the core on any page, so the menu
+               needs no module of the site and no script. language-menu.js keeps the rest of the
+               query of the page and takes setlng back out of the address once it has done. #}
+            <div class="dropdown">
+                <button type="button" class="admin-topbar__btn" data-bs-toggle="dropdown" aria-expanded="false" aria-label="{{ d__('system', 'Select language') }}">
+                    <img class="admin-topbar__flag" src="{{ asset('images/flags/' ~ app.locale|lower ~ '.svg') }}" alt="">
+                    <span class="admin-topbar__btn-label">{{ languages[app.locale].name|default(app.locale) }}</span>
+                    {% include '@admin/components/ui/icon.twig' with {name: 'chevron-down', size: 12, class: 'text-body-tertiary'} only %}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end admin-language-menu">
+                    {% for code, language in languages %}
+                        <li>
+                            <a class="dropdown-item{{ code == app.locale ? ' active' }}" href="?setlng={{ code|url_encode }}" lang="{{ code }}" data-language-link="{{ code }}"{% if code == app.locale %} aria-current="true"{% endif %}>
+                                <img class="admin-topbar__flag" src="{{ asset('images/flags/' ~ code|lower ~ '.svg') }}" alt="">
+                                <span class="flex-grow-1">{{ language.name|default(code) }}</span>
+                                {% if code == app.locale %}
+                                    {% include '@admin/components/ui/icon.twig' with {name: 'check', size: 14} only %}
+                                {% endif %}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         {% endif %}
 
         <button type="button" class="admin-topbar__btn admin-topbar__btn--icon"

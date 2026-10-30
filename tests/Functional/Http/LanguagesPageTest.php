@@ -34,6 +34,18 @@ final class LanguagesPageTest extends FunctionalTestCase
         self::assertMatchesRegularExpression('#name="lng" value="ru" id="default-ru" checked#', $content);
     }
 
+    public function testTheTopBarSwitchesTheLanguageWithLinksAndNoDialog(): void
+    {
+        $content = $this->withConfig(
+            ['johncms' => ['lng' => 'ru', 'lng_list' => ['ru' => ['name' => 'Русский', 'version' => 1.0], 'en' => ['name' => 'English', 'version' => 1.0]]]],
+            fn (): string => (string) $this->handleRequest('/admin/settings', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()))->getContent()
+        );
+
+        self::assertStringContainsString('href="?setlng=en" lang="en" data-language-link="en"', $content);
+        self::assertMatchesRegularExpression('#class="dropdown-item active" href="\?setlng=ru"#', $content);
+        self::assertStringNotContainsString('ajax_modal', $content);
+    }
+
     public function testTheManagementOfLanguagePacksIsGone(): void
     {
         $response = $this->handleRequest('/admin/languages/manage', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()));
