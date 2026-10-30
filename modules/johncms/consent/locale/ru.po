@@ -275,3 +275,30 @@ msgstr "Здесь будут отображаться записи о прин�
 
 msgid "Total:"
 msgstr "Всего:"
+
+msgid "Changes saved. The banner is shown to every visitor again."
+msgstr "Изменения сохранены. Баннер снова покажется всем посетителям."
+
+msgid "Visitors with this language see now"
+msgstr "Сейчас посетители с этим языком видят"
+
+msgid "The default text of the site with a link to the Privacy Policy."
+msgstr "Стандартный текст сайта со ссылкой на Политику конфиденциальности."
+
+msgid "The preview shows the saved text."
+msgstr "В предпросмотре — сохранённый текст."
+
+msgid "Showing"
+msgstr "Показ"
+
+msgid "The banner asks a visitor once and remembers the answer in the browser."
+msgstr "Баннер спрашивает посетителя один раз и запоминает ответ в браузере."
+
+msgid "Ask every visitor again"
+msgstr "Спросить всех заново"
+
+msgid "Turn it on when the text or the cookies of the site change: everybody who accepted the banner sees it once more."
+msgstr "Включите, если изменился текст или cookie сайта: все, кто уже принял баннер, увидят его ещё раз."
+
+msgid "Version of the consent: %d"
+msgstr "Версия согласия: %d"

@@ -109,6 +109,19 @@ final class ConsentAdminTest extends FunctionalTestCase
         self::assertStringContainsString('14 мар 2025', $content);
     }
 
+    public function testTheCookieBannerOpensTheDefaultLanguageAndShowsWhatVisitorsSee(): void
+    {
+        $content = (string) $this->handleRequest('/admin/cookie-banner', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()))->getContent();
+
+        // One switch instead of a tab per language, the default language of the site opened.
+        self::assertStringContainsString('data-language-switch', $content);
+        self::assertStringNotContainsString('data-bs-toggle="tab"', $content);
+        self::assertMatchesRegularExpression('#class="dropdown-item active"\s+data-language-option\s+data-language-code="' . config('johncms')['lng'] . '"#', $content);
+        self::assertStringContainsString('admin-cookie-preview', $content);
+        // The example of a link is shown as code, not as a link.
+        self::assertStringContainsString('&lt;a href=&quot;/consent/cookie-policy/&quot;&gt;', $content);
+    }
+
     public function testDeleteConfirmationSupportsModalAndPlainPage(): void
     {
         $consent = Consent::query()->create([

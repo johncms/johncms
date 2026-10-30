@@ -1,78 +1,91 @@
 {#
-    The cookie banner and its text in every installed language.
+    The cookie banner: its text in every installed language on the left, whether and to whom it is
+    shown on the right.
 
     @var string form_action
-    @var array  languages       Languages the text may be written in: code, name.
+    @var array  languages        code, name, default (AdminLanguageOptions).
+    @var string active_language  The language opened first.
+    @var array  default_language code, name.
+    @var string languages_url
     @var bool   enabled
-    @var int    version
-    @var array  texts           Text of the banner, keyed by language code.
-    @var string error_message   Empty unless the last save failed.
-    @var string success_message Empty unless a save has just succeeded.
+    @var int    version          What a visitor's acceptance is remembered for.
+    @var array  texts            Text of the banner, keyed by language code.
+    @var array  previews         What a visitor of each language sees now: sanitized markup, or
+                                 null for the default text.
+    @var string error_message    Empty unless the last save failed.
+    @var string success_message  Empty unless a save has just succeeded.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
 {% block content %}
-    <div class="card">
-        <div class="card-header d-flex align-items-center gap-2">
-            {% include '@admin/components/ui/icon.twig' with {name: 'cookie', size: 16} only %}
-            <h2 class="h6 mb-0">{{ __('Cookie banner settings') }}</h2>
-        </div>
-        <div class="card-body">
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: error_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
 
-        <form id="cookie-banner-form" method="post" action="{{ form_action }}">
-            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+    <form id="cookie-banner-form" method="post" action="{{ form_action }}" class="row g-3 align-items-start">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
 
-            <div class="form-check mb-3">
-                <input type="checkbox" class="form-check-input" name="cookie_banner_enabled" value="1" id="cookie_banner_enabled"{% if enabled %} checked="checked"{% endif %}>
-                <label class="form-check-label" for="cookie_banner_enabled">{{ __('Enable banner') }}</label>
-            </div>
-
-            <div class="form-group">
-                <label>{{ __('Banner text') }}</label>
-                <div class="text-muted small mb-2">{{ __('Leave empty to use the default text with a link to the Privacy Policy.') }}</div>
-                <div class="text-muted small mb-2">
-                    {{ __('You can use simple HTML tags in the text, for example links:') }}
-                    <code>{{ '<a href="/consent/cookie-policy/">Cookie Policy</a>'|e }}</code>
+        <div class="col-lg-8">
+            <section class="card">
+                <div class="card-header">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'languages', size: 16} only %}
+                    <h2 class="h6 mb-0 ms-2">{{ __('Banner text') }}</h2>
                 </div>
-                <ul class="nav nav-tabs" role="tablist">
+                <div class="card-body">
+                    {% include '@admin/components/ui/language-fallback-hint.twig' with {default_language: default_language, languages_url: languages_url} only %}
+                    {% include '@admin/components/ui/language-switch.twig' with {languages: languages, active: active_language, input_name: 'cookie_banner_language'} only %}
+
                     {% for language in languages %}
-                        <li class="nav-item">
-                            <a class="nav-link {% if loop.first %}active{% endif %}"
-                               data-bs-toggle="tab"
-                               href="#cookie_text_{{ language.code }}"
-                               role="tab">{{ language.name }} ({{ language.code }})</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-                <div class="tab-content border border-top-0 p-3">
-                    {% for language in languages %}
-                        <div class="tab-pane fade {% if loop.first %}show active{% endif %}"
-                             id="cookie_text_{{ language.code }}"
-                             role="tabpanel">
-                            <textarea rows="4"
-                                      class="form-control"
+                        <div class="pt-3" data-language-panel="{{ language.code }}"{% if active_language != language.code %} hidden{% endif %}>
+                            <label class="form-label" for="cookie_banner_text_{{ language.code }}">{{ __('Text') }}</label>
+                            <textarea rows="4" class="form-control" id="cookie_banner_text_{{ language.code }}"
                                       name="cookie_banner_text[{{ language.code }}]">{{ texts[language.code]|default('') }}</textarea>
+                            <div class="form-text">
+                                {{ __('Leave empty to use the default text with a link to the Privacy Policy.') }}
+                                {{ __('You can use simple HTML tags in the text, for example links:') }}
+                                {# A literal is not escaped by itself: the example is shown as code, not as a link. #}
+                                <code>{{ '<a href="/consent/cookie-policy/">Cookie Policy</a>'|e }}</code>
+                            </div>
+
+                            <div class="form-label mt-3">{{ __('Visitors with this language see now') }}</div>
+                            <div class="admin-cookie-preview">
+                                <div class="admin-cookie-preview__text">
+                                    {% if previews[language.code] %}
+                                        {{ previews[language.code] }}
+                                    {% else %}
+                                        <span class="text-body-secondary">{{ __('The default text of the site with a link to the Privacy Policy.') }}</span>
+                                    {% endif %}
+                                </div>
+                                <span class="btn btn-primary btn-sm" aria-hidden="true">{{ d__('system', 'Accept') }}</span>
+                            </div>
+                            <div class="form-text">{{ __('The preview shows the saved text.') }}</div>
                         </div>
                     {% endfor %}
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label for="cookie_banner_version">{{ __('Version') }}</label>
-                <div class="text-muted small mb-2">{{ __('Increase the version to show the banner again to everyone.') }}</div>
-                <input type="number"
-                       min="1"
-                       id="cookie_banner_version"
-                       name="cookie_banner_version"
-                       class="form-control col-sm-3"
-                       value="{{ version }}">
-            </div>
-
-        </form>
+            </section>
         </div>
-    </div>
+
+        <div class="col-lg-4">
+            <section class="card">
+                <div class="card-header">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'cookie', size: 16} only %}
+                    <h2 class="h6 mb-0 ms-2">{{ __('Showing') }}</h2>
+                </div>
+                <div class="card-body d-flex flex-column gap-3">
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" role="switch" name="cookie_banner_enabled" value="1" id="cookie_banner_enabled"{% if enabled %} checked{% endif %}>
+                        <label class="form-check-label" for="cookie_banner_enabled">{{ __('Enable banner') }}</label>
+                        <div class="form-text mt-0">{{ __('The banner asks a visitor once and remembers the answer in the browser.') }}</div>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" role="switch" name="cookie_banner_reshow" value="1" id="cookie_banner_reshow">
+                        <label class="form-check-label" for="cookie_banner_reshow">{{ __('Ask every visitor again') }}</label>
+                        <div class="form-text mt-0">{{ __('Turn it on when the text or the cookies of the site change: everybody who accepted the banner sees it once more.') }}</div>
+                    </div>
+                    <div class="text-body-secondary small">{{ __('Version of the consent: %d')|format(version) }}</div>
+                </div>
+            </section>
+        </div>
+    </form>
 
     {% include '@admin/components/ui/form-footer.twig' with {form: 'cookie-banner-form', cancel_url: '/admin'} only %}
 {% endblock %}

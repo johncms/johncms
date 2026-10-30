@@ -14,12 +14,12 @@ msgstr ""
 #: modules/johncms/consent/src/Application/Controllers/Admin/ConsentDeleteController.php:54
 #: modules/johncms/consent/src/Application/Controllers/Admin/ConsentEditController.php:108
 #: modules/johncms/consent/src/Application/Controllers/Admin/ConsentListController.php:32
-#: modules/johncms/consent/src/Application/Controllers/Admin/ConsentLogController.php:31
+#: modules/johncms/consent/src/Application/Controllers/Admin/ConsentLogController.php:33
 msgid "Consents"
 msgstr ""
 
 #: modules/johncms/consent/src/Application/Controllers/Admin/ConsentEditController.php:98
-#: modules/johncms/consent/src/Application/Controllers/Admin/CookieBannerController.php:39
+#: modules/johncms/consent/src/Application/Controllers/Admin/CookieBannerController.php:46
 msgid "Changes saved successfully"
 msgstr ""
 
@@ -40,53 +40,85 @@ msgstr ""
 msgid "Contacts form"
 msgstr ""
 
-#: modules/johncms/consent/src/Application/Controllers/Admin/ConsentLogController.php:30
+#: modules/johncms/consent/src/Application/Controllers/Admin/ConsentLogController.php:32
 #: modules/johncms/consent/templates/admin/list.twig:17
 msgid "Consent log"
 msgstr ""
 
-#: modules/johncms/consent/src/Application/Controllers/Admin/CookieBannerController.php:36
+#: modules/johncms/consent/src/Application/Controllers/Admin/CookieBannerController.php:41
 msgid "ERROR: Can not write file `system.local.php`"
 msgstr ""
 
-#: modules/johncms/consent/src/Application/Controllers/Admin/CookieBannerController.php:62
+#: modules/johncms/consent/src/Application/Controllers/Admin/CookieBannerController.php:45
+msgid "Changes saved. The banner is shown to every visitor again."
+msgstr ""
+
+#: modules/johncms/consent/src/Application/Controllers/Admin/CookieBannerController.php:71
 msgid "Cookie banner"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:18
-msgid "Cookie banner settings"
-msgstr ""
-
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:29
-msgid "Enable banner"
-msgstr ""
-
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:33
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:31
 msgid "Banner text"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:34
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:39
+#: modules/johncms/consent/templates/admin/form.twig:56
+msgid "Text"
+msgstr ""
+
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:43
 msgid "Leave empty to use the default text with a link to the Privacy Policy."
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:36
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:44
 msgid "You can use simple HTML tags in the text, for example links:"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:63
-#: modules/johncms/consent/templates/admin/delete-dialog.twig:17
-#: modules/johncms/consent/templates/admin/form.twig:68
-#: modules/johncms/consent/templates/admin/list.twig:43
-#: modules/johncms/consent/templates/admin/log.twig:36
-msgid "Version"
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:48
+msgid "Visitors with this language see now"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:64
-msgid "Increase the version to show the banner again to everyone."
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:54
+msgid "The default text of the site with a link to the Privacy Policy."
+msgstr ""
+
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:59
+msgid "The preview shows the saved text."
+msgstr ""
+
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:70
+msgid "Showing"
+msgstr ""
+
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:75
+msgid "Enable banner"
+msgstr ""
+
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:76
+msgid "The banner asks a visitor once and remembers the answer in the browser."
+msgstr ""
+
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:80
+msgid "Ask every visitor again"
+msgstr ""
+
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:81
+msgid "Turn it on when the text or the cookies of the site change: everybody who accepted the banner sees it once more."
+msgstr ""
+
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:83
+msgid "Version of the consent: %d"
 msgstr ""
 
 #: modules/johncms/consent/templates/admin/delete-dialog.twig:16
 msgid "Are you sure you want to delete this consent?"
+msgstr ""
+
+#: modules/johncms/consent/templates/admin/delete-dialog.twig:17
+#: modules/johncms/consent/templates/admin/form.twig:68
+#: modules/johncms/consent/templates/admin/list.twig:43
+#: modules/johncms/consent/templates/admin/log.twig:37
+msgid "Version"
 msgstr ""
 
 #: modules/johncms/consent/templates/admin/delete-dialog.twig:21
@@ -133,10 +165,6 @@ msgstr ""
 msgid "Consent text"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/form.twig:56
-msgid "Text"
-msgstr ""
-
 #: modules/johncms/consent/templates/admin/form.twig:57
 msgid "Full text shown on a separate page. Leave empty if the checkbox should contain no link to a separate text page."
 msgstr ""
@@ -167,7 +195,7 @@ msgid "Inactive consents are not shown in forms."
 msgstr ""
 
 #: modules/johncms/consent/templates/admin/list.twig:32
-#: modules/johncms/consent/templates/admin/log.twig:25
+#: modules/johncms/consent/templates/admin/log.twig:26
 msgid "The list is empty"
 msgstr ""
 
@@ -201,34 +229,34 @@ msgid "Edit"
 msgstr ""
 
 #: modules/johncms/consent/templates/admin/list.twig:73
-#: modules/johncms/consent/templates/admin/log.twig:68
+#: modules/johncms/consent/templates/admin/log.twig:75
 msgid "Total:"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/log.twig:16
+#: modules/johncms/consent/templates/admin/log.twig:17
 msgid "Back to consents"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/log.twig:26
+#: modules/johncms/consent/templates/admin/log.twig:27
 msgid "Consent acceptance records will appear here."
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/log.twig:34
+#: modules/johncms/consent/templates/admin/log.twig:35
 msgid "User"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/log.twig:35
+#: modules/johncms/consent/templates/admin/log.twig:36
 msgid "Consent"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/log.twig:37
+#: modules/johncms/consent/templates/admin/log.twig:38
 msgid "IP address"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/log.twig:38
+#: modules/johncms/consent/templates/admin/log.twig:39
 msgid "Date"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/log.twig:52
+#: modules/johncms/consent/templates/admin/log.twig:59
 msgid "Guest"
 msgstr ""

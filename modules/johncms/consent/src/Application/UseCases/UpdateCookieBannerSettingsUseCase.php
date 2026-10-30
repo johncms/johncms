@@ -22,8 +22,10 @@ final readonly class UpdateCookieBannerSettingsUseCase
     {
         $config = $this->configRepository->getJohncms();
 
+        $version = max(1, (int) ($config['cookie_banner_version'] ?? 1));
+
         $config['cookie_banner_enabled'] = $dto->enabled;
-        $config['cookie_banner_version'] = $dto->version;
+        $config['cookie_banner_version'] = $dto->reshow ? $version + 1 : $version;
         $config['cookie_banner_text'] = $dto->texts;
 
         $this->configRepository->saveJohncms($config);
