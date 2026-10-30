@@ -177,8 +177,8 @@ body.dark {
   }
 }
 
-// A captcha provider of the settings: the one in use is framed by the accent.
-.admin-captcha-provider--active {
+// A service of the settings (a captcha, a sign-in service): the one in use is framed by the accent.
+.admin-provider-card--active {
   border-color: var(--accent);
 }
 
@@ -186,4 +186,10 @@ body.dark {
 .admin-smiley {
   max-height: 32px;
   max-width: 48px;
+}
+
+// A copy button that has just copied: the accent says so for a moment.
+[data-copy].is-copied {
+  color: var(--accent);
+  border-color: var(--accent);
 }

@@ -1,5 +1,6 @@
 {#
-    Application keys of the sign-in services.
+    Application keys of the sign-in services: a card for each, switched on in its head, with the
+    keys from the panel of the service and the callback address to register there.
 
     @var array  providers       Rows: key, label, enabled, clientId, hasSecret, callbackUrl,
                                 users, withoutAlternative.
@@ -8,54 +9,83 @@
 #}
 {% extends '@admin/layouts/default.twig' %}
 
+{% block page_tabs %}
+    {% include '@admin/components/settings-tabs.twig' with {active: 'sign_in'} only %}
+{% endblock %}
+
 {% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
 
-    <form method="post" action="{{ form_action }}">
-        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+    <p class="text-body-secondary">{{ __('Members can sign in with an account of a service turned on here. Register an application in the panel of the service, give it the callback address and fill in the keys it gives.') }}</p>
 
-        {% for provider in providers %}
-            <div class="border rounded p-3 mb-3">
-                <h5>{{ provider.label }}</h5>
+    {% if providers is empty %}
+        {% include '@admin/components/ui/empty-state.twig' with {icon: 'log-in', title: __('The list is empty'), description: ''} only %}
+    {% else %}
+        <form method="post" action="{{ form_action }}" id="sign-in-form" class="row g-3 align-items-start">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
 
-                <div class="form-check mb-3">
-                    <input type="checkbox" class="form-check-input"
-                           id="enabled_{{ provider.key }}"
-                           name="providers[{{ provider.key }}][enabled]" value="1"
-                           {{ provider.enabled ? 'checked' : '' }}>
-                    <label class="form-check-label" for="enabled_{{ provider.key }}">{{ __('Enabled') }}</label>
+            {% for provider in providers %}
+                {% set configured = provider.clientId != '' and provider.hasSecret %}
+                <div class="col-lg-6">
+                    <section class="card admin-provider-card{{ provider.enabled ? ' admin-provider-card--active' }}">
+                        <div class="card-header d-flex align-items-center gap-2">
+                            <div class="form-check form-switch mb-0">
+                                <input type="checkbox" class="form-check-input" role="switch" id="enabled_{{ provider.key }}" name="providers[{{ provider.key }}][enabled]" value="1"{% if provider.enabled %} checked{% endif %}>
+                                <label class="form-check-label fw-semibold" for="enabled_{{ provider.key }}">{{ provider.label }}</label>
+                            </div>
+                            <span class="ms-auto">
+                                {% if provider.enabled and configured %}
+                                    <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ __('Turned on') }}</span>
+                                {% elseif not configured %}
+                                    <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis badge-dot">{{ __('Not configured') }}</span>
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="card-body d-flex flex-column gap-3">
+                            {% if provider.enabled and not configured %}
+                                <div class="alert alert-warning small mb-0">{{ __('The service is turned on, but its button is not shown on the site until both keys are filled in.') }}</div>
+                            {% endif %}
+                            {% if provider.withoutAlternative > 0 %}
+                                {# The number is the point of this warning: switching the service off is the
+                                   simplest way to lock people out of their own accounts without noticing. #}
+                                <div class="alert alert-warning small mb-0">
+                                    {{ __('Members who sign in through it: %d. Without another way in: %d — turning the service off locks them out.')|format(provider.users, provider.withoutAlternative) }}
+                                </div>
+                            {% elseif provider.users > 0 %}
+                                <div class="form-text mt-0">
+                                    {% include '@admin/components/ui/icon.twig' with {name: 'users', size: 14} only %}
+                                    {{ __('Members who sign in through it: %d.')|format(provider.users) }}
+                                </div>
+                            {% endif %}
+
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label class="form-label" for="client_id_{{ provider.key }}">{{ __('Client ID') }}</label>
+                                    <input type="text" class="form-control font-monospace" id="client_id_{{ provider.key }}" name="providers[{{ provider.key }}][client_id]" value="{{ provider.clientId }}" autocomplete="off">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label" for="client_secret_{{ provider.key }}">{{ __('Client secret') }}</label>
+                                    <input type="password" class="form-control" id="client_secret_{{ provider.key }}" name="providers[{{ provider.key }}][client_secret]" value=""
+                                           placeholder="{{ provider.hasSecret ? __('Saved. Fill in to replace.') : '' }}" autocomplete="new-password">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="form-label" for="callback_{{ provider.key }}">{{ __('Callback URL') }}</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control font-monospace small" id="callback_{{ provider.key }}" value="{{ provider.callbackUrl }}" readonly>
+                                    <button type="button" class="btn btn-outline-secondary" data-copy="#callback_{{ provider.key }}" title="{{ __('Copy') }}" aria-label="{{ __('Copy') }}">
+                                        {% include '@admin/components/ui/icon.twig' with {name: 'copy', size: 14} only %}
+                                    </button>
+                                </div>
+                                <div class="form-text">{{ __('Give this address to the service when registering the application.') }}</div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
+            {% endfor %}
+        </form>
 
-                {% if provider.enabled and provider.withoutAlternative > 0 %}
-                    {# The number is the point of this warning: switching the service off is the
-                       simplest way to lock people out of their own accounts without noticing. #}
-                    <div class="alert alert-warning py-2">
-                        {{ __('%d users sign in through this service, %d of them have no other way in.')|format(provider.users, provider.withoutAlternative) }}
-                    </div>
-                {% endif %}
-
-                <div class="form-group">
-                    <label for="client_id_{{ provider.key }}">{{ __('Client ID') }}</label>
-                    <input type="text" class="form-control" id="client_id_{{ provider.key }}"
-                           name="providers[{{ provider.key }}][client_id]" value="{{ provider.clientId }}">
-                </div>
-
-                <div class="form-group">
-                    <label for="client_secret_{{ provider.key }}">{{ __('Client secret') }}</label>
-                    <input type="password" class="form-control" id="client_secret_{{ provider.key }}"
-                           name="providers[{{ provider.key }}][client_secret]" value=""
-                           placeholder="{{ provider.hasSecret ? __('Saved. Fill in to replace.') : '' }}"
-                           autocomplete="new-password">
-                </div>
-
-                <div class="small text-muted mt-2">
-                    {{ __('Callback URL') }}: <code>{{ provider.callbackUrl }}</code>
-                </div>
-            </div>
-        {% else %}
-            {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
-        {% endfor %}
-
-        <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
-    </form>
+        {% include '@admin/components/ui/form-footer.twig' with {form: 'sign-in-form', cancel_url: '/admin/settings'} only %}
+    {% endif %}
 {% endblock %}

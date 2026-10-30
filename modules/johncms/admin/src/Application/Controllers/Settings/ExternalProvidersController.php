@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Application\Controllers\Access;
+namespace Johncms\Modules\Admin\Application\Controllers\Settings;
 
 use Johncms\Http\Request;
 use Johncms\Http\Session;
@@ -21,7 +21,7 @@ use Johncms\NavChain;
  */
 final readonly class ExternalProvidersController
 {
-    private const URL = '/admin/auth/providers';
+    private const URL = '/admin/settings/sign-in';
 
     public function __construct(
         private NavChain $navChain,
@@ -35,14 +35,15 @@ final readonly class ExternalProvidersController
     public function index(Request $request): ViewResponse
     {
         $title = __('Sign-in services');
+        $this->navChain->add(__('Settings'), '/admin/settings');
         $this->navChain->add($title);
 
         return new ViewResponse(
             '@admin/external-providers.twig',
             [
                 'title'           => $title,
-                'page_title'      => $title,
-                'sec_menu'        => ['auth_providers' => true],
+                'page_title'      => __('Settings'),
+                'sys_menu'        => ['settings' => true],
                 'form_action'     => self::URL,
                 // The same address the flow sends, resolved in one place: a callback registered
                 // at the provider that differs from the one we send is refused by it.

@@ -867,6 +867,13 @@
       'After an update' => 'После обновления',
       'Run them once the files of the site have been updated.' => 'Запускайте после того, как обновили файлы сайта.',
       'Run them in this order once the files of the site have been updated.' => 'Запускайте по порядку после того, как обновили файлы сайта.',
+      'Members can sign in with an account of a service turned on here. Register an application in the panel of the service, give it the callback address and fill in the keys it gives.' => 'Пользователи могут входить через аккаунт включённого здесь сервиса. Зарегистрируйте приложение в кабинете сервиса, укажите ему адрес возврата и впишите выданные ключи.',
+      'Turned on' => 'Включён',
+      'The service is turned on, but its button is not shown on the site until both keys are filled in.' => 'Сервис включён, но его кнопка не появится на сайте, пока не заполнены оба ключа.',
+      'Members who sign in through it: %d.' => 'Входят через этот сервис: %d.',
+      'Copy' => 'Скопировать',
+      'Give this address to the service when registering the application.' => 'Укажите этот адрес в настройках приложения у сервиса.',
+      'Members who sign in through it: %d. Without another way in: %d — turning the service off locks them out.' => 'Входят через этот сервис: %d. Без другого способа входа: %d — если выключить сервис, они не смогут войти.',
     ),
   ),
 );

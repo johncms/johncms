@@ -20,6 +20,7 @@ import './offcanvas';
 import './language-panels';
 import './mail-settings';
 import './language-settings';
+import './copy-button';
 import './ad-form-preview';
 import './prism';
 import './forum';

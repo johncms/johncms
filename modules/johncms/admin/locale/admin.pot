@@ -44,6 +44,11 @@ msgstr ""
 msgid "Captcha"
 msgstr ""
 
+#: themes/default/templates/admin/components/settings-tabs.twig:12
+#: modules/johncms/admin/src/Application/Controllers/Settings/ExternalProvidersController.php:37
+msgid "Sign-in services"
+msgstr ""
+
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:34
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:38
 #: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:134
@@ -199,6 +204,8 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:72
 #: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:62
 #: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:71
+#: modules/johncms/admin/src/Application/Controllers/Settings/ExternalProvidersController.php:38
+#: modules/johncms/admin/src/Application/Controllers/Settings/ExternalProvidersController.php:45
 #: modules/johncms/admin/src/Application/Controllers/Settings/MailSettingsController.php:95
 #: modules/johncms/admin/src/Application/Controllers/Settings/MailSettingsController.php:106
 #: modules/johncms/admin/src/Application/Controllers/Settings/SystemSettingsController.php:82
@@ -237,18 +244,13 @@ msgid "Security"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:78
-#: modules/johncms/admin/src/Application/Controllers/Access/ExternalProvidersController.php:37
-msgid "Sign-in services"
-msgstr ""
-
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:79
 #: modules/johncms/admin/src/Application/Controllers/System/FileIntegrityController.php:29
 #: modules/johncms/admin/src/Application/Controllers/System/FileIntegrityController.php:42
 #: modules/johncms/admin/src/Application/Controllers/System/FileIntegrityController.php:71
 msgid "Anti-Spyware"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:80
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:79
 #: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:50
 #: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:74
 #: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:126
@@ -311,7 +313,6 @@ msgstr ""
 
 #: themes/default/templates/admin/components/ui/form-footer.twig:26
 #: themes/default/templates/admin/components/ui/form-footer.twig:46
-#: modules/johncms/admin/templates/external-providers.twig:59
 #: modules/johncms/admin/templates/ip-ban-form.twig:53
 #: modules/johncms/admin/templates/style-guide/examples/card.twig:16
 msgid "Save"
@@ -374,13 +375,6 @@ msgstr ""
 msgid "Loading"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Access/ExternalProvidersController.php:70
-#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:226
-#: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:98
-#: modules/johncms/admin/templates/style-guide/examples/alerts.twig:1
-msgid "Changes saved successfully"
-msgstr ""
-
 #: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:124
 msgid "Delete role"
 msgstr ""
@@ -423,6 +417,13 @@ msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:193
 msgid "The role is deleted"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:226
+#: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:98
+#: modules/johncms/admin/src/Application/Controllers/Settings/ExternalProvidersController.php:71
+#: modules/johncms/admin/templates/style-guide/examples/alerts.twig:1
+msgid "Changes saved successfully"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:229
@@ -1715,7 +1716,7 @@ msgid "Underline"
 msgstr ""
 
 #: modules/johncms/admin/templates/ads.twig:40
-#: modules/johncms/admin/templates/external-providers.twig:56
+#: modules/johncms/admin/templates/external-providers.twig:22
 #: modules/johncms/admin/templates/ip-bans.twig:29
 msgid "The list is empty"
 msgstr ""
@@ -1981,6 +1982,7 @@ msgid "In use"
 msgstr ""
 
 #: modules/johncms/admin/templates/captcha-settings.twig:28
+#: modules/johncms/admin/templates/external-providers.twig:40
 msgid "Not configured"
 msgstr ""
 
@@ -1993,7 +1995,7 @@ msgid "Nothing to set up."
 msgstr ""
 
 #: modules/johncms/admin/templates/components/settings-field.twig:27
-#: modules/johncms/admin/templates/external-providers.twig:47
+#: modules/johncms/admin/templates/external-providers.twig:69
 msgid "Saved. Fill in to replace."
 msgstr ""
 
@@ -2047,7 +2049,6 @@ msgid "Showing"
 msgstr ""
 
 #: modules/johncms/admin/templates/counter-form.twig:84
-#: modules/johncms/admin/templates/external-providers.twig:26
 msgid "Enabled"
 msgstr ""
 
@@ -2161,20 +2162,44 @@ msgstr ""
 msgid "Applied when a picture is scaled down or re-encoded."
 msgstr ""
 
-#: modules/johncms/admin/templates/external-providers.twig:33
-msgid "%d users sign in through this service, %d of them have no other way in."
+#: modules/johncms/admin/templates/external-providers.twig:19
+msgid "Members can sign in with an account of a service turned on here. Register an application in the panel of the service, give it the callback address and fill in the keys it gives."
 msgstr ""
 
 #: modules/johncms/admin/templates/external-providers.twig:38
-msgid "Client ID"
+msgid "Turned on"
 msgstr ""
 
-#: modules/johncms/admin/templates/external-providers.twig:44
-msgid "Client secret"
+#: modules/johncms/admin/templates/external-providers.twig:46
+msgid "The service is turned on, but its button is not shown on the site until both keys are filled in."
 msgstr ""
 
 #: modules/johncms/admin/templates/external-providers.twig:52
+msgid "Members who sign in through it: %d. Without another way in: %d — turning the service off locks them out."
+msgstr ""
+
+#: modules/johncms/admin/templates/external-providers.twig:57
+msgid "Members who sign in through it: %d."
+msgstr ""
+
+#: modules/johncms/admin/templates/external-providers.twig:63
+msgid "Client ID"
+msgstr ""
+
+#: modules/johncms/admin/templates/external-providers.twig:67
+msgid "Client secret"
+msgstr ""
+
+#: modules/johncms/admin/templates/external-providers.twig:74
 msgid "Callback URL"
+msgstr ""
+
+#: modules/johncms/admin/templates/external-providers.twig:77
+msgid "Copy"
+msgstr ""
+
+#: modules/johncms/admin/templates/external-providers.twig:81
+msgid "Give this address to the service when registering the application."
 msgstr ""
 
 #: modules/johncms/admin/templates/file-integrity-scan-result.twig:12

@@ -3068,3 +3068,24 @@ msgstr "Запускайте после того, как обновили фай
 
 msgid "Run them in this order once the files of the site have been updated."
 msgstr "Запускайте по порядку после того, как обновили файлы сайта."
+
+msgid "Members can sign in with an account of a service turned on here. Register an application in the panel of the service, give it the callback address and fill in the keys it gives."
+msgstr "Пользователи могут входить через аккаунт включённого здесь сервиса. Зарегистрируйте приложение в кабинете сервиса, укажите ему адрес возврата и впишите выданные ключи."
+
+msgid "Turned on"
+msgstr "Включён"
+
+msgid "The service is turned on, but its button is not shown on the site until both keys are filled in."
+msgstr "Сервис включён, но его кнопка не появится на сайте, пока не заполнены оба ключа."
+
+msgid "Members who sign in through it: %d."
+msgstr "Входят через этот сервис: %d."
+
+msgid "Copy"
+msgstr "Скопировать"
+
+msgid "Give this address to the service when registering the application."
+msgstr "Укажите этот адрес в настройках приложения у сервиса."
+
+msgid "Members who sign in through it: %d. Without another way in: %d — turning the service off locks them out."
+msgstr "Входят через этот сервис: %d. Без другого способа входа: %d — если выключить сервис, они не смогут войти."

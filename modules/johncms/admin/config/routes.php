@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Modules\Admin\Application\Controllers\Access\AuthLogController;
-use Johncms\Modules\Admin\Application\Controllers\Access\ExternalProvidersController;
+use Johncms\Modules\Admin\Application\Controllers\Settings\ExternalProvidersController;
 use Johncms\Modules\Admin\Application\Controllers\Access\RolesController;
 use Johncms\Modules\Admin\Application\Controllers\Access\UserRolesController;
 use Johncms\Modules\Admin\Application\Controllers\DashboardController;
@@ -91,12 +91,6 @@ return static function (RouteCollection $router): void {
         $r->post('/admin/roles/{id:number}/delete', [RolesController::class, 'delete'])->name('admin.roles.delete');
         // Reading the trail is a permission of its own: it names who did what, which is more than
         // "may open the panel" is meant to grant.
-        $r->get('/admin/auth/providers', [ExternalProvidersController::class, 'index'])
-            ->name('admin.auth.providers')
-            ->permission(CorePermissions::ADMIN_SETTINGS_MANAGE);
-        $r->post('/admin/auth/providers', [ExternalProvidersController::class, 'save'])
-            ->name('admin.auth.providers.save')
-            ->permission(CorePermissions::ADMIN_SETTINGS_MANAGE);
         $r->get('/admin/auth-log', AuthLogController::class)
             ->name('admin.auth_log')
             ->permission(AdminPermissions::AUTH_LOG_VIEW);
@@ -164,6 +158,10 @@ return static function (RouteCollection $router): void {
             $sr->get('/admin/settings/mail', [MailSettingsController::class, 'form'])->name('admin.settings.mail');
             $sr->post('/admin/settings/mail', [MailSettingsController::class, 'save'])->name('admin.settings.mail.save');
             $sr->post('/admin/settings/mail/test', [MailSettingsController::class, 'test'])->name('admin.settings.mail.test');
+            $sr->get('/admin/settings/sign-in', [ExternalProvidersController::class, 'index'])
+                ->name('admin.settings.sign_in');
+            $sr->post('/admin/settings/sign-in', [ExternalProvidersController::class, 'save'])
+                ->name('admin.settings.sign_in.save');
             $sr->get('/admin/settings/images', [EditorImageSettingsController::class, 'form'])
                 ->name('admin.settings.images');
             $sr->post('/admin/settings/images', [EditorImageSettingsController::class, 'save'])

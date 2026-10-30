@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% macro provider_card(provider, columns) %}
-    <section class="card admin-captcha-provider{{ provider.isActive ? ' admin-captcha-provider--active' }}">
+    <section class="card admin-provider-card{{ provider.isActive ? ' admin-provider-card--active' }}">
         <div class="card-header d-flex align-items-center gap-2">
             <div class="form-check mb-0">
                 <input type="radio" class="form-check-input" id="default_{{ provider.key }}" name="default" value="{{ provider.key }}"{% if provider.isActive %} checked{% endif %}>

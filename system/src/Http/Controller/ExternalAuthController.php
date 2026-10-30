@@ -327,7 +327,7 @@ final readonly class ExternalAuthController
      * The site setting comes first, and the request only fills in for it. Behind a proxy that
      * terminates TLS the request looks like plain HTTP unless `http.trusted_proxies` is filled
      * in, so an address taken from it would be `http://…` on an HTTPS site — which providers
-     * refuse, VK with a bare "Security Error". The setting is also what /admin/auth/providers
+     * refuse, VK with a bare "Security Error". The setting is also what /admin/settings/sign-in
      * shows as the callback to register, so the two cannot disagree.
      */
     private function callbackUrl(Request $request, string $provider): string

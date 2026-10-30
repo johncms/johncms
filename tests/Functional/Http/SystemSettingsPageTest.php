@@ -38,12 +38,19 @@ final class SystemSettingsPageTest extends FunctionalTestCase
 
     public function testTheSettingsAreTabsOfOnePage(): void
     {
-        foreach (['/admin/settings' => '/admin/settings', '/admin/settings/mail' => '/admin/settings/mail'] as $page => $active) {
+        foreach (['/admin/settings' => '/admin/settings', '/admin/settings/mail' => '/admin/settings/mail', '/admin/settings/sign-in' => '/admin/settings/sign-in'] as $page => $active) {
             $content = (string) $this->handleRequest($page, cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()))->getContent();
 
             self::assertMatchesRegularExpression('#class="nav-link active" href="' . preg_quote($active, '#') . '"\s*aria-current="page"#', $content, $page);
             self::assertStringContainsString('href="/admin/settings/captcha"', $content, $page);
         }
+    }
+
+    public function testTheSignInServicesMovedFromTheSecuritySection(): void
+    {
+        $response = $this->handleRequest('/admin/auth/providers', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()));
+
+        self::assertSame(404, $response->getStatusCode());
     }
 
     private function page(): string
