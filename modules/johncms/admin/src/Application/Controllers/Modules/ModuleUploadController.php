@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Application\Controllers\Modules;
 
 use Johncms\Http\Request;
+use Johncms\Http\UploadLimits;
 use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\ModuleInstallService;
@@ -35,6 +36,7 @@ final readonly class ModuleUploadController
         private ModuleRegistry $registry,
         private Session $session,
         private LoggerInterface $logger,
+        private UploadLimits $uploadLimits,
     ) {
     }
 
@@ -50,6 +52,7 @@ final readonly class ModuleUploadController
             'module_menu'   => ['modules' => true],
             'action_url'    => self::URL . '/upload',
             'back_url'      => self::URL,
+            'max_bytes'     => $this->uploadLimits->maxUploadBytes(),
             'error_message' => (string) $this->session->getFlash('error_message'),
         ]);
     }

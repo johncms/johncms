@@ -114,7 +114,7 @@ msgid "Karma"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:48
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModuleUploadController.php:44
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModuleUploadController.php:46
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:47
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:120
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:228
@@ -288,7 +288,6 @@ msgstr ""
 #: modules/johncms/admin/templates/ip-ban-search.twig:24
 #: modules/johncms/admin/templates/karma/clear-dialog.twig:20
 #: modules/johncms/admin/templates/modules-confirm-dialog.twig:62
-#: modules/johncms/admin/templates/modules-upload.twig:30
 #: modules/johncms/admin/templates/smilies.twig:21
 #: modules/johncms/admin/templates/style-guide/examples/card.twig:15
 #: modules/johncms/admin/templates/style-guide/examples/dialog.twig:13
@@ -565,21 +564,21 @@ msgstr ""
 msgid "The language was successfully deleted"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModuleUploadController.php:43
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModuleUploadController.php:45
 #: modules/johncms/admin/templates/modules.twig:19
 msgid "Install a module from a file"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModuleUploadController.php:62
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModuleUploadController.php:65
 msgid "Choose a zip file with the module"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModuleUploadController.php:92
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModuleUploadController.php:95
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:162
 msgid "Done"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModuleUploadController.php:99
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModuleUploadController.php:102
 msgid "An error occurred"
 msgstr ""
 
@@ -2423,7 +2422,7 @@ msgstr ""
 
 #: modules/johncms/admin/templates/languages-manage.twig:53
 #: modules/johncms/admin/templates/modules-confirm-dialog.twig:63
-#: modules/johncms/admin/templates/modules-upload.twig:29
+#: modules/johncms/admin/templates/modules-upload.twig:43
 #: modules/johncms/admin/templates/modules.twig:108
 msgid "Install"
 msgstr ""
@@ -2598,16 +2597,21 @@ msgstr ""
 msgid "For a module with heavy migrations: the scheduler starts it within a minute."
 msgstr ""
 
-#: modules/johncms/admin/templates/modules-upload.twig:13
-msgid "A module is code that runs on your site with the rights of your site. Install only what you trust."
-msgstr ""
-
-#: modules/johncms/admin/templates/modules-upload.twig:22
+#: modules/johncms/admin/templates/modules-upload.twig:21
+#: modules/johncms/admin/templates/modules-upload.twig:24
 msgid "Zip archive with the module"
 msgstr ""
 
-#: modules/johncms/admin/templates/modules-upload.twig:25
+#: modules/johncms/admin/templates/modules-upload.twig:26
 msgid "The archive holds one directory with a module.php inside it. A module that is already installed is updated."
+msgstr ""
+
+#: modules/johncms/admin/templates/modules-upload.twig:28
+msgid "The largest archive the server accepts: %s."
+msgstr ""
+
+#: modules/johncms/admin/templates/modules-upload.twig:38
+msgid "A module is code that runs on your site with the rights of your site. Install only what you trust."
 msgstr ""
 
 #: modules/johncms/admin/templates/modules.twig:31

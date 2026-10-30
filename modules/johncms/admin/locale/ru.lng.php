@@ -807,6 +807,7 @@
       'A system module cannot be switched off or removed.' => 'Системный модуль нельзя выключить или удалить.',
       'Installed modules' => 'Установленные',
       'New modules' => 'Новые',
+      'The largest archive the server accepts: %s.' => 'Самый большой архив, который примет сервер: %s.',
     ),
   ),
 );

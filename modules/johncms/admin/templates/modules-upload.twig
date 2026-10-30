@@ -2,33 +2,43 @@
     Installing a module out of an archive.
 
     @var string action_url
+    @var string back_url
+    @var int    max_bytes     The largest upload PHP accepts; zero when there is no limit.
     @var string error_message
 #}
 {% extends '@admin/layouts/default.twig' %}
 
 {% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: error_message} only %}
 
-    <div class="alert alert-warning shadow border-0">
-        {{ __('A module is code that runs on your site with the rights of your site. Install only what you trust.') }}
-    </div>
+    <form action="{{ action_url }}" method="post" enctype="multipart/form-data" id="module-upload-form" class="row g-3 align-items-start">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
 
-    <div class="card shadow border-0">
-        <div class="card-body">
-            <form action="{{ action_url }}" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-
-                <div class="mb-3">
-                    <label class="form-label" for="package">{{ __('Zip archive with the module') }}</label>
-                    <input class="form-control" type="file" name="package" id="package" accept=".zip" required>
+        <div class="col-lg-8">
+            <section class="card">
+                <div class="card-header">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'package', size: 16} only %}
+                    <h2 class="h6 mb-0 ms-2">{{ __('Zip archive with the module') }}</h2>
+                </div>
+                <div class="card-body">
+                    <input class="form-control" type="file" name="package" id="package" accept=".zip" required aria-label="{{ __('Zip archive with the module') }}">
                     <div class="form-text">
                         {{ __('The archive holds one directory with a module.php inside it. A module that is already installed is updated.') }}
+                        {% if max_bytes %}
+                            {{ __('The largest archive the server accepts: %s.')|format(max_bytes|format_size) }}
+                        {% endif %}
                     </div>
                 </div>
-
-                <button type="submit" class="btn btn-primary">{{ __('Install') }}</button>
-                <a class="btn btn-outline-secondary" href="{{ back_url }}">{{ __('Cancel') }}</a>
-            </form>
+            </section>
         </div>
-    </div>
+
+        <div class="col-lg-4">
+            <div class="alert alert-warning d-flex gap-2 mb-0">
+                {% include '@admin/components/ui/icon.twig' with {name: 'triangle-alert', size: 16, class: 'flex-shrink-0 mt-1'} only %}
+                <div>{{ __('A module is code that runs on your site with the rights of your site. Install only what you trust.') }}</div>
+            </div>
+        </div>
+    </form>
+
+    {% include '@admin/components/ui/form-footer.twig' with {form: 'module-upload-form', cancel_url: back_url, submit_title: __('Install')} only %}
 {% endblock %}

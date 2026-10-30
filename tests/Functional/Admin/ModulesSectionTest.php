@@ -98,6 +98,7 @@ final class ModulesSectionTest extends FunctionalTestCase
         $allowed = $this->handleRequest('/admin/modules/upload', cookies: $this->actingAs($this->manager()));
         self::assertSame(Response::HTTP_OK, $allowed->getStatusCode());
         self::assertStringContainsString('multipart/form-data', (string) $allowed->getContent());
+        self::assertStringContainsString('id="module-upload-form"', (string) $allowed->getContent());
     }
 
     public function testAnOperationIsConfirmedInTheDialog(): void

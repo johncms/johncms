@@ -2889,3 +2889,6 @@ msgstr "Установленные"
 
 msgid "New modules"
 msgstr "Новые"
+
+msgid "The largest archive the server accepts: %s."
+msgstr "Самый большой архив, который примет сервер: %s."
