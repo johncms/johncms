@@ -1,0 +1,53 @@
+{#
+    Which language a text is being written in: a dropdown of the installed languages over panels
+    with the fields of each (src/admin/js/language-panels.js shows the panel of the chosen one).
+    The default language of the site is marked. Without the script the dropdown cannot switch, so
+    the active panel is the one the controller picked.
+
+    A panel is any element inside the same form with data-language-panel="<code>"; it is hidden
+    unless it is the active one.
+
+    @param array  languages   code, name, default (AdminLanguageOptions::languages()).
+    @param string active      The code of the language opened first.
+    @param string input_name  A hidden field that keeps the chosen language through a failed save;
+                              empty for none.
+#}
+<div class="dropdown admin-language-switch" data-language-switch>
+    {% if input_name|default('') %}
+        <input type="hidden" name="{{ input_name }}" value="{{ active }}" data-language-value>
+    {% endif %}
+    <button type="button" class="admin-filter" data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="admin-filter__label">{{ d__('admin', 'Languages') }}:</span>
+        <span class="admin-filter__value" data-language-label>
+            {% for language in languages %}
+                {% if active == language.code %}{{ language.name }} ({{ language.code }}){% endif %}
+            {% endfor %}
+        </span>
+        {% include '@admin/components/ui/icon.twig' with {name: 'chevron-down', size: 12} only %}
+    </button>
+    <ul class="dropdown-menu">
+        {% for language in languages %}
+            <li>
+                <button type="button"
+                        class="dropdown-item{% if active == language.code %} active{% endif %}"
+                        data-language-option
+                        data-language-code="{{ language.code }}"
+                        data-language-label="{{ language.name }} ({{ language.code }})"
+                        aria-pressed="{{ active == language.code ? 'true' : 'false' }}">
+                    <span class="admin-filter__check">
+                        {% if active == language.code %}
+                            {% include '@admin/components/ui/icon.twig' with {name: 'check', size: 13} only %}
+                        {% endif %}
+                    </span>
+                    {{ language.name }} <span class="text-body-tertiary">({{ language.code }})</span>
+                    {% if language.default %}
+                        <span class="badge rounded-pill text-bg-light border ms-2">{{ d__('admin', 'default') }}</span>
+                    {% endif %}
+                </button>
+            </li>
+        {% endfor %}
+    </ul>
+    <template data-language-check>
+        {% include '@admin/components/ui/icon.twig' with {name: 'check', size: 13} only %}
+    </template>
+</div>

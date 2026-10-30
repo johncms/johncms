@@ -1,0 +1,17 @@
+{#
+    How the site picks the language of a text written per language: the visitor's, then the default
+    of the site, then English — so filling in the default language is enough.
+
+    @param array  default_language code, name (AdminLanguageOptions::defaultLanguage()).
+    @param string languages_url    Where the default language is chosen.
+#}
+<div class="alert alert-info">
+    <p class="mb-2">{{ d__('admin', 'Visitors see this text in the language of their interface. When it is empty for that language, the text in the default language of the site — %s — is shown instead.')|format(default_language.name) }}</p>
+    {% if default_language.code != 'en' %}
+        <p class="mb-2">{{ d__('admin', 'When the default language is empty too, the English text is shown.') }}</p>
+    {% endif %}
+    <p class="mb-0">
+        {{ d__('admin', 'It is enough to fill in the default language. Fill in another language only where its text has to differ.') }}
+        <a href="{{ languages_url }}" class="alert-link">{{ d__('admin', 'Change the default language') }}</a>
+    </p>
+</div>

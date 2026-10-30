@@ -305,7 +305,7 @@ msgid "Cancel"
 msgstr ""
 
 #: themes/default/templates/admin/components/ui/form-footer.twig:26
-#: themes/default/templates/admin/components/ui/form-footer.twig:44
+#: themes/default/templates/admin/components/ui/form-footer.twig:46
 #: modules/johncms/admin/templates/captcha-settings.twig:45
 #: modules/johncms/admin/templates/counter-preview.twig:51
 #: modules/johncms/admin/templates/editor-images.twig:64
@@ -318,12 +318,38 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: themes/default/templates/admin/components/ui/form-footer.twig:30
+#: themes/default/templates/admin/components/ui/form-footer.twig:32
 msgid "More ways to save"
 msgstr ""
 
-#: themes/default/templates/admin/components/ui/form-footer.twig:36
+#: themes/default/templates/admin/components/ui/form-footer.twig:38
 msgid "Save and close"
+msgstr ""
+
+#: themes/default/templates/admin/components/ui/language-fallback-hint.twig:9
+msgid "Visitors see this text in the language of their interface. When it is empty for that language, the text in the default language of the site — %s — is shown instead."
+msgstr ""
+
+#: themes/default/templates/admin/components/ui/language-fallback-hint.twig:11
+msgid "When the default language is empty too, the English text is shown."
+msgstr ""
+
+#: themes/default/templates/admin/components/ui/language-fallback-hint.twig:14
+msgid "It is enough to fill in the default language. Fill in another language only where its text has to differ."
+msgstr ""
+
+#: themes/default/templates/admin/components/ui/language-fallback-hint.twig:15
+msgid "Change the default language"
+msgstr ""
+
+#: themes/default/templates/admin/components/ui/language-switch.twig:20
+#: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:60
+#: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:144
+msgid "Languages"
+msgstr ""
+
+#: themes/default/templates/admin/components/ui/language-switch.twig:44
+msgid "default"
 msgstr ""
 
 #: themes/default/templates/admin/components/ui/user-cell.twig:17
@@ -531,12 +557,6 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:59
 #: modules/johncms/admin/templates/languages.twig:35
 msgid "Managing languages"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:60
-#: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:144
-#: modules/johncms/contacts/templates/admin/settings.twig:54
-msgid "Languages"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:97

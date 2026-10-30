@@ -166,3 +166,13 @@ body.dark {
     padding-inline: 1rem;
   }
 }
+
+// Which language a text is written in (components/ui/language-switch.twig).
+.admin-language-switch {
+  width: fit-content;
+  max-width: 100%;
+
+  .admin-filter {
+    max-width: 100%;
+  }
+}

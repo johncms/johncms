@@ -2730,3 +2730,18 @@ msgstr "Сохранить и закрыть"
 
 msgid "More ways to save"
 msgstr "Другие варианты сохранения"
+
+msgid "Visitors see this text in the language of their interface. When it is empty for that language, the text in the default language of the site — %s — is shown instead."
+msgstr "Посетители видят этот текст на языке своего интерфейса. Если для этого языка он пустой, вместо него показывается текст на языке сайта по умолчанию — %s."
+
+msgid "When the default language is empty too, the English text is shown."
+msgstr "Если пусто и на языке по умолчанию, показывается текст на английском."
+
+msgid "It is enough to fill in the default language. Fill in another language only where its text has to differ."
+msgstr "Достаточно заполнить язык по умолчанию. Другой язык заполняйте, только если текст на нём должен отличаться."
+
+msgid "Change the default language"
+msgstr "Сменить язык по умолчанию"
+
+msgid "default"
+msgstr "по умолчанию"

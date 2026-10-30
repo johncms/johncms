@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Contacts\Application\Controllers\Admin;
 
+use Johncms\Modules\Admin\Application\Services\AdminLanguageOptions;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
 use Johncms\Modules\Contacts\Application\DTO\ContactSettingsDTO;
 use Johncms\Modules\Contacts\Application\DTO\SocialLinkDTO;
@@ -23,6 +24,7 @@ final readonly class ContactSettingsController
         private NavChain $navChain,
         private ContactSettingsProvider $settingsProvider,
         private UpdateContactSettingsUseCase $updateSettings,
+        private AdminLanguageOptions $languageOptions,
     ) {
     }
 
@@ -112,7 +114,7 @@ final readonly class ContactSettingsController
      */
     private function languageCodes(): array
     {
-        return array_keys(config('johncms')['lng_list'] ?? []);
+        return array_column($this->languageOptions->languages(), 'code');
     }
 
     private function renderForm(
@@ -124,24 +126,6 @@ final readonly class ContactSettingsController
         $this->navChain->add($title, self::URL);
 
         $successMessage = $this->session->getFlash('success_message');
-
-        // The public page falls back to this language, so it is the one opened first.
-        $defaultLanguage = (string) (config('johncms')['lng'] ?? 'en');
-        $defaultLanguageName = $defaultLanguage;
-
-        $languages = [];
-        foreach (config('johncms')['lng_list'] ?? [] as $code => $data) {
-            $name = $data['name'] ?? $code;
-            $languages[] = ['code' => $code, 'name' => $name, 'default' => $code === $defaultLanguage];
-            if ($code === $defaultLanguage) {
-                $defaultLanguageName = $name;
-            }
-        }
-
-        $codes = array_column($languages, 'code');
-        if (! in_array($activeLanguage, $codes, true)) {
-            $activeLanguage = in_array($defaultLanguage, $codes, true) ? $defaultLanguage : ($codes[0] ?? '');
-        }
 
         $socials = implode(
             "\n",
@@ -157,10 +141,10 @@ final readonly class ContactSettingsController
             ] + [
                 'form_action'     => self::URL,
                 'messages_url'    => self::URL . '/messages',
-                'languages'       => $languages,
-                'active_language' => $activeLanguage,
-                'default_language' => ['code' => $defaultLanguage, 'name' => $defaultLanguageName],
-                'languages_url'   => '/admin/languages',
+                'languages'        => $this->languageOptions->languages(),
+                'active_language'  => $this->languageOptions->active($activeLanguage),
+                'default_language' => $this->languageOptions->defaultLanguage(),
+                'languages_url'    => AdminLanguageOptions::LANGUAGES_URL,
                 'settings'        => $settings,
                 'multilingual_fields' => [
                     ['name' => 'contacts_address', 'label' => __('Address'), 'values' => $settings->addresses],

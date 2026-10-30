@@ -37,61 +37,12 @@
                         <h2 class="h6 mb-0 ms-2">{{ __('Page texts') }}</h2>
                     </div>
                     <div class="card-body">
-                        <div class="alert alert-info">
-                            <p class="mb-2">{{ __('Visitors see these texts in the language of their interface. When a field is empty for that language, the text in the default language of the site — %s — is shown instead.')|format(default_language.name) }}</p>
-                            {% if default_language.code != 'en' %}
-                                <p class="mb-2">{{ __('When the default language is empty too, the English text is shown.') }}</p>
-                            {% endif %}
-                            <p class="mb-0">
-                                {{ __('It is enough to fill in the default language. Fill in another language only where its text has to differ.') }}
-                                <a href="{{ languages_url }}" class="alert-link">{{ __('Change the default language') }}</a>
-                            </p>
-                        </div>
-
-                        <div class="dropdown contacts-settings__language-dropdown" data-contacts-language-switch>
-                            <input type="hidden" name="contacts_language" value="{{ active_language }}" data-contacts-language-value>
-                            <button type="button" class="admin-filter" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="admin-filter__label">{{ d__('admin', 'Languages') }}:</span>
-                                <span class="admin-filter__value" data-contacts-language-label>
-                                    {% for language in languages %}
-                                        {% if active_language == language.code %}{{ language.name }} ({{ language.code }}){% endif %}
-                                    {% endfor %}
-                                </span>
-                                {% include '@admin/components/ui/icon.twig' with {name: 'chevron-down', size: 12} only %}
-                            </button>
-                            <ul class="dropdown-menu">
-                                {% for language in languages %}
-                                    <li>
-                                        <button type="button"
-                                                class="dropdown-item{% if active_language == language.code %} active{% endif %}"
-                                                data-contacts-language-option
-                                                data-language-code="{{ language.code }}"
-                                                data-language-label="{{ language.name }} ({{ language.code }})"
-                                                aria-pressed="{{ active_language == language.code ? 'true' : 'false' }}">
-                                            <span class="admin-filter__check">
-                                                {% if active_language == language.code %}
-                                                    {% include '@admin/components/ui/icon.twig' with {name: 'check', size: 13} only %}
-                                                {% endif %}
-                                            </span>
-                                            {{ language.name }} <span class="text-body-tertiary">({{ language.code }})</span>
-                                            {% if language.default %}
-                                                <span class="badge rounded-pill text-bg-light border ms-2">{{ __('default') }}</span>
-                                            {% endif %}
-                                        </button>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                            <template data-contacts-language-check>
-                                {% include '@admin/components/ui/icon.twig' with {name: 'check', size: 13} only %}
-                            </template>
-                        </div>
+                        {% include '@admin/components/ui/language-fallback-hint.twig' with {default_language: default_language, languages_url: languages_url} only %}
+                        {% include '@admin/components/ui/language-switch.twig' with {languages: languages, active: active_language, input_name: 'contacts_language'} only %}
 
                         <div class="pt-3">
                             {% for language in languages %}
-                                <div class="contacts-settings__language-panel"
-                                     id="contacts-language-{{ language.code }}"
-                                     data-contacts-language-panel
-                                     {% if active_language != language.code %}hidden{% endif %}>
+                                <div data-language-panel="{{ language.code }}"{% if active_language != language.code %} hidden{% endif %}>
                                     {% for field in multilingual_fields %}
                                         <div class="{{ loop.last ? 'mb-0' : 'mb-4' }}">
                                             <label class="form-label" for="{{ field.name }}_{{ language.code }}">{{ field.label }}</label>

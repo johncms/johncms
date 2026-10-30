@@ -754,6 +754,11 @@
       'The link starts over: its hits and days are counted anew, and it is shown.' => 'Ссылка начата заново: переходы и дни считаются с нуля, ссылка показывается.',
       'Save and close' => 'Сохранить и закрыть',
       'More ways to save' => 'Другие варианты сохранения',
+      'Visitors see this text in the language of their interface. When it is empty for that language, the text in the default language of the site — %s — is shown instead.' => 'Посетители видят этот текст на языке своего интерфейса. Если для этого языка он пустой, вместо него показывается текст на языке сайта по умолчанию — %s.',
+      'When the default language is empty too, the English text is shown.' => 'Если пусто и на языке по умолчанию, показывается текст на английском.',
+      'It is enough to fill in the default language. Fill in another language only where its text has to differ.' => 'Достаточно заполнить язык по умолчанию. Другой язык заполняйте, только если текст на нём должен отличаться.',
+      'Change the default language' => 'Сменить язык по умолчанию',
+      'default' => 'по умолчанию',
     ),
   ),
 );
