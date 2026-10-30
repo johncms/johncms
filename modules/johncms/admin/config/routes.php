@@ -20,7 +20,6 @@ use Johncms\Modules\Admin\Application\Controllers\Settings\EditorImageSettingsCo
 use Johncms\Modules\Admin\Application\Controllers\Settings\MailSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\SystemSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\System\EmoticonsController;
-use Johncms\Modules\Admin\Application\Controllers\System\FileIntegrityController;
 use Johncms\Modules\Admin\Application\Controllers\System\MaintenanceTasksController;
 use Johncms\Modules\Admin\Application\Controllers\System\StyleGuideController;
 use Johncms\Modules\Admin\Application\Controllers\System\SystemCheckController;
@@ -195,11 +194,6 @@ return static function (RouteCollection $router): void {
 
             $sr->get('/admin/maintenance', [MaintenanceTasksController::class, 'index'])->name('admin.maintenance');
             $sr->post('/admin/maintenance/run', [MaintenanceTasksController::class, 'run'])->name('admin.maintenance.run');
-
-            $sr->get('/admin/file-integrity', [FileIntegrityController::class, 'index'])->name('admin.file_integrity');
-            $sr->get('/admin/file-integrity/scan', [FileIntegrityController::class, 'scan'])->name('admin.file_integrity.scan');
-            $sr->get('/admin/file-integrity/snapshot', [FileIntegrityController::class, 'snapshotConfirm'])->name('admin.file_integrity.snapshot');
-            $sr->post('/admin/file-integrity/snapshot', [FileIntegrityController::class, 'createSnapshot'])->name('admin.file_integrity.snapshot.create');
 
             $sr->get('/admin/karma', [KarmaController::class, 'index'])->name('admin.karma');
             $sr->post('/admin/karma', [KarmaController::class, 'save'])->name('admin.karma.save');

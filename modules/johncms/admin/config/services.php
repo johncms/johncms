@@ -23,7 +23,6 @@ use Johncms\Modules\Admin\Domain\Repository\UserDeletionRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\UserCardRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\UserEditRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\UserListRepositoryInterface;
-use Johncms\Modules\Admin\Domain\Services\FileIntegrityScannerInterface;
 use Johncms\Modules\Admin\Domain\Services\LanguageFilesManagerInterface;
 use Johncms\Modules\Admin\Domain\Services\ThemeListProviderInterface;
 use Johncms\Modules\Admin\Domain\Services\WhoisClientInterface;
@@ -44,7 +43,6 @@ use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentKarmaRep
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentIpSearchRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentRegistrationModerationRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentUserDeletionRepository;
-use Johncms\Modules\Admin\Infrastructure\Security\CrcFileIntegrityScanner;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentUserCardRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentUserEditRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentUserListRepository;
@@ -97,5 +95,4 @@ return static function (ContainerConfigurator $container): void {
     $services->set(KarmaRepositoryInterface::class, EloquentKarmaRepository::class)->public();
     $services->set(CounterRepositoryInterface::class, EloquentCounterRepository::class)->public();
     $services->set(AdRepositoryInterface::class, EloquentAdRepository::class)->public();
-    $services->set(FileIntegrityScannerInterface::class, CrcFileIntegrityScanner::class)->public();
 };

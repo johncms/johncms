@@ -244,13 +244,6 @@ msgid "Security"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:78
-#: modules/johncms/admin/src/Application/Controllers/System/FileIntegrityController.php:29
-#: modules/johncms/admin/src/Application/Controllers/System/FileIntegrityController.php:42
-#: modules/johncms/admin/src/Application/Controllers/System/FileIntegrityController.php:71
-msgid "Anti-Spyware"
-msgstr ""
-
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:79
 #: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:50
 #: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:74
 #: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:126
@@ -293,7 +286,6 @@ msgstr ""
 #: modules/johncms/admin/templates/ad-delete-dialog.twig:28
 #: modules/johncms/admin/templates/bans/amnesty-dialog.twig:31
 #: modules/johncms/admin/templates/counter-delete-dialog.twig:20
-#: modules/johncms/admin/templates/file-integrity-snapshot-confirm.twig:22
 #: modules/johncms/admin/templates/ip-ban-clear-confirm.twig:21
 #: modules/johncms/admin/templates/ip-ban-confirm.twig:44
 #: modules/johncms/admin/templates/ip-ban-form.twig:54
@@ -914,30 +906,6 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/System/EmoticonsController.php:52
 #, php-format
 msgid "The list of the smilies is built again. Pictures: %d."
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/System/FileIntegrityController.php:41
-#: modules/johncms/admin/templates/file-integrity.twig:14
-msgid "Snapshot scan"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/System/FileIntegrityController.php:48
-msgid "Snapshot is not created"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/System/FileIntegrityController.php:50
-#: modules/johncms/admin/src/Application/Controllers/System/FileIntegrityController.php:70
-#: modules/johncms/admin/templates/file-integrity-snapshot-confirm.twig:21
-#: modules/johncms/admin/templates/file-integrity.twig:20
-msgid "Create snapshot"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/System/FileIntegrityController.php:57
-msgid "Excellent!<br>All files are consistent with previously made image."
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/System/FileIntegrityController.php:83
-msgid "Snapshot successfully created"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:55
@@ -2202,41 +2170,6 @@ msgstr ""
 msgid "Give this address to the service when registering the application."
 msgstr ""
 
-#: modules/johncms/admin/templates/file-integrity-scan-result.twig:12
-msgid "Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created."
-msgstr ""
-
-#: modules/johncms/admin/templates/file-integrity-scan-result.twig:17
-msgid "List of files"
-msgstr ""
-
-#: modules/johncms/admin/templates/file-integrity-scan-result.twig:25
-#: modules/johncms/admin/templates/ip-ban-detail.twig:52
-#: modules/johncms/admin/templates/ip-bans.twig:63
-#: modules/johncms/admin/templates/role-form.twig:27
-msgid "Back"
-msgstr ""
-
-#: modules/johncms/admin/templates/file-integrity-snapshot-confirm.twig:12
-msgid "WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications."
-msgstr ""
-
-#: modules/johncms/admin/templates/file-integrity-snapshot-confirm.twig:16
-msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison."
-msgstr ""
-
-#: modules/johncms/admin/templates/file-integrity.twig:10
-msgid "Scan mode"
-msgstr ""
-
-#: modules/johncms/admin/templates/file-integrity.twig:16
-msgid "Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes."
-msgstr ""
-
-#: modules/johncms/admin/templates/file-integrity.twig:22
-msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database."
-msgstr ""
-
 #: modules/johncms/admin/templates/index.twig:10
 msgid "Show admin menu"
 msgstr ""
@@ -2296,6 +2229,12 @@ msgstr ""
 
 #: modules/johncms/admin/templates/ip-ban-detail.twig:45
 msgid "Delete Ban"
+msgstr ""
+
+#: modules/johncms/admin/templates/ip-ban-detail.twig:52
+#: modules/johncms/admin/templates/ip-bans.twig:63
+#: modules/johncms/admin/templates/role-form.twig:27
+msgid "Back"
 msgstr ""
 
 #: modules/johncms/admin/templates/ip-ban-form.twig:16
