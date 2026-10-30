@@ -111,12 +111,17 @@ final class ConsentAdminTest extends FunctionalTestCase
 
     public function testTheCookieBannerOpensTheDefaultLanguageAndShowsWhatVisitorsSee(): void
     {
-        $content = (string) $this->handleRequest('/admin/cookie-banner', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()))->getContent();
+        // The default language among those on offer, as a site keeps it: the bare configuration
+        // of the repository names Russian the default while offering English only.
+        $content = $this->withConfig(
+            ['johncms' => ['lng' => 'ru', 'lng_list' => ['ru' => ['name' => 'Русский', 'version' => 1.0]]]],
+            fn (): string => (string) $this->handleRequest('/admin/cookie-banner', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()))->getContent()
+        );
 
         // One switch instead of a tab per language, the default language of the site opened.
         self::assertStringContainsString('data-language-switch', $content);
         self::assertStringNotContainsString('data-bs-toggle="tab"', $content);
-        self::assertMatchesRegularExpression('#class="dropdown-item active"\s+data-language-option\s+data-language-code="' . config('johncms')['lng'] . '"#', $content);
+        self::assertMatchesRegularExpression('#class="dropdown-item active"\s+data-language-option\s+data-language-code="ru"#', $content);
         self::assertStringContainsString('admin-cookie-preview', $content);
         // The example of a link is shown as code, not as a link.
         self::assertStringContainsString('&lt;a href=&quot;/consent/cookie-policy/&quot;&gt;', $content);

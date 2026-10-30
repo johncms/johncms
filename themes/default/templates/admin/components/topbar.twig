@@ -19,7 +19,7 @@
         {% if languages|length > 1 %}
             <button type="button" class="admin-topbar__btn" data-url="/language/" data-bs-toggle="modal" data-bs-target=".ajax_modal">
                 <img class="admin-topbar__flag" src="{{ asset('images/flags/' ~ app.locale|lower ~ '.svg') }}" alt="">
-                <span class="admin-topbar__btn-label">{{ languages[app.locale].name }}</span>
+                <span class="admin-topbar__btn-label">{{ languages[app.locale].name|default(app.locale) }}</span>
             </button>
         {% endif %}
 
