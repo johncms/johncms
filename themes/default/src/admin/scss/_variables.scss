@@ -183,8 +183,7 @@ $modal-header-padding-y: 0.875rem;
 $modal-header-padding-x: 1.125rem;
 $modal-inner-padding: 1.125rem;
 
-// The editor and the parts of the old layout keep their own dark palette; the colors of
-// Bootstrap come from ui/_scheme.scss.
+// The editor keeps its own dark palette; the colors of Bootstrap come from ui/_scheme.scss.
 @mixin dark-theme-vars {
   // CKEditor
   --ck-custom-background: hsl(0, 0%, 16%);

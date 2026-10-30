@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="form-group">
+    <div class="mb-3">
       <label :for="id">{{ label }}</label>
       <textarea :name="name" :id="id" class="form-control" :class="classes + (errors ? 'is-invalid' : '')" v-model="model_value"></textarea>
       <div class="invalid-feedback d-block" v-if="errors">{{ errors }}</div>

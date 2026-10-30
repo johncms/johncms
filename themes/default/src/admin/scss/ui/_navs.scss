@@ -116,4 +116,26 @@
   .active > .page-link {
     font-weight: 700;
   }
+
+  // On a phone only the links of pages stay, and the current one: the disabled arrows and the
+  // gaps between the numbers go.
+  @media (max-width: 500px) {
+    span.page-link {
+      display: none;
+    }
+
+    .page-link {
+      font-size: 0.7rem;
+      padding: 0.5rem;
+    }
+
+    .active .page-link {
+      display: block;
+    }
+  }
+}
+
+// Pagination in the footer of a card, where the card gives the spacing.
+.pagination-no-padding .pagination {
+  margin-bottom: 0;
 }

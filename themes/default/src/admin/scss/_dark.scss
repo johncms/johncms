@@ -1,21 +1,12 @@
-.list-items {
-  .list-item {
-    background: #2c2c2c;
-    text-decoration: none;
+// The dark look of the content edited in CKEditor, which ui/_scheme.scss does not reach.
+.ck-content {
+  pre {
+    background: #2b3036;
   }
-}
 
-.post-item {
-  background: transparent;
-  border-bottom: 1px solid var(--bs-border-color);
-}
-
-.forum-section {
-  border-bottom: 1px solid var(--bs-border-color);
-}
-
-.ck-content pre {
-  background: #2b3036;
+  blockquote {
+    background-color: rgb(48, 48, 48);
+  }
 }
 
 figure.table {
@@ -36,120 +27,4 @@ figure.table {
     border-color: #4a4a4a;
     background: transparent;
   }
-}
-
-// User
-.post-user .user-name {
-  color: #fff;
-}
-
-.section-header .section-name {
-  color: #fff;
-}
-
-.like-btn {
-  --bs-btn-color: #898989;
-}
-
-.post-user {
-  a {
-    --bs-link-color: #b8b8b8;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  .user-name {
-    color: #b8b8b8;
-  }
-}
-
-.post-footer {
-  .user-ip {
-    color: #d7d7d7;
-  }
-
-  .useragent {
-    color: #ababab !important;
-  }
-}
-
-.user-row.bg-yellow-light {
-  background: rgb(97 73 28 / 35%) !important;
-}
-
-.user-row {
-  background: rgb(255 255 255 / 2%);
-  border-bottom-color: #323232 !important;
-  transition: background-color .15s ease-in-out;
-
-  &:hover {
-    background: rgb(255 255 255 / 4%);
-  }
-
-  .user-login {
-    color: #dcdcdc;
-  }
-
-  .post-footer {
-    border-top-color: #383838 !important;
-  }
-}
-
-.new_post-item {
-  .post-title {
-    color: #dddddd;
-  }
-
-  &.post-unread {
-    background: rgb(36 36 36 / 98%);
-  }
-}
-
-.responsive-table {
-  thead {
-    th {
-      color: #aeb6bf;
-      background-color: #1b1b1b;
-      border-color: #2f2f2f;
-    }
-  }
-
-  tbody {
-    tr {
-      &:hover {
-        background-color: rgb(255 255 255 / 4%);
-      }
-    }
-
-    th[scope="row"] {
-      color: #d7d7d7;
-
-      @media (max-width: 55rem) {
-        background: #171717;
-      }
-    }
-
-    td {
-      color: #d7d7d7;
-    }
-  }
-}
-
-.btn-group {
-  .input-group-text {
-    align-items: center;
-    display: inline-flex;
-  }
-}
-
-.counter-badge {
-  background: #515151;
-  color: #fff;
-}
-
-blockquote {
-  background-color: rgb(48, 48, 48);
 }

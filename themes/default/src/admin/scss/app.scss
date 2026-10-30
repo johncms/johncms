@@ -2,28 +2,10 @@
 @import 'variables';
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
-// Основные стили шаблона
-@import "base_styles";
-// Иконки
-@import "icons";
-@import "posts";
-@import "sections";
-@import "lists";
-@import "inputs";
-@import "buttons";
-@import "tables";
-@import "user";
-@import "album";
-@import "homepage";
-
-@import "pagination";
-
-// Editor
-
+// The date picker of the forms.
 @import 'flatpickr/dist/flatpickr.css';
 
 // The design of the panel on top of Bootstrap: the color schemes first, then the components.
-// It comes last, so it wins over the older styles above at the same specificity.
 @import 'ui/scheme';
 @import 'ui/base';
 @import 'ui/icon';
@@ -32,6 +14,7 @@
 @import 'ui/alerts';
 @import 'ui/cards';
 @import 'ui/forms';
+@import 'ui/editor';
 @import 'ui/tables';
 @import 'ui/navs';
 @import 'ui/overlays';

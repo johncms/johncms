@@ -134,3 +134,7 @@
   height: var(--btn-icon-side);
   justify-content: center;
 }
+
+.btn:disabled {
+  cursor: not-allowed;
+}

@@ -22,14 +22,14 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6 form-group">
+                    <div class="col-md-6 mb-3">
                         <label for="context">{{ __('Context') }}</label>
                         <input type="text" id="context" name="context" list="context_list" class="form-control {% if errors.context|default([]) is not empty %}is-invalid{% endif %}" value="{{ fields.context }}">
                         <datalist id="context_list">{% for context in contexts %}<option value="{{ context.code }}" label="{{ context.name }}"></option>{% endfor %}</datalist>
                         {% include '@theme/components/field-errors.twig' with {errors: errors.context|default([])} only %}
                         <div class="form-text">{{ __('The form where the consent is shown. Pick a suggestion or enter your own context.') }}</div>
                     </div>
-                    <div class="col-md-6 form-group">
+                    <div class="col-md-6 mb-3">
                         <label for="language">{{ __('Language') }}</label>
                         <select id="language" name="language" class="form-select {% if errors.language|default([]) is not empty %}is-invalid{% endif %}">
                             {% for language in languages %}<option value="{{ language.code }}"{% if fields.language == language.code %} selected{% endif %}>{{ language.name }} ({{ language.code }})</option>{% endfor %}
@@ -38,7 +38,7 @@
                         <div class="form-text">{{ __('Visitors see the consent text in this language.') }}</div>
                     </div>
                 </div>
-                <div class="form-group mb-0">
+                <div class="mb-0">
                     <label for="title">{{ __('Title') }}</label>
                     <textarea rows="3" id="title" name="title" class="form-control {% if errors.title|default([]) is not empty %}is-invalid{% endif %}">{{ fields.title }}</textarea>
                     {% include '@theme/components/field-errors.twig' with {errors: errors.title|default([])} only %}
@@ -64,7 +64,7 @@
                 <h2 class="h6 mb-0">{{ __('Behavior') }}</h2>
             </div>
             <div class="card-body">
-                <div class="form-group col-md-4">
+                <div class="col-md-4 mb-3">
                     <label for="version">{{ __('Version') }}</label>
                     <input type="text" id="version" name="version" class="form-control {% if errors.version|default([]) is not empty %}is-invalid{% endif %}" value="{{ fields.version }}">
                     {% include '@theme/components/field-errors.twig' with {errors: errors.version|default([])} only %}
