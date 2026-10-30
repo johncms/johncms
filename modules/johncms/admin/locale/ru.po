@@ -2970,3 +2970,9 @@ msgstr "Не отправлять"
 
 msgid "When it is filled in, the method of sending above is ignored. This is the only way to use a provider with its own API (Mailgun, Postmark, SES and others)."
 msgstr "Если строка заполнена, способ отправки выше не учитывается. Только так можно подключить сервис со своим API (Mailgun, Postmark, SES и другие)."
+
+msgid "Captcha services"
+msgstr "Сервисы капчи"
+
+msgid "Each needs the keys it gives in its own panel."
+msgstr "Каждому нужны ключи, которые он выдаёт в своём кабинете."

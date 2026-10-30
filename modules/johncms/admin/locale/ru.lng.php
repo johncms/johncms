@@ -834,6 +834,8 @@
       'Letters are not sent at all. For a copy of the site where mail must not go out.' => 'Письма не отправляются совсем. Для копии сайта, с которой почта уходить не должна.',
       'Do not send' => 'Не отправлять',
       'When it is filled in, the method of sending above is ignored. This is the only way to use a provider with its own API (Mailgun, Postmark, SES and others).' => 'Если строка заполнена, способ отправки выше не учитывается. Только так можно подключить сервис со своим API (Mailgun, Postmark, SES и другие).',
+      'Captcha services' => 'Сервисы капчи',
+      'Each needs the keys it gives in its own panel.' => 'Каждому нужны ключи, которые он выдаёт в своём кабинете.',
     ),
   ),
 );

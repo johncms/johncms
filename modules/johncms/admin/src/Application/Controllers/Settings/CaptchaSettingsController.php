@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Settings;
 
+use Johncms\Captcha\CaptchaManager;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\Admin\Application\DTO\CaptchaProviderRowDTO;
 use Johncms\Modules\Admin\Application\DTO\CaptchaSettingsDTO;
 use Johncms\Modules\Admin\Application\UseCases\GetCaptchaSettingsUseCase;
 use Johncms\Modules\Admin\Application\UseCases\UpdateCaptchaSettingsUseCase;
@@ -61,6 +63,8 @@ final readonly class CaptchaSettingsController
         $this->navChain->add(__('Settings'), '/admin/settings');
         $this->navChain->add($title);
 
+        $providers = $this->getSettings->execute();
+
         return new ViewResponse(
             '@admin/captcha-settings.twig',
             [
@@ -68,7 +72,10 @@ final readonly class CaptchaSettingsController
                 'page_title'      => __('Settings'),
                 'sys_menu'        => ['settings' => true],
                 'form_action'     => self::URL,
-                'providers'       => $this->getSettings->execute(),
+                // The picture is built in and needs no keys: it is shown apart from the services,
+                // as the one the forms fall back to.
+                'built_in'        => array_values(array_filter($providers, static fn (CaptchaProviderRowDTO $provider): bool => $provider->key === CaptchaManager::FALLBACK_PROVIDER)),
+                'services'        => array_values(array_filter($providers, static fn (CaptchaProviderRowDTO $provider): bool => $provider->key !== CaptchaManager::FALLBACK_PROVIDER)),
                 'error_message'   => $errorMessage,
                 'success_message' => (string) $this->session->getFlash('success_message'),
             ]

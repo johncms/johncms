@@ -27,7 +27,7 @@ final class CaptchaManager
      * remote service lost its keys falls back to the picture instead of letting everything past,
      * which is what switching the captcha off silently would amount to.
      */
-    private const FALLBACK_PROVIDER = 'image';
+    public const string FALLBACK_PROVIDER = 'image';
 
     public function __construct(
         private readonly CaptchaProviderRegistry $registry,

@@ -40,7 +40,7 @@ msgid "Images in the editor"
 msgstr ""
 
 #: themes/default/templates/admin/components/settings-tabs.twig:11
-#: modules/johncms/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:60
+#: modules/johncms/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:62
 msgid "Captcha"
 msgstr ""
 
@@ -195,8 +195,8 @@ msgid "System"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:66
-#: modules/johncms/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:61
-#: modules/johncms/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:68
+#: modules/johncms/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:63
+#: modules/johncms/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:72
 #: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:62
 #: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:71
 #: modules/johncms/admin/src/Application/Controllers/Settings/MailSettingsController.php:95
@@ -544,7 +544,7 @@ msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:53
 #: modules/johncms/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:39
-#: modules/johncms/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:53
+#: modules/johncms/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:55
 #: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:44
 #: modules/johncms/admin/src/Application/Controllers/Settings/MailSettingsController.php:46
 #: modules/johncms/admin/src/Application/Controllers/Settings/SystemSettingsController.php:49
@@ -827,7 +827,7 @@ msgstr ""
 msgid "The day delay applies while somebody of the staff is on the site, the night one when nobody is."
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:50
+#: modules/johncms/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:52
 msgid "ERROR: Can not write file `captcha.local.php`"
 msgstr ""
 
@@ -1971,23 +1971,31 @@ msgstr ""
 msgid "until %s"
 msgstr ""
 
-#: modules/johncms/admin/templates/captcha-settings.twig:20
+#: modules/johncms/admin/templates/captcha-settings.twig:61
 msgid "Pick the captcha the forms of the site ask for; fill in the keys of a service before picking it."
 msgstr ""
 
-#: modules/johncms/admin/templates/captcha-settings.twig:35
+#: modules/johncms/admin/templates/captcha-settings.twig:74
+msgid "Captcha services"
+msgstr ""
+
+#: modules/johncms/admin/templates/captcha-settings.twig:75
+msgid "Each needs the keys it gives in its own panel."
+msgstr ""
+
+#: modules/johncms/admin/templates/captcha-settings.twig:26
 msgid "In use"
 msgstr ""
 
-#: modules/johncms/admin/templates/captcha-settings.twig:37
+#: modules/johncms/admin/templates/captcha-settings.twig:28
 msgid "Not configured"
 msgstr ""
 
-#: modules/johncms/admin/templates/captcha-settings.twig:46
+#: modules/johncms/admin/templates/captcha-settings.twig:37
 msgid "This provider is not configured yet. Until it is, the forms fall back to the picture with a code."
 msgstr ""
 
-#: modules/johncms/admin/templates/captcha-settings.twig:56
+#: modules/johncms/admin/templates/captcha-settings.twig:50
 msgid "Nothing to set up."
 msgstr ""
 
