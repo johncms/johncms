@@ -448,7 +448,7 @@
       'Also install the demo data' => 'Заодно установить демонстрационные данные',
       'Also delete its tables, data and permissions. This cannot be undone.' => 'Заодно удалить его таблицы, данные и права доступа. Отменить это будет нельзя.',
       'Run in the background (for a module with heavy migrations; the scheduler starts it within a minute)' => 'Выполнить в фоне (для модуля с тяжёлыми миграциями; планировщик запустит задачу в течение минуты)',
-      'The module will be taken off the site. Its files stay where they are, and its tables are kept unless you ask for them to be removed.' => 'Модуль будет снят с сайта. Его файлы останутся на месте, а таблицы сохранятся, если не попросить удалить и их.',
+      'The module will be taken off the site. Its files stay where they are, and its tables are kept unless you ask for them to be removed.' => 'Модуль будет удалён с сайта. Его файлы останутся на диске, а таблицы и данные — в базе, если не включить их удаление ниже.',
       'The module stops working: no pages, no menu items. Its tables and data are untouched.' => 'Модуль перестанет работать: ни страниц, ни пунктов меню. Таблицы и данные останутся нетронутыми.',
       'The migrations of the module will be applied and its installer run.' => 'Будут выполнены миграции модуля и запущен его установщик.',
       'A module is code that runs on your site with the rights of your site. Install only what you trust.' => 'Модуль — это код, который выполняется на вашем сайте с правами вашего сайта. Устанавливайте только то, чему доверяете.',

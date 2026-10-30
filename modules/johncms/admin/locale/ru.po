@@ -1929,7 +1929,7 @@ msgid "Run in the background (for a module with heavy migrations; the scheduler 
 msgstr "Выполнить в фоне (для модуля с тяжёлыми миграциями; планировщик запустит задачу в течение минуты)"
 
 msgid "The module will be taken off the site. Its files stay where they are, and its tables are kept unless you ask for them to be removed."
-msgstr "Модуль будет снят с сайта. Его файлы останутся на месте, а таблицы сохранятся, если не попросить удалить и их."
+msgstr "Модуль будет удалён с сайта. Его файлы останутся на диске, а таблицы и данные — в базе, если не включить их удаление ниже."
 
 msgid "The module stops working: no pages, no menu items. Its tables and data are untouched."
 msgstr "Модуль перестанет работать: ни страниц, ни пунктов меню. Таблицы и данные останутся нетронутыми."
