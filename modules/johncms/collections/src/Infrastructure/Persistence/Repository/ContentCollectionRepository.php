@@ -23,11 +23,17 @@ final class ContentCollectionRepository implements ContentCollectionRepositoryIn
     public function getAll(int $limit, int $offset): Collection
     {
         return ContentCollection::query()
+            ->withCount(['items', 'sections', 'fields'])
             ->orderBy('sort')
             ->orderBy('id')
             ->offset($offset)
             ->limit($limit)
             ->get();
+    }
+
+    public function findWithCounts(int $id): ?ContentCollection
+    {
+        return ContentCollection::query()->withCount(['items', 'sections', 'fields'])->find($id);
     }
 
     public function countAll(): int

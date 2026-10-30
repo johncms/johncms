@@ -1,0 +1,44 @@
+{#
+    The pages of one collection: its name over them, where it is on the site, and a tab for each
+    part of it.
+
+    @var array  collection      Built by CollectionWorkspaceMapper::head(): id, name, code, active,
+                                public, public_url, tabs (title, url, active, count).
+    @var string success_message Empty unless an action has just been performed.
+
+    A page fills the collection_content block and puts its main action into collection_actions.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block page_actions %}
+    {% if collection.public_url %}
+        <a class="btn btn-outline-secondary" href="{{ collection.public_url }}" target="_blank" rel="noopener">
+            {% include '@admin/components/ui/icon.twig' with {name: 'external-link', size: 14} only %}
+            {{ __('Open on the site') }}
+        </a>
+    {% endif %}
+    {% block collection_actions %}{% endblock %}
+{% endblock %}
+
+{% block page_tabs %}
+    <ul class="nav nav-tabs">
+        {% for tab in collection.tabs %}
+            <li class="nav-item">
+                <a class="nav-link{{ tab.active ? ' active' }}" href="{{ tab.url }}"{% if tab.active %} aria-current="page"{% endif %}>
+                    {{ tab.title }}
+                    {% if tab.count is not null %}
+                        <span class="badge text-bg-light">{{ tab.count|format_number }}</span>
+                    {% endif %}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block content %}
+    {% if not collection.active %}
+        <div class="alert alert-warning">{{ __('The collection is turned off: the site does not show it.') }}</div>
+    {% endif %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+    {% block collection_content %}{% endblock %}
+{% endblock %}

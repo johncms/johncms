@@ -1,22 +1,24 @@
 {#
     One level of the sections of a collection.
 
-    @var string       collection_name
     @var string       root_url
     @var array        path            Breadcrumbs of the current level: name, url.
     @var array        items           Rows: sort, name, code, child_count, active and the urls.
     @var string       add_url
-    @var string       back_url
     @var \Twig\Markup pagination
-    @var string       success_message Empty unless an action has just been performed.
+
+    The head of the collection comes from collection/layout.twig.
 #}
-{% extends '@admin/layouts/default.twig' %}
+{% extends '@collections/admin/collection/layout.twig' %}
 
-{% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+{% block collection_actions %}
+    <a href="{{ add_url }}" class="btn btn-primary">
+        {% include '@admin/components/ui/icon.twig' with {name: 'plus', size: 14} only %}
+        {{ __('New section') }}
+    </a>
+{% endblock %}
 
-    <div class="mb-2 text-muted">{{ __('Collection') }}: <b>{{ collection_name }}</b></div>
-
+{% block collection_content %}
     <div class="mb-3 small">
         <a href="{{ root_url }}">{{ __('Root') }}</a>
         {% for crumb in path %}
@@ -24,9 +26,6 @@
         {% endfor %}
     </div>
 
-    <div class="mb-3">
-        <a href="{{ add_url }}" class="btn btn-primary btn-sm">{{ __('New section') }}</a>
-    </div>
 
     {% if items is empty %}
         {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
@@ -54,14 +53,11 @@
             <div class="mt-2">
                 <a href="{{ item.browse_url }}">{{ __('Open') }}</a>
                 <a href="{{ item.edit_url }}" class="ms-2">{{ __('Edit') }}</a>
-                <a href="{{ item.delete_url }}" class="text-danger ms-2">{{ __('Delete') }}</a>
+                <a href="{{ item.delete_url }}" class="text-danger ms-2" data-admin-modal>{{ __('Delete') }}</a>
             </div>
         </div>
     {% endfor %}
 
     <div class="mt-4">{{ pagination }}</div>
 
-    <div class="mt-2">
-        <a href="{{ back_url }}">{{ __('Back') }}</a>
-    </div>
 {% endblock %}

@@ -1,23 +1,21 @@
 {#
     The fields an item of a collection carries.
 
-    @var string collection_name
     @var array  items           Rows: sort, name, code, type_label, required, multiple, urls.
     @var string add_url
-    @var string back_url
-    @var string success_message Empty unless an action has just been performed.
+
+    The head of the collection comes from collection/layout.twig.
 #}
-{% extends '@admin/layouts/default.twig' %}
+{% extends '@collections/admin/collection/layout.twig' %}
 
-{% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+{% block collection_actions %}
+    <a href="{{ add_url }}" class="btn btn-primary">
+        {% include '@admin/components/ui/icon.twig' with {name: 'plus', size: 14} only %}
+        {{ __('New field') }}
+    </a>
+{% endblock %}
 
-    <div class="mb-3 text-muted">{{ __('Collection') }}: <b>{{ collection_name }}</b></div>
-
-    <div class="mb-3">
-        <a href="{{ add_url }}" class="btn btn-primary btn-sm">{{ __('New field') }}</a>
-    </div>
-
+{% block collection_content %}
     {% if items is empty %}
         {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
     {% endif %}
@@ -38,12 +36,9 @@
             </div>
             <div class="mt-2">
                 <a href="{{ item.edit_url }}">{{ __('Edit') }}</a>
-                <a href="{{ item.delete_url }}" class="text-danger ms-2">{{ __('Delete') }}</a>
+                <a href="{{ item.delete_url }}" class="text-danger ms-2" data-admin-modal>{{ __('Delete') }}</a>
             </div>
         </div>
     {% endfor %}
 
-    <div class="mt-3">
-        <a href="{{ back_url }}">{{ __('Back') }}</a>
-    </div>
 {% endblock %}

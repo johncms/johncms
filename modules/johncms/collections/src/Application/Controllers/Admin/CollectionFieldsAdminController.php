@@ -15,6 +15,7 @@ use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
+use Johncms\Modules\Collections\Application\Services\CollectionWorkspaceMapper;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
@@ -24,6 +25,7 @@ final readonly class CollectionFieldsAdminController
 {
     public function __construct(
         private NavChain $navChain,
+        private CollectionWorkspaceMapper $workspace,
         private ContentCollectionRepositoryInterface $collectionRepository,
         private ContentCollectionFieldRepositoryInterface $fieldRepository,
         private ListCollectionFieldsUseCase $listFields,
@@ -35,7 +37,7 @@ final readonly class CollectionFieldsAdminController
 
     public function index(int $collection_id): ViewResponse
     {
-        $collection = $this->collectionRepository->findById($collection_id);
+        $collection = $this->collectionRepository->findWithCounts($collection_id);
         if ($collection === null) {
             return $this->collectionNotFound();
         }
@@ -43,11 +45,12 @@ final readonly class CollectionFieldsAdminController
         $this->breadcrumbs($collection);
         $title = __('Fields');
 
-        return new ViewResponse('@collections/admin/fields.twig', $this->menu($title, $collection->name) + [
-            'collection_name' => $collection->name,
+        return new ViewResponse('@collections/admin/fields.twig', [
+            'page_title' => $collection->name,
+            'collection' => $this->workspace->head($collection, CollectionWorkspaceMapper::FIELDS),
+        ] + $this->menu($title, $collection->name) + [
             'items'           => $this->mapRows($collection_id, $this->listFields->getByCollection($collection_id)),
             'add_url'         => $this->baseUrl($collection_id) . '/new',
-            'back_url'        => '/admin/collections',
             'success_message' => $this->session->getFlash('success_message') ?? '',
         ]);
     }
@@ -106,7 +109,7 @@ final readonly class CollectionFieldsAdminController
         redirect($this->baseUrl($collection_id));
     }
 
-    public function deleteConfirm(int $collection_id, int $id): ViewResponse
+    public function deleteConfirm(Request $request, int $collection_id, int $id): ViewResponse
     {
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
@@ -118,15 +121,23 @@ final readonly class CollectionFieldsAdminController
             return $this->wrongData($collection_id);
         }
 
-        $this->breadcrumbs($collection);
-        $title = __('Delete');
-        $this->navChain->add($title);
-
-        return new ViewResponse('@collections/admin/delete-confirm.twig', $this->menu($title, $collection->name) + [
+        $dialog = [
+            'title'       => __('Delete field'),
             'message'     => __('Are you sure you want to delete the field?'),
             'name'        => $field->name,
             'form_action' => $this->baseUrl($collection_id) . '/' . $id . '/delete',
             'back_url'    => $this->baseUrl($collection_id),
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            return new ViewResponse('@collections/admin/delete-dialog.twig', $dialog);
+        }
+
+        $this->breadcrumbs($collection);
+        $this->navChain->add($dialog['title']);
+
+        return new ViewResponse('@collections/admin/delete-confirm.twig', $this->menu($dialog['title'], $collection->name) + [
+            'dialog' => $dialog,
         ]);
     }
 

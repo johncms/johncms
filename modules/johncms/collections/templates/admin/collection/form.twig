@@ -1,0 +1,88 @@
+{#
+    The fields of the form of a collection, shared by a new collection and its settings.
+
+    @param string form_action
+    @param int    id     Null for a new collection.
+    @param array  fields Values of the form, keyed by field name.
+    @param array  errors Validation messages, empty on the first render.
+#}
+{% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
+
+<form action="{{ form_action }}" method="post" id="collection-form" class="row g-3 align-items-start">
+    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+    {% if id is not null %}
+        <input type="hidden" name="id" value="{{ id }}">
+    {% endif %}
+
+    <div class="col-lg-8">
+        <section class="card">
+            <div class="card-header">
+                {% include '@admin/components/ui/icon.twig' with {name: 'layout-grid', size: 16} only %}
+                <h2 class="h6 mb-0 ms-2">{{ __('Collection') }}</h2>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label" for="name">{{ __('Name') }}</label>
+                        <input type="text" name="name" class="form-control" id="name" value="{{ fields.name }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="code">{{ __('Code') }}</label>
+                        <input type="text" name="code" class="form-control font-monospace" id="code" value="{{ fields.code }}" required pattern="[a-z0-9_-]+">
+                        <div class="form-text">{{ __('The address of the collection on the site and its name in the API: lowercase latin letters, digits, hyphen and underscore.') }}</div>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label" for="description">{{ __('Description') }}</label>
+                        <textarea name="description" class="form-control" id="description" rows="3">{{ fields.description }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-lg-4 d-flex flex-column gap-3">
+        <section class="card">
+            <div class="card-header">
+                {% include '@admin/components/ui/icon.twig' with {name: 'eye', size: 16} only %}
+                <h2 class="h6 mb-0 ms-2">{{ __('Visibility') }}</h2>
+            </div>
+            <div class="card-body d-flex flex-column gap-3">
+                <div class="form-check form-switch">
+                    <input type="checkbox" class="form-check-input" role="switch" name="active" value="1" id="active"{% if fields.active %} checked{% endif %}>
+                    <label class="form-check-label" for="active">{{ __('Active') }}</label>
+                    <div class="form-text mt-0">{{ __('A turned off collection is not shown on the site and not given out by the API.') }}</div>
+                </div>
+                <div class="form-check form-switch">
+                    <input type="checkbox" class="form-check-input" role="switch" name="public" value="1" id="public"{% if fields.public %} checked{% endif %}>
+                    <label class="form-check-label" for="public">{{ __('Public (accessible by URL)') }}</label>
+                    <div class="form-text mt-0">{{ __('A private collection has no public page and is available only through the API') }}</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-header">
+                {% include '@admin/components/ui/icon.twig' with {name: 'list-tree', size: 16} only %}
+                <h2 class="h6 mb-0 ms-2">{{ __('Structure') }}</h2>
+            </div>
+            <div class="card-body d-flex flex-column gap-3">
+                <div class="form-check form-switch">
+                    <input type="checkbox" class="form-check-input" role="switch" name="has_sections" value="1" id="has_sections"{% if fields.has_sections %} checked{% endif %}>
+                    <label class="form-check-label" for="has_sections">{{ __('Use sections') }}</label>
+                    <div class="form-text mt-0">{{ __('Items are grouped into a tree of sections, and the sections become a part of their address.') }}</div>
+                </div>
+                <div class="row g-3">
+                    <div class="col-6">
+                        <label class="form-label" for="per_page">{{ __('Items per page') }}</label>
+                        <input type="number" name="per_page" class="form-control" id="per_page" min="1" value="{{ fields.per_page }}">
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label" for="sort">{{ __('Sorting') }}</label>
+                        <input type="number" name="sort" class="form-control" id="sort" value="{{ fields.sort }}">
+                    </div>
+                </div>
+                <div class="form-text mt-0">{{ __('The sorting orders the collections in the list of the panel: the smaller the number, the higher.') }}</div>
+            </div>
+        </section>
+    </div>
+</form>

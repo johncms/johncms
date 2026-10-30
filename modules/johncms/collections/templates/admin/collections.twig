@@ -1,61 +1,85 @@
 {#
-    The collections of the site.
+    The collections of the site. A phone leaves the counts out: the tabs of a collection carry them.
 
-    @var array        items           Rows: sort, name, code, active, has_sections and the urls.
+    @var array        items           Rows: name, code, active, public, has_sections, the number of
+                                      items, sections and fields, url (the collection) and actions.
     @var int          total
+    @var int          per_page
     @var string       add_url
     @var \Twig\Markup pagination
     @var string       success_message Empty unless an action has just been performed.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
+{% block page_actions %}
+    <a href="{{ add_url }}" class="btn btn-primary">
+        {% include '@admin/components/ui/icon.twig' with {name: 'plus', size: 14} only %}
+        {{ __('New collection') }}
+    </a>
+{% endblock %}
+
 {% block content %}
     {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
 
-    <div class="mb-3">
-        <a href="{{ add_url }}" class="btn btn-primary btn-sm">{{ __('New collection') }}</a>
-    </div>
-
-    {% if items is empty %}
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
-    {% endif %}
-
-    {% for item in items %}
-        <div class="new_post-item without_avatar">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center">
-                    <span class="text-muted me-1">[{{ item.sort }}]</span>
-                    <a href="{{ item.edit_url }}" class="h3 mb-0">{{ item.name }}</a>
-                    <span class="badge rounded-pill text-bg-light border ms-2">{{ item.code }}</span>
-                </div>
-                <div>
-                    {% if item.active %}
-                        <span class="badge rounded-pill bg-success">{{ __('On') }}</span>
-                    {% else %}
-                        <span class="badge rounded-pill bg-danger">{{ __('Off') }}</span>
-                    {% endif %}
-                </div>
+    <div class="card">
+        {% if items is empty %}
+            {% include '@admin/components/ui/empty-state.twig' with {
+                icon: 'layout-grid',
+                title: __('There are no collections yet'),
+                description: __('A collection is a list of things of one kind: posts, products, cities. Start with one and describe the fields its items carry.'),
+            } only %}
+            <div class="text-center pb-4">
+                <a href="{{ add_url }}" class="btn btn-outline-secondary">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'plus', size: 14} only %}
+                    {{ __('New collection') }}
+                </a>
             </div>
-            <div class="mt-2">
-                <a href="{{ item.items_url }}">{{ __('Items') }}</a>
-                <a href="{{ item.fields_url }}" class="ms-2">{{ __('Fields') }}</a>
-                {% if item.has_sections %}
-                    <a href="{{ item.sections_url }}" class="ms-2">{{ __('Sections') }}</a>
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle admin-collections-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ __('Collection') }}</th>
+                            <th scope="col" class="text-end d-none d-md-table-cell">{{ __('Items') }}</th>
+                            <th scope="col" class="text-end d-none d-md-table-cell">{{ __('Sections') }}</th>
+                            <th scope="col" class="text-end d-none d-md-table-cell">{{ __('Fields') }}</th>
+                            <th scope="col">{{ __('Status') }}</th>
+                            <th scope="col"><span class="visually-hidden">{{ __('Actions') }}</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                            <tr>
+                                <td>
+                                    <a class="admin-collections-table__name" href="{{ item.url }}">{{ item.name }}</a>
+                                    <div class="admin-collections-table__code">{{ item.code }}</div>
+                                </td>
+                                <td class="text-end admin-collections-table__number d-none d-md-table-cell">{{ item.items|format_number }}</td>
+                                <td class="text-end admin-collections-table__number d-none d-md-table-cell">{{ item.has_sections ? item.sections|format_number : '—' }}</td>
+                                <td class="text-end admin-collections-table__number d-none d-md-table-cell">{{ item.fields|format_number }}</td>
+                                <td>
+                                    {% if not item.active %}
+                                        <span class="badge rounded-pill text-bg-light badge-dot">{{ __('Turned off') }}</span>
+                                    {% elseif item.public %}
+                                        <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ __('Public') }}</span>
+                                    {% else %}
+                                        <span class="badge rounded-pill bg-info-subtle text-info-emphasis badge-dot">{{ __('API only') }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end">
+                                    {% include '@admin/components/ui/row-actions.twig' with {actions: item.actions, label: __('Actions')} only %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer admin-list-footer">
+                <span class="admin-list-footer__total">{{ __('Total:') }} {{ total|format_number }}</span>
+                {% if total > per_page %}
+                    <div class="pagination-no-padding">{{ pagination }}</div>
                 {% endif %}
-                <a href="{{ item.edit_url }}" class="ms-2">{{ __('Edit') }}</a>
-                <a href="{{ item.delete_url }}" class="text-danger ms-2">{{ __('Delete') }}</a>
             </div>
-        </div>
-    {% endfor %}
-
-    <div class="mt-4">
-        <div>{{ pagination }}</div>
-        {% if total > 0 %}
-            <div>{{ __('Total:') }} {{ total }}</div>
         {% endif %}
-    </div>
-
-    <div class="mt-2">
-        <a href="/admin/">{{ __('Back') }}</a>
     </div>
 {% endblock %}

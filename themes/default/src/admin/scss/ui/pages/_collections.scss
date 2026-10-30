@@ -1,0 +1,36 @@
+// The collections (collections::admin): the list of them and the pages of one.
+
+.admin-collections-table {
+  td {
+    white-space: nowrap;
+  }
+
+  td:first-child {
+    width: 100%;
+    min-width: 9rem;
+    white-space: normal;
+  }
+}
+
+.admin-collections-table__name {
+  font-weight: 600;
+  color: var(--fg);
+
+  &:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+}
+
+.admin-collections-table__code {
+  margin-top: 2px;
+  font-family: $ui-font-mono;
+  font-size: 0.75rem;
+  color: var(--fg-dim);
+}
+
+.admin-collections-table__number {
+  font-family: $ui-font-mono;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-muted);
+}

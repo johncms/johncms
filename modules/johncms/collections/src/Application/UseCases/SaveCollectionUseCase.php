@@ -21,13 +21,13 @@ final readonly class SaveCollectionUseCase
     }
 
     /**
-     * Creates or updates a collection. Returns true when an existing collection
-     * was updated, false when a new one was created.
+     * Creates or updates a collection. Returns the id of the collection saved, so the panel
+     * can open a new one right away.
      *
      * @throws CollectionCodeAlreadyExistsException when the code belongs to another collection
      * @throws CollectionCodeReservedException when the code collides with a reserved top-level segment
      */
-    public function execute(?int $id, CollectionFormDTO $dto): bool
+    public function execute(?int $id, CollectionFormDTO $dto): int
     {
         if ($this->reservedCodeChecker->isReserved($dto->code)) {
             throw new CollectionCodeReservedException();
@@ -55,12 +55,12 @@ final readonly class SaveCollectionUseCase
             $this->repository->update($id, $attributes);
             $this->codeCache->invalidate();
 
-            return true;
+            return $id;
         }
 
-        $this->repository->create($attributes);
+        $collection = $this->repository->create($attributes);
         $this->codeCache->invalidate();
 
-        return false;
+        return $collection->id;
     }
 }

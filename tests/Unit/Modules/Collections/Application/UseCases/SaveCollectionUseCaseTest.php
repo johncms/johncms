@@ -57,12 +57,17 @@ final class SaveCollectionUseCaseTest extends TestCase
                 return $attributes['code'] === 'blog'
                     && $attributes['settings'] === ['has_sections' => true, 'per_page' => 10];
             }))
-            ->willReturn(new ContentCollection());
+            ->willReturnCallback(static function (): ContentCollection {
+                $created = new ContentCollection();
+                $created->id = 12;
+
+                return $created;
+            });
         $repository->expects(self::never())->method('update');
 
-        $isUpdate = (new SaveCollectionUseCase($repository, $this->cache(true), $this->checker(false)))->execute(null, $this->dto());
+        $id = (new SaveCollectionUseCase($repository, $this->cache(true), $this->checker(false)))->execute(null, $this->dto());
 
-        self::assertFalse($isUpdate);
+        self::assertSame(12, $id);
     }
 
     public function testUpdatesExistingCollection(): void
@@ -76,9 +81,9 @@ final class SaveCollectionUseCaseTest extends TestCase
         $repository->expects(self::once())->method('update')->with(7, self::anything());
         $repository->expects(self::never())->method('create');
 
-        $isUpdate = (new SaveCollectionUseCase($repository, $this->cache(true), $this->checker(false)))->execute(7, $this->dto());
+        $id = (new SaveCollectionUseCase($repository, $this->cache(true), $this->checker(false)))->execute(7, $this->dto());
 
-        self::assertTrue($isUpdate);
+        self::assertSame(7, $id);
     }
 
     public function testThrowsWhenCodeBelongsToAnotherCollection(): void

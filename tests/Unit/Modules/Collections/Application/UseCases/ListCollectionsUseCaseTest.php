@@ -24,12 +24,16 @@ final class ListCollectionsUseCaseTest extends TestCase
     public function testGetPageMapsModelsToRowDtos(): void
     {
         $withSections = new ContentCollection([
-            'code' => 'blog', 'name' => 'Blog', 'active' => true, 'sort' => 100,
+            'code' => 'blog', 'name' => 'Blog', 'active' => true, 'public' => true, 'sort' => 100,
             'settings' => ['has_sections' => true],
         ]);
         $withSections->id = 7;
+        $withSections->setAttribute('items_count', 22);
+        $withSections->setAttribute('sections_count', 7);
+        $withSections->setAttribute('fields_count', 4);
 
-        $flat = new ContentCollection(['code' => 'pages', 'name' => 'Pages', 'active' => false, 'sort' => 200]);
+        // Public but turned off: the site does not show it.
+        $flat = new ContentCollection(['code' => 'pages', 'name' => 'Pages', 'active' => false, 'public' => true, 'sort' => 200]);
         $flat->id = 8;
 
         $repository = $this->createMock(ContentCollectionRepositoryInterface::class);
@@ -48,8 +52,11 @@ final class ListCollectionsUseCaseTest extends TestCase
         self::assertTrue($rows[0]->active);
         self::assertSame(100, $rows[0]->sort);
         self::assertTrue($rows[0]->hasSections);
+        self::assertSame('/blog', $rows[0]->publicUrl);
+        self::assertSame([22, 7, 4], [$rows[0]->itemCount, $rows[0]->sectionCount, $rows[0]->fieldCount]);
 
         self::assertFalse($rows[1]->active);
         self::assertFalse($rows[1]->hasSections);
+        self::assertSame('', $rows[1]->publicUrl);
     }
 }

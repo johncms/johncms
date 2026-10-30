@@ -1,0 +1,36 @@
+{#
+    Confirming the removal of a collection or of a part of one. Answered to the modal as it is, and
+    put into a page of its own (delete-confirm.twig) for a plain visit.
+
+    @var string title
+    @var string message     What deleting it does.
+    @var string name        What is about to be deleted.
+    @var array  facts       What goes with it: label, value; may be empty.
+    @var string form_action
+    @var string back_url
+#}
+{% embed '@admin/components/ui/dialog.twig' with {
+    title: title,
+    action: form_action,
+    close_url: back_url,
+    message: message,
+    name: name,
+    facts: facts|default([]),
+} only %}
+    {% block body %}
+        <p class="mb-2">{{ message }}</p>
+        <div class="fw-semibold">{{ name }}</div>
+        {% if facts is not empty %}
+            <div class="mt-3">
+                {% include '@admin/components/ui/facts.twig' with {items: facts} only %}
+            </div>
+        {% endif %}
+    {% endblock %}
+    {% block footer %}
+        <a href="{{ close_url }}" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</a>
+        <button type="submit" class="btn btn-danger">
+            {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+            {{ __('Delete') }}
+        </button>
+    {% endblock %}
+{% endembed %}

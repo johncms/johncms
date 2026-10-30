@@ -449,3 +449,69 @@ msgstr "Открыть"
 
 msgid "Manage the collections"
 msgstr "Управлять коллекциями"
+
+msgid "Delete field"
+msgstr "Удалить поле"
+
+msgid "Delete item"
+msgstr "Удалить элемент"
+
+msgid "Delete section"
+msgstr "Удалить раздел"
+
+msgid "The collection is created. Add the fields its items carry."
+msgstr "Коллекция создана. Добавьте поля, которые будут у её элементов."
+
+msgid "Delete collection"
+msgstr "Удалить коллекцию"
+
+msgid "The collection is deleted with all its items, sections and fields. This cannot be undone."
+msgstr "Коллекция удаляется вместе со всеми элементами, разделами и полями. Это нельзя отменить."
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "Open on the site"
+msgstr "Открыть на сайте"
+
+msgid "The address of the collection on the site and its name in the API: lowercase latin letters, digits, hyphen and underscore."
+msgstr "Адрес коллекции на сайте и её имя в API: строчные латинские буквы, цифры, дефис и подчёркивание."
+
+msgid "Visibility"
+msgstr "Видимость"
+
+msgid "A turned off collection is not shown on the site and not given out by the API."
+msgstr "Выключенная коллекция не показывается на сайте и не отдаётся через API."
+
+msgid "Structure"
+msgstr "Структура"
+
+msgid "Items are grouped into a tree of sections, and the sections become a part of their address."
+msgstr "Элементы группируются в дерево разделов, и разделы становятся частью их адреса."
+
+msgid "The sorting orders the collections in the list of the panel: the smaller the number, the higher."
+msgstr "Сортировка задаёт порядок коллекций в списке админки: чем меньше число, тем выше."
+
+msgid "The collection is turned off: the site does not show it."
+msgstr "Коллекция выключена: сайт её не показывает."
+
+msgid "There are no collections yet"
+msgstr "Коллекций пока нет"
+
+msgid "A collection is a list of things of one kind: posts, products, cities. Start with one and describe the fields its items carry."
+msgstr "Коллекция — это список однотипных записей: посты, товары, города. Создайте коллекцию и опишите поля её элементов."
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Actions"
+msgstr "Действия"
+
+msgid "Turned off"
+msgstr "Выключена"
+
+msgid "Public"
+msgstr "Публичная"
+
+msgid "API only"
+msgstr "Только API"

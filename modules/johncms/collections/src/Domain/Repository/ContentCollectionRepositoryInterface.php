@@ -18,9 +18,17 @@ interface ContentCollectionRepositoryInterface
     public function findById(int $id): ?ContentCollection;
 
     /**
+     * A page of the collections, each with the number of its items, sections and fields
+     * (items_count, sections_count, fields_count).
+     *
      * @return Collection<int, ContentCollection>
      */
     public function getAll(int $limit, int $offset): Collection;
+
+    /**
+     * The collection with the number of its items, sections and fields, as getAll() gives them.
+     */
+    public function findWithCounts(int $id): ?ContentCollection;
 
     public function countAll(): int;
 

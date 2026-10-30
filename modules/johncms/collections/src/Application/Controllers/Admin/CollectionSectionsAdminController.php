@@ -17,6 +17,7 @@ use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
+use Johncms\Modules\Collections\Application\Services\CollectionWorkspaceMapper;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
@@ -26,6 +27,7 @@ final readonly class CollectionSectionsAdminController
 {
     public function __construct(
         private NavChain $navChain,
+        private CollectionWorkspaceMapper $workspace,
         private ContentCollectionRepositoryInterface $collectionRepository,
         private ContentCollectionSectionRepositoryInterface $sectionRepository,
         private ListCollectionSectionsUseCase $listSections,
@@ -39,7 +41,7 @@ final readonly class CollectionSectionsAdminController
 
     public function index(Request $request, int $collection_id): ViewResponse
     {
-        $collection = $this->collectionRepository->findById($collection_id);
+        $collection = $this->collectionRepository->findWithCounts($collection_id);
         if ($collection === null) {
             return $this->collectionNotFound();
         }
@@ -62,13 +64,14 @@ final readonly class CollectionSectionsAdminController
         $this->breadcrumbs($collection);
         $title = __('Sections');
 
-        return new ViewResponse('@collections/admin/sections.twig', $this->menu($this->pageMeta($title, $pagination->getCurrentPage()), $collection->name) + [
-            'collection_name' => $collection->name,
+        return new ViewResponse('@collections/admin/sections.twig', [
+            'page_title' => $collection->name,
+            'collection' => $this->workspace->head($collection, CollectionWorkspaceMapper::SECTIONS),
+        ] + $this->menu($this->pageMeta($title, $pagination->getCurrentPage()), $collection->name) + [
             'root_url'        => $this->baseUrl($collection_id),
             'path'            => $this->pathItems($collection_id, $parentSection),
             'items'           => $this->mapRows($collection_id, $sections),
             'add_url'         => $this->urlWithParent($this->baseUrl($collection_id) . '/new', $parent),
-            'back_url'        => $this->parentUpUrl($collection_id, $parentSection),
             'pagination'      => $pagination->render(),
             'success_message' => $this->session->getFlash('success_message') ?? '',
         ]);
@@ -145,7 +148,7 @@ final readonly class CollectionSectionsAdminController
         redirect($this->urlWithParent($this->baseUrl($collection_id), $parent));
     }
 
-    public function deleteConfirm(int $collection_id, int $id): ViewResponse
+    public function deleteConfirm(Request $request, int $collection_id, int $id): ViewResponse
     {
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
@@ -157,16 +160,24 @@ final readonly class CollectionSectionsAdminController
             return $this->wrongData($collection_id, null);
         }
 
-        $this->breadcrumbs($collection);
-        $title = __('Delete');
-        $this->navChain->add($title);
-
-        return new ViewResponse('@collections/admin/delete-confirm.twig', $this->menu($title, $collection->name) + [
+        $dialog = [
+            'title'       => __('Delete section'),
             'message'     => __('Are you sure you want to delete the section?')
                 . ' ' . __('Nested sections will be deleted too.'),
             'name'        => $section->name,
             'form_action' => $this->baseUrl($collection_id) . '/' . $id . '/delete',
             'back_url'    => $this->urlWithParent($this->baseUrl($collection_id), $section->parent),
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            return new ViewResponse('@collections/admin/delete-dialog.twig', $dialog);
+        }
+
+        $this->breadcrumbs($collection);
+        $this->navChain->add($dialog['title']);
+
+        return new ViewResponse('@collections/admin/delete-confirm.twig', $this->menu($dialog['title'], $collection->name) + [
+            'dialog' => $dialog,
         ]);
     }
 
@@ -362,15 +373,6 @@ final readonly class CollectionSectionsAdminController
     private function urlWithParent(string $url, ?int $parent): string
     {
         return $parent !== null ? $url . '?parent=' . $parent : $url;
-    }
-
-    private function parentUpUrl(int $collectionId, ?ContentCollectionSection $parentSection): string
-    {
-        if ($parentSection === null) {
-            return '/admin/collections';
-        }
-
-        return $this->urlWithParent($this->baseUrl($collectionId), $parentSection->parent);
     }
 
     private function pageMeta(string $title, int $page): string

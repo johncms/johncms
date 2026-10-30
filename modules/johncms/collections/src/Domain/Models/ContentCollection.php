@@ -52,6 +52,15 @@ final class ContentCollection extends Model
         'updated_at' => FormattedDate::class,
     ];
 
+    /**
+     * Where the collection is on the site; empty for one the site does not show — turned off, or
+     * private and available only through the API.
+     */
+    public function publicUrl(): string
+    {
+        return $this->active && $this->public ? '/' . $this->code : '';
+    }
+
     public function fields(): HasMany
     {
         return $this->hasMany(ContentCollectionField::class, 'collection_id');

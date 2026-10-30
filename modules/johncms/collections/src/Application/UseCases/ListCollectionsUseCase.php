@@ -33,6 +33,11 @@ final readonly class ListCollectionsUseCase
                 active: $collection->active,
                 sort: $collection->sort,
                 hasSections: ! empty($collection->settings['has_sections']),
+                public: $collection->public,
+                publicUrl: $collection->publicUrl(),
+                itemCount: (int) $collection->getAttribute('items_count'),
+                sectionCount: (int) $collection->getAttribute('sections_count'),
+                fieldCount: (int) $collection->getAttribute('fields_count'),
             ))
             ->all();
     }
