@@ -6,6 +6,7 @@ namespace Johncms\Modules\Admin\Application\Controllers\Settings;
 
 use Johncms\Auth\RegistrationSettings;
 use Johncms\Http\Session;
+use Johncms\Http\UploadLimits;
 use Johncms\Modules\Admin\Application\DTO\SystemSettingsDTO;
 use Johncms\Modules\Admin\Application\UseCases\UpdateSystemSettingsUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
@@ -18,12 +19,17 @@ final readonly class SystemSettingsController
 {
     private const URL = '/admin/settings';
 
+    /** The time zones of the world run from UTC−12 to UTC+14. */
+    private const int SHIFT_MIN = -12;
+    private const int SHIFT_MAX = 14;
+
     public function __construct(
         private NavChain $navChain,
         private UpdateSystemSettingsUseCase $updateSystemSettingsUseCase,
         private ThemeListProviderInterface $themeListProvider,
         private RegistrationSettings $registrationSettings,
         private Session $session,
+        private UploadLimits $uploadLimits,
     ) {
     }
 
@@ -51,11 +57,10 @@ final readonly class SystemSettingsController
         return new SystemSettingsDTO(
             theme: $request->body('skindef', 'default'),
             email: $request->body('madm', 'example@example.com'),
-            timeShift: $request->bodyInt('timeshift'),
+            timeShift: max(self::SHIFT_MIN, min(self::SHIFT_MAX, $request->bodyInt('timeshift'))),
             copyright: $request->body('copyright', 'JohnCMS'),
             homeUrl: $request->body('homeurl', $currentHost),
             maxFileSize: $request->bodyInt('flsz'),
-            gzip: $request->bodyInt('gz'),
             metaTitle: $request->body('meta_title', 'johncms'),
             metaKeywords: $request->body('meta_key', 'johncms'),
             metaDescription: $request->body('meta_desc', 'johncms'),
@@ -86,13 +91,33 @@ final readonly class SystemSettingsController
                 'sys_menu'        => ['settings' => true],
                 'settings'        => $this->settings($timeShift),
                 'themes'          => $this->themeListProvider->getAvailable(),
-                'system_time'     => date('H:i', time() + $timeShift * 3600),
-                'utc_time'        => date('H:i'),
+                'time_shifts'     => $this->timeShifts(),
+                'upload_limit'    => $this->uploadLimits->maxUploadBytes(),
                 'form_action'     => self::URL,
                 'error_message'   => $errorMessage,
                 'success_message' => (string) $this->session->getFlash('success_message'),
             ]
         );
+    }
+
+    /**
+     * The shifts a site may take, each with the time it gives now, so the administrator picks the
+     * time rather than works out the number.
+     *
+     * @return list<array{value: int, label: string}>
+     */
+    private function timeShifts(): array
+    {
+        $now = time();
+        $shifts = [];
+        for ($shift = self::SHIFT_MIN; $shift <= self::SHIFT_MAX; $shift++) {
+            $shifts[] = [
+                'value' => $shift,
+                'label' => sprintf('UTC%s%d · %s', $shift < 0 ? '−' : '+', abs($shift), gmdate('H:i', $now + $shift * 3600)),
+            ];
+        }
+
+        return $shifts;
     }
 
     /**
@@ -108,7 +133,6 @@ final readonly class SystemSettingsController
             'copyright'               => (string) config('johncms.copyright', ''),
             'email'                   => (string) config('johncms.email', ''),
             'flsz'                    => (int) config('johncms.flsz', 0),
-            'gzip'                    => (bool) config('johncms.gzip', false),
             'user_email_required'     => (bool) config('johncms.user_email_required', false),
             'user_email_confirmation' => (bool) config('johncms.user_email_confirmation', false),
             'timeshift'               => $timeShift,

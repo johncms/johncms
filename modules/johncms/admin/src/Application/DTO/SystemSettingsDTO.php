@@ -13,7 +13,6 @@ final readonly class SystemSettingsDTO
         public string $copyright,
         public string $homeUrl,
         public int $maxFileSize,
-        public int $gzip,
         public string $metaTitle,
         public string $metaKeywords,
         public string $metaDescription,

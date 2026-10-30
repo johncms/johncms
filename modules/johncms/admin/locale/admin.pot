@@ -118,7 +118,6 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:47
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:120
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:228
-#: modules/johncms/admin/templates/settings.twig:54
 msgid "Modules"
 msgstr ""
 
@@ -178,7 +177,7 @@ msgid "System"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:66
-#: modules/johncms/admin/src/Application/Controllers/Settings/SystemSettingsController.php:76
+#: modules/johncms/admin/src/Application/Controllers/Settings/SystemSettingsController.php:81
 msgid "System Settings"
 msgstr ""
 
@@ -308,7 +307,6 @@ msgstr ""
 #: modules/johncms/admin/templates/ip-ban-form.twig:53
 #: modules/johncms/admin/templates/languages.twig:31
 #: modules/johncms/admin/templates/mail-settings.twig:104
-#: modules/johncms/admin/templates/settings.twig:125
 #: modules/johncms/admin/templates/style-guide/examples/card.twig:16
 msgid "Save"
 msgstr ""
@@ -528,7 +526,7 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:128
 #: modules/johncms/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:36
 #: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:41
-#: modules/johncms/admin/src/Application/Controllers/Settings/SystemSettingsController.php:40
+#: modules/johncms/admin/src/Application/Controllers/Settings/SystemSettingsController.php:46
 #: modules/johncms/admin/src/Application/Controllers/Users/KarmaController.php:52
 msgid "ERROR: Can not write file `system.local.php`"
 msgstr ""
@@ -542,7 +540,7 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:53
 #: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:44
 #: modules/johncms/admin/src/Application/Controllers/Settings/MailSettingsController.php:46
-#: modules/johncms/admin/src/Application/Controllers/Settings/SystemSettingsController.php:43
+#: modules/johncms/admin/src/Application/Controllers/Settings/SystemSettingsController.php:49
 #: modules/johncms/admin/src/Application/Controllers/Users/KarmaController.php:55
 msgid "Settings are saved successfully"
 msgstr ""
@@ -1501,6 +1499,7 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:44
 #: modules/johncms/admin/src/Domain/Enums/IpBanType.php:22
 #: modules/johncms/admin/templates/ip-ban-form.twig:27
+#: modules/johncms/admin/templates/settings.twig:113
 #: modules/johncms/admin/templates/style-guide/examples/sort-header.twig:6
 #: modules/johncms/admin/templates/users/results.twig:29
 msgid "Registration"
@@ -1613,7 +1612,7 @@ msgid "Address"
 msgstr ""
 
 #: modules/johncms/admin/templates/ad-form.twig:56
-#: modules/johncms/admin/templates/settings.twig:85
+#: modules/johncms/admin/templates/settings.twig:74
 #: modules/johncms/admin/templates/style-guide/examples/card.twig:10
 #: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:20
 msgid "Title"
@@ -1870,6 +1869,7 @@ msgid "Change the search or reset the filters."
 msgstr ""
 
 #: modules/johncms/admin/templates/auth-log/results.twig:30
+#: modules/johncms/admin/templates/settings.twig:131
 msgid "Time"
 msgstr ""
 
@@ -2716,104 +2716,141 @@ msgstr ""
 msgid "This role stands above your own"
 msgstr ""
 
-#: modules/johncms/admin/templates/settings.twig:22
-msgid "Common Settings"
+#: modules/johncms/admin/templates/settings.twig:40
+#: modules/johncms/admin/templates/user/edit.twig:78
+#: modules/johncms/admin/templates/user/view.twig:115
+msgid "Site"
 msgstr ""
 
-#: modules/johncms/admin/templates/settings.twig:24
-msgid "Web site address without the slash at the end"
-msgstr ""
-
-#: modules/johncms/admin/templates/settings.twig:28
-msgid "Site copyright"
-msgstr ""
-
-#: modules/johncms/admin/templates/settings.twig:32
-msgid "Site Email"
-msgstr ""
-
-#: modules/johncms/admin/templates/settings.twig:36
-msgid "Max. file size"
-msgstr ""
-
-#: modules/johncms/admin/templates/settings.twig:41
-msgid "Gzip compression"
+#: modules/johncms/admin/templates/settings.twig:44
+msgid "Address of the site"
 msgstr ""
 
 #: modules/johncms/admin/templates/settings.twig:46
-msgid "E-mail is required for registration"
+msgid "Without the slash at the end."
 msgstr ""
 
-#: modules/johncms/admin/templates/settings.twig:50
-msgid "Request a confirmation email to activate the user's account."
+#: modules/johncms/admin/templates/settings.twig:49
+msgid "Theme"
 msgstr ""
 
 #: modules/johncms/admin/templates/settings.twig:57
-msgid "Comments in the library"
+msgid "Site Email"
 msgstr ""
 
-#: modules/johncms/admin/templates/settings.twig:61
-msgid "Comments in the downloads"
+#: modules/johncms/admin/templates/settings.twig:59
+msgid "The letters of the site are sent from it, and the messages of the feedback form come to it unless the contacts set another address."
 msgstr ""
 
-#: modules/johncms/admin/templates/settings.twig:65
-#: modules/johncms/admin/templates/style-guide/examples/alerts.twig:2
-msgid "New accounts wait for confirmation"
+#: modules/johncms/admin/templates/settings.twig:62
+msgid "Site copyright"
 msgstr ""
 
-#: modules/johncms/admin/templates/settings.twig:68
-msgid "Who may open a module and write in it is set by the permissions of the roles."
-msgstr ""
-
-#: modules/johncms/admin/templates/settings.twig:72
-msgid "Time shift"
+#: modules/johncms/admin/templates/settings.twig:70
+msgid "Search engines"
 msgstr ""
 
 #: modules/johncms/admin/templates/settings.twig:78
-msgid "System Time"
-msgstr ""
-
-#: modules/johncms/admin/templates/settings.twig:83
-msgid "META tags"
-msgstr ""
-
-#: modules/johncms/admin/templates/settings.twig:89
 msgid "Keywords"
 msgstr ""
 
-#: modules/johncms/admin/templates/settings.twig:93
+#: modules/johncms/admin/templates/settings.twig:82
 #: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:25
 #: modules/johncms/admin/templates/system-check.twig:16
 #: modules/johncms/admin/templates/system-check.twig:24
 msgid "Description"
 msgstr ""
 
-#: modules/johncms/admin/templates/settings.twig:98
+#: modules/johncms/admin/templates/settings.twig:85
+msgid "The title, keywords and description of the homepage."
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.twig:91
 msgid "Legal documents"
 msgstr ""
 
-#: modules/johncms/admin/templates/settings.twig:99
-msgid "If the link is filled in, it will be displayed in the site footer."
-msgstr ""
-
-#: modules/johncms/admin/templates/settings.twig:101
+#: modules/johncms/admin/templates/settings.twig:95
 msgid "Privacy Policy"
 msgstr ""
 
-#: modules/johncms/admin/templates/settings.twig:105
+#: modules/johncms/admin/templates/settings.twig:96
 msgid "Terms of Use"
 msgstr ""
 
-#: modules/johncms/admin/templates/settings.twig:109
+#: modules/johncms/admin/templates/settings.twig:97
 msgid "Personal Data Processing Policy"
 msgstr ""
 
-#: modules/johncms/admin/templates/settings.twig:113
+#: modules/johncms/admin/templates/settings.twig:98
 msgid "Cookie Policy"
 msgstr ""
 
-#: modules/johncms/admin/templates/settings.twig:118
-msgid "Themes"
+#: modules/johncms/admin/templates/settings.twig:105
+msgid "If the link is filled in, it will be displayed in the site footer."
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.twig:115
+msgid "E-mail is required for registration"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.twig:116
+msgid "Request a confirmation email to activate the user's account."
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.twig:117
+#: modules/johncms/admin/templates/style-guide/examples/alerts.twig:2
+msgid "New accounts wait for confirmation"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.twig:117
+msgid "An administrator lets every new account in by hand."
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.twig:122
+#: modules/johncms/admin/templates/user/view.twig:55
+#: modules/johncms/admin/templates/users-cleanup.twig:31
+#: modules/johncms/admin/templates/users/delete-dialog.twig:41
+msgid "Comments"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.twig:124
+msgid "Comments in the library"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.twig:125
+msgid "Comments in the downloads"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.twig:126
+msgid "Who may open a module and write in it is set by the permissions of the roles."
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.twig:133
+msgid "Time of the site"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.twig:139
+msgid "Pick the time the site should show now. A member can set a shift of their own in the profile."
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.twig:144
+msgid "Files"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.twig:147
+msgid "Max. file size"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.twig:150
+msgid "KB"
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.twig:153
+msgid "For what members upload: files in the downloads, photos in the albums, attachments in the forum."
+msgstr ""
+
+#: modules/johncms/admin/templates/settings.twig:155
+msgid "The server accepts files up to %s: a larger limit here does not help."
 msgstr ""
 
 #: modules/johncms/admin/templates/smilies.twig:15
@@ -3201,11 +3238,6 @@ msgstr ""
 msgid "Phone number"
 msgstr ""
 
-#: modules/johncms/admin/templates/user/edit.twig:78
-#: modules/johncms/admin/templates/user/view.twig:115
-msgid "Site"
-msgstr ""
-
 #: modules/johncms/admin/templates/user/edit.twig:86
 msgid "For the staff"
 msgstr ""
@@ -3256,12 +3288,6 @@ msgstr ""
 #: modules/johncms/admin/templates/user/view.twig:54
 #: modules/johncms/admin/templates/users-cleanup.twig:30
 msgid "Guestbook"
-msgstr ""
-
-#: modules/johncms/admin/templates/user/view.twig:55
-#: modules/johncms/admin/templates/users-cleanup.twig:31
-#: modules/johncms/admin/templates/users/delete-dialog.twig:41
-msgid "Comments"
 msgstr ""
 
 #: modules/johncms/admin/templates/user/view.twig:61

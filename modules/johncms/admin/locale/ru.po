@@ -2892,3 +2892,42 @@ msgstr "Новые"
 
 msgid "The largest archive the server accepts: %s."
 msgstr "Самый большой архив, который примет сервер: %s."
+
+msgid "Address of the site"
+msgstr "Адрес сайта"
+
+msgid "Without the slash at the end."
+msgstr "Без слеша в конце."
+
+msgid "Theme"
+msgstr "Тема"
+
+msgid "The letters of the site are sent from it, and the messages of the feedback form come to it unless the contacts set another address."
+msgstr "С него уходят письма сайта, и на него приходят сообщения из формы обратной связи, если в контактах не указан другой адрес."
+
+msgid "Search engines"
+msgstr "Поисковики"
+
+msgid "The title, keywords and description of the homepage."
+msgstr "Заголовок, ключевые слова и описание главной страницы."
+
+msgid "An administrator lets every new account in by hand."
+msgstr "Администратор пускает каждый новый аккаунт вручную."
+
+msgid "Time of the site"
+msgstr "Время сайта"
+
+msgid "Pick the time the site should show now. A member can set a shift of their own in the profile."
+msgstr "Выберите, какое время сайт должен показывать сейчас. Пользователь может задать свой сдвиг в профиле."
+
+msgid "Files"
+msgstr "Файлы"
+
+msgid "KB"
+msgstr "КБ"
+
+msgid "For what members upload: files in the downloads, photos in the albums, attachments in the forum."
+msgstr "Для того, что загружают пользователи: файлов в загрузках, фото в альбомах, вложений на форуме."
+
+msgid "The server accepts files up to %s: a larger limit here does not help."
+msgstr "Сервер принимает файлы до %s: больший лимит здесь не поможет."

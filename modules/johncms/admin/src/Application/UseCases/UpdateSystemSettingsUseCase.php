@@ -28,7 +28,6 @@ final readonly class UpdateSystemSettingsUseCase
         $config['copyright'] = $dto->copyright;
         $config['homeurl'] = rtrim($dto->homeUrl, '/');
         $config['flsz'] = $dto->maxFileSize;
-        $config['gzip'] = $dto->gzip;
         $config['meta_title'] = $dto->metaTitle;
         $config['meta_key'] = $dto->metaKeywords;
         $config['meta_desc'] = $dto->metaDescription;
