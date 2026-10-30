@@ -78,12 +78,6 @@
             </div>
         </div>
 
-        <div class="admin-role-form__actions">
-            <a class="btn btn-secondary" href="{{ back_url }}">{{ __('Cancel') }}</a>
-            <button type="submit" class="btn btn-primary">
-                {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
-                {{ __('Save') }}
-            </button>
-        </div>
+        {% include '@admin/components/ui/form-footer.twig' with {cancel_url: back_url} only %}
     </form>
 {% endblock %}

@@ -513,7 +513,6 @@ msgstr ""
 
 #: modules/johncms/news/templates/admin/delete-article-dialog.twig:21
 #: modules/johncms/news/templates/admin/delete-section-dialog.twig:35
-#: modules/johncms/news/templates/admin/settings.twig:123
 msgid "Cancel"
 msgstr ""
 
@@ -671,10 +670,6 @@ msgstr ""
 
 #: modules/johncms/news/templates/admin/settings.twig:115
 msgid "Used where the article has no title, keywords or description of its own."
-msgstr ""
-
-#: modules/johncms/news/templates/admin/settings.twig:126
-msgid "Save"
 msgstr ""
 
 #: modules/johncms/news/templates/public/article.twig:16

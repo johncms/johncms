@@ -1,9 +1,10 @@
 {#
-    The buttons that finish a form, under it: a link back and the button that saves. The form is
-    named by its id, so the footer may stand outside the form element. A sticky footer stays at
-    the bottom of the screen while the form scrolls — for the forms long enough to need it.
+    The buttons that finish a form, under it: a link back and the button that saves. Inside the
+    form element the buttons need nothing more; outside it they name the form by its id. A sticky
+    footer stays at the bottom of the screen while the form scrolls — for the forms long enough to
+    need it.
 
-    @param string form         The id of the form.
+    @param string form         The id of the form, for a footer outside the form element.
     @param string cancel_url   Where the link back leads; empty for no link.
     @param string cancel_title Cancel by default.
     @param string submit_title Save by default.
@@ -16,9 +17,9 @@
         <a class="btn btn-outline-secondary" href="{{ cancel_url }}">{{ cancel_title|default(d__('admin', 'Cancel')) }}</a>
     {% endif %}
     {% if close|default(false) %}
-        <button type="submit" class="btn btn-outline-secondary" form="{{ form }}" name="close" value="1">{{ d__('admin', 'Save and close') }}</button>
+        <button type="submit" class="btn btn-outline-secondary"{% if form|default('') %} form="{{ form }}"{% endif %} name="close" value="1">{{ d__('admin', 'Save and close') }}</button>
     {% endif %}
-    <button type="submit" class="btn btn-primary" form="{{ form }}">
+    <button type="submit" class="btn btn-primary"{% if form|default('') %} form="{{ form }}"{% endif %}>
         {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
         {{ submit_title|default(d__('admin', 'Save')) }}
     </button>

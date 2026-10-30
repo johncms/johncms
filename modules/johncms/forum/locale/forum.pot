@@ -1018,7 +1018,6 @@ msgstr ""
 
 #: modules/johncms/forum/templates/admin/delete-section-dialog.twig:83
 #: modules/johncms/forum/templates/admin/purge-hidden-dialog.twig:41
-#: modules/johncms/forum/templates/admin/settings.twig:83
 #: modules/johncms/forum/templates/public/bulk-delete-posts.twig:23
 #: modules/johncms/forum/templates/public/clear-search-history.twig:17
 #: modules/johncms/forum/templates/public/delete-poll-answer.twig:16
@@ -1280,14 +1279,6 @@ msgstr ""
 msgid "Topic description"
 msgstr ""
 
-#: modules/johncms/forum/templates/admin/settings.twig:86
-#: modules/johncms/forum/templates/public/add-poll.twig:42
-#: modules/johncms/forum/templates/public/change-topic.twig:40
-#: modules/johncms/forum/templates/public/edit-poll.twig:53
-#: modules/johncms/forum/templates/public/edit-post.twig:23
-msgid "Save"
-msgstr ""
-
 #: modules/johncms/forum/templates/public/add-file.twig:14
 msgid "File attached"
 msgstr ""
@@ -1350,6 +1341,13 @@ msgstr ""
 #: modules/johncms/forum/templates/public/add-poll.twig:38
 #: modules/johncms/forum/templates/public/edit-poll.twig:49
 msgid "Delete last"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/add-poll.twig:42
+#: modules/johncms/forum/templates/public/change-topic.twig:40
+#: modules/johncms/forum/templates/public/edit-poll.twig:53
+#: modules/johncms/forum/templates/public/edit-post.twig:23
+msgid "Save"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/bulk-delete-posts.twig:13

@@ -83,7 +83,6 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">{% include '@admin/components/ui/icon.twig' with {name: 'check', size: 14} only %} {{ __('Save') }}</button>
-        <a href="{{ back_url }}" class="btn btn-outline-secondary">{{ __('Cancel') }}</a>
+        {% include '@admin/components/ui/form-footer.twig' with {cancel_url: back_url} only %}
     </form>
 {% endblock %}

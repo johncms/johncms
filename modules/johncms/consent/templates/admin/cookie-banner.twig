@@ -74,5 +74,5 @@
         </div>
     </div>
 
-    {% include '@admin/components/ui/form-footer.twig' with {form: 'cookie-banner-form'} only %}
+    {% include '@admin/components/ui/form-footer.twig' with {form: 'cookie-banner-form', cancel_url: '/admin'} only %}
 {% endblock %}

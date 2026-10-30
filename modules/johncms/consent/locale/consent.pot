@@ -90,7 +90,6 @@ msgid "Are you sure you want to delete this consent?"
 msgstr ""
 
 #: modules/johncms/consent/templates/admin/delete-dialog.twig:21
-#: modules/johncms/consent/templates/admin/form.twig:87
 msgid "Cancel"
 msgstr ""
 
@@ -165,10 +164,6 @@ msgstr ""
 
 #: modules/johncms/consent/templates/admin/form.twig:81
 msgid "Inactive consents are not shown in forms."
-msgstr ""
-
-#: modules/johncms/consent/templates/admin/form.twig:86
-msgid "Save"
 msgstr ""
 
 #: modules/johncms/consent/templates/admin/list.twig:32

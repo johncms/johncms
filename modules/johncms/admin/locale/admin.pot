@@ -275,11 +275,10 @@ msgstr ""
 msgid "Reset filters"
 msgstr ""
 
-#: themes/default/templates/admin/components/ui/form-footer.twig:16
+#: themes/default/templates/admin/components/ui/form-footer.twig:17
 #: themes/default/templates/admin/pages/confirm-dialog.twig:44
 #: modules/johncms/admin/templates/ad-clear-dialog.twig:19
 #: modules/johncms/admin/templates/ad-delete-dialog.twig:28
-#: modules/johncms/admin/templates/antiflood.twig:96
 #: modules/johncms/admin/templates/bans/amnesty-dialog.twig:31
 #: modules/johncms/admin/templates/counter-delete-confirm.twig:22
 #: modules/johncms/admin/templates/counter-form.twig:76
@@ -290,7 +289,6 @@ msgstr ""
 #: modules/johncms/admin/templates/ip-ban-confirm.twig:44
 #: modules/johncms/admin/templates/ip-ban-form.twig:54
 #: modules/johncms/admin/templates/ip-ban-search.twig:24
-#: modules/johncms/admin/templates/karma.twig:77
 #: modules/johncms/admin/templates/karma/clear-dialog.twig:20
 #: modules/johncms/admin/templates/modules-confirm.twig:62
 #: modules/johncms/admin/templates/modules-upload.twig:30
@@ -299,33 +297,27 @@ msgstr ""
 #: modules/johncms/admin/templates/style-guide/examples/dialog.twig:13
 #: modules/johncms/admin/templates/style-guide/examples/modal.twig:10
 #: modules/johncms/admin/templates/style-guide/examples/modal.twig:16
-#: modules/johncms/admin/templates/user-roles.twig:82
 #: modules/johncms/admin/templates/user/ban-dialog.twig:64
-#: modules/johncms/admin/templates/user/edit.twig:107
 #: modules/johncms/admin/templates/user/password.twig:33
 #: modules/johncms/admin/templates/users/cleanup-dialog.twig:24
 #: modules/johncms/admin/templates/users/delete-dialog.twig:54
 msgid "Cancel"
 msgstr ""
 
-#: themes/default/templates/admin/components/ui/form-footer.twig:19
+#: themes/default/templates/admin/components/ui/form-footer.twig:20
 msgid "Save and close"
 msgstr ""
 
-#: themes/default/templates/admin/components/ui/form-footer.twig:23
-#: modules/johncms/admin/templates/antiflood.twig:99
+#: themes/default/templates/admin/components/ui/form-footer.twig:24
 #: modules/johncms/admin/templates/captcha-settings.twig:45
 #: modules/johncms/admin/templates/counter-preview.twig:51
 #: modules/johncms/admin/templates/editor-images.twig:64
 #: modules/johncms/admin/templates/external-providers.twig:59
 #: modules/johncms/admin/templates/ip-ban-form.twig:53
-#: modules/johncms/admin/templates/karma.twig:80
 #: modules/johncms/admin/templates/languages.twig:31
 #: modules/johncms/admin/templates/mail-settings.twig:104
 #: modules/johncms/admin/templates/settings.twig:125
 #: modules/johncms/admin/templates/style-guide/examples/card.twig:16
-#: modules/johncms/admin/templates/user-roles.twig:85
-#: modules/johncms/admin/templates/user/edit.twig:110
 msgid "Save"
 msgstr ""
 
@@ -1023,8 +1015,8 @@ msgid "You cannot delete higher administration"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Users/KarmaController.php:71
-#: modules/johncms/admin/templates/karma.twig:88
-#: modules/johncms/admin/templates/karma.twig:93
+#: modules/johncms/admin/templates/karma.twig:82
+#: modules/johncms/admin/templates/karma.twig:87
 #: modules/johncms/admin/templates/karma/clear-dialog.twig:10
 msgid "Clear Karma"
 msgstr ""
@@ -2308,7 +2300,7 @@ msgstr ""
 msgid "How many posts a user needs on the forum to vote. A week on the site is needed besides."
 msgstr ""
 
-#: modules/johncms/admin/templates/karma.twig:89
+#: modules/johncms/admin/templates/karma.twig:83
 msgid "Every vote is deleted and the karma of every account goes back to zero."
 msgstr ""
 

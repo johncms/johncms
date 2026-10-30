@@ -119,13 +119,7 @@
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-end gap-2">
-                    <a href="{{ list_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
-                    <button type="submit" class="btn btn-primary">
-                        {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
-                        {{ __('Save') }}
-                    </button>
-                </div>
+                {% include '@admin/components/ui/form-footer.twig' with {cancel_url: list_url} only %}
             </form>
         </div>
     </div>

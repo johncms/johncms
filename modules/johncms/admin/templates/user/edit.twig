@@ -103,12 +103,6 @@
             </div>
         {% endif %}
 
-        <div class="admin-user-form__actions">
-            <a class="btn btn-secondary" href="/admin/users/{{ user.id }}">{{ __('Cancel') }}</a>
-            <button type="submit" class="btn btn-primary">
-                {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
-                {{ __('Save') }}
-            </button>
-        </div>
+        {% include '@admin/components/ui/form-footer.twig' with {cancel_url: '/admin/users/' ~ user.id} only %}
     </form>
 {% endblock %}
