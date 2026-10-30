@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Рекламная ссылка/блок (таблица cms_ads).
+ * An advertising link (the cms_ads table).
  *
  * @mixin Builder
  * @property int $id

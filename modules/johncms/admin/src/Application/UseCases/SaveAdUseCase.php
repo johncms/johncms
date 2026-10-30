@@ -15,7 +15,7 @@ final readonly class SaveAdUseCase
     }
 
     /**
-     * Создаёт или обновляет рекламную ссылку. Возвращает true при обновлении.
+     * Creates an advertising link or updates an existing one. Returns true for an update.
      */
     public function execute(?int $id, AdFormDTO $dto): bool
     {
