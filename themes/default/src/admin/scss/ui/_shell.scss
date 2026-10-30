@@ -571,6 +571,31 @@ $admin-topbar-height: 3.75rem;
     font-size: 1.5rem;
   }
 
+  // The buttons of a form in the head go to a bar at the bottom of the screen, so saving a long
+  // form does not mean scrolling back up. Only a head holding a submit button of a form moves;
+  // the other actions of a page stay where they are.
+  .admin-page__actions:has([type='submit'][form]) {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: $zindex-sticky;
+    flex-wrap: nowrap;
+    padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--border);
+    background: color-mix(in oklab, var(--bg) 92%, transparent);
+    backdrop-filter: blur(8px);
+
+    > * {
+      flex: 1 1 0;
+      justify-content: center;
+    }
+  }
+
+  body:has(.admin-page__actions [type='submit'][form]) {
+    padding-bottom: calc(4.25rem + env(safe-area-inset-bottom));
+  }
+
   .admin-footer {
     padding: 1rem;
   }
