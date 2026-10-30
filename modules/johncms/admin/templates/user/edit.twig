@@ -103,6 +103,6 @@
             </div>
         {% endif %}
 
-        {% include '@admin/components/ui/form-footer.twig' with {cancel_url: '/admin/users/' ~ user.id} only %}
+        {% include '@admin/components/ui/form-footer.twig' with {cancel_url: '/admin/users/' ~ user.id, sticky: true} only %}
     </form>
 {% endblock %}
