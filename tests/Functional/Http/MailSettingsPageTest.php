@@ -56,7 +56,7 @@ final class MailSettingsPageTest extends FunctionalTestCase
         self::assertStringContainsString('name="redirect_to"', $content);
         self::assertStringContainsString('name="test_email"', $content);
         self::assertStringContainsString(
-            sprintf('value="%s" selected="selected"', (string) (config('mail')['transport'] ?? 'sendmail')),
+            sprintf('value="%s" id="transport-%1$s" checked', (string) (config('mail')['transport'] ?? 'sendmail')),
             $content
         );
     }

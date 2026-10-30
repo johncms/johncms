@@ -80,7 +80,7 @@ final class SettingsFieldTemplateTest extends TestCase
         );
 
         self::assertStringContainsString('<option value="webp" selected>WebP</option>', $html);
-        self::assertStringContainsString('<option value="png" >PNG</option>', $html);
+        self::assertStringContainsString('<option value="png">PNG</option>', $html);
     }
 
     public function testACheckboxIsCheckedFromTheRow(): void

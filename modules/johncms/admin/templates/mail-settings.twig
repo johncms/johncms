@@ -1,5 +1,5 @@
 {#
-    The mail settings of the site.
+    The mail settings of the site: how letters are sent on the left, a test letter on the right.
 
     @var array  settings        Current values, keyed by field name.
     @var array  transports      Names of the transports that can be chosen.
@@ -16,114 +16,126 @@
     {% include '@admin/components/settings-tabs.twig' with {active: 'mail'} only %}
 {% endblock %}
 
-{% block content %}
-    <div style="max-width: 640px">
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
-
-        <form method="post" action="{{ form_action }}">
-            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-
-            <fieldset>
-                <legend>{{ d__('admin', 'Connection string') }}</legend>
-                <div class="form-group">
-                    <label for="dsn">{{ d__('admin', 'DSN') }}</label>
-                    <input type="text" id="dsn" name="dsn" class="form-control" value="{{ settings.dsn }}"
-                           placeholder="smtps://user:password@smtp.example.com:465"/>
-                    <small class="form-text text-muted">
-                        {{ d__('admin', 'When it is filled in, the settings below are ignored. This is the only way to use a provider with its own API (Mailgun, Postmark, SES and others).') }}
-                    </small>
-                </div>
-            </fieldset>
-
-            <fieldset class="mt-3">
-                <legend>{{ d__('admin', 'Transport') }}</legend>
-                <div class="form-group">
-                    <label for="transport">{{ d__('admin', 'Sending method') }}</label>
-                    <select id="transport" name="transport" class="form-control">
-                        {% for transport in transports %}
-                            <option value="{{ transport }}"{% if settings.transport == transport %} selected="selected"{% endif %}>{{ transport }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </fieldset>
-
-            <fieldset class="mt-3">
-                <legend>{{ d__('admin', 'SMTP') }}</legend>
-                <div class="form-group">
-                    <label for="host">{{ d__('admin', 'Server') }}</label>
-                    <input type="text" id="host" name="host" class="form-control" value="{{ settings.host }}"/>
-                </div>
-                <div class="form-group">
-                    <label for="port">{{ d__('admin', 'Port') }}</label>
-                    <input type="text" id="port" name="port" class="form-control col-sm-3" value="{{ settings.port }}"/>
-                </div>
-                <div class="form-group">
-                    <label for="username">{{ d__('admin', 'User name') }}</label>
-                    <input type="text" id="username" name="username" class="form-control" value="{{ settings.username }}"/>
-                </div>
-                <div class="form-group">
-                    <label for="password">{{ d__('admin', 'Password') }}</label>
-                    <input type="password" id="password" name="password" class="form-control" value="{{ settings.password }}"/>
-                </div>
-                <div class="form-group">
-                    <label for="encryption">{{ d__('admin', 'Encryption') }}</label>
-                    <select id="encryption" name="encryption" class="form-control">
-                        {% for encryption in encryptions %}
-                            <option value="{{ encryption }}"{% if settings.encryption == encryption %} selected="selected"{% endif %}>
-                                {{ encryption ?: d__('admin', 'None') }}
-                            </option>
-                        {% endfor %}
-                    </select>
-                    <small class="form-text text-muted">
-                        {{ d__('admin', 'ssl - encryption from the first byte, usually port 465. tls - STARTTLS, usually port 587.') }}
-                    </small>
-                </div>
-            </fieldset>
-
-            <fieldset class="mt-3">
-                <legend>{{ d__('admin', 'Sendmail') }}</legend>
-                <div class="form-group">
-                    <label for="sendmail_command">{{ d__('admin', 'Command') }}</label>
-                    <input type="text" id="sendmail_command" name="sendmail_command" class="form-control"
-                           value="{{ settings.sendmail_command }}" placeholder="/usr/sbin/sendmail -bs"/>
-                    <small class="form-text text-muted">
-                        {{ d__('admin', 'Leave empty to use the setting of php.ini.') }}
-                    </small>
-                </div>
-            </fieldset>
-
-            <fieldset class="mt-3">
-                <legend>{{ d__('admin', 'Development') }}</legend>
-                <div class="form-group">
-                    <label for="redirect_to">{{ d__('admin', 'Send all mail to this address') }}</label>
-                    <input type="text" id="redirect_to" name="redirect_to" class="form-control" value="{{ settings.redirect_to }}"/>
-                    <small class="form-text text-muted">
-                        {{ d__('admin', 'Every message goes to this address instead of its real recipients. For a test copy of the site; leave empty on a live one. Several addresses are separated by commas.') }}
-                    </small>
-                </div>
-            </fieldset>
-
-            <div class="mt-3">
-                <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
-            </div>
-        </form>
-
-        <form method="post" action="{{ test_action }}" class="mt-4">
-            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-            <fieldset>
-                <legend>{{ d__('admin', 'Test message') }}</legend>
-                <div class="form-group">
-                    <label for="test_email">{{ d__('admin', 'Send a test message to') }}</label>
-                    <input type="text" id="test_email" name="test_email" class="form-control" value="{{ test_email }}"/>
-                    <small class="form-text text-muted">
-                        {{ d__('admin', 'The message is sent immediately, bypassing the queue, so that the answer of the mail server is shown right here. Save the settings first.') }}
-                    </small>
-                </div>
-            </fieldset>
-            <div class="mt-3">
-                <button type="submit" class="btn btn-outline-primary">{{ d__('admin', 'Send') }}</button>
-            </div>
-        </form>
+{% macro card_head(icon, title) %}
+    <div class="card-header">
+        {% include '@admin/components/ui/icon.twig' with {name: icon, size: 16} only %}
+        <h2 class="h6 mb-0 ms-2">{{ title }}</h2>
     </div>
+{% endmacro %}
+
+{% block content %}
+    {% import _self as ui %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: error_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+
+    {% set descriptions = {
+        smtp: d__('admin', 'Through a mail server: your hosting, Yandex, Gmail or another service. The most reliable way.'),
+        sendmail: d__('admin', 'Through the sendmail program of the server the site runs on.'),
+        native: d__('admin', 'Through the mail() function of PHP, as php.ini sets it up.'),
+        null: d__('admin', 'Letters are not sent at all. For a copy of the site where mail must not go out.'),
+    } %}
+    {% set titles = {smtp: 'SMTP', sendmail: 'Sendmail', native: 'PHP mail()', null: d__('admin', 'Do not send')} %}
+
+    <div class="row g-3 align-items-start">
+        <div class="col-lg-8">
+            <form method="post" action="{{ form_action }}" id="mail-form" class="d-flex flex-column gap-3" data-mail-settings>
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+
+                <section class="card">
+                    {{ ui.card_head('mail', d__('admin', 'Sending method')) }}
+                    <div class="card-body d-flex flex-column gap-2">
+                        {% for transport in transports %}
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" name="transport" value="{{ transport }}" id="transport-{{ transport }}"{% if settings.transport == transport %} checked{% endif %} data-mail-transport>
+                                <label class="form-check-label" for="transport-{{ transport }}">
+                                    {{ titles[transport]|default(transport) }}
+                                    <span class="form-text d-block mt-0">{{ descriptions[transport]|default('') }}</span>
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <section class="card" data-mail-for="smtp">
+                    {{ ui.card_head('settings', d__('admin', 'SMTP')) }}
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-8">
+                                <label class="form-label" for="host">{{ d__('admin', 'Server') }}</label>
+                                <input type="text" id="host" name="host" class="form-control" value="{{ settings.host }}" placeholder="smtp.example.com">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="port">{{ d__('admin', 'Port') }}</label>
+                                <input type="number" id="port" name="port" min="0" class="form-control" value="{{ settings.port ?: '' }}" placeholder="465">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="username">{{ d__('admin', 'User name') }}</label>
+                                <input type="text" id="username" name="username" class="form-control" value="{{ settings.username }}" autocomplete="off">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="password">{{ d__('admin', 'Password') }}</label>
+                                <input type="password" id="password" name="password" class="form-control" value="{{ settings.password }}" autocomplete="new-password">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="encryption">{{ d__('admin', 'Encryption') }}</label>
+                                <select id="encryption" name="encryption" class="form-select">
+                                    {% for encryption in encryptions %}
+                                        <option value="{{ encryption }}"{% if settings.encryption == encryption %} selected{% endif %}>{{ encryption ?: d__('admin', 'None') }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-text align-self-end">
+                                {{ d__('admin', 'ssl - encryption from the first byte, usually port 465. tls - STARTTLS, usually port 587.') }}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card" data-mail-for="sendmail">
+                    {{ ui.card_head('settings', d__('admin', 'Sendmail')) }}
+                    <div class="card-body">
+                        <label class="form-label" for="sendmail_command">{{ d__('admin', 'Command') }}</label>
+                        <input type="text" id="sendmail_command" name="sendmail_command" class="form-control font-monospace" value="{{ settings.sendmail_command }}" placeholder="/usr/sbin/sendmail -bs">
+                        <div class="form-text">{{ d__('admin', 'Leave empty to use the setting of php.ini.') }}</div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    {{ ui.card_head('link', d__('admin', 'Connection string')) }}
+                    <div class="card-body">
+                        <label class="form-label" for="dsn">{{ d__('admin', 'DSN') }}</label>
+                        <input type="text" id="dsn" name="dsn" class="form-control font-monospace" value="{{ settings.dsn }}" placeholder="smtps://user:password@smtp.example.com:465">
+                        <div class="form-text">{{ d__('admin', 'When it is filled in, the method of sending above is ignored. This is the only way to use a provider with its own API (Mailgun, Postmark, SES and others).') }}</div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    {{ ui.card_head('wrench', d__('admin', 'Development')) }}
+                    <div class="card-body">
+                        <label class="form-label" for="redirect_to">{{ d__('admin', 'Send all mail to this address') }}</label>
+                        <input type="text" id="redirect_to" name="redirect_to" class="form-control" value="{{ settings.redirect_to }}">
+                        <div class="form-text">{{ d__('admin', 'Every message goes to this address instead of its real recipients. For a test copy of the site; leave empty on a live one. Several addresses are separated by commas.') }}</div>
+                    </div>
+                </section>
+            </form>
+        </div>
+
+        <div class="col-lg-4">
+            <form method="post" action="{{ test_action }}" class="card">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                {{ ui.card_head('send', d__('admin', 'Test message')) }}
+                <div class="card-body">
+                    <label class="form-label" for="test_email">{{ d__('admin', 'Send a test message to') }}</label>
+                    <input type="email" id="test_email" name="test_email" class="form-control" value="{{ test_email }}">
+                    <div class="form-text">{{ d__('admin', 'The message is sent immediately, bypassing the queue, so that the answer of the mail server is shown right here. Save the settings first.') }}</div>
+                    <button type="submit" class="btn btn-outline-secondary mt-3">
+                        {% include '@admin/components/ui/icon.twig' with {name: 'send', size: 14} only %}
+                        {{ d__('admin', 'Send') }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% include '@admin/components/ui/form-footer.twig' with {form: 'mail-form', cancel_url: '/admin/settings'} only %}
 {% endblock %}

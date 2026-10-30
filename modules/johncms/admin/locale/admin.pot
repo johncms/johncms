@@ -290,7 +290,6 @@ msgstr ""
 #: modules/johncms/admin/templates/ad-delete-dialog.twig:28
 #: modules/johncms/admin/templates/bans/amnesty-dialog.twig:31
 #: modules/johncms/admin/templates/counter-delete-dialog.twig:20
-#: modules/johncms/admin/templates/editor-images.twig:69
 #: modules/johncms/admin/templates/file-integrity-snapshot-confirm.twig:22
 #: modules/johncms/admin/templates/ip-ban-clear-confirm.twig:21
 #: modules/johncms/admin/templates/ip-ban-confirm.twig:44
@@ -312,12 +311,9 @@ msgstr ""
 
 #: themes/default/templates/admin/components/ui/form-footer.twig:26
 #: themes/default/templates/admin/components/ui/form-footer.twig:46
-#: modules/johncms/admin/templates/captcha-settings.twig:49
-#: modules/johncms/admin/templates/editor-images.twig:68
 #: modules/johncms/admin/templates/external-providers.twig:59
 #: modules/johncms/admin/templates/ip-ban-form.twig:53
 #: modules/johncms/admin/templates/languages.twig:31
-#: modules/johncms/admin/templates/mail-settings.twig:108
 #: modules/johncms/admin/templates/style-guide/examples/card.twig:16
 msgid "Save"
 msgstr ""
@@ -899,7 +895,7 @@ msgid "ERROR: Can not write file `mail.local.php`"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Settings/MailSettingsController.php:61
-#: modules/johncms/admin/templates/mail-settings.twig:115
+#: modules/johncms/admin/templates/mail-settings.twig:126
 msgid "Test message"
 msgstr ""
 
@@ -1259,7 +1255,7 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Services/UserCardMapper.php:120
 #: modules/johncms/admin/templates/login.twig:35
 #: modules/johncms/admin/templates/login.twig:43
-#: modules/johncms/admin/templates/mail-settings.twig:66
+#: modules/johncms/admin/templates/mail-settings.twig:76
 msgid "Password"
 msgstr ""
 
@@ -1975,11 +1971,27 @@ msgstr ""
 msgid "until %s"
 msgstr ""
 
+#: modules/johncms/admin/templates/captcha-settings.twig:20
+msgid "Pick the captcha the forms of the site ask for; fill in the keys of a service before picking it."
+msgstr ""
+
 #: modules/johncms/admin/templates/captcha-settings.twig:35
+msgid "In use"
+msgstr ""
+
+#: modules/johncms/admin/templates/captcha-settings.twig:37
+msgid "Not configured"
+msgstr ""
+
+#: modules/johncms/admin/templates/captcha-settings.twig:46
 msgid "This provider is not configured yet. Until it is, the forms fall back to the picture with a code."
 msgstr ""
 
-#: modules/johncms/admin/templates/components/settings-field.twig:28
+#: modules/johncms/admin/templates/captcha-settings.twig:56
+msgid "Nothing to set up."
+msgstr ""
+
+#: modules/johncms/admin/templates/components/settings-field.twig:27
 #: modules/johncms/admin/templates/external-providers.twig:47
 msgid "Saved. Fill in to replace."
 msgstr ""
@@ -2099,47 +2111,52 @@ msgstr ""
 msgid "The site prints the counters in this order."
 msgstr ""
 
-#: modules/johncms/admin/templates/editor-images.twig:25
+#: modules/johncms/admin/templates/editor-images.twig:36
 msgid "Upload limit"
 msgstr ""
 
-#: modules/johncms/admin/templates/editor-images.twig:27
+#: modules/johncms/admin/templates/editor-images.twig:38
 msgid "Max. picture size"
 msgstr ""
 
-#: modules/johncms/admin/templates/editor-images.twig:30
+#: modules/johncms/admin/templates/editor-images.twig:41
+#: modules/johncms/admin/templates/settings.twig:154
+msgid "KB"
+msgstr ""
+
+#: modules/johncms/admin/templates/editor-images.twig:44
 msgid "The server accepts up to %s."
 msgstr ""
 
-#: modules/johncms/admin/templates/editor-images.twig:35
+#: modules/johncms/admin/templates/editor-images.twig:48
 msgid "The limit is above what the server accepts, so an upload larger than the server limit fails before the site sees it. Raise upload_max_filesize and post_max_size in php.ini, or lower this value."
 msgstr ""
 
-#: modules/johncms/admin/templates/editor-images.twig:39
+#: modules/johncms/admin/templates/editor-images.twig:55
 msgid "Resolution"
 msgstr ""
 
-#: modules/johncms/admin/templates/editor-images.twig:40
-msgid "A larger picture is scaled down to fit these bounds, keeping its proportions. A smaller one is left alone. Zero leaves the side unconstrained."
-msgstr ""
-
-#: modules/johncms/admin/templates/editor-images.twig:42
+#: modules/johncms/admin/templates/editor-images.twig:59
 msgid "Max. width"
 msgstr ""
 
-#: modules/johncms/admin/templates/editor-images.twig:46
+#: modules/johncms/admin/templates/editor-images.twig:66
 msgid "Max. height"
 msgstr ""
 
-#: modules/johncms/admin/templates/editor-images.twig:50
+#: modules/johncms/admin/templates/editor-images.twig:72
+msgid "A larger picture is scaled down to fit these bounds, keeping its proportions. A smaller one is left alone. Zero leaves the side unconstrained."
+msgstr ""
+
+#: modules/johncms/admin/templates/editor-images.twig:80
 msgid "Storage format"
 msgstr ""
 
-#: modules/johncms/admin/templates/editor-images.twig:62
+#: modules/johncms/admin/templates/editor-images.twig:94
 msgid "Quality"
 msgstr ""
 
-#: modules/johncms/admin/templates/editor-images.twig:64
+#: modules/johncms/admin/templates/editor-images.twig:99
 msgid "Applied when a picture is scaled down or re-encoded."
 msgstr ""
 
@@ -2468,87 +2485,103 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: modules/johncms/admin/templates/mail-settings.twig:28
-msgid "Connection string"
+#: modules/johncms/admin/templates/mail-settings.twig:32
+msgid "Through a mail server: your hosting, Yandex, Gmail or another service. The most reliable way."
 msgstr ""
 
-#: modules/johncms/admin/templates/mail-settings.twig:30
-msgid "DSN"
+#: modules/johncms/admin/templates/mail-settings.twig:33
+msgid "Through the sendmail program of the server the site runs on."
 msgstr ""
 
 #: modules/johncms/admin/templates/mail-settings.twig:34
-msgid "When it is filled in, the settings below are ignored. This is the only way to use a provider with its own API (Mailgun, Postmark, SES and others)."
+msgid "Through the mail() function of PHP, as php.ini sets it up."
 msgstr ""
 
-#: modules/johncms/admin/templates/mail-settings.twig:40
-msgid "Transport"
+#: modules/johncms/admin/templates/mail-settings.twig:35
+msgid "Letters are not sent at all. For a copy of the site where mail must not go out."
 msgstr ""
 
-#: modules/johncms/admin/templates/mail-settings.twig:42
+#: modules/johncms/admin/templates/mail-settings.twig:37
+msgid "Do not send"
+msgstr ""
+
+#: modules/johncms/admin/templates/mail-settings.twig:45
 msgid "Sending method"
 msgstr ""
 
-#: modules/johncms/admin/templates/mail-settings.twig:52
+#: modules/johncms/admin/templates/mail-settings.twig:60
 msgid "SMTP"
 msgstr ""
 
-#: modules/johncms/admin/templates/mail-settings.twig:54
+#: modules/johncms/admin/templates/mail-settings.twig:64
 msgid "Server"
 msgstr ""
 
-#: modules/johncms/admin/templates/mail-settings.twig:58
+#: modules/johncms/admin/templates/mail-settings.twig:68
 msgid "Port"
 msgstr ""
 
-#: modules/johncms/admin/templates/mail-settings.twig:62
+#: modules/johncms/admin/templates/mail-settings.twig:72
 msgid "User name"
 msgstr ""
 
-#: modules/johncms/admin/templates/mail-settings.twig:70
+#: modules/johncms/admin/templates/mail-settings.twig:80
 msgid "Encryption"
 msgstr ""
 
-#: modules/johncms/admin/templates/mail-settings.twig:74
+#: modules/johncms/admin/templates/mail-settings.twig:83
 msgid "None"
 msgstr ""
 
-#: modules/johncms/admin/templates/mail-settings.twig:79
+#: modules/johncms/admin/templates/mail-settings.twig:88
 msgid "ssl - encryption from the first byte, usually port 465. tls - STARTTLS, usually port 587."
 msgstr ""
 
-#: modules/johncms/admin/templates/mail-settings.twig:85
+#: modules/johncms/admin/templates/mail-settings.twig:95
 msgid "Sendmail"
 msgstr ""
 
-#: modules/johncms/admin/templates/mail-settings.twig:87
+#: modules/johncms/admin/templates/mail-settings.twig:97
 msgid "Command"
 msgstr ""
 
-#: modules/johncms/admin/templates/mail-settings.twig:91
+#: modules/johncms/admin/templates/mail-settings.twig:99
 msgid "Leave empty to use the setting of php.ini."
 msgstr ""
 
-#: modules/johncms/admin/templates/mail-settings.twig:97
+#: modules/johncms/admin/templates/mail-settings.twig:104
+msgid "Connection string"
+msgstr ""
+
+#: modules/johncms/admin/templates/mail-settings.twig:106
+msgid "DSN"
+msgstr ""
+
+#: modules/johncms/admin/templates/mail-settings.twig:108
+msgid "When it is filled in, the method of sending above is ignored. This is the only way to use a provider with its own API (Mailgun, Postmark, SES and others)."
+msgstr ""
+
+#: modules/johncms/admin/templates/mail-settings.twig:113
 msgid "Development"
 msgstr ""
 
-#: modules/johncms/admin/templates/mail-settings.twig:99
+#: modules/johncms/admin/templates/mail-settings.twig:115
 msgid "Send all mail to this address"
 msgstr ""
 
-#: modules/johncms/admin/templates/mail-settings.twig:102
+#: modules/johncms/admin/templates/mail-settings.twig:117
 msgid "Every message goes to this address instead of its real recipients. For a test copy of the site; leave empty on a live one. Several addresses are separated by commas."
 msgstr ""
 
-#: modules/johncms/admin/templates/mail-settings.twig:117
+#: modules/johncms/admin/templates/mail-settings.twig:128
 msgid "Send a test message to"
 msgstr ""
 
-#: modules/johncms/admin/templates/mail-settings.twig:120
+#: modules/johncms/admin/templates/mail-settings.twig:130
 msgid "The message is sent immediately, bypassing the queue, so that the answer of the mail server is shown right here. Save the settings first."
 msgstr ""
 
-#: modules/johncms/admin/templates/mail-settings.twig:125
+#: modules/johncms/admin/templates/mail-settings.twig:133
 msgid "Send"
 msgstr ""
 
@@ -2858,10 +2891,6 @@ msgstr ""
 
 #: modules/johncms/admin/templates/settings.twig:151
 msgid "Max. file size"
-msgstr ""
-
-#: modules/johncms/admin/templates/settings.twig:154
-msgid "KB"
 msgstr ""
 
 #: modules/johncms/admin/templates/settings.twig:157

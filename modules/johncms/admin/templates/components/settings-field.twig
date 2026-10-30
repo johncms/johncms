@@ -8,19 +8,18 @@
     @var id    string
 #}
 {% if field.type == 'checkbox' %}
-    <div class="form-check mb-3">
-        <input type="checkbox" class="form-check-input" id="{{ id }}" name="{{ name }}" value="1"
-               {{ field.checked ? 'checked' : '' }}>
+    <div class="form-check form-switch">
+        <input type="checkbox" class="form-check-input" role="switch" id="{{ id }}" name="{{ name }}" value="1"{% if field.checked %} checked{% endif %}>
         <label class="form-check-label" for="{{ id }}">{{ field.label }}</label>
-        {% if field.hint %}<div class="form-text">{{ field.hint }}</div>{% endif %}
+        {% if field.hint %}<div class="form-text mt-0">{{ field.hint }}</div>{% endif %}
     </div>
 {% else %}
-    <div class="form-group">
-        <label for="{{ id }}">{{ field.label }}</label>
+    <div>
+        <label class="form-label" for="{{ id }}">{{ field.label }}</label>
         {% if field.type == 'select' %}
             <select class="form-select" id="{{ id }}" name="{{ name }}">
                 {% for value, label in field.options %}
-                    <option value="{{ value }}" {{ field.value == value ? 'selected' : '' }}>{{ label }}</option>
+                    <option value="{{ value }}"{% if field.value == value %} selected{% endif %}>{{ label }}</option>
                 {% endfor %}
             </select>
         {% elseif field.type == 'password' %}
@@ -28,8 +27,7 @@
                    placeholder="{{ field.hasValue ? __('Saved. Fill in to replace.') : '' }}"
                    autocomplete="new-password">
         {% else %}
-            <input type="{{ field.type == 'number' ? 'number' : 'text' }}"
-                   {{ field.type == 'number' ? 'step="any"' : '' }}
+            <input type="{{ field.type == 'number' ? 'number' : 'text' }}"{% if field.type == 'number' %} step="any"{% endif %}
                    class="form-control" id="{{ id }}" name="{{ name }}" value="{{ field.value }}">
         {% endif %}
         {% if field.hint %}<div class="form-text">{{ field.hint }}</div>{% endif %}

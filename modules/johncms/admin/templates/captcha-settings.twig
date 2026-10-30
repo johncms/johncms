@@ -1,5 +1,6 @@
 {#
-    Which captcha the site uses, and the settings of each provider.
+    Which captcha the site uses, and the settings of each provider: a card each, the one in use
+    picked in its head.
 
     @var array  providers       Rows: key, label, isActive, isConfigured, fields.
     @var string form_action
@@ -13,39 +14,52 @@
 {% endblock %}
 
 {% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: error_message} only %}
 
-    <form method="post" action="{{ form_action }}">
+    <p class="text-body-secondary">{{ __('Pick the captcha the forms of the site ask for; fill in the keys of a service before picking it.') }}</p>
+
+    <form method="post" action="{{ form_action }}" id="captcha-form" class="row g-3 align-items-start">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
 
         {% for provider in providers %}
-            <div class="border rounded p-3 mb-3">
-                <div class="form-check">
-                    <input type="radio" class="form-check-input" id="default_{{ provider.key }}"
-                           name="default" value="{{ provider.key }}"
-                           {{ provider.isActive ? 'checked' : '' }}>
-                    <label class="form-check-label h5" for="default_{{ provider.key }}">{{ provider.label }}</label>
-                </div>
-
-                {% if not provider.isConfigured %}
-                    {# Said out loud: a service picked here without its keys quietly leaves the
-                       forms showing the built-in picture instead. #}
-                    <div class="alert alert-warning py-2 mt-2">
-                        {{ __('This provider is not configured yet. Until it is, the forms fall back to the picture with a code.') }}
+            <div class="col-lg-6">
+                <section class="card admin-captcha-provider{{ provider.isActive ? ' admin-captcha-provider--active' }}">
+                    <div class="card-header d-flex align-items-center gap-2">
+                        <div class="form-check mb-0">
+                            <input type="radio" class="form-check-input" id="default_{{ provider.key }}" name="default" value="{{ provider.key }}"{% if provider.isActive %} checked{% endif %}>
+                            <label class="form-check-label fw-semibold" for="default_{{ provider.key }}">{{ provider.label }}</label>
+                        </div>
+                        <span class="ms-auto">
+                            {% if provider.isActive and provider.isConfigured %}
+                                <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ __('In use') }}</span>
+                            {% elseif not provider.isConfigured %}
+                                <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis badge-dot">{{ __('Not configured') }}</span>
+                            {% endif %}
+                        </span>
                     </div>
-                {% endif %}
-
-                {% for field in provider.fields %}
-                    {% include '@admin/components/settings-field.twig' with {
-                        field: field,
-                        name: 'providers[' ~ provider.key ~ '][' ~ field.key ~ ']',
-                        id: provider.key ~ '_' ~ field.key
-                    } only %}
-                {% endfor %}
+                    <div class="card-body d-flex flex-column gap-3">
+                        {% if provider.isActive and not provider.isConfigured %}
+                            {# Said out loud: a service picked here without its keys quietly leaves the
+                               forms showing the built-in picture instead. The others carry the badge. #}
+                            <div class="alert alert-warning mb-0 small">
+                                {{ __('This provider is not configured yet. Until it is, the forms fall back to the picture with a code.') }}
+                            </div>
+                        {% endif %}
+                        {% for field in provider.fields %}
+                            {% include '@admin/components/settings-field.twig' with {
+                                field: field,
+                                name: 'providers[' ~ provider.key ~ '][' ~ field.key ~ ']',
+                                id: provider.key ~ '_' ~ field.key
+                            } only %}
+                        {% else %}
+                            <div class="text-body-secondary small">{{ __('Nothing to set up.') }}</div>
+                        {% endfor %}
+                    </div>
+                </section>
             </div>
         {% endfor %}
-
-        <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
     </form>
+
+    {% include '@admin/components/ui/form-footer.twig' with {form: 'captcha-form', cancel_url: '/admin/settings'} only %}
 {% endblock %}

@@ -18,6 +18,7 @@ import './role-permissions';
 import './modal';
 import './offcanvas';
 import './language-panels';
+import './mail-settings';
 import './ad-form-preview';
 import './prism';
 import './forum';

@@ -176,3 +176,8 @@ body.dark {
     max-width: 100%;
   }
 }
+
+// A captcha provider of the settings: the one in use is framed by the accent.
+.admin-captcha-provider--active {
+  border-color: var(--accent);
+}

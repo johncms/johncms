@@ -2940,3 +2940,33 @@ msgstr "Общие"
 
 msgid "Mail"
 msgstr "Почта"
+
+msgid "Pick the captcha the forms of the site ask for; fill in the keys of a service before picking it."
+msgstr "Выберите капчу, которую спрашивают формы сайта; ключи сервиса заполните до того, как его выбрать."
+
+msgid "In use"
+msgstr "Используется"
+
+msgid "Not configured"
+msgstr "Не настроен"
+
+msgid "Nothing to set up."
+msgstr "Настраивать нечего."
+
+msgid "Through a mail server: your hosting, Yandex, Gmail or another service. The most reliable way."
+msgstr "Через почтовый сервер: вашего хостинга, Яндекса, Gmail или другого сервиса. Самый надёжный способ."
+
+msgid "Through the sendmail program of the server the site runs on."
+msgstr "Через программу sendmail на сервере, где работает сайт."
+
+msgid "Through the mail() function of PHP, as php.ini sets it up."
+msgstr "Через функцию mail() в PHP, как её настраивает php.ini."
+
+msgid "Letters are not sent at all. For a copy of the site where mail must not go out."
+msgstr "Письма не отправляются совсем. Для копии сайта, с которой почта уходить не должна."
+
+msgid "Do not send"
+msgstr "Не отправлять"
+
+msgid "When it is filled in, the method of sending above is ignored. This is the only way to use a provider with its own API (Mailgun, Postmark, SES and others)."
+msgstr "Если строка заполнена, способ отправки выше не учитывается. Только так можно подключить сервис со своим API (Mailgun, Postmark, SES и другие)."
