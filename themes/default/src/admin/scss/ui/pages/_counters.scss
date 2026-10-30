@@ -30,3 +30,13 @@
   font-size: 0.75rem;
   color: var(--fg-dim);
 }
+
+// A saved code run in a sandboxed frame (admin::counter-form).
+.admin-counter-preview {
+  display: block;
+  width: 100%;
+  height: 6rem;
+  border: 1px dashed var(--border);
+  border-radius: 0.5rem;
+  background: #fff;
+}

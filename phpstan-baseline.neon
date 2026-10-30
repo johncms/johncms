@@ -25,12 +25,6 @@ parameters:
 			path: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php
 
 		-
-			message: '#^Using nullsafe property access "\?\-\>require_cookie_consent" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
-			identifier: nullsafe.neverNull
-			count: 1
-			path: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php
-
-		-
 			message: '#^Using nullsafe property access "\?\-\>output" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1

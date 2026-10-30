@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Settings;
 
-use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Admin\Application\Services\CounterRowMapper;
 use Johncms\Modules\Admin\Application\UseCases\GetCounterListUseCase;
 use Johncms\Modules\Admin\Application\UseCases\ManageCounterUseCase;
@@ -18,10 +17,17 @@ use Johncms\Http\View\ViewResponse;
 final readonly class CountersController
 {
     private const URL = '/admin/counters';
+    private const int NAME_LENGTH = 25;
+
+    /** The first code on the homepage, the second on the other pages. */
+    private const int MODE_HOMEPAGE = 1;
+    /** The first code on every page. */
+    private const int MODE_EVERYWHERE = 2;
+    /** The second code on every page. */
+    private const int MODE_SECOND_EVERYWHERE = 3;
 
     public function __construct(
         private NavChain $navChain,
-        private CurrentUser $currentUser,
         private GetCounterListUseCase $getList,
         private SaveCounterUseCase $saveCounter,
         private ManageCounterUseCase $manageCounter,
@@ -42,32 +48,9 @@ final readonly class CountersController
         ]);
     }
 
-    public function view(int $id): ViewResponse
-    {
-        $counter = $this->manageCounter->find($id);
-        if ($counter === null) {
-            return $this->error(__('Wrong data'));
-        }
-
-        $title = __('Viewing');
-        $this->navChain->add(__('Counters'), self::URL);
-        $this->navChain->add($title);
-
-        return new ViewResponse('@admin/counter-view.twig', $this->menu($title) + [
-            'id'                     => $counter->id,
-            'name'                   => $counter->name,
-            'counter_1'              => $counter->link1,
-            'counter_2'              => $counter->link2,
-            'mode_name'              => $this->modeName($counter->mode),
-            'enabled'                => $counter->switch === 1,
-            'require_cookie_consent' => $counter->require_cookie_consent === 1,
-            'base_url'               => self::URL,
-        ]);
-    }
-
     public function newForm(): ViewResponse
     {
-        return $this->renderForm(null);
+        return $this->renderForm(null, $this->fieldsOf(null));
     }
 
     public function editForm(int $id): ViewResponse
@@ -77,53 +60,40 @@ final readonly class CountersController
             return $this->error(__('Wrong data'));
         }
 
-        return $this->renderForm($counter);
-    }
-
-    public function preview(Request $request): ViewResponse
-    {
-        $id = $request->bodyInt('id');
-        $name = mb_substr(trim($request->body('name', '')), 0, 25);
-        $link1 = trim($request->body('link1', ''));
-        $link2 = trim($request->body('link2', ''));
-        $mode = $request->bodyInt('mode', 1);
-        $requireCookieConsent = $request->hasBody('require_cookie_consent');
-        $enabled = $request->hasBody('switch');
-
-        if ($name === '' || $link1 === '') {
-            return $this->error(__('The required fields are not filled'));
-        }
-
-        $title = __('Counters');
-        $this->navChain->add($title, self::URL);
-
-        return new ViewResponse('@admin/counter-preview.twig', $this->menu($title) + [
-            'form_action'            => self::URL,
-            'name'                   => $name,
-            'counter_1'              => $link1,
-            'counter_2'              => $link2,
-            'mode'                   => $mode,
-            'require_cookie_consent' => $requireCookieConsent,
-            'enabled'                => $enabled,
-            'id'                     => $id ?: null,
-        ]);
+        return $this->renderForm($counter, $this->fieldsOf($counter));
     }
 
     public function store(Request $request): ViewResponse
     {
-        $id = $request->bodyInt('id');
-        $name = mb_substr(trim($request->body('name', '')), 0, 25);
-        $link1 = trim($request->body('link1', ''));
-        $link2 = trim($request->body('link2', ''));
-        $mode = $request->bodyInt('mode', 1);
-        $requireCookieConsent = $request->hasBody('require_cookie_consent');
-        $enabled = $request->hasBody('switch');
-
-        if ($name === '' || $link1 === '') {
-            return $this->error(__('The required fields are not filled'));
+        $id = $request->bodyInt('id') ?: null;
+        $counter = $id !== null ? $this->manageCounter->find($id) : null;
+        if ($id !== null && $counter === null) {
+            return $this->error(__('Wrong data'));
         }
 
-        $this->saveCounter->execute($id ?: null, $name, $link1, $link2, $mode, $requireCookieConsent, $enabled);
+        $fields = [
+            'name'                   => mb_substr(trim($request->body('name', '')), 0, self::NAME_LENGTH),
+            'link1'                  => trim($request->body('link1', '')),
+            'link2'                  => trim($request->body('link2', '')),
+            'mode'                   => $this->mode($request->bodyInt('mode', self::MODE_EVERYWHERE)),
+            'require_cookie_consent' => $request->hasBody('require_cookie_consent'),
+            'enabled'                => $request->hasBody('switch'),
+        ];
+
+        $errors = [];
+        if ($fields['name'] === '') {
+            $errors['name'] = [__('Enter the name of the counter')];
+        }
+        if ($fields['link1'] === '') {
+            $errors['link1'] = [__('Paste the code of the counter')];
+        }
+
+        if ($errors !== []) {
+            return $this->renderForm($counter, $fields, $errors);
+        }
+
+        $this->saveCounter->execute($id, $fields['name'], $fields['link1'], $fields['link2'], $fields['mode'], $fields['require_cookie_consent'], $fields['enabled']);
+        $this->session->flash('success_message', $id !== null ? __('The counter is saved') : __('The counter is added'));
 
         redirect(self::URL);
     }
@@ -186,31 +156,51 @@ final readonly class CountersController
         redirect(self::URL);
     }
 
-    private function renderForm(?Counter $counter): ViewResponse
+    /**
+     * @param array<string, mixed>        $fields
+     * @param array<string, list<string>> $errors
+     */
+    private function renderForm(?Counter $counter, array $fields, array $errors = []): ViewResponse
     {
-        $title = __('Counters');
-        $this->navChain->add($title, self::URL);
+        $title = $counter !== null ? __('Edit counter') : __('Add counter');
+        $this->navChain->add(__('Counters'), self::URL);
+        $this->navChain->add($title);
 
         return new ViewResponse('@admin/counter-form.twig', $this->menu($title) + [
-            'form_action'            => self::URL . '/preview',
-            'id'                     => $counter?->id,
-            'name'                   => $counter?->name ?? '',
-            'counter_1'              => $counter?->link1 ?? '',
-            'counter_2'              => $counter?->link2 ?? '',
-            'mode'                   => $counter?->mode ?? 0,
-            'require_cookie_consent' => (bool) ($counter?->require_cookie_consent ?? false),
-            'enabled'                => $counter === null ? true : $counter->switch === 1,
-            'field_height'           => $this->currentUser->user()->config->fieldHeight,
+            'form_action'    => self::URL,
+            'id'             => $counter?->id,
+            'fields'         => $fields,
+            'errors'         => $errors,
+            'name_length'    => self::NAME_LENGTH,
+            // The legacy mode, the second code everywhere, is offered only to a counter that has it.
+            'legacy_mode'    => $counter?->mode === self::MODE_SECOND_EVERYWHERE,
+            'banner_enabled' => ! empty(config('johncms')['cookie_banner_enabled']),
+            // What is saved, previewed in an isolated frame on the edit page.
+            'saved'          => $counter === null ? null : ['link1' => $counter->link1, 'link2' => $counter->link2],
         ]);
     }
 
-    private function modeName(int $mode): string
+    /**
+     * @return array<string, mixed>
+     */
+    private function fieldsOf(?Counter $counter): array
     {
-        return match ($mode) {
-            2       => __('On all pages showing option 1'),
-            3       => __('On all pages showing option 2'),
-            default => __('On the main showing option 1, on the other pages option 2'),
-        };
+        return [
+            'name'                   => $counter?->name ?? '',
+            'link1'                  => $counter?->link1 ?? '',
+            'link2'                  => $counter?->link2 ?? '',
+            'mode'                   => $this->mode($counter?->mode ?? self::MODE_EVERYWHERE),
+            'require_cookie_consent' => $counter?->require_cookie_consent === 1,
+            'enabled'                => $counter === null || $counter->switch === 1,
+        ];
+    }
+
+    /**
+     * One of the three modes the site knows; anything else reads as the first code everywhere.
+     */
+    private function mode(int $mode): int
+    {
+        return in_array($mode, [self::MODE_HOMEPAGE, self::MODE_EVERYWHERE, self::MODE_SECOND_EVERYWHERE], true) ? $mode : self::MODE_EVERYWHERE;
     }
 
     private function error(string $message): ViewResponse

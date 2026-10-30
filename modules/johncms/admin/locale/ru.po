@@ -2796,3 +2796,63 @@ msgstr "После согласия на cookie"
 
 msgid "The site prints the counters in this order."
 msgstr "Сайт выводит счётчики в этом порядке."
+
+msgid "Enter the name of the counter"
+msgstr "Введите название счётчика"
+
+msgid "Paste the code of the counter"
+msgstr "Вставьте код счётчика"
+
+msgid "The counter is saved"
+msgstr "Счётчик сохранён"
+
+msgid "The counter is added"
+msgstr "Счётчик добавлен"
+
+msgid "Edit counter"
+msgstr "Изменить счётчик"
+
+msgid "Yandex Metrica"
+msgstr "Яндекс.Метрика"
+
+msgid "Seen only in the panel."
+msgstr "Видно только в админке."
+
+msgid "Code"
+msgstr "Код"
+
+msgid "Paste the code as the analytics service gives it. It is printed at the bottom of the page as it is."
+msgstr "Вставьте код так, как его выдаёт сервис аналитики. Он выводится внизу страницы без изменений."
+
+msgid "Second code"
+msgstr "Второй код"
+
+msgid "Needed only when the homepage has its own code: the first code goes there, this one on the other pages."
+msgstr "Нужен, только если у главной страницы свой код: первый код выводится на главной, этот — на остальных страницах."
+
+msgid "The saved code, run apart from the panel. A counter that only sends statistics shows nothing here."
+msgstr "Сохранённый код, запущенный отдельно от админки. Счётчик, который только собирает статистику, здесь ничего не покажет."
+
+msgid "Showing"
+msgstr "Показ"
+
+msgid "The code runs only after the visitor accepts the cookie banner."
+msgstr "Код выполняется только после того, как посетитель примет cookie-баннер."
+
+msgid "The cookie banner is turned off: nobody can accept it, so a counter waiting for the consent never loads."
+msgstr "Cookie-баннер выключен: принять его некому, поэтому счётчик, ждущий согласия, не загрузится никогда."
+
+msgid "The code on every page"
+msgstr "Код на всех страницах"
+
+msgid "The usual choice for an analytics service."
+msgstr "Обычный выбор для сервиса аналитики."
+
+msgid "Its own code on the homepage"
+msgstr "Свой код на главной"
+
+msgid "The first code on the homepage, the second on the other pages. Without the second code the counter is only on the homepage."
+msgstr "Первый код — на главной, второй — на остальных страницах. Без второго кода счётчик будет только на главной."
+
+msgid "The second code on every page"
+msgstr "Второй код на всех страницах"

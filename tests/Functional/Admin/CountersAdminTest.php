@@ -63,6 +63,50 @@ final class CountersAdminTest extends FunctionalTestCase
         self::assertNull(Counter::query()->find($id));
     }
 
+    public function testACounterIsSavedInOneStep(): void
+    {
+        $response = $this->handleRequest('/admin/counters', 'POST', $this->withCsrfToken([
+            'name' => 'Metrica', 'link1' => '<script>ym()</script>', 'mode' => '2', 'switch' => '1', 'require_cookie_consent' => '1',
+        ]), cookies: $this->cookies());
+
+        $counter = Counter::query()->where('name', 'Metrica')->firstOrFail();
+        self::assertSame('/admin/counters', $response->headers->get('Location'));
+        self::assertSame(2, $counter->mode);
+        self::assertSame(1, $counter->require_cookie_consent);
+    }
+
+    public function testAMissingCodeIsShownAtItsField(): void
+    {
+        $response = $this->handleRequest('/admin/counters', 'POST', $this->withCsrfToken(['name' => 'Empty', 'link1' => '']), cookies: $this->cookies());
+        $content = (string) $response->getContent();
+
+        self::assertSame(Response::HTTP_OK, $response->getStatusCode());
+        self::assertStringContainsString('Вставьте код счётчика', $content);
+        self::assertMatchesRegularExpression('#name="link1" id="link1"#', $content);
+        self::assertFalse(Counter::query()->where('name', 'Empty')->exists());
+    }
+
+    public function testTheSavedCodeIsPreviewedInAnIsolatedFrame(): void
+    {
+        $id = $this->counter('Metrica');
+
+        $content = $this->page('/admin/counters/' . $id . '/edit');
+
+        self::assertStringContainsString('sandbox="allow-scripts" srcdoc="&lt;span&gt;Metrica&lt;/span&gt;"', $content);
+    }
+
+    public function testTheOldPagesOfACounterAreGone(): void
+    {
+        $id = $this->counter('Metrica');
+
+        self::assertSame(Response::HTTP_NOT_FOUND, $this->handleRequest('/admin/counters/' . $id, cookies: $this->cookies())->getStatusCode());
+        // The public catch-all of the site takes the path for a GET only, so a POST meets 405.
+        self::assertContains(
+            $this->handleRequest('/admin/counters/preview', 'POST', $this->withCsrfToken(), cookies: $this->cookies())->getStatusCode(),
+            [Response::HTTP_NOT_FOUND, Response::HTTP_METHOD_NOT_ALLOWED]
+        );
+    }
+
     private function counter(string $name, int $mode = 2, bool $consent = false, int $sort = 1): int
     {
         return Fixture::insert('cms_counters', [

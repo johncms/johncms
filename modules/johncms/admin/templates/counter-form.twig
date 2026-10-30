@@ -1,79 +1,125 @@
 {#
-    The form of a counter, for a new one and for an existing one.
+    The form of a counter, for a new one and for an existing one: the code and where it goes on
+    the left, whether it is shown on the right. An existing counter is previewed below as it is
+    saved, in an isolated frame.
 
     @var string form_action
-    @var int    id                     Null when a new counter is being added.
-    @var string name
-    @var string counter_1
-    @var string counter_2
-    @var int    mode
-    @var bool   require_cookie_consent
-    @var bool   enabled
-    @var int    field_height           Rows of a code field, from the settings of the visitor.
+    @var int    id             Null when a new counter is being added.
+    @var array  fields         name, link1, link2, mode, require_cookie_consent, enabled.
+    @var array  errors         Validation messages keyed by field, empty on the first render.
+    @var int    name_length
+    @var bool   legacy_mode    Offer "the second code on every page": the counter has that mode.
+    @var bool   banner_enabled Whether the cookie banner is on.
+    @var array  saved          link1, link2 as saved; null for a new counter.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
+{% macro card_head(icon, title) %}
+    <div class="card-header">
+        {% include '@admin/components/ui/icon.twig' with {name: icon, size: 16} only %}
+        <h2 class="h6 mb-0 ms-2">{{ title }}</h2>
+    </div>
+{% endmacro %}
+
 {% block content %}
-    <form action="{{ form_action }}" method="post">
+    {% import _self as ui %}
+
+    <form action="{{ form_action }}" method="post" id="counter-form" class="row g-3 align-items-start">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         {% if id %}
-            <input type="hidden" value="{{ id }}" name="id">
+            <input type="hidden" name="id" value="{{ id }}">
         {% endif %}
-        <div class="form-group">
-            <label for="name">{{ __('Name') }}</label>
-            <input type="text" name="name" class="form-control" id="name" value="{{ name }}" placeholder="{{ __('Name') }}">
-        </div>
-        <div class="form-group">
-            <label for="link1">{{ __('Option 1') }}</label>
-            <textarea class="form-control" rows="{{ field_height }}" name="link1" id="link1">{{ counter_1 }}</textarea>
-            <div class="small text-muted">{{ __('Code for main page') }}</div>
-        </div>
-        <div class="form-group">
-            <label for="link2">{{ __('Option 2') }}</label>
-            <textarea class="form-control" rows="{{ field_height }}" name="link2" id="link2">{{ counter_2 }}</textarea>
-            <div class="small text-muted">{{ __('Code for other pages') }}</div>
+
+        <div class="col-lg-8 d-flex flex-column gap-3">
+            <section class="card">
+                {{ ui.card_head('chart-column', __('Counter')) }}
+                <div class="card-body d-flex flex-column gap-3">
+                    <div>
+                        <label class="form-label" for="name">{{ __('Name') }}</label>
+                        <input type="text" name="name" class="form-control{{ errors.name is defined ? ' is-invalid' }}" id="name" value="{{ fields.name }}" maxlength="{{ name_length }}" placeholder="{{ __('Yandex Metrica') }}">
+                        {% include '@theme/components/field-errors.twig' with {errors: errors.name|default([])} only %}
+                        <div class="form-text">{{ __('Seen only in the panel.') }}</div>
+                    </div>
+                    <div>
+                        <label class="form-label" for="link1">{{ __('Code') }}</label>
+                        <textarea class="form-control font-monospace{{ errors.link1 is defined ? ' is-invalid' }}" rows="6" name="link1" id="link1" spellcheck="false">{{ fields.link1 }}</textarea>
+                        {% include '@theme/components/field-errors.twig' with {errors: errors.link1|default([])} only %}
+                        <div class="form-text">{{ __('Paste the code as the analytics service gives it. It is printed at the bottom of the page as it is.') }}</div>
+                    </div>
+                    <div>
+                        <label class="form-label" for="link2">{{ __('Second code') }}</label>
+                        <textarea class="form-control font-monospace" rows="4" name="link2" id="link2" spellcheck="false">{{ fields.link2 }}</textarea>
+                        <div class="form-text">{{ __('Needed only when the homepage has its own code: the first code goes there, this one on the other pages.') }}</div>
+                    </div>
+                </div>
+            </section>
+
+            {% if saved %}
+                <section class="card">
+                    {{ ui.card_head('eye', __('Preview')) }}
+                    <div class="card-body">
+                        <div class="row g-3">
+                            {% for code in [saved.link1, saved.link2] %}
+                                {% if code %}
+                                    <div class="col-md-6">
+                                        <div class="form-label">{{ loop.first ? __('Code') : __('Second code') }}</div>
+                                        {# Sandboxed: the scripts of the counter run, but cannot reach the panel or its cookies. #}
+                                        <iframe class="admin-counter-preview" sandbox="allow-scripts" srcdoc="{{ code }}" title="{{ __('Preview') }}"></iframe>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="form-text">{{ __('The saved code, run apart from the panel. A counter that only sends statistics shows nothing here.') }}</div>
+                    </div>
+                </section>
+            {% endif %}
         </div>
 
-        <h3>{{ __('Display mode') }}</h3>
-        <div class="form-check">
-            <input type="radio" id="mode1" name="mode" value="1" class="form-check-input"{% if mode == 0 or mode == 1 %} checked="checked"{% endif %}>
-            <label class="form-check-label" for="mode1">{{ __('Default') }}</label>
-        </div>
-        <div class="small text-muted">
-            {{ __('On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page.')|raw }}
-        </div>
+        <div class="col-lg-4 d-flex flex-column gap-3">
+            <section class="card">
+                {{ ui.card_head('eye', __('Showing')) }}
+                <div class="card-body d-flex flex-column gap-3">
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" role="switch" name="switch" value="1" id="switch"{% if fields.enabled %} checked{% endif %}>
+                        <label class="form-check-label" for="switch">{{ __('Enabled') }}</label>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" role="switch" name="require_cookie_consent" value="1" id="require_cookie_consent"{% if fields.require_cookie_consent %} checked{% endif %}>
+                        <label class="form-check-label" for="require_cookie_consent">{{ __('Load only after cookie consent') }}</label>
+                        <div class="form-text mt-0">{{ __('The code runs only after the visitor accepts the cookie banner.') }}</div>
+                    </div>
+                    {% if not banner_enabled %}
+                        <div class="alert alert-warning mb-0 small">
+                            {{ __('The cookie banner is turned off: nobody can accept it, so a counter waiting for the consent never loads.') }}
+                            <a href="/admin/cookie-banner" class="alert-link">{{ __('Cookie banner') }}</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </section>
 
-        <div class="form-check">
-            <input type="radio" id="term3" name="mode" value="2" class="form-check-input"{% if mode == 2 %} checked="checked"{% endif %}>
-            <label class="form-check-label" for="term3">{{ __('Option 1') }}</label>
-        </div>
-        <div class="form-check">
-            <input type="radio" id="term2" name="mode" value="3" class="form-check-input"{% if mode == 3 %} checked="checked"{% endif %}>
-            <label class="form-check-label" for="term2">{{ __('Option 2') }}</label>
-        </div>
-
-        <div class="form-check mt-3">
-            <input type="checkbox" class="form-check-input" name="switch" value="1" id="switch"{% if enabled %} checked="checked"{% endif %}>
-            <label class="form-check-label" for="switch">{{ __('Enabled') }}</label>
-        </div>
-
-        <div class="form-check mt-3">
-            <input type="checkbox" class="form-check-input" name="require_cookie_consent" value="1" id="require_cookie_consent"{% if require_cookie_consent %} checked="checked"{% endif %}>
-            <label class="form-check-label" for="require_cookie_consent">{{ __('Load only after cookie consent') }}</label>
-        </div>
-        <div class="small text-muted">
-            {{ __('If enabled, the counter code runs only after the visitor accepts the cookie banner. Requires the cookie banner to be enabled.') }}
-        </div>
-
-        <div class="alert alert-info mb-3 mt-3">
-            <div class="fw-bold">{{ __('WARNING!') }}</div>
-            <div>{{ __('Make sure you have correctly entered the code. It must meet the standard of XML') }}</div>
-            <div>{{ __('If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors.')|raw }}</div>
-        </div>
-
-        <div class="mt-3">
-            <input type="submit" value="{{ __('Viewing') }}" class="btn btn-primary"/>
-            <a href="/admin/counters" class="btn btn-secondary">{{ __('Cancel') }}</a>
+            <section class="card">
+                {{ ui.card_head('layout-grid', __('Where')) }}
+                <div class="card-body d-flex flex-column gap-2">
+                    {% set modes = [
+                        {value: 2, label: __('The code on every page'), hint: __('The usual choice for an analytics service.')},
+                        {value: 1, label: __('Its own code on the homepage'), hint: __('The first code on the homepage, the second on the other pages. Without the second code the counter is only on the homepage.')},
+                    ] %}
+                    {% if legacy_mode %}
+                        {% set modes = modes|merge([{value: 3, label: __('The second code on every page'), hint: ''}]) %}
+                    {% endif %}
+                    {% for mode in modes %}
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" name="mode" value="{{ mode.value }}" id="mode{{ mode.value }}"{% if fields.mode == mode.value %} checked{% endif %}>
+                            <label class="form-check-label" for="mode{{ mode.value }}">
+                                {{ mode.label }}
+                                {% if mode.hint %}<span class="form-text d-block mt-0">{{ mode.hint }}</span>{% endif %}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
         </div>
     </form>
+
+    {% include '@admin/components/ui/form-footer.twig' with {form: 'counter-form', cancel_url: '/admin/counters'} only %}
 {% endblock %}

@@ -156,16 +156,15 @@ msgid "Contacts"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:57
+#: modules/johncms/admin/templates/counter-form.twig:94
 msgid "Cookie banner"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:58
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:35
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:53
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:97
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:172
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:191
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:218
+#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:41
+#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:142
+#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:166
+#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:208
 msgid "Counters"
 msgstr ""
 
@@ -281,8 +280,6 @@ msgstr ""
 #: modules/johncms/admin/templates/ad-delete-dialog.twig:28
 #: modules/johncms/admin/templates/bans/amnesty-dialog.twig:31
 #: modules/johncms/admin/templates/counter-delete-dialog.twig:20
-#: modules/johncms/admin/templates/counter-form.twig:76
-#: modules/johncms/admin/templates/counter-preview.twig:52
 #: modules/johncms/admin/templates/editor-images.twig:65
 #: modules/johncms/admin/templates/file-integrity-snapshot-confirm.twig:22
 #: modules/johncms/admin/templates/ip-ban-clear-confirm.twig:21
@@ -307,7 +304,6 @@ msgstr ""
 #: themes/default/templates/admin/components/ui/form-footer.twig:26
 #: themes/default/templates/admin/components/ui/form-footer.twig:46
 #: modules/johncms/admin/templates/captcha-settings.twig:45
-#: modules/johncms/admin/templates/counter-preview.twig:51
 #: modules/johncms/admin/templates/editor-images.twig:64
 #: modules/johncms/admin/templates/external-providers.twig:59
 #: modules/johncms/admin/templates/ip-ban-form.twig:53
@@ -413,7 +409,6 @@ msgstr[0] ""
 #: modules/johncms/admin/templates/ad-delete-dialog.twig:31
 #: modules/johncms/admin/templates/ads.twig:120
 #: modules/johncms/admin/templates/counter-delete-dialog.twig:23
-#: modules/johncms/admin/templates/counter-view.twig:51
 #: modules/johncms/admin/templates/languages-manage.twig:51
 #: modules/johncms/admin/templates/roles.twig:85
 #: modules/johncms/admin/templates/style-guide/examples/buttons-sizes.twig:17
@@ -513,7 +508,6 @@ msgid "Ban IP address"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:243
-#: modules/johncms/admin/templates/counter-form.twig:40
 msgid "Default"
 msgstr ""
 
@@ -595,9 +589,9 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:166
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:86
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:152
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:49
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:77
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:158
+#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:60
+#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:71
+#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:128
 #: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:44
 #: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:58
 #: modules/johncms/admin/src/Application/Controllers/Users/DeleteUserController.php:104
@@ -846,43 +840,47 @@ msgstr ""
 msgid "ERROR: Can not write file `captcha.local.php`"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:52
-#: modules/johncms/admin/templates/counter-form.twig:75
-msgid "Viewing"
+#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:85
+msgid "Enter the name of the counter"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:94
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:123
-msgid "The required fields are not filled"
+#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:88
+msgid "Paste the code of the counter"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:135
+#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:96
+msgid "The counter is saved"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:96
+msgid "The counter is added"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:105
 msgid "The counter is turned on"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:135
+#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:105
 msgid "The counter is turned off"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:171
+#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:141
 #: modules/johncms/admin/templates/counter-delete-dialog.twig:10
 msgid "Delete counter"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:184
+#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:154
 msgid "The counter is deleted"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:210
-msgid "On all pages showing option 1"
+#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:165
+msgid "Edit counter"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:211
-msgid "On all pages showing option 2"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:212
-msgid "On the main showing option 1, on the other pages option 2"
+#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:165
+#: modules/johncms/admin/templates/counters.twig:13
+#: modules/johncms/admin/templates/counters.twig:30
+msgid "Add counter"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:107
@@ -1242,7 +1240,6 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Services/UserActionsMapper.php:53
 #: modules/johncms/admin/src/Application/Services/UserCardMapper.php:110
 #: modules/johncms/admin/templates/ads.twig:102
-#: modules/johncms/admin/templates/counter-view.twig:50
 #: modules/johncms/admin/templates/roles.twig:75
 #: modules/johncms/admin/templates/style-guide/examples/buttons-sizes.twig:14
 #: modules/johncms/admin/templates/style-guide/examples/buttons-sizes.twig:20
@@ -1584,8 +1581,6 @@ msgid "Address"
 msgstr ""
 
 #: modules/johncms/admin/templates/ad-form.twig:56
-#: modules/johncms/admin/templates/counter-preview.twig:23
-#: modules/johncms/admin/templates/counter-view.twig:21
 #: modules/johncms/admin/templates/settings.twig:85
 #: modules/johncms/admin/templates/style-guide/examples/card.twig:10
 #: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:20
@@ -1639,6 +1634,8 @@ msgid "The link leads straight to the address: its clicks are not counted and th
 msgstr ""
 
 #: modules/johncms/admin/templates/ad-form.twig:101
+#: modules/johncms/admin/templates/counter-form.twig:59
+#: modules/johncms/admin/templates/counter-form.twig:67
 msgid "Preview"
 msgstr ""
 
@@ -1936,114 +1933,91 @@ msgstr ""
 msgid "The code of the counter is removed from every page of the site."
 msgstr ""
 
-#: modules/johncms/admin/templates/counter-form.twig:23
-#: modules/johncms/admin/templates/counter-form.twig:24
+#: modules/johncms/admin/templates/counter-form.twig:35
+#: modules/johncms/admin/templates/counters.twig:38
+msgid "Counter"
+msgstr ""
+
+#: modules/johncms/admin/templates/counter-form.twig:38
 #: modules/johncms/admin/templates/user/edit.twig:52
 #: modules/johncms/admin/templates/user/view.twig:108
 msgid "Name"
 msgstr ""
 
-#: modules/johncms/admin/templates/counter-form.twig:27
-#: modules/johncms/admin/templates/counter-form.twig:48
-#: modules/johncms/admin/templates/counter-preview.twig:26
-#: modules/johncms/admin/templates/counter-view.twig:32
-msgid "Option 1"
+#: modules/johncms/admin/templates/counter-form.twig:39
+msgid "Yandex Metrica"
 msgstr ""
 
-#: modules/johncms/admin/templates/counter-form.twig:29
-msgid "Code for main page"
+#: modules/johncms/admin/templates/counter-form.twig:41
+msgid "Seen only in the panel."
 msgstr ""
 
-#: modules/johncms/admin/templates/counter-form.twig:32
+#: modules/johncms/admin/templates/counter-form.twig:44
+#: modules/johncms/admin/templates/counter-form.twig:65
+msgid "Code"
+msgstr ""
+
+#: modules/johncms/admin/templates/counter-form.twig:47
+msgid "Paste the code as the analytics service gives it. It is printed at the bottom of the page as it is."
+msgstr ""
+
+#: modules/johncms/admin/templates/counter-form.twig:50
+#: modules/johncms/admin/templates/counter-form.twig:65
+msgid "Second code"
+msgstr ""
+
 #: modules/johncms/admin/templates/counter-form.twig:52
-#: modules/johncms/admin/templates/counter-preview.twig:29
-#: modules/johncms/admin/templates/counter-view.twig:35
-msgid "Option 2"
+msgid "Needed only when the homepage has its own code: the first code goes there, this one on the other pages."
 msgstr ""
 
-#: modules/johncms/admin/templates/counter-form.twig:34
-msgid "Code for other pages"
+#: modules/johncms/admin/templates/counter-form.twig:72
+msgid "The saved code, run apart from the panel. A counter that only sends statistics shows nothing here."
 msgstr ""
 
-#: modules/johncms/admin/templates/counter-form.twig:37
-msgid "Display mode"
+#: modules/johncms/admin/templates/counter-form.twig:80
+msgid "Showing"
 msgstr ""
 
-#: modules/johncms/admin/templates/counter-form.twig:43
-msgid "On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page."
-msgstr ""
-
-#: modules/johncms/admin/templates/counter-form.twig:57
-#: modules/johncms/admin/templates/counter-view.twig:26
+#: modules/johncms/admin/templates/counter-form.twig:84
 #: modules/johncms/admin/templates/external-providers.twig:26
 msgid "Enabled"
 msgstr ""
 
-#: modules/johncms/admin/templates/counter-form.twig:62
-#: modules/johncms/admin/templates/counter-view.twig:41
+#: modules/johncms/admin/templates/counter-form.twig:88
 msgid "Load only after cookie consent"
 msgstr ""
 
-#: modules/johncms/admin/templates/counter-form.twig:65
-msgid "If enabled, the counter code runs only after the visitor accepts the cookie banner. Requires the cookie banner to be enabled."
+#: modules/johncms/admin/templates/counter-form.twig:89
+msgid "The code runs only after the visitor accepts the cookie banner."
 msgstr ""
 
-#: modules/johncms/admin/templates/counter-form.twig:69
-msgid "WARNING!"
+#: modules/johncms/admin/templates/counter-form.twig:93
+msgid "The cookie banner is turned off: nobody can accept it, so a counter waiting for the consent never loads."
 msgstr ""
 
-#: modules/johncms/admin/templates/counter-form.twig:70
-msgid "Make sure you have correctly entered the code. It must meet the standard of XML"
+#: modules/johncms/admin/templates/counter-form.twig:101
+#: modules/johncms/admin/templates/counters.twig:39
+msgid "Where"
 msgstr ""
 
-#: modules/johncms/admin/templates/counter-form.twig:71
-msgid "If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
+#: modules/johncms/admin/templates/counter-form.twig:104
+msgid "The code on every page"
 msgstr ""
 
-#: modules/johncms/admin/templates/counter-preview.twig:47
-msgid "If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors."
+#: modules/johncms/admin/templates/counter-form.twig:104
+msgid "The usual choice for an analytics service."
 msgstr ""
 
-#: modules/johncms/admin/templates/counter-view.twig:24
-msgid "Status:"
+#: modules/johncms/admin/templates/counter-form.twig:105
+msgid "Its own code on the homepage"
 msgstr ""
 
-#: modules/johncms/admin/templates/counter-view.twig:28
-msgid "Disabled"
+#: modules/johncms/admin/templates/counter-form.twig:105
+msgid "The first code on the homepage, the second on the other pages. Without the second code the counter is only on the homepage."
 msgstr ""
 
-#: modules/johncms/admin/templates/counter-view.twig:38
-msgid "Display mode:"
-msgstr ""
-
-#: modules/johncms/admin/templates/counter-view.twig:42
-msgid "Yes"
-msgstr ""
-
-#: modules/johncms/admin/templates/counter-view.twig:42
-msgid "No"
-msgstr ""
-
-#: modules/johncms/admin/templates/counter-view.twig:48
-msgid "Disable"
-msgstr ""
-
-#: modules/johncms/admin/templates/counter-view.twig:48
-msgid "Enable"
-msgstr ""
-
-#: modules/johncms/admin/templates/counter-view.twig:52
-#: modules/johncms/admin/templates/file-integrity-scan-result.twig:25
-#: modules/johncms/admin/templates/ip-ban-detail.twig:52
-#: modules/johncms/admin/templates/ip-bans.twig:63
-#: modules/johncms/admin/templates/languages-manage.twig:63
-#: modules/johncms/admin/templates/role-form.twig:27
-msgid "Back"
-msgstr ""
-
-#: modules/johncms/admin/templates/counters.twig:13
-#: modules/johncms/admin/templates/counters.twig:30
-msgid "Add counter"
+#: modules/johncms/admin/templates/counter-form.twig:108
+msgid "The second code on every page"
 msgstr ""
 
 #: modules/johncms/admin/templates/counters.twig:24
@@ -2052,14 +2026,6 @@ msgstr ""
 
 #: modules/johncms/admin/templates/counters.twig:25
 msgid "A counter is the code of an analytics service, such as Yandex Metrica or Google Analytics, printed at the bottom of every page."
-msgstr ""
-
-#: modules/johncms/admin/templates/counters.twig:38
-msgid "Counter"
-msgstr ""
-
-#: modules/johncms/admin/templates/counters.twig:39
-msgid "Where"
 msgstr ""
 
 #: modules/johncms/admin/templates/counters.twig:52
@@ -2144,6 +2110,14 @@ msgstr ""
 
 #: modules/johncms/admin/templates/file-integrity-scan-result.twig:17
 msgid "List of files"
+msgstr ""
+
+#: modules/johncms/admin/templates/file-integrity-scan-result.twig:25
+#: modules/johncms/admin/templates/ip-ban-detail.twig:52
+#: modules/johncms/admin/templates/ip-bans.twig:63
+#: modules/johncms/admin/templates/languages-manage.twig:63
+#: modules/johncms/admin/templates/role-form.twig:27
+msgid "Back"
 msgstr ""
 
 #: modules/johncms/admin/templates/file-integrity-snapshot-confirm.twig:12

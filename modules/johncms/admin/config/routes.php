@@ -187,9 +187,7 @@ return static function (RouteCollection $router): void {
 
             $sr->get('/admin/counters', [CountersController::class, 'index'])->name('admin.counters');
             $sr->get('/admin/counters/new', [CountersController::class, 'newForm'])->name('admin.counters.new');
-            $sr->post('/admin/counters/preview', [CountersController::class, 'preview'])->name('admin.counters.preview');
             $sr->post('/admin/counters', [CountersController::class, 'store'])->name('admin.counters.store');
-            $sr->get('/admin/counters/{id:number}', [CountersController::class, 'view'])->name('admin.counters.view');
             $sr->get('/admin/counters/{id:number}/edit', [CountersController::class, 'editForm'])->name('admin.counters.edit');
             $sr->post('/admin/counters/{id:number}/toggle', [CountersController::class, 'toggle'])->name('admin.counters.toggle');
             $sr->post('/admin/counters/{id:number}/up', [CountersController::class, 'up'])->name('admin.counters.up');
