@@ -47,12 +47,12 @@ msgid "Users List"
 msgstr ""
 
 #: config/places.global.php:16
-#: system/src/Comments.php:208
-#: system/src/Comments.php:245
-#: system/src/Comments.php:274
-#: system/src/Comments.php:298
-#: system/src/Comments.php:339
-#: system/src/Comments.php:366
+#: system/src/Comments.php:212
+#: system/src/Comments.php:249
+#: system/src/Comments.php:278
+#: system/src/Comments.php:302
+#: system/src/Comments.php:343
+#: system/src/Comments.php:370
 msgid "Downloads"
 msgstr ""
 
@@ -196,14 +196,14 @@ msgid "Go to Link"
 msgstr ""
 
 #: modules/johncms/redirect/templates/public/index.twig:31
-#: system/src/Comments.php:212
-#: system/src/Comments.php:249
-#: system/src/Comments.php:266
-#: system/src/Comments.php:278
-#: system/src/Comments.php:302
-#: system/src/Comments.php:343
-#: system/src/Comments.php:358
-#: system/src/Comments.php:370
+#: system/src/Comments.php:216
+#: system/src/Comments.php:253
+#: system/src/Comments.php:270
+#: system/src/Comments.php:282
+#: system/src/Comments.php:306
+#: system/src/Comments.php:347
+#: system/src/Comments.php:362
+#: system/src/Comments.php:374
 #: themes/default/templates/admin/pages/result.twig:21
 #: themes/default/templates/pages/comments-list.twig:138
 #: themes/default/templates/pages/result.twig:19
@@ -658,55 +658,55 @@ msgid ""
 "PHP should work with the default driver: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
 msgstr ""
 
-#: system/src/Comments.php:197
-#: system/src/Comments.php:262
-#: system/src/Comments.php:263
+#: system/src/Comments.php:201
+#: system/src/Comments.php:266
+#: system/src/Comments.php:267
 #: themes/default/templates/pages/comments-list.twig:106
 msgid "Reply"
 msgstr ""
 
-#: system/src/Comments.php:210
+#: system/src/Comments.php:214
 msgid "Administrator already replied to this message"
 msgstr ""
 
-#: system/src/Comments.php:276
-#: system/src/Comments.php:368
+#: system/src/Comments.php:280
+#: system/src/Comments.php:372
 #: system/src/Http/EditorImageUploadResponder.php:60
 msgid "Wrong data"
 msgstr ""
 
-#: system/src/Comments.php:288
-#: system/src/Comments.php:354
-#: system/src/Comments.php:355
+#: system/src/Comments.php:292
+#: system/src/Comments.php:358
+#: system/src/Comments.php:359
 #: themes/default/templates/pages/comments-list.twig:118
 msgid "Edit"
 msgstr ""
 
-#: system/src/Comments.php:300
+#: system/src/Comments.php:304
 msgid "You cannot edit posts of higher administration"
 msgstr ""
 
-#: system/src/Comments.php:380
-#: system/src/Comments.php:414
-#: system/src/Comments.php:415
+#: system/src/Comments.php:384
+#: system/src/Comments.php:418
+#: system/src/Comments.php:419
 #: themes/default/templates/pages/comments-delete.twig:16
 #: themes/default/templates/pages/comments-list.twig:121
 msgid "Delete"
 msgstr ""
 
-#: system/src/Comments.php:678
+#: system/src/Comments.php:682
 msgid "Text is too short"
 msgstr ""
 
-#: system/src/Comments.php:684
+#: system/src/Comments.php:688
 msgid "You cannot add the message so often<br>Please, wait"
 msgstr ""
 
-#: system/src/Comments.php:684
+#: system/src/Comments.php:688
 msgid "seconds"
 msgstr ""
 
-#: system/src/Comments.php:692
+#: system/src/Comments.php:696
 msgid "Message already exists"
 msgstr ""
 
@@ -787,9 +787,7 @@ msgstr ""
 #: system/src/Http/PageMeta.php:18
 #: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:87
 #: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:96
-#: modules/johncms/forum/src/Application/Controllers/ForumTopicController.php:155
-#: modules/johncms/forum/src/Application/Controllers/ForumTopicController.php:164
-#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:406
+#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:404
 msgid "Page"
 msgstr ""
 
@@ -903,8 +901,14 @@ msgstr ""
 msgid "The two given tokens do not match"
 msgstr ""
 
+#: system/src/Validator/RuleFactories/PatternRuleFactory.php:31
 #: system/src/Validator/RuleFactories/StringLengthRuleFactory.php:33
+#: system/src/Validator/RuleFactories/WebAddressRuleFactory.php:31
 msgid "Invalid type given. String expected"
+msgstr ""
+
+#: system/src/Validator/RuleFactories/PatternRuleFactory.php:32
+msgid "The input does not match the expected format"
 msgstr ""
 
 #: system/src/Validator/RuleFactories/StringLengthRuleFactory.php:37
@@ -915,6 +919,10 @@ msgstr ""
 #: system/src/Validator/RuleFactories/StringLengthRuleFactory.php:38
 #, php-format
 msgid "The input is more than %max% characters long"
+msgstr ""
+
+#: system/src/Validator/RuleFactories/WebAddressRuleFactory.php:33
+msgid "Enter a full address that starts with http:// or https://"
 msgstr ""
 
 #: system/src/Validator/Rules/Ban.php:31

@@ -324,6 +324,8 @@ The number is shown so that support for the old scheme is not removed while it i
       'The account has not been approved yet, so nobody can sign in to it' => 'Аккаунт ещё не одобрен, войти под ним нельзя',
       'The account has not confirmed its e-mail, so nobody can sign in to it' => 'Аккаунт не подтвердил e-mail, войти под ним нельзя',
       'Your account has been created. Follow the link we sent to your e-mail to activate it.' => 'Аккаунт создан. Чтобы активировать его, перейдите по ссылке из письма, которое мы отправили на ваш e-mail.',
+      'The input does not match the expected format' => 'Значение не соответствует ожидаемому формату',
+      'Enter a full address that starts with http:// or https://' => 'Введите полный адрес, начинающийся с http:// или https://',
     ),
   ),
 );

@@ -705,6 +705,8 @@
       ),
       'This cannot be undone.' => 'Это нельзя отменить.',
       'Points per day' => 'Баллов в сутки',
+      'Enter the title of the link' => 'Введите название ссылки',
+      'Enter the color as six hexadecimal digits, for example FF0000' => 'Укажите цвет шестью шестнадцатеричными цифрами, например FF0000',
     ),
   ),
 );

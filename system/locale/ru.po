@@ -1245,3 +1245,9 @@ msgstr "Аккаунт не подтвердил e-mail, войти под ни�
 
 msgid "Your account has been created. Follow the link we sent to your e-mail to activate it."
 msgstr "Аккаунт создан. Чтобы активировать его, перейдите по ссылке из письма, которое мы отправили на ваш e-mail."
+
+msgid "The input does not match the expected format"
+msgstr "Значение не соответствует ожидаемому формату"
+
+msgid "Enter a full address that starts with http:// or https://"
+msgstr "Введите полный адрес, начинающийся с http:// или https://"

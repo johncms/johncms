@@ -53,7 +53,9 @@ class Ads
 
         $req = $this->db->query("SELECT * FROM `cms_ads` WHERE `to` = '0'");
         while ($res = $req->fetch()) {
-            if (! $this->checkAccess($res)) {
+            // The panel accepts only http(s) addresses; a row saved before that check, with a
+            // javascript: or data: address, is not printed into a link at all.
+            if (! $this->checkAccess($res) || ! $this->isWebAddress((string) $res['link'])) {
                 continue;
             }
             $name = explode('|', $res['name']);
@@ -119,6 +121,13 @@ class Ads
      * itself: it used to be the _IS_HOMEPAGE constant, which belongs to the process — once the
      * home page had been served, every later page of the same worker looked like the home page.
      */
+    private function isWebAddress(string $link): bool
+    {
+        $scheme = strtolower((string) parse_url($link, PHP_URL_SCHEME));
+
+        return $scheme === 'http' || $scheme === 'https';
+    }
+
     private function isHomePage(): bool
     {
         return (bool) $this->requestStack->getCurrentRequest()?->attributes->get('is_homepage', false);

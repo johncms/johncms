@@ -17,6 +17,10 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
+use Johncms\Validator\Rules\NotEmpty;
+use Johncms\Validator\Rules\Pattern;
+use Johncms\Validator\Rules\WebAddress;
+use Johncms\Validator\ValidatorInterface;
 
 final readonly class AdsController
 {
@@ -31,6 +35,7 @@ final readonly class AdsController
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
         private Session $session,
+        private ValidatorInterface $validator,
     ) {
     }
 
@@ -179,26 +184,21 @@ final readonly class AdsController
 
     /**
      * @param array<string, mixed> $fields
-     * @return list<string>
+     * @return array<string, list<string>>
      */
     private function validate(array $fields): array
     {
-        $errors = [];
-        if ($fields['link'] === '' || $fields['name'] === '') {
-            $errors[] = __('The required fields are not filled');
-        }
-
-        $color = (string) $fields['color'];
-        if ($color !== '') {
-            if (preg_match('/[^\da-fA-F_]+/', $color)) {
-                $errors[] = __('Invalid characters');
-            }
-            if (strlen($color) < 6) {
-                $errors[] = __('Color is specified incorrectly');
-            }
-        }
-
-        return $errors;
+        return $this->validator->validate($fields, [
+            'link'  => [new WebAddress()],
+            'name'  => [new NotEmpty(message: __('Enter the title of the link'))],
+            'color' => [
+                new Pattern(
+                    '/^[\da-f]{6}$/i',
+                    allowEmpty: true,
+                    message: __('Enter the color as six hexadecimal digits, for example FF0000')
+                ),
+            ],
+        ])->getErrors();
     }
 
     /**
@@ -209,7 +209,7 @@ final readonly class AdsController
         return [
             'link'       => trim($request->body('link', '')),
             'name'       => trim($request->body('name', '')),
-            'color'      => mb_substr(trim($request->body('color', '')), 0, 6),
+            'color'      => ltrim(trim($request->body('color', '')), '#'),
             'count_link' => abs($request->bodyInt('count')),
             'day'        => abs($request->bodyInt('day')),
             'view'       => abs($request->bodyInt('view')),
@@ -249,7 +249,7 @@ final readonly class AdsController
     private function defaultFields(): array
     {
         return [
-            'link'       => 'http://',
+            'link'       => '',
             'name'       => '',
             'color'      => '',
             'count_link' => 0,
@@ -287,7 +287,7 @@ final readonly class AdsController
 
     /**
      * @param array<string, mixed> $fields
-     * @param list<string> $errors
+     * @param array<string, list<string>> $errors
      */
     private function renderForm(?int $id, array $fields, array $errors = []): ViewResponse
     {

@@ -4,7 +4,7 @@
     @var string     form_action
     @var int|null   id               Null when a new link is being added.
     @var array      fields           Values of the form, keyed by field name.
-    @var array      errors           Validation messages, empty on the first render.
+    @var array      errors           Validation messages keyed by field, empty on the first render.
     @var array      audience_options Visitors the link is shown to: value, label.
     @var array      place_options    Place on the page: value, label.
     @var array      layout_options   Pages the link appears on: value, label.
@@ -44,12 +44,6 @@
             <input type="hidden" name="id" value="{{ id }}">
         {% endif %}
 
-        {% if errors is not empty %}
-            <div class="alert alert-danger shadow border-0">
-                {% for error in errors %}<div>{{ error }}</div>{% endfor %}
-            </div>
-        {% endif %}
-
         <div class="card">
             <div class="card-header">
                 {% include '@admin/components/ui/icon.twig' with {name: 'link', size: 15, class: 'text-body-tertiary'} only %}
@@ -59,18 +53,21 @@
                 <div class="row g-3">
                     <div class="col-12">
                         <label class="form-label" for="ad-link">{{ __('Link') }}</label>
-                        <input type="text" name="link" class="form-control" id="ad-link" value="{{ fields.link }}" autocomplete="url">
+                        <input type="url" name="link" class="form-control{{ errors.link is defined ? ' is-invalid' }}" id="ad-link" value="{{ fields.link }}" placeholder="https://" autocomplete="url">
+                        {% include '@theme/components/field-errors.twig' with {errors: errors.link|default([])} only %}
                     </div>
                     <div class="col-12">
                         <label class="form-label" for="ad-name">{{ __('Title') }}</label>
-                        <input type="text" name="name" class="form-control" id="ad-name" value="{{ fields.name }}">
+                        <input type="text" name="name" class="form-control{{ errors.name is defined ? ' is-invalid' }}" id="ad-name" value="{{ fields.name }}">
+                        {% include '@theme/components/field-errors.twig' with {errors: errors.name|default([])} only %}
                         <div class="form-text">{{ __('To change the name when updating pages, you must wtite names trought the symbol |') }}</div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label" for="ad-color">{{ __('Color') }}</label>
                         <div class="input-group">
                             <span class="input-group-text">#</span>
-                            <input type="text" name="color" class="form-control font-monospace" id="ad-color" value="{{ fields.color }}" maxlength="6" autocomplete="off">
+                            <input type="text" name="color" class="form-control font-monospace{{ errors.color is defined ? ' is-invalid' }}" id="ad-color" value="{{ fields.color }}" maxlength="7" autocomplete="off">
+                            {% include '@theme/components/field-errors.twig' with {errors: errors.color|default([])} only %}
                         </div>
                         <div class="form-text">{{ __('In the format FFFFFF, if you do not want to use link color, simply do not fill this field') }}</div>
                     </div>

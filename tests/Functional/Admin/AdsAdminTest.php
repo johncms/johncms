@@ -94,6 +94,48 @@ final class AdsAdminTest extends FunctionalTestCase
         self::assertStringContainsString('Неактивные ссылки удалены', (string) $list->getContent());
     }
 
+    public function testALinkWithAScriptAddressIsNotSaved(): void
+    {
+        $response = $this->handleRequest(
+            '/admin/ads',
+            'POST',
+            $this->withCsrfToken(['link' => 'javascript:alert(1)', 'name' => 'Script link']),
+            cookies: $this->actingAs(FunctionalUserFactory::createSupervisor())
+        );
+
+        self::assertSame(Response::HTTP_OK, $response->getStatusCode());
+        self::assertStringContainsString('id="ad-link" value="javascript:alert(1)"', (string) $response->getContent());
+        self::assertStringContainsString('is-invalid', (string) $response->getContent());
+        self::assertFalse(Ad::query()->where('name', 'Script link')->exists());
+    }
+
+    public function testAColorMustBeSixHexadecimalDigits(): void
+    {
+        $response = $this->handleRequest(
+            '/admin/ads',
+            'POST',
+            $this->withCsrfToken(['link' => 'https://example.com', 'name' => 'Odd color', 'color' => 'ABC_EF']),
+            cookies: $this->actingAs(FunctionalUserFactory::createSupervisor())
+        );
+
+        self::assertSame(Response::HTTP_OK, $response->getStatusCode());
+        self::assertStringContainsString('шестью шестнадцатеричными цифрами', (string) $response->getContent());
+        self::assertFalse(Ad::query()->where('name', 'Odd color')->exists());
+    }
+
+    public function testAColorIsSavedWithoutTheHashSign(): void
+    {
+        $response = $this->handleRequest(
+            '/admin/ads',
+            'POST',
+            $this->withCsrfToken(['link' => 'https://example.com', 'name' => 'Pasted color', 'color' => '#d9480f']),
+            cookies: $this->actingAs(FunctionalUserFactory::createSupervisor())
+        );
+
+        self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
+        self::assertSame('d9480f', Ad::query()->where('name', 'Pasted color')->value('color'));
+    }
+
     /**
      * @param array<string, mixed> $attributes
      */

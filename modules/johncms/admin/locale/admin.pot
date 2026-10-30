@@ -138,9 +138,9 @@ msgid "Collections"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:54
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:50
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:125
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:156
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:55
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:130
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:161
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:295
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:372
 msgid "Advertisement"
@@ -295,7 +295,7 @@ msgid "Collapse the menu"
 msgstr ""
 
 #: themes/default/templates/admin/layouts/default.twig:101
-#: modules/johncms/contacts/templates/admin/messages.twig:23
+#: modules/johncms/contacts/templates/admin/messages.twig:24
 msgid "Loading"
 msgstr ""
 
@@ -361,7 +361,7 @@ msgid_plural "It is held by %d accounts, which lose everything the role granted 
 msgstr[0] ""
 
 #: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:160
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:124
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:129
 #: modules/johncms/admin/src/Application/Controllers/Users/RegistrationModerationController.php:88
 #: modules/johncms/admin/src/Application/Controllers/Users/RegistrationModerationController.php:151
 #: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:142
@@ -521,7 +521,7 @@ msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:60
 #: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:144
-#: modules/johncms/contacts/templates/admin/settings.twig:44
+#: modules/johncms/contacts/templates/admin/settings.twig:58
 msgid "Languages"
 msgstr ""
 
@@ -559,8 +559,8 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:121
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:150
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:166
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:77
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:121
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:82
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:126
 #: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:44
 #: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:72
 #: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:152
@@ -622,44 +622,38 @@ msgstr ""
 msgid "Installation unfinished"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:95
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:100
 msgid "Link successfully changed"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:95
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:100
 msgid "Link successfully added"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:129
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:134
 msgid "Are you sure want to delete link?"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:145
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:150
 #: modules/johncms/admin/templates/ad-clear-dialog.twig:10
 #: modules/johncms/admin/templates/ads.twig:28
 msgid "Delete inactive links"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:147
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:152
 msgid "Are you sure you want to delete all inactive links?"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:167
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:172
 msgid "Inactive links deleted"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:188
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:89
-#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:118
-msgid "The required fields are not filled"
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:193
+msgid "Enter the title of the link"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:194
-msgid "Invalid characters"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:197
-msgid "Color is specified incorrectly"
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:198
+msgid "Enter the color as six hexadecimal digits, for example FF0000"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:294
@@ -803,6 +797,11 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:47
 #: modules/johncms/admin/templates/counter-form.twig:75
 msgid "Viewing"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:89
+#: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:118
+msgid "The required fields are not filled"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:155
@@ -1258,17 +1257,17 @@ msgid "Color:"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Services/AdRowMapper.php:97
-#: modules/johncms/admin/templates/ad-form.twig:135
+#: modules/johncms/admin/templates/ad-form.twig:132
 msgid "Bold"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Services/AdRowMapper.php:100
-#: modules/johncms/admin/templates/ad-form.twig:135
+#: modules/johncms/admin/templates/ad-form.twig:132
 msgid "Italic"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Services/AdRowMapper.php:103
-#: modules/johncms/admin/templates/ad-form.twig:135
+#: modules/johncms/admin/templates/ad-form.twig:132
 msgid "Underline"
 msgstr ""
 
@@ -1524,17 +1523,17 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:56
+#: modules/johncms/admin/templates/ad-form.twig:50
 #: modules/johncms/admin/templates/role-form.twig:42
 msgid "Main"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:61
+#: modules/johncms/admin/templates/ad-form.twig:55
 #: modules/johncms/admin/templates/ads.twig:53
 msgid "Link"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:65
+#: modules/johncms/admin/templates/ad-form.twig:60
 #: modules/johncms/admin/templates/counter-preview.twig:23
 #: modules/johncms/admin/templates/counter-view.twig:21
 #: modules/johncms/admin/templates/settings.twig:85
@@ -1543,60 +1542,60 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:67
+#: modules/johncms/admin/templates/ad-form.twig:63
 msgid "To change the name when updating pages, you must wtite names trought the symbol |"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:70
+#: modules/johncms/admin/templates/ad-form.twig:66
 msgid "Color"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:75
+#: modules/johncms/admin/templates/ad-form.twig:72
 msgid "In the format FFFFFF, if you do not want to use link color, simply do not fill this field"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:78
+#: modules/johncms/admin/templates/ad-form.twig:75
 msgid "Hits"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:80
+#: modules/johncms/admin/templates/ad-form.twig:77
 msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:83
+#: modules/johncms/admin/templates/ad-form.twig:80
 msgid "Days"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:85
+#: modules/johncms/admin/templates/ad-form.twig:82
 msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:90
+#: modules/johncms/admin/templates/ad-form.twig:87
 #: modules/johncms/admin/templates/ads.twig:86
 msgid "Direct Link"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:91
+#: modules/johncms/admin/templates/ad-form.twig:88
 msgid "Click statistics won't be counted, If the direct link is turned on"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:101
+#: modules/johncms/admin/templates/ad-form.twig:98
 #: modules/johncms/admin/templates/ads.twig:56
 #: modules/johncms/admin/templates/ads.twig:100
 msgid "Show"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:111
+#: modules/johncms/admin/templates/ad-form.twig:108
 #: modules/johncms/admin/templates/ads.twig:54
 msgid "Disposition"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:121
+#: modules/johncms/admin/templates/ad-form.twig:118
 #: modules/johncms/admin/templates/ads.twig:55
 msgid "Layout"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:131
+#: modules/johncms/admin/templates/ad-form.twig:128
 msgid "Styling links"
 msgstr ""
 

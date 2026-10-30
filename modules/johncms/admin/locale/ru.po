@@ -2611,3 +2611,9 @@ msgstr "Это нельзя отменить."
 
 msgid "Points per day"
 msgstr "Баллов в сутки"
+
+msgid "Enter the title of the link"
+msgstr "Введите название ссылки"
+
+msgid "Enter the color as six hexadecimal digits, for example FF0000"
+msgstr "Укажите цвет шестью шестнадцатеричными цифрами, например FF0000"
