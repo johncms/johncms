@@ -8,13 +8,12 @@ use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Admin\Application\Exceptions\MaintenanceTaskNotFoundException;
+use Johncms\Modules\Admin\Application\Services\ModuleRowMapper;
 use Johncms\Modules\Admin\Application\UseCases\GetModulesOverviewUseCase;
 use Johncms\Modules\Admin\Application\UseCases\QueueMaintenanceTaskUseCase;
 use Johncms\Modules\ModuleInstallService;
 use Johncms\Modules\ModuleOperationResult;
 use Johncms\Modules\ModuleRegistry;
-use Johncms\Modules\ModuleState;
-use Johncms\Modules\ModuleStatus;
 use Johncms\NavChain;
 use Psr\Log\LoggerInterface;
 
@@ -39,24 +38,50 @@ final readonly class ModulesController
         private Session $session,
         private LoggerInterface $logger,
         private QueueMaintenanceTaskUseCase $queueTask,
+        private ModuleRowMapper $rowMapper,
     ) {
     }
 
-    public function index(): ViewResponse
+    public function index(Request $request): ViewResponse
     {
         $title = __('Modules');
         $this->navChain->add($title);
 
         $overview = $this->overview->execute();
+        $groups = [
+            'installed' => __('Installed modules'),
+            'available' => __('New modules'),
+            'problems'  => __('Need attention'),
+        ];
+        $tab = $request->queryParam('tab');
+        if (! isset($groups[$tab]) || ($tab !== 'installed' && $overview[$tab] === [])) {
+            $tab = 'installed';
+        }
+
+        $tabs = [];
+        foreach ($groups as $group => $groupTitle) {
+            // A group with nothing in it is left out; the installed ones are always there.
+            if ($group !== 'installed' && $overview[$group] === []) {
+                continue;
+            }
+
+            $tabs[] = [
+                'title'  => $groupTitle,
+                'url'    => self::URL . ($group === 'installed' ? '' : '?tab=' . $group),
+                'active' => $tab === $group,
+                'count'  => count($overview[$group]),
+                'tone'   => $group === 'problems' ? 'danger' : '',
+            ];
+        }
 
         return new ViewResponse('@admin/modules.twig', [
             'title'           => $title,
             'page_title'      => $title,
             'module_menu'     => ['modules' => true],
-            'installed'       => array_map($this->row(...), $overview['installed']),
-            'available'       => array_map($this->row(...), $overview['available']),
-            'problems'        => array_map($this->row(...), $overview['problems']),
-            'action_url'      => self::URL . '/run',
+            'tab'             => $tab,
+            'tabs'            => $tabs,
+            'rows'            => array_map($this->rowMapper->row(...), $overview[$tab]),
+            'has_available'   => $overview['available'] !== [],
             'success_message' => (string) $this->session->getFlash('success_message'),
             'error_message'   => (string) $this->session->getFlash('error_message'),
             'operation_steps' => (array) $this->session->getFlash('operation_steps'),
@@ -80,18 +105,25 @@ final readonly class ModulesController
             redirect(self::URL);
         }
 
-        $title = __('Modules');
-        $this->navChain->add($title, self::URL);
-        $this->navChain->add($this->operationTitle($operation));
+        $dialog = [
+            'title'      => $this->operationTitle($operation),
+            'module'     => $this->rowMapper->row($state),
+            'operation'  => $operation,
+            'action_url' => self::URL . '/run',
+            'back_url'   => self::URL,
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            return new ViewResponse('@admin/modules-confirm-dialog.twig', $dialog);
+        }
+
+        $this->navChain->add(__('Modules'), self::URL);
+        $this->navChain->add($dialog['title']);
 
         return new ViewResponse('@admin/modules-confirm.twig', [
-            'title'       => $this->operationTitle($operation),
-            'page_title'  => $this->operationTitle($operation),
+            'title'       => $dialog['title'],
             'module_menu' => ['modules' => true],
-            'module'      => $this->row($state),
-            'operation'   => $operation,
-            'action_url'  => self::URL . '/run',
-            'back_url'    => self::URL,
+            'dialog'      => $dialog,
         ]);
     }
 
@@ -195,43 +227,5 @@ final readonly class ModulesController
             'uninstall' => __('Remove the module'),
             default     => __('Modules'),
         };
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    private function row(ModuleState $state): array
-    {
-        $labels = [
-            ModuleStatus::Enabled->value      => ['label' => __('Switched on'), 'class' => 'bg-success'],
-            ModuleStatus::Disabled->value     => ['label' => __('Switched off'), 'class' => 'bg-secondary'],
-            ModuleStatus::Discovered->value   => ['label' => __('Not installed'), 'class' => 'bg-info'],
-            ModuleStatus::Broken->value       => ['label' => __('Broken'), 'class' => 'bg-danger'],
-            ModuleStatus::Incompatible->value => ['label' => __('Incompatible'), 'class' => 'bg-warning text-dark'],
-            ModuleStatus::Installing->value   => ['label' => __('Installation unfinished'), 'class' => 'bg-warning text-dark'],
-        ];
-
-        return [
-            'key'         => $state->key,
-            'alias'       => $state->alias,
-            'name'        => $state->name,
-            'version'     => $state->version ?? CMS_VERSION,
-            'system'      => $state->system,
-            'status'      => $state->status->value,
-            'status_label' => $labels[$state->status->value]['label'],
-            'status_class' => $labels[$state->status->value]['class'],
-            'problem'     => $state->problem,
-            'can_enable'  => $state->status === ModuleStatus::Disabled,
-            'can_disable' => $state->status === ModuleStatus::Enabled && ! $state->system,
-            // Installing again is what finishes an installation that stopped halfway, so the
-            // button is offered for both.
-            'can_install' => in_array($state->status, [ModuleStatus::Discovered, ModuleStatus::Installing], true),
-            'can_update'  => in_array($state->status, [ModuleStatus::Enabled, ModuleStatus::Disabled], true),
-            'can_remove'  => in_array(
-                $state->status,
-                [ModuleStatus::Enabled, ModuleStatus::Disabled, ModuleStatus::Installing],
-                true
-            ) && ! $state->system,
-        ];
     }
 }

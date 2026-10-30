@@ -116,8 +116,8 @@ msgstr ""
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:48
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModuleUploadController.php:44
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:47
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:83
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:196
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:120
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:228
 #: modules/johncms/admin/templates/settings.twig:54
 msgid "Modules"
 msgstr ""
@@ -173,7 +173,7 @@ msgid "Manage modules"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:63
-#: modules/johncms/admin/templates/modules.twig:50
+#: modules/johncms/admin/templates/modules.twig:81
 msgid "System"
 msgstr ""
 
@@ -287,7 +287,7 @@ msgstr ""
 #: modules/johncms/admin/templates/ip-ban-form.twig:54
 #: modules/johncms/admin/templates/ip-ban-search.twig:24
 #: modules/johncms/admin/templates/karma/clear-dialog.twig:20
-#: modules/johncms/admin/templates/modules-confirm.twig:62
+#: modules/johncms/admin/templates/modules-confirm-dialog.twig:62
 #: modules/johncms/admin/templates/modules-upload.twig:30
 #: modules/johncms/admin/templates/smilies.twig:21
 #: modules/johncms/admin/templates/style-guide/examples/card.twig:15
@@ -566,7 +566,7 @@ msgid "The language was successfully deleted"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModuleUploadController.php:43
-#: modules/johncms/admin/templates/modules.twig:93
+#: modules/johncms/admin/templates/modules.twig:19
 msgid "Install a module from a file"
 msgstr ""
 
@@ -575,7 +575,7 @@ msgid "Choose a zip file with the module"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModuleUploadController.php:92
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:130
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:162
 msgid "Done"
 msgstr ""
 
@@ -583,10 +583,22 @@ msgstr ""
 msgid "An error occurred"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:78
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:121
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:150
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:166
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:52
+msgid "Installed modules"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:53
+msgid "New modules"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:54
+msgid "Need attention"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:103
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:153
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:182
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:198
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:86
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:152
 #: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:60
@@ -600,54 +612,29 @@ msgstr ""
 msgid "Wrong data"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:174
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:206
 #: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:50
 msgid "The task has been queued and will start within a minute"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:191
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:223
 msgid "Install the module"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:192
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:224
 msgid "Switch the module on"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:193
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:225
 msgid "Switch the module off"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:194
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:226
 msgid "Update the module"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:195
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:227
 msgid "Remove the module"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:206
-msgid "Switched on"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:207
-msgid "Switched off"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:208
-#: modules/johncms/admin/templates/languages-manage.twig:43
-msgid "Not installed"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:209
-msgid "Broken"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:210
-msgid "Incompatible"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:211
-msgid "Installation unfinished"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:104
@@ -1427,6 +1414,52 @@ msgstr ""
 msgid "Second IP is entered incorrectly"
 msgstr ""
 
+#: modules/johncms/admin/src/Application/Services/ModuleRowMapper.php:31
+#: modules/johncms/admin/templates/modules-confirm-dialog.twig:63
+msgid "Switch on"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Services/ModuleRowMapper.php:34
+#: modules/johncms/admin/templates/modules-confirm-dialog.twig:63
+msgid "Switch off"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Services/ModuleRowMapper.php:37
+#: modules/johncms/admin/templates/languages-manage.twig:56
+#: modules/johncms/admin/templates/modules-confirm-dialog.twig:63
+msgid "Update"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Services/ModuleRowMapper.php:40
+#: modules/johncms/admin/templates/modules-confirm-dialog.twig:63
+msgid "Remove"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Services/ModuleRowMapper.php:61
+msgid "Switched on"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Services/ModuleRowMapper.php:62
+msgid "Switched off"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Services/ModuleRowMapper.php:63
+#: modules/johncms/admin/templates/languages-manage.twig:43
+msgid "Not installed"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Services/ModuleRowMapper.php:64
+msgid "Broken"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Services/ModuleRowMapper.php:65
+msgid "Incompatible"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Services/ModuleRowMapper.php:66
+msgid "Installation unfinished"
+msgstr ""
+
 #: modules/johncms/admin/src/Application/Services/RoleListRowMapper.php:58
 msgid "Everybody signed in"
 msgstr ""
@@ -1693,6 +1726,7 @@ msgstr ""
 #: modules/johncms/admin/templates/ads.twig:57
 #: modules/johncms/admin/templates/ads.twig:92
 #: modules/johncms/admin/templates/counters.twig:40
+#: modules/johncms/admin/templates/modules.twig:70
 #: modules/johncms/admin/templates/style-guide/examples/sort-header.twig:7
 #: modules/johncms/admin/templates/style-guide/examples/table.twig:12
 #: modules/johncms/admin/templates/user/edit.twig:65
@@ -1708,6 +1742,8 @@ msgstr ""
 #: modules/johncms/admin/templates/counters.twig:65
 #: modules/johncms/admin/templates/ip-search/results.twig:44
 #: modules/johncms/admin/templates/ip-search/results.twig:76
+#: modules/johncms/admin/templates/modules.twig:71
+#: modules/johncms/admin/templates/modules.twig:112
 #: modules/johncms/admin/templates/roles.twig:33
 #: modules/johncms/admin/templates/style-guide/examples/row-actions.twig:3
 #: modules/johncms/admin/templates/user/bans.twig:45
@@ -1767,6 +1803,7 @@ msgstr ""
 #: modules/johncms/admin/templates/ads.twig:129
 #: modules/johncms/admin/templates/counters.twig:73
 #: modules/johncms/admin/templates/ip-bans.twig:46
+#: modules/johncms/admin/templates/modules.twig:122
 msgid "Total:"
 msgstr ""
 
@@ -2377,7 +2414,6 @@ msgid "New version:"
 msgstr ""
 
 #: modules/johncms/admin/templates/languages-manage.twig:41
-#: modules/johncms/admin/templates/modules.twig:112
 msgid "Installed"
 msgstr ""
 
@@ -2386,14 +2422,10 @@ msgid "The language files of this language are not writable! "
 msgstr ""
 
 #: modules/johncms/admin/templates/languages-manage.twig:53
+#: modules/johncms/admin/templates/modules-confirm-dialog.twig:63
 #: modules/johncms/admin/templates/modules-upload.twig:29
-#: modules/johncms/admin/templates/modules.twig:18
+#: modules/johncms/admin/templates/modules.twig:108
 msgid "Install"
-msgstr ""
-
-#: modules/johncms/admin/templates/languages-manage.twig:56
-#: modules/johncms/admin/templates/modules.twig:33
-msgid "Update"
 msgstr ""
 
 #: modules/johncms/admin/templates/languages.twig:20
@@ -2405,7 +2437,7 @@ msgid "Update List"
 msgstr ""
 
 #: modules/johncms/admin/templates/login-captcha.twig:25
-#: modules/johncms/admin/templates/modules-confirm.twig:60
+#: modules/johncms/admin/templates/modules-confirm-dialog.twig:64
 msgid "Continue"
 msgstr ""
 
@@ -2530,28 +2562,40 @@ msgstr ""
 msgid "There are no available tasks"
 msgstr ""
 
-#: modules/johncms/admin/templates/modules-confirm.twig:17
+#: modules/johncms/admin/templates/modules-confirm-dialog.twig:26
 msgid "The module will be taken off the site. Its files stay where they are, and its tables are kept unless you ask for them to be removed."
 msgstr ""
 
-#: modules/johncms/admin/templates/modules-confirm.twig:21
+#: modules/johncms/admin/templates/modules-confirm-dialog.twig:28
 msgid "The module stops working: no pages, no menu items. Its tables and data are untouched."
 msgstr ""
 
-#: modules/johncms/admin/templates/modules-confirm.twig:25
+#: modules/johncms/admin/templates/modules-confirm-dialog.twig:30
+msgid "The pages and the menu items of the module come back."
+msgstr ""
+
+#: modules/johncms/admin/templates/modules-confirm-dialog.twig:32
 msgid "The migrations of the module will be applied and its installer run."
 msgstr ""
 
-#: modules/johncms/admin/templates/modules-confirm.twig:37
+#: modules/johncms/admin/templates/modules-confirm-dialog.twig:34
+msgid "The new migrations of the module will be applied."
+msgstr ""
+
+#: modules/johncms/admin/templates/modules-confirm-dialog.twig:41
 msgid "Also install the demo data"
 msgstr ""
 
-#: modules/johncms/admin/templates/modules-confirm.twig:45
+#: modules/johncms/admin/templates/modules-confirm-dialog.twig:48
 msgid "Also delete its tables, data and permissions. This cannot be undone."
 msgstr ""
 
-#: modules/johncms/admin/templates/modules-confirm.twig:54
-msgid "Run in the background (for a module with heavy migrations; the scheduler starts it within a minute)"
+#: modules/johncms/admin/templates/modules-confirm-dialog.twig:55
+msgid "Run in the background"
+msgstr ""
+
+#: modules/johncms/admin/templates/modules-confirm-dialog.twig:56
+msgid "For a module with heavy migrations: the scheduler starts it within a minute."
 msgstr ""
 
 #: modules/johncms/admin/templates/modules-upload.twig:13
@@ -2566,40 +2610,32 @@ msgstr ""
 msgid "The archive holds one directory with a module.php inside it. A module that is already installed is updated."
 msgstr ""
 
-#: modules/johncms/admin/templates/modules.twig:73
+#: modules/johncms/admin/templates/modules.twig:31
 msgid "What was done"
 msgstr ""
 
-#: modules/johncms/admin/templates/modules.twig:98
+#: modules/johncms/admin/templates/modules.twig:49
 msgid "New modules were found in the modules directory. They are not running until they are installed."
 msgstr ""
 
-#: modules/johncms/admin/templates/modules.twig:106
-msgid "Need attention"
+#: modules/johncms/admin/templates/modules.twig:50
+msgid "Show new modules"
 msgstr ""
 
-#: modules/johncms/admin/templates/modules.twig:116
+#: modules/johncms/admin/templates/modules.twig:60
 msgid "No modules are installed."
 msgstr ""
 
-#: modules/johncms/admin/templates/modules.twig:23
-msgid "Switch on"
+#: modules/johncms/admin/templates/modules.twig:68
+msgid "Module"
 msgstr ""
 
-#: modules/johncms/admin/templates/modules.twig:28
-msgid "Switch off"
-msgstr ""
-
-#: modules/johncms/admin/templates/modules.twig:38
-msgid "Remove"
-msgstr ""
-
-#: modules/johncms/admin/templates/modules.twig:55
+#: modules/johncms/admin/templates/modules.twig:69
 msgid "Version"
 msgstr ""
 
-#: modules/johncms/admin/templates/modules.twig:56
-msgid "Short name"
+#: modules/johncms/admin/templates/modules.twig:81
+msgid "A system module cannot be switched off or removed."
 msgstr ""
 
 #: modules/johncms/admin/templates/role-form.twig:36

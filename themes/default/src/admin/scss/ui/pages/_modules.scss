@@ -1,0 +1,68 @@
+// The modules of the site (admin::modules).
+
+.admin-modules-table {
+  td {
+    white-space: nowrap;
+  }
+
+  td:first-child {
+    width: 100%;
+    min-width: 10rem;
+    white-space: normal;
+  }
+}
+
+.admin-modules-table__name {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.admin-modules-table__key,
+.admin-modules-table__version {
+  font-family: $ui-font-mono;
+  font-size: 0.75rem;
+  color: var(--fg-dim);
+}
+
+.admin-modules-table__key {
+  margin-top: 2px;
+}
+
+.admin-modules-table__problem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.375rem;
+  margin-top: 0.375rem;
+  font-size: 0.8125rem;
+  color: var(--bs-warning-text-emphasis);
+
+  .admin-icon {
+    flex: none;
+    margin-top: 0.15rem;
+  }
+}
+
+// What an operation on a module did, step by step.
+.admin-module-steps__step {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+
+  .admin-icon {
+    flex: none;
+    margin-top: 0.15rem;
+  }
+}
+
+.admin-module-steps__step--done .admin-icon {
+  color: var(--bs-success);
+}
+
+.admin-module-steps__step--skipped .admin-icon {
+  color: var(--fg-dim);
+}
+
+.admin-module-steps__step--failed .admin-icon {
+  color: var(--bs-danger);
+}

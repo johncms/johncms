@@ -2856,3 +2856,36 @@ msgstr "Первый код — на главной, второй — на ос�
 
 msgid "The second code on every page"
 msgstr "Второй код на всех страницах"
+
+msgid "New"
+msgstr "Новые"
+
+msgid "Installation unfinished"
+msgstr "Установка не завершена"
+
+msgid "The pages and the menu items of the module come back."
+msgstr "Страницы и пункты меню модуля вернутся."
+
+msgid "The new migrations of the module will be applied."
+msgstr "Будут применены новые миграции модуля."
+
+msgid "Run in the background"
+msgstr "Запустить в фоне"
+
+msgid "For a module with heavy migrations: the scheduler starts it within a minute."
+msgstr "Для модуля с тяжёлыми миграциями: планировщик запустит операцию в течение минуты."
+
+msgid "Show new modules"
+msgstr "Показать новые модули"
+
+msgid "Module"
+msgstr "Модуль"
+
+msgid "A system module cannot be switched off or removed."
+msgstr "Системный модуль нельзя выключить или удалить."
+
+msgid "Installed modules"
+msgstr "Установленные"
+
+msgid "New modules"
+msgstr "Новые"

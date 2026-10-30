@@ -100,6 +100,30 @@ final class ModulesSectionTest extends FunctionalTestCase
         self::assertStringContainsString('multipart/form-data', (string) $allowed->getContent());
     }
 
+    public function testAnOperationIsConfirmedInTheDialog(): void
+    {
+        $response = $this->handleRequest(
+            '/admin/modules/confirm?module=johncms%2Fnews&operation=uninstall',
+            server: ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'],
+            cookies: $this->actingAs($this->manager())
+        );
+        $body = trim((string) $response->getContent());
+
+        self::assertStringStartsWith('<form class="modal-content" method="post" action="/admin/modules/run">', $body);
+        self::assertStringContainsString('name="purge"', $body);
+        // The button names what it does.
+        self::assertMatchesRegularExpression('#<button type="submit" class="btn btn-danger">\s*Удалить\s*</button>#u', $body);
+    }
+
+    public function testTheOperationsOfAModuleOpenTheDialog(): void
+    {
+        $body = (string) $this->handleRequest('/admin/modules', cookies: $this->actingAs($this->manager()))->getContent();
+
+        self::assertMatchesRegularExpression('#href="/admin/modules/confirm\?module=johncms%2Fnews&amp;operation=uninstall"\s*data-admin-modal#', $body);
+        // A group with nothing in it is not a tab.
+        self::assertStringNotContainsString('href="/admin/modules?tab=problems"', $body);
+    }
+
     private function manager(): \Johncms\Users\User
     {
         return FunctionalUserFactory::createWithPermissions([

@@ -1,0 +1,66 @@
+{#
+    Confirming one operation on one module. Nothing has happened yet at this point. Answered to
+    the modal as it is, and put into a page of its own (modules-confirm.twig) for a plain visit.
+
+    @var array  module     The row of the module, as on the list.
+    @var string operation  install | enable | disable | update | uninstall
+    @var string title
+    @var string action_url
+    @var string back_url
+#}
+{% embed '@admin/components/ui/dialog.twig' with {
+    title: title,
+    action: action_url,
+    close_url: back_url,
+    module: module,
+    operation: operation,
+} only %}
+    {% block body %}
+        <input type="hidden" name="module" value="{{ module.key }}">
+        <input type="hidden" name="operation" value="{{ operation }}">
+
+        <div class="fw-semibold">{{ module.name }}</div>
+        <div class="text-body-secondary small mb-3"><code>{{ module.key }}</code> &middot; {{ module.version }}</div>
+
+        {% if operation == 'uninstall' %}
+            <p>{{ __('The module will be taken off the site. Its files stay where they are, and its tables are kept unless you ask for them to be removed.') }}</p>
+        {% elseif operation == 'disable' %}
+            <p>{{ __('The module stops working: no pages, no menu items. Its tables and data are untouched.') }}</p>
+        {% elseif operation == 'enable' %}
+            <p>{{ __('The pages and the menu items of the module come back.') }}</p>
+        {% elseif operation == 'install' %}
+            <p>{{ __('The migrations of the module will be applied and its installer run.') }}</p>
+        {% elseif operation == 'update' %}
+            <p>{{ __('The new migrations of the module will be applied.') }}</p>
+        {% endif %}
+
+        <div class="d-flex flex-column gap-2">
+            {% if operation == 'install' %}
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" name="demo" value="1" id="demo">
+                    <label class="form-check-label" for="demo">{{ __('Also install the demo data') }}</label>
+                </div>
+            {% endif %}
+            {% if operation == 'uninstall' %}
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" name="purge" value="1" id="purge">
+                    <label class="form-check-label text-danger-emphasis" for="purge">
+                        {{ __('Also delete its tables, data and permissions. This cannot be undone.') }}
+                    </label>
+                </div>
+            {% endif %}
+            {% if operation in ['install', 'update', 'uninstall'] %}
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" name="background" value="1" id="background">
+                    <label class="form-check-label" for="background">{{ __('Run in the background') }}</label>
+                    <div class="form-text mt-0">{{ __('For a module with heavy migrations: the scheduler starts it within a minute.') }}</div>
+                </div>
+            {% endif %}
+        </div>
+    {% endblock %}
+    {% block footer %}
+        <a href="{{ close_url }}" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</a>
+        {% set submit = {install: __('Install'), enable: __('Switch on'), disable: __('Switch off'), update: __('Update'), uninstall: __('Remove')} %}
+        <button type="submit" class="btn {{ operation == 'uninstall' ? 'btn-danger' : 'btn-primary' }}">{{ submit[operation]|default(__('Continue')) }}</button>
+    {% endblock %}
+{% endembed %}
