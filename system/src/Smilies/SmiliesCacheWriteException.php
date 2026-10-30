@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Domain\Exceptions;
+namespace Johncms\Smilies;
 
 use RuntimeException;
 

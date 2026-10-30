@@ -6,9 +6,9 @@ namespace Johncms\Modules\Admin\Application\Controllers\System;
 
 use Johncms\Http\Session;
 use Johncms\Modules\Admin\Application\UseCases\RebuildSmiliesCacheUseCase;
-use Johncms\Modules\Admin\Domain\Exceptions\SmiliesCacheWriteException;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
+use Johncms\Smilies\SmiliesCacheWriteException;
 use Johncms\Http\Request;
 
 final readonly class EmoticonsController

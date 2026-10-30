@@ -4,28 +4,25 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\UseCases;
 
-use Johncms\Modules\Admin\Domain\Exceptions\SmiliesCacheWriteException;
-use Johncms\Modules\Admin\Domain\Repository\SmiliesCacheRepositoryInterface;
-use Johncms\Modules\Admin\Domain\Services\SmiliesScannerInterface;
+use Johncms\Smilies\SmiliesCacheWriteException;
+use Johncms\Smilies\SmiliesMap;
 
 final readonly class RebuildSmiliesCacheUseCase
 {
-    public function __construct(
-        private SmiliesScannerInterface $scanner,
-        private SmiliesCacheRepositoryInterface $cacheRepository,
-    ) {
+    public function __construct(private SmiliesMap $smilies)
+    {
     }
 
     /**
-     * Пересобирает кэш смайлов и возвращает количество записанных смайлов.
+     * Builds the map of the smilies again and returns how many pictures it holds: a picture has
+     * a Latin and a Cyrillic code, so the codes would count it twice.
      *
      * @throws SmiliesCacheWriteException
      */
     public function execute(): int
     {
-        $smilies = $this->scanner->scan();
-        $this->cacheRepository->save($smilies);
+        $map = $this->smilies->rebuild();
 
-        return count($smilies['adm']) + count($smilies['usr']);
+        return count(array_unique(array_merge(array_values($map['usr']), array_values($map['adm']))));
     }
 }

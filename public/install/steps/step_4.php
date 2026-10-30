@@ -17,7 +17,6 @@ use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Auth\Session\AuthCookieFactory;
 use Johncms\Auth\Session\AuthSessionManager;
 use Johncms\Console\Commands\CacheClearCommand;
-use Johncms\Modules\Admin\Application\UseCases\RebuildSmiliesCacheUseCase;
 use Johncms\Modules\Admin\Domain\Services\LanguageFilesManagerInterface;
 use Johncms\Http\Environment;
 use Johncms\Console\Commands\ModuleSyncCommand;
@@ -189,13 +188,6 @@ if ($request->getMethod() === 'POST') {
 
             // Drop cached counters so freshly seeded data is reflected right away.
             (new CacheClearCommand())->run(new ArrayInput([]), new NullOutput());
-
-            // Build the smilies cache so text formatters have a valid list from the first request.
-            try {
-                di(RebuildSmiliesCacheUseCase::class)->execute();
-            } catch (Throwable) {
-                // Smilies cache is non-critical for install; it can be rebuilt later from the admin panel.
-            }
 
             header('Location: /install/?step=5');
             exit;
