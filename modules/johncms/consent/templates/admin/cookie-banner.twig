@@ -12,10 +12,7 @@
 {% extends '@admin/layouts/default.twig' %}
 
 {% block page_actions %}
-    <button type="submit" form="cookie-banner-form" class="btn btn-primary">
-        {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
-        {{ __('Save') }}
-    </button>
+    {% include '@admin/components/ui/form-buttons.twig' with {form: 'cookie-banner-form'} only %}
 {% endblock %}
 
 {% block content %}
@@ -80,4 +77,6 @@
         </form>
         </div>
     </div>
+
+    {% include '@admin/components/ui/form-footer.twig' with {form: 'cookie-banner-form'} only %}
 {% endblock %}

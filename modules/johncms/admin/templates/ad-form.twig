@@ -34,11 +34,7 @@
 {% endmacro %}
 
 {% block page_actions %}
-    <a class="btn btn-outline-secondary" href="{{ back_url }}">{{ __('Cancel') }}</a>
-    <button type="submit" class="btn btn-primary" form="ad-form">
-        {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
-        {{ __('Save') }}
-    </button>
+    {% include '@admin/components/ui/form-buttons.twig' with {form: 'ad-form', cancel_url: back_url} only %}
 {% endblock %}
 
 {% block content %}
@@ -153,4 +149,6 @@
             </section>
         </div>
     </form>
+
+    {% include '@admin/components/ui/form-footer.twig' with {form: 'ad-form', cancel_url: back_url, sticky: true} only %}
 {% endblock %}

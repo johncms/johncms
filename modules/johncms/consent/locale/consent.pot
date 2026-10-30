@@ -53,32 +53,27 @@ msgstr ""
 msgid "Cookie banner"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:17
-#: modules/johncms/consent/templates/admin/form.twig:86
-msgid "Save"
-msgstr ""
-
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:25
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:22
 msgid "Cookie banner settings"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:36
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:33
 msgid "Enable banner"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:40
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:37
 msgid "Banner text"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:41
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:38
 msgid "Leave empty to use the default text with a link to the Privacy Policy."
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:43
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:40
 msgid "You can use simple HTML tags in the text, for example links:"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:70
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:67
 #: modules/johncms/consent/templates/admin/delete-dialog.twig:17
 #: modules/johncms/consent/templates/admin/form.twig:68
 #: modules/johncms/consent/templates/admin/list.twig:43
@@ -86,7 +81,7 @@ msgstr ""
 msgid "Version"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:71
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:68
 msgid "Increase the version to show the banner again to everyone."
 msgstr ""
 
@@ -170,6 +165,10 @@ msgstr ""
 
 #: modules/johncms/consent/templates/admin/form.twig:81
 msgid "Inactive consents are not shown in forms."
+msgstr ""
+
+#: modules/johncms/consent/templates/admin/form.twig:86
+msgid "Save"
 msgstr ""
 
 #: modules/johncms/consent/templates/admin/list.twig:32

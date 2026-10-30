@@ -1,0 +1,17 @@
+{#
+    The buttons of a form repeated under it, so a long form is finished where it ends. A sticky
+    footer stays at the bottom of the screen while the form scrolls — for the forms long enough
+    to need it.
+
+    @param bool sticky Keep the footer in view while the form scrolls.
+
+    The other parameters are those of form-buttons.twig.
+#}
+<div class="admin-form-footer{{ sticky|default(false) ? ' admin-form-footer--sticky' }}">
+    {% include '@admin/components/ui/form-buttons.twig' with {
+        form: form|default(''),
+        cancel_url: cancel_url|default(''),
+        cancel_title: cancel_title|default(''),
+        submit_title: submit_title|default(''),
+    } only %}
+</div>

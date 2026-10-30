@@ -129,3 +129,35 @@ body.dark {
     @include ui-form-images($ui-dark);
   }
 }
+
+// The buttons of a form repeated under it (components/ui/form-footer.twig).
+.admin-form-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.admin-form-footer--sticky {
+  position: sticky;
+  bottom: 0;
+  z-index: $zindex-sticky;
+  margin-inline: -1.5rem;
+  padding: 0.75rem 1.5rem calc(0.75rem + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border);
+  background: color-mix(in oklab, var(--bg) 92%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+@include media-breakpoint-down(md) {
+  .admin-form-footer > * {
+    flex: 1 1 0;
+    justify-content: center;
+  }
+
+  .admin-form-footer--sticky {
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+  }
+}

@@ -39,10 +39,7 @@
             {{ __('Open on the site') }}
         </a>
     {% endif %}
-    <button type="submit" class="btn btn-primary" form="section-form">
-        {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
-        {{ __('Save') }}
-    </button>
+    {% include '@admin/components/ui/form-buttons.twig' with {form: 'section-form'} only %}
 {% endblock %}
 
 {% block content %}
@@ -168,4 +165,6 @@
             </button>
         </div>
     </form>
+
+    {% include '@admin/components/ui/form-footer.twig' with {form: 'section-form'} only %}
 {% endblock %}
