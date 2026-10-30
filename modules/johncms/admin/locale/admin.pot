@@ -208,7 +208,8 @@ msgid "Settings"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:67
-msgid "Update Smilies"
+#: modules/johncms/admin/src/Application/Controllers/System/EmoticonsController.php:58
+msgid "Smilies"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:68
@@ -936,10 +937,6 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/System/EmoticonsController.php:52
 #, php-format
 msgid "The list of the smilies is built again. Pictures: %d."
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/System/EmoticonsController.php:58
-msgid "Smilies"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/System/FileIntegrityController.php:41

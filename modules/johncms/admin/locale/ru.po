@@ -382,7 +382,7 @@ msgstr "Кэш смайлов успешно обновлен"
 
 #: modules/admin/src/Application/Controllers/System/EmoticonsController.php:62
 msgid "Smilies"
-msgstr "Смайлики"
+msgstr "Смайлы"
 
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:32
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:46
@@ -1124,7 +1124,7 @@ msgstr "Включить"
 
 #: modules/admin/templates/emoticons.phtml:21
 msgid "Rebuild the smilies cache after adding or removing smilies in the assets/emoticons directory"
-msgstr "Перестроить кэш смайликов после добавления или удаления смайликов в каталоге медиафайлов/смайликов"
+msgstr "Перестроить кэш смайлов после добавления или удаления смайлов в каталоге медиафайлов/смайлов"
 
 #: modules/admin/templates/emoticons.phtml:26
 msgid "Update cache"
@@ -2978,7 +2978,7 @@ msgid "Each needs the keys it gives in its own panel."
 msgstr "Каждому нужны ключи, которые он выдаёт в своём кабинете."
 
 msgid "The list of the smilies is built again. Pictures: %d."
-msgstr "Список смайликов собран заново. Картинок: %d."
+msgstr "Список смайлов собран заново. Картинок: %d."
 
 msgid "Catalogue on the site"
 msgstr "Каталог на сайте"
@@ -2990,10 +2990,10 @@ msgid "Build the list again"
 msgstr "Собрать список заново"
 
 msgid "How to add a smiley"
-msgstr "Как добавить смайлик"
+msgstr "Как добавить смайл"
 
 msgid "Put a picture (GIF, PNG or JPG) in one of the folders of %s. Its file name becomes the code; the list of the smilies picks it up by itself on the next page."
-msgstr "Положите картинку (GIF, PNG или JPG) в одну из папок %s. Имя файла станет кодом; список смайликов подхватит её сам на следующей странице."
+msgstr "Положите картинку (GIF, PNG или JPG) в одну из папок %s. Имя файла станет кодом; список смайлов подхватит её сам на следующей странице."
 
 msgid "the simplest codes, without the closing colon: smile.gif is written :smile."
 msgstr "простые коды без двоеточия в конце: smile.gif пишется как :smile."
@@ -3017,7 +3017,7 @@ msgid "Written as"
 msgstr "Код:"
 
 msgid "The folders have changed, so the list of the smilies is built again. Pictures: %d."
-msgstr "В папках появились изменения, поэтому список смайликов собран заново. Картинок: %d."
+msgstr "В папках появились изменения, поэтому список смайлов собран заново. Картинок: %d."
 
 msgid "The list is built again when this page is opened; build it now if a picture does not show up."
 msgstr "Список пересобирается при открытии этой страницы; соберите его сейчас, если картинка не появилась."
