@@ -46,7 +46,7 @@ final class AdminTaskRegistryTest extends TestCase
 
         self::assertSame(['test:listed', 'test:z-first', 'test:a-second'], array_column($definitions, 'commandName'));
         self::assertSame(AdminTaskGroup::Routine, $definitions[0]->group);
-        self::assertSame(AdminTaskGroup::Migration, $definitions[1]->group);
+        self::assertSame(AdminTaskGroup::Update, $definitions[1]->group);
         self::assertSame('system', $definitions[1]->domain);
     }
 
@@ -69,13 +69,13 @@ final class UnlistedTaskCommand extends Command
 }
 
 #[AsCommand(name: 'test:z-first', description: 'First step')]
-#[AsAdminTask(title: 'First step', group: AdminTaskGroup::Migration)]
+#[AsAdminTask(title: 'First step', group: AdminTaskGroup::Update)]
 final class FirstStepCommand extends Command
 {
 }
 
 #[AsCommand(name: 'test:a-second', description: 'Second step')]
-#[AsAdminTask(title: 'Second step', group: AdminTaskGroup::Migration, order: 1)]
+#[AsAdminTask(title: 'Second step', group: AdminTaskGroup::Update, order: 1)]
 final class SecondStepCommand extends Command
 {
 }

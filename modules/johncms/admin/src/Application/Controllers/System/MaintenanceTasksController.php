@@ -95,7 +95,6 @@ final readonly class MaintenanceTasksController
         $groups = [
             AdminTaskGroup::Routine->value   => [__('Routine'), __('Cleaning up and the caches. Safe to run at any time.')],
             AdminTaskGroup::Update->value    => [__('After an update'), __('Run them in this order once the files of the site have been updated.')],
-            AdminTaskGroup::Migration->value => [__('One-time: coming from 9.9'), __('Only a site moved from version 9.9 needs them. Run them in this order.')],
         ];
 
         $result = [];

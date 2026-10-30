@@ -710,22 +710,6 @@ msgstr ""
 msgid "Message already exists"
 msgstr ""
 
-#: system/src/Console/Commands/AuthDropLegacyColumnsCommand.php:36
-msgid "Drop the columns of the old access system"
-msgstr ""
-
-#: system/src/Console/Commands/AuthDropLegacyColumnsCommand.php:36
-msgid "Deletes users.rights and the other leftovers of the numeric access levels. Refuses while anyone still has an access level and no role."
-msgstr ""
-
-#: system/src/Console/Commands/AuthMigrateLegacyAccessCommand.php:44
-msgid "Convert the old access system"
-msgstr ""
-
-#: system/src/Console/Commands/AuthMigrateLegacyAccessCommand.php:44
-msgid "For a site coming from 9.9: gives every member of staff the role their access level stood for, and turns the per-module access settings into permissions. Does nothing once the old columns are gone."
-msgstr ""
-
 #: system/src/Console/Commands/AuthSyncRolesCommand.php:40
 msgid "Synchronise roles and permissions"
 msgstr ""

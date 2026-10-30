@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Console\Commands;
 
-use Johncms\AdminTasks\AdminTaskGroup;
-use Johncms\AdminTasks\AsAdminTask;
 use Johncms\Database\ConnectionInterface;
 use Johncms\Database\Schema\SchemaInterface;
 use Johncms\Database\Schema\TableDefinition;
@@ -26,12 +24,6 @@ use Throwable;
 #[AsCommand(
     name: 'auth:drop-legacy-columns',
     description: 'One-time: drop users.rights and the other columns the roles replaced',
-)]
-#[AsAdminTask(
-    title: 'Drop the columns of the old access system',
-    description: 'Deletes users.rights and the other leftovers of the numeric access levels. Refuses while anyone still has an access level and no role.',
-    group: AdminTaskGroup::Migration,
-    order: 1,
 )]
 final class AuthDropLegacyColumnsCommand extends Command
 {

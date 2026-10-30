@@ -14,7 +14,4 @@ enum AdminTaskGroup: string
 
     /** Bringing the site up to its files after they were updated. */
     case Update = 'update';
-
-    /** One-time steps of a site coming from an older version, run in their order. */
-    case Migration = 'migration';
 }

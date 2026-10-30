@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Console\Commands;
 
-use Johncms\AdminTasks\AdminTaskGroup;
-use Johncms\AdminTasks\AsAdminTask;
 use Johncms\Auth\Authorization\LegacyRightsMigration;
 use Johncms\Auth\Authorization\ModuleAccessMigration;
 use Johncms\Auth\Authorization\RoleSeeder;
@@ -35,11 +33,6 @@ use Throwable;
 #[AsCommand(
     name: 'auth:migrate-legacy-access',
     description: 'One-time: turn the numeric access levels and the mod_* settings of 9.9 into roles and permissions',
-)]
-#[AsAdminTask(
-    title: 'Convert the old access system',
-    description: 'For a site coming from 9.9: gives every member of staff the role their access level stood for, and turns the per-module access settings into permissions. Does nothing once the old columns are gone.',
-    group: AdminTaskGroup::Migration,
 )]
 final class AuthMigrateLegacyAccessCommand extends Command
 {

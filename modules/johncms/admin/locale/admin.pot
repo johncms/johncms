@@ -967,27 +967,19 @@ msgstr ""
 msgid "Run them in this order once the files of the site have been updated."
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:98
-msgid "One-time: coming from 9.9"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:98
-msgid "Only a site moved from version 9.9 needs them. Run them in this order."
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:119
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:118
 msgid "Queued"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:120
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:119
 msgid "Running"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:121
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:120
 msgid "Completed"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:122
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:121
 msgid "Failed"
 msgstr ""
 

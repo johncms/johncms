@@ -1252,18 +1252,6 @@ msgstr "Значение не соответствует ожидаемому ф
 msgid "Enter a full address that starts with http:// or https://"
 msgstr "Введите полный адрес, начинающийся с http:// или https://"
 
-msgid "Drop the columns of the old access system"
-msgstr "Удалить столбцы старой системы доступа"
-
-msgid "Deletes users.rights and the other leftovers of the numeric access levels. Refuses while anyone still has an access level and no role."
-msgstr "Удаляет users.rights и другие остатки числовых уровней доступа. Не выполняется, пока у кого-то есть уровень доступа без роли."
-
-msgid "Convert the old access system"
-msgstr "Перевести старую систему доступа"
-
-msgid "For a site coming from 9.9: gives every member of staff the role their access level stood for, and turns the per-module access settings into permissions. Does nothing once the old columns are gone."
-msgstr "Для сайта, перешедшего с 9.9: выдаёт каждому сотруднику роль, соответствующую его уровню доступа, и превращает настройки доступа модулей в права. Ничего не делает, если старых столбцов уже нет."
-
 msgid "Synchronise roles and permissions"
 msgstr "Синхронизировать роли и права"
 

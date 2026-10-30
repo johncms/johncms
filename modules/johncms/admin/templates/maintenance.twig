@@ -2,7 +2,7 @@
     The maintenance tasks and what came of the last run of each: a card for each group, a row a
     task with its button on the right and the output of the last run folded under it.
 
-    @var array  groups          Groups of tasks: key (routine | update | migration), title, hint and
+    @var array  groups          Groups of tasks: key (routine | update), title, hint and
                                 rows of command_name, title, description, background, group,
                                 status_label, status_class, pending, output, finished_at.
     @var string form_action
@@ -19,7 +19,7 @@
         {% include '@admin/components/ui/empty-state.twig' with {icon: 'wrench', title: __('There are no available tasks'), description: ''} only %}
     {% else %}
         {% for group in groups %}
-            <section class="card mb-4{{ group.key == 'migration' ? ' border-warning-subtle' }}" data-task-group="{{ group.key }}">
+            <section class="card mb-4" data-task-group="{{ group.key }}">
                 <div class="card-header d-block">
                     <h2 class="h6 mb-0">{{ group.title }}</h2>
                     <div class="form-text mt-1">{{ group.hint }}</div>
