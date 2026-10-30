@@ -59,14 +59,48 @@
 .admin-news-tree__section {
   display: flex;
   align-items: flex-start;
-  gap: .5rem;
-  padding-inline-start: calc(var(--depth, 0) * 1.25rem);
+  gap: 0.625rem;
+  padding-inline-start: calc(var(--depth, 0) * 1.5rem);
+  white-space: normal;
 }
 
 .admin-news-tree__icon {
-  flex: 0 0 auto;
-  margin-top: .15rem;
-  color: var(--bs-secondary-color);
+  flex: none;
+  margin-top: 0.125rem;
+  color: var(--fg-dim);
+}
+
+.admin-news-tree__name {
+  color: var(--fg);
+
+  &:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+}
+
+// A top section, as on the tree of the forum: a tinted row and a bold name.
+.admin-news-tree__root {
+  > td {
+    background-color: color-mix(in oklab, var(--fg) 2.5%, transparent);
+  }
+
+  .admin-news-tree__name {
+    font-weight: 600;
+  }
+
+  .admin-news-tree__icon {
+    color: var(--fg-muted);
+  }
+}
+
+// A section a search only passes through on the way to what it found.
+.admin-news-tree__context {
+  .admin-news-tree__name,
+  .admin-news-table__code,
+  .admin-news-table__number {
+    color: var(--fg-dim);
+  }
 }
 
 // The forms of an article and of a section (news::admin/article-form, section-form).

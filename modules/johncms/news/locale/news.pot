@@ -15,7 +15,7 @@ msgid "The article was updated successfully"
 msgstr ""
 
 #: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:130
-#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:109
+#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:108
 #: modules/johncms/news/templates/admin/index.twig:32
 msgid "Add article"
 msgstr ""
@@ -163,7 +163,7 @@ msgid "Root"
 msgstr ""
 
 #: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:93
-#: modules/johncms/news/templates/admin/components/sections-table.twig:12
+#: modules/johncms/news/templates/admin/components/sections-table.twig:14
 msgid "Articles"
 msgstr ""
 
@@ -178,7 +178,7 @@ msgstr ""
 #: modules/johncms/news/src/Application/Services/NewsListControlsMapper.php:130
 #: modules/johncms/news/templates/admin/article-form.twig:161
 #: modules/johncms/news/templates/admin/components/articles-table.twig:12
-#: modules/johncms/news/templates/admin/components/sections-table.twig:10
+#: modules/johncms/news/templates/admin/components/sections-table.twig:12
 msgid "Section"
 msgstr ""
 
@@ -218,26 +218,26 @@ msgid "Expired"
 msgstr ""
 
 #: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:71
-#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:107
+#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:106
 msgid "Edit"
 msgstr ""
 
 #: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:72
-#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:110
+#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:109
 #: modules/johncms/news/templates/admin/article-form.twig:39
 #: modules/johncms/news/templates/admin/section-form.twig:37
 msgid "Open on the site"
 msgstr ""
 
 #: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:73
-#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:111
+#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:110
 #: modules/johncms/news/templates/admin/delete-article-dialog.twig:24
 #: modules/johncms/news/templates/admin/delete-section-dialog.twig:38
 #: modules/johncms/news/templates/public/article.twig:70
 msgid "Delete"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:108
+#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:107
 #: modules/johncms/news/templates/admin/section-form.twig:31
 msgid "Articles of the section"
 msgstr ""
@@ -466,14 +466,13 @@ msgstr ""
 
 #: modules/johncms/news/templates/admin/article-form.twig:199
 #: modules/johncms/news/templates/admin/components/articles-table.twig:16
-#: modules/johncms/news/templates/admin/components/sections-table.twig:13
 #: modules/johncms/news/templates/admin/section-form.twig:125
 msgid "Created"
 msgstr ""
 
 #: modules/johncms/news/templates/admin/article-form.twig:200
 #: modules/johncms/news/templates/admin/components/articles-table.twig:17
-#: modules/johncms/news/templates/admin/components/sections-table.twig:14
+#: modules/johncms/news/templates/admin/components/sections-table.twig:15
 #: modules/johncms/news/templates/admin/section-form.twig:126
 msgid "Updated"
 msgstr ""
@@ -493,8 +492,8 @@ msgstr ""
 
 #: modules/johncms/news/templates/admin/components/articles-table.twig:18
 #: modules/johncms/news/templates/admin/components/articles-table.twig:65
-#: modules/johncms/news/templates/admin/components/sections-table.twig:15
-#: modules/johncms/news/templates/admin/components/sections-table.twig:39
+#: modules/johncms/news/templates/admin/components/sections-table.twig:16
+#: modules/johncms/news/templates/admin/components/sections-table.twig:44
 msgid "Actions"
 msgstr ""
 
@@ -503,8 +502,12 @@ msgid "%d comment"
 msgid_plural "%d comments"
 msgstr[0] ""
 
-#: modules/johncms/news/templates/admin/components/sections-table.twig:11
+#: modules/johncms/news/templates/admin/components/sections-table.twig:13
 msgid "Code"
+msgstr ""
+
+#: modules/johncms/news/templates/admin/components/sections-table.twig:38
+msgid "Own: %s"
 msgstr ""
 
 #: modules/johncms/news/templates/admin/delete-article-dialog.twig:18

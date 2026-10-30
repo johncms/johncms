@@ -57,7 +57,7 @@ final readonly class NewsListController
         }
 
         $listUrl = $pagination?->getUrl($pagination->getCurrentPage()) ?? $this->controlsMapper->url($filter);
-        $sectionRows = $articles ? [] : $this->rowMapper->sectionTree($this->getList->getAllSectionsWithArticleCounts(), $tree, $filter, $listUrl);
+        $sectionRows = $articles ? [] : $this->rowMapper->sectionTree($this->getList->getSectionTree($filter, $tree), $listUrl);
 
         $data = [
             'tab'        => $filter->tab->value,

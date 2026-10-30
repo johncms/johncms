@@ -154,6 +154,64 @@ final class AdminNewsListTest extends FunctionalTestCase
         self::assertStringNotContainsString('href="/admin/news/sections/' . $other . '/edit"', $content);
     }
 
+    public function testTheSectionsStandEachUnderItsParent(): void
+    {
+        $zulu = $this->section('Zulu', 'zulu');
+        $alpha = $this->section('Alpha', 'alpha');
+        $child = $this->section('Child of Zulu', 'zulu-child', $zulu);
+
+        $content = $this->page('/admin/news?tab=sections');
+
+        // By name at every level, a child right under its parent.
+        self::assertLessThan($this->rowOf($content, $zulu), $this->rowOf($content, $alpha));
+        self::assertLessThan($this->rowOf($content, $child), $this->rowOf($content, $zulu));
+        self::assertStringContainsString('admin-news-tree__root', $this->row($content, $zulu));
+        self::assertStringContainsString('--depth: 1', $this->row($content, $child));
+        self::assertStringNotContainsString('admin-news-tree__root', $this->row($content, $child));
+    }
+
+    public function testANarrowedListStartsAtTheTopOfWhatItShows(): void
+    {
+        $releases = $this->section('Releases', 'releases');
+        $version = $this->section('Version 10', 'v10', $releases);
+        $beta = $this->section('Beta', 'beta', $version);
+
+        $content = $this->page('/admin/news?tab=sections&section=' . $releases);
+
+        self::assertStringContainsString('--depth: 0', $this->row($content, $version));
+        self::assertStringContainsString('--depth: 1', $this->row($content, $beta));
+    }
+
+    public function testTheSearchShowsTheSectionsAboveWhatItFound(): void
+    {
+        $releases = $this->section('Releases', 'releases');
+        $version = $this->section('Version 10', 'v10', $releases);
+        $beta = $this->section('Beta', 'beta', $version);
+        $other = $this->section('Other', 'other');
+
+        $content = $this->page('/admin/news?tab=sections&q=beta');
+
+        self::assertStringNotContainsString('admin-news-tree__context', $this->row($content, $beta));
+        self::assertStringContainsString('admin-news-tree__context', $this->row($content, $releases));
+        self::assertStringContainsString('admin-news-tree__context', $this->row($content, $version));
+        self::assertStringNotContainsString('href="/admin/news/sections/' . $other . '/edit"', $content);
+    }
+
+    public function testASectionCountsTheArticlesUnderItToo(): void
+    {
+        $releases = $this->section('Releases', 'releases');
+        $version = $this->section('Version 10', 'v10', $releases);
+        $this->article('Release notes', $releases);
+        $this->article('First beta', $version);
+        $this->article('Second beta', $version);
+
+        $content = $this->page('/admin/news?tab=sections');
+
+        self::assertStringContainsString('href="/admin/news?section=' . $releases . '">3</a>', $this->row($content, $releases));
+        self::assertStringContainsString('Своих: 1', $this->row($content, $releases));
+        self::assertStringNotContainsString('Своих', $this->row($content, $version));
+    }
+
     public function testTheLiveListGetsItsRegionsAlone(): void
     {
         $this->article('Live', 0);
@@ -175,6 +233,31 @@ final class AdminNewsListTest extends FunctionalTestCase
         $response = $this->handleRequest('/admin/news', cookies: $this->actingAs($member));
 
         self::assertSame(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+    }
+
+    /**
+     * Where the row of a section begins in the page.
+     */
+    private function rowOf(string $content, int $section): int
+    {
+        $position = strpos($content, 'href="/admin/news/sections/' . $section . '/edit"');
+        self::assertIsInt($position, 'No row of the section ' . $section);
+
+        return $position;
+    }
+
+    /**
+     * The markup of the row of a section, from its opening <tr> to its closing one.
+     */
+    private function row(string $content, int $section): string
+    {
+        $link = $this->rowOf($content, $section);
+        $start = strrpos(substr($content, 0, $link), '<tr');
+        $end = strpos($content, '</tr>', $link);
+        self::assertIsInt($start);
+        self::assertIsInt($end);
+
+        return substr($content, $start, $end - $start);
     }
 
     private function editLink(int $article): string

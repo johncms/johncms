@@ -692,3 +692,6 @@ msgstr "статей"
 
 msgid "days"
 msgstr "дней"
+
+msgid "Own: %s"
+msgstr "Своих: %s"

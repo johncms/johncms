@@ -191,6 +191,7 @@
       'Used where the article has no title, keywords or description of its own.' => 'Используются, если у статьи нет своего заголовка, ключевых слов или описания.',
       'articles' => 'статей',
       'days' => 'дней',
+      'Own: %s' => 'Своих: %s',
     ),
   ),
 );

@@ -38,6 +38,21 @@ final class SectionTreeTest extends TestCase
         self::assertSame([], $tree->pathOf(0));
     }
 
+    public function testTheAncestorsRunFromTheParentUpAndGiveTheDepth(): void
+    {
+        $tree = new SectionTree([1 => 0, 2 => 1, 3 => 2]);
+
+        self::assertSame([2, 1], $tree->ancestorsOf(3));
+        self::assertSame([], $tree->ancestorsOf(1));
+        self::assertSame(2, $tree->depthOf(3));
+        self::assertSame(0, $tree->depthOf(1));
+    }
+
+    public function testTheAncestorsOfALoopEnd(): void
+    {
+        self::assertSame([2], (new SectionTree([1 => 2, 2 => 1]))->ancestorsOf(1));
+    }
+
     public function testTheOrderPutsEverySectionUnderItsParentByName(): void
     {
         $tree = new SectionTree([1 => 0, 2 => 1, 3 => 0, 4 => 1, 5 => 99], [1 => 'Releases', 2 => 'b', 3 => 'Guides', 4 => 'a', 5 => 'Lost']);

@@ -1,38 +1,43 @@
 {#
-    The sections of the list of the news.
+    The sections of the list of the news, each under its parent.
 
-    @param array rows Built by NewsListRowMapper::sectionTree().
+    @param array rows Built by NewsListRowMapper::sectionTree(): depth below what the list is
+                      narrowed to, is_match (false for a section a search only passes through),
+                      articles in it and articles_in_subtree, in it and under it.
 #}
-<table class="table table-hover admin-news-table">
+<table class="table table-hover admin-news-table admin-news-tree">
     <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">{{ __('Section') }}</th>
             <th scope="col">{{ __('Code') }}</th>
             <th scope="col" class="text-end">{{ __('Articles') }}</th>
-            <th scope="col">{{ __('Created') }}</th>
             <th scope="col">{{ __('Updated') }}</th>
             <th scope="col"><span class="visually-hidden">{{ __('Actions') }}</span></th>
         </tr>
     </thead>
     <tbody>
         {% for section in rows %}
-            <tr>
+            <tr class="{{ section.depth == 0 ? 'admin-news-tree__root' }}{{ not section.is_match ? ' admin-news-tree__context' }}">
                 <td class="admin-news-table__id">{{ section.id }}</td>
                 <td>
                     <div class="admin-news-tree__section" style="--depth: {{ section.depth }}">
                         {% include '@admin/components/ui/icon.twig' with {name: 'folder', size: 15, class: 'admin-news-tree__icon'} only %}
-                        <a class="admin-news-table__name" href="{{ section.edit_url }}">{{ section.name }}</a>
+                        <a class="admin-news-tree__name" href="{{ section.edit_url }}">{{ section.name }}</a>
                     </div>
-                    {% if section.parents %}
-                        <div class="admin-news-table__sub">{{ section.parents }}</div>
-                    {% endif %}
                 </td>
                 <td class="admin-news-table__code">{{ section.code }}</td>
                 <td class="text-end">
-                    <a class="admin-news-table__number" href="{{ section.articles_url }}">{{ section.articles|format_number }}</a>
+                    {# The link leads to the articles of the section and of those under it, so the number counts them all. #}
+                    {% if section.articles_in_subtree %}
+                        <a class="admin-news-table__number" href="{{ section.articles_url }}">{{ section.articles_in_subtree|format_number }}</a>
+                    {% else %}
+                        <span class="admin-news-table__number text-body-tertiary">0</span>
+                    {% endif %}
+                    {% if section.articles != section.articles_in_subtree %}
+                        <div class="admin-news-table__sub">{{ __('Own: %s')|format(section.articles|format_number) }}</div>
+                    {% endif %}
                 </td>
-                <td class="admin-news-table__date">{{ section.created ? section.created|display_date : '—' }}</td>
                 <td class="admin-news-table__date">{{ section.updated ? section.updated|display_date : '—' }}</td>
                 <td>
                     <div class="admin-news-table__actions">

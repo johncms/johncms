@@ -7,10 +7,10 @@ namespace Johncms\Modules\News\Application\Services;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Collection;
+use Johncms\Modules\News\Application\DTO\SectionTreeItemDTO;
 use Johncms\Modules\News\Domain\Enums\ArticleStatus;
 use Johncms\Modules\News\Domain\Enums\NewsListTab;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
-use Johncms\Modules\News\Domain\Models\NewsSection;
 use Johncms\Modules\News\Domain\Services\SectionTree;
 use Johncms\Modules\News\Domain\ValueObjects\NewsListFilter;
 
@@ -79,31 +79,30 @@ final readonly class NewsListRowMapper
     }
 
     /**
-     * @param Collection<int, NewsSection> $sections
+     * @param list<SectionTreeItemDTO> $items
      * @return list<array<string, mixed>>
      */
-    public function sections(Collection $sections, SectionTree $tree, string $listUrl): array
+    public function sectionTree(array $items, string $listUrl): array
     {
         $rows = [];
 
-        foreach ($sections as $section) {
-            $path = $tree->pathOf($section->id);
-            // The sections above it; the name itself is the title of the row.
-            array_pop($path);
+        foreach ($items as $item) {
+            $section = $item->section;
             $articlesUrl = $this->controls->url(new NewsListFilter(tab: NewsListTab::ARTICLES, section: $section->id));
             $editUrl = '/admin/news/sections/' . $section->id . '/edit';
 
             $rows[] = [
-                'id'           => $section->id,
-                'name'         => $section->name,
-                'code'         => $section->code,
-                'parents'      => implode(' › ', $path),
-                'edit_url'     => $editUrl,
-                'articles'     => (int) $section->getAttribute('articles_count'),
-                'articles_url' => $articlesUrl,
-                'created'      => $this->timestamp($section->getRawOriginal('created_at')),
-                'updated'      => $this->timestamp($section->getRawOriginal('updated_at')),
-                'actions'      => [
+                'id'                  => $section->id,
+                'name'                => $section->name,
+                'code'                => $section->code,
+                'depth'               => $item->depth,
+                'is_match'            => $item->isMatch,
+                'edit_url'            => $editUrl,
+                'articles'            => $item->articles,
+                'articles_in_subtree' => $item->articlesInSubtree,
+                'articles_url'        => $articlesUrl,
+                'updated'             => $this->timestamp($section->getRawOriginal('updated_at')),
+                'actions'             => [
                     $this->action('get', $editUrl, __('Edit'), 'pencil'),
                     $this->action('get', $articlesUrl, __('Articles of the section'), 'file-text'),
                     $this->action('get', '/admin/news/articles/new?section=' . $section->id, __('Add article'), 'plus'),
@@ -114,76 +113,6 @@ final readonly class NewsListRowMapper
         }
 
         return $rows;
-    }
-
-    /**
-     * @param Collection<int, NewsSection> $sections Every section, with its article count.
-     * @return list<array<string, mixed>> Matching sections, their parents, and their depth.
-     */
-    public function sectionTree(Collection $sections, SectionTree $tree, NewsListFilter $filter, string $listUrl): array
-    {
-        $byId = [];
-        foreach ($sections as $section) {
-            $byId[$section->id] = $section;
-        }
-
-        $inScope = match ($filter->section) {
-            null => array_keys($byId),
-            NewsListFilter::ROOT => $tree->childrenOf(NewsListFilter::ROOT),
-            default => array_slice($tree->subtreeOf($filter->section), 1),
-        };
-        $visible = [];
-
-        foreach ($inScope as $id) {
-            $section = $byId[$id] ?? null;
-            if ($section === null || ! $this->matchesSectionSearch($section, $filter->search)) {
-                continue;
-            }
-
-            $visible[$id] = true;
-            if ($filter->search === '') {
-                continue;
-            }
-
-            $currentId = $id;
-            $seen = [$currentId => true];
-            while (isset($byId[$currentId])) {
-                $currentId = (int) ($section->parent ?? 0);
-                if ($currentId === 0 || ! isset($byId[$currentId]) || isset($seen[$currentId])) {
-                    break;
-                }
-                $seen[$currentId] = true;
-                $visible[$currentId] = true;
-                $section = $byId[$currentId];
-            }
-        }
-
-        $ordered = [];
-        foreach ($tree->ordered() as $id) {
-            if (isset($visible[$id], $byId[$id])) {
-                $ordered[] = $byId[$id];
-            }
-        }
-
-        $rows = $this->sections(new Collection($ordered), $tree, $listUrl);
-        foreach ($rows as &$row) {
-            $row['parents'] = '';
-            $row['depth'] = max(0, count($tree->pathOf($row['id'])) - 1);
-        }
-        unset($row);
-
-        return $rows;
-    }
-
-    private function matchesSectionSearch(NewsSection $section, string $search): bool
-    {
-        if ($search === '') {
-            return true;
-        }
-
-        return str_contains(mb_strtolower($section->name), mb_strtolower($search))
-            || str_contains(mb_strtolower($section->code), mb_strtolower($search))
-            || (ctype_digit($search) && $section->id === (int) $search);
     }
 
     /**

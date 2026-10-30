@@ -85,6 +85,37 @@ final readonly class SectionTree
     }
 
     /**
+     * The sections above this one, from its parent up to the top.
+     *
+     * @return list<int>
+     */
+    public function ancestorsOf(int $id): array
+    {
+        $ancestors = [];
+        $seen = [$id => true];
+
+        while (isset($this->parents[$id])) {
+            $id = $this->parents[$id];
+            if ($id === 0 || isset($seen[$id])) {
+                break;
+            }
+
+            $seen[$id] = true;
+            $ancestors[] = $id;
+        }
+
+        return $ancestors;
+    }
+
+    /**
+     * How many sections stand above this one: 0 at the top.
+     */
+    public function depthOf(int $id): int
+    {
+        return count($this->ancestorsOf($id));
+    }
+
+    /**
      * Every section, each under its parent, the children of a section by name: the order of a list
      * that shows the tree flat. A section whose parent is gone comes last, with what is under it.
      *

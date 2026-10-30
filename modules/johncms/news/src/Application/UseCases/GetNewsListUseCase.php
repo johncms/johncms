@@ -7,6 +7,7 @@ namespace Johncms\Modules\News\Application\UseCases;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Collection;
+use Johncms\Modules\News\Application\DTO\SectionTreeItemDTO;
 use Johncms\Modules\News\Domain\Enums\NewsListTab;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Modules\News\Domain\Models\NewsSection;
@@ -57,10 +58,67 @@ final readonly class GetNewsListUseCase
         return $this->articles->getList($filter, $this->articleSections($filter, $tree), $now ?? new DateTimeImmutable(), $limit, $offset);
     }
 
-    /** @return Collection<int, NewsSection> */
-    public function getAllSectionsWithArticleCounts(): Collection
+    /**
+     * The sections the filter lets through, each under its parent. A search keeps the sections
+     * above a found one, so it is seen where it stands; they are told apart from what was found.
+     *
+     * @return list<SectionTreeItemDTO>
+     */
+    public function getSectionTree(NewsListFilter $filter, SectionTree $tree): array
     {
-        return $this->sections->getAllWithArticleCounts();
+        /** @var array<int, NewsSection> $byId */
+        $byId = $this->sections->getAllWithArticleCounts()->keyBy('id')->all();
+
+        $inScope = match ($filter->section) {
+            null                 => array_keys($byId),
+            NewsListFilter::ROOT => $tree->childrenOf(NewsListFilter::ROOT),
+            default              => array_slice($tree->subtreeOf($filter->section), 1),
+        };
+        $inScope = array_fill_keys($inScope, true);
+
+        $matches = [];
+        $visible = [];
+        foreach (array_keys($inScope) as $id) {
+            if (! isset($byId[$id]) || ! $this->matchesSearch($byId[$id], $filter->search)) {
+                continue;
+            }
+
+            $matches[$id] = true;
+            // The path down to it, as far as the list reaches.
+            foreach ($tree->ancestorsOf($id) as $ancestor) {
+                if (isset($inScope[$ancestor])) {
+                    $visible[$ancestor] = true;
+                }
+            }
+            $visible[$id] = true;
+        }
+
+        // A narrowed list starts one level below the section it is narrowed to.
+        $base = $filter->section !== null && $filter->section !== NewsListFilter::ROOT
+            ? $tree->depthOf($filter->section) + 1
+            : 0;
+
+        $items = [];
+        foreach ($tree->ordered() as $id) {
+            if (! isset($visible[$id], $byId[$id])) {
+                continue;
+            }
+
+            $inSubtree = 0;
+            foreach ($tree->subtreeOf($id) as $sectionId) {
+                $inSubtree += $this->articleCount($byId[$sectionId] ?? null);
+            }
+
+            $items[] = new SectionTreeItemDTO(
+                section: $byId[$id],
+                depth: max(0, $tree->depthOf($id) - $base),
+                isMatch: isset($matches[$id]),
+                articles: $this->articleCount($byId[$id]),
+                articlesInSubtree: $inSubtree,
+            );
+        }
+
+        return $items;
     }
 
     /**
@@ -69,6 +127,24 @@ final readonly class GetNewsListUseCase
     public function authors(): Collection
     {
         return $this->articles->getAuthors();
+    }
+
+    private function matchesSearch(NewsSection $section, string $search): bool
+    {
+        if ($search === '') {
+            return true;
+        }
+
+        $search = mb_strtolower($search);
+
+        return str_contains(mb_strtolower($section->name), $search)
+            || str_contains(mb_strtolower((string) $section->code), $search)
+            || (ctype_digit($search) && $section->id === (int) $search);
+    }
+
+    private function articleCount(?NewsSection $section): int
+    {
+        return (int) $section?->getAttribute('articles_count');
     }
 
     /**
