@@ -132,6 +132,12 @@
       'Found: %s' => 'Найдено: %s',
       'Search the items' => 'Поиск элементов',
       'Name, code or ID' => 'Название, код или ID',
+      'Items of the section' => 'Элементы раздела',
+      'New subsection' => 'Новый подраздел',
+      'There are no sections yet' => 'Разделов пока нет',
+      'Sections group the items into a tree and become a part of their address on the site.' => 'Разделы группируют элементы в дерево и становятся частью их адреса на сайте.',
+      'Own: %s' => 'Своих: %s',
+      'Shown' => 'Показывается',
     ),
   ),
 );

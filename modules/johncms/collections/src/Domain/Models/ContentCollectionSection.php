@@ -67,4 +67,9 @@ final class ContentCollectionSection extends Model
     {
         return $this->hasMany(self::class, 'parent');
     }
+
+    public function items(): HasMany
+    {
+        return $this->hasMany(ContentCollectionItem::class, 'section_id');
+    }
 }

@@ -10,13 +10,6 @@ use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
 interface ContentCollectionSectionRepositoryInterface
 {
     /**
-     * Sections of a collection under the given parent (NULL = root level).
-     *
-     * @return Collection<int, ContentCollectionSection>
-     */
-    public function getByCollection(int $collectionId, ?int $parent, int $limit, int $offset): Collection;
-
-    /**
      * All sections of a collection (flat), ordered by sort. Used for section pickers.
      *
      * @return Collection<int, ContentCollectionSection>
@@ -24,13 +17,19 @@ interface ContentCollectionSectionRepositoryInterface
     public function getAllByCollection(int $collectionId): Collection;
 
     /**
+     * All sections of a collection, each with the number of the items standing right in it
+     * (items_count).
+     *
+     * @return Collection<int, ContentCollectionSection>
+     */
+    public function getAllWithItemCounts(int $collectionId): Collection;
+
+    /**
      * Active child sections under the given parent (NULL = root), for public navigation.
      *
      * @return Collection<int, ContentCollectionSection>
      */
     public function getActiveChildren(int $collectionId, ?int $parent): Collection;
-
-    public function countByCollection(int $collectionId, ?int $parent): int;
 
     public function findByCode(int $collectionId, ?int $parent, string $code): ?ContentCollectionSection;
 

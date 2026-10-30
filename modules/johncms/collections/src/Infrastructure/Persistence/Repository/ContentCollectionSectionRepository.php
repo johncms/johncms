@@ -11,28 +11,20 @@ use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionReposi
 
 final class ContentCollectionSectionRepository implements ContentCollectionSectionRepositoryInterface
 {
-    public function getByCollection(int $collectionId, ?int $parent, int $limit, int $offset): Collection
-    {
-        return $this->parentScopedQuery($collectionId, $parent)
-            ->withCount('childSections')
-            ->orderBy('sort')
-            ->orderBy('id')
-            ->offset($offset)
-            ->limit($limit)
-            ->get();
-    }
-
-    public function countByCollection(int $collectionId, ?int $parent): int
-    {
-        return $this->parentScopedQuery($collectionId, $parent)->count();
-    }
-
     public function getAllByCollection(int $collectionId): Collection
     {
         return ContentCollectionSection::query()
             ->where('collection_id', $collectionId)
             ->orderBy('sort')
             ->orderBy('id')
+            ->get();
+    }
+
+    public function getAllWithItemCounts(int $collectionId): Collection
+    {
+        return ContentCollectionSection::query()
+            ->where('collection_id', $collectionId)
+            ->withCount('items')
             ->get();
     }
 

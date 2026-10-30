@@ -1,11 +1,10 @@
 {#
-    One level of the sections of a collection.
+    The sections of a collection, a tab of it: the whole tree, each section under its parent, with
+    the items of its subtree.
 
-    @var string       root_url
-    @var array        path            Breadcrumbs of the current level: name, url.
-    @var array        items           Rows: sort, name, code, child_count, active and the urls.
-    @var string       add_url
-    @var \Twig\Markup pagination
+    @var array  rows    Rows: id, name, code, active, depth, items (in the section itself),
+                        items_in_subtree, items_url, edit_url, actions.
+    @var string add_url
 
     The head of the collection comes from collection/layout.twig.
 #}
@@ -19,45 +18,68 @@
 {% endblock %}
 
 {% block collection_content %}
-    <div class="mb-3 small">
-        <a href="{{ root_url }}">{{ __('Root') }}</a>
-        {% for crumb in path %}
-            / <a href="{{ crumb.url }}">{{ crumb.name }}</a>
-        {% endfor %}
+    <div class="card">
+        {% if rows is empty %}
+            {% include '@admin/components/ui/empty-state.twig' with {
+                icon: 'folder',
+                title: __('There are no sections yet'),
+                description: __('Sections group the items into a tree and become a part of their address on the site.'),
+            } only %}
+            <div class="text-center pb-4">
+                <a href="{{ add_url }}" class="btn btn-outline-secondary">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'plus', size: 14} only %}
+                    {{ __('New section') }}
+                </a>
+            </div>
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle admin-collection-tree">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ __('Section') }}</th>
+                            <th scope="col" class="text-end">{{ __('Items') }}</th>
+                            <th scope="col">{{ __('Status') }}</th>
+                            <th scope="col"><span class="visually-hidden">{{ __('Actions') }}</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in rows %}
+                            <tr class="{{ row.depth == 0 ? 'admin-collection-tree__root' }}">
+                                <td>
+                                    <div class="admin-collection-tree__section" style="--depth: {{ row.depth }}">
+                                        {% include '@admin/components/ui/icon.twig' with {name: 'folder', size: 15, class: 'admin-collection-tree__icon'} only %}
+                                        <div class="min-w-0">
+                                            <a class="admin-collection-tree__name" href="{{ row.edit_url }}">{{ row.name }}</a>
+                                            <div class="admin-collection-tree__code">{{ row.code }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-end">
+                                    {# The link leads to the items of the section and of those under it, so the number counts them all. #}
+                                    {% if row.items_in_subtree %}
+                                        <a class="admin-collection-tree__number" href="{{ row.items_url }}">{{ row.items_in_subtree|format_number }}</a>
+                                    {% else %}
+                                        <span class="admin-collection-tree__number text-body-tertiary">0</span>
+                                    {% endif %}
+                                    {% if row.items != row.items_in_subtree %}
+                                        <div class="admin-collection-tree__code">{{ __('Own: %s')|format(row.items|format_number) }}</div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if row.active %}
+                                        <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ __('Shown') }}</span>
+                                    {% else %}
+                                        <span class="badge rounded-pill text-bg-light badge-dot">{{ __('Hidden') }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end">
+                                    {% include '@admin/components/ui/row-actions.twig' with {actions: row.actions, label: __('Actions')} only %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
     </div>
-
-
-    {% if items is empty %}
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
-    {% endif %}
-
-    {% for item in items %}
-        <div class="new_post-item without_avatar">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center">
-                    <span class="text-muted me-1">[{{ item.sort }}]</span>
-                    <a href="{{ item.browse_url }}" class="h3 mb-0">{{ item.name }}</a>
-                    <span class="badge rounded-pill text-bg-light border ms-2">{{ item.code }}</span>
-                    {% if item.child_count > 0 %}
-                        <span class="badge rounded-pill bg-secondary ms-2">{{ item.child_count }}</span>
-                    {% endif %}
-                </div>
-                <div>
-                    {% if item.active %}
-                        <span class="badge rounded-pill bg-success">{{ __('On') }}</span>
-                    {% else %}
-                        <span class="badge rounded-pill bg-danger">{{ __('Off') }}</span>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="mt-2">
-                <a href="{{ item.browse_url }}">{{ __('Open') }}</a>
-                <a href="{{ item.edit_url }}" class="ms-2">{{ __('Edit') }}</a>
-                <a href="{{ item.delete_url }}" class="text-danger ms-2" data-admin-modal>{{ __('Delete') }}</a>
-            </div>
-        </div>
-    {% endfor %}
-
-    <div class="mt-4">{{ pagination }}</div>
-
 {% endblock %}

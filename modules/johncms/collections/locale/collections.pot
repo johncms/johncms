@@ -19,14 +19,14 @@ msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:108
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:151
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:147
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:123
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:101
 msgid "Changes saved"
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:108
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:151
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:147
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:123
 msgid "Created successfully"
 msgstr ""
 
@@ -40,7 +40,7 @@ msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:152
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:197
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:195
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:168
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:146
 msgid "Deleted successfully"
 msgstr ""
@@ -56,14 +56,14 @@ msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:283
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:383
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:348
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:315
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:327
 msgid "The required fields are not filled"
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:287
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:387
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:352
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:319
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:331
 msgid "The code may contain only lowercase latin letters, digits, hyphen and underscore"
 msgstr ""
@@ -120,8 +120,8 @@ msgstr ""
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:352
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:470
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:488
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:385
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:403
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:342
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:360
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:53
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:135
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:199
@@ -136,8 +136,8 @@ msgstr ""
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:394
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:490
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:500
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:405
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:415
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:362
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:372
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:76
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:114
 msgid "Wrong data"
@@ -151,6 +151,7 @@ msgstr ""
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:158
 #: modules/johncms/collections/src/Application/Services/CollectionWorkspaceMapper.php:33
 #: modules/johncms/collections/templates/admin/collections.twig:43
+#: modules/johncms/collections/templates/admin/sections.twig:40
 msgid "Items"
 msgstr ""
 
@@ -171,15 +172,16 @@ msgid "Edit item"
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:228
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:217
 #: modules/johncms/collections/templates/admin/items-results.twig:26
 #: modules/johncms/collections/templates/admin/items.twig:25
 msgid "New item"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:65
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:396
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:412
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:413
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:49
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:353
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:369
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:370
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:124
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:161
 #: modules/johncms/collections/src/Application/Services/CollectionWorkspaceMapper.php:34
@@ -187,28 +189,51 @@ msgstr ""
 msgid "Sections"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:144
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:120
 msgid "A section with this code already exists"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:164
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:140
 msgid "Delete section"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:165
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:141
 msgid "Are you sure you want to delete the section?"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:166
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:142
 msgid "Nested sections will be deleted too."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:265
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:215
+#: modules/johncms/collections/src/Application/Services/ItemListRowMapper.php:46
+#: modules/johncms/collections/templates/admin/fields.twig:38
+msgid "Edit"
+msgstr ""
+
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:216
+msgid "Items of the section"
+msgstr ""
+
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:218
+msgid "New subsection"
+msgstr ""
+
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:219
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:168
+#: modules/johncms/collections/src/Application/Services/ItemListRowMapper.php:62
+#: modules/johncms/collections/templates/admin/delete-dialog.twig:38
+#: modules/johncms/collections/templates/admin/fields.twig:39
+msgid "Delete"
+msgstr ""
+
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:234
 msgid "Edit section"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:265
-#: modules/johncms/collections/templates/admin/sections.twig:17
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:234
+#: modules/johncms/collections/templates/admin/sections.twig:16
+#: modules/johncms/collections/templates/admin/sections.twig:31
 msgid "New section"
 msgstr ""
 
@@ -245,14 +270,6 @@ msgstr ""
 #: modules/johncms/collections/src/Application/Services/ItemListRowMapper.php:52
 #: modules/johncms/collections/templates/admin/collection/layout.twig:17
 msgid "Open on the site"
-msgstr ""
-
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:168
-#: modules/johncms/collections/src/Application/Services/ItemListRowMapper.php:62
-#: modules/johncms/collections/templates/admin/delete-dialog.twig:38
-#: modules/johncms/collections/templates/admin/fields.twig:39
-#: modules/johncms/collections/templates/admin/sections.twig:56
-msgid "Delete"
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:198
@@ -296,6 +313,7 @@ msgstr ""
 #: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:90
 #: modules/johncms/collections/templates/admin/components/items-table.twig:14
 #: modules/johncms/collections/templates/admin/item-form.twig:37
+#: modules/johncms/collections/templates/admin/sections.twig:39
 msgid "Section"
 msgstr ""
 
@@ -306,13 +324,8 @@ msgstr ""
 #: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:105
 #: modules/johncms/collections/templates/admin/collections.twig:46
 #: modules/johncms/collections/templates/admin/components/items-table.twig:19
+#: modules/johncms/collections/templates/admin/sections.twig:41
 msgid "Status"
-msgstr ""
-
-#: modules/johncms/collections/src/Application/Services/ItemListRowMapper.php:46
-#: modules/johncms/collections/templates/admin/fields.twig:38
-#: modules/johncms/collections/templates/admin/sections.twig:55
-msgid "Edit"
 msgstr ""
 
 #: modules/johncms/collections/src/Install/Installer.php:34
@@ -443,11 +456,14 @@ msgstr ""
 #: modules/johncms/collections/templates/admin/collections.twig:47
 #: modules/johncms/collections/templates/admin/collections.twig:70
 #: modules/johncms/collections/templates/admin/components/items-table.twig:21
-#: modules/johncms/collections/templates/admin/components/items-table.twig:62
+#: modules/johncms/collections/templates/admin/components/items-table.twig:60
+#: modules/johncms/collections/templates/admin/sections.twig:42
+#: modules/johncms/collections/templates/admin/sections.twig:76
 msgid "Actions"
 msgstr ""
 
 #: modules/johncms/collections/templates/admin/collections.twig:62
+#: modules/johncms/collections/templates/admin/sections.twig:72
 msgid "Turned off"
 msgstr ""
 
@@ -519,7 +535,6 @@ msgid "Save"
 msgstr ""
 
 #: modules/johncms/collections/templates/admin/fields.twig:20
-#: modules/johncms/collections/templates/admin/sections.twig:31
 #: modules/johncms/collections/templates/public/listing.twig:20
 msgid "The list is empty"
 msgstr ""
@@ -580,18 +595,18 @@ msgstr ""
 msgid "Name, code or ID"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/sections.twig:23
-msgid "Root"
+#: modules/johncms/collections/templates/admin/sections.twig:25
+msgid "There are no sections yet"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/sections.twig:47
-msgid "On"
+#: modules/johncms/collections/templates/admin/sections.twig:26
+msgid "Sections group the items into a tree and become a part of their address on the site."
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/sections.twig:49
-msgid "Off"
+#: modules/johncms/collections/templates/admin/sections.twig:65
+msgid "Own: %s"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/sections.twig:54
-msgid "Open"
+#: modules/johncms/collections/templates/admin/sections.twig:70
+msgid "Shown"
 msgstr ""

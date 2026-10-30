@@ -575,3 +575,21 @@ msgstr "Поиск элементов"
 
 msgid "Name, code or ID"
 msgstr "Название, код или ID"
+
+msgid "Items of the section"
+msgstr "Элементы раздела"
+
+msgid "New subsection"
+msgstr "Новый подраздел"
+
+msgid "There are no sections yet"
+msgstr "Разделов пока нет"
+
+msgid "Sections group the items into a tree and become a part of their address on the site."
+msgstr "Разделы группируют элементы в дерево и становятся частью их адреса на сайте."
+
+msgid "Own: %s"
+msgstr "Своих: %s"
+
+msgid "Shown"
+msgstr "Показывается"

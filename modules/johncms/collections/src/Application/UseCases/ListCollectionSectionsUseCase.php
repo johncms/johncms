@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\UseCases;
 
-use Johncms\Modules\Collections\Application\DTO\CollectionSectionListItemDTO;
+use Johncms\Modules\Collections\Application\DTO\SectionTreeItemDTO;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Services\SectionTree;
 
+/**
+ * The sections of a collection as one tree: every section under its parent, in the order the
+ * collection keeps them, with the items of its whole subtree.
+ */
 final readonly class ListCollectionSectionsUseCase
 {
     public function __construct(
@@ -15,25 +20,35 @@ final readonly class ListCollectionSectionsUseCase
     ) {
     }
 
-    public function count(int $collectionId, ?int $parent): int
+    /**
+     * @return list<SectionTreeItemDTO>
+     */
+    public function getTree(int $collectionId): array
     {
-        return $this->repository->countByCollection($collectionId, $parent);
+        /** @var array<int, ContentCollectionSection> $byId */
+        $byId = $this->repository->getAllWithItemCounts($collectionId)->keyBy('id')->all();
+        $tree = SectionTree::of($byId);
+        $items = [];
+
+        foreach ($tree->ordered() as $id) {
+            $inSubtree = 0;
+            foreach ($tree->subtreeOf($id) as $sectionId) {
+                $inSubtree += $this->itemCount($byId[$sectionId] ?? null);
+            }
+
+            $items[] = new SectionTreeItemDTO(
+                section: $byId[$id],
+                depth: $tree->depthOf($id),
+                items: $this->itemCount($byId[$id]),
+                itemsInSubtree: $inSubtree,
+            );
+        }
+
+        return $items;
     }
 
-    /**
-     * @return list<CollectionSectionListItemDTO>
-     */
-    public function getPage(int $collectionId, ?int $parent, int $limit, int $offset): array
+    private function itemCount(?ContentCollectionSection $section): int
     {
-        return $this->repository->getByCollection($collectionId, $parent, $limit, $offset)
-            ->map(static fn (ContentCollectionSection $section): CollectionSectionListItemDTO => new CollectionSectionListItemDTO(
-                id: $section->id,
-                code: $section->code,
-                name: $section->name,
-                active: $section->active,
-                sort: $section->sort,
-                childCount: (int) ($section->child_sections_count ?? 0),
-            ))
-            ->all();
+        return (int) $section?->getAttribute('items_count');
     }
 }

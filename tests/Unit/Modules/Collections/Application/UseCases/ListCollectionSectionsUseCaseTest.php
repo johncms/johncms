@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Unit\Modules\Collections\Application\UseCases;
 
 use Illuminate\Database\Eloquent\Collection;
-use Johncms\Modules\Collections\Application\DTO\CollectionSectionListItemDTO;
 use Johncms\Modules\Collections\Application\UseCases\ListCollectionSectionsUseCase;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
@@ -13,35 +12,34 @@ use PHPUnit\Framework\TestCase;
 
 final class ListCollectionSectionsUseCaseTest extends TestCase
 {
-    public function testCountDelegatesToRepositoryWithParent(): void
+    public function testTheTreeStandsEverySectionUnderItsParentWithTheItemsOfItsSubtree(): void
     {
-        $repository = $this->createMock(ContentCollectionSectionRepositoryInterface::class);
-        $repository->expects(self::once())->method('countByCollection')->with(1, 5)->willReturn(3);
-
-        self::assertSame(3, (new ListCollectionSectionsUseCase($repository))->count(1, 5));
-    }
-
-    public function testGetPageMapsSectionsWithChildCount(): void
-    {
-        $section = new ContentCollectionSection(['code' => 'tech', 'name' => 'Technology', 'active' => true, 'sort' => 100]);
-        $section->id = 4;
-        $section->child_sections_count = 2;
-
         $repository = $this->createMock(ContentCollectionSectionRepositoryInterface::class);
         $repository->expects(self::once())
-            ->method('getByCollection')
-            ->with(1, null, 10, 0)
-            ->willReturn(new Collection([$section]));
+            ->method('getAllWithItemCounts')
+            ->with(1)
+            ->willReturn(new Collection([
+                $this->section(3, 2, 'Laravel', 100, 4),
+                $this->section(1, null, 'Tech', 100, 2),
+                $this->section(2, 1, 'PHP', 100, 7),
+                $this->section(4, null, 'Life', 50, 0),
+            ]));
 
-        $rows = (new ListCollectionSectionsUseCase($repository))->getPage(1, null, 10, 0);
+        $tree = (new ListCollectionSectionsUseCase($repository))->getTree(1);
 
-        self::assertCount(1, $rows);
-        self::assertInstanceOf(CollectionSectionListItemDTO::class, $rows[0]);
-        self::assertSame(4, $rows[0]->id);
-        self::assertSame('tech', $rows[0]->code);
-        self::assertSame('Technology', $rows[0]->name);
-        self::assertTrue($rows[0]->active);
-        self::assertSame(100, $rows[0]->sort);
-        self::assertSame(2, $rows[0]->childCount);
+        self::assertSame([4, 1, 2, 3], array_map(static fn ($item): int => $item->section->id, $tree));
+        self::assertSame([0, 0, 1, 2], array_map(static fn ($item): int => $item->depth, $tree));
+        // Tech holds 2 of its own and 11 under it.
+        self::assertSame(2, $tree[1]->items);
+        self::assertSame(13, $tree[1]->itemsInSubtree);
+    }
+
+    private function section(int $id, ?int $parent, string $name, int $sort, int $items): ContentCollectionSection
+    {
+        $section = new ContentCollectionSection(['parent' => $parent, 'name' => $name, 'code' => strtolower($name), 'sort' => $sort, 'active' => true]);
+        $section->id = $id;
+        $section->setAttribute('items_count', $items);
+
+        return $section;
     }
 }

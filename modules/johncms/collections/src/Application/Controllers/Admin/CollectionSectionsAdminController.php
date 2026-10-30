@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Controllers\Admin;
 
-use Johncms\Http\PageMeta;
-use Johncms\Http\Pagination\PaginationFactory;
-use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
-use Johncms\Modules\Collections\Application\DTO\CollectionSectionListItemDTO;
+use Johncms\Modules\Collections\Application\DTO\SectionTreeItemDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSectionCodeAlreadyExistsException;
 use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionSectionUseCase;
 use Johncms\Modules\Collections\Application\UseCases\ListCollectionSectionsUseCase;
@@ -34,45 +31,24 @@ final readonly class CollectionSectionsAdminController
         private SaveCollectionSectionUseCase $saveSection,
         private DeleteCollectionSectionUseCase $deleteSection,
         private Session $session,
-        private PaginationFactory $paginationFactory,
-        private PaginationGuard $paginationGuard,
     ) {
     }
 
-    public function index(Request $request, int $collection_id): ViewResponse
+    public function index(int $collection_id): ViewResponse
     {
         $collection = $this->collectionRepository->findWithCounts($collection_id);
         if ($collection === null) {
             return $this->collectionNotFound();
         }
 
-        $parent = $this->queryParent($request);
-        $parentSection = $this->resolveParent($collection_id, $parent);
-        if ($parent !== null && $parentSection === null) {
-            redirect($this->baseUrl($collection_id));
-        }
-
-        $pagination = $this->paginationFactory->create($this->listSections->count($collection_id, $parent));
-
-        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
-        if ($redirectUrl !== null) {
-            redirect($redirectUrl);
-        }
-
-        $sections = $this->listSections->getPage($collection_id, $parent, $pagination->getPerPage(), $pagination->getOffset());
-
         $this->breadcrumbs($collection);
-        $title = __('Sections');
 
         return new ViewResponse('@collections/admin/sections.twig', [
             'page_title' => $collection->name,
             'collection' => $this->workspace->head($collection, CollectionWorkspaceMapper::SECTIONS),
-        ] + $this->menu($this->pageMeta($title, $pagination->getCurrentPage()), $collection->name) + [
-            'root_url'        => $this->baseUrl($collection_id),
-            'path'            => $this->pathItems($collection_id, $parentSection),
-            'items'           => $this->mapRows($collection_id, $sections),
-            'add_url'         => $this->urlWithParent($this->baseUrl($collection_id) . '/new', $parent),
-            'pagination'      => $pagination->render(),
+        ] + $this->menu(__('Sections'), $collection->name) + [
+            'rows'            => $this->mapRows($collection_id, $this->listSections->getTree($collection_id)),
+            'add_url'         => $this->baseUrl($collection_id) . '/new',
             'success_message' => $this->session->getFlash('success_message') ?? '',
         ]);
     }
@@ -101,7 +77,7 @@ final readonly class CollectionSectionsAdminController
 
         $section = $this->findOwnedSection($collection_id, $id);
         if ($section === null) {
-            return $this->wrongData($collection_id, null);
+            return $this->wrongData($collection_id);
         }
 
         return $this->renderForm($collection, $id, $this->fieldsFromSection($section));
@@ -121,13 +97,13 @@ final readonly class CollectionSectionsAdminController
         if ($id !== null) {
             $section = $this->findOwnedSection($collection_id, $id);
             if ($section === null) {
-                return $this->wrongData($collection_id, null);
+                return $this->wrongData($collection_id);
             }
             $parent = $section->parent;
         } else {
             $parent = $this->postParent($request);
             if ($parent !== null && $this->resolveParent($collection_id, $parent) === null) {
-                return $this->wrongData($collection_id, null);
+                return $this->wrongData($collection_id);
             }
         }
 
@@ -145,7 +121,7 @@ final readonly class CollectionSectionsAdminController
         }
 
         $this->session->flash('success_message', $isUpdate ? __('Changes saved') : __('Created successfully'));
-        redirect($this->urlWithParent($this->baseUrl($collection_id), $parent));
+        redirect($this->baseUrl($collection_id));
     }
 
     public function deleteConfirm(Request $request, int $collection_id, int $id): ViewResponse
@@ -157,7 +133,7 @@ final readonly class CollectionSectionsAdminController
 
         $section = $this->findOwnedSection($collection_id, $id);
         if ($section === null) {
-            return $this->wrongData($collection_id, null);
+            return $this->wrongData($collection_id);
         }
 
         $dialog = [
@@ -166,7 +142,7 @@ final readonly class CollectionSectionsAdminController
                 . ' ' . __('Nested sections will be deleted too.'),
             'name'        => $section->name,
             'form_action' => $this->baseUrl($collection_id) . '/' . $id . '/delete',
-            'back_url'    => $this->urlWithParent($this->baseUrl($collection_id), $section->parent),
+            'back_url'    => $this->baseUrl($collection_id),
         ];
 
         if ($request->isXmlHttpRequest()) {
@@ -187,15 +163,12 @@ final readonly class CollectionSectionsAdminController
             return $this->collectionNotFound();
         }
 
-        $section = $this->findOwnedSection($collection_id, $id);
-        $parent = $section?->parent;
-
-        if ($section !== null) {
+        if ($this->findOwnedSection($collection_id, $id) !== null) {
             $this->deleteSection->execute($id);
             $this->session->flash('success_message', __('Deleted successfully'));
         }
 
-        redirect($this->urlWithParent($this->baseUrl($collection_id), $parent));
+        redirect($this->baseUrl($collection_id));
     }
 
     private function findOwnedSection(int $collectionId, int $id): ?ContentCollectionSection
@@ -211,48 +184,44 @@ final readonly class CollectionSectionsAdminController
     }
 
     /**
-     * @param list<CollectionSectionListItemDTO> $items
+     * @param list<SectionTreeItemDTO> $items
      * @return list<array<string, mixed>>
      */
     private function mapRows(int $collectionId, array $items): array
     {
         $base = $this->baseUrl($collectionId);
+        $itemsBase = CollectionWorkspaceMapper::url($collectionId);
+        $action = static fn (string $url, string $title, string $icon, bool $danger = false, bool $dialog = false): array => [
+            'method' => 'get', 'url' => $url, 'title' => $title, 'icon' => $icon, 'danger' => $danger, 'dialog' => $dialog, 'fields' => [],
+        ];
 
         $rows = [];
         foreach ($items as $item) {
+            $section = $item->section;
+            $editUrl = $base . '/' . $section->id . '/edit';
+            $itemsUrl = $itemsBase . '?section=' . $section->id;
+
             $rows[] = [
-                'name'        => $item->name,
-                'code'        => $item->code,
-                'active'      => $item->active,
-                'sort'        => $item->sort,
-                'child_count' => $item->childCount,
-                'browse_url'  => $base . '?parent=' . $item->id,
-                'edit_url'    => $base . '/' . $item->id . '/edit',
-                'delete_url'  => $base . '/' . $item->id . '/delete',
+                'id'                => $section->id,
+                'name'              => $section->name,
+                'code'              => $section->code,
+                'active'            => $section->active,
+                'depth'             => $item->depth,
+                'items'             => $item->items,
+                'items_in_subtree'  => $item->itemsInSubtree,
+                'items_url'         => $itemsUrl,
+                'edit_url'          => $editUrl,
+                'actions'           => [
+                    $action($editUrl, __('Edit'), 'pencil'),
+                    $action($itemsUrl, __('Items of the section'), 'file-text'),
+                    $action($itemsBase . '/new?section=' . $section->id, __('New item'), 'plus'),
+                    $action($base . '/new?parent=' . $section->id, __('New subsection'), 'folder-plus'),
+                    $action($base . '/' . $section->id . '/delete', __('Delete'), 'trash-2', danger: true, dialog: true),
+                ],
             ];
         }
 
         return $rows;
-    }
-
-    /**
-     * Breadcrumb path from the root down to the current parent.
-     *
-     * @return list<array{name: string, url: string}>
-     */
-    private function pathItems(int $collectionId, ?ContentCollectionSection $parentSection): array
-    {
-        if ($parentSection === null) {
-            return [];
-        }
-
-        $base = $this->baseUrl($collectionId);
-        $items = [];
-        foreach ($this->sectionRepository->getPathTo($parentSection->id) as $section) {
-            $items[] = ['name' => $section->name, 'url' => $base . '?parent=' . $section->id];
-        }
-
-        return $items;
     }
 
     /**
@@ -265,11 +234,9 @@ final readonly class CollectionSectionsAdminController
         $title = $id !== null ? __('Edit section') : __('New section');
         $this->navChain->add($title);
 
-        $parent = $fields['parent'] !== null ? (int) $fields['parent'] : null;
-
         return new ViewResponse('@collections/admin/section-form.twig', $this->menu($title, $collection->name) + [
             'form_action' => $this->baseUrl($collection->id),
-            'back_url'    => $this->urlWithParent($this->baseUrl($collection->id), $parent),
+            'back_url'    => $this->baseUrl($collection->id),
             'id'          => $id,
             'fields'      => $fields,
             'errors'      => $errors,
@@ -370,16 +337,6 @@ final readonly class CollectionSectionsAdminController
         return '/admin/collections/' . $collectionId . '/sections';
     }
 
-    private function urlWithParent(string $url, ?int $parent): string
-    {
-        return $parent !== null ? $url . '?parent=' . $parent : $url;
-    }
-
-    private function pageMeta(string $title, int $page): string
-    {
-        return (new PageMeta($title, $page))->title;
-    }
-
     private function breadcrumbs(ContentCollection $collection): void
     {
         $this->navChain->add(__('Collections'), '/admin/collections');
@@ -407,13 +364,13 @@ final readonly class CollectionSectionsAdminController
         ]);
     }
 
-    private function wrongData(int $collectionId, ?int $parent): ViewResponse
+    private function wrongData(int $collectionId): ViewResponse
     {
         return new ViewResponse('@admin/pages/result.twig', $this->menu(__('Sections'), __('Sections')) + [
             'title'    => __('Sections'),
             'type'     => 'alert-danger',
             'message'  => __('Wrong data'),
-            'back_url' => $this->urlWithParent($this->baseUrl($collectionId), $parent),
+            'back_url' => $this->baseUrl($collectionId),
         ]);
     }
 }

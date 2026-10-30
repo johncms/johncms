@@ -76,3 +76,66 @@
   font-family: $ui-font-mono;
   font-variant-numeric: tabular-nums;
 }
+
+// The sections of a collection as a tree (collections::admin/sections), drawn like the tree of
+// the forum: the top sections in a tinted row with a bold name.
+
+.admin-collection-tree {
+  td {
+    white-space: nowrap;
+  }
+
+  td:first-child {
+    width: 100%;
+    min-width: 12rem;
+    white-space: normal;
+  }
+}
+
+.admin-collection-tree__section {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  padding-inline-start: calc(var(--depth, 0) * 1.5rem);
+}
+
+.admin-collection-tree__icon {
+  flex: none;
+  margin-top: 0.125rem;
+  color: var(--fg-dim);
+}
+
+.admin-collection-tree__name {
+  color: var(--fg);
+
+  &:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+}
+
+.admin-collection-tree__code {
+  margin-top: 2px;
+  font-family: $ui-font-mono;
+  font-size: 0.6875rem;
+  color: var(--fg-dim);
+}
+
+.admin-collection-tree__number {
+  font-family: $ui-font-mono;
+  font-variant-numeric: tabular-nums;
+}
+
+.admin-collection-tree__root {
+  > td {
+    background-color: color-mix(in oklab, var(--fg) 2.5%, transparent);
+  }
+
+  .admin-collection-tree__name {
+    font-weight: 600;
+  }
+
+  .admin-collection-tree__icon {
+    color: var(--fg-muted);
+  }
+}

@@ -2598,9 +2598,3 @@ parameters:
 			identifier: empty.property
 			count: 1
 			path: system/src/Users/UserMutators.php
-
-		-
-			message: '#^Access to an undefined property Johncms\\Modules\\Collections\\Domain\\Models\\ContentCollectionSection\:\:\$child_sections_count\.$#'
-			identifier: property.notFound
-			count: 1
-			path: tests/Unit/Modules/Collections/Application/UseCases/ListCollectionSectionsUseCaseTest.php
