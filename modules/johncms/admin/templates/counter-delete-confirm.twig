@@ -1,27 +1,10 @@
 {#
-    Confirmation of deleting a counter.
+    Confirmation of deleting a counter as a page for a plain visit.
 
-    @var string message
-    @var string form_action
-    @var string back_url
+    @var array dialog What counter-delete-dialog.twig is given.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-6">
-            <div class="alert alert-danger">
-                <div class="pb-2">
-                    {{ message }}
-                </div>
-                <div class="d-flex">
-                    <form action="{{ form_action }}" method="post" class="me-2">
-                        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                        <button type="submit" class="btn btn-danger">{{ __('Delete') }}</button>
-                    </form>
-                    <a href="{{ back_url }}" class="btn btn-outline-secondary">{{ __('Cancel') }}</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include '@admin/components/ui/dialog-page.twig' with {dialog: '@admin/counter-delete-dialog.twig', data: dialog} only %}
 {% endblock %}

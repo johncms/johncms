@@ -1,0 +1,26 @@
+{#
+    Confirming the removal of a counter. Answered to the modal as it is, and put into a page of its
+    own (counter-delete-confirm.twig) for a plain visit.
+
+    @var string name
+    @var string form_action
+    @var string back_url
+#}
+{% embed '@admin/components/ui/dialog.twig' with {
+    title: __('Delete counter'),
+    action: form_action,
+    close_url: back_url,
+    name: name,
+} only %}
+    {% block body %}
+        <p class="mb-2">{{ __('The code of the counter is removed from every page of the site.') }}</p>
+        <div class="fw-semibold">{{ name }}</div>
+    {% endblock %}
+    {% block footer %}
+        <a href="{{ close_url }}" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</a>
+        <button type="submit" class="btn btn-danger">
+            {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+            {{ __('Delete') }}
+        </button>
+    {% endblock %}
+{% endembed %}

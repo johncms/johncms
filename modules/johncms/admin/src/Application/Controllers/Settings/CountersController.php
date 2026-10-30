@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Application\Controllers\Settings;
 
 use Johncms\Auth\CurrentUser;
+use Johncms\Modules\Admin\Application\Services\CounterRowMapper;
 use Johncms\Modules\Admin\Application\UseCases\GetCounterListUseCase;
 use Johncms\Modules\Admin\Application\UseCases\ManageCounterUseCase;
 use Johncms\Modules\Admin\Application\UseCases\SaveCounterUseCase;
 use Johncms\Modules\Admin\Domain\Models\Counter;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
 
 final readonly class CountersController
@@ -23,6 +25,8 @@ final readonly class CountersController
         private GetCounterListUseCase $getList,
         private SaveCounterUseCase $saveCounter,
         private ManageCounterUseCase $manageCounter,
+        private CounterRowMapper $rowMapper,
+        private Session $session,
     ) {
     }
 
@@ -32,8 +36,9 @@ final readonly class CountersController
         $this->navChain->add($title, self::URL);
 
         return new ViewResponse('@admin/counters.twig', $this->menu($title) + [
-            'items'   => $this->getList->execute(),
-            'add_url' => self::URL . '/new',
+            'rows'            => $this->rowMapper->rows($this->getList->execute()),
+            'add_url'         => self::URL . '/new',
+            'success_message' => (string) $this->session->getFlash('success_message'),
         ]);
     }
 
@@ -127,8 +132,9 @@ final readonly class CountersController
     {
         $enabled = $request->bodyInt('enabled') === 1;
         $this->manageCounter->toggle($id, $enabled);
+        $this->session->flash('success_message', $enabled ? __('The counter is turned on') : __('The counter is turned off'));
 
-        redirect(self::URL . '/' . $id);
+        redirect(self::URL);
     }
 
     public function up(int $id): ViewResponse
@@ -145,27 +151,37 @@ final readonly class CountersController
         redirect(self::URL);
     }
 
-    public function deleteConfirm(int $id): ViewResponse
+    public function deleteConfirm(Request $request, int $id): ViewResponse
     {
         $counter = $this->manageCounter->find($id);
         if ($counter === null) {
             return $this->error(__('Wrong data'));
         }
 
-        $title = __('Delete:') . ' ' . $counter->name;
+        $dialog = [
+            'name'        => $counter->name,
+            'form_action' => self::URL . '/' . $id . '/delete',
+            'back_url'    => self::URL,
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            return new ViewResponse('@admin/counter-delete-dialog.twig', $dialog);
+        }
+
+        $title = __('Delete counter');
         $this->navChain->add(__('Counters'), self::URL);
         $this->navChain->add($title);
 
-        return new ViewResponse('@admin/counter-delete-confirm.twig', $this->menu($title) + [
-            'message'     => __('Do you really want to delete?'),
-            'form_action' => self::URL . '/' . $id . '/delete',
-            'back_url'    => self::URL,
-        ]);
+        return new ViewResponse('@admin/counter-delete-confirm.twig', [
+            'title'  => $title,
+            'dialog' => $dialog,
+        ] + $this->menu($title));
     }
 
     public function delete(int $id): ViewResponse
     {
         $this->manageCounter->delete($id);
+        $this->session->flash('success_message', __('The counter is deleted'));
 
         redirect(self::URL);
     }

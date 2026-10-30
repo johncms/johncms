@@ -2745,3 +2745,54 @@ msgstr "Сменить язык по умолчанию"
 
 msgid "default"
 msgstr "по умолчанию"
+
+msgid "The counter is turned on"
+msgstr "Счётчик включён"
+
+msgid "The counter is turned off"
+msgstr "Счётчик выключен"
+
+msgid "Delete counter"
+msgstr "Удалить счётчик"
+
+msgid "The counter is deleted"
+msgstr "Счётчик удалён"
+
+msgid "Turn off"
+msgstr "Выключить"
+
+msgid "Turn on"
+msgstr "Включить"
+
+msgid "On every page"
+msgstr "На всех страницах"
+
+msgid "Only on the homepage"
+msgstr "Только на главной"
+
+msgid "On every page, its own code on the homepage"
+msgstr "На всех страницах, на главной — свой код"
+
+msgid "The code of the counter is removed from every page of the site."
+msgstr "Код счётчика будет убран со всех страниц сайта."
+
+msgid "Add counter"
+msgstr "Добавить счётчик"
+
+msgid "There are no counters yet"
+msgstr "Счётчиков пока нет"
+
+msgid "A counter is the code of an analytics service, such as Yandex Metrica or Google Analytics, printed at the bottom of every page."
+msgstr "Счётчик — это код сервиса аналитики, например Яндекс.Метрики или Google Analytics, который выводится внизу каждой страницы."
+
+msgid "Counter"
+msgstr "Счётчик"
+
+msgid "Where"
+msgstr "Где"
+
+msgid "After the cookie consent"
+msgstr "После согласия на cookie"
+
+msgid "The site prints the counters in this order."
+msgstr "Сайт выводит счётчики в этом порядке."

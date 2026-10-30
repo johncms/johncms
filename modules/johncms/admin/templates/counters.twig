@@ -1,53 +1,78 @@
 {#
-    The list of the analytics counters.
+    The analytics counters, in the order the site prints them at the bottom of every page.
 
-    @var iterable items   Counter models.
-    @var string   add_url
+    @var array  rows            Built by CounterRowMapper.
+    @var string add_url
+    @var string success_message Empty unless an action has just succeeded.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
-{% macro mini_form(action, label, csrf_token) %}
-    <form method="post" action="{{ action }}" class="d-inline me-2">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-        <button type="submit" class="btn btn-link p-0">{{ label }}</button>
-    </form>
-{% endmacro %}
+{% block page_actions %}
+    <a href="{{ add_url }}" class="btn btn-primary">
+        {% include '@admin/components/ui/icon.twig' with {name: 'plus', size: 14} only %}
+        {{ __('Add counter') }}
+    </a>
+{% endblock %}
 
 {% block content %}
-    {% import _self as forms %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
 
-    {% if items is empty %}
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
-    {% endif %}
-
-    {% for item in items %}
-        <div class="new_post-item without_avatar">
-            <div class="d-flex justify-content-between align-items-center">
-                <a href="/admin/counters/{{ item.id }}" class="h3">{{ item.name }}</a>
-                <div>
-                    {% if item.switch == 1 %}
-                        <span class="badge rounded-pill bg-success">{{ __('On') }}</span>
-                    {% else %}
-                        <span class="badge rounded-pill bg-danger">{{ __('Off') }}</span>
-                    {% endif %}
-                </div>
+    <div class="card">
+        {% if rows is empty %}
+            {% include '@admin/components/ui/empty-state.twig' with {
+                icon: 'chart-column',
+                title: __('There are no counters yet'),
+                description: __('A counter is the code of an analytics service, such as Yandex Metrica or Google Analytics, printed at the bottom of every page.'),
+            } only %}
+            <div class="text-center pb-4">
+                <a href="{{ add_url }}" class="btn btn-outline-secondary">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'plus', size: 14} only %}
+                    {{ __('Add counter') }}
+                </a>
             </div>
-            <div class="mt-2 d-flex align-items-center">
-                {{ forms.mini_form('/admin/counters/' ~ item.id ~ '/up', __('Up'), app.csrf_token) }}
-                {{ forms.mini_form('/admin/counters/' ~ item.id ~ '/down', __('Down'), app.csrf_token) }}
-                <a href="/admin/counters/{{ item.id }}/edit" class="me-2">{{ __('Edit') }}</a>
-                <a href="/admin/counters/{{ item.id }}/delete" class="me-2 text-danger">{{ __('Delete') }}</a>
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle admin-counters-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ __('Counter') }}</th>
+                            <th scope="col" class="d-none d-md-table-cell">{{ __('Where') }}</th>
+                            <th scope="col">{{ __('Status') }}</th>
+                            <th scope="col"><span class="visually-hidden">{{ __('Actions') }}</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in rows %}
+                            <tr>
+                                <td>
+                                    <a class="admin-counters-table__name" href="{{ row.edit_url }}">{{ row.name }}</a>
+                                    {% if row.cookie_consent %}
+                                        <div class="admin-counters-table__sub">
+                                            {% include '@admin/components/ui/icon.twig' with {name: 'cookie', size: 12} only %}
+                                            {{ __('After the cookie consent') }}
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td class="d-none d-md-table-cell text-body-secondary">{{ row.where }}</td>
+                                <td>
+                                    {% if row.enabled %}
+                                        <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ __('On') }}</span>
+                                    {% else %}
+                                        <span class="badge rounded-pill text-bg-light badge-dot">{{ __('Off') }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end">
+                                    {% include '@admin/components/ui/row-actions.twig' with {actions: row.actions, label: __('Actions')} only %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-        </div>
-    {% endfor %}
-
-    <div class="mt-2">
-        {% if items is not empty %}
-            <div class="mb-2">{{ __('Total:') }} {{ items|length }}</div>
+            <div class="card-footer admin-list-footer">
+                <span class="admin-list-footer__total">{{ __('Total:') }} {{ rows|length|format_number }}</span>
+                <span class="text-body-secondary small">{{ __('The site prints the counters in this order.') }}</span>
+            </div>
         {% endif %}
-        <a href="{{ add_url }}" class="btn btn-primary">{{ __('Add') }}</a>
-    </div>
-    <div class="mt-2">
-        <a href="/admin/">{{ __('Back') }}</a>
     </div>
 {% endblock %}

@@ -1,0 +1,32 @@
+// The analytics counters (admin::counters) and the form of one.
+
+.admin-counters-table {
+  td {
+    white-space: nowrap;
+  }
+
+  td:first-child {
+    width: 100%;
+    min-width: 9rem;
+    white-space: normal;
+  }
+}
+
+.admin-counters-table__name {
+  font-weight: 600;
+  color: var(--fg);
+
+  &:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+}
+
+.admin-counters-table__sub {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 2px;
+  font-size: 0.75rem;
+  color: var(--fg-dim);
+}
