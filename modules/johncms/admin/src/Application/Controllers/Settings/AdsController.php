@@ -341,6 +341,7 @@ final readonly class AdsController
 
         return new ViewResponse('@admin/ad-form.twig', $this->menu($title, $title) + [
             'form_action'      => self::URL,
+            'back_url'         => $this->listUrl((int) $fields['type'], 1),
             'id'               => $id,
             'fields'           => $fields,
             'errors'           => $errors,

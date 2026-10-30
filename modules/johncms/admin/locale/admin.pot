@@ -29,7 +29,7 @@ msgstr ""
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:34
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:38
 #: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:134
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:361
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:362
 #: modules/johncms/admin/src/Application/Controllers/Users/DeleteUserController.php:64
 #: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:221
 #: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:320
@@ -142,7 +142,7 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:156
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:190
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:339
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:417
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:418
 msgid "Advertisement"
 msgstr ""
 
@@ -302,7 +302,7 @@ msgstr ""
 #: themes/default/templates/admin/pages/confirm-dialog.twig:44
 #: modules/johncms/admin/templates/ad-clear-dialog.twig:19
 #: modules/johncms/admin/templates/ad-delete-dialog.twig:28
-#: modules/johncms/admin/templates/ad-form.twig:31
+#: modules/johncms/admin/templates/ad-form.twig:37
 #: modules/johncms/admin/templates/antiflood.twig:96
 #: modules/johncms/admin/templates/bans/amnesty-dialog.twig:31
 #: modules/johncms/admin/templates/counter-delete-confirm.twig:22
@@ -681,85 +681,85 @@ msgstr ""
 msgid "Add link"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:359
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:360
 #: modules/johncms/admin/src/Application/Services/AdRowMapper.php:88
 msgid "Everyone"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:359
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:360
 msgid "Visitors who are signed in and guests can see this link."
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:360
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:361
 #: modules/johncms/admin/src/Application/Services/AdRowMapper.php:88
 #: modules/johncms/admin/src/Application/Services/RoleListRowMapper.php:57
 msgid "Guests"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:360
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:361
 msgid "Show this link only to visitors who are not signed in."
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:361
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:362
 msgid "Show this link only to signed-in users."
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:371
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:372
 msgid "Before the menu"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:371
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:372
 msgid "Above the site menu."
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:372
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:373
 msgid "After the menu"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:372
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:373
 msgid "Below the site menu."
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:373
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:374
 msgid "At the top of the page"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:373
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:374
 msgid "At the start of the page content."
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:374
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:375
 msgid "At the bottom of the page"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:374
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:375
 msgid "After the page content."
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:384
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:385
 #: modules/johncms/admin/src/Application/Services/AdRowMapper.php:80
 msgid "All pages"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:384
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:385
 msgid "Show on the homepage and every other page."
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:385
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:386
 #: modules/johncms/admin/src/Application/Services/AdRowMapper.php:80
 msgid "Only on Homepage"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:385
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:386
 msgid "Show on the homepage only."
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:386
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:387
 #: modules/johncms/admin/src/Application/Services/AdRowMapper.php:80
 msgid "On all, except Homepage"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:386
+#: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:387
 msgid "Show on every page except the homepage."
 msgstr ""
 
@@ -1495,7 +1495,7 @@ msgstr ""
 msgid "Are you sure want to delete link?"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:34
+#: modules/johncms/admin/templates/ad-form.twig:40
 #: modules/johncms/admin/templates/antiflood.twig:99
 #: modules/johncms/admin/templates/captcha-settings.twig:45
 #: modules/johncms/admin/templates/counter-preview.twig:51
@@ -1514,17 +1514,16 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:50
-#: modules/johncms/admin/templates/role-form.twig:42
-msgid "Main"
-msgstr ""
-
-#: modules/johncms/admin/templates/ad-form.twig:55
+#: modules/johncms/admin/templates/ad-form.twig:56
 #: modules/johncms/admin/templates/ads.twig:54
 msgid "Link"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:60
+#: modules/johncms/admin/templates/ad-form.twig:59
+msgid "Address"
+msgstr ""
+
+#: modules/johncms/admin/templates/ad-form.twig:64
 #: modules/johncms/admin/templates/counter-preview.twig:23
 #: modules/johncms/admin/templates/counter-view.twig:21
 #: modules/johncms/admin/templates/settings.twig:85
@@ -1533,68 +1532,89 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:63
-msgid "To change the name when updating pages, you must wtite names trought the symbol |"
+#: modules/johncms/admin/templates/ad-form.twig:67
+msgid "Several titles separated by | are shown in turn, one per page view."
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:66
+#: modules/johncms/admin/templates/ad-form.twig:70
 msgid "Color"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:72
-msgid "In the format FFFFFF, if you do not want to use link color, simply do not fill this field"
+#: modules/johncms/admin/templates/ad-form.twig:73
+msgid "Pick a color"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:75
-msgid "Hits"
+#: modules/johncms/admin/templates/ad-form.twig:78
+msgid "Six hexadecimal digits. Leave it empty to keep the color of the theme."
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:77
-msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
-msgstr ""
-
-#: modules/johncms/admin/templates/ad-form.twig:80
-msgid "Days"
-msgstr ""
-
-#: modules/johncms/admin/templates/ad-form.twig:82
-msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
-msgstr ""
-
-#: modules/johncms/admin/templates/ad-form.twig:87
-msgid "Direct Link"
+#: modules/johncms/admin/templates/ad-form.twig:84
+#: modules/johncms/admin/templates/ads.twig:56
+#: modules/johncms/admin/templates/ads.twig:78
+msgid "Limits"
 msgstr ""
 
 #: modules/johncms/admin/templates/ad-form.twig:88
-msgid "Click statistics won't be counted, If the direct link is turned on"
+msgid "Hits"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:98
-#: modules/johncms/admin/templates/ads.twig:115
-msgid "Show"
+#: modules/johncms/admin/templates/ad-form.twig:90
+msgid "The link is hidden after this many clicks. 0 means no limit."
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:108
-msgid "Disposition"
+#: modules/johncms/admin/templates/ad-form.twig:93
+msgid "Days"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:118
-msgid "Layout"
+#: modules/johncms/admin/templates/ad-form.twig:95
+msgid "The link is hidden this many days after it was added. 0 means no limit."
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:128
+#: modules/johncms/admin/templates/ad-form.twig:100
+msgid "Direct Link"
+msgstr ""
+
+#: modules/johncms/admin/templates/ad-form.twig:101
+msgid "The link leads straight to the address: its clicks are not counted and the hit limit does not apply."
+msgstr ""
+
+#: modules/johncms/admin/templates/ad-form.twig:109
+msgid "Preview"
+msgstr ""
+
+#: modules/johncms/admin/templates/ad-form.twig:114
+msgid "Title of the link"
+msgstr ""
+
+#: modules/johncms/admin/templates/ad-form.twig:116
+msgid "This is how the link looks on the site; the colors of the theme may differ."
+msgstr ""
+
+#: modules/johncms/admin/templates/ad-form.twig:123
+msgid "Who sees it"
+msgstr ""
+
+#: modules/johncms/admin/templates/ad-form.twig:130
+msgid "Place on the page"
+msgstr ""
+
+#: modules/johncms/admin/templates/ad-form.twig:137
+msgid "Pages"
+msgstr ""
+
+#: modules/johncms/admin/templates/ad-form.twig:144
 msgid "Styling links"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:132
+#: modules/johncms/admin/templates/ad-form.twig:146
 msgid "Bold"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:132
+#: modules/johncms/admin/templates/ad-form.twig:146
 msgid "Italic"
 msgstr ""
 
-#: modules/johncms/admin/templates/ad-form.twig:132
+#: modules/johncms/admin/templates/ad-form.twig:146
 msgid "Underline"
 msgstr ""
 
@@ -1612,11 +1632,6 @@ msgstr ""
 #: modules/johncms/admin/templates/ads.twig:55
 #: modules/johncms/admin/templates/ads.twig:74
 msgid "Shown to"
-msgstr ""
-
-#: modules/johncms/admin/templates/ads.twig:56
-#: modules/johncms/admin/templates/ads.twig:78
-msgid "Limits"
 msgstr ""
 
 #: modules/johncms/admin/templates/ads.twig:57
@@ -1688,6 +1703,10 @@ msgstr ""
 
 #: modules/johncms/admin/templates/ads.twig:113
 msgid "Hide"
+msgstr ""
+
+#: modules/johncms/admin/templates/ads.twig:115
+msgid "Show"
 msgstr ""
 
 #: modules/johncms/admin/templates/ads.twig:126
@@ -2526,6 +2545,10 @@ msgstr ""
 
 #: modules/johncms/admin/templates/modules.twig:56
 msgid "Short name"
+msgstr ""
+
+#: modules/johncms/admin/templates/role-form.twig:42
+msgid "Main"
 msgstr ""
 
 #: modules/johncms/admin/templates/role-form.twig:46

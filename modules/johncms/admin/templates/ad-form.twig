@@ -2,33 +2,39 @@
     The form of an advertising link, for a new one and for an existing one.
 
     @var string     form_action
+    @var string     back_url         The list the form came from.
     @var int|null   id               Null when a new link is being added.
     @var array      fields           Values of the form, keyed by field name.
     @var array      errors           Validation messages keyed by field, empty on the first render.
-    @var array      audience_options Visitors the link is shown to: value, label.
-    @var array      place_options    Place on the page: value, label.
-    @var array      layout_options   Pages the link appears on: value, label.
+    @var array      audience_options Visitors the link is shown to: value, label, hint.
+    @var array      place_options    Place on the page: value, label, hint.
+    @var array      layout_options   Pages the link appears on: value, label, hint.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
 {% macro choices(name, options, value) %}
-    <div class="row g-3">
+    <div class="d-flex flex-column gap-2">
         {% for option in options %}
-            <div class="col-md-6">
-                <div class="form-check">
-                    <input type="radio" class="form-check-input" name="{{ name }}" value="{{ option.value }}" id="ad-{{ name }}-{{ option.value }}"{% if value == option.value %} checked{% endif %}>
-                    <label class="form-check-label" for="ad-{{ name }}-{{ option.value }}">
-                        {{ option.label }}
-                        <span class="form-text d-block mt-0">{{ option.hint }}</span>
-                    </label>
-                </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="{{ name }}" value="{{ option.value }}" id="ad-{{ name }}-{{ option.value }}"{% if value == option.value %} checked{% endif %}>
+                <label class="form-check-label" for="ad-{{ name }}-{{ option.value }}">
+                    {{ option.label }}
+                    <span class="form-text d-block mt-0">{{ option.hint }}</span>
+                </label>
             </div>
         {% endfor %}
     </div>
 {% endmacro %}
 
+{% macro card(icon, title) %}
+    <div class="card-header">
+        {% include '@admin/components/ui/icon.twig' with {name: icon, size: 16} only %}
+        <h2 class="h6 mb-0 ms-2">{{ title }}</h2>
+    </div>
+{% endmacro %}
+
 {% block page_actions %}
-    <a class="btn btn-secondary" href="/admin/ads?type={{ fields.type }}">{{ __('Cancel') }}</a>
+    <a class="btn btn-outline-secondary" href="{{ back_url }}">{{ __('Cancel') }}</a>
     <button type="submit" class="btn btn-primary" form="ad-form">
         {% include '@admin/components/ui/icon.twig' with {name: 'save', size: 14} only %}
         {{ __('Save') }}
@@ -37,108 +43,114 @@
 
 {% block content %}
     {% import _self as form %}
+    {% set names = fields.name|split('|')|map(name => name|trim)|filter(name => name is not empty) %}
 
-    <form action="{{ form_action }}" method="post" id="ad-form" class="admin-ad-form">
+    <form action="{{ form_action }}" method="post" id="ad-form" class="row g-3 align-items-start" data-ad-form>
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         {% if id %}
             <input type="hidden" name="id" value="{{ id }}">
         {% endif %}
 
-        <div class="card">
-            <div class="card-header">
-                {% include '@admin/components/ui/icon.twig' with {name: 'link', size: 15, class: 'text-body-tertiary'} only %}
-                {{ __('Main') }}
-            </div>
-            <div class="card-body">
-                <div class="row g-3">
-                    <div class="col-12">
-                        <label class="form-label" for="ad-link">{{ __('Link') }}</label>
+        <div class="col-lg-8 d-flex flex-column gap-3">
+            <section class="card">
+                {{ form.card('link', __('Link')) }}
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label" for="ad-link">{{ __('Address') }}</label>
                         <input type="url" name="link" class="form-control{{ errors.link is defined ? ' is-invalid' }}" id="ad-link" value="{{ fields.link }}" placeholder="https://" autocomplete="url">
                         {% include '@theme/components/field-errors.twig' with {errors: errors.link|default([])} only %}
                     </div>
-                    <div class="col-12">
+                    <div class="mb-3">
                         <label class="form-label" for="ad-name">{{ __('Title') }}</label>
-                        <input type="text" name="name" class="form-control{{ errors.name is defined ? ' is-invalid' }}" id="ad-name" value="{{ fields.name }}">
+                        <input type="text" name="name" class="form-control{{ errors.name is defined ? ' is-invalid' }}" id="ad-name" value="{{ fields.name }}" data-ad-name>
                         {% include '@theme/components/field-errors.twig' with {errors: errors.name|default([])} only %}
-                        <div class="form-text">{{ __('To change the name when updating pages, you must wtite names trought the symbol |') }}</div>
+                        <div class="form-text">{{ __('Several titles separated by | are shown in turn, one per page view.') }}</div>
                     </div>
-                    <div class="col-md-6">
+                    <div>
                         <label class="form-label" for="ad-color">{{ __('Color') }}</label>
-                        <div class="input-group">
+                        <div class="input-group has-validation admin-ad-form__color">
+                            <input type="color" class="form-control form-control-color" value="#{{ fields.color matches '/^[\\da-f]{6}$/i' ? fields.color : '000000' }}"
+                                   aria-label="{{ __('Pick a color') }}" data-ad-color-picker hidden>
                             <span class="input-group-text">#</span>
-                            <input type="text" name="color" class="form-control font-monospace{{ errors.color is defined ? ' is-invalid' }}" id="ad-color" value="{{ fields.color }}" maxlength="7" autocomplete="off">
+                            <input type="text" name="color" class="form-control font-monospace{{ errors.color is defined ? ' is-invalid' }}" id="ad-color" value="{{ fields.color }}" maxlength="7" autocomplete="off" placeholder="D9480F" data-ad-color>
                             {% include '@theme/components/field-errors.twig' with {errors: errors.color|default([])} only %}
                         </div>
-                        <div class="form-text">{{ __('In the format FFFFFF, if you do not want to use link color, simply do not fill this field') }}</div>
+                        <div class="form-text">{{ __('Six hexadecimal digits. Leave it empty to keep the color of the theme.') }}</div>
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="ad-count">{{ __('Hits') }}</label>
-                        <input type="number" name="count" class="form-control" id="ad-count" value="{{ fields.count_link }}" min="0">
-                        <div class="form-text">{{ __('Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited')|raw }}</div>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="ad-days">{{ __('Days') }}</label>
-                        <input type="number" name="day" class="form-control" id="ad-days" value="{{ fields.day }}" min="0">
-                        <div class="form-text">{{ __('Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited')|raw }}</div>
-                    </div>
-                    <div class="col-md-6 d-flex align-items-center">
-                        <div class="form-check form-switch">
-                            <input type="checkbox" class="form-check-input" role="switch" name="show" value="1" id="ad-direct-link"{% if fields.show %} checked{% endif %}>
-                            <label class="form-check-label" for="ad-direct-link">{{ __('Direct Link') }}</label>
-                            <div class="form-text">{{ __('Click statistics won\'t be counted, If the direct link is turned on') }}</div>
+                </div>
+            </section>
+
+            <section class="card">
+                {{ form.card('gauge', __('Limits')) }}
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label class="form-label" for="ad-count">{{ __('Hits') }}</label>
+                            <input type="number" name="count" class="form-control" id="ad-count" value="{{ fields.count_link }}" min="0">
+                            <div class="form-text">{{ __('The link is hidden after this many clicks. 0 means no limit.') }}</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label" for="ad-days">{{ __('Days') }}</label>
+                            <input type="number" name="day" class="form-control" id="ad-days" value="{{ fields.day }}" min="0">
+                            <div class="form-text">{{ __('The link is hidden this many days after it was added. 0 means no limit.') }}</div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-check form-switch">
+                                <input type="checkbox" class="form-check-input" role="switch" name="show" value="1" id="ad-direct-link"{% if fields.show %} checked{% endif %}>
+                                <label class="form-check-label" for="ad-direct-link">{{ __('Direct Link') }}</label>
+                                <div class="form-text mt-0">{{ __('The link leads straight to the address: its clicks are not counted and the hit limit does not apply.') }}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            <section class="card">
+                {{ form.card('eye', __('Preview')) }}
+                <div class="card-body">
+                    <div class="admin-ad-form__preview">
+                        <span class="admin-ad-form__preview-link{{ fields.bold ? ' fw-bold' }}{{ fields.italic ? ' fst-italic' }}{{ fields.underline ? ' text-decoration-underline' }}"
+                              {% if fields.color matches '/^[\\da-f]{6}$/i' %}style="color: #{{ fields.color }}"{% endif %}
+                              data-ad-preview data-empty="{{ __('Title of the link') }}">{{ names|first ?: __('Title of the link') }}</span>
+                    </div>
+                    <div class="form-text">{{ __('This is how the link looks on the site; the colors of the theme may differ.') }}</div>
+                </div>
+            </section>
         </div>
 
-        <div class="card">
-            <div class="card-header">
-                {% include '@admin/components/ui/icon.twig' with {name: 'users', size: 15, class: 'text-body-tertiary'} only %}
-                {{ __('Show') }}
-            </div>
-            <div class="card-body">
-                {{ form.choices('view', audience_options, fields.view) }}
-            </div>
-        </div>
+        <div class="col-lg-4 d-flex flex-column gap-3">
+            <section class="card">
+                {{ form.card('users', __('Who sees it')) }}
+                <div class="card-body">
+                    {{ form.choices('view', audience_options, fields.view) }}
+                </div>
+            </section>
 
-        <div class="card">
-            <div class="card-header">
-                {% include '@admin/components/ui/icon.twig' with {name: 'pin', size: 15, class: 'text-body-tertiary'} only %}
-                {{ __('Disposition') }}
-            </div>
-            <div class="card-body">
-                {{ form.choices('type', place_options, fields.type) }}
-            </div>
-        </div>
+            <section class="card">
+                {{ form.card('pin', __('Place on the page')) }}
+                <div class="card-body">
+                    {{ form.choices('type', place_options, fields.type) }}
+                </div>
+            </section>
 
-        <div class="card">
-            <div class="card-header">
-                {% include '@admin/components/ui/icon.twig' with {name: 'layout-grid', size: 15, class: 'text-body-tertiary'} only %}
-                {{ __('Layout') }}
-            </div>
-            <div class="card-body">
-                {{ form.choices('layout', layout_options, fields.layout) }}
-            </div>
-        </div>
+            <section class="card">
+                {{ form.card('layout-grid', __('Pages')) }}
+                <div class="card-body">
+                    {{ form.choices('layout', layout_options, fields.layout) }}
+                </div>
+            </section>
 
-        <div class="card">
-            <div class="card-header">
-                {% include '@admin/components/ui/icon.twig' with {name: 'palette', size: 15, class: 'text-body-tertiary'} only %}
-                {{ __('Styling links') }}
-            </div>
-            <div class="card-body">
-                <div class="row g-3">
+            <section class="card">
+                {{ form.card('palette', __('Styling links')) }}
+                <div class="card-body d-flex flex-column gap-2">
                     {% for key, label in {bold: __('Bold'), italic: __('Italic'), underline: __('Underline')} %}
-                        <div class="col-md-4">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="{{ key }}" value="1" id="ad-style-{{ key }}"{% if fields[key] %} checked{% endif %}>
-                                <label class="form-check-label" for="ad-style-{{ key }}">{{ label }}</label>
-                            </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="{{ key }}" value="1" id="ad-style-{{ key }}"{% if fields[key] %} checked{% endif %} data-ad-style="{{ key }}">
+                            <label class="form-check-label" for="ad-style-{{ key }}">{{ label }}</label>
                         </div>
                     {% endfor %}
                 </div>
-            </div>
+            </section>
         </div>
     </form>
 {% endblock %}

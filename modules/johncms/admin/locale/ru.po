@@ -2679,3 +2679,42 @@ msgstr "Ниже"
 
 msgid "Delete link"
 msgstr "Удалить ссылку"
+
+msgid "Address"
+msgstr "Адрес"
+
+msgid "Several titles separated by | are shown in turn, one per page view."
+msgstr "Несколько названий через | показываются по очереди — по одному при каждом просмотре страницы."
+
+msgid "Pick a color"
+msgstr "Выбрать цвет"
+
+msgid "Six hexadecimal digits. Leave it empty to keep the color of the theme."
+msgstr "Шесть шестнадцатеричных цифр. Оставьте пустым, чтобы ссылка была цвета темы."
+
+msgid "The link is hidden after this many clicks. 0 means no limit."
+msgstr "После стольких переходов ссылка скрывается. 0 — без ограничений."
+
+msgid "The link is hidden this many days after it was added. 0 means no limit."
+msgstr "Через столько дней после добавления ссылка скрывается. 0 — без ограничений."
+
+msgid "The link leads straight to the address: its clicks are not counted and the hit limit does not apply."
+msgstr "Ссылка ведёт прямо на адрес: переходы не считаются, и лимит переходов не действует."
+
+msgid "Preview"
+msgstr "Предпросмотр"
+
+msgid "Title of the link"
+msgstr "Название ссылки"
+
+msgid "This is how the link looks on the site; the colors of the theme may differ."
+msgstr "Так ссылка выглядит на сайте; цвета темы могут отличаться."
+
+msgid "Who sees it"
+msgstr "Кому показывать"
+
+msgid "Place on the page"
+msgstr "Место на странице"
+
+msgid "Pages"
+msgstr "Страницы"
