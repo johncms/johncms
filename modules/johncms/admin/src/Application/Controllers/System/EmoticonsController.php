@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Application\Controllers\System;
 
 use Johncms\Http\Session;
+use Johncms\Modules\Admin\Application\UseCases\GetSmileyFoldersUseCase;
 use Johncms\Modules\Admin\Application\UseCases\RebuildSmiliesCacheUseCase;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
@@ -19,6 +20,7 @@ final readonly class EmoticonsController
         private NavChain $navChain,
         private RebuildSmiliesCacheUseCase $rebuildSmiliesCacheUseCase,
         private Session $session,
+        private GetSmileyFoldersUseCase $getFolders,
     ) {
     }
 
@@ -35,7 +37,7 @@ final readonly class EmoticonsController
             return $this->renderPage(__('Error updating cache'));
         }
 
-        $this->session->flash('success_message', __('Smilie cache updated successfully') . ': ' . $total);
+        $this->session->flash('success_message', sprintf(__('The list of the smilies is built again. Pictures: %d.'), $total));
         redirect(self::URL);
     }
 
@@ -51,6 +53,8 @@ final readonly class EmoticonsController
                 'page_title'      => $title,
                 'sys_menu'        => ['emoticons' => true],
                 'form_action'     => self::URL,
+                'folders'         => $this->getFolders->execute(),
+                'catalog_url'     => '/help/smilies',
                 'error_message'   => $errorMessage,
                 'success_message' => (string) $this->session->getFlash('success_message'),
             ]

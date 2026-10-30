@@ -181,3 +181,9 @@ body.dark {
 .admin-captcha-provider--active {
   border-color: var(--accent);
 }
+
+// A smiley in the overview of the folders: pictures of any size line up at one height.
+.admin-smiley {
+  max-height: 32px;
+  max-width: 48px;
+}

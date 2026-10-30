@@ -1,23 +1,89 @@
 {#
-    Rebuilding the cache of the smilies.
+    The smilies of the site: the folders they are taken from, how many pictures each holds and a
+    few of them. The list is built from the folders by itself; the button builds it again at once.
 
+    @var array  folders         Rows: folder, kind (simply | admin | user), count, samples, code.
+    @var string catalog_url     The public catalogue of the smilies.
     @var string form_action
     @var string error_message   Empty unless the last run failed.
     @var string success_message Empty unless a run has just succeeded.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
-{% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+{% block page_actions %}
+    <a href="{{ catalog_url }}" class="btn btn-outline-secondary">
+        {% include '@admin/components/ui/icon.twig' with {name: 'external-link', size: 14} only %}
+        {{ __('Catalogue on the site') }}
+    </a>
+    <form method="post" action="{{ form_action }}" class="d-inline">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+        <button type="submit" class="btn btn-outline-secondary" title="{{ __('The list is built by itself; build it now if a picture does not show up.') }}">
+            {% include '@admin/components/ui/icon.twig' with {name: 'refresh-cw', size: 14} only %}
+            {{ __('Build the list again') }}
+        </button>
+    </form>
+{% endblock %}
 
-    <div class="alert alert-info">
-        {{ __('Rebuild the smilies cache after adding or removing smilies in the assets/emoticons directory') }}
+{% macro folder_card(row, label) %}
+    <section class="card h-100">
+        <div class="card-header d-flex align-items-center gap-2">
+            {% include '@admin/components/ui/icon.twig' with {name: 'folder', size: 16} only %}
+            <code class="text-body">{{ row.folder }}</code>
+            {% if label|default('') %}<span class="text-body-secondary small">{{ label }}</span>{% endif %}
+            <span class="badge rounded-pill text-bg-light border ms-auto">{{ row.count }}</span>
+        </div>
+        <div class="card-body d-flex flex-column gap-2">
+            {% if row.samples is empty %}
+                <div class="text-body-secondary small">{{ __('The folder is empty.') }}</div>
+            {% else %}
+                <div class="d-flex flex-wrap gap-2 align-items-center">
+                    {% for url in row.samples %}
+                        <img src="{{ url }}" alt="" loading="lazy" class="admin-smiley">
+                    {% endfor %}
+                    {% if row.count > row.samples|length %}
+                        <span class="text-body-secondary small">+{{ row.count - row.samples|length }}</span>
+                    {% endif %}
+                </div>
+                <div class="form-text mt-auto">{{ __('Written as') }} <code>{{ row.code }}</code></div>
+            {% endif %}
+        </div>
+    </section>
+{% endmacro %}
+
+{% block content %}
+    {% import _self as ui %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: error_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+
+    <section class="card mb-4">
+        <div class="card-header">
+            {% include '@admin/components/ui/icon.twig' with {name: 'info', size: 16} only %}
+            <h2 class="h6 mb-0 ms-2">{{ __('How to add a smiley') }}</h2>
+        </div>
+        <div class="card-body">
+            <p class="mb-2">{{ __('Put a picture (GIF, PNG or JPG) in one of the folders of %s. Its file name becomes the code; the list of the smilies picks it up by itself on the next page.')|format('<code>public/assets/emoticons</code>')|raw }}</p>
+            <ul class="mb-0 small">
+                <li><code>simply</code> — {{ __('the simplest codes, without the closing colon: smile.gif is written :smile.') }}</li>
+                <li><code>admin</code> — {{ __('only the staff may use them.') }}</li>
+                <li><code>user/&lt;category&gt;</code> — {{ __('the categories of the catalogue; a code is written in Latin letters or in their Cyrillic spelling: kot.gif is :kot: and :кот:.') }}</li>
+            </ul>
+        </div>
+    </section>
+
+    {# The two folders of their own share a row; the categories follow under a heading. #}
+    <div class="row g-3 mb-4">
+        {% for row in folders|filter(row => row.kind != 'user') %}
+            <div class="col-md-6 {{ row.kind == 'admin' ? 'col-xl-8' : 'col-xl-4' }}">{{ ui.folder_card(row, row.kind == 'admin' ? __('For the staff') : __('Simple')) }}</div>
+        {% endfor %}
     </div>
 
-    <form method="post" action="{{ form_action }}">
-        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-        <input type="submit" value="{{ __('Update cache') }}" class="btn btn-primary">
-        <a href="/admin/" class="btn btn-secondary">{{ __('Cancel') }}</a>
-    </form>
+    {% set categories = folders|filter(row => row.kind == 'user') %}
+    {% if categories is not empty %}
+        <h2 class="h6 mb-2">{{ __('Categories of the catalogue') }}</h2>
+        <div class="row g-3">
+            {% for row in categories %}
+                <div class="col-md-6 col-xl-4">{{ ui.folder_card(row) }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}

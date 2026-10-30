@@ -2976,3 +2976,42 @@ msgstr "Сервисы капчи"
 
 msgid "Each needs the keys it gives in its own panel."
 msgstr "Каждому нужны ключи, которые он выдаёт в своём кабинете."
+
+msgid "The list of the smilies is built again. Pictures: %d."
+msgstr "Список смайликов собран заново. Картинок: %d."
+
+msgid "Catalogue on the site"
+msgstr "Каталог на сайте"
+
+msgid "The list is built by itself; build it now if a picture does not show up."
+msgstr "Список собирается сам; соберите его сейчас, если картинка не появилась."
+
+msgid "Build the list again"
+msgstr "Собрать список заново"
+
+msgid "How to add a smiley"
+msgstr "Как добавить смайлик"
+
+msgid "Put a picture (GIF, PNG or JPG) in one of the folders of %s. Its file name becomes the code; the list of the smilies picks it up by itself on the next page."
+msgstr "Положите картинку (GIF, PNG или JPG) в одну из папок %s. Имя файла станет кодом; список смайликов подхватит её сам на следующей странице."
+
+msgid "the simplest codes, without the closing colon: smile.gif is written :smile."
+msgstr "простые коды без двоеточия в конце: smile.gif пишется как :smile."
+
+msgid "only the staff may use them."
+msgstr "ими может пользоваться только персонал."
+
+msgid "the categories of the catalogue; a code is written in Latin letters or in their Cyrillic spelling: kot.gif is :kot: and :кот:."
+msgstr "категории каталога; код пишется латиницей или кириллицей: kot.gif — это :kot: и :кот:."
+
+msgid "Simple"
+msgstr "Простые"
+
+msgid "Categories of the catalogue"
+msgstr "Категории каталога"
+
+msgid "The folder is empty."
+msgstr "Папка пуста."
+
+msgid "Written as"
+msgstr "Код:"
