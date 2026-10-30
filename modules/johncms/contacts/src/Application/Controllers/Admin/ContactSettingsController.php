@@ -125,12 +125,22 @@ final readonly class ContactSettingsController
 
         $successMessage = $this->session->getFlash('success_message');
 
+        // The public page falls back to this language, so it is the one opened first.
+        $defaultLanguage = (string) (config('johncms')['lng'] ?? 'en');
+        $defaultLanguageName = $defaultLanguage;
+
         $languages = [];
         foreach (config('johncms')['lng_list'] ?? [] as $code => $data) {
-            $languages[] = ['code' => $code, 'name' => $data['name'] ?? $code];
+            $name = $data['name'] ?? $code;
+            $languages[] = ['code' => $code, 'name' => $name, 'default' => $code === $defaultLanguage];
+            if ($code === $defaultLanguage) {
+                $defaultLanguageName = $name;
+            }
         }
-        if (! in_array($activeLanguage, array_column($languages, 'code'), true)) {
-            $activeLanguage = $languages[0]['code'] ?? '';
+
+        $codes = array_column($languages, 'code');
+        if (! in_array($activeLanguage, $codes, true)) {
+            $activeLanguage = in_array($defaultLanguage, $codes, true) ? $defaultLanguage : ($codes[0] ?? '');
         }
 
         $socials = implode(
@@ -149,6 +159,8 @@ final readonly class ContactSettingsController
                 'messages_url'    => self::URL . '/messages',
                 'languages'       => $languages,
                 'active_language' => $activeLanguage,
+                'default_language' => ['code' => $defaultLanguage, 'name' => $defaultLanguageName],
+                'languages_url'   => '/admin/languages',
                 'settings'        => $settings,
                 'multilingual_fields' => [
                     ['name' => 'contacts_address', 'label' => __('Address'), 'values' => $settings->addresses],

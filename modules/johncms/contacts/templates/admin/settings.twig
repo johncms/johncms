@@ -3,7 +3,10 @@
 
     @var string form_action
     @var string messages_url
-    @var array  languages           Languages the texts may be written in: code, name.
+    @var array  languages           Languages the texts may be written in: code, name, default.
+    @var string active_language     Code of the language whose fields are shown first.
+    @var array  default_language    The language the public page falls back to: code, name.
+    @var string languages_url       Where the default language is chosen.
     @var object settings            ContactSettingsDTO.
     @var array  multilingual_fields Fields kept per language: name, label, values.
     @var string socials             One link per line.
@@ -35,9 +38,20 @@
                 <section class="card h-100">
                     <div class="card-header">
                         {% include '@admin/components/ui/icon.twig' with {name: 'languages', size: 16} only %}
-                        <h2 class="h6 mb-0 ms-2">{{ __('Contacts') }}</h2>
+                        <h2 class="h6 mb-0 ms-2">{{ __('Page texts') }}</h2>
                     </div>
                     <div class="card-body">
+                        <div class="alert alert-info">
+                            <p class="mb-2">{{ __('Visitors see these texts in the language of their interface. When a field is empty for that language, the text in the default language of the site — %s — is shown instead.')|format(default_language.name) }}</p>
+                            {% if default_language.code != 'en' %}
+                                <p class="mb-2">{{ __('When the default language is empty too, the English text is shown.') }}</p>
+                            {% endif %}
+                            <p class="mb-0">
+                                {{ __('It is enough to fill in the default language. Fill in another language only where its text has to differ.') }}
+                                <a href="{{ languages_url }}" class="alert-link">{{ __('Change the default language') }}</a>
+                            </p>
+                        </div>
+
                         <div class="dropdown contacts-settings__language-dropdown" data-contacts-language-switch>
                             <input type="hidden" name="contacts_language" value="{{ active_language }}" data-contacts-language-value>
                             <button type="button" class="admin-filter" data-bs-toggle="dropdown" aria-expanded="false">
@@ -64,6 +78,9 @@
                                                 {% endif %}
                                             </span>
                                             {{ language.name }} <span class="text-body-tertiary">({{ language.code }})</span>
+                                            {% if language.default %}
+                                                <span class="badge rounded-pill text-bg-light border ms-2">{{ __('default') }}</span>
+                                            {% endif %}
                                         </button>
                                     </li>
                                 {% endfor %}
@@ -80,7 +97,7 @@
                                      data-contacts-language-panel
                                      {% if active_language != language.code %}hidden{% endif %}>
                                     {% for field in multilingual_fields %}
-                                        <div class="mb-4{% if loop.last %} mb-0{% endif %}">
+                                        <div class="{{ loop.last ? 'mb-0' : 'mb-4' }}">
                                             <label class="form-label" for="{{ field.name }}_{{ language.code }}">{{ field.label }}</label>
                                             <textarea class="form-control"
                                                       id="{{ field.name }}_{{ language.code }}"
