@@ -47,7 +47,7 @@ final readonly class NewsListController
         $filter = $this->filterMapper->fromQuery($request->query->all());
         $tree = $this->getTree->execute();
         $articles = $filter->tab === NewsListTab::ARTICLES;
-        $pagination = $articles ? $this->paginationFactory->create($this->getList->count($filter, $tree)) : null;
+        $pagination = $articles ? $this->paginationFactory->create($this->getList->countArticles($filter, $tree)) : null;
 
         if ($pagination !== null) {
             $redirectUrl = $this->paginationGuard->redirectUrl($pagination);

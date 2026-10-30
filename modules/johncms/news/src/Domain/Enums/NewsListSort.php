@@ -17,7 +17,6 @@ enum NewsListSort: string
     case CREATED = 'created';
     case UPDATED = 'updated';
     case VIEWS = 'views';
-    case ARTICLES = 'articles';
 
     /**
      * The order a tab takes when nothing is asked for: the newest articles, the sections by name.
@@ -28,16 +27,12 @@ enum NewsListSort: string
     }
 
     /**
-     * Whether the tab has the column: the views belong to the articles, the number of articles to
-     * the sections.
+     * Whether the tab has the column: only the articles are ordered by one, the sections stand as
+     * a tree, each under its parent.
      */
     public function isOf(NewsListTab $tab): bool
     {
-        return match ($this) {
-            self::VIEWS    => $tab === NewsListTab::ARTICLES,
-            self::ARTICLES => $tab === NewsListTab::SECTIONS,
-            default        => true,
-        };
+        return $tab === NewsListTab::ARTICLES;
     }
 
     /**

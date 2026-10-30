@@ -44,11 +44,9 @@ final readonly class GetNewsListUseCase
         ];
     }
 
-    public function count(NewsListFilter $filter, SectionTree $tree, ?DateTimeInterface $now = null): int
+    public function countArticles(NewsListFilter $filter, SectionTree $tree, ?DateTimeInterface $now = null): int
     {
-        return $filter->tab === NewsListTab::ARTICLES
-            ? $this->articles->countList($filter, $this->articleSections($filter, $tree), $now ?? new DateTimeImmutable())
-            : $this->sections->countList($filter, $this->sectionIds($filter, $tree));
+        return $this->articles->countList($filter, $this->articleSections($filter, $tree), $now ?? new DateTimeImmutable());
     }
 
     /**
@@ -57,14 +55,6 @@ final readonly class GetNewsListUseCase
     public function getArticles(NewsListFilter $filter, SectionTree $tree, int $limit, int $offset, ?DateTimeInterface $now = null): Collection
     {
         return $this->articles->getList($filter, $this->articleSections($filter, $tree), $now ?? new DateTimeImmutable(), $limit, $offset);
-    }
-
-    /**
-     * @return Collection<int, NewsSection>
-     */
-    public function getSections(NewsListFilter $filter, SectionTree $tree, int $limit, int $offset): Collection
-    {
-        return $this->sections->getList($filter, $this->sectionIds($filter, $tree), $limit, $offset);
     }
 
     /** @return Collection<int, NewsSection> */
@@ -92,21 +82,6 @@ final readonly class GetNewsListUseCase
             null                 => null,
             NewsListFilter::ROOT => [NewsListFilter::ROOT],
             default              => $tree->subtreeOf($filter->section),
-        };
-    }
-
-    /**
-     * The sections of a section are those under it, the section itself left out; those of the root
-     * are the top ones.
-     *
-     * @return list<int>|null
-     */
-    private function sectionIds(NewsListFilter $filter, SectionTree $tree): ?array
-    {
-        return match ($filter->section) {
-            null                 => null,
-            NewsListFilter::ROOT => $tree->childrenOf(NewsListFilter::ROOT),
-            default              => array_slice($tree->subtreeOf($filter->section), 1),
         };
     }
 }

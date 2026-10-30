@@ -32,22 +32,6 @@ interface NewsSectionRepositoryInterface
     public function countAll(): int;
 
     /**
-     * The sections the list lets through.
-     *
-     * @param list<int>|null $ids The sections it may show, worked out by the caller from the tree;
-     *                            null for any.
-     */
-    public function countList(NewsListFilter $filter, ?array $ids): int;
-
-    /**
-     * One page of them, each with the number of the articles standing in it.
-     *
-     * @param list<int>|null $ids As for countList().
-     * @return Collection<int, NewsSection>
-     */
-    public function getList(NewsListFilter $filter, ?array $ids, int $limit, int $offset): Collection;
-
-    /**
      * Whether another section under the parent holds the code. 0 is the root, where the sections
      * stored without a parent stand as well.
      */
