@@ -219,10 +219,6 @@ return static function (RouteCollection $router): void {
 
             $sr->get('/admin/languages', [LanguagesController::class, 'index'])->name('admin.languages');
             $sr->post('/admin/languages', [LanguagesController::class, 'save'])->name('admin.languages.save');
-            $sr->get('/admin/languages/manage', [LanguagesController::class, 'manage'])->name('admin.languages.manage');
-            $sr->post('/admin/languages/install', [LanguagesController::class, 'install'])->name('admin.languages.install');
-            $sr->post('/admin/languages/update', [LanguagesController::class, 'update'])->name('admin.languages.update');
-            $sr->post('/admin/languages/delete', [LanguagesController::class, 'delete'])->name('admin.languages.delete');
         });
         $superGroup->addMiddleware(SuperAdminAccessMiddleware::class)->adminArea();
     });

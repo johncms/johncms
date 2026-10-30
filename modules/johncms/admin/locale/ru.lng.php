@@ -852,6 +852,13 @@
       'The folders have changed, so the list of the smilies is built again. Pictures: %d.' => 'В папках появились изменения, поэтому список смайлов собран заново. Картинок: %d.',
       'The list is built again when this page is opened; build it now if a picture does not show up.' => 'Список пересобирается при открытии этой страницы; соберите его сейчас, если картинка не появилась.',
       'Put a picture (GIF, PNG or JPG) in one of the folders of %s. Its file name becomes the code. The site picks the new picture up when this page is opened.' => 'Положите картинку (GIF, PNG или JPG) в одну из папок %s. Имя файла станет кодом. Сайт подхватит новую картинку, когда вы откроете эту страницу.',
+      'Languages of the site' => 'Языки сайта',
+      'Language' => 'Язык',
+      'On the site' => 'На сайте',
+      'How it works' => 'Как это работает',
+      'The default language is the one a guest sees first. It is always on the site.' => 'Язык по умолчанию гость видит первым. Он всегда включён на сайте.',
+      'A language turned off is not offered in the switch, in the profile and in the forms of the panel. Its files stay in place, so it can be turned on again at any time.' => 'Выключенный язык не предлагается в переключателе, в профиле и в формах панели. Его файлы остаются на месте, поэтому язык можно включить снова в любой момент.',
+      'A member who has chosen a language that is turned off sees the site in the default language.' => 'Пользователь, выбравший выключенный язык, видит сайт на языке по умолчанию.',
     ),
   ),
 );

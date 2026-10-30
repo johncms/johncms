@@ -19,6 +19,7 @@ import './modal';
 import './offcanvas';
 import './language-panels';
 import './mail-settings';
+import './language-settings';
 import './ad-form-preview';
 import './prism';
 import './forum';

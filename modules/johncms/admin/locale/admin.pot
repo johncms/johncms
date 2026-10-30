@@ -313,7 +313,6 @@ msgstr ""
 #: themes/default/templates/admin/components/ui/form-footer.twig:46
 #: modules/johncms/admin/templates/external-providers.twig:59
 #: modules/johncms/admin/templates/ip-ban-form.twig:53
-#: modules/johncms/admin/templates/languages.twig:31
 #: modules/johncms/admin/templates/style-guide/examples/card.twig:16
 msgid "Save"
 msgstr ""
@@ -343,8 +342,7 @@ msgid "Change the default language"
 msgstr ""
 
 #: themes/default/templates/admin/components/ui/language-switch.twig:20
-#: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:60
-#: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:144
+#: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:49
 msgid "Languages"
 msgstr ""
 
@@ -413,7 +411,6 @@ msgstr[0] ""
 #: modules/johncms/admin/templates/ad-delete-dialog.twig:31
 #: modules/johncms/admin/templates/ads.twig:120
 #: modules/johncms/admin/templates/counter-delete-dialog.twig:23
-#: modules/johncms/admin/templates/languages-manage.twig:51
 #: modules/johncms/admin/templates/roles.twig:85
 #: modules/johncms/admin/templates/style-guide/examples/buttons-sizes.twig:17
 #: modules/johncms/admin/templates/style-guide/examples/dialog.twig:14
@@ -512,6 +509,8 @@ msgid "Ban IP address"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:243
+#: modules/johncms/admin/templates/languages.twig:29
+#: modules/johncms/admin/templates/languages.twig:44
 msgid "Default"
 msgstr ""
 
@@ -528,9 +527,7 @@ msgstr ""
 msgid "IP history"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:48
-#: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:113
-#: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:128
+#: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:40
 #: modules/johncms/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:36
 #: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:41
 #: modules/johncms/admin/src/Application/Controllers/Settings/SystemSettingsController.php:46
@@ -538,11 +535,7 @@ msgstr ""
 msgid "ERROR: Can not write file `system.local.php`"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:52
-msgid "Descriptions have been updated successfully"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:53
+#: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:43
 #: modules/johncms/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:39
 #: modules/johncms/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:55
 #: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:44
@@ -550,23 +543,6 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Settings/SystemSettingsController.php:49
 #: modules/johncms/admin/src/Application/Controllers/Users/KarmaController.php:55
 msgid "Settings are saved successfully"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:59
-#: modules/johncms/admin/templates/languages.twig:35
-msgid "Managing languages"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:97
-msgid "The language was successfully installed"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:102
-msgid "The language was successfully updated"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:111
-msgid "The language was successfully deleted"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModuleUploadController.php:45
@@ -1440,7 +1416,6 @@ msgid "Switch off"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Services/ModuleRowMapper.php:37
-#: modules/johncms/admin/templates/languages-manage.twig:56
 #: modules/johncms/admin/templates/modules-confirm-dialog.twig:63
 msgid "Update"
 msgstr ""
@@ -1459,7 +1434,6 @@ msgid "Switched off"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Services/ModuleRowMapper.php:63
-#: modules/johncms/admin/templates/languages-manage.twig:43
 msgid "Not installed"
 msgstr ""
 
@@ -2198,7 +2172,6 @@ msgstr ""
 #: modules/johncms/admin/templates/file-integrity-scan-result.twig:25
 #: modules/johncms/admin/templates/ip-ban-detail.twig:52
 #: modules/johncms/admin/templates/ip-bans.twig:63
-#: modules/johncms/admin/templates/languages-manage.twig:63
 #: modules/johncms/admin/templates/role-form.twig:27
 msgid "Back"
 msgstr ""
@@ -2451,35 +2424,32 @@ msgstr[0] ""
 msgid "This cannot be undone."
 msgstr ""
 
-#: modules/johncms/admin/templates/languages-manage.twig:36
-msgid "Version:"
+#: modules/johncms/admin/templates/languages.twig:22
+msgid "Languages of the site"
 msgstr ""
 
-#: modules/johncms/admin/templates/languages-manage.twig:38
-msgid "New version:"
+#: modules/johncms/admin/templates/languages.twig:28
+msgid "Language"
 msgstr ""
 
-#: modules/johncms/admin/templates/languages-manage.twig:41
-msgid "Installed"
+#: modules/johncms/admin/templates/languages.twig:30
+msgid "On the site"
 msgstr ""
 
-#: modules/johncms/admin/templates/languages-manage.twig:48
-msgid "The language files of this language are not writable! "
+#: modules/johncms/admin/templates/languages.twig:63
+msgid "How it works"
 msgstr ""
 
-#: modules/johncms/admin/templates/languages-manage.twig:53
-#: modules/johncms/admin/templates/modules-confirm-dialog.twig:63
-#: modules/johncms/admin/templates/modules-upload.twig:43
-#: modules/johncms/admin/templates/modules.twig:108
-msgid "Install"
+#: modules/johncms/admin/templates/languages.twig:66
+msgid "The default language is the one a guest sees first. It is always on the site."
 msgstr ""
 
-#: modules/johncms/admin/templates/languages.twig:20
-msgid "Default language"
+#: modules/johncms/admin/templates/languages.twig:67
+msgid "A language turned off is not offered in the switch, in the profile and in the forms of the panel. Its files stay in place, so it can be turned on again at any time."
 msgstr ""
 
-#: modules/johncms/admin/templates/languages.twig:32
-msgid "Update List"
+#: modules/johncms/admin/templates/languages.twig:68
+msgid "A member who has chosen a language that is turned off sees the site in the default language."
 msgstr ""
 
 #: modules/johncms/admin/templates/login-captcha.twig:25
@@ -2658,6 +2628,12 @@ msgstr ""
 
 #: modules/johncms/admin/templates/modules-confirm-dialog.twig:56
 msgid "For a module with heavy migrations: the scheduler starts it within a minute."
+msgstr ""
+
+#: modules/johncms/admin/templates/modules-confirm-dialog.twig:63
+#: modules/johncms/admin/templates/modules-upload.twig:43
+#: modules/johncms/admin/templates/modules.twig:108
+msgid "Install"
 msgstr ""
 
 #: modules/johncms/admin/templates/modules-upload.twig:21

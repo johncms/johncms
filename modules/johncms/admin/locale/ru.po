@@ -3024,3 +3024,24 @@ msgstr "Список пересобирается при открытии это
 
 msgid "Put a picture (GIF, PNG or JPG) in one of the folders of %s. Its file name becomes the code. The site picks the new picture up when this page is opened."
 msgstr "Положите картинку (GIF, PNG или JPG) в одну из папок %s. Имя файла станет кодом. Сайт подхватит новую картинку, когда вы откроете эту страницу."
+
+msgid "Languages of the site"
+msgstr "Языки сайта"
+
+msgid "Language"
+msgstr "Язык"
+
+msgid "On the site"
+msgstr "На сайте"
+
+msgid "How it works"
+msgstr "Как это работает"
+
+msgid "The default language is the one a guest sees first. It is always on the site."
+msgstr "Язык по умолчанию гость видит первым. Он всегда включён на сайте."
+
+msgid "A language turned off is not offered in the switch, in the profile and in the forms of the panel. Its files stay in place, so it can be turned on again at any time."
+msgstr "Выключенный язык не предлагается в переключателе, в профиле и в формах панели. Его файлы остаются на месте, поэтому язык можно включить снова в любой момент."
+
+msgid "A member who has chosen a language that is turned off sees the site in the default language."
+msgstr "Пользователь, выбравший выключенный язык, видит сайт на языке по умолчанию."
