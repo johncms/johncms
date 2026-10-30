@@ -2,29 +2,7 @@
   --bs-offcanvas-width: min(34rem, 100vw);
 }
 
-.contact-message-offcanvas__sender {
-  display: flex;
-  align-items: center;
-  gap: .75rem;
-  padding: .875rem;
-  border: 1px solid var(--border);
-  border-radius: .75rem;
-  background: var(--bg-elev);
-}
-
-.contact-message-offcanvas__sender-icon {
-  display: grid;
-  width: 2.5rem;
-  height: 2.5rem;
-  flex: 0 0 2.5rem;
-  place-items: center;
-  border-radius: 50%;
-  color: var(--accent);
-  background: var(--bg-inset);
-}
-
-.contact-message-offcanvas__message,
-.contact-message-page__body {
+.contact-message-offcanvas__message {
   padding: 1rem;
   border: 1px solid var(--border);
   border-radius: .75rem;
@@ -32,23 +10,37 @@
   overflow-wrap: anywhere;
 }
 
-.contact-message-offcanvas__facts {
-  display: grid;
-  grid-template-columns: minmax(7rem, auto) 1fr;
-  gap: .625rem .875rem;
-  margin: 0;
-  font-size: .875rem;
+.contact-message-offcanvas__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+}
 
-  dt {
-    color: var(--fg-muted);
-    font-weight: 500;
+.contact-message-offcanvas__reply {
+  margin-left: auto;
+}
+
+// The panel takes the whole screen of a phone: the main action goes first across the width,
+// the other two share the row below it.
+@media (max-width: 575.98px) {
+  .contact-message-offcanvas__footer > .btn {
+    flex: 1 1 0;
+    margin-left: 0;
   }
 
-  dd {
-    min-width: 0;
-    margin: 0;
-    color: var(--fg);
+  .contact-message-offcanvas__process {
+    order: -1;
+    flex: 1 0 100%;
+
+    .btn {
+      width: 100%;
+    }
   }
+}
+
+.contact-message-page__body {
+  overflow-wrap: anywhere;
 }
 
 .contacts-settings__language-dropdown {

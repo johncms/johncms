@@ -47,7 +47,6 @@ final readonly class ContactMessageViewController
             'is_processed' => $message->status === ContactMessageStatus::Processed,
             'created_at'   => $message->created_at?->format('d.m.Y H:i') ?? '',
             'processed_at' => $message->processed_at?->format('d.m.Y H:i') ?? '',
-            'back_url'     => self::URL,
             'process_url'  => self::URL . '/' . $message->id,
             'delete_url'   => self::URL . '/' . $message->id . '/delete',
         ];
@@ -62,7 +61,7 @@ final readonly class ContactMessageViewController
                 'title'           => $title,
                 'page_title'      => $title,
                 'module_menu'     => ['contacts' => true],
-                'success_message' => $this->session->getFlash('success_message'),
+                'back_url'        => self::URL,
             ] + $data
         );
     }

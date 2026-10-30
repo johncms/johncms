@@ -17,15 +17,14 @@ msgstr ""
 #: modules/johncms/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:123
 #: modules/johncms/contacts/src/Application/Controllers/ContactsController.php:43
 #: modules/johncms/contacts/src/Application/Menu/ContactsMenuItemProvider.php:15
-#: modules/johncms/contacts/templates/admin/settings.twig:38
-#: modules/johncms/contacts/templates/admin/settings.twig:102
+#: modules/johncms/contacts/templates/admin/settings.twig:119
 msgid "Contacts"
 msgstr ""
 
 #: modules/johncms/contacts/src/Application/Controllers/Admin/ContactMessageDeleteController.php:51
 #: modules/johncms/contacts/src/Application/Controllers/Admin/ContactMessageListController.php:41
 #: modules/johncms/contacts/src/Application/Controllers/Admin/ContactMessageViewController.php:42
-#: modules/johncms/contacts/templates/admin/settings.twig:18
+#: modules/johncms/contacts/templates/admin/settings.twig:21
 msgid "Contact messages"
 msgstr ""
 
@@ -34,18 +33,10 @@ msgid "All"
 msgstr ""
 
 #: modules/johncms/contacts/src/Application/Controllers/Admin/ContactMessageListController.php:82
-#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:24
-#: modules/johncms/contacts/templates/admin/message.twig:45
-#: modules/johncms/contacts/templates/admin/results.twig:38
 msgid "New"
 msgstr ""
 
 #: modules/johncms/contacts/src/Application/Controllers/Admin/ContactMessageListController.php:89
-#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:22
-#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:55
-#: modules/johncms/contacts/templates/admin/message.twig:43
-#: modules/johncms/contacts/templates/admin/message.twig:82
-#: modules/johncms/contacts/templates/admin/results.twig:40
 msgid "Processed"
 msgstr ""
 
@@ -66,17 +57,17 @@ msgstr ""
 msgid "Changes saved successfully"
 msgstr ""
 
-#: modules/johncms/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:154
+#: modules/johncms/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:166
 #: modules/johncms/contacts/templates/public/index.twig:42
 msgid "Address"
 msgstr ""
 
-#: modules/johncms/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:155
+#: modules/johncms/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:167
 #: modules/johncms/contacts/templates/public/index.twig:47
 msgid "Working hours"
 msgstr ""
 
-#: modules/johncms/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:156
+#: modules/johncms/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:168
 msgid "Text above the contact information"
 msgstr ""
 
@@ -101,115 +92,171 @@ msgid "Cancel"
 msgstr ""
 
 #: modules/johncms/contacts/templates/admin/message-delete-dialog.twig:25
-#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:64
-#: modules/johncms/contacts/templates/admin/message.twig:28
-#: modules/johncms/contacts/templates/admin/results.twig:48
+#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:57
+#: modules/johncms/contacts/templates/admin/message.twig:17
+#: modules/johncms/contacts/templates/admin/results.twig:49
 msgid "Delete"
 msgstr ""
 
 #: modules/johncms/contacts/templates/admin/message-offcanvas.twig:14
+#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:44
+#: modules/johncms/contacts/templates/admin/message.twig:74
 msgid "Contact message"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:30
-#: modules/johncms/contacts/templates/admin/message.twig:60
-#: modules/johncms/contacts/templates/admin/message.twig:64
-#: modules/johncms/contacts/templates/admin/results.twig:21
-msgid "Sender"
+#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:21
+#: modules/johncms/contacts/templates/admin/message.twig:37
+#: modules/johncms/contacts/templates/admin/results.twig:41
+msgid "Processed message"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:43
-#: modules/johncms/contacts/templates/admin/message.twig:40
-#: modules/johncms/contacts/templates/admin/results.twig:22
+#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:23
+#: modules/johncms/contacts/templates/admin/message.twig:39
+#: modules/johncms/contacts/templates/admin/results.twig:39
+msgid "New message"
+msgstr ""
+
+#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:31
+#: modules/johncms/contacts/templates/admin/message.twig:51
+#: modules/johncms/contacts/templates/admin/results.twig:23
 #: modules/johncms/contacts/templates/public/index.twig:94
 msgid "Message"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:48
-#: modules/johncms/contacts/templates/admin/message.twig:76
-msgid "Technical information"
+#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:36
+#: modules/johncms/contacts/templates/admin/message.twig:61
+#: modules/johncms/contacts/templates/admin/results.twig:22
+msgid "Sender"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:50
-#: modules/johncms/contacts/templates/admin/message.twig:80
-msgid "IP address"
+#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:38
+#: modules/johncms/contacts/templates/admin/message.twig:65
+msgid "Name"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:52
-#: modules/johncms/contacts/templates/admin/message.twig:81
-msgid "Browser"
+#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:39
+#: modules/johncms/contacts/templates/admin/message.twig:66
+#: modules/johncms/contacts/templates/public/index.twig:28
+msgid "E-mail"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:69
-#: modules/johncms/contacts/templates/admin/message.twig:23
-msgid "Mark as processed"
-msgstr ""
-
-#: modules/johncms/contacts/templates/admin/message.twig:18
-msgid "Back"
-msgstr ""
-
-#: modules/johncms/contacts/templates/admin/results.twig:12
-msgid "The list is empty"
-msgstr ""
-
-#: modules/johncms/contacts/templates/admin/results.twig:20
-msgid "Date"
-msgstr ""
-
-#: modules/johncms/contacts/templates/admin/results.twig:23
+#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:46
+#: modules/johncms/contacts/templates/admin/message.twig:78
+#: modules/johncms/contacts/templates/admin/results.twig:24
 msgid "Status"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/results.twig:24
+#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:47
+#: modules/johncms/contacts/templates/admin/message.twig:79
+msgid "Received"
+msgstr ""
+
+#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:48
+#: modules/johncms/contacts/templates/admin/message.twig:80
+msgid "Processed on"
+msgstr ""
+
+#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:49
+#: modules/johncms/contacts/templates/admin/message.twig:81
+msgid "IP address"
+msgstr ""
+
+#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:50
+#: modules/johncms/contacts/templates/admin/message.twig:82
+msgid "Browser"
+msgstr ""
+
+#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:61
+#: modules/johncms/contacts/templates/admin/message.twig:21
+msgid "Reply"
+msgstr ""
+
+#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:68
+#: modules/johncms/contacts/templates/admin/message.twig:28
+msgid "Mark as processed"
+msgstr ""
+
+#: modules/johncms/contacts/templates/admin/message.twig:92
+msgid "Back to messages"
+msgstr ""
+
+#: modules/johncms/contacts/templates/admin/results.twig:13
+msgid "The list is empty"
+msgstr ""
+
+#: modules/johncms/contacts/templates/admin/results.twig:21
+msgid "Date"
+msgstr ""
+
+#: modules/johncms/contacts/templates/admin/results.twig:25
 msgid "Actions"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/results.twig:45
+#: modules/johncms/contacts/templates/admin/results.twig:46
 msgid "View"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/settings.twig:22
+#: modules/johncms/contacts/templates/admin/settings.twig:25
 msgid "Save"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/settings.twig:106
+#: modules/johncms/contacts/templates/admin/settings.twig:41
+msgid "Page texts"
+msgstr ""
+
+#: modules/johncms/contacts/templates/admin/settings.twig:45
+msgid "Visitors see these texts in the language of their interface. When a field is empty for that language, the text in the default language of the site — %s — is shown instead."
+msgstr ""
+
+#: modules/johncms/contacts/templates/admin/settings.twig:47
+msgid "When the default language is empty too, the English text is shown."
+msgstr ""
+
+#: modules/johncms/contacts/templates/admin/settings.twig:50
+msgid "It is enough to fill in the default language. Fill in another language only where its text has to differ."
+msgstr ""
+
+#: modules/johncms/contacts/templates/admin/settings.twig:51
+msgid "Change the default language"
+msgstr ""
+
+#: modules/johncms/contacts/templates/admin/settings.twig:82
+msgid "default"
+msgstr ""
+
+#: modules/johncms/contacts/templates/admin/settings.twig:123
 msgid "Public e-mail"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/settings.twig:111
+#: modules/johncms/contacts/templates/admin/settings.twig:128
 #: modules/johncms/contacts/templates/public/index.twig:35
 msgid "Phone"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/settings.twig:121
+#: modules/johncms/contacts/templates/admin/settings.twig:138
 #: modules/johncms/contacts/templates/public/index.twig:65
 msgid "Feedback form"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/settings.twig:128
+#: modules/johncms/contacts/templates/admin/settings.twig:145
 msgid "Enable feedback form"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/settings.twig:130
+#: modules/johncms/contacts/templates/admin/settings.twig:147
 msgid "E-mail for notifications"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/settings.twig:133
+#: modules/johncms/contacts/templates/admin/settings.twig:150
 msgid "Leave empty to use the site e-mail from the system settings."
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/settings.twig:140
-#: modules/johncms/contacts/templates/admin/settings.twig:143
+#: modules/johncms/contacts/templates/admin/settings.twig:157
+#: modules/johncms/contacts/templates/admin/settings.twig:160
 msgid "Social networks and messengers"
 msgstr ""
 
-#: modules/johncms/contacts/templates/admin/settings.twig:145
+#: modules/johncms/contacts/templates/admin/settings.twig:162
 msgid "One link per line in the format: Title|https://example.com"
-msgstr ""
-
-#: modules/johncms/contacts/templates/public/index.twig:28
-msgid "E-mail"
 msgstr ""
 
 #: modules/johncms/contacts/templates/public/index.twig:52

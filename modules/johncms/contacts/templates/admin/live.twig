@@ -4,6 +4,7 @@
     @var array filters
     @var array items
     @var \Twig\Markup pagination
+    @var string base_url
 #}
 {% include '@admin/components/list-tabs.twig' with {tabs: filters} only %}
-{% include '@contacts/admin/results.twig' with {items: items, pagination: pagination} only %}
+{% include '@contacts/admin/results.twig' with {items: items, pagination: pagination, base_url: base_url} only %}

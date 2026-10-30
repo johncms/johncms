@@ -16,57 +16,57 @@
     </div>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="{{ d__('admin', 'Close') }}"></button>
 </div>
+{% set status %}
+    {% if is_processed %}
+        <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ __('Processed message') }}</span>
+    {% else %}
+        <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis badge-dot">{{ __('New message') }}</span>
+    {% endif %}
+{% endset %}
+{% set email %}
+    <a class="text-break" href="mailto:{{ message.email }}">{{ message.email }}</a>
+{% endset %}
 <div class="offcanvas-body">
-    <div class="d-flex flex-wrap align-items-center gap-2 mb-4">
-        {% if is_processed %}
-            <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ __('Processed') }}</span>
-        {% else %}
-            <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis badge-dot">{{ __('New') }}</span>
-        {% endif %}
-        <span class="small text-body-secondary">{{ created_at }}</span>
-    </div>
-
-    <section class="mb-4">
-        <h3 class="h6 mb-3">{{ __('Sender') }}</h3>
-        <div class="contact-message-offcanvas__sender">
-            <div class="contact-message-offcanvas__sender-icon">
-                {% include '@admin/components/ui/icon.twig' with {name: 'user', size: 18} only %}
-            </div>
-            <div class="min-w-0">
-                <div class="fw-semibold text-break">{{ message.name }}</div>
-                <a class="small text-break" href="mailto:{{ message.email }}">{{ message.email }}</a>
-            </div>
-        </div>
-    </section>
-
     <section class="mb-4">
         <h3 class="h6 mb-3">{{ __('Message') }}</h3>
         <div class="contact-message-offcanvas__message">{{ message.message|nl2br }}</div>
     </section>
 
+    <section class="mb-4">
+        <h3 class="h6 mb-3">{{ __('Sender') }}</h3>
+        {% include '@admin/components/ui/facts.twig' with {items: [
+            {label: __('Name'), value: message.name},
+            {label: __('E-mail'), value: email},
+        ]} only %}
+    </section>
+
     <section>
-        <h3 class="h6 mb-3">{{ __('Technical information') }}</h3>
-        <dl class="contact-message-offcanvas__facts">
-            <dt>{{ __('IP address') }}</dt>
-            <dd>{{ message.ip_address }}</dd>
-            <dt>{{ __('Browser') }}</dt>
-            <dd class="text-break">{{ message.user_agent ?: '—' }}</dd>
-            {% if processed_at %}
-                <dt>{{ __('Processed') }}</dt>
-                <dd>{{ processed_at }}</dd>
-            {% endif %}
-        </dl>
+        <h3 class="h6 mb-3">{{ __('Contact message') }}</h3>
+        {% include '@admin/components/ui/facts.twig' with {items: [
+            {label: __('Status'), value: status},
+            {label: __('Received'), value: created_at},
+            {label: __('Processed on'), value: processed_at},
+            {label: __('IP address'), value: message.ip_address},
+            {label: __('Browser'), value: message.user_agent},
+        ]} only %}
     </section>
 </div>
-<div class="offcanvas-footer d-flex justify-content-between gap-2 p-3 border-top">
+<div class="offcanvas-footer contact-message-offcanvas__footer p-3 border-top">
     <a href="{{ delete_url }}" class="btn btn-outline-danger" data-admin-modal>
         {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
         {{ __('Delete') }}
     </a>
+    <a href="mailto:{{ message.email }}" class="btn btn-outline-secondary contact-message-offcanvas__reply">
+        {% include '@admin/components/ui/icon.twig' with {name: 'mail', size: 14} only %}
+        {{ __('Reply') }}
+    </a>
     {% if not is_processed %}
-        <form method="post" action="{{ process_url }}">
+        <form method="post" action="{{ process_url }}" class="contact-message-offcanvas__process">
             <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-            <button type="submit" class="btn btn-primary">{{ __('Mark as processed') }}</button>
+            <button type="submit" class="btn btn-primary">
+                {% include '@admin/components/ui/icon.twig' with {name: 'check', size: 14} only %}
+                {{ __('Mark as processed') }}
+            </button>
         </form>
     {% endif %}
 </div>

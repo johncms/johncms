@@ -157,3 +157,42 @@ msgstr "Техническая информация"
 
 msgid "Browser"
 msgstr "Браузер"
+
+msgid "Visitors see these texts in the language of their interface. When a field is empty for that language, the text in the default language of the site — %s — is shown instead."
+msgstr "Посетители видят эти тексты на языке своего интерфейса. Если для этого языка поле пустое, вместо него показывается текст на языке сайта по умолчанию — %s."
+
+msgid "When the default language is empty too, the English text is shown."
+msgstr "Если пусто и на языке по умолчанию, показывается текст на английском."
+
+msgid "It is enough to fill in the default language. Fill in another language only where its text has to differ."
+msgstr "Достаточно заполнить язык по умолчанию. Другой язык заполняйте, только если текст на нём должен отличаться."
+
+msgid "Change the default language"
+msgstr "Сменить язык по умолчанию"
+
+msgid "default"
+msgstr "по умолчанию"
+
+msgid "Page texts"
+msgstr "Тексты страницы"
+
+msgid "Reply"
+msgstr "Ответить"
+
+msgid "Name"
+msgstr "Имя"
+
+msgid "Received"
+msgstr "Получено"
+
+msgid "New message"
+msgstr "Новое"
+
+msgid "Processed message"
+msgstr "Обработано"
+
+msgid "Processed on"
+msgstr "Обработано"
+
+msgid "Back to messages"
+msgstr "Назад к обращениям"

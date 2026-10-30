@@ -3,6 +3,7 @@
 
     @var array items
     @var \Twig\Markup pagination
+    @var string base_url Address of the message list; a message lives under it.
 #}
 <div class="admin-list-results" data-live-list-region="results">
     <div class="card">
@@ -27,25 +28,25 @@
                     <tbody>
                         {% for item in items %}
                             <tr>
-                                <td class="text-nowrap"><a class="text-body-secondary" href="/admin/contacts/messages/{{ item.id }}" data-admin-offcanvas>{{ item.createdAt }}</a></td>
+                                <td class="text-nowrap"><a class="text-body-secondary" href="{{ base_url }}/{{ item.id }}" data-admin-offcanvas>{{ item.createdAt }}</a></td>
                                 <td>
-                                    <div class="fw-semibold"><a class="text-body" href="/admin/contacts/messages/{{ item.id }}" data-admin-offcanvas>{{ item.name }}</a></div>
+                                    <div class="fw-semibold"><a class="text-body" href="{{ base_url }}/{{ item.id }}" data-admin-offcanvas>{{ item.name }}</a></div>
                                     <div class="small text-body-secondary">{{ item.email }}</div>
                                 </td>
-                                <td><a class="text-body" href="/admin/contacts/messages/{{ item.id }}" data-admin-offcanvas>{{ item.preview }}</a></td>
+                                <td><a class="text-body" href="{{ base_url }}/{{ item.id }}" data-admin-offcanvas>{{ item.preview }}</a></td>
                                 <td>
                                     {% if item.status.value == 'new' %}
-                                        <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis badge-dot">{{ __('New') }}</span>
+                                        <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis badge-dot">{{ __('New message') }}</span>
                                     {% else %}
-                                        <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ __('Processed') }}</span>
+                                        <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ __('Processed message') }}</span>
                                     {% endif %}
                                 </td>
                                 <td class="text-end">
                                     <div class="d-flex justify-content-end gap-1">
-                                        <a href="/admin/contacts/messages/{{ item.id }}" class="btn btn-outline-secondary btn-icon btn-sm" title="{{ __('View') }}" aria-label="{{ __('View') }}" data-admin-offcanvas>
+                                        <a href="{{ base_url }}/{{ item.id }}" class="btn btn-outline-secondary btn-icon btn-sm" title="{{ __('View') }}" aria-label="{{ __('View') }}" data-admin-offcanvas>
                                             {% include '@admin/components/ui/icon.twig' with {name: 'eye', size: 14} only %}
                                         </a>
-                                        <a href="/admin/contacts/messages/{{ item.id }}/delete" class="btn btn-outline-danger btn-icon btn-sm" title="{{ __('Delete') }}" aria-label="{{ __('Delete') }}" data-admin-modal>
+                                        <a href="{{ base_url }}/{{ item.id }}/delete" class="btn btn-outline-danger btn-icon btn-sm" title="{{ __('Delete') }}" aria-label="{{ __('Delete') }}" data-admin-modal>
                                             {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
                                         </a>
                                     </div>

@@ -47,6 +47,7 @@ final readonly class ContactMessageListController
             'items'      => $this->messages->getPage($pagination->getPerPage(), $pagination->getOffset(), $status),
             'filters'    => $this->filters($status?->value ?? '', $newCount),
             'pagination' => $pagination->render(),
+            'base_url'   => self::URL,
         ];
 
         if ($request->isXmlHttpRequest()) {
@@ -60,7 +61,6 @@ final readonly class ContactMessageListController
             'title'           => $meta->title,
             'page_title'      => $title,
             'module_menu'     => ['contacts' => true],
-            'base_url'        => self::URL,
             'success_message' => $successMessage,
         ]);
     }

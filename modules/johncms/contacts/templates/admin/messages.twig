@@ -5,6 +5,7 @@
                                       status, createdAt.
     @var array        filters         Tabs prepared for the live list.
     @var \Twig\Markup pagination
+    @var string       base_url        Address of the message list.
     @var string       success_message Empty unless an action has just been performed.
 #}
 {% extends '@admin/layouts/default.twig' %}
@@ -14,7 +15,7 @@
 
     <div data-live-list>
         {% include '@admin/components/list-tabs.twig' with {tabs: filters} only %}
-        {% include '@contacts/admin/results.twig' with {items: items, pagination: pagination} only %}
+        {% include '@contacts/admin/results.twig' with {items: items, pagination: pagination, base_url: base_url} only %}
     </div>
 
     <template data-admin-offcanvas-loading-template>
