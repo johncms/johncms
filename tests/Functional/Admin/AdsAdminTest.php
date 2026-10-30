@@ -136,6 +136,45 @@ final class AdsAdminTest extends FunctionalTestCase
         self::assertSame('d9480f', Ad::query()->where('name', 'Pasted color')->value('color'));
     }
 
+    public function testALinkWithItsHitsUsedUpIsNotTurnedBackOn(): void
+    {
+        $id = $this->ad(['to' => 1, 'count' => 300, 'count_link' => 300]);
+        $cookies = $this->actingAs(FunctionalUserFactory::createSupervisor());
+
+        $response = $this->handleRequest('/admin/ads/' . $id . '/toggle', 'POST', $this->withCsrfToken(), cookies: $cookies);
+        $list = $this->handleRequest('/admin/ads', cookies: $cookies);
+
+        self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
+        self::assertSame(1, Ad::query()->whereKey($id)->value('to'));
+        self::assertStringContainsString('Лимит исчерпан', (string) $list->getContent());
+        self::assertStringContainsString('увеличьте лимит', (string) $list->getContent());
+    }
+
+    public function testAnActionReturnsToThePageItWasTakenOn(): void
+    {
+        $id = $this->ad(['type' => 1]);
+
+        $response = $this->handleRequest(
+            '/admin/ads/' . $id . '/toggle',
+            'POST',
+            $this->withCsrfToken(['page' => 2]),
+            cookies: $this->actingAs(FunctionalUserFactory::createSupervisor())
+        );
+
+        self::assertSame('/admin/ads?type=1&page=2', $response->headers->get('Location'));
+        self::assertSame(1, Ad::query()->whereKey($id)->value('to'));
+    }
+
+    public function testTheTabsCountTheLinksOfEveryPlace(): void
+    {
+        $this->ad(['type' => 2]);
+        $this->ad(['type' => 2]);
+
+        $response = $this->handleRequest('/admin/ads', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()));
+
+        self::assertMatchesRegularExpression('#В верхней части страницы\s*<span class="badge text-bg-light">2</span>#u', (string) $response->getContent());
+    }
+
     /**
      * @param array<string, mixed> $attributes
      */

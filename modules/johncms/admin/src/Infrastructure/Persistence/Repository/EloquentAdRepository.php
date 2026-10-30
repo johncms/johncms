@@ -15,6 +15,16 @@ final class EloquentAdRepository implements AdRepositoryInterface
         return Ad::query()->where('type', $type)->count();
     }
 
+    public function countsByType(): array
+    {
+        return Ad::query()
+            ->selectRaw('type, COUNT(*) AS total')
+            ->groupBy('type')
+            ->pluck('total', 'type')
+            ->map(static fn(mixed $total): int => (int) $total)
+            ->all();
+    }
+
     /**
      * @return Collection<int, Ad>
      */

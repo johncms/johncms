@@ -1,53 +1,118 @@
 // Advertising links (admin::ads) and their forms.
 
-.admin-ads-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .5rem;
-  margin-bottom: 1rem;
-}
-
 .admin-ads-table {
   td {
-    vertical-align: middle;
     white-space: nowrap;
   }
 
   td:first-child {
     width: 100%;
-    min-width: 18rem;
+    min-width: 16rem;
     white-space: normal;
   }
 }
 
-.admin-ads-table__link {
-  > a {
-    color: var(--fg);
-    font-weight: 600;
+.admin-ads-table__name {
+  color: var(--fg);
+  font-weight: 600;
+  overflow-wrap: anywhere;
 
-    &:hover {
-      color: var(--accent);
-      text-decoration: none;
-    }
+  &:hover {
+    color: var(--accent);
+    text-decoration: none;
   }
 }
 
-.admin-ads-table__url,
+.admin-ads-table__url {
+  display: block;
+  margin-top: .2rem;
+  color: var(--fg-dim);
+  font-family: $ui-font-mono;
+  font-size: .75rem;
+  overflow-wrap: anywhere;
+
+  &:hover {
+    color: var(--accent);
+  }
+}
+
 .admin-ads-table__sub {
   margin-top: .2rem;
   color: var(--fg-dim);
   font-size: .75rem;
-  overflow-wrap: anywhere;
-}
-
-.admin-ads-table__url {
-  font-family: $ui-font-mono;
 }
 
 .admin-ads-table__actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: .25rem;
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  > * + * {
+    margin-left: .25rem;
+  }
+}
+
+// On a phone a row becomes a card: the link on top, then a labelled line for every column.
+@media (max-width: 767.98px) {
+  .admin-ads-table {
+    thead {
+      display: none;
+    }
+
+    tbody,
+    tr,
+    td {
+      display: block;
+    }
+
+    tr {
+      position: relative;
+      padding: .875rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 0;
+      border: 0;
+      white-space: normal;
+    }
+
+    td:first-child {
+      width: auto;
+      min-width: 0;
+      padding-right: 5rem;
+      margin-bottom: .5rem;
+    }
+
+    td[data-label] {
+      display: grid;
+      grid-template-columns: 6rem 1fr;
+      gap: .1rem .75rem;
+      padding: .2rem 0;
+
+      &::before {
+        content: attr(data-label);
+        color: var(--fg-dim);
+        font-size: .8125rem;
+      }
+
+      .admin-ads-table__sub {
+        grid-column: 2;
+        margin-top: 0;
+      }
+
+      .badge {
+        justify-self: start;
+      }
+    }
+
+    .admin-ads-table__actions {
+      position: absolute;
+      top: .75rem;
+      right: 1rem;
+    }
+  }
 }
 
 .admin-ad-form {

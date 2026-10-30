@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\UseCases;
 
+use Johncms\Modules\Admin\Domain\Exceptions\AdLimitReachedException;
 use Johncms\Modules\Admin\Domain\Models\Ad;
 use Johncms\Modules\Admin\Domain\Repository\AdRepositoryInterface;
 
@@ -29,9 +30,20 @@ final readonly class ManageAdUseCase
         $this->repository->deleteInactive();
     }
 
-    public function toggle(int $id): void
+    /**
+     * Hides a shown link or shows a hidden one. Returns whether the link is shown now.
+     *
+     * @throws AdLimitReachedException when a hidden link has no hits or days left
+     */
+    public function toggle(Ad $ad): bool
     {
-        $this->repository->toggleActive($id);
+        if ($ad->isHidden() && $ad->isExhausted(time())) {
+            throw new AdLimitReachedException();
+        }
+
+        $this->repository->toggleActive($ad->id);
+
+        return $ad->isHidden();
     }
 
     public function moveUp(int $id): void

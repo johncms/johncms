@@ -69,4 +69,32 @@ final class Ad extends Model
         'italic'     => 'integer',
         'underline'  => 'integer',
     ];
+
+    public function isHidden(): bool
+    {
+        return $this->to !== 0;
+    }
+
+    /**
+     * When the period of the link runs out, or null for a link without one.
+     */
+    public function expiresAt(): ?int
+    {
+        return $this->day > 0 ? $this->time + $this->day * 86400 : null;
+    }
+
+    /**
+     * The hits or the days the link was bought for are used up. The site hides such a link the
+     * next time it is shown, so turning it back on means raising the limit first.
+     */
+    public function isExhausted(int $now): bool
+    {
+        if ($this->count_link > 0 && $this->count >= $this->count_link) {
+            return true;
+        }
+
+        $expiresAt = $this->expiresAt();
+
+        return $expiresAt !== null && $now >= $expiresAt;
+    }
 }

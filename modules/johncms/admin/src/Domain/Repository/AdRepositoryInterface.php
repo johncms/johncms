@@ -12,6 +12,11 @@ interface AdRepositoryInterface
     public function countByType(int $type): int;
 
     /**
+     * @return array<int, int> Number of links by place; a place without links is absent.
+     */
+    public function countsByType(): array;
+
+    /**
      * @return Collection<int, Ad>
      */
     public function getByType(int $type, int $limit, int $offset): Collection;

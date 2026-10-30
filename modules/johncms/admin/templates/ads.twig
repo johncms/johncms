@@ -4,23 +4,17 @@
     @var array        items      Rows prepared by AdRowMapper.
     @var int          total
     @var int          per_page
+    @var int          offset     Position of the first row of the page in the whole list.
+    @var int          page
     @var array        filters    Tabs for the places: title, url, active, count, tone.
     @var string       add_url
     @var string       clear_url
     @var int          type
     @var \Twig\Markup pagination
     @var string       success_message Empty unless an action has just succeeded.
+    @var string       error_message   Empty unless an action has just been refused.
 #}
 {% extends '@admin/layouts/default.twig' %}
-
-{% macro mini_form(action, label, icon, danger, csrf_token) %}
-    <form method="post" action="{{ action }}" class="d-inline">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-        <button type="submit" class="btn btn-outline-{{ danger ? 'danger' : 'secondary' }} btn-icon btn-sm" title="{{ label }}" aria-label="{{ label }}">
-            {% include '@admin/components/ui/icon.twig' with {name: icon, size: 14} only %}
-        </button>
-    </form>
-{% endmacro %}
 
 {% block page_actions %}
     <a class="btn btn-outline-danger" href="{{ clear_url }}" data-admin-modal>
@@ -35,6 +29,7 @@
 
 {% block content %}
     {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-warning', alert: error_message} only %}
 
     {% include '@admin/components/list-tabs.twig' with {tabs: filters} only %}
 
@@ -43,66 +38,84 @@
             {% include '@admin/components/ui/empty-state.twig' with {
                 icon: 'megaphone',
                 title: __('The list is empty'),
-                description: '',
+                description: __('There are no links in this place yet.'),
             } only %}
+            <div class="text-center pb-4">
+                <a class="btn btn-outline-secondary" href="{{ add_url }}">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'plus', size: 14} only %}
+                    {{ __('Add link') }}
+                </a>
+            </div>
         {% else %}
             <div class="table-responsive">
-                <table class="table table-hover admin-ads-table">
+                <table class="table table-hover align-middle admin-ads-table">
                     <thead>
                         <tr>
                             <th scope="col">{{ __('Link') }}</th>
-                            <th scope="col">{{ __('Disposition') }}</th>
-                            <th scope="col">{{ __('Layout') }}</th>
-                            <th scope="col">{{ __('Show') }}</th>
-                            <th scope="col">{{ __('Agreement') }}</th>
-                            <th scope="col">{{ __('Remains') }}</th>
+                            <th scope="col">{{ __('Shown to') }}</th>
+                            <th scope="col">{{ __('Limits') }}</th>
                             <th scope="col">{{ __('Status') }}</th>
                             <th scope="col"><span class="visually-hidden">{{ __('Actions') }}</span></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% import _self as forms %}
                         {% for item in items %}
+                            {% set position = offset + loop.index0 %}
                             <tr>
                                 <td class="admin-ads-table__link">
-                                    <a href="{{ item.link }}" target="_blank" rel="noopener noreferrer">
-                                        {{ item.name }}
-                                    </a>
-                                    <div class="admin-ads-table__url">{{ item.link }}</div>
-                                    <div class="admin-ads-table__sub">{{ __('Start date') }}: {{ item.display_time }}</div>
-                                    {% if item.styles %}<div class="admin-ads-table__sub">{{ item.styles }}</div>{% endif %}
-                                </td>
-                                <td>{{ item.place }}</td>
-                                <td>{{ item.layout }}</td>
-                                <td>{{ item.show_for }}</td>
-                                <td>{{ item.agreement ?: '—' }}</td>
-                                <td>{{ item.remains ?: '—' }}</td>
-                                <td>
-                                    {% if item.active %}
-                                        <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ __('On') }}</span>
-                                    {% else %}
-                                        <span class="badge rounded-pill text-bg-light badge-dot">{{ __('Off') }}</span>
+                                    <a href="/admin/ads/{{ item.id }}/edit"
+                                       class="admin-ads-table__name{{ item.bold ? ' fw-bold' }}{{ item.italic ? ' fst-italic' }}{{ item.underline ? ' text-decoration-underline' }}"
+                                       {% if item.color %}style="color: #{{ item.color }}"{% endif %}>{{ item.name }}</a>
+                                    {% if item.other_names is not empty %}
+                                        <span class="badge rounded-pill text-bg-light border ms-1" title="{{ item.other_names|join('; ') }}">+{{ item.other_names|length }}</span>
                                     {% endif %}
-                                    <div class="admin-ads-table__sub">{{ item.direct_link ? __('Direct Link') : __('Redirect') }}</div>
+                                    <a class="admin-ads-table__url" href="{{ item.link }}" target="_blank" rel="noopener noreferrer">{{ item.link }}</a>
                                 </td>
-                                <td>
-                                    <div class="admin-ads-table__actions">
-                                        {{ forms.mini_form('/admin/ads/' ~ item.id ~ '/up', __('Up'), 'arrow-up', false, app.csrf_token) }}
-                                        {{ forms.mini_form('/admin/ads/' ~ item.id ~ '/down', __('Down'), 'arrow-down', false, app.csrf_token) }}
-                                        <a href="/admin/ads/{{ item.id }}/edit" class="btn btn-outline-secondary btn-icon btn-sm" title="{{ __('Edit') }}" aria-label="{{ __('Edit') }}">
-                                            {% include '@admin/components/ui/icon.twig' with {name: 'pencil', size: 14} only %}
-                                        </a>
-                                        <a href="/admin/ads/{{ item.id }}/delete" class="btn btn-outline-danger btn-icon btn-sm" title="{{ __('Delete') }}" aria-label="{{ __('Delete') }}">
-                                            {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
-                                        </a>
-                                        {{ forms.mini_form(
-                                            '/admin/ads/' ~ item.id ~ '/toggle',
-                                            item.active ? __('Hide') : __('Show'),
-                                            item.active ? 'eye-off' : 'eye',
-                                            false,
-                                            app.csrf_token
-                                        ) }}
+                                <td data-label="{{ __('Shown to') }}">
+                                    <div>{{ item.audience }}</div>
+                                    <div class="admin-ads-table__sub">{{ item.layout }}</div>
+                                </td>
+                                <td data-label="{{ __('Limits') }}">
+                                    <div>
+                                        {% if item.direct_link %}
+                                            {{ __('Hits are not counted') }}
+                                        {% elseif item.hit_limit %}
+                                            {{ n__('%1$s of %2$s hit', '%1$s of %2$s hits', item.hit_limit)|format(item.hits, item.hit_limit) }}
+                                        {% else %}
+                                            {{ n__('%s hit', '%s hits', item.hits)|format(item.hits) }}
+                                        {% endif %}
                                     </div>
+                                    <div class="admin-ads-table__sub">
+                                        {{ item.expires_at ? __('Ends: %s')|format(item.expires_at) : __('Started: %s')|format(item.started_at) }}
+                                    </div>
+                                </td>
+                                <td data-label="{{ __('Status') }}">
+                                    {% if item.status == 'shown' %}
+                                        <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ __('Shown') }}</span>
+                                    {% elseif item.status == 'exhausted' %}
+                                        <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis badge-dot">{{ __('Limit reached') }}</span>
+                                    {% else %}
+                                        <span class="badge rounded-pill text-bg-light badge-dot">{{ __('Hidden') }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="admin-ads-table__actions">
+                                    <a href="/admin/ads/{{ item.id }}/edit" class="btn btn-outline-secondary btn-icon btn-sm" title="{{ __('Edit') }}" aria-label="{{ __('Edit') }}">
+                                        {% include '@admin/components/ui/icon.twig' with {name: 'pencil', size: 14} only %}
+                                    </a>
+                                    {% set actions = [] %}
+                                    {% if position > 0 %}
+                                        {% set actions = actions|merge([{method: 'post', url: '/admin/ads/' ~ item.id ~ '/up', title: __('Move up'), icon: 'arrow-up', danger: false, fields: {page: page}}]) %}
+                                    {% endif %}
+                                    {% if position < total - 1 %}
+                                        {% set actions = actions|merge([{method: 'post', url: '/admin/ads/' ~ item.id ~ '/down', title: __('Move down'), icon: 'arrow-down', danger: false, fields: {page: page}}]) %}
+                                    {% endif %}
+                                    {% if item.status == 'shown' %}
+                                        {% set actions = actions|merge([{method: 'post', url: '/admin/ads/' ~ item.id ~ '/toggle', title: __('Hide'), icon: 'eye-off', danger: false, fields: {page: page}}]) %}
+                                    {% elseif item.status == 'hidden' %}
+                                        {% set actions = actions|merge([{method: 'post', url: '/admin/ads/' ~ item.id ~ '/toggle', title: __('Show'), icon: 'eye', danger: false, fields: {page: page}}]) %}
+                                    {% endif %}
+                                    {% set actions = actions|merge([{method: 'get', url: '/admin/ads/' ~ item.id ~ '/delete', title: __('Delete'), icon: 'trash-2', danger: true, fields: {}}]) %}
+                                    {% include '@admin/components/ui/row-actions.twig' with {label: __('Actions'), actions: actions} only %}
                                 </td>
                             </tr>
                         {% endfor %}

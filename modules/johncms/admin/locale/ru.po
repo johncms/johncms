@@ -2617,3 +2617,62 @@ msgstr "Введите название ссылки"
 
 msgid "Enter the color as six hexadecimal digits, for example FF0000"
 msgstr "Укажите цвет шестью шестнадцатеричными цифрами, например FF0000"
+
+msgid "The link is shown"
+msgstr "Ссылка показывается"
+
+msgid "The link is hidden"
+msgstr "Ссылка скрыта"
+
+msgid "The link has used up its hits or days. Raise the limit in its settings to show it again."
+msgstr "У ссылки закончились переходы или дни. Чтобы снова её показывать, увеличьте лимит в её настройках."
+
+msgid "The link is deleted"
+msgstr "Ссылка удалена"
+
+msgid "There are no links in this place yet."
+msgstr "В этом месте пока нет ссылок."
+
+msgid "Shown to"
+msgstr "Показ"
+
+msgid "Limits"
+msgstr "Лимиты"
+
+msgid "Hits are not counted"
+msgstr "Переходы не считаются"
+
+msgid "%1$s of %2$s hit"
+msgid_plural "%1$s of %2$s hits"
+msgstr[0] "%1$s из %2$s перехода"
+msgstr[1] "%1$s из %2$s переходов"
+msgstr[2] "%1$s из %2$s переходов"
+msgstr[3] "%1$s из %2$s переходов"
+
+msgid "%s hit"
+msgid_plural "%s hits"
+msgstr[0] "%s переход"
+msgstr[1] "%s перехода"
+msgstr[2] "%s переходов"
+msgstr[3] "%s переходов"
+
+msgid "Ends: %s"
+msgstr "Окончание: %s"
+
+msgid "Started: %s"
+msgstr "Начало: %s"
+
+msgid "Shown"
+msgstr "Показывается"
+
+msgid "Limit reached"
+msgstr "Лимит исчерпан"
+
+msgid "Hidden"
+msgstr "Скрыта"
+
+msgid "Move up"
+msgstr "Выше"
+
+msgid "Move down"
+msgstr "Ниже"

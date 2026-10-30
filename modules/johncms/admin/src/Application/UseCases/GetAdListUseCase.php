@@ -21,6 +21,14 @@ final readonly class GetAdListUseCase
     }
 
     /**
+     * @return array<int, int> Number of links by place.
+     */
+    public function countsByType(): array
+    {
+        return $this->repository->countsByType();
+    }
+
+    /**
      * @return Collection<int, Ad>
      */
     public function getPage(int $type, int $limit, int $offset): Collection

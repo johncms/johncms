@@ -12,6 +12,7 @@ use Johncms\Modules\Admin\Application\Services\AdRowMapper;
 use Johncms\Modules\Admin\Application\UseCases\GetAdListUseCase;
 use Johncms\Modules\Admin\Application\UseCases\ManageAdUseCase;
 use Johncms\Modules\Admin\Application\UseCases\SaveAdUseCase;
+use Johncms\Modules\Admin\Domain\Exceptions\AdLimitReachedException;
 use Johncms\Modules\Admin\Domain\Models\Ad;
 use Johncms\NavChain;
 use Johncms\Http\Request;
@@ -61,12 +62,15 @@ final readonly class AdsController
             'items'      => $this->rowMapper->mapMany($ads),
             'total'      => $pagination->getTotal(),
             'per_page'   => $pagination->getPerPage(),
+            'offset'     => $pagination->getOffset(),
+            'page'       => $pagination->getCurrentPage(),
             'type'       => $type,
-            'filters'    => $this->filters($type),
+            'filters'    => $this->filters($type, $this->getList->countsByType()),
             'add_url'    => self::URL . '/new',
             'clear_url'  => self::URL . '/clear',
             'pagination' => $pagination->render(),
             'success_message' => (string) $this->session->getFlash('success_message'),
+            'error_message'   => (string) $this->session->getFlash('error_message'),
         ]);
     }
 
@@ -98,25 +102,34 @@ final readonly class AdsController
         $isUpdate = $this->saveAd->execute($id, $this->dtoFromFields($fields));
 
         $this->session->flash('success_message', $isUpdate ? __('Link successfully changed') : __('Link successfully added'));
-        redirect(self::URL . '?type=' . $fields['type']);
+        redirect($this->listUrl((int) $fields['type'], 1));
     }
 
-    public function up(int $id): ViewResponse
+    public function up(Request $request, int $id): ViewResponse
     {
-        return $this->reorder($id, 'up');
+        return $this->reorder($request, $id, 'up');
     }
 
-    public function down(int $id): ViewResponse
+    public function down(Request $request, int $id): ViewResponse
     {
-        return $this->reorder($id, 'down');
+        return $this->reorder($request, $id, 'down');
     }
 
-    public function toggle(int $id): ViewResponse
+    public function toggle(Request $request, int $id): ViewResponse
     {
-        $type = $this->manageAd->find($id)?->type ?? 0;
-        $this->manageAd->toggle($id);
+        $ad = $this->manageAd->find($id);
+        if ($ad === null) {
+            redirect(self::URL);
+        }
 
-        redirect(self::URL . '?type=' . $type);
+        try {
+            $shown = $this->manageAd->toggle($ad);
+            $this->session->flash('success_message', $shown ? __('The link is shown') : __('The link is hidden'));
+        } catch (AdLimitReachedException) {
+            $this->session->flash('error_message', __('The link has used up its hits or days. Raise the limit in its settings to show it again.'));
+        }
+
+        redirect($this->listUrl($ad->type, $request->bodyInt('page', 1)));
     }
 
     public function deleteConfirm(int $id): ViewResponse
@@ -137,12 +150,17 @@ final readonly class AdsController
         ]);
     }
 
-    public function delete(int $id): ViewResponse
+    public function delete(Request $request, int $id): ViewResponse
     {
-        $type = $this->manageAd->find($id)?->type ?? 0;
-        $this->manageAd->delete($id);
+        $ad = $this->manageAd->find($id);
+        if ($ad === null) {
+            redirect(self::URL);
+        }
 
-        redirect(self::URL . '?type=' . $type);
+        $this->manageAd->delete($id);
+        $this->session->flash('success_message', __('The link is deleted'));
+
+        redirect($this->listUrl($ad->type, $request->bodyInt('page', 1)));
     }
 
     public function clearConfirm(Request $request): ViewResponse
@@ -174,12 +192,27 @@ final readonly class AdsController
         redirect(self::URL);
     }
 
-    private function reorder(int $id, string $direction): ViewResponse
+    private function reorder(Request $request, int $id, string $direction): ViewResponse
     {
-        $type = $this->manageAd->find($id)?->type ?? 0;
+        $ad = $this->manageAd->find($id);
+        if ($ad === null) {
+            redirect(self::URL);
+        }
+
         $direction === 'up' ? $this->manageAd->moveUp($id) : $this->manageAd->moveDown($id);
 
-        redirect(self::URL . '?type=' . $type);
+        redirect($this->listUrl($ad->type, $request->bodyInt('page', 1)));
+    }
+
+    /**
+     * The list of a place at the page the action was taken on; the pagination guard moves a
+     * page that no longer exists back to the last one.
+     */
+    private function listUrl(int $type, int $page): string
+    {
+        $query = array_filter(['type' => $type, 'page' => $page > 1 ? $page : 0]);
+
+        return self::URL . ($query === [] ? '' : '?' . http_build_query($query));
     }
 
     /**
@@ -344,9 +377,10 @@ final readonly class AdsController
     }
 
     /**
+     * @param array<int, int> $counts
      * @return list<array{url: string, title: string, active: bool, count: int, tone: string}>
      */
-    private function filters(int $type): array
+    private function filters(int $type, array $counts): array
     {
         $filters = [];
         foreach ($this->placeOptions() as $option) {
@@ -354,7 +388,7 @@ final readonly class AdsController
                 'url'    => $option['value'] === 0 ? self::URL : self::URL . '?type=' . $option['value'],
                 'title'  => $option['label'],
                 'active' => $type === $option['value'],
-                'count'  => 0,
+                'count'  => $counts[$option['value']] ?? 0,
                 'tone'   => '',
             ];
         }

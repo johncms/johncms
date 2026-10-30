@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Services;
 
-use Illuminate\Support\Collection;
 use Johncms\Modules\Admin\Domain\Models\Ad;
 use Johncms\Utils\DateFormatterInterface;
-use Johncms\Utils\DurationFormatter;
 
 /**
- * Готовит строку рекламной ссылки для шаблона списка: вычисляет условия договора
- * (показы/дни), остаток, оформление и человекочитаемые подписи мест показа.
+ * Prepares an advertising link for a row of the list: the title as the site shows it, who sees
+ * it and where, how much of its limits is used, and whether it is shown now.
  */
 final readonly class AdRowMapper
 {
+    public const string STATUS_SHOWN = 'shown';
+    public const string STATUS_HIDDEN = 'hidden';
+    public const string STATUS_EXHAUSTED = 'exhausted';
+
     public function __construct(
         private DateFormatterInterface $dateFormatter,
     ) {
@@ -22,7 +24,7 @@ final readonly class AdRowMapper
 
     /**
      * @param iterable<Ad> $ads
-     * @return array<int, array<string, mixed>>
+     * @return list<array<string, mixed>>
      */
     public function mapMany(iterable $ads): array
     {
@@ -39,84 +41,37 @@ final readonly class AdRowMapper
      */
     public function map(Ad $ad): array
     {
+        // The site picks one of the titles at random on every page.
+        $names = array_values(array_filter(array_map(trim(...), explode('|', $ad->name)), static fn(string $name): bool => $name !== ''));
+        $expiresAt = $ad->expiresAt();
+
         return [
-            'id'           => $ad->id,
-            'link'         => $ad->link,
-            'name'         => str_replace('|', '; ', $ad->name),
-            'active'       => $ad->to === 0,
-            'direct_link'  => $ad->show === 1,
-            'display_time' => $this->dateFormatter->format($ad->time),
-            'place'        => $this->placementLabels()[$ad->type] ?? '',
-            'layout'       => $this->layoutLabels()[$ad->layout] ?? '',
-            'show_for'     => $this->audienceLabels()[$ad->view] ?? '',
-            'agreement'    => $this->agreement($ad),
-            'remains'      => $this->remains($ad),
-            'styles'       => $this->styles($ad),
+            'id'          => $ad->id,
+            'name'        => $names[0] ?? $ad->name,
+            'other_names' => array_slice($names, 1),
+            'link'        => $ad->link,
+            'color'       => preg_match('/^[\da-f]{6}$/i', $ad->color) === 1 ? $ad->color : '',
+            'bold'        => $ad->bold === 1,
+            'italic'      => $ad->italic === 1,
+            'underline'   => $ad->underline === 1,
+            'audience'    => $this->audienceLabels()[$ad->view] ?? '',
+            'layout'      => $this->layoutLabels()[$ad->layout] ?? '',
+            'direct_link' => $ad->show === 1,
+            'hits'        => $ad->count,
+            'hit_limit'   => $ad->count_link,
+            'started_at'  => $this->dateFormatter->format($ad->time),
+            'expires_at'  => $expiresAt === null ? '' : $this->dateFormatter->format($expiresAt),
+            'status'      => $this->status($ad),
         ];
     }
 
-    private function agreement(Ad $ad): string
+    private function status(Ad $ad): string
     {
-        $parts = [];
-        if ($ad->count_link > 0) {
-            $parts[] = $ad->count_link . ' ' . __('hits');
-        }
-        if ($ad->day > 0) {
-            $parts[] = DurationFormatter::format($ad->day * 86400);
+        if ($ad->isExhausted(time())) {
+            return self::STATUS_EXHAUSTED;
         }
 
-        return implode(', ', $parts);
-    }
-
-    private function remains(Ad $ad): string
-    {
-        $parts = [];
-        if ($ad->count_link > 0) {
-            $left = $ad->count_link - $ad->count;
-            if ($left > 0) {
-                $parts[] = $left . ' ' . __('hits');
-            }
-        }
-        if ($ad->day > 0) {
-            $left = $ad->day * 86400 - (time() - $ad->time);
-            if ($left > 0) {
-                $parts[] = DurationFormatter::format($left);
-            }
-        }
-
-        return implode(', ', $parts);
-    }
-
-    private function styles(Ad $ad): string
-    {
-        $parts = [];
-        if ($ad->color !== '') {
-            $parts[] = __('Color:') . ' ' . $ad->color;
-        }
-        if ($ad->bold) {
-            $parts[] = __('Bold');
-        }
-        if ($ad->italic) {
-            $parts[] = __('Italic');
-        }
-        if ($ad->underline) {
-            $parts[] = __('Underline');
-        }
-
-        return implode(' ', $parts);
-    }
-
-    /**
-     * @return array<int, string>
-     */
-    private function placementLabels(): array
-    {
-        return [
-            __('Before the menu'),
-            __('After the menu'),
-            __('At the top of the page'),
-            __('At the bottom of the page'),
-        ];
+        return $ad->isHidden() ? self::STATUS_HIDDEN : self::STATUS_SHOWN;
     }
 
     /** @return array<int, string> */
