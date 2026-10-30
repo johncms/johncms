@@ -265,6 +265,7 @@ msgstr "Неактивно"
 
 msgid "Cookie banner settings"
 msgstr "Настройки баннера cookie"
+
 msgid "Back to consents"
 msgstr "К списку согласий"
 

@@ -39,6 +39,16 @@ final class CookieBannerTextFormatterTest extends TestCase
         self::assertSame('sanitized', (new CookieBannerTextFormatter($sanitizer))->toHtml('text'));
     }
 
+    public function testTheTextFallsBackToTheDefaultLanguageOfTheSiteBeforeEnglish(): void
+    {
+        $formatter = new CookieBannerTextFormatter($this->createMock(HtmlSanitizerInterface::class));
+        $texts = ['ru' => 'Мы используем cookie', 'en' => 'We use cookies', 'kk' => '  '];
+
+        self::assertSame('Мы используем cookie', $formatter->pick($texts, ['kk', 'ru', 'en']));
+        self::assertSame('We use cookies', $formatter->pick($texts, ['en', 'ru', 'en']));
+        self::assertSame('', $formatter->pick(['ru' => ''], ['kk', 'ru', 'en']));
+    }
+
     public function testKeepsParagraphsAndLinksButNotTheLayout(): void
     {
         $formatter = new CookieBannerTextFormatter(new HtmlSanitizer(new HtmlPurifierFactory()));

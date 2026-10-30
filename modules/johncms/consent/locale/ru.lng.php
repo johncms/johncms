@@ -63,6 +63,7 @@
       'Status' => 'Статус',
       'Actions' => 'Действия',
       'Inactive' => 'Неактивно',
+      'Cookie banner settings' => 'Настройки баннера cookie',
       'Back to consents' => 'К списку согласий',
       'Consent acceptance records will appear here.' => 'Здесь будут отображаться записи о принятых согласиях.',
       'Total:' => 'Всего:',

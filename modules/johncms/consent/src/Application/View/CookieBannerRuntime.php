@@ -34,8 +34,10 @@ final readonly class CookieBannerRuntime implements RuntimeExtensionInterface
             return null;
         }
 
-        $texts = (array) config('johncms.cookie_banner_text', []);
-        $text = (string) ($texts[$this->translator->getLocale()] ?? $texts['en'] ?? '');
+        $text = $this->formatter->pick(
+            (array) config('johncms.cookie_banner_text', []),
+            [$this->translator->getLocale(), (string) config('johncms.lng', 'en'), 'en'],
+        );
 
         return [
             'text'    => $text === '' ? null : new Markup($this->formatter->toHtml($text), 'UTF-8'),

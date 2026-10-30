@@ -25,4 +25,24 @@ final readonly class CookieBannerTextFormatter
     {
         return $this->sanitizer->sanitize($text, HtmlPolicy::InlineWithParagraphs);
     }
+
+    /**
+     * The text for the first of the languages that has one: the language of the visitor, then the
+     * default language of the site, then English — the order the contacts page follows too. Empty
+     * when none has a text, and the banner then says the translated default.
+     *
+     * @param array<array-key, mixed> $texts     The text of each language, keyed by its code.
+     * @param list<string>            $languages In the order they are tried.
+     */
+    public function pick(array $texts, array $languages): string
+    {
+        foreach ($languages as $language) {
+            $text = $texts[$language] ?? '';
+            if (is_string($text) && trim($text) !== '') {
+                return $text;
+            }
+        }
+
+        return '';
+    }
 }
