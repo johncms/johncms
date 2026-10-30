@@ -29,6 +29,7 @@ final readonly class ListCollectionFieldsUseCase
                 required: $field->required,
                 multiple: $field->multiple,
                 sort: $field->sort,
+                inList: $field->in_list,
             ))
             ->all();
     }

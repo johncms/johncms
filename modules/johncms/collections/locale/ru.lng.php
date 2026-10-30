@@ -138,6 +138,11 @@
       'Sections group the items into a tree and become a part of their address on the site.' => 'Разделы группируют элементы в дерево и становятся частью их адреса на сайте.',
       'Own: %s' => 'Своих: %s',
       'Shown' => 'Показывается',
+      'There are no fields yet' => 'Полей пока нет',
+      'Every item has a name, a code and two texts. Add a field for anything else it should carry: an author, a price, a date.' => 'У каждого элемента есть название, код и два текста. Добавьте поле для всего остального: автора, цены, даты.',
+      'Field' => 'Поле',
+      'Properties' => 'Свойства',
+      'In the list' => 'В списке',
     ),
   ),
 );

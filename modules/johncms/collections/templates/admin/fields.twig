@@ -1,7 +1,9 @@
 {#
-    The fields an item of a collection carries.
+    The fields an item of a collection carries, a tab of it: what the collection holds besides the
+    name and the texts every item has.
 
-    @var array  items           Rows: sort, name, code, type_label, required, multiple, urls.
+    @var array  items   Rows: name, code, type_label, required, multiple, in_list, sort, edit_url,
+                        actions.
     @var string add_url
 
     The head of the collection comes from collection/layout.twig.
@@ -16,29 +18,56 @@
 {% endblock %}
 
 {% block collection_content %}
-    {% if items is empty %}
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
-    {% endif %}
-
-    {% for item in items %}
-        <div class="new_post-item without_avatar">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center">
-                    <span class="text-muted me-1">[{{ item.sort }}]</span>
-                    <a href="{{ item.edit_url }}" class="h3 mb-0">{{ item.name }}</a>
-                    <span class="badge rounded-pill text-bg-light border ms-2">{{ item.code }}</span>
-                </div>
-                <span class="badge rounded-pill bg-secondary">{{ item.type_label }}</span>
+    <div class="card">
+        {% if items is empty %}
+            {% include '@admin/components/ui/empty-state.twig' with {
+                icon: 'list',
+                title: __('There are no fields yet'),
+                description: __('Every item has a name, a code and two texts. Add a field for anything else it should carry: an author, a price, a date.'),
+            } only %}
+            <div class="text-center pb-4">
+                <a href="{{ add_url }}" class="btn btn-outline-secondary">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'plus', size: 14} only %}
+                    {{ __('New field') }}
+                </a>
             </div>
-            <div class="small text-muted mt-1">
-                {% if item.required %}<span class="me-2">{{ __('Required') }}</span>{% endif %}
-                {% if item.multiple %}<span>{{ __('Multiple') }}</span>{% endif %}
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle admin-collection-fields">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ __('Field') }}</th>
+                            <th scope="col">{{ __('Type') }}</th>
+                            <th scope="col" class="d-none d-md-table-cell">{{ __('Properties') }}</th>
+                            <th scope="col" class="text-end d-none d-md-table-cell">{{ __('Sorting') }}</th>
+                            <th scope="col"><span class="visually-hidden">{{ __('Actions') }}</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                            <tr>
+                                <td>
+                                    <a class="admin-collection-fields__name" href="{{ item.edit_url }}">{{ item.name }}</a>
+                                    <div class="admin-collection-fields__code">{{ item.code }}</div>
+                                </td>
+                                <td><span class="badge rounded-pill text-bg-light border">{{ item.type_label }}</span></td>
+                                <td class="d-none d-md-table-cell">
+                                    <div class="d-flex flex-wrap gap-1">
+                                        {% if item.required %}<span class="badge rounded-pill bg-warning-subtle text-warning-emphasis">{{ __('Required') }}</span>{% endif %}
+                                        {% if item.multiple %}<span class="badge rounded-pill bg-info-subtle text-info-emphasis">{{ __('Multiple') }}</span>{% endif %}
+                                        {% if item.in_list %}<span class="badge rounded-pill bg-success-subtle text-success-emphasis">{{ __('In the list') }}</span>{% endif %}
+                                        {% if not item.required and not item.multiple and not item.in_list %}<span class="text-body-tertiary">—</span>{% endif %}
+                                    </div>
+                                </td>
+                                <td class="text-end admin-collection-fields__sort d-none d-md-table-cell">{{ item.sort }}</td>
+                                <td class="text-end">
+                                    {% include '@admin/components/ui/row-actions.twig' with {actions: item.actions, label: __('Actions')} only %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-            <div class="mt-2">
-                <a href="{{ item.edit_url }}">{{ __('Edit') }}</a>
-                <a href="{{ item.delete_url }}" class="text-danger ms-2" data-admin-modal>{{ __('Delete') }}</a>
-            </div>
-        </div>
-    {% endfor %}
-
+        {% endif %}
+    </div>
 {% endblock %}

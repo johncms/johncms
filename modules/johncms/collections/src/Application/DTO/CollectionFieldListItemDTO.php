@@ -20,6 +20,7 @@ final readonly class CollectionFieldListItemDTO
         public bool $required,
         public bool $multiple,
         public int $sort,
+        public bool $inList = false,
     ) {
     }
 }

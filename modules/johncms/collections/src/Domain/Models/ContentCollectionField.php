@@ -34,6 +34,11 @@ final class ContentCollectionField extends Model
 {
     protected $table = 'collection_fields';
 
+    /** The defaults of the table, so a field built in code reads like a stored one. */
+    protected $attributes = [
+        'in_list' => false,
+    ];
+
     protected $fillable = [
         'collection_id',
         'code',

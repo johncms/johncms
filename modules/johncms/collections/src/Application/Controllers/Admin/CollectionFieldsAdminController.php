@@ -172,15 +172,20 @@ final readonly class CollectionFieldsAdminController
 
         $rows = [];
         foreach ($items as $item) {
+            $editUrl = $base . '/' . $item->id . '/edit';
             $rows[] = [
                 'code'       => $item->code,
                 'name'       => $item->name,
                 'type_label' => $this->typeLabel($item->type),
                 'required'   => $item->required,
                 'multiple'   => $item->multiple,
+                'in_list'    => $item->inList,
                 'sort'       => $item->sort,
-                'edit_url'   => $base . '/' . $item->id . '/edit',
-                'delete_url' => $base . '/' . $item->id . '/delete',
+                'edit_url'   => $editUrl,
+                'actions'    => [
+                    ['method' => 'get', 'url' => $editUrl, 'title' => __('Edit'), 'icon' => 'pencil', 'danger' => false, 'dialog' => false, 'fields' => []],
+                    ['method' => 'get', 'url' => $base . '/' . $item->id . '/delete', 'title' => __('Delete'), 'icon' => 'trash-2', 'danger' => true, 'dialog' => true, 'fields' => []],
+                ],
             ];
         }
 

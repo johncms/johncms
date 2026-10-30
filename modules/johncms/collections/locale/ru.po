@@ -593,3 +593,18 @@ msgstr "Своих: %s"
 
 msgid "Shown"
 msgstr "Показывается"
+
+msgid "There are no fields yet"
+msgstr "Полей пока нет"
+
+msgid "Every item has a name, a code and two texts. Add a field for anything else it should carry: an author, a price, a date."
+msgstr "У каждого элемента есть название, код и два текста. Добавьте поле для всего остального: автора, цены, даты."
+
+msgid "Field"
+msgstr "Поле"
+
+msgid "Properties"
+msgstr "Свойства"
+
+msgid "In the list"
+msgstr "В списке"

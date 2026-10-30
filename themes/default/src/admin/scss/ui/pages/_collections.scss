@@ -139,3 +139,38 @@
     color: var(--fg-muted);
   }
 }
+
+// The fields of a collection (collections::admin/fields).
+
+.admin-collection-fields {
+  td {
+    white-space: nowrap;
+  }
+
+  td:first-child {
+    width: 100%;
+    min-width: 9rem;
+    white-space: normal;
+  }
+}
+
+.admin-collection-fields__name {
+  font-weight: 600;
+  color: var(--fg);
+
+  &:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+}
+
+.admin-collection-fields__code,
+.admin-collection-fields__sort {
+  font-family: $ui-font-mono;
+  font-size: 0.75rem;
+  color: var(--fg-dim);
+}
+
+.admin-collection-fields__code {
+  margin-top: 2px;
+}
