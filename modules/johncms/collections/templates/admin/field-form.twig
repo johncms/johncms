@@ -11,58 +11,78 @@
 {% extends '@admin/layouts/default.twig' %}
 
 {% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: errors} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
 
-    <form action="{{ form_action }}" method="post">
+    <form action="{{ form_action }}" method="post" id="field-form" class="row g-3 align-items-start">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         {% if id is not null %}
             <input type="hidden" name="id" value="{{ id }}">
         {% endif %}
 
-        <div class="form-group">
-            <label for="name">{{ __('Name') }}</label>
-            <input type="text" name="name" class="form-control" id="name" value="{{ fields.name }}">
+        <div class="col-lg-8">
+            <section class="card">
+                <div class="card-header">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'list', size: 16} only %}
+                    <h2 class="h6 mb-0 ms-2">{{ __('Field') }}</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label" for="name">{{ __('Name') }}</label>
+                            <input type="text" name="name" class="form-control" id="name" value="{{ fields.name }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="code">{{ __('Code') }}</label>
+                            <input type="text" name="code" class="form-control font-monospace" id="code" value="{{ fields.code }}" required pattern="[a-z0-9_-]+">
+                            <div class="form-text">{{ __('The name of the value in the API and the templates: lowercase latin letters, digits, hyphen and underscore.') }}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="type">{{ __('Type') }}</label>
+                            <select name="type" class="form-select" id="type">
+                                {% for value, label in type_options %}
+                                    <option value="{{ value }}"{% if fields.type == value %} selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                            {% if id is not null %}
+                                <div class="form-text">{{ __('Changing the type of a field the items already fill may lose their values.') }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="sort">{{ __('Sorting') }}</label>
+                            <input type="number" name="sort" class="form-control" id="sort" value="{{ fields.sort }}">
+                            <div class="form-text">{{ __('The order of the fields in the form of an item and of the columns of the list.') }}</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
 
-        <div class="form-group mt-2">
-            <label for="code">{{ __('Code') }}</label>
-            <input type="text" name="code" class="form-control" id="code" value="{{ fields.code }}">
-            <div class="text-muted small">{{ __('Machine code: lowercase latin letters, digits, hyphen and underscore') }}</div>
-        </div>
-
-        <div class="form-group mt-2">
-            <label for="type">{{ __('Type') }}</label>
-            <select name="type" class="form-control" id="type">
-                {% for value, label in type_options %}
-                    <option value="{{ value }}"{% if fields.type == value %} selected{% endif %}>{{ label }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <div class="form-group mt-2">
-            <label for="sort">{{ __('Sorting') }}</label>
-            <input type="number" name="sort" class="form-control" id="sort" value="{{ fields.sort }}">
-        </div>
-
-        <div class="form-check mt-3">
-            <input type="checkbox" class="form-check-input" name="required" value="1" id="required"{% if fields.required %} checked{% endif %}>
-            <label class="form-check-label" for="required">{{ __('Required') }}</label>
-        </div>
-
-        <div class="form-check mt-2">
-            <input type="checkbox" class="form-check-input" name="multiple" value="1" id="multiple"{% if fields.multiple %} checked{% endif %}>
-            <label class="form-check-label" for="multiple">{{ __('Allow multiple values') }}</label>
-        </div>
-
-        <div class="form-check mt-2">
-            <input type="checkbox" class="form-check-input" name="in_list" value="1" id="in_list"{% if fields.in_list %} checked{% endif %}>
-            <label class="form-check-label" for="in_list">{{ __('Show in the list of items') }}</label>
-            <div class="form-text mt-0">{{ __('The value becomes a column of the list of the items in the panel.') }}</div>
-        </div>
-
-        <div class="mt-3">
-            <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
-            <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+        <div class="col-lg-4">
+            <section class="card">
+                <div class="card-header">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'settings', size: 16} only %}
+                    <h2 class="h6 mb-0 ms-2">{{ __('Properties') }}</h2>
+                </div>
+                <div class="card-body d-flex flex-column gap-3">
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" role="switch" name="required" value="1" id="required"{% if fields.required %} checked{% endif %}>
+                        <label class="form-check-label" for="required">{{ __('Required') }}</label>
+                        <div class="form-text mt-0">{{ __('An item is not saved without a value.') }}</div>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" role="switch" name="multiple" value="1" id="multiple"{% if fields.multiple %} checked{% endif %}>
+                        <label class="form-check-label" for="multiple">{{ __('Allow multiple values') }}</label>
+                        <div class="form-text mt-0">{{ __('The form takes one value per line.') }}</div>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" role="switch" name="in_list" value="1" id="in_list"{% if fields.in_list %} checked{% endif %}>
+                        <label class="form-check-label" for="in_list">{{ __('Show in the list of items') }}</label>
+                        <div class="form-text mt-0">{{ __('The value becomes a column of the list of the items in the panel.') }}</div>
+                    </div>
+                </div>
+            </section>
         </div>
     </form>
+
+    {% include '@admin/components/ui/form-footer.twig' with {form: 'field-form', cancel_url: back_url} only %}
 {% endblock %}

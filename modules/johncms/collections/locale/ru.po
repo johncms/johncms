@@ -608,3 +608,60 @@ msgstr "Свойства"
 
 msgid "In the list"
 msgstr "В списке"
+
+msgid "Fill in the field \"%s\""
+msgstr "Заполните поле «%s»"
+
+msgid "The name of the value in the API and the templates: lowercase latin letters, digits, hyphen and underscore."
+msgstr "Имя значения в API и шаблонах: строчные латинские буквы, цифры, дефис и подчёркивание."
+
+msgid "Changing the type of a field the items already fill may lose their values."
+msgstr "Если сменить тип поля, которое уже заполнено у элементов, их значения могут потеряться."
+
+msgid "The order of the fields in the form of an item and of the columns of the list."
+msgstr "Порядок полей в форме элемента и колонок в списке."
+
+msgid "An item is not saved without a value."
+msgstr "Элемент не сохранится без значения."
+
+msgid "The form takes one value per line."
+msgstr "В форме — по одному значению в строке."
+
+msgid "The last part of the address. Leave it empty to make it from the name."
+msgstr "Последняя часть адреса. Оставьте пустым, чтобы он составился из названия."
+
+msgid "Fields of the collection"
+msgstr "Поля коллекции"
+
+msgid "Publication"
+msgstr "Публикация"
+
+msgid "A turned off item is not shown on the site, whatever its dates."
+msgstr "Выключенный элемент не показывается на сайте, какие бы ни были даты."
+
+msgid "Leave the dates empty to show the item from the moment it is saved and without an end."
+msgstr "Оставьте даты пустыми, чтобы элемент показывался сразу после сохранения и без срока."
+
+msgid "Place"
+msgstr "Расположение"
+
+msgid "Order"
+msgstr "Порядок"
+
+msgid "The smaller the number, the higher the item in the lists."
+msgstr "Чем меньше число, тем выше элемент в списках."
+
+msgid "Its part of the address of the items: lowercase latin letters, digits, hyphen and underscore."
+msgstr "Часть адреса элементов раздела: строчные латинские буквы, цифры, дефис и подчёркивание."
+
+msgid "Inside"
+msgstr "Внутри"
+
+msgid "The top of the collection"
+msgstr "Верхний уровень коллекции"
+
+msgid "The smaller the number, the higher the section among its neighbours."
+msgstr "Чем меньше число, тем выше раздел среди соседних."
+
+msgid "A turned off section and what stands in it are not shown on the site."
+msgstr "Выключенный раздел и всё, что в нём, не показываются на сайте."

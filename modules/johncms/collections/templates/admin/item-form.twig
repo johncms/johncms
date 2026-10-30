@@ -1,123 +1,145 @@
 {#
-    An item of a collection, new or existing, together with the fields the collection defines.
+    An item of a collection, new or existing: what it says and the fields the collection defines on
+    the left, when and where the site shows it on the right.
 
     @var string form_action
     @var string back_url
     @var int    id              Null when a new item is being added.
     @var array  fields          Values of the form, keyed by field name.
     @var bool   has_sections
-    @var array  section_options Sections to put the item in, keyed by id.
-    @var array  field_defs      Fields of the collection: input_name, name, type, multiple, value.
+    @var array  section_options Sections to put the item in, keyed by id, named by their path.
+    @var array  field_defs      Fields of the collection: input_name, name, type, multiple,
+                                required, value.
     @var array  errors          Validation messages, empty on the first render.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
-{% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: errors} only %}
+{% macro card_head(icon, title) %}
+    <div class="card-header">
+        {% include '@admin/components/ui/icon.twig' with {name: icon, size: 16} only %}
+        <h2 class="h6 mb-0 ms-2">{{ title }}</h2>
+    </div>
+{% endmacro %}
 
-    <form action="{{ form_action }}" method="post">
+{% block content %}
+    {% import _self as ui %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
+
+    <form action="{{ form_action }}" method="post" id="item-form" class="row g-3 align-items-start">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         {% if id is not null %}
             <input type="hidden" name="id" value="{{ id }}">
         {% endif %}
 
-        <div class="form-group">
-            <label for="name">{{ __('Name') }}</label>
-            <input type="text" name="name" class="form-control" id="name" value="{{ fields.name }}">
-        </div>
-
-        <div class="form-group mt-2">
-            <label for="code">{{ __('Code') }}</label>
-            <input type="text" name="code" class="form-control" id="code" value="{{ fields.code }}">
-            <div class="text-muted small">{{ __('Machine code: lowercase latin letters, digits, hyphen and underscore. Leave empty to generate it from the name automatically') }}</div>
-        </div>
-
-        {% if has_sections %}
-            <div class="form-group mt-2">
-                <label for="section_id">{{ __('Section') }}</label>
-                <select name="section_id" class="form-control" id="section_id">
-                    <option value="0">{{ __('— none —') }}</option>
-                    {% for id, name in section_options %}
-                        <option value="{{ id }}"{% if fields.section_id == id %} selected{% endif %}>{{ name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-        {% endif %}
-
-        <div class="form-group mt-2">
-            <label for="sort">{{ __('Sorting') }}</label>
-            <input type="number" name="sort" class="form-control" id="sort" value="{{ fields.sort }}">
-        </div>
-
-        <div class="form-group mt-2">
-            <label for="active_from">{{ __('Active from') }}</label>
-            <input type="text" name="active_from" class="form-control" id="active_from" placeholder="YYYY-MM-DD HH:MM:SS" value="{{ fields.active_from }}">
-        </div>
-
-        <div class="form-group mt-2">
-            <label for="active_to">{{ __('Active to') }}</label>
-            <input type="text" name="active_to" class="form-control" id="active_to" placeholder="YYYY-MM-DD HH:MM:SS" value="{{ fields.active_to }}">
-        </div>
-
-        <div class="form-group mt-2">
-            {% include '@theme/components/editor.twig' with {
-                name: 'preview_text',
-                label: __('Preview text'),
-                value: fields.preview_text
-            } only %}
-        </div>
-
-        <div class="form-group mt-2">
-            {% include '@theme/components/editor.twig' with {
-                name: 'detail_text',
-                label: __('Detail text'),
-                value: fields.detail_text
-            } only %}
-        </div>
-
-        <div class="form-check mt-3">
-            <input type="checkbox" class="form-check-input" name="active" value="1" id="active"{% if fields.active %} checked{% endif %}>
-            <label class="form-check-label" for="active">{{ __('Active') }}</label>
-        </div>
-
-        {% if field_defs is not empty %}
-            <hr>
-            <h3 class="h5">{{ __('Fields') }}</h3>
-            {% for def in field_defs %}
-                {% set input_id = 'f_' ~ def.input_name %}
-                {% if def.multiple %}
-                    <div class="form-group mt-2">
-                        <label for="{{ input_id }}">{{ def.name }}</label>
-                        <textarea name="{{ def.input_name }}" class="form-control" id="{{ input_id }}" rows="3">{{ def.value }}</textarea>
-                        <div class="text-muted small">{{ __('One value per line') }}</div>
+        <div class="col-lg-8 d-flex flex-column gap-3">
+            <section class="card">
+                {{ ui.card_head('file-text', __('Item')) }}
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-7">
+                            <label class="form-label" for="name">{{ __('Name') }}</label>
+                            <input type="text" name="name" class="form-control" id="name" value="{{ fields.name }}" required>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label" for="code">{{ __('Code') }}</label>
+                            <input type="text" name="code" class="form-control font-monospace" id="code" value="{{ fields.code }}" pattern="[a-z0-9_-]*">
+                            <div class="form-text">{{ __('The last part of the address. Leave it empty to make it from the name.') }}</div>
+                        </div>
+                        <div class="col-12">
+                            {% include '@theme/components/editor.twig' with {name: 'preview_text', label: __('Preview text'), value: fields.preview_text} only %}
+                        </div>
+                        <div class="col-12">
+                            {% include '@theme/components/editor.twig' with {name: 'detail_text', label: __('Detail text'), value: fields.detail_text} only %}
+                        </div>
                     </div>
-                {% elseif def.type == 'boolean' %}
-                    <div class="form-check mt-2">
-                        <input type="checkbox" class="form-check-input" name="{{ def.input_name }}" value="1" id="{{ input_id }}"{% if def.value == '1' %} checked{% endif %}>
-                        <label class="form-check-label" for="{{ input_id }}">{{ def.name }}</label>
-                    </div>
-                {% elseif def.type == 'text' or def.type == 'html' %}
-                    <div class="form-group mt-2">
-                        <label for="{{ input_id }}">{{ def.name }}</label>
-                        <textarea name="{{ def.input_name }}" class="form-control" id="{{ input_id }}" rows="4">{{ def.value }}</textarea>
-                    </div>
-                {% elseif def.type == 'integer' or def.type == 'double' %}
-                    <div class="form-group mt-2">
-                        <label for="{{ input_id }}">{{ def.name }}</label>
-                        <input type="number"{% if def.type == 'double' %} step="any"{% endif %} name="{{ def.input_name }}" class="form-control" id="{{ input_id }}" value="{{ def.value }}">
-                    </div>
-                {% else %}
-                    <div class="form-group mt-2">
-                        <label for="{{ input_id }}">{{ def.name }}</label>
-                        <input type="text" name="{{ def.input_name }}" class="form-control" id="{{ input_id }}" value="{{ def.value }}">
-                    </div>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
+                </div>
+            </section>
 
-        <div class="mt-3">
-            <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
-            <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+            {% if field_defs is not empty %}
+                <section class="card">
+                    {{ ui.card_head('list', __('Fields of the collection')) }}
+                    <div class="card-body">
+                        <div class="row g-3">
+                            {% for def in field_defs %}
+                                {% set input_id = 'f_' ~ def.input_name %}
+                                {% set wide = def.multiple or def.type in ['text', 'html'] %}
+                                <div class="{{ wide ? 'col-12' : 'col-md-6' }}">
+                                    {% if def.type == 'boolean' and not def.multiple %}
+                                        <div class="form-check form-switch mt-md-4">
+                                            <input type="checkbox" class="form-check-input" role="switch" name="{{ def.input_name }}" value="1" id="{{ input_id }}"{% if def.value == '1' %} checked{% endif %}>
+                                            <label class="form-check-label" for="{{ input_id }}">{{ def.name }}</label>
+                                        </div>
+                                    {% else %}
+                                        <label class="form-label" for="{{ input_id }}">
+                                            {{ def.name }}{% if def.required %} <span class="text-danger" title="{{ __('Required') }}">*</span>{% endif %}
+                                        </label>
+                                        {% if def.multiple %}
+                                            <textarea name="{{ def.input_name }}" class="form-control" id="{{ input_id }}" rows="3">{{ def.value }}</textarea>
+                                            <div class="form-text">{{ __('One value per line') }}</div>
+                                        {% elseif def.type in ['text', 'html'] %}
+                                            <textarea name="{{ def.input_name }}" class="form-control" id="{{ input_id }}" rows="4">{{ def.value }}</textarea>
+                                        {% elseif def.type in ['integer', 'double'] %}
+                                            <input type="number"{% if def.type == 'double' %} step="any"{% endif %} name="{{ def.input_name }}" class="form-control" id="{{ input_id }}" value="{{ def.value }}">
+                                        {% elseif def.type == 'date' %}
+                                            <input type="date" name="{{ def.input_name }}" class="form-control" id="{{ input_id }}" value="{{ def.value }}">
+                                        {% elseif def.type == 'datetime' %}
+                                            <input type="datetime-local" name="{{ def.input_name }}" class="form-control" id="{{ input_id }}" value="{{ def.value }}">
+                                        {% else %}
+                                            <input type="text" name="{{ def.input_name }}" class="form-control" id="{{ input_id }}" value="{{ def.value }}">
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </section>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-4 d-flex flex-column gap-3">
+            <section class="card">
+                {{ ui.card_head('eye', __('Publication')) }}
+                <div class="card-body d-flex flex-column gap-3">
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" role="switch" name="active" value="1" id="active"{% if fields.active %} checked{% endif %}>
+                        <label class="form-check-label" for="active">{{ __('Active') }}</label>
+                        <div class="form-text mt-0">{{ __('A turned off item is not shown on the site, whatever its dates.') }}</div>
+                    </div>
+                    <div>
+                        <label class="form-label" for="active_from">{{ __('Active from') }}</label>
+                        <input type="datetime-local" name="active_from" class="form-control" id="active_from" value="{{ fields.active_from }}">
+                    </div>
+                    <div>
+                        <label class="form-label" for="active_to">{{ __('Active to') }}</label>
+                        <input type="datetime-local" name="active_to" class="form-control" id="active_to" value="{{ fields.active_to }}">
+                        <div class="form-text">{{ __('Leave the dates empty to show the item from the moment it is saved and without an end.') }}</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                {{ ui.card_head('folder', has_sections ? __('Place') : __('Order')) }}
+                <div class="card-body d-flex flex-column gap-3">
+                    {% if has_sections %}
+                        <div>
+                            <label class="form-label" for="section_id">{{ __('Section') }}</label>
+                            <select name="section_id" class="form-select" id="section_id">
+                                <option value="0">{{ __('Without a section') }}</option>
+                                {% for section_id, title in section_options %}
+                                    <option value="{{ section_id }}"{% if fields.section_id == section_id %} selected{% endif %}>{{ title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    {% endif %}
+                    <div>
+                        <label class="form-label" for="sort">{{ __('Sorting') }}</label>
+                        <input type="number" name="sort" class="form-control" id="sort" value="{{ fields.sort }}">
+                        <div class="form-text">{{ __('The smaller the number, the higher the item in the lists.') }}</div>
+                    </div>
+                </div>
+            </section>
         </div>
     </form>
+
+    {% include '@admin/components/ui/form-footer.twig' with {form: 'item-form', cancel_url: back_url, sticky: true} only %}
 {% endblock %}

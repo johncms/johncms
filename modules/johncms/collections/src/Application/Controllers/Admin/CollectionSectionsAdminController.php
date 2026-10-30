@@ -14,6 +14,7 @@ use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Services\SectionTree;
 use Johncms\Modules\Collections\Application\Services\CollectionWorkspaceMapper;
 use Johncms\NavChain;
 use Johncms\Http\Request;
@@ -239,6 +240,9 @@ final readonly class CollectionSectionsAdminController
             'back_url'    => $this->baseUrl($collection->id),
             'id'          => $id,
             'fields'      => $fields,
+            'parent_path' => $fields['parent'] !== null
+                ? implode(' › ', SectionTree::of($this->sectionRepository->getAllByCollection($collection->id))->pathOf((int) $fields['parent']))
+                : '',
             'errors'      => $errors,
         ]);
     }
@@ -350,7 +354,7 @@ final readonly class CollectionSectionsAdminController
     {
         return [
             'title'       => $title . ' — ' . $collectionName,
-            'page_title'  => __('Sections'),
+            'page_title'  => $title,
             'module_menu' => ['collections' => true],
         ];
     }

@@ -135,7 +135,7 @@ final readonly class CollectionItemsAdminController
 
         $fieldDefs = $this->fieldRepository->getByCollection($collection_id);
         $fields = $this->fieldsFromRequest($request, $collection, $fieldDefs);
-        $errors = $this->validate($collection, $fields);
+        $errors = [...$this->validate($collection, $fields), ...$this->missingRequired($fieldDefs, $fields['values'])];
 
         if ($errors !== []) {
             return $this->renderFormWithFields($collection, $id, $fields, $errors);
@@ -271,6 +271,12 @@ final readonly class CollectionItemsAdminController
                 $value = ! empty($current) ? '1' : '0';
             } else {
                 $value = is_array($current) ? '' : (string) ($current ?? '');
+                // The formats of <input type="date"> and <input type="datetime-local">.
+                if ($value !== '' && $field->type === FieldType::Date) {
+                    $value = substr($value, 0, 10);
+                } elseif ($value !== '' && $field->type === FieldType::Datetime) {
+                    $value = str_replace(' ', 'T', substr($value, 0, 16));
+                }
             }
 
             $defs[] = [
@@ -325,8 +331,9 @@ final readonly class CollectionItemsAdminController
             'code'         => $item->code,
             'name'         => $item->name,
             'active'       => $item->active ? 1 : 0,
-            'active_from'  => $item->active_from?->format('Y-m-d H:i:s') ?? '',
-            'active_to'    => $item->active_to?->format('Y-m-d H:i:s') ?? '',
+            // The format of an <input type="datetime-local">.
+            'active_from'  => $item->active_from?->format('Y-m-d\TH:i') ?? '',
+            'active_to'    => $item->active_to?->format('Y-m-d\TH:i') ?? '',
             'sort'         => $item->sort,
             'preview_text' => (string) $item->preview_text,
             'detail_text'  => (string) $item->detail_text,
@@ -362,8 +369,8 @@ final readonly class CollectionItemsAdminController
             code: (string) $fields['code'],
             name: (string) $fields['name'],
             active: (bool) $fields['active'],
-            activeFrom: $fields['active_from'] !== '' ? (string) $fields['active_from'] : null,
-            activeTo: $fields['active_to'] !== '' ? (string) $fields['active_to'] : null,
+            activeFrom: $this->dateTime((string) $fields['active_from']),
+            activeTo: $this->dateTime((string) $fields['active_to']),
             sort: (int) $fields['sort'],
             previewText: $fields['preview_text'] !== '' ? (string) $fields['preview_text'] : null,
             detailText: $fields['detail_text'] !== '' ? (string) $fields['detail_text'] : null,
@@ -398,6 +405,31 @@ final readonly class CollectionItemsAdminController
     }
 
     /**
+     * A message for every required field left empty. A yes/no field always has a value: off is
+     * an answer too.
+     *
+     * @param Collection<int, \Johncms\Modules\Collections\Domain\Models\ContentCollectionField> $fieldDefs
+     * @param array<string, string|list<string>> $values
+     * @return list<string>
+     */
+    private function missingRequired(Collection $fieldDefs, array $values): array
+    {
+        $errors = [];
+        foreach ($fieldDefs as $field) {
+            if (! $field->required || $field->type === FieldType::Boolean) {
+                continue;
+            }
+
+            $value = $values[$field->code] ?? '';
+            if ($value === [] || (is_string($value) && trim($value) === '')) {
+                $errors[] = __('Fill in the field "%s"', $field->name);
+            }
+        }
+
+        return $errors;
+    }
+
+    /**
      * @param Collection<int, \Johncms\Modules\Collections\Domain\Models\ContentCollectionField> $fieldDefs
      * @return array<string, string|list<string>>
      */
@@ -421,16 +453,34 @@ final readonly class CollectionItemsAdminController
     }
 
     /**
+     * The sections an item may stand in, in the order of the tree, each named by its path.
+     *
      * @return array<int, string>
      */
     private function sectionOptions(int $collectionId): array
     {
+        $tree = $this->listItems->sectionTree($collectionId);
         $options = [];
-        foreach ($this->sectionRepository->getAllByCollection($collectionId) as $section) {
-            $options[$section->id] = $section->name;
+        foreach ($tree->ordered() as $id) {
+            $options[$id] = implode(' › ', $tree->pathOf($id));
         }
 
         return $options;
+    }
+
+    /**
+     * A date and time as the column keeps it, from the value of an <input type="datetime-local">
+     * ("2026-10-30T12:00") or one typed by hand; null for none or one that is not a date.
+     */
+    private function dateTime(string $value): ?string
+    {
+        if ($value === '') {
+            return null;
+        }
+
+        $timestamp = strtotime(str_replace('T', ' ', $value));
+
+        return $timestamp !== false ? date('Y-m-d H:i:s', $timestamp) : null;
     }
 
     private function sectionBelongs(int $collectionId, int $sectionId): bool
@@ -478,7 +528,7 @@ final readonly class CollectionItemsAdminController
     {
         return [
             'title'       => $title . ' — ' . $collectionName,
-            'page_title'  => __('Items'),
+            'page_title'  => $title,
             'module_menu' => ['collections' => true],
         ];
     }
