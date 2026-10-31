@@ -6,6 +6,7 @@ namespace Tests\Unit\Checker;
 
 use Illuminate\Database\Connection;
 use Johncms\Checker\DBChecker;
+use Johncms\Checker\Exceptions\DatabaseCheckException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -32,6 +33,17 @@ final class DBCheckerTest extends TestCase
         yield 'old MariaDB' => ['10.1.48-MariaDB', 'MariaDB', true];
         yield 'minimum MariaDB' => ['10.2.0-MariaDB', 'MariaDB', false];
         yield 'current MariaDB' => ['11.8.5-MariaDB-ubu2404', 'MariaDB', false];
+        yield 'MariaDB compatibility prefix' => ['5.5.5-10.11.6-MariaDB', 'MariaDB', false];
+        yield 'old MariaDB compatibility prefix' => ['5.5.5-10.1.48-MariaDB', 'MariaDB', true];
+    }
+
+    public function testAnUnrecognisedVersionIsAnExplicitFailureToCheck(): void
+    {
+        $connection = $this->createMock(Connection::class);
+        $connection->method('select')->willReturn([(object) ['ver' => 'unknown']]);
+
+        $this->expectException(DatabaseCheckException::class);
+        $this->checker($connection)->versionInfo();
     }
 
     #[DataProvider('databaseValues')]

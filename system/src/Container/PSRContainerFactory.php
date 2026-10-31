@@ -109,6 +109,7 @@ class PSRContainerFactory
     private function registerExtensionPoints(ContainerBuilder $container): void
     {
         $tags = [
+            \Johncms\Checker\SystemCheckInterface::class => 'johncms.system_check',
             AuthenticatorInterface::class      => 'johncms.auth.authenticator',
             AccessVoterInterface::class        => 'johncms.auth.voter',
             PermissionProviderInterface::class => 'johncms.auth.permissions',

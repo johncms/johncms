@@ -1329,3 +1329,129 @@ msgstr "Обновить модуль"
 
 msgid "Runs the migrations of a module and its update hook."
 msgstr "Выполняет миграции модуля и его обработчик обновления."
+
+msgid "Cache read and write"
+msgstr "Чтение и запись кеша"
+
+msgid "Cache and storage"
+msgstr "Кеш и хранилища"
+
+msgid "The application cache is disabled in configuration."
+msgstr "Кеш приложения отключён в настройках."
+
+msgid "The array cache lasts for this request only. Use a persistent cache driver on a production site."
+msgstr "Кеш в памяти действует только в течение текущего запроса. На рабочем сайте используйте драйвер с постоянным хранением кеша."
+
+msgid "A temporary cache entry was written, read back and removed. If the check fails, inspect the configured cache driver and its access permissions."
+msgstr "Временная запись кеша создана, прочитана и удалена. Если проверка не пройдена, проверьте настройки драйвера кеша и права доступа."
+
+msgid "Database"
+msgstr "База данных"
+
+msgid "This check applies to MySQL and MariaDB connections."
+msgstr "Эта проверка предназначена для подключений к MySQL и MariaDB."
+
+msgid "Database integers must be returned as integers. Enable MySQL Native Driver (mysqlnd) and check the PDO connection settings."
+msgstr "Целые числа из базы данных должны возвращаться с целочисленным типом. Включите MySQL Native Driver (mysqlnd) и проверьте настройки подключения PDO."
+
+msgid "Debug mode"
+msgstr "Режим отладки"
+
+msgid "Security"
+msgstr "Безопасность"
+
+msgid "Debug mode is useful during development. Disable DEBUG on a public production site; DEBUG_FOR_ALL exposes additional diagnostics to visitors."
+msgstr "Режим отладки полезен при разработке. На общедоступном рабочем сайте отключите DEBUG. Настройка DEBUG_FOR_ALL открывает посетителям дополнительную диагностическую информацию."
+
+msgid "Working directories"
+msgstr "Рабочие каталоги"
+
+msgid "Filesystem"
+msgstr "Файловая система"
+
+msgid "Writable"
+msgstr "Доступен для записи"
+
+msgid "Not writable"
+msgstr "Недоступен для записи"
+
+msgid "The PHP process must be able to write here or create this directory. Check its owner and permissions; granting access to everyone is not required."
+msgstr "Процесс PHP должен иметь возможность записывать файлы в этот каталог или создавать его. Проверьте владельца и права доступа. Предоставлять доступ всем пользователям не требуется."
+
+msgid "Mail queue"
+msgstr "Очередь почты"
+
+msgid "Background tasks"
+msgstr "Фоновые задачи"
+
+msgid "Emails that could not be delivered"
+msgstr "Письма, которые не удалось доставить"
+
+msgid "These messages exhausted their delivery attempts. Check mail transport settings and the application log."
+msgstr "Для этих писем исчерпаны попытки доставки. Проверьте настройки отправки почты и журнал приложения."
+
+msgid "Emails waiting for delivery for over an hour"
+msgstr "Письма, ожидающие отправки более часа"
+
+msgid "Check that cron runs and mail:send-pending completes successfully. Messages scheduled for a later attempt are excluded."
+msgstr "Убедитесь, что cron работает, а команда mail:send-pending выполняется успешно. Письма, для которых повторная попытка назначена на более позднее время, не учитываются."
+
+msgid "Recommended parameters"
+msgstr "Рекомендуемые параметры"
+
+msgid "This result describes PHP CLI. Open this page in a browser to check the web server OPcache settings."
+msgstr "Этот результат относится к PHP CLI. Откройте страницу в браузере, чтобы проверить настройки OPcache веб-сервера."
+
+msgid "Pending database migrations"
+msgstr "Неприменённые миграции базы данных"
+
+msgid "Apply pending migrations after updating the site: php system/bin/console migrate. Back up the database before updating it."
+msgstr "После обновления сайта примените миграции командой php system/bin/console migrate. Перед обновлением базы данных создайте её резервную копию."
+
+msgid "PHP requirements"
+msgstr "Требования к PHP"
+
+msgid "Required parameters"
+msgstr "Обязательные параметры"
+
+msgid "PHP must satisfy the version requirement %s."
+msgstr "Версия PHP должна соответствовать требованию %s."
+
+msgid "The PHP extension %s must be installed and enabled for the web server."
+msgstr "Расширение PHP %s должно быть установлено и включено для веб-сервера."
+
+msgid "Storage read and write"
+msgstr "Чтение и запись в хранилища"
+
+msgid "Storage: %s"
+msgstr "Хранилище: %s"
+
+msgid "Could not check"
+msgstr "Не удалось проверить"
+
+msgid "The storage test could not finish. Check its configuration and application log, including any failure to remove the temporary test file."
+msgstr "Не удалось завершить проверку хранилища. Проверьте его настройки и журнал приложения, в том числе сообщения об ошибке удаления временного файла."
+
+msgid "A temporary file was written, read back and removed. The contents must match what was written."
+msgstr "Временный файл создан, прочитан и удалён. Прочитанное содержимое должно совпадать с записанным."
+
+msgid "Upload limits"
+msgstr "Ограничения загрузки файлов"
+
+msgid "Uploads"
+msgstr "Загрузка файлов"
+
+msgid "Enable file_uploads in PHP to accept uploaded files."
+msgstr "Включите file_uploads в настройках PHP, чтобы разрешить загрузку файлов."
+
+msgid "post_max_size must allow the uploaded file and the rest of the form. Set it higher than upload_max_filesize, or use 0 for no POST size limit."
+msgstr "Значение post_max_size должно вмещать загружаемый файл и остальные данные формы. Установите его больше upload_max_filesize или укажите 0, чтобы снять ограничение размера POST-запроса."
+
+msgid "Editor image upload limit"
+msgstr "Ограничение размера изображений в редакторе"
+
+msgid "The image size allowed in editor settings must fit within the PHP upload limit, with room for the form in post_max_size."
+msgstr "Допустимый размер изображения в настройках редактора не должен превышать ограничение PHP. В post_max_size также должен оставаться запас для данных формы."
+
+msgid "The check could not be completed. See the application log for details and run the check again."
+msgstr "Не удалось завершить проверку. Подробности смотрите в журнале приложения, затем запустите проверку повторно."

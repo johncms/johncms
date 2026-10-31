@@ -31,7 +31,7 @@ use Throwable;
  * failed one is not recorded: on a database that rolls back DDL it did nothing, and on one that
  * does not the exception says so.
  */
-final readonly class Migrator implements MigrationRunnerInterface
+final readonly class Migrator implements MigrationRunnerInterface, PendingMigrationsProviderInterface
 {
     private const string LOCK_KEY = 'johncms.migrations';
 

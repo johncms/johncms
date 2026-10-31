@@ -24,7 +24,7 @@ use Johncms\Users\User;
  * Lives beside the verifier that recognises a single value, because the two share the same
  * knowledge and are meant to be deleted together.
  */
-final class LegacyPasswordAudit
+final class LegacyPasswordAudit implements LegacyPasswordAuditInterface
 {
     /**
      * The old scheme produced a 32-character hex digest; password_hash() never produces anything

@@ -130,6 +130,7 @@ final class ContainerCompilationTest extends TestCase
             'johncms.visitor_place_provider',
             'johncms.system_notification_provider',
             'johncms.homepage_block_provider',
+            'johncms.system_check',
             'johncms.twig_extension',
             'johncms.resettable',
             'johncms.validator.rule_factory',

@@ -2408,12 +2408,6 @@ parameters:
 			path: public/install/steps/step_1.php
 
 		-
-			message: '#^Comparison operation "\<" between int\<80400, 80699\> and 80400 is always false\.$#'
-			identifier: smaller.alwaysFalse
-			count: 1
-			path: public/install/steps/step_2.php
-
-		-
 			message: '#^Variable \$view might not be defined\.$#'
 			identifier: variable.undefined
 			count: 1
@@ -2490,12 +2484,6 @@ parameters:
 			identifier: return.type
 			count: 1
 			path: system/src/Casts/TimeToDate.php
-
-		-
-			message: '#^Comparison operation "\<" between int\<80400, 80699\> and 80400 is always false\.$#'
-			identifier: smaller.alwaysFalse
-			count: 1
-			path: system/src/Checker/SystemChecker.php
 
 		-
 			message: '#^Call to method set\(\) on an unknown class ProjectServiceContainer\.$#'

@@ -12,6 +12,9 @@ declare(strict_types=1);
 
 namespace Johncms\Http;
 
+use Johncms\Checker\NativePhpEnvironment;
+use Johncms\Checker\PhpEnvironmentInterface;
+
 /**
  * What PHP itself lets through, whatever the site has configured.
  *
@@ -22,6 +25,10 @@ namespace Johncms\Http;
  */
 final readonly class UploadLimits
 {
+    public function __construct(private PhpEnvironmentInterface $php = new NativePhpEnvironment())
+    {
+    }
+
     /** The largest upload PHP accepts, in bytes. Zero when neither limit is set. */
     public function maxUploadBytes(): int
     {
@@ -63,7 +70,7 @@ final readonly class UploadLimits
      */
     private function bytes(string $directive): int
     {
-        $value = trim((string) ini_get($directive));
+        $value = trim($this->php->ini($directive));
         if ($value === '') {
             return 0;
         }

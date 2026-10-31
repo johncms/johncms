@@ -28,6 +28,7 @@ final class CachePoolFactory
 
     public function __construct(
         private readonly CacheSettings $settings,
+        private readonly ?int $connectionTimeout = null,
     ) {
     }
 
@@ -95,10 +96,32 @@ final class CachePoolFactory
         }
 
         return new RedisTagAwareAdapter(
-            RedisAdapter::createConnection($this->settings->redisDsn),
+            RedisAdapter::createConnection($this->redisDsn()),
             $this->settings->namespace,
             $this->settings->defaultLifetime
         );
+    }
+
+    private function redisDsn(): string
+    {
+        if ($this->connectionTimeout === null) {
+            return $this->settings->redisDsn;
+        }
+
+        // DSN query options take precedence over createConnection() options. Override them here
+        // so that a production DSN with unlimited reads cannot make diagnostics wait forever.
+        [$address, $query] = array_pad(explode('?', $this->settings->redisDsn, 2), 2, '');
+        parse_str($query, $options);
+        $options = array_replace($options, [
+            'timeout' => $this->connectionTimeout,
+            'read_timeout' => $this->connectionTimeout,
+            'cluster_command_timeout' => $this->connectionTimeout,
+            'retry_interval' => 0,
+            'persistent' => 0,
+            'lazy' => 0,
+        ]);
+
+        return $address . '?' . http_build_query($options, encoding_type: PHP_QUERY_RFC3986);
     }
 
     private function useSymlinkTags(string $directory): bool

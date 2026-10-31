@@ -540,113 +540,242 @@ msgstr ""
 msgid "Server key"
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:30
-msgid "PHP version"
+#: system/src/Checker/Checks/CacheCheck.php:25
+msgid "Cache read and write"
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:35
-#, php-format
-msgid "The PHP version must be at least %s"
+#: system/src/Checker/Checks/CacheCheck.php:25
+#: system/src/Checker/Checks/StorageCheck.php:26
+msgid "Cache and storage"
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:40
-#: system/src/Checker/SystemChecker.php:48
-#: system/src/Checker/SystemChecker.php:56
-#: system/src/Checker/SystemChecker.php:64
-#: system/src/Checker/SystemChecker.php:72
-#: system/src/Checker/SystemChecker.php:89
-#: system/src/Checker/SystemChecker.php:97
-#: system/src/Checker/SystemChecker.php:147
+#: system/src/Checker/Checks/CacheCheck.php:37
+msgid "The application cache is disabled in configuration."
+msgstr ""
+
+#: system/src/Checker/Checks/CacheCheck.php:49
+msgid "The array cache lasts for this request only. Use a persistent cache driver on a production site."
+msgstr ""
+
+#: system/src/Checker/Checks/CacheCheck.php:50
+msgid "A temporary cache entry was written, read back and removed. If the check fails, inspect the configured cache driver and its access permissions."
+msgstr ""
+
+#: system/src/Checker/Checks/DatabaseTypesCheck.php:22
+msgid "mysqlnd test"
+msgstr ""
+
+#: system/src/Checker/Checks/DatabaseTypesCheck.php:22
+#: system/src/Checker/Checks/DatabaseVersionCheck.php:23
+#: system/src/Checker/Checks/PendingMigrationsCheck.php:22
+msgid "Database"
+msgstr ""
+
+#: system/src/Checker/Checks/DatabaseTypesCheck.php:34
+#: system/src/Checker/Checks/DatabaseVersionCheck.php:35
+msgid "This check applies to MySQL and MariaDB connections."
+msgstr ""
+
+#: system/src/Checker/Checks/DatabaseTypesCheck.php:42
+#: system/src/Checker/Checks/OpcacheCheck.php:46
+#: system/src/Checker/Checks/OpcacheCheck.php:54
+#: system/src/Checker/Checks/PhpRequirementsCheck.php:52
+#: system/src/Checker/Checks/StorageCheck.php:54
+#: system/src/Checker/Checks/UploadLimitsCheck.php:40
 msgid "Yes"
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:40
-#: system/src/Checker/SystemChecker.php:48
-#: system/src/Checker/SystemChecker.php:56
-#: system/src/Checker/SystemChecker.php:64
-#: system/src/Checker/SystemChecker.php:72
-#: system/src/Checker/SystemChecker.php:89
-#: system/src/Checker/SystemChecker.php:97
-#: system/src/Checker/SystemChecker.php:147
+#: system/src/Checker/Checks/DatabaseTypesCheck.php:42
+#: system/src/Checker/Checks/OpcacheCheck.php:46
+#: system/src/Checker/Checks/OpcacheCheck.php:54
+#: system/src/Checker/Checks/PhpRequirementsCheck.php:52
+#: system/src/Checker/Checks/StorageCheck.php:55
+#: system/src/Checker/Checks/UploadLimitsCheck.php:40
 msgid "No"
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:43
-msgid "PHP extension PDO must be installed"
+#: system/src/Checker/Checks/DatabaseTypesCheck.php:45
+msgid "Database integers must be returned as integers. Enable MySQL Native Driver (mysqlnd) and check the PDO connection settings."
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:46
-msgid "Imagick or GD extension"
+#: system/src/Checker/Checks/DatabaseVersionCheck.php:23
+msgid "Version of the database server"
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:51
-msgid "You must install the php extension Imagick or GD"
+#: system/src/Checker/Checks/DatabaseVersionCheck.php:46
+#, php-format
+msgid "The system requires a MySQL server version %s or higher or MariaDB %s or higher."
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:54
-msgid "zlib extension"
+#: system/src/Checker/Checks/DebugModeCheck.php:21
+msgid "Debug mode"
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:59
-msgid "PHP extension zlib must be installed"
+#: system/src/Checker/Checks/DebugModeCheck.php:21
+#: system/src/Checker/Checks/LegacyPasswordsCheck.php:22
+msgid "Security"
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:62
-msgid "mbstring extension"
+#: system/src/Checker/Checks/DebugModeCheck.php:32
+msgid "Debug mode is useful during development. Disable DEBUG on a public production site; DEBUG_FOR_ALL exposes additional diagnostics to visitors."
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:67
-msgid "PHP extension mbstring must be installed"
+#: system/src/Checker/Checks/DirectoriesCheck.php:23
+msgid "Working directories"
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:70
-msgid "fileinfo extension"
+#: system/src/Checker/Checks/DirectoriesCheck.php:23
+#: modules/johncms/admin/src/Application/SystemChecks/DiskSpaceCheck.php:24
+msgid "Filesystem"
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:75
-msgid "PHP extension fileinfo must be installed"
+#: system/src/Checker/Checks/DirectoriesCheck.php:34
+msgid "Writable"
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:87
-msgid "opcache extension"
+#: system/src/Checker/Checks/DirectoriesCheck.php:34
+msgid "Not writable"
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:92
-msgid "It is recommended to install the php opcache extension for better performance."
+#: system/src/Checker/Checks/DirectoriesCheck.php:37
+msgid "The PHP process must be able to write here or create this directory. Check its owner and permissions; granting access to everyone is not required."
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:100
-msgid "It is recommended to enable the php opcache extension to improve performance."
-msgstr ""
-
-#: system/src/Checker/SystemChecker.php:114
+#: system/src/Checker/Checks/LegacyPasswordsCheck.php:22
 msgid "Accounts with an outdated password hash"
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:119
+#: system/src/Checker/Checks/LegacyPasswordsCheck.php:35
 msgid ""
 "These accounts predate the current password hashing and their owners have not signed in since.\n"
 "Each one is converted automatically the next time its owner signs in — nobody has to reset anything.\n"
 "The number is shown so that support for the old scheme is not removed while it is still in use."
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:137
-msgid "Version of the database server"
+#: system/src/Checker/Checks/MailQueueCheck.php:22
+msgid "Mail queue"
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:142
+#: system/src/Checker/Checks/MailQueueCheck.php:22
+#: modules/johncms/admin/src/Application/SystemChecks/SchedulerCheck.php:23
+msgid "Background tasks"
+msgstr ""
+
+#: system/src/Checker/Checks/MailQueueCheck.php:32
+msgid "Emails that could not be delivered"
+msgstr ""
+
+#: system/src/Checker/Checks/MailQueueCheck.php:36
+msgid "These messages exhausted their delivery attempts. Check mail transport settings and the application log."
+msgstr ""
+
+#: system/src/Checker/Checks/MailQueueCheck.php:40
+msgid "Emails waiting for delivery for over an hour"
+msgstr ""
+
+#: system/src/Checker/Checks/MailQueueCheck.php:44
+msgid "Check that cron runs and mail:send-pending completes successfully. Messages scheduled for a later attempt are excluded."
+msgstr ""
+
+#: system/src/Checker/Checks/OpcacheCheck.php:26
+msgid "Recommended parameters"
+msgstr ""
+
+#: system/src/Checker/Checks/OpcacheCheck.php:45
+msgid "opcache extension"
+msgstr ""
+
+#: system/src/Checker/Checks/OpcacheCheck.php:49
+msgid "It is recommended to install the php opcache extension for better performance."
+msgstr ""
+
+#: system/src/Checker/Checks/OpcacheCheck.php:58
+msgid "This result describes PHP CLI. Open this page in a browser to check the web server OPcache settings."
+msgstr ""
+
+#: system/src/Checker/Checks/OpcacheCheck.php:59
+msgid "It is recommended to enable the php opcache extension to improve performance."
+msgstr ""
+
+#: system/src/Checker/Checks/PendingMigrationsCheck.php:22
+msgid "Pending database migrations"
+msgstr ""
+
+#: system/src/Checker/Checks/PendingMigrationsCheck.php:35
+msgid "Apply pending migrations after updating the site: php system/bin/console migrate. Back up the database before updating it."
+msgstr ""
+
+#: system/src/Checker/Checks/PhpRequirementsCheck.php:27
+msgid "PHP requirements"
+msgstr ""
+
+#: system/src/Checker/Checks/PhpRequirementsCheck.php:28
+msgid "Required parameters"
+msgstr ""
+
+#: system/src/Checker/Checks/PhpRequirementsCheck.php:40
+msgid "PHP version"
+msgstr ""
+
+#: system/src/Checker/Checks/PhpRequirementsCheck.php:44
 #, php-format
-msgid "The system requires a MySQL server version %s or higher or MariaDB %s or higher."
+msgid "PHP must satisfy the version requirement %s."
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:145
-msgid "mysqlnd test"
+#: system/src/Checker/Checks/PhpRequirementsCheck.php:55
+#, php-format
+msgid "The PHP extension %s must be installed and enabled for the web server."
 msgstr ""
 
-#: system/src/Checker/SystemChecker.php:150
-msgid ""
-"We use strict data type checks when developing the system. The CMS will not work correctly if the driver for working with the database returns incorrect data types.\n"
-"PHP should work with the default driver: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
+#: system/src/Checker/Checks/StorageCheck.php:26
+msgid "Storage read and write"
+msgstr ""
+
+#: system/src/Checker/Checks/StorageCheck.php:52
+#, php-format
+msgid "Storage: %s"
+msgstr ""
+
+#: system/src/Checker/Checks/StorageCheck.php:56
+#: system/src/Checker/SystemChecker.php:67
+#: modules/johncms/admin/src/Application/SystemChecks/DiskSpaceCheck.php:35
+msgid "Could not check"
+msgstr ""
+
+#: system/src/Checker/Checks/StorageCheck.php:61
+msgid "The storage test could not finish. Check its configuration and application log, including any failure to remove the temporary test file."
+msgstr ""
+
+#: system/src/Checker/Checks/StorageCheck.php:62
+msgid "A temporary file was written, read back and removed. The contents must match what was written."
+msgstr ""
+
+#: system/src/Checker/Checks/UploadLimitsCheck.php:24
+msgid "Upload limits"
+msgstr ""
+
+#: system/src/Checker/Checks/UploadLimitsCheck.php:24
+msgid "Uploads"
+msgstr ""
+
+#: system/src/Checker/Checks/UploadLimitsCheck.php:43
+msgid "Enable file_uploads in PHP to accept uploaded files."
+msgstr ""
+
+#: system/src/Checker/Checks/UploadLimitsCheck.php:51
+msgid "post_max_size must allow the uploaded file and the rest of the form. Set it higher than upload_max_filesize, or use 0 for no POST size limit."
+msgstr ""
+
+#: system/src/Checker/Checks/UploadLimitsCheck.php:56
+msgid "Editor image upload limit"
+msgstr ""
+
+#: system/src/Checker/Checks/UploadLimitsCheck.php:60
+msgid "The image size allowed in editor settings must fit within the PHP upload limit, with room for the form in post_max_size."
+msgstr ""
+
+#: system/src/Checker/SystemChecker.php:70
+msgid "The check could not be completed. See the application log for details and run the check again."
 msgstr ""
 
 #: system/src/Comments.php:201

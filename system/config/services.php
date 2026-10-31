@@ -189,6 +189,12 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Counters.php',
                 ROOT_PATH . 'system/src/FileInfo.php',
                 ROOT_PATH . 'system/src/Config',
+                ROOT_PATH . 'system/src/Checker/DTO',
+                ROOT_PATH . 'system/src/Checker/Exceptions',
+                ROOT_PATH . 'system/src/Checker/CheckProfile.php',
+                ROOT_PATH . 'system/src/Checker/CheckSeverity.php',
+                ROOT_PATH . 'system/src/Checker/CheckStatus.php',
+                ROOT_PATH . 'system/src/Checker/PlatformRequirements.php',
                 // Value objects of the content pipeline: what a caller asks for and what a
                 // provider answers, both carrying scalar constructor arguments.
                 ROOT_PATH . 'system/src/Content/ContentContext.php',
@@ -374,6 +380,9 @@ return static function (ContainerConfigurator $container): void {
     // Configuring Eloquent and connecting to the database are two services: the console boots
     // the capsule for every command, while the connection opens only for the ones that query.
     $services->set(Capsule::class)->factory(service(CapsuleFactory::class));
+    $services->set('johncms.checker.database_connection', \Illuminate\Database\Connection::class)
+        ->factory([service(Capsule::class), 'getConnection']);
+    $services->set(\Johncms\Checker\DBChecker::class)->arg('$connection', service('johncms.checker.database_connection'));
     $services->set(\PDO::class, PdoFactory::class)->factory(service(PdoFactory::class));
     // Creating and altering tables: a handful of console commands and the installer.
     $services->set(SchemaBuilder::class)->factory(service(SchemaBuilderFactory::class));
@@ -398,6 +407,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(MigrationRepositoryInterface::class, DatabaseMigrationRepository::class);
     $services->set(Migrator::class);
     $services->alias(MigrationRunnerInterface::class, Migrator::class);
+    $services->alias(\Johncms\Database\Migrations\PendingMigrationsProviderInterface::class, Migrator::class);
     $services->set(MigrationGenerator::class);
     $services->set(PendingMigrations::class);
     $services->set(\Johncms\Users\Repository\UserRepositoryInterface::class, \Johncms\Users\Repository\EloquentUserRepository::class);
@@ -587,6 +597,23 @@ return static function (ContainerConfigurator $container): void {
     // container is built: the built container is cached, and a driver resolved there would be
     // frozen into it.
     $services->set(CacheSettings::class)->factory(service(CacheSettingsFactory::class));
+    $services->set(\Johncms\Checker\PhpEnvironmentInterface::class, \Johncms\Checker\NativePhpEnvironment::class);
+    $services->set(\Johncms\Checker\FilesystemProbeInterface::class, \Johncms\Checker\NativeFilesystemProbe::class);
+    $services->alias(\Johncms\Auth\Password\LegacyPasswordAuditInterface::class, \Johncms\Auth\Password\LegacyPasswordAudit::class);
+    $services->alias(\Johncms\Checker\DatabaseProbeInterface::class, \Johncms\Checker\DBChecker::class);
+    $services->set(\Johncms\Checker\SystemChecker::class)->arg('$checks', tagged_locator('johncms.system_check'));
+    $services->alias(\Johncms\Checker\SystemCheckerInterface::class, \Johncms\Checker\SystemChecker::class);
+    $services->set(\Johncms\Mail\Queue\EmailQueueStatusInterface::class, \Johncms\Mail\Queue\EloquentEmailQueueStatus::class);
+    // Active diagnostics have bounded network calls and are built only for the Extended profile.
+    $services->set('johncms.checker.cache_factory', CachePoolFactory::class)->arg('$connectionTimeout', 3);
+    $services->set('johncms.checker.cache', CacheInterface::class)->factory([service('johncms.checker.cache_factory'), 'create']);
+    $services->set(\Johncms\Checker\CacheProbeInterface::class, \Johncms\Checker\CacheRoundTripProbe::class)
+        ->arg('$cache', service('johncms.checker.cache'));
+    $services->set('johncms.checker.storage_factory', \Johncms\Storage\StorageFactory::class)->arg('$connectionTimeout', 3);
+    $services->set('johncms.checker.storage_registry', StorageRegistry::class)->arg('$factory', service('johncms.checker.storage_factory'));
+    $services->set(\Johncms\Checker\Checks\StorageCheck::class)
+        ->arg('$storage', service('johncms.checker.storage_registry'))
+        ->autoconfigure();
     $services->set(CacheInterface::class)->factory([service(CachePoolFactory::class), 'create']);
     // The disks the CMS stores files on, read from config at instantiation for the same reason.
     $services->set(StorageSettings::class)->factory(service(StorageSettingsFactory::class));

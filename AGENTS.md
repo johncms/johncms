@@ -25,6 +25,7 @@ guide first:
 * Validating a form, adding a validation rule, messages of a rule → read `.agents/validation.md`
 * Asking a form for a captcha, adding a captcha provider → read `.agents/captcha.md`
 * Writing a test: the two suites, the harness of a functional test, accounts and fixtures → read `.agents/testing.md`
+* Adding or changing a system diagnostic check → read `.agents/system-checks.md`
 * Self-review, when the user asks for it (architecture, security, PHP quality, localization) → read `.agents/review/README.md`
 
 ## Self-Review

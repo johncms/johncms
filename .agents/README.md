@@ -27,6 +27,7 @@ automatically; `CLAUDE.md` is a symlink to it for Claude Code.
 | `validation.md` | form validation: rules, the null policy, messages, adding a rule |
 | `captcha.md` | captcha: asking for one in a form, scopes, settings, adding a provider |
 | `testing.md` | writing a test: the two suites, the functional harness, accounts and fixtures |
+| `system-checks.md` | adding system diagnostics, selecting profiles and testing probes |
 | `review/` | self-review protocol and checklists, run on demand (see below) |
 | `scripts/verify.sh` | the deterministic gate: `composer check` (coding standard, phpstan, tests, Twig lint, `ide-twig.json`) in the container — the list CI runs |
 

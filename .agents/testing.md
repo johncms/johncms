@@ -152,9 +152,8 @@ and put the CSRF token into each form that posts; the panel must let nobody in b
 the staff must be refused nothing. The list comes from the router, so a new page is covered with no
 change to the test.
 
-A page that fails there is a bug of the page. The one exception is a page asking MySQL for
-something SQLite does not have: it goes to `MYSQL_ONLY` with the reason, and the run against
-MySQL still opens it.
+A page that fails there is a bug of the page. Isolate engine-specific diagnostics behind a probe:
+the system check page skips MySQL-only checks for SQLite and is crawled on both databases.
 
 When a request answers 500, `handleRequest(..., catch: false)` hands the test the exception the
 kernel would have logged.

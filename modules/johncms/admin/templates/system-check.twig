@@ -2,17 +2,20 @@
     What the environment of the site supports: a summary on top, then a card for each group of
     checks, each check marked by how it went.
 
-    @var array sections Groups of checks: title, icon and rows of name, value, description, error,
-                        level (critical | warning | info: how much a failure matters).
+    @var sections array
+    @var report \Johncms\Checker\DTO\CheckReportDTO
+    @var checked_at string
 #}
 {% extends '@admin/layouts/default.twig' %}
 
 {% macro section_card(section) %}
     {% set marks = {
-        ok: {icon: 'circle-check', tone: 'text-success'},
-        critical: {icon: 'circle-x', tone: 'text-danger'},
-        warning: {icon: 'triangle-alert', tone: 'text-warning'},
-        info: {icon: 'info', tone: 'text-info'},
+        passed: {icon: 'circle-check', tone: 'text-success', label: __('Passed')},
+        critical: {icon: 'circle-x', tone: 'text-danger', label: __('Critical')},
+        warning: {icon: 'triangle-alert', tone: 'text-warning', label: __('Warning')},
+        info: {icon: 'info', tone: 'text-info', label: __('Information')},
+        skipped: {icon: 'info', tone: 'text-body-secondary', label: __('Skipped')},
+        unavailable: {icon: 'triangle-alert', tone: 'text-warning', label: __('Could not check')},
     } %}
     <section class="card">
         <div class="card-header">
@@ -21,17 +24,21 @@
         </div>
         <ul class="list-group list-group-flush">
             {% for check in section.checks %}
-                {% set mark = marks[check.error ? check.level : 'ok'] %}
-                <li class="list-group-item d-flex gap-3 align-items-start">
+                {% set mark = marks[check.status.value == 'failed' ? check.severity.value : check.status.value] %}
+                <li class="list-group-item d-flex gap-3 align-items-start" data-check-id="{{ check.id }}" data-check-status="{{ check.status.value }}" data-check-severity="{{ check.severity.value }}">
                     <span class="{{ mark.tone }} flex-shrink-0 admin-check-mark">
                         {% include '@admin/components/ui/icon.twig' with {name: mark.icon, size: 18} only %}
                     </span>
                     <div class="flex-grow-1" style="min-width: 0">
                         <div class="d-flex flex-wrap gap-2 justify-content-between align-items-baseline">
-                            <span class="fw-semibold">{{ check.name }}</span>
+                            <span class="fw-semibold text-break">{{ check.name }}</span>
                             <code class="text-body text-break small" data-check-value>{{ check.value }}</code>
                         </div>
+                        <div class="small {{ mark.tone }}">{{ mark.label }}</div>
                         <div class="form-text mt-1">{{ check.description }}</div>
+                        {% if check.documentationUrl %}
+                            <a class="small" href="{{ check.documentationUrl }}" target="_blank" rel="noopener noreferrer">{{ __('Documentation') }}</a>
+                        {% endif %}
                     </div>
                 </li>
             {% endfor %}
@@ -42,36 +49,39 @@
 {% block content %}
     {% import _self as ui %}
 
-    {% set critical = 0 %}
-    {% set warnings = 0 %}
-    {% for section in sections %}
-        {% for check in section.checks|filter(check => check.error) %}
-            {% if check.level == 'critical' %}
-                {% set critical = critical + 1 %}
-            {% elseif check.level == 'warning' %}
-                {% set warnings = warnings + 1 %}
-            {% endif %}
-        {% endfor %}
-    {% endfor %}
+    <p class="small text-body-secondary">{{ __('Checked at %s · PHP %s', checked_at, report.runtime) }}</p>
 
-    {% if critical > 0 %}
+    <form method="post" action="/admin/system_check" class="mb-3">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+        <input type="hidden" name="run_probes" value="1">
+        <button type="submit" class="btn btn-outline-primary btn-sm">{{ __('Check cache and storage') }}</button>
+        <div class="form-text">{{ __('Test reading and writing with temporary data, then remove it. This may take a few seconds.') }}</div>
+    </form>
+
+    {% if report.critical > 0 %}
         <div class="alert alert-danger d-flex gap-2 align-items-center" data-check-summary="critical">
             {% include '@admin/components/ui/icon.twig' with {name: 'circle-x', size: 18} only %}
             {{ __('Some required checks failed: the site may not work correctly until they are fixed.') }}
         </div>
-    {% elseif warnings > 0 %}
+    {% elseif report.warnings > 0 %}
         <div class="alert alert-warning d-flex gap-2 align-items-center" data-check-summary="warning">
             {% include '@admin/components/ui/icon.twig' with {name: 'triangle-alert', size: 18} only %}
-            {{ __('Everything required is in place. Some recommendations are not followed, which may slow the site down.') }}
+            {{ __('No critical problems were found. Review the recommendations below.') }}
         </div>
-    {% else %}
+    {% elseif report.unavailable == 0 and report.evaluated > 0 %}
         <div class="alert alert-success d-flex gap-2 align-items-center" data-check-summary="ok">
             {% include '@admin/components/ui/icon.twig' with {name: 'circle-check', size: 18} only %}
-            {{ __('The server meets every requirement of the system.') }}
+            {{ __('The completed checks found no critical problems or warnings.') }}
         </div>
     {% endif %}
 
-    {% set halves = sections|batch((sections|length / 2)|round(0, 'ceil')) %}
+    {% if report.unavailable > 0 or report.evaluated == 0 %}
+        <div class="alert alert-warning" data-check-summary="unavailable">
+            {{ __('The diagnosis is incomplete: some checks could not run. Review their results and check the application log.') }}
+        </div>
+    {% endif %}
+
+    {% set halves = sections|batch(max(1, (sections|length / 2)|round(0, 'ceil'))) %}
     <div class="row g-3 align-items-start">
         {% for half in halves %}
             <div class="col-lg-6 d-flex flex-column gap-3">

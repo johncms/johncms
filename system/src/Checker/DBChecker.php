@@ -14,11 +14,11 @@ namespace Johncms\Checker;
 
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Connection;
+use Johncms\Checker\Exceptions\DatabaseCheckException;
 
-class DBChecker
+class DBChecker implements DatabaseProbeInterface
 {
-    /** @var Connection */
-    protected $connection;
+    protected ?Connection $connection;
 
     /** @var string */
     public const MARIADB_VERSION = '10.2';
@@ -26,38 +26,42 @@ class DBChecker
     /** @var string */
     public const MYSQL_VERSION = '5.7';
 
-    public function __construct()
+    public function __construct(?Connection $connection = null)
     {
-        $this->connection = Manager::connection();
+        $this->connection = $connection;
+    }
+
+    public function driver(): string
+    {
+        return $this->connection()->getDriverName();
     }
 
     /**
      * Getting information about the database server.
      *
-     * @return array
+     * @return array{version_raw: string, version_clean: string, server_name: string, required_version: string, error: bool}
      */
     public function versionInfo(): array
     {
-        $version_info = [];
-        $res = $this->connection->select('SELECT VERSION() as ver;');
-        $version = $res[0]->ver;
-        preg_match('/\d*\.\d*\.\d*/', $version, $matches);
-        preg_match('/maria/i', $version, $server_name_matches);
-        if (! empty($matches[0])) {
-            $server_name = 'MySQL';
-            if (! empty($server_name_matches[0]) && strtolower($server_name_matches[0]) === 'maria') {
-                $server_name = 'MariaDB';
-            }
-            $required_version = $this->getRequiredVersion($server_name);
-            $version_info = [
-                'version_raw'      => $version,
-                'version_clean'    => $matches[0],
-                'server_name'      => $server_name,
-                'required_version' => $required_version,
-                'error'            => version_compare($required_version, $version, '>'),
-            ];
+        $res = $this->connection()->select('SELECT VERSION() as ver;');
+        $version = $res[0]->ver ?? null;
+        if (! is_string($version)) {
+            throw new DatabaseCheckException('The database did not return a server version.');
         }
-        return $version_info;
+        $server = stripos($version, 'mariadb') !== false ? 'MariaDB' : 'MySQL';
+        $reported = $server === 'MariaDB' ? preg_replace('/^5\.5\.5-/', '', $version) : $version;
+        if (preg_match('/^\d+\.\d+(?:\.\d+)?/', $reported, $matches) !== 1) {
+            throw new DatabaseCheckException('The database returned an unrecognised server version.');
+        }
+        $required = $this->getRequiredVersion($server);
+
+        return [
+            'version_raw' => $version,
+            'version_clean' => $matches[0],
+            'server_name' => $server,
+            'required_version' => $required,
+            'error' => version_compare($matches[0], $required, '<'),
+        ];
     }
 
     protected function getRequiredVersion(string $server_name): string
@@ -77,8 +81,13 @@ class DBChecker
      */
     public function checkMysqlnd(): bool
     {
-        $row = $this->connection->selectOne('SELECT 666 AS test_int_col');
+        $row = $this->connection()->selectOne('SELECT 666 AS test_int_col');
 
         return $row !== null && is_int($row->test_int_col);
+    }
+
+    private function connection(): Connection
+    {
+        return $this->connection ?? Manager::connection();
     }
 }

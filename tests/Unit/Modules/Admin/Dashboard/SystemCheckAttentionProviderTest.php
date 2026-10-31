@@ -6,7 +6,12 @@ namespace Tests\Unit\Modules\Admin\Dashboard;
 
 use Gettext\Translator;
 use Gettext\TranslatorFunctions;
-use Johncms\Checker\SystemChecker;
+use Johncms\Checker\CheckProfile;
+use Johncms\Checker\CheckSeverity;
+use Johncms\Checker\CheckStatus;
+use Johncms\Checker\DTO\CheckReportDTO;
+use Johncms\Checker\DTO\CheckResultDTO;
+use Johncms\Checker\SystemCheckerInterface;
 use Johncms\Modules\Admin\Application\Dashboard\SystemCheckAttentionProvider;
 use Johncms\Modules\Admin\Application\Services\AdminPermissions;
 use Johncms\View\Dashboard\AttentionItem;
@@ -53,25 +58,23 @@ final class SystemCheckAttentionProviderTest extends TestCase
      */
     private function itemsFor(array $granted, array $extensions, array $recommendations): array
     {
-        $checker = new class ($extensions, $recommendations) extends SystemChecker {
-            /**
-             * @param list<bool> $extensions
-             * @param list<bool> $recommendations
-             */
-            public function __construct(private array $extensions, private array $recommendations)
-            {
+        $checks = [];
+        foreach ([CheckSeverity::Critical->value => $extensions, CheckSeverity::Warning->value => $recommendations] as $level => $errors) {
+            foreach ($errors as $index => $error) {
+                $checks[] = new CheckResultDTO(
+                    $level . $index,
+                    '',
+                    '',
+                    $error ? CheckStatus::Failed : CheckStatus::Passed,
+                    CheckSeverity::from($level),
+                    '',
+                );
             }
-
-            public function checkExtensions(): array
-            {
-                return array_map(static fn (bool $error): array => ['error' => $error, 'error_level' => self::CRITICAL], $this->extensions);
-            }
-
-            public function recommendations(): array
-            {
-                return array_map(static fn (bool $error): array => ['error' => $error, 'error_level' => self::WARNING], $this->recommendations);
-            }
-        };
+        }
+        $report = new CheckReportDTO([['title' => 'PHP', 'icon' => 'gauge', 'checks' => $checks]], 123, 'test');
+        $checker = $this->createMock(SystemCheckerInterface::class);
+        $checker->expects($granted === [] ? self::never() : self::once())
+            ->method('run')->with(CheckProfile::Dashboard)->willReturn($report);
 
         $provider = new SystemCheckAttentionProvider(new FakeAccessChecker($granted), $checker);
 

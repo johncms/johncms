@@ -26,6 +26,10 @@ use League\Flysystem\UnixVisibility\PortableVisibilityConverter;
  */
 final readonly class StorageFactory
 {
+    public function __construct(private ?int $connectionTimeout = null)
+    {
+    }
+
     /**
      * Permissions used when the configuration names none. What the CMS has always written:
      * files the web server can read, directories it can enter.
@@ -89,6 +93,11 @@ final readonly class StorageFactory
                     'endpoint'                => $options['endpoint'] ?? null,
                     // What the S3-compatible services other than AWS usually need.
                     'use_path_style_endpoint' => $options['path_style'] ?? null,
+                    'http' => $this->connectionTimeout === null ? null : [
+                        'connect_timeout' => $this->connectionTimeout,
+                        'timeout' => $this->connectionTimeout,
+                    ],
+                    'retries' => $this->connectionTimeout === null ? null : 0,
                     'credentials'             => isset($options['key'], $options['secret'])
                         ? ['key' => $options['key'], 'secret' => $options['secret']]
                         : null,

@@ -10,51 +10,28 @@
 
 declare(strict_types=1);
 
-use Johncms\Checker\SystemChecker;
+use Johncms\Checker\CheckProfile;
+use Johncms\Checker\CheckStatus;
+use Johncms\Checker\SystemCheckerInterface;
 use Johncms\Http\Request;
 
 /** @var Request $request Built by the installer entry point, which includes this file. */
+/** @var \Psr\Container\ContainerInterface $container */
 
 $viewData += ['title' => __('Checking parameters'), 'page_title' => __('Checking parameters')];
 
-$check_extensions = [
-    [
-        'name'        => __('PHP version'),
-        'value'       => PHP_VERSION,
-        'error'       => (PHP_VERSION_ID < SystemChecker::MIN_PHP_VERSION_ID),
-        'description' => __('The PHP version must be at least %s', SystemChecker::MIN_PHP_VERSION),
-    ],
-    [
-        'name'        => 'PDO',
-        'value'       => class_exists(PDO::class) ? __('Yes') : __('No'),
-        'error'       => ! class_exists(PDO::class),
-        'description' => __('PHP extension PDO must be installed'),
-    ],
-    [
-        'name'        => __('Imagick or GD extension'),
-        'value'       => (extension_loaded('gd') || extension_loaded('imagick')) ? __('Yes') : __('No'),
-        'error'       => (! extension_loaded('gd') && ! extension_loaded('imagick')),
-        'description' => __('You must install the php extension Imagick or GD'),
-    ],
-    [
-        'name'        => __('zlib extension'),
-        'value'       => extension_loaded('zlib') ? __('Yes') : __('No'),
-        'error'       => ! extension_loaded('zlib'),
-        'description' => __('PHP extension zlib must be installed'),
-    ],
-    [
-        'name'        => __('mbstring extension'),
-        'value'       => extension_loaded('mbstring') ? __('Yes') : __('No'),
-        'error'       => ! extension_loaded('mbstring'),
-        'description' => __('PHP extension mbstring must be installed'),
-    ],
-    [
-        'name'        => __('fileinfo extension'),
-        'value'       => extension_loaded('fileinfo') ? __('Yes') : __('No'),
-        'error'       => ! extension_loaded('fileinfo'),
-        'description' => __('PHP extension fileinfo must be installed'),
-    ],
-];
+$report = $container->get(SystemCheckerInterface::class)->run(CheckProfile::Installer);
+$check_extensions = [];
+foreach ($report->sections as $section) {
+    foreach ($section['checks'] as $check) {
+        $check_extensions[] = [
+            'name' => $check->name,
+            'value' => $check->value,
+            'error' => $check->status !== CheckStatus::Passed,
+            'description' => $check->description,
+        ];
+    }
+}
 
 $error_extensions = array_filter(
     $check_extensions,

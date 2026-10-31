@@ -266,7 +266,7 @@ msgid "Language Settings"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:70
-#: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:25
+#: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:24
 #: modules/johncms/admin/templates/dashboard/system.twig:11
 msgid "System check"
 msgstr ""
@@ -888,24 +888,6 @@ msgstr ""
 msgid "Failed"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:35
-msgid "Required parameters"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:36
-#: modules/johncms/admin/templates/dashboard/system.twig:44
-msgid "Database"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:37
-msgid "Recommended parameters"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:38
-#: modules/johncms/admin/templates/dashboard/security.twig:12
-msgid "Security"
-msgstr ""
-
 #: modules/johncms/admin/src/Application/Controllers/Users/AmnestyController.php:40
 #: modules/johncms/admin/src/Application/UseCases/ApplyAmnestyUseCase.php:30
 #: modules/johncms/admin/templates/bans.twig:22
@@ -1227,12 +1209,16 @@ msgstr ""
 msgid "The disk is running out of space"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Dashboard/SystemCheckAttentionProvider.php:47
-msgid "PHP does not meet the requirements of the site"
+#: modules/johncms/admin/src/Application/Dashboard/SystemCheckAttentionProvider.php:36
+msgid "Critical system checks failed"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Dashboard/SystemCheckAttentionProvider.php:51
-msgid "Recommendations to speed up PHP"
+#: modules/johncms/admin/src/Application/Dashboard/SystemCheckAttentionProvider.php:40
+msgid "System check recommendations"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Dashboard/SystemCheckAttentionProvider.php:44
+msgid "Some system checks could not be completed"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Dashboard/UserMetricsProvider.php:25
@@ -1537,6 +1523,34 @@ msgstr ""
 
 #: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:204
 msgid "In the last year"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/SystemChecks/DiskSpaceCheck.php:24
+msgid "Free disk space"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/SystemChecks/DiskSpaceCheck.php:34
+#, php-format
+msgid "Free space: %s"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/SystemChecks/DiskSpaceCheck.php:38
+#, php-format
+msgid "Keep at least %d%% of the filesystem free for uploads, cache and logs."
+msgstr ""
+
+#: modules/johncms/admin/src/Application/SystemChecks/SchedulerCheck.php:23
+#: modules/johncms/admin/templates/dashboard/system.twig:17
+msgid "Task scheduler (cron)"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/SystemChecks/SchedulerCheck.php:35
+msgid "Never run"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/SystemChecks/SchedulerCheck.php:38
+#, php-format
+msgid "Cron should run php system/bin/console schedule:run every minute. A heartbeat older than %d minutes means background tasks may have stopped."
 msgstr ""
 
 #: modules/johncms/admin/src/Application/UseCases/ChangeUserPasswordUseCase.php:45
@@ -2092,6 +2106,10 @@ msgstr ""
 msgid "Over %d days: from %d to %d a day"
 msgstr ""
 
+#: modules/johncms/admin/templates/dashboard/security.twig:12
+msgid "Security"
+msgstr ""
+
 #: modules/johncms/admin/templates/dashboard/security.twig:21
 msgid "Failed sign-ins today"
 msgstr ""
@@ -2122,10 +2140,6 @@ msgstr ""
 
 #: modules/johncms/admin/templates/dashboard/security.twig:62
 msgid "Nobody of the staff has signed in yet."
-msgstr ""
-
-#: modules/johncms/admin/templates/dashboard/system.twig:17
-msgid "Task scheduler (cron)"
 msgstr ""
 
 #: modules/johncms/admin/templates/dashboard/system.twig:20
@@ -2159,6 +2173,10 @@ msgstr ""
 
 #: modules/johncms/admin/templates/dashboard/system.twig:39
 msgid "Versions"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/system.twig:44
+msgid "Database"
 msgstr ""
 
 #: modules/johncms/admin/templates/dashboard/system.twig:51
@@ -3188,6 +3206,7 @@ msgstr ""
 
 #: modules/johncms/admin/templates/style-guide/examples/alerts.twig:4
 #: modules/johncms/admin/templates/style-guide/examples/icon.twig:5
+#: modules/johncms/admin/templates/system-check.twig:15
 msgid "Warning"
 msgstr ""
 
@@ -3285,16 +3304,56 @@ msgstr ""
 msgid "Nickname, e-mail, ID or IP"
 msgstr ""
 
-#: modules/johncms/admin/templates/system-check.twig:60
+#: modules/johncms/admin/templates/system-check.twig:52
+msgid "Checked at %s · PHP %s"
+msgstr ""
+
+#: modules/johncms/admin/templates/system-check.twig:57
+msgid "Check cache and storage"
+msgstr ""
+
+#: modules/johncms/admin/templates/system-check.twig:58
+msgid "Test reading and writing with temporary data, then remove it. This may take a few seconds."
+msgstr ""
+
+#: modules/johncms/admin/templates/system-check.twig:64
 msgid "Some required checks failed: the site may not work correctly until they are fixed."
 msgstr ""
 
-#: modules/johncms/admin/templates/system-check.twig:65
-msgid "Everything required is in place. Some recommendations are not followed, which may slow the site down."
+#: modules/johncms/admin/templates/system-check.twig:69
+msgid "No critical problems were found. Review the recommendations below."
 msgstr ""
 
-#: modules/johncms/admin/templates/system-check.twig:70
-msgid "The server meets every requirement of the system."
+#: modules/johncms/admin/templates/system-check.twig:74
+msgid "The completed checks found no critical problems or warnings."
+msgstr ""
+
+#: modules/johncms/admin/templates/system-check.twig:80
+msgid "The diagnosis is incomplete: some checks could not run. Review their results and check the application log."
+msgstr ""
+
+#: modules/johncms/admin/templates/system-check.twig:13
+msgid "Passed"
+msgstr ""
+
+#: modules/johncms/admin/templates/system-check.twig:14
+msgid "Critical"
+msgstr ""
+
+#: modules/johncms/admin/templates/system-check.twig:16
+msgid "Information"
+msgstr ""
+
+#: modules/johncms/admin/templates/system-check.twig:17
+msgid "Skipped"
+msgstr ""
+
+#: modules/johncms/admin/templates/system-check.twig:18
+msgid "Could not check"
+msgstr ""
+
+#: modules/johncms/admin/templates/system-check.twig:40
+msgid "Documentation"
 msgstr ""
 
 #: modules/johncms/admin/templates/user-roles.twig:24

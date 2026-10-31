@@ -2,89 +2,28 @@ msgid ""
 msgstr ""
 "X-Domain: install\n"
 
-#: public/install/index.php:84
+#: public/install/index.php:85
 #: public/install/steps/step_1.php:21
 msgid "Preparing for installation"
 msgstr ""
 
-#: public/install/index.php:89
-#: public/install/steps/step_2.php:18
+#: public/install/index.php:90
+#: public/install/steps/step_2.php:21
 msgid "Checking parameters"
 msgstr ""
 
-#: public/install/index.php:94
+#: public/install/index.php:95
 #: public/install/steps/step_3.php:23
 msgid "Database"
 msgstr ""
 
-#: public/install/index.php:99
+#: public/install/index.php:100
 #: public/install/steps/step_4.php:39
 msgid "Setting"
 msgstr ""
 
-#: public/install/index.php:104
+#: public/install/index.php:105
 msgid "Completion"
-msgstr ""
-
-#: public/install/steps/step_2.php:22
-msgid "PHP version"
-msgstr ""
-
-#: public/install/steps/step_2.php:25
-#, php-format
-msgid "The PHP version must be at least %s"
-msgstr ""
-
-#: public/install/steps/step_2.php:29
-#: public/install/steps/step_2.php:35
-#: public/install/steps/step_2.php:41
-#: public/install/steps/step_2.php:47
-#: public/install/steps/step_2.php:53
-msgid "Yes"
-msgstr ""
-
-#: public/install/steps/step_2.php:29
-#: public/install/steps/step_2.php:35
-#: public/install/steps/step_2.php:41
-#: public/install/steps/step_2.php:47
-#: public/install/steps/step_2.php:53
-msgid "No"
-msgstr ""
-
-#: public/install/steps/step_2.php:31
-msgid "PHP extension PDO must be installed"
-msgstr ""
-
-#: public/install/steps/step_2.php:34
-msgid "Imagick or GD extension"
-msgstr ""
-
-#: public/install/steps/step_2.php:37
-msgid "You must install the php extension Imagick or GD"
-msgstr ""
-
-#: public/install/steps/step_2.php:40
-msgid "zlib extension"
-msgstr ""
-
-#: public/install/steps/step_2.php:43
-msgid "PHP extension zlib must be installed"
-msgstr ""
-
-#: public/install/steps/step_2.php:46
-msgid "mbstring extension"
-msgstr ""
-
-#: public/install/steps/step_2.php:49
-msgid "PHP extension mbstring must be installed"
-msgstr ""
-
-#: public/install/steps/step_2.php:52
-msgid "fileinfo extension"
-msgstr ""
-
-#: public/install/steps/step_2.php:55
-msgid "PHP extension fileinfo must be installed"
 msgstr ""
 
 #: public/install/steps/step_3.php:126

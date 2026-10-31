@@ -58,6 +58,7 @@ $container->get(RequestStack::class)->push($request);
 
 $translator = new Translator();
 $translator->setLocale($_SESSION['lng'] ?? 'en');
+$translator->addTranslationDomain('system', ROOT_PATH . 'system/locale', false);
 $translator->addTranslationDomain('install', __DIR__ . '/locale');
 $translator->defaultDomain('install');
 TranslatorFunctions::register($translator);
