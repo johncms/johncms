@@ -22,6 +22,7 @@ use Johncms\Modules\Admin\Application\Controllers\System\EmoticonsController;
 use Johncms\Modules\Admin\Application\Controllers\System\MaintenanceTasksController;
 use Johncms\Modules\Admin\Application\Controllers\System\StyleGuideController;
 use Johncms\Modules\Admin\Application\Controllers\System\SystemCheckController;
+use Johncms\Modules\Admin\Application\Controllers\Content\CommentFeedController;
 use Johncms\Modules\Admin\Application\Controllers\Users\AmnestyController;
 use Johncms\Modules\Admin\Application\Controllers\Users\BanListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\DeleteUserController;
@@ -100,6 +101,9 @@ return static function (RouteCollection $router): void {
             ->name('admin.ip_search.mode')
             ->requirements(['mode' => 'history']);
         $r->get('/admin/bans', BanListController::class)->name('admin.bans');
+        // What the comment feed lists is decided by its sources: each shows its comments to whoever
+        // moderates them.
+        $r->get('/admin/comments', CommentFeedController::class)->name('admin.comments');
         $r->post('/admin/registrations/approve', [RegistrationModerationController::class, 'approve'])->name('admin.registrations.approve');
         $r->post('/admin/registrations/confirm-email', [RegistrationModerationController::class, 'confirmEmail'])->name('admin.registrations.confirm_email');
         // Removing is confirmed first: the dialog says what would go (see the controller).

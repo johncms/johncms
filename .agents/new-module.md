@@ -284,6 +284,7 @@ service compiles fine and is never asked anything.
 | `HomepageBlockProviderInterface` | a block of the home page: a template of its own and the data for it |
 | `DashboardAttentionProviderInterface` | a line in "Needs attention" on the dashboard of the panel: a queue of its staff or a problem, with a number and a link to where it is dealt with |
 | `DashboardMetricProviderInterface` | a card among the numbers of the dashboard: today's count, the change since the day before and a line of the last two weeks (count by day with `Johncms\Database\Query\DailyCounts`) |
+| `CommentFeedSourceInterface` | its comments in the feed of the panel (`/admin/comments` and the dashboard), the newest first, for whoever moderates them |
 | `Symfony\...\Console\Command` | a command of `system/bin/console`, tagged `console.command` — name and description go in `#[AsCommand]`, so it is listed without being built |
 | `Twig\Extension\ExtensionInterface` | a function or filter its templates call |
 | `RuleConstraintFactoryInterface` | a rule the validator can be asked for |

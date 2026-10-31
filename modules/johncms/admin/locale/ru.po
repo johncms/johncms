@@ -3158,3 +3158,24 @@ msgstr "как в предыдущие сутки"
 
 msgid "Over %d days: from %d to %d a day"
 msgstr "За %d дн.: от %d до %d в сутки"
+
+msgid "Comments on files, articles, photos and news, the newest first. A comment leads to its place on the site, where it can be answered or removed."
+msgstr "Комментарии к файлам, статьям, фото и новостям — от новых к старым. Комментарий ведёт на своё место на сайте, где на него можно ответить или удалить."
+
+msgid "No comments yet"
+msgstr "Комментариев пока нет"
+
+msgid "Only the comments of the sections you moderate are shown here."
+msgstr "Здесь показываются только комментарии разделов, которые вы модерируете."
+
+msgid "Deleted account"
+msgstr "Удалённый аккаунт"
+
+msgid "Open the comments"
+msgstr "Открыть комментарии"
+
+msgid "Latest comments"
+msgstr "Последние комментарии"
+
+msgid "All comments"
+msgstr "Все комментарии"

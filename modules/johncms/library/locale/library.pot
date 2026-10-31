@@ -2,26 +2,7 @@ msgid ""
 msgstr ""
 "X-Domain: library\n"
 
-#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:33
-#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:49
-#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:67
-#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:71
-#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:95
-msgid "Comments"
-msgstr ""
-
-#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:35
-#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:51
-#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:33
-#: modules/johncms/library/src/Application/Controllers/DeleteArticleImageController.php:33
-#: modules/johncms/library/src/Application/Controllers/DeleteSectionController.php:33
-#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:65
-#: modules/johncms/library/src/Application/Controllers/EditSectionController.php:40
-#: modules/johncms/library/src/Application/Controllers/PremodController.php:40
-#: modules/johncms/library/src/Application/Middlewares/LibraryAccessMiddleware.php:31
-msgid "Access forbidden"
-msgstr ""
-
+#: modules/johncms/library/src/Application/CommentFeed/LibraryCommentFeedSource.php:50
 #: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:37
 #: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:53
 #: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:67
@@ -60,6 +41,26 @@ msgstr ""
 #: modules/johncms/library/src/Application/Services/LibraryPermissions.php:34
 #: modules/johncms/library/src/Application/Services/LibraryPermissions.php:41
 msgid "Library"
+msgstr ""
+
+#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:33
+#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:49
+#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:67
+#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:71
+#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:95
+msgid "Comments"
+msgstr ""
+
+#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:35
+#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:51
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:33
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleImageController.php:33
+#: modules/johncms/library/src/Application/Controllers/DeleteSectionController.php:33
+#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:65
+#: modules/johncms/library/src/Application/Controllers/EditSectionController.php:40
+#: modules/johncms/library/src/Application/Controllers/PremodController.php:40
+#: modules/johncms/library/src/Application/Middlewares/LibraryAccessMiddleware.php:31
+msgid "Access forbidden"
 msgstr ""
 
 #: modules/johncms/library/src/Application/Controllers/ArticleController.php:62

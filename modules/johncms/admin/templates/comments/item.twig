@@ -1,0 +1,25 @@
+{#
+    A comment in the feed of the panel: the author, where it was written and when, the start of its
+    text, and the way to its place on the site, where it is answered or removed.
+
+    @var comment \Johncms\View\CommentFeed\FeedComment
+#}
+<li class="list-group-item admin-comment">
+    <img class="admin-comment__avatar" src="{{ avatar(comment.authorId) }}" width="32" height="32" alt="" loading="lazy">
+    <div class="admin-comment__main">
+        <div class="admin-comment__head">
+            {% if comment.authorId %}
+                <a class="admin-comment__author" href="/admin/users/{{ comment.authorId }}">{{ comment.authorName ?: '#' ~ comment.authorId }}</a>
+            {% else %}
+                <span class="admin-comment__author">{{ comment.authorName ?: __('Deleted account') }}</span>
+            {% endif %}
+            <span class="badge rounded-pill text-bg-light">{{ comment.section }}</span>
+            <time class="admin-comment__time" datetime="{{ comment.time|date('c') }}">{{ comment.time|display_date }}</time>
+        </div>
+        <p class="admin-comment__text">{{ comment.excerpt() }}</p>
+        <a class="admin-comment__subject" href="{{ comment.url }}">
+            {% include '@admin/components/ui/icon.twig' with {name: 'message-square', size: 13} only %}
+            <span>{{ comment.subject ?: __('Open the comments') }}</span>
+        </a>
+    </div>
+</li>

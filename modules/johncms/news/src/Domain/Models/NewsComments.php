@@ -4,6 +4,7 @@ namespace Johncms\Modules\News\Domain\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Johncms\Auth\CurrentUser;
@@ -22,6 +23,7 @@ use Johncms\Users\User;
  * @property array $attached_files
  *
  * @property User $user
+ * @property NewsArticle|null $article
  */
 class NewsComments extends Model
 {
@@ -57,5 +59,13 @@ class NewsComments extends Model
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    /**
+     * @return BelongsTo<NewsArticle, $this>
+     */
+    public function article(): BelongsTo
+    {
+        return $this->belongsTo(NewsArticle::class, 'article_id');
     }
 }

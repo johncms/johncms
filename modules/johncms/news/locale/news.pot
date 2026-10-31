@@ -6,20 +6,7 @@ msgstr ""
 msgid "The requested article was not found."
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:61
-msgid "The article was created successfully"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:83
-msgid "The article was updated successfully"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:130
-#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:108
-#: modules/johncms/news/templates/admin/index.twig:32
-msgid "Add article"
-msgstr ""
-
+#: modules/johncms/news/src/Application/CommentFeed/NewsCommentFeedSource.php:47
 #: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:131
 #: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:146
 #: modules/johncms/news/src/Application/Controllers/Admin/DeleteArticleController.php:52
@@ -36,6 +23,20 @@ msgstr ""
 #: modules/johncms/news/src/Application/Services/NewsPermissions.php:29
 #: modules/johncms/news/templates/homepage/latest.twig:8
 msgid "News"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:61
+msgid "The article was created successfully"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:83
+msgid "The article was updated successfully"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:130
+#: modules/johncms/news/src/Application/Services/NewsListRowMapper.php:108
+#: modules/johncms/news/templates/admin/index.twig:32
+msgid "Add article"
 msgstr ""
 
 #: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:149

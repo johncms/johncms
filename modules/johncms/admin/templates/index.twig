@@ -1,6 +1,6 @@
 {#
-    The dashboard of the admin panel: what needs the administrator, and what happened on the site
-    today.
+    The dashboard of the admin panel: what needs the administrator, what happened on the site today,
+    and what the visitors wrote last.
 
     @var \Johncms\Modules\Admin\Application\DTO\DashboardContextDTO data
 #}
@@ -51,4 +51,27 @@
             {% endfor %}
         </div>
     {% endif %}
+
+    <section class="card mt-3" aria-labelledby="admin-comments-title">
+        <div class="card-header">
+            {% include '@admin/components/ui/icon.twig' with {name: 'messages-square', size: 15, class: 'text-body-tertiary'} only %}
+            <h2 class="flex-grow-1 m-0 fs-6 fw-semibold" id="admin-comments-title">{{ __('Latest comments') }}</h2>
+            {% if data.comments %}
+                <a class="small" href="/admin/comments">{{ __('All comments') }}</a>
+            {% endif %}
+        </div>
+        {% if data.comments %}
+            <ul class="list-group list-group-flush">
+                {% for comment in data.comments %}
+                    {% include '@admin/comments/item.twig' with {comment: comment} only %}
+                {% endfor %}
+            </ul>
+        {% else %}
+            {% include '@admin/components/ui/empty-state.twig' with {
+                icon: 'message-square',
+                title: __('No comments yet'),
+                description: __('Only the comments of the sections you moderate are shown here.'),
+            } only %}
+        {% endif %}
+    </section>
 {% endblock %}

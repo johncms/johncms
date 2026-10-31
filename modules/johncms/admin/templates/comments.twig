@@ -1,0 +1,32 @@
+{#
+    The comments of every module in one list, the newest first.
+
+    @var comments   \Johncms\View\CommentFeed\FeedComment[]
+    @var total      int
+    @var pagination \Twig\Markup
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <p class="text-body-secondary">{{ __('Comments on files, articles, photos and news, the newest first. A comment leads to its place on the site, where it can be answered or removed.') }}</p>
+
+    <div class="card">
+        {% if comments %}
+            <ul class="list-group list-group-flush">
+                {% for comment in comments %}
+                    {% include '@admin/comments/item.twig' with {comment: comment} only %}
+                {% endfor %}
+            </ul>
+        {% else %}
+            {% include '@admin/components/ui/empty-state.twig' with {
+                icon: 'message-square',
+                title: __('No comments yet'),
+                description: __('Only the comments of the sections you moderate are shown here.'),
+            } only %}
+        {% endif %}
+    </div>
+
+    {% if total > comments|length %}
+        <div class="mt-3">{{ pagination }}</div>
+    {% endif %}
+{% endblock %}

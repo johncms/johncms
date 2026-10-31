@@ -897,6 +897,13 @@
       'The day before: %d' => 'Предыдущие сутки: %d',
       'as the day before' => 'как в предыдущие сутки',
       'Over %d days: from %d to %d a day' => 'За %d дн.: от %d до %d в сутки',
+      'Comments on files, articles, photos and news, the newest first. A comment leads to its place on the site, where it can be answered or removed.' => 'Комментарии к файлам, статьям, фото и новостям — от новых к старым. Комментарий ведёт на своё место на сайте, где на него можно ответить или удалить.',
+      'No comments yet' => 'Комментариев пока нет',
+      'Only the comments of the sections you moderate are shown here.' => 'Здесь показываются только комментарии разделов, которые вы модерируете.',
+      'Deleted account' => 'Удалённый аккаунт',
+      'Open the comments' => 'Открыть комментарии',
+      'Latest comments' => 'Последние комментарии',
+      'All comments' => 'Все комментарии',
     ),
   ),
 );

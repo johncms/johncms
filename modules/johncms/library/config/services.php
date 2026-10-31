@@ -9,7 +9,9 @@ use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
 use Johncms\Modules\Library\Application\Services\LibraryPermissions;
 use Johncms\Modules\Library\Application\Services\LibrarySlugService;
+use Johncms\Modules\Library\Domain\Repository\LibraryCommentRepositoryInterface;
 use Johncms\Modules\Library\Domain\Repository\LibraryTextRepositoryInterface;
+use Johncms\Modules\Library\Infrastructure\Persistence\Repository\LibraryCommentRepository;
 use Johncms\Modules\Library\Infrastructure\Persistence\Repository\LibraryTextRepository;
 use Johncms\Modules\Library\Infrastructure\Storage\LibraryCoverStorage;
 
@@ -47,4 +49,5 @@ return static function (ContainerConfigurator $container): void {
     $services->set(LibraryCoverStorage::class)->autowire()->public();
 
     $services->set(LibraryTextRepositoryInterface::class, LibraryTextRepository::class)->public();
+    $services->set(LibraryCommentRepositoryInterface::class, LibraryCommentRepository::class)->public();
 };

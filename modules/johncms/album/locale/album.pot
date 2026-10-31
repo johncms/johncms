@@ -2,6 +2,11 @@ msgid ""
 msgstr ""
 "X-Domain: album\n"
 
+#: modules/johncms/album/src/Application/CommentFeed/AlbumCommentFeedSource.php:51
+#: modules/johncms/album/src/Application/Services/AlbumPermissions.php:29
+msgid "Photo albums"
+msgstr ""
+
 #: modules/johncms/album/src/Application/Controllers/AlbumIndexController.php:25
 #: modules/johncms/album/src/Application/Controllers/DeleteAlbumController.php:38
 #: modules/johncms/album/src/Application/Controllers/DeleteAlbumController.php:98
@@ -235,10 +240,6 @@ msgstr ""
 
 #: modules/johncms/album/src/Application/Menu/AlbumMenuItemProvider.php:41
 msgid "Photo Albums"
-msgstr ""
-
-#: modules/johncms/album/src/Application/Services/AlbumPermissions.php:29
-msgid "Photo albums"
 msgstr ""
 
 #: modules/johncms/album/src/Application/Services/AlbumPermissions.php:35

@@ -1,0 +1,62 @@
+// A comment of the feed (admin::comments/item), on the page of the comments and on the dashboard.
+
+.admin-comment {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  padding-block: 0.75rem;
+}
+
+.admin-comment__avatar {
+  flex: none;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.admin-comment__main {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-comment__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.5rem;
+}
+
+.admin-comment__author {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.admin-comment__time {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: var(--fg-dim);
+  white-space: nowrap;
+}
+
+.admin-comment__text {
+  margin: 0.25rem 0;
+  overflow-wrap: anywhere;
+}
+
+.admin-comment__subject {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  max-width: 100%;
+  font-size: 0.75rem;
+  color: var(--fg-dim);
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &:hover {
+    color: var(--accent);
+  }
+}

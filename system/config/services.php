@@ -242,6 +242,8 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/View/Dashboard/AttentionLevel.php',
                 ROOT_PATH . 'system/src/View/Dashboard/DashboardMetric.php',
                 ROOT_PATH . 'system/src/View/Dashboard/MetricPeriod.php',
+                // One comment of the feed of the panel.
+                ROOT_PATH . 'system/src/View/CommentFeed/FeedComment.php',
                 ROOT_PATH . 'system/src/Modules/ModuleRegistry.php',
                 ROOT_PATH . 'system/src/Modules/ModuleState.php',
                 ROOT_PATH . 'system/src/Modules/ModuleStateRecord.php',
@@ -601,6 +603,8 @@ return static function (ContainerConfigurator $container): void {
         ->arg('$providers', tagged_iterator('johncms.dashboard_attention_provider'));
     $services->set(\Johncms\View\Dashboard\DashboardMetrics::class)
         ->arg('$providers', tagged_iterator('johncms.dashboard_metric_provider'));
+    $services->set(\Johncms\View\CommentFeed\CommentFeed::class)
+        ->arg('$providers', tagged_iterator('johncms.comment_feed_source'));
     // The content pipeline. Both registries are handed the services a module tagged by simply
     // implementing the interface — see PSRContainerFactory::registerExtensionPoints().
     $services->set(ContentTransformerRegistry::class)

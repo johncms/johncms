@@ -119,16 +119,25 @@ msgid "Ban Panel"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:42
+#: modules/johncms/admin/src/Application/Controllers/Content/CommentFeedController.php:38
+#: modules/johncms/admin/templates/settings.twig:126
+#: modules/johncms/admin/templates/user/view.twig:55
+#: modules/johncms/admin/templates/users-cleanup.twig:31
+#: modules/johncms/admin/templates/users/delete-dialog.twig:41
+msgid "Comments"
+msgstr ""
+
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:43
 #: modules/johncms/admin/src/Application/Controllers/Users/UserCleanupController.php:34
 #: modules/johncms/admin/src/Application/Controllers/Users/UserCleanupController.php:60
 msgid "Database cleanup"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:43
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:44
 msgid "Antiflood"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:44
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:45
 #: modules/johncms/admin/src/Application/Controllers/Users/KarmaController.php:72
 #: modules/johncms/admin/src/Application/Controllers/Users/KarmaController.php:93
 #: modules/johncms/admin/templates/user/view.twig:61
@@ -136,7 +145,7 @@ msgstr ""
 msgid "Karma"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:48
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:49
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModuleUploadController.php:46
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:47
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:120
@@ -144,22 +153,22 @@ msgstr ""
 msgid "Modules"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:51
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:52
 #: modules/johncms/admin/templates/user/view.twig:53
 #: modules/johncms/admin/templates/users-cleanup.twig:29
 #: modules/johncms/admin/templates/users/delete-dialog.twig:47
 msgid "Forum"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:52
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:53
 msgid "News"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:53
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:54
 msgid "Collections"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:54
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:55
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:56
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:169
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:203
@@ -168,21 +177,21 @@ msgstr ""
 msgid "Advertisement"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:55
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:56
 msgid "Consents"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:56
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:57
 #: modules/johncms/admin/templates/user/edit.twig:75
 msgid "Contacts"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:57
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:58
 #: modules/johncms/admin/templates/counter-form.twig:94
 msgid "Cookie banner"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:58
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:59
 #: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:41
 #: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:142
 #: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:166
@@ -190,16 +199,16 @@ msgstr ""
 msgid "Counters"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:59
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:60
 msgid "Manage modules"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:63
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:64
 #: modules/johncms/admin/templates/modules.twig:81
 msgid "System"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:66
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:67
 #: modules/johncms/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:63
 #: modules/johncms/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:72
 #: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:62
@@ -214,26 +223,26 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:67
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:68
 #: modules/johncms/admin/src/Application/Controllers/System/EmoticonsController.php:58
 msgid "Smilies"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:68
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:69
 msgid "Language Settings"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:69
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:70
 #: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:25
 msgid "System check"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:70
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:71
 #: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:69
 msgid "Maintenance"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:71
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:72
 #: modules/johncms/admin/src/Application/Controllers/System/StyleGuideController.php:23
 msgid "Style guide"
 msgstr ""
@@ -1885,6 +1894,28 @@ msgstr ""
 msgid "Nothing to set up."
 msgstr ""
 
+#: modules/johncms/admin/templates/comments.twig:11
+msgid "Comments on files, articles, photos and news, the newest first. A comment leads to its place on the site, where it can be answered or removed."
+msgstr ""
+
+#: modules/johncms/admin/templates/comments.twig:23
+#: modules/johncms/admin/templates/index.twig:72
+msgid "No comments yet"
+msgstr ""
+
+#: modules/johncms/admin/templates/comments.twig:24
+#: modules/johncms/admin/templates/index.twig:73
+msgid "Only the comments of the sections you moderate are shown here."
+msgstr ""
+
+#: modules/johncms/admin/templates/comments/item.twig:14
+msgid "Deleted account"
+msgstr ""
+
+#: modules/johncms/admin/templates/comments/item.twig:22
+msgid "Open the comments"
+msgstr ""
+
 #: modules/johncms/admin/templates/components/settings-field.twig:27
 #: modules/johncms/admin/templates/external-providers.twig:69
 msgid "Saved. Fill in to replace."
@@ -2116,6 +2147,14 @@ msgstr ""
 
 #: modules/johncms/admin/templates/index.twig:42
 msgid "Nothing needs attention: the queues are empty and the server is fine."
+msgstr ""
+
+#: modules/johncms/admin/templates/index.twig:58
+msgid "Latest comments"
+msgstr ""
+
+#: modules/johncms/admin/templates/index.twig:60
+msgid "All comments"
 msgstr ""
 
 #: modules/johncms/admin/templates/ip-search.twig:32
@@ -2730,13 +2769,6 @@ msgstr ""
 
 #: modules/johncms/admin/templates/settings.twig:121
 msgid "An administrator lets every new account in by hand."
-msgstr ""
-
-#: modules/johncms/admin/templates/settings.twig:126
-#: modules/johncms/admin/templates/user/view.twig:55
-#: modules/johncms/admin/templates/users-cleanup.twig:31
-#: modules/johncms/admin/templates/users/delete-dialog.twig:41
-msgid "Comments"
 msgstr ""
 
 #: modules/johncms/admin/templates/settings.twig:128
