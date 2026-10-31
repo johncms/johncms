@@ -50,7 +50,7 @@
             {% if security.staffSignIns %}
                 <ul class="list-group">
                     {% for sign_in in security.staffSignIns %}
-                        <li class="list-group-item d-flex align-items-center gap-2">
+                        <li class="list-group-item d-flex flex-wrap align-items-center gap-2">
                             <img class="admin-security__avatar" src="{{ avatar(sign_in.userId) }}" width="24" height="24" alt="" loading="lazy">
                             <a class="fw-semibold" href="/admin/auth-log?user={{ sign_in.userId }}">{{ sign_in.name ?: '#' ~ sign_in.userId }}</a>
                             <span class="admin-security__ip">{{ sign_in.ip }}</span>

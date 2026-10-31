@@ -575,3 +575,12 @@ $admin-topbar-height: 3.75rem;
     padding: 1rem;
   }
 }
+
+// On a phone the line does not hold all three: the counters go up on a line of their own, and
+// the copyright and the statistics share the one under them, at its two ends.
+@include media-breakpoint-down(sm) {
+  .admin-footer__counters {
+    order: -1;
+    flex-basis: 100%;
+  }
+}

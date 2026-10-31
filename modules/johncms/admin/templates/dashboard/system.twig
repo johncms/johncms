@@ -12,7 +12,10 @@
     </div>
     <div class="card-body admin-system__grid">
         <div class="admin-system__part">
-            <h3 class="admin-system__title">{{ __('Task scheduler (cron)') }}</h3>
+            <h3 class="admin-system__title">
+                {% include '@admin/components/ui/icon.twig' with {name: 'clock', size: 14} only %}
+                {{ __('Task scheduler (cron)') }}
+            </h3>
             {% if system.schedulerRuns %}
                 <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ __('Runs') }}</span>
             {% elseif system.schedulerLastRun is null %}
@@ -31,7 +34,10 @@
         </div>
 
         <div class="admin-system__part">
-            <h3 class="admin-system__title">{{ __('Versions') }}</h3>
+            <h3 class="admin-system__title">
+                {% include '@admin/components/ui/icon.twig' with {name: 'package', size: 14} only %}
+                {{ __('Versions') }}
+            </h3>
             {% include '@admin/components/ui/facts.twig' with {items: [
                 {label: 'JohnCMS', value: system.cmsVersion},
                 {label: 'PHP', value: system.phpVersion},
@@ -40,7 +46,10 @@
         </div>
 
         <div class="admin-system__part">
-            <h3 class="admin-system__title">{{ __('Disk') }}</h3>
+            <h3 class="admin-system__title">
+                {% include '@admin/components/ui/icon.twig' with {name: 'database', size: 14} only %}
+                {{ __('Disk') }}
+            </h3>
             {% if system.diskTotal %}
                 {% set used = system.diskTotal - system.diskFree %}
                 <div class="progress admin-system__disk{{ system.diskLow ? ' admin-system__disk--low' }}" role="progressbar"
@@ -54,7 +63,10 @@
         </div>
 
         <div class="admin-system__part">
-            <h3 class="admin-system__title">{{ __('Cache and logs') }}</h3>
+            <h3 class="admin-system__title">
+                {% include '@admin/components/ui/icon.twig' with {name: 'archive', size: 14} only %}
+                {{ __('Cache and logs') }}
+            </h3>
             {% include '@admin/components/ui/facts.twig' with {items: [
                 {label: __('Cache'), value: system.cacheSize|format_size},
                 {label: __('Logs'), value: system.logsSize|format_size},

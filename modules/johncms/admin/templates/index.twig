@@ -10,10 +10,6 @@
 {% set level_badges = {danger: 'text-bg-danger', warning: 'text-bg-warning', pending: 'text-bg-light'} %}
 
 {% block content %}
-    <div class="d-block d-lg-none text-center mb-3">
-        <button type="button" class="btn btn-outline-primary w-100" data-admin-nav-open aria-controls="admin-sidebar">{{ __('Show admin menu') }}</button>
-    </div>
-
     {# What the modules offer to do from here; only the actions the visitor may take arrive. #}
     {% set actions = menu_items('admin_actions') %}
     {% if actions %}
@@ -70,7 +66,7 @@
     {% endif %}
 
     <div class="row g-3 mt-0">
-        <div class="col-lg-7">
+        <div class="col-xl-7">
             <section class="card h-100" aria-labelledby="admin-comments-title">
                 <div class="card-header">
                     {% include '@admin/components/ui/icon.twig' with {name: 'messages-square', size: 15, class: 'text-body-tertiary'} only %}
@@ -94,7 +90,7 @@
                 {% endif %}
             </section>
         </div>
-        <div class="col-lg-5">
+        <div class="col-xl-5">
             {% include '@admin/dashboard/security.twig' with {security: data.security} only %}
         </div>
     </div>

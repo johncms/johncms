@@ -35,6 +35,13 @@
   font-size: 0.75rem;
   color: var(--fg-dim);
   white-space: nowrap;
+
+  // On a phone the head does not hold it: a line of its own under the name, from the left, rather
+  // than a date wrapped to the right edge.
+  @include media-breakpoint-down(sm) {
+    flex-basis: 100%;
+    margin-left: 0;
+  }
 }
 
 .admin-comment__text {

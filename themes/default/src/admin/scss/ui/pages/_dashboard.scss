@@ -43,7 +43,8 @@
 // before and a line of the last days, the line recessive and today in the accent.
 
 .admin-metrics {
-  grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr));
+  // Two in a row on the narrowest phone (375px), so the numbers do not run on for screens.
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
 }
 
 .admin-metric__row {
@@ -107,10 +108,16 @@
 // The security block (admin::dashboard/security): three numbers, then the addresses refused most
 // often and the sign-ins of the staff.
 
+// The three in a row — one left alone on a line of its own reads as a different kind of number —
+// and one under another on a phone, where a third of the width breaks the labels in mid-word.
 .admin-security__figures {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.5rem;
+
+  @include media-breakpoint-down(sm) {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .admin-security__title {
@@ -158,20 +165,34 @@ span.admin-security__ip,
   }
 }
 
-// The system block (admin::dashboard/system): four parts side by side, one under another on a phone.
+// The system block (admin::dashboard/system).
 
+// Four parts in a row on a wide screen, two by two below that, one under another on a phone —
+// never three and one left over.
 .admin-system__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-  gap: 1.25rem 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+
+  @include media-breakpoint-up(xl) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  @include media-breakpoint-down(sm) {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
+// Each part on a plate of its own, so the four read as four things rather than one table.
 .admin-system__part {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.5rem;
   min-width: 0;
+  padding: 0.875rem 1rem;
+  border-radius: 0.625rem;
+  background: var(--bg-inset);
 
   .admin-facts {
     width: 100%;
@@ -185,24 +206,31 @@ span.admin-security__ip,
     gap: 0.75rem;
   }
 
+  // When the two do not fit, the label wraps: a value broken in the middle is harder to read.
   .admin-facts__label {
-    flex: none;
+    flex: 0 1 auto;
   }
 
   .admin-facts__value {
-    overflow-wrap: normal;
+    flex: none;
+    white-space: nowrap;
     text-align: right;
   }
 }
 
+// In the colour of the text, not of the labels under it: the title of a part is not one of its facts.
 .admin-system__title {
-  margin: 0;
-  font-family: $ui-font-mono;
-  font-size: 0.65625rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--fg-dim);
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 0 0.125rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--fg);
+
+  .admin-icon {
+    color: var(--accent);
+  }
 }
 
 .admin-system__hint {
@@ -215,13 +243,18 @@ span.admin-security__ip,
   display: block;
   max-width: 100%;
   padding: 0.375rem 0.5rem;
+  border: 1px solid var(--border);
   border-radius: 0.375rem;
-  background: var(--bg-inset);
+  // The plate of the part is already inset: the line of crontab stands out of it, not into it.
+  background: var(--bg-elev);
   font-size: 0.75rem;
   overflow-wrap: anywhere;
 }
 
 .admin-system__disk {
+  // The track of the bar is the colour of the plate it lies on; it takes that of a card instead.
+  --bs-progress-bg: var(--bg-elev);
+
   width: 100%;
 }
 
