@@ -53,7 +53,7 @@ msgstr ""
 msgid "Changes saved. The banner is shown to every visitor again."
 msgstr ""
 
-#: modules/johncms/consent/src/Application/Controllers/Admin/CookieBannerController.php:71
+#: modules/johncms/consent/src/Application/Controllers/Admin/CookieBannerController.php:67
 msgid "Cookie banner"
 msgstr ""
 
@@ -74,39 +74,39 @@ msgstr ""
 msgid "You can use simple HTML tags in the text, for example links:"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:48
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:49
 msgid "Visitors with this language see now"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:54
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:55
 msgid "The default text of the site with a link to the Privacy Policy."
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:59
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:60
 msgid "The preview shows the saved text."
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:70
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:71
 msgid "Showing"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:75
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:76
 msgid "Enable banner"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:76
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:77
 msgid "The banner asks a visitor once and remembers the answer in the browser."
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:80
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:81
 msgid "Ask every visitor again"
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:81
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:82
 msgid "Turn it on when the text or the cookies of the site change: everybody who accepted the banner sees it once more."
 msgstr ""
 
-#: modules/johncms/consent/templates/admin/cookie-banner.twig:83
+#: modules/johncms/consent/templates/admin/cookie-banner.twig:84
 msgid "Version of the consent: %d"
 msgstr ""
 

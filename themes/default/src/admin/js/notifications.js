@@ -1,6 +1,6 @@
 /**
- * Confirm clearing personal notifications in place and refresh the open panel and header.
- * The POST redirect is followed as XHR, so the response is the refreshed offcanvas contents.
+ * Confirm clearing personal notifications on the page and in the panel.
+ * In the panel, follow the POST redirect as XHR to refresh its contents and the header.
  */
 const pending = new WeakSet();
 
@@ -44,24 +44,30 @@ document.addEventListener('click', function (event) {
 
 document.addEventListener('submit', async function (event) {
   const form = event.target.closest('[data-notifications-clear]');
-  const panel = form?.closest('#admin-notifications');
-  if (!panel) {
+  if (!form) {
     return;
   }
 
-  event.preventDefault();
   if (pending.has(form)) {
+    event.preventDefault();
     return;
   }
 
   const confirmation = form.querySelector('[data-notifications-confirm]');
   if (confirmation.hidden) {
+    event.preventDefault();
     form.querySelector('[data-notifications-actions]').hidden = true;
     confirmation.hidden = false;
     form.querySelector('[data-notifications-confirm-title]').focus();
     return;
   }
 
+  const panel = form.closest('#admin-notifications');
+  if (!panel) {
+    return;
+  }
+
+  event.preventDefault();
   const body = new FormData(form);
   const buttons = form.querySelectorAll('button');
   const error = form.querySelector('[data-notifications-clear-error]');

@@ -2,6 +2,11 @@ msgid ""
 msgstr ""
 "X-Domain: auth\n"
 
+#: modules/johncms/admin/templates/logout-dialog.twig:8
+#: modules/johncms/auth/templates/public/logout.twig:10
+msgid "Are you sure you want to leave the site?"
+msgstr ""
+
 #: modules/johncms/auth/src/Application/Controllers/ConfirmEmailChangeController.php:23
 #: modules/johncms/auth/src/Application/Controllers/ConfirmRegistrationEmailController.php:31
 #: modules/johncms/auth/src/Application/Controllers/ConfirmRegistrationEmailController.php:32
@@ -75,40 +80,40 @@ msgstr ""
 msgid "You must accept the consent to continue"
 msgstr ""
 
-#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:35
-#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:40
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:36
 #: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:41
-#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:49
-#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:79
-#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:88
-#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:99
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:42
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:50
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:80
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:89
 #: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:100
-#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:108
-#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:120
-#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:134
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:101
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:109
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:121
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:135
 msgid "Restore password"
 msgstr ""
 
-#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:61
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:62
 msgid "Incorrect code"
 msgstr ""
 
-#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:81
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:82
 msgid "Check your e-mail for further information"
 msgstr ""
 
-#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:122
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:123
 msgid "Password successfully changed.<br>New password sent to your E-mail address."
 msgstr ""
 
-#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:124
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:125
 #: modules/johncms/auth/templates/public/login-captcha.twig:18
 #: modules/johncms/auth/templates/public/restore-password-set.twig:14
 #: modules/johncms/auth/templates/public/restore-password.twig:32
 msgid "Continue"
 msgstr ""
 
-#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:138
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:139
 msgid "Back"
 msgstr ""
 
@@ -191,10 +196,6 @@ msgstr ""
 
 #: modules/johncms/auth/templates/public/login.twig:52
 msgid "Forgot password?"
-msgstr ""
-
-#: modules/johncms/auth/templates/public/logout.twig:10
-msgid "Are you sure you want to leave the site?"
 msgstr ""
 
 #: modules/johncms/auth/templates/public/logout.twig:14
