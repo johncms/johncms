@@ -1189,11 +1189,6 @@ msgstr ""
 msgid "Set Dark Theme"
 msgstr ""
 
-#: themes/default/templates/admin/components/topbar.twig:81
-#: themes/default/templates/components/sidebar-user-menu.twig:52
-msgid "Personal"
-msgstr ""
-
 #: themes/default/templates/admin/components/topbar.twig:94
 #: themes/default/templates/components/sidebar-user-menu.twig:60
 #: modules/johncms/admin/src/Application/Controllers/LogoutController.php:22
@@ -1254,6 +1249,10 @@ msgstr ""
 #: themes/default/templates/components/sidebar-user-menu.twig:24
 #: modules/johncms/auth/templates/public/registration-email-confirmed.twig:15
 msgid "Log In"
+msgstr ""
+
+#: themes/default/templates/components/sidebar-user-menu.twig:52
+msgid "Personal"
 msgstr ""
 
 #: themes/default/templates/emails/changed-email-notification.twig:9

@@ -76,9 +76,9 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="/profile/account">
+                        <a class="dropdown-item" href="/admin/users/{{ app.user.id }}">
                             {% include '@admin/components/ui/icon.twig' with {name: 'user', size: 14} only %}
-                            {{ d__('system', 'Personal') }}
+                            {{ d__('admin', 'My profile') }}
                         </a>
                     </li>
                     <li>

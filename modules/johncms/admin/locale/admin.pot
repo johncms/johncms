@@ -285,6 +285,10 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
+#: themes/default/templates/admin/components/topbar.twig:81
+msgid "My profile"
+msgstr ""
+
 #: themes/default/templates/admin/components/topbar.twig:87
 #: themes/default/templates/admin/layouts/default.twig:44
 #: themes/default/templates/admin/layouts/default.twig:46

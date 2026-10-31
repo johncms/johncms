@@ -937,6 +937,7 @@
       'Add an advertisement' => 'Добавить рекламу',
       'Site settings' => 'Настройки сайта',
       'Quick actions' => 'Быстрые действия',
+      'My profile' => 'Мой профиль',
       'Critical system checks failed' => 'Критические проверки системы не пройдены',
       'System check recommendations' => 'Рекомендации по настройке системы',
       'Some system checks could not be completed' => 'Некоторые проверки системы не удалось завершить',

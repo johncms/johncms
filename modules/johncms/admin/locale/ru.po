@@ -3279,6 +3279,9 @@ msgstr "Настройки сайта"
 msgid "Quick actions"
 msgstr "Быстрые действия"
 
+msgid "My profile"
+msgstr "Мой профиль"
+
 msgid "Critical system checks failed"
 msgstr "Критические проверки системы не пройдены"
 
