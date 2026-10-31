@@ -15,6 +15,7 @@ final readonly class SystemNotification
      *                          of the templates returns.
      * @param bool   $countShown False for a line that has no number to tell — a ban — while it still
      *                          counts in the badge of the header.
+     * @param string $icon      A name in the sprite of the panel; empty for a bell.
      */
     public function __construct(
         public string $key,
@@ -22,6 +23,7 @@ final readonly class SystemNotification
         public string $url,
         public int $count,
         public bool $countShown = true,
+        public string $icon = '',
     ) {
     }
 }

@@ -57,3 +57,29 @@ msgstr "Сохранить"
 msgid "Cancel"
 msgstr "Отмена"
 
+msgid "No personal notifications."
+msgstr "Личных уведомлений нет."
+
+msgid "Clear all personal notifications? They cannot be restored."
+msgstr "Удалить все личные уведомления? Восстановить их будет нельзя."
+
+msgid "Could not clear notifications. Please try again."
+msgstr "Не удалось очистить уведомления. Попробуйте ещё раз."
+
+msgid "Clear all"
+msgstr "Очистить все"
+
+msgid "Needs attention"
+msgstr "Требуют внимания"
+
+msgid "Personal notifications"
+msgstr "Личные уведомления"
+
+msgid "New events will appear here."
+msgstr "Здесь появятся новые события."
+
+msgid "Notification settings"
+msgstr "Настройки уведомлений"
+
+msgid "New"
+msgstr "Новое"

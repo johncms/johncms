@@ -112,6 +112,7 @@ msgid "Who is online?"
 msgstr ""
 
 #: modules/johncms/language/templates/public/index.twig:8
+#: themes/default/templates/admin/components/topbar.twig:24
 msgid "Select language"
 msgstr ""
 
@@ -119,27 +120,17 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
-#: modules/johncms/notifications/src/Application/Controllers/ClearController.php:22
-msgid "Notifications are cleared!"
-msgstr ""
-
-#: modules/johncms/notifications/src/Application/Controllers/IndexController.php:26
-#: modules/johncms/notifications/src/Application/Controllers/IndexController.php:37
-#: modules/johncms/notifications/src/Application/Controllers/IndexController.php:43
-#: modules/johncms/notifications/src/Application/Controllers/SettingsController.php:30
-#: themes/default/templates/admin/components/topbar.twig:39
-#: themes/default/templates/admin/components/topbar.twig:54
-#: themes/default/templates/components/sidebar-user-menu.twig:41
-msgid "Notifications"
-msgstr ""
-
 #: modules/johncms/notifications/src/Application/Controllers/SettingsController.php:28
 #: modules/johncms/notifications/templates/public/index.twig:72
 msgid "Settings"
 msgstr ""
 
-#: modules/johncms/notifications/src/Application/Controllers/SettingsController.php:36
-msgid "Settings saved!"
+#: modules/johncms/notifications/src/Application/Controllers/SettingsController.php:30
+#: themes/default/templates/admin/components/topbar.twig:58
+#: themes/default/templates/admin/components/topbar.twig:59
+#: themes/default/templates/admin/components/topbar.twig:74
+#: themes/default/templates/components/sidebar-user-menu.twig:41
+msgid "Notifications"
 msgstr ""
 
 #: modules/johncms/notifications/templates/public/index.twig:17
@@ -1056,26 +1047,29 @@ msgid "'%hostname%' does not appear to have any valid MX or A records for the em
 msgstr ""
 
 #: themes/default/templates/admin/components/topbar.twig:9
-#: themes/default/templates/admin/components/topbar.twig:31
+#: themes/default/templates/admin/components/topbar.twig:50
 #: themes/default/templates/components/sidebar-main-menu.twig:5
 #: themes/default/templates/components/sidebar-main-menu.twig:100
 msgid "Set Light Theme"
 msgstr ""
 
 #: themes/default/templates/admin/components/topbar.twig:9
-#: themes/default/templates/admin/components/topbar.twig:30
+#: themes/default/templates/admin/components/topbar.twig:49
 #: themes/default/templates/components/sidebar-main-menu.twig:5
 #: themes/default/templates/components/sidebar-main-menu.twig:99
 msgid "Set Dark Theme"
 msgstr ""
 
-#: themes/default/templates/admin/components/topbar.twig:63
+#: themes/default/templates/admin/components/topbar.twig:81
 #: themes/default/templates/components/sidebar-user-menu.twig:52
 msgid "Personal"
 msgstr ""
 
-#: themes/default/templates/admin/components/topbar.twig:76
+#: themes/default/templates/admin/components/topbar.twig:94
 #: themes/default/templates/components/sidebar-user-menu.twig:60
+#: modules/johncms/admin/src/Application/Controllers/LogoutController.php:22
+#: modules/johncms/admin/templates/logout-dialog.twig:3
+#: modules/johncms/admin/templates/logout-dialog.twig:12
 msgid "Exit"
 msgstr ""
 

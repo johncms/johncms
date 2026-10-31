@@ -31,16 +31,8 @@ final readonly class SettingsController
         $this->navChain->add($title, '/notifications/settings/');
 
         if ($request->getMethod() === 'POST') {
-            $showForumUnread = (bool) $request->bodyInt('show_forum_unread');
-            $this->saveSettingsUseCase->execute($showForumUnread);
-            $this->session->flash('message', __('Settings saved!'));
-            return new RedirectResponse('/notifications/settings/');
+            return $this->save($request, '/notifications/settings/');
         }
-
-        $message = (string) $this->session->getFlash('message');
-
-        $defaultSettings = ['show_forum_unread' => true];
-        $currentSettings = array_merge($defaultSettings, ($this->currentUser->user()->notification_settings ?? []));
 
         return new ViewResponse(
             '@notifications/public/settings.twig',
@@ -49,9 +41,47 @@ final readonly class SettingsController
                 'page_title'       => $title,
                 'back_url'         => '/notifications/',
                 'form_action'      => '/notifications/settings/',
-                'message'          => $message,
-                'current_settings' => $currentSettings,
+                'message'          => (string) $this->session->getFlash('message'),
+                'current_settings' => $this->currentSettings(),
             ]
         );
+    }
+
+    public function admin(Request $request): Response|ViewResponse
+    {
+        $title = d__('notifications', 'Notification settings');
+
+        $this->navChain->add($title, '/admin/notifications/settings');
+
+        if ($request->getMethod() === 'POST') {
+            return $this->save($request, '/admin/notifications/settings');
+        }
+
+        return new ViewResponse(
+            '@notifications/admin/settings.twig',
+            [
+                'title'            => $title,
+                'page_title'       => $title,
+                'form_action'      => '/admin/notifications/settings',
+                'message'          => (string) $this->session->getFlash('message'),
+                'current_settings' => $this->currentSettings(),
+            ]
+        );
+    }
+
+    private function save(Request $request, string $returnUrl): RedirectResponse
+    {
+        $this->saveSettingsUseCase->execute((bool) $request->bodyInt('show_forum_unread'));
+        $this->session->flash('message', d__('notifications', 'Settings saved!'));
+
+        return new RedirectResponse($returnUrl);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function currentSettings(): array
+    {
+        return array_merge(['show_forum_unread' => true], ($this->currentUser->user()->notification_settings ?? []));
     }
 }

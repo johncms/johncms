@@ -25,7 +25,7 @@ final readonly class UnreadCommentsNotificationProvider implements SystemNotific
         $count = $this->photos->countWithUnreadComments($this->currentUser->id());
 
         if ($count > 0) {
-            yield new SystemNotification('new_album_comm', d__('album', 'Comments'), '/album/top/my-comments', $count);
+            yield new SystemNotification('new_album_comm', d__('album', 'Comments'), '/album/top/my-comments', $count, icon: 'image');
         }
     }
 }

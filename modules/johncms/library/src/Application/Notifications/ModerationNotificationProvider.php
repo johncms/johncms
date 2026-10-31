@@ -30,7 +30,7 @@ final readonly class ModerationNotificationProvider implements SystemNotificatio
         $count = $this->texts->countAwaitingModeration();
 
         if ($count > 0) {
-            yield new SystemNotification('library_mod', d__('library', 'Articles on moderation'), '/library/premod', $count);
+            yield new SystemNotification('library_mod', d__('library', 'Articles on moderation'), '/library/premod', $count, icon: 'library');
         }
     }
 }

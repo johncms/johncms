@@ -29,7 +29,8 @@ final readonly class BanNotificationProvider implements SystemNotificationProvid
             d__('profile', 'Ban'),
             '/profile/' . $this->currentUser->id() . '/bans',
             1,
-            countShown: false
+            countShown: false,
+            icon: 'ban',
         );
     }
 }

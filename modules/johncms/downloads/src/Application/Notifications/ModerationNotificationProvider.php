@@ -30,7 +30,7 @@ final readonly class ModerationNotificationProvider implements SystemNotificatio
         $count = $this->files->countAwaitingModeration();
 
         if ($count > 0) {
-            yield new SystemNotification('downloads_mod', d__('downloads', 'Downloads on moderation'), '/downloads/moderation', $count);
+            yield new SystemNotification('downloads_mod', d__('downloads', 'Downloads on moderation'), '/downloads/moderation', $count, icon: 'download');
         }
     }
 }

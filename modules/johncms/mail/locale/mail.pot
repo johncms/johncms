@@ -7,7 +7,7 @@ msgstr ""
 #: modules/johncms/mail/src/Application/Controllers/BlocklistIndexController.php:23
 #: modules/johncms/mail/src/Application/Controllers/ClearConversationController.php:30
 #: modules/johncms/mail/src/Application/Controllers/ContactController.php:35
-#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:30
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:31
 #: modules/johncms/mail/src/Application/Controllers/DeleteMessageController.php:30
 #: modules/johncms/mail/src/Application/Controllers/FilesController.php:35
 #: modules/johncms/mail/src/Application/Controllers/IncomingConversationsController.php:35
@@ -22,7 +22,7 @@ msgstr ""
 #: modules/johncms/mail/src/Application/Controllers/BlocklistIndexController.php:24
 #: modules/johncms/mail/src/Application/Controllers/ClearConversationController.php:31
 #: modules/johncms/mail/src/Application/Controllers/ContactController.php:36
-#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:31
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:32
 #: modules/johncms/mail/src/Application/Controllers/DeleteMessageController.php:31
 #: modules/johncms/mail/src/Application/Controllers/DownloadFileController.php:27
 #: modules/johncms/mail/src/Application/Controllers/FilesController.php:36
@@ -39,7 +39,7 @@ msgstr ""
 #: modules/johncms/mail/src/Application/Controllers/AddContactController.php:34
 #: modules/johncms/mail/src/Application/Controllers/ContactController.php:37
 #: modules/johncms/mail/src/Application/Controllers/ContactController.php:39
-#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:32
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:33
 #: modules/johncms/mail/templates/public/components/nav.twig:10
 msgid "Contacts"
 msgstr ""
@@ -110,11 +110,11 @@ msgid "Confirm the deletion of messages"
 msgstr ""
 
 #: modules/johncms/mail/src/Application/Controllers/ClearConversationController.php:38
-#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:39
-#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:45
-#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:46
-#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:63
-#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:77
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:43
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:49
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:50
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:67
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:81
 #: modules/johncms/mail/src/Application/Controllers/DeleteMessageController.php:38
 #: modules/johncms/mail/src/Application/UseCases/GetContactListUseCase.php:91
 #: modules/johncms/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:86
@@ -129,7 +129,7 @@ msgid "Messages are deleted"
 msgstr ""
 
 #: modules/johncms/mail/src/Application/Controllers/ClearConversationController.php:66
-#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:67
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:71
 #: modules/johncms/mail/src/Application/Controllers/DeleteMessageController.php:66
 #: modules/johncms/mail/src/Application/Controllers/WriteController.php:62
 #: modules/johncms/mail/templates/public/contacts.twig:65
@@ -145,15 +145,15 @@ msgstr ""
 msgid "User does not exists"
 msgstr ""
 
-#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:33
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:34
 msgid "Delete contact"
 msgstr ""
 
-#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:37
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:39
 msgid "When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?"
 msgstr ""
 
-#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:65
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:69
 msgid "Contact deleted"
 msgstr ""
 

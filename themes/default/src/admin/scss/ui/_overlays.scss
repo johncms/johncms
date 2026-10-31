@@ -74,6 +74,30 @@
   --bs-backdrop-opacity: 0.55;
 }
 
+// A panel at the side of the screen (src/admin/js/offcanvas.js): the header and the footer stay
+// put, each behind a line, while the body between them scrolls.
+.offcanvas {
+  --bs-offcanvas-padding-x: 1.25rem;
+  --bs-offcanvas-padding-y: 1.125rem;
+}
+
+.offcanvas-header {
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.offcanvas-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.offcanvas-footer {
+  flex-shrink: 0;
+  padding: 1rem var(--bs-offcanvas-padding-x) max(1rem, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border);
+}
+
 // The cross is an image drawn in black; the dark scheme turns it white.
 .btn-close {
   @include ui-when-dark {

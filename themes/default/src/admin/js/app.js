@@ -16,6 +16,7 @@ import './tabs';
 import './role-permissions';
 import './modal';
 import './offcanvas';
+import './notifications';
 import './language-panels';
 import './mail-settings';
 import './language-settings';

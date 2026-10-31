@@ -54,7 +54,8 @@
         </button>
 
         {% if app.user.isValid %}
-            <a href="/notifications/" class="admin-topbar__btn admin-topbar__btn--icon{{ unread ? ' admin-topbar__btn--dot' }}"
+            <a href="/admin/notifications" data-admin-offcanvas data-admin-offcanvas-target="admin-notifications" aria-controls="admin-notifications" class="admin-topbar__btn admin-topbar__btn--icon{{ unread ? ' admin-topbar__btn--dot' }}"
+               data-notifications-bell data-notifications-label="{{ d__('system', 'Notifications') }}"
                title="{{ d__('system', 'Notifications') }}" aria-label="{{ d__('system', 'Notifications') }}{{ unread ? ': ' ~ unread }}">
                 {% include '@admin/components/ui/icon.twig' with {name: 'bell'} only %}
             </a>
@@ -68,12 +69,10 @@
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><h6 class="dropdown-header">{{ app.user.name }}</h6></li>
                     <li>
-                        <a class="dropdown-item" href="/notifications/">
+                        <a class="dropdown-item" href="/admin/notifications" data-admin-offcanvas data-admin-offcanvas-target="admin-notifications" aria-controls="admin-notifications">
                             {% include '@admin/components/ui/icon.twig' with {name: 'bell', size: 14} only %}
                             <span class="flex-grow-1">{{ d__('system', 'Notifications') }}</span>
-                            {% if unread %}
-                                <span class="badge text-bg-danger">{{ unread }}</span>
-                            {% endif %}
+                            <span class="badge text-bg-danger{{ not unread ? ' d-none' }}" data-notifications-badge{% if not unread %} hidden{% endif %}>{{ unread }}</span>
                         </a>
                     </li>
                     <li>

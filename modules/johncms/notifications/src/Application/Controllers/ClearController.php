@@ -18,8 +18,18 @@ final readonly class ClearController
 
     public function __invoke(): RedirectResponse
     {
+        return $this->clear('/notifications/');
+    }
+
+    public function admin(): RedirectResponse
+    {
+        return $this->clear('/admin/notifications');
+    }
+
+    private function clear(string $returnUrl): RedirectResponse
+    {
         $this->clearNotificationsUseCase->execute();
-        $this->session->flash('message', __('Notifications are cleared!'));
-        return new RedirectResponse('/notifications/');
+        $this->session->flash('message', d__('notifications', 'Notifications are cleared!'));
+        return new RedirectResponse($returnUrl);
     }
 }

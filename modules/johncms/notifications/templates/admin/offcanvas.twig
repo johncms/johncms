@@ -1,0 +1,26 @@
+{#
+    Notifications loaded into the global panel offcanvas.
+
+    @var int unread_count
+    @var string message
+    @var array notifications
+    @var array items
+    @var int total
+    @var pagination \Twig\Markup|null
+#}
+<div class="offcanvas-header">
+    <h2 class="offcanvas-title" id="admin-notifications-title">{{ d__('notifications', 'Notifications') }}</h2>
+    <a href="/admin/notifications/settings" class="btn btn-sm btn-link text-body-secondary ms-auto"
+       title="{{ d__('notifications', 'Notification settings') }}" aria-label="{{ d__('notifications', 'Notification settings') }}">
+        {% include '@admin/components/ui/icon.twig' with {name: 'settings', size: 18} only %}
+    </a>
+    <button type="button" class="btn-close ms-1" data-bs-dismiss="offcanvas" aria-label="{{ d__('admin', 'Close') }}"></button>
+</div>
+<div class="offcanvas-body admin-notifications__body" data-notifications-unread="{{ unread_count }}">
+    {% include '@notifications/admin/content.twig' with {message: message, notifications: notifications, items: items, total: total, pagination: pagination} only %}
+</div>
+{% if total > 0 %}
+    <div class="offcanvas-footer admin-notifications__footer">
+        {% include '@notifications/admin/actions.twig' only %}
+    </div>
+{% endif %}

@@ -32,7 +32,7 @@ final readonly class UnreadTopicsNotificationProvider implements SystemNotificat
         $count = $this->unreadTopics->count();
 
         if ($count > 0) {
-            yield new SystemNotification('forum_new', d__('forum', 'New forum posts'), '/forum/?act=new', $count);
+            yield new SystemNotification('forum_new', d__('forum', 'New forum posts'), '/forum/?act=new', $count, icon: 'messages-square');
         }
     }
 }

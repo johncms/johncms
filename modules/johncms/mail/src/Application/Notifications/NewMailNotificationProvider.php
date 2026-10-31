@@ -25,7 +25,7 @@ final readonly class NewMailNotificationProvider implements SystemNotificationPr
         $count = $this->messages->countNewInbox($this->currentUser->id());
 
         if ($count > 0) {
-            yield new SystemNotification('new_mail', d__('mail', 'Mail'), '/mail/incoming', $count);
+            yield new SystemNotification('new_mail', d__('mail', 'Mail'), '/mail/incoming', $count, icon: 'mail');
         }
     }
 }

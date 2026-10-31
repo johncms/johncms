@@ -2,24 +2,75 @@ msgid ""
 msgstr ""
 "X-Domain: notifications\n"
 
-#: modules/johncms/notifications/src/Application/Controllers/ClearController.php:22
+#: modules/johncms/notifications/src/Application/Controllers/ClearController.php:32
 msgid "Notifications are cleared!"
 msgstr ""
 
-#: modules/johncms/notifications/src/Application/Controllers/IndexController.php:26
-#: modules/johncms/notifications/src/Application/Controllers/IndexController.php:37
 #: modules/johncms/notifications/src/Application/Controllers/IndexController.php:43
+#: modules/johncms/notifications/src/Application/Controllers/IndexController.php:54
+#: modules/johncms/notifications/src/Application/Controllers/IndexController.php:64
+#: modules/johncms/notifications/templates/admin/offcanvas.twig:12
 #: modules/johncms/notifications/src/Application/Controllers/SettingsController.php:30
 msgid "Notifications"
 msgstr ""
 
+#: modules/johncms/notifications/src/Application/Controllers/SettingsController.php:52
+#: modules/johncms/notifications/templates/admin/offcanvas.twig:14
+msgid "Notification settings"
+msgstr ""
+
+#: modules/johncms/notifications/src/Application/Controllers/SettingsController.php:75
+msgid "Settings saved!"
+msgstr ""
+
+#: modules/johncms/notifications/templates/admin/actions.twig:10
+#: modules/johncms/notifications/templates/public/index.twig:67
+msgid "Clear notifications"
+msgstr ""
+
+#: modules/johncms/notifications/templates/admin/actions.twig:16
+msgid "Clear all personal notifications? They cannot be restored."
+msgstr ""
+
+#: modules/johncms/notifications/templates/admin/actions.twig:18
+msgid "Could not clear notifications. Please try again."
+msgstr ""
+
+#: modules/johncms/notifications/templates/admin/actions.twig:24
+msgid "Clear all"
+msgstr ""
+
+#: modules/johncms/notifications/templates/admin/content.twig:17
+#: modules/johncms/notifications/templates/admin/content.twig:18
+msgid "Needs attention"
+msgstr ""
+
+#: modules/johncms/notifications/templates/admin/content.twig:35
+#: modules/johncms/notifications/templates/admin/content.twig:37
+msgid "Personal notifications"
+msgstr ""
+
+#: modules/johncms/notifications/templates/admin/content.twig:43
+msgid "No personal notifications."
+msgstr ""
+
+#: modules/johncms/notifications/templates/admin/content.twig:44
+msgid "New events will appear here."
+msgstr ""
+
+#: modules/johncms/notifications/templates/admin/content.twig:56
+msgid "New"
+msgstr ""
+
+#: modules/johncms/notifications/templates/admin/index.twig:15
 #: modules/johncms/notifications/src/Application/Controllers/SettingsController.php:28
 #: modules/johncms/notifications/templates/public/index.twig:72
 msgid "Settings"
 msgstr ""
 
-#: modules/johncms/notifications/src/Application/Controllers/SettingsController.php:36
-msgid "Settings saved!"
+#: modules/johncms/notifications/templates/admin/settings.twig:22
+#: modules/johncms/notifications/templates/public/settings.twig:27
+msgid "Display the number of unread messages in the forum"
 msgstr ""
 
 #: modules/johncms/notifications/templates/public/index.twig:17
@@ -28,14 +79,6 @@ msgstr ""
 
 #: modules/johncms/notifications/templates/public/index.twig:59
 msgid "Total"
-msgstr ""
-
-#: modules/johncms/notifications/templates/public/index.twig:67
-msgid "Clear notifications"
-msgstr ""
-
-#: modules/johncms/notifications/templates/public/settings.twig:27
-msgid "Display the number of unread messages in the forum"
 msgstr ""
 
 #: modules/johncms/notifications/templates/public/settings.twig:31

@@ -2,6 +2,35 @@ msgid ""
 msgstr ""
 "X-Domain: admin\n"
 
+#: modules/johncms/notifications/templates/admin/actions.twig:20
+#: themes/default/templates/admin/components/ui/form-footer.twig:19
+#: themes/default/templates/admin/pages/confirm-dialog.twig:44
+#: modules/johncms/admin/templates/ad-clear-dialog.twig:19
+#: modules/johncms/admin/templates/ad-delete-dialog.twig:28
+#: modules/johncms/admin/templates/bans/amnesty-dialog.twig:31
+#: modules/johncms/admin/templates/counter-delete-dialog.twig:20
+#: modules/johncms/admin/templates/karma/clear-dialog.twig:20
+#: modules/johncms/admin/templates/logout-dialog.twig:11
+#: modules/johncms/admin/templates/modules-confirm-dialog.twig:62
+#: modules/johncms/admin/templates/style-guide/examples/card.twig:15
+#: modules/johncms/admin/templates/style-guide/examples/dialog.twig:13
+#: modules/johncms/admin/templates/style-guide/examples/modal.twig:10
+#: modules/johncms/admin/templates/style-guide/examples/modal.twig:16
+#: modules/johncms/admin/templates/user/ban-dialog.twig:64
+#: modules/johncms/admin/templates/user/password.twig:33
+#: modules/johncms/admin/templates/users/cleanup-dialog.twig:24
+#: modules/johncms/admin/templates/users/delete-dialog.twig:54
+msgid "Cancel"
+msgstr ""
+
+#: modules/johncms/notifications/templates/admin/offcanvas.twig:17
+#: themes/default/templates/admin/components/ui/dialog.twig:25
+#: themes/default/templates/admin/pages/result-dialog.twig:15
+#: modules/johncms/admin/templates/users/cleanup-dialog.twig:24
+#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:17
+msgid "Close"
+msgstr ""
+
 #: system/src/Http/AdminAreaContext.php:33
 #: themes/default/templates/admin/layouts/default.twig:25
 #: themes/default/templates/admin/layouts/default.twig:29
@@ -256,17 +285,10 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-#: themes/default/templates/admin/components/topbar.twig:88
+#: themes/default/templates/admin/components/topbar.twig:87
 #: themes/default/templates/admin/layouts/default.twig:44
 #: themes/default/templates/admin/layouts/default.twig:46
 msgid "Back to the site"
-msgstr ""
-
-#: themes/default/templates/admin/components/ui/dialog.twig:25
-#: themes/default/templates/admin/pages/result-dialog.twig:15
-#: modules/johncms/admin/templates/users/cleanup-dialog.twig:24
-#: modules/johncms/contacts/templates/admin/message-offcanvas.twig:17
-msgid "Close"
 msgstr ""
 
 #: themes/default/templates/admin/components/ui/filter-chips.twig:11
@@ -275,25 +297,6 @@ msgstr ""
 
 #: themes/default/templates/admin/components/ui/filter-chips.twig:18
 msgid "Reset filters"
-msgstr ""
-
-#: themes/default/templates/admin/components/ui/form-footer.twig:19
-#: themes/default/templates/admin/pages/confirm-dialog.twig:44
-#: modules/johncms/admin/templates/ad-clear-dialog.twig:19
-#: modules/johncms/admin/templates/ad-delete-dialog.twig:28
-#: modules/johncms/admin/templates/bans/amnesty-dialog.twig:31
-#: modules/johncms/admin/templates/counter-delete-dialog.twig:20
-#: modules/johncms/admin/templates/karma/clear-dialog.twig:20
-#: modules/johncms/admin/templates/modules-confirm-dialog.twig:62
-#: modules/johncms/admin/templates/style-guide/examples/card.twig:15
-#: modules/johncms/admin/templates/style-guide/examples/dialog.twig:13
-#: modules/johncms/admin/templates/style-guide/examples/modal.twig:10
-#: modules/johncms/admin/templates/style-guide/examples/modal.twig:16
-#: modules/johncms/admin/templates/user/ban-dialog.twig:64
-#: modules/johncms/admin/templates/user/password.twig:33
-#: modules/johncms/admin/templates/users/cleanup-dialog.twig:24
-#: modules/johncms/admin/templates/users/delete-dialog.twig:54
-msgid "Cancel"
 msgstr ""
 
 #: themes/default/templates/admin/components/ui/form-footer.twig:26
@@ -354,7 +357,8 @@ msgstr ""
 msgid "Collapse the menu"
 msgstr ""
 
-#: themes/default/templates/admin/layouts/default.twig:100
+#: themes/default/templates/admin/layouts/default.twig:96
+#: themes/default/templates/admin/layouts/default.twig:110
 #: modules/johncms/contacts/templates/admin/messages.twig:24
 msgid "Loading"
 msgstr ""
@@ -889,7 +893,7 @@ msgid "Required parameters"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:36
-#: modules/johncms/admin/templates/dashboard/system.twig:38
+#: modules/johncms/admin/templates/dashboard/system.twig:44
 msgid "Database"
 msgstr ""
 
@@ -2010,7 +2014,7 @@ msgid "Showing"
 msgstr ""
 
 #: modules/johncms/admin/templates/counter-form.twig:84
-#: modules/johncms/admin/templates/dashboard/system.twig:61
+#: modules/johncms/admin/templates/dashboard/system.twig:73
 msgid "Enabled"
 msgstr ""
 
@@ -2120,77 +2124,77 @@ msgstr ""
 msgid "Nobody of the staff has signed in yet."
 msgstr ""
 
-#: modules/johncms/admin/templates/dashboard/system.twig:15
+#: modules/johncms/admin/templates/dashboard/system.twig:17
 msgid "Task scheduler (cron)"
 msgstr ""
 
-#: modules/johncms/admin/templates/dashboard/system.twig:17
+#: modules/johncms/admin/templates/dashboard/system.twig:20
 msgid "Runs"
 msgstr ""
 
-#: modules/johncms/admin/templates/dashboard/system.twig:19
+#: modules/johncms/admin/templates/dashboard/system.twig:22
 msgid "Has never run"
 msgstr ""
 
-#: modules/johncms/admin/templates/dashboard/system.twig:21
+#: modules/johncms/admin/templates/dashboard/system.twig:24
 msgid "Stopped"
 msgstr ""
 
-#: modules/johncms/admin/templates/dashboard/system.twig:24
+#: modules/johncms/admin/templates/dashboard/system.twig:27
 #: modules/johncms/admin/templates/maintenance.twig:50
 msgid "Last run"
 msgstr ""
 
-#: modules/johncms/admin/templates/dashboard/system.twig:24
+#: modules/johncms/admin/templates/dashboard/system.twig:27
 msgid "never"
 msgstr ""
 
-#: modules/johncms/admin/templates/dashboard/system.twig:27
+#: modules/johncms/admin/templates/dashboard/system.twig:30
 msgid "Mail, cleanups and the tasks of the panel wait for it. Add this line to the crontab of the server:"
 msgstr ""
 
-#: modules/johncms/admin/templates/dashboard/system.twig:29
+#: modules/johncms/admin/templates/dashboard/system.twig:32
 msgid "How to set up the scheduler"
 msgstr ""
 
-#: modules/johncms/admin/templates/dashboard/system.twig:34
+#: modules/johncms/admin/templates/dashboard/system.twig:39
 msgid "Versions"
 msgstr ""
 
-#: modules/johncms/admin/templates/dashboard/system.twig:43
-#: modules/johncms/admin/templates/dashboard/system.twig:47
+#: modules/johncms/admin/templates/dashboard/system.twig:51
+#: modules/johncms/admin/templates/dashboard/system.twig:56
 msgid "Disk"
 msgstr ""
 
-#: modules/johncms/admin/templates/dashboard/system.twig:50
+#: modules/johncms/admin/templates/dashboard/system.twig:59
 msgid "%s free of %s"
 msgstr ""
 
-#: modules/johncms/admin/templates/dashboard/system.twig:52
+#: modules/johncms/admin/templates/dashboard/system.twig:61
 msgid "The host does not tell."
 msgstr ""
 
-#: modules/johncms/admin/templates/dashboard/system.twig:57
+#: modules/johncms/admin/templates/dashboard/system.twig:68
 msgid "Cache and logs"
 msgstr ""
 
-#: modules/johncms/admin/templates/dashboard/system.twig:59
+#: modules/johncms/admin/templates/dashboard/system.twig:71
 msgid "Cache"
 msgstr ""
 
-#: modules/johncms/admin/templates/dashboard/system.twig:60
+#: modules/johncms/admin/templates/dashboard/system.twig:72
 msgid "Logs"
 msgstr ""
 
-#: modules/johncms/admin/templates/dashboard/system.twig:61
+#: modules/johncms/admin/templates/dashboard/system.twig:73
 msgid "Debug mode"
 msgstr ""
 
-#: modules/johncms/admin/templates/dashboard/system.twig:61
+#: modules/johncms/admin/templates/dashboard/system.twig:73
 msgid "Disabled"
 msgstr ""
 
-#: modules/johncms/admin/templates/dashboard/system.twig:68
+#: modules/johncms/admin/templates/dashboard/system.twig:80
 msgid "Clear cache"
 msgstr ""
 

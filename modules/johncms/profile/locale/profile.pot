@@ -3,7 +3,7 @@ msgstr ""
 "X-Domain: profile\n"
 
 #: modules/johncms/profile/src/Application/Controllers/AccountController.php:23
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:160
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:162
 msgid "My Account"
 msgstr ""
 
@@ -308,36 +308,36 @@ msgid "%d device has been signed out"
 msgid_plural "%d devices have been signed out"
 msgstr[0] ""
 
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:51
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:181
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:53
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:183
 msgid "General setting"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:97
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:118
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:200
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:99
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:120
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:202
 msgid "Settings saved successfully"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:102
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:204
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:104
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:206
 msgid "Default settings are set"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:128
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:186
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:130
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:188
 #: modules/johncms/profile/src/Application/UseCases/GetBanHistoryUseCase.php:46
 #: modules/johncms/profile/templates/public/ban.twig:39
 #: modules/johncms/profile/templates/public/statistics.twig:35
 msgid "Forum"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:145
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:191
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:147
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:193
 msgid "Mail"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:161
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:163
 #: modules/johncms/profile/templates/public/account.twig:64
 msgid "Settings"
 msgstr ""

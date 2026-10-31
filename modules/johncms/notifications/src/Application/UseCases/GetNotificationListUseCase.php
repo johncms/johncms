@@ -35,6 +35,7 @@ final readonly class GetNotificationListUseCase
                     'name'    => $notification->name,
                     'url'     => $notification->url,
                     'counter' => $notification->countShown ? $notification->count : 0,
+                    'icon'    => $notification->icon ?: 'bell',
                 ],
                 $this->systemNotifications->all()
             ),

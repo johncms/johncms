@@ -27,7 +27,8 @@ final readonly class GuestbookNotificationProvider implements SystemNotification
                 'guestbook_comments',
                 d__('profile', 'Guestbook'),
                 '/profile/' . $this->currentUser->id() . '/guestbook',
-                $count
+                $count,
+                icon: 'book-open',
             );
         }
     }

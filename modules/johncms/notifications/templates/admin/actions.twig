@@ -1,0 +1,28 @@
+{#
+    Clearing personal notifications, shared by the offcanvas footer and full-page fallback.
+    The callers include it only when there is something to clear.
+#}
+<form action="/admin/notifications/clear" method="post" data-notifications-clear>
+    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+    <div data-notifications-actions>
+        <button type="submit" class="btn btn-outline-secondary btn-sm" data-notifications-clear-start>
+            {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+            {{ d__('notifications', 'Clear notifications') }}
+        </button>
+    </div>
+    <div class="admin-notifications__confirmation" data-notifications-confirm hidden>
+        <div class="admin-notifications__warning">
+            {% include '@admin/components/ui/icon.twig' with {name: 'triangle-alert', size: 18} only %}
+            <p tabindex="-1" data-notifications-confirm-title>{{ d__('notifications', 'Clear all personal notifications? They cannot be restored.') }}</p>
+        </div>
+        <div class="alert alert-danger" role="alert" data-notifications-clear-error hidden>{{ d__('notifications', 'Could not clear notifications. Please try again.') }}</div>
+        <div class="d-flex flex-wrap gap-2 justify-content-end">
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-notifications-clear-cancel>{{ d__('admin', 'Cancel') }}</button>
+            <button type="submit" class="btn btn-danger btn-sm">
+                <span data-notifications-clear-spinner hidden><span class="spinner-border spinner-border-sm" aria-hidden="true"></span></span>
+                {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+                {{ d__('notifications', 'Clear all') }}
+            </button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,30 @@
+{#
+    Full-page fallback for the notifications offcanvas.
+
+    @var string message
+    @var array notifications
+    @var array items
+    @var int total
+    @var pagination \Twig\Markup|null
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block page_actions %}
+    <a href="/admin/notifications/settings" class="btn btn-outline-secondary">
+        {% include '@admin/components/ui/icon.twig' with {name: 'settings', size: 14} only %}
+        {{ d__('notifications', 'Settings') }}
+    </a>
+{% endblock %}
+
+{% block content %}
+    <div class="card admin-notifications-page">
+        <div class="card-body">
+            {% include '@notifications/admin/content.twig' with {message: message, notifications: notifications, items: items, total: total, pagination: pagination} only %}
+        </div>
+        {% if total > 0 %}
+            <div class="card-footer">
+                {% include '@notifications/admin/actions.twig' only %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -6,9 +6,9 @@
  */
 import { Offcanvas } from 'bootstrap';
 
-const panel = document.querySelector('[data-admin-offcanvas-panel]');
+const panels = document.querySelectorAll('[data-admin-offcanvas-panel]');
 
-if (panel) {
+panels.forEach(function (panel) {
   const loading = document.querySelector('template[data-admin-offcanvas-loading-template]');
   const offcanvas = Offcanvas.getOrCreateInstance(panel);
   let pending = null;
@@ -21,6 +21,11 @@ if (panel) {
     const request = new AbortController();
     pending = request;
     panel.replaceChildren(loading.content.cloneNode(true));
+    panels.forEach(function (other) {
+      if (other !== panel) {
+        Offcanvas.getInstance(other)?.hide();
+      }
+    });
     offcanvas.show(trigger);
 
     try {
@@ -41,6 +46,7 @@ if (panel) {
       }
 
       panel.innerHTML = await response.text();
+      panel.dispatchEvent(new CustomEvent('admin:offcanvas-loaded', {bubbles: true}));
     } catch (error) {
       if (error.name !== 'AbortError') {
         window.location.assign(url);
@@ -53,9 +59,14 @@ if (panel) {
   }
 
   document.addEventListener('click', function (event) {
-    const trigger = event.target.closest('[data-admin-offcanvas]');
+    const trigger = event.target.closest('a');
+    const navigation = trigger && panel.contains(trigger)
+      && panel.dataset.adminOffcanvasNavigation === new URL(trigger.href).pathname;
+    const target = trigger?.dataset.adminOffcanvasTarget;
+    const opensPanel = trigger?.hasAttribute('data-admin-offcanvas')
+      && (target ? target === panel.id : panel === panels[0]);
 
-    if (!trigger || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey
+    if (!trigger || (!navigation && !opensPanel) || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey
       || trigger.target || trigger.hasAttribute('download')) {
       return;
     }
@@ -72,4 +83,4 @@ if (panel) {
 
     panel.replaceChildren();
   });
-}
+});

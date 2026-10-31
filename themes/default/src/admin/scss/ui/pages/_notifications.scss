@@ -1,0 +1,133 @@
+.admin-notifications {
+  --bs-offcanvas-width: min(30rem, 100vw);
+}
+
+.admin-notifications__body {
+  min-height: 0;
+}
+
+// The confirmation of clearing opens in the footer; on a low screen it scrolls rather than
+// pushing the list out of sight.
+.admin-notifications__footer {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.admin-notifications-page {
+  max-width: 42rem;
+}
+
+.admin-notifications__section + .admin-notifications__section {
+  margin-top: 1.5rem;
+}
+
+.admin-notifications__attention {
+  --bs-list-group-border-width: 0;
+  --bs-list-group-bg: transparent;
+
+  gap: .125rem;
+  margin-inline: -.75rem;
+
+  > .list-group-item {
+    padding: .5rem .75rem;
+    border-radius: .5rem;
+  }
+}
+
+.admin-notifications__status {
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+  margin-bottom: 1.25rem;
+  font-size: .8125rem;
+  color: var(--accent);
+
+  > .admin-icon {
+    flex-shrink: 0;
+    margin-top: .125rem;
+  }
+}
+
+.admin-notifications__event {
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+  padding: 1rem 0;
+
+  + .admin-notifications__event {
+    border-top: 1px solid var(--border);
+  }
+}
+
+// A new event: a dot of the accent on the corner of its icon.
+.admin-notifications__event--unread .admin-notifications__event-icon::after {
+  content: "";
+  position: absolute;
+  top: -.1875rem;
+  right: -.1875rem;
+  width: .625rem;
+  height: .625rem;
+  border: 2px solid var(--bs-offcanvas-bg);
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.admin-notifications__event-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: .5rem;
+  background: var(--bg-inset);
+  color: var(--fg-muted);
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+
+.admin-notifications__event-body {
+  min-width: 0;
+  flex: 1;
+  font-size: .8125rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+// The texts come from the templates of the modules, with links all over them: in the list they
+// read as text, and the link shows itself under the pointer.
+.admin-notifications__event-message a {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+}
+
+.admin-notifications__event-time {
+  margin-top: .375rem;
+  font-size: .6875rem;
+  color: var(--fg-dim);
+}
+
+.admin-notifications__confirmation {
+  padding: .875rem;
+  border: 1px solid color-mix(in oklab, var(--warn) 30%, var(--border));
+  border-radius: .5rem;
+  background: color-mix(in oklab, var(--warn) 6%, var(--bs-offcanvas-bg, var(--bg-elev)));
+}
+
+.admin-notifications__warning {
+  display: flex;
+  align-items: flex-start;
+  gap: .625rem;
+  font-size: .8125rem;
+
+  > .admin-icon {
+    flex-shrink: 0;
+    margin-top: .125rem;
+    color: var(--warn);
+  }
+}

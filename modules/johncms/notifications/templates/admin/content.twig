@@ -1,0 +1,65 @@
+{#
+    The scrollable contents of the notifications panel.
+
+    @var string message
+    @var array notifications
+    @var array items
+    @var int total
+    @var pagination \Twig\Markup|null
+#}
+{% if message %}
+    <div class="admin-notifications__status" role="status">
+        {% include '@admin/components/ui/icon.twig' with {name: 'circle-check', size: 16} only %}
+        <span>{{ message }}</span>
+    </div>
+{% endif %}
+{% if notifications is not empty %}
+    <section class="admin-notifications__section" aria-label="{{ d__('notifications', 'Needs attention') }}">
+        <h3 class="text-caption mb-2">{{ d__('notifications', 'Needs attention') }}</h3>
+        <div class="list-group admin-notifications__attention">
+            {% for notification in notifications %}
+                <a href="{{ notification.url }}" class="list-group-item list-group-item-action admin-attention__item">
+                    <span class="admin-attention__icon">
+                        {% include '@admin/components/ui/icon.twig' with {name: notification.icon, size: 16} only %}
+                    </span>
+                    <span class="flex-grow-1">{{ notification.name }}</span>
+                    {% if notification.counter %}
+                        <span class="badge text-bg-light">{{ notification.counter|format_number }}</span>
+                    {% endif %}
+                    {% include '@admin/components/ui/icon.twig' with {name: 'chevron-right', size: 15, class: 'text-body-tertiary'} only %}
+                </a>
+            {% endfor %}
+        </div>
+    </section>
+{% endif %}
+<section class="admin-notifications__section" aria-label="{{ d__('notifications', 'Personal notifications') }}">
+    <div class="d-flex align-items-center gap-2 mb-2">
+        <h3 class="text-caption mb-0">{{ d__('notifications', 'Personal notifications') }}</h3>
+        {% if total > 0 %}<span class="badge text-bg-light rounded-pill">{{ total }}</span>{% endif %}
+    </div>
+    {% if total == 0 %}
+        {% include '@admin/components/ui/empty-state.twig' with {
+            icon: 'bell',
+            title: d__('notifications', 'No personal notifications.'),
+            description: d__('notifications', 'New events will appear here.'),
+        } only %}
+    {% else %}
+        <div class="admin-notifications__events">
+            {% for item in items %}
+                <div class="admin-notifications__event{{ item.unread ? ' admin-notifications__event--unread' }}">
+                    <div class="admin-notifications__event-icon">
+                        {% include '@admin/components/ui/icon.twig' with {name: item.icon, size: 16} only %}
+                    </div>
+                    <div class="admin-notifications__event-body">
+                        <div class="admin-notifications__event-message">{{ item.message }}</div>
+                        <div class="admin-notifications__event-time">
+                            {% if item.unread %}<span class="visually-hidden">{{ d__('notifications', 'New') }}, </span>{% endif %}
+                            <time datetime="{{ item.created_at|date('c') }}">{{ item.created_at|display_date }}</time>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% if pagination %}<div class="mt-3">{{ pagination }}</div>{% endif %}
+    {% endif %}
+</section>
