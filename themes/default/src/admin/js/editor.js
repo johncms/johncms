@@ -10,11 +10,13 @@ if (fields.length > 0) {
     const status = field.querySelector('[data-admin-editor-status]');
     let loading = true;
     let editor;
+    const failedUploads = new Set();
 
     textarea.form?.addEventListener('submit', function (event) {
-      if (loading || editor?.plugins.get('PendingActions').hasAny) {
+      if (loading || failedUploads.size > 0 || editor?.plugins.get('PendingActions').hasAny) {
         event.preventDefault();
-        status.textContent = loading ? field.dataset.loadingMessage : field.dataset.uploadMessage;
+        status.textContent = loading ? field.dataset.loadingMessage
+          : failedUploads.size > 0 ? field.dataset.uploadErrorMessage : field.dataset.uploadMessage;
         status.hidden = false;
       }
     });
@@ -35,12 +37,26 @@ if (fields.length > 0) {
           }
         });
 
-        editor.model.document.on('change:data', () => { textarea.value = editor.getData(); });
+        editor.model.document.on('change:data', () => {
+          textarea.value = editor.getData();
+          for (const image of failedUploads) {
+            if (image.root.rootName === '$graveyard') {
+              failedUploads.delete(image);
+            }
+          }
+          if (failedUploads.size === 0 && status.textContent === field.dataset.uploadErrorMessage) {
+            status.hidden = true;
+          }
+        });
 
         if (field.dataset.uploadUrl) {
-          editor.plugins.get('ImageUploadEditing').on('uploadComplete', (_event, { data }) => {
+          editor.plugins.get('ImageUploadEditing').on('uploadComplete', (_event, { data, imageElement }) => {
             if (!Number.isInteger(data.id) || data.id <= 0) {
-              throw new Error('The image upload response must contain a positive integer file id.');
+              failedUploads.add(imageElement);
+              status.textContent = field.dataset.uploadErrorMessage;
+              status.hidden = false;
+              console.error('The image upload response must contain a positive integer file id.');
+              return;
             }
 
             const input = document.createElement('input');
@@ -52,7 +68,7 @@ if (fields.length > 0) {
         }
 
         editor.plugins.get('PendingActions').on('change:hasAny', (_event, _name, hasAny) => {
-          if (!hasAny) {
+          if (!hasAny && failedUploads.size === 0) {
             status.hidden = true;
           }
         });
@@ -63,6 +79,8 @@ if (fields.length > 0) {
             if (!event.defaultPrevented) {
               editor.setData(initialValue);
               field.querySelectorAll('input[name="attached_files[]"]').forEach(input => input.remove());
+              failedUploads.clear();
+              status.hidden = true;
             }
           });
         });

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional\News;
 
+use Dom\HTMLDocument;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Symfony\Component\HttpFoundation\Response;
@@ -136,7 +137,8 @@ final class AdminArticleFormTest extends FunctionalTestCase
         self::assertStringContainsString('<option value="' . $releases . '" selected>', $content);
         // The pictures of the text are uploaded where the panel takes them.
         self::assertStringContainsString('data-upload-url="/admin/news/upload_file"', $content);
-        self::assertSame(2, substr_count($content, "data-admin-editor\n"));
+        $page = HTMLDocument::createFromString($content, LIBXML_NOERROR);
+        self::assertCount(2, $page->querySelectorAll('[data-admin-editor]'));
         self::assertStringNotContainsString('ckeditor-input-component', $content);
         self::assertStringNotContainsString('/ckeditor5/ckeditor.js', $content);
     }

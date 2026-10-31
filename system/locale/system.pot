@@ -1206,10 +1206,14 @@ msgid "Wait for the image upload to finish."
 msgstr ""
 
 #: themes/default/templates/admin/components/ui/editor.twig:18
+msgid "The uploaded image could not be attached. Remove it and upload it again."
+msgstr ""
+
+#: themes/default/templates/admin/components/ui/editor.twig:19
 msgid "Could not load the editor. You can edit the HTML below."
 msgstr ""
 
-#: themes/default/templates/admin/components/ui/editor.twig:24
+#: themes/default/templates/admin/components/ui/editor.twig:25
 msgid "Text"
 msgstr ""
 

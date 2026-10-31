@@ -105,12 +105,23 @@ export default defineConfig({
         postcss: {
             plugins: [{
                 postcssPlugin: 'johncms:admin-editor-tokens',
-                Rule(rule) {
+                Once(root) {
+                    if (!root.source?.input.file?.endsWith('/ckeditor5/dist/ckeditor5.css')) {
+                        return;
+                    }
+
                     // Editor tokens must resolve on the body, where the panel's color scheme
                     // lives. Otherwise their derived values stay frozen to the root palette.
-                    if (rule.source?.input.file?.endsWith('/ckeditor5/dist/ckeditor5.css')
-                        && rule.selector === ':root, :host') {
-                        rule.selector = 'body';
+                    let rewritten = 0;
+                    root.walkRules(rule => {
+                        if (rule.selector === ':root, :host') {
+                            rule.selector = 'body';
+                            rewritten++;
+                        }
+                    });
+
+                    if (rewritten === 0) {
+                        throw root.error('CKEditor theme token selectors changed: expected ":root, :host" rules.');
                     }
                 },
             }],

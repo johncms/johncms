@@ -61,6 +61,7 @@ docker-compose.override.yml
 !/public/upload/library/images/small/.gitkeep
 /public/upload/forum_files/*
 /public/upload/guestbook/*
+/public/upload/news/
 
 # Generated sitemap files
 /public/sitemap.xml

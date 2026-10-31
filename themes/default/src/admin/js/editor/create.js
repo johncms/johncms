@@ -1,6 +1,6 @@
 import {
   ClassicEditor, Essentials, Paragraph, Heading, Bold, Italic, Underline, Strikethrough,
-  List, Link, CodeBlock, BlockQuote, ImageBlock, ImageInline, ImageInsert, ImageUpload,
+  List, Link, CodeBlock, BlockQuote, ImageBlock, ImageInline, ImageInsertViaUrl, ImageUpload,
   ImageResize, ImageStyle, ImageToolbar, ImageCaption, ImageTextAlternative,
   Table, TableToolbar, TableProperties, TableCellProperties,
   FontColor, FontBackgroundColor, FontFamily, FontSize, RemoveFormat, MediaEmbed,
@@ -17,7 +17,7 @@ const translations = import.meta.glob([
 
 /** Keep the panel's features and configuration separate from the public editor. */
 export async function createEditor(textarea, { language, uploadUrl }) {
-  const locale = language.replace('_', '-').toLowerCase();
+  const locale = language.replaceAll('_', '-').toLowerCase();
   const translation = translations[`/node_modules/ckeditor5/dist/translations/${locale}.js`]
     ?? translations[`/node_modules/ckeditor5/dist/translations/${locale.split('-')[0]}.js`];
   const dictionary = translation ? (await translation()).default : null;
@@ -25,24 +25,25 @@ export async function createEditor(textarea, { language, uploadUrl }) {
 
   const plugins = [
     Essentials, PendingActions, Paragraph, Heading, Bold, Italic, Underline, Strikethrough,
-    List, Link, CodeBlock, BlockQuote, ImageBlock, ImageInline, ImageResize, ImageStyle,
+    List, Link, CodeBlock, BlockQuote, ImageBlock, ImageInline, ImageInsertViaUrl, ImageResize, ImageStyle,
     ImageToolbar, ImageCaption, ImageTextAlternative, Table, TableToolbar, TableProperties,
     TableCellProperties, FontColor, FontBackgroundColor, FontFamily, FontSize, RemoveFormat, MediaEmbed,
   ];
   if (uploadUrl) {
-    plugins.push(ImageInsert, ImageUpload, SimpleUploadAdapter);
+    plugins.push(ImageUpload, SimpleUploadAdapter);
   }
 
   return ClassicEditor.create({
     attachTo: textarea,
     licenseKey: 'GPL',
     plugins,
-    language: { ui: uiLanguage, content: language },
+    language: { ui: uiLanguage, content: locale },
+    ui: { viewportOffset: { top: document.querySelector('.admin-topbar')?.getBoundingClientRect().height ?? 0 } },
     translations: dictionary ? [dictionary] : [],
     toolbar: {
       items: [
         'heading', '|', 'bold', 'italic', 'link', 'fontColor', 'bulletedList', 'numberedList',
-        'removeFormat', '|', 'codeBlock', ...(uploadUrl ? ['insertImage'] : []),
+        'removeFormat', '|', 'codeBlock', 'insertImage',
         'blockQuote', 'insertTable', 'mediaEmbed', 'undo', 'redo',
       ],
     },

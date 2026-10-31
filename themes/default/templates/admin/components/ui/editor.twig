@@ -15,6 +15,7 @@
      data-upload-url="{{ allow_upload|default(false) ? upload_url|default('') : '' }}"
      data-loading-message="{{ d__('system', 'Please wait...') }}"
      data-upload-message="{{ d__('system', 'Wait for the image upload to finish.') }}"
+     data-upload-error-message="{{ d__('system', 'The uploaded image could not be attached. Remove it and upload it again.') }}"
      data-error-message="{{ d__('system', 'Could not load the editor. You can edit the HTML below.') }}">
     {% if label|default('') %}
         <label class="form-label" for="{{ id|default(name) }}">{{ label }}</label>
