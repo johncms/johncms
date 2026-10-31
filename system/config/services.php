@@ -614,6 +614,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ContentRendererInterface::class, ContentRenderer::class)->autowire();
     $services->set(ColorScheme::class);
     $services->set(\Johncms\Scheduler\ScheduleMutexInterface::class, \Johncms\Scheduler\FileScheduleMutex::class);
+    $services->set(\Johncms\Scheduler\ScheduleHeartbeatInterface::class, \Johncms\Scheduler\FileScheduleHeartbeat::class);
     $services->set(\Johncms\Scheduler\ScheduledTaskRegistry::class)
         ->arg('$commands', tagged_iterator('console.command'));
     $services->set(\Johncms\AdminTasks\AdminTaskRegistry::class)

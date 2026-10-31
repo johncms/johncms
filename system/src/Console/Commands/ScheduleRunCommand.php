@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Console\Commands;
 
 use DateTimeImmutable;
+use Johncms\Scheduler\ScheduleHeartbeatInterface;
 use Johncms\Scheduler\ScheduleRunner;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -21,6 +22,7 @@ final class ScheduleRunCommand extends Command
 {
     public function __construct(
         private ScheduleRunner $scheduleRunner,
+        private ScheduleHeartbeatInterface $heartbeat,
     ) {
         parent::__construct();
     }
@@ -34,8 +36,12 @@ final class ScheduleRunCommand extends Command
             return self::FAILURE;
         }
 
+        $now = new DateTimeImmutable('now');
+        // Before the tasks: a task that hangs must not make cron look stopped.
+        $this->heartbeat->beat($now->getTimestamp());
+
         return $this->scheduleRunner->runDueTasks(
-            now: new DateTimeImmutable('now'),
+            now: $now,
             application: $application,
             output: $io,
         );

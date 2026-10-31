@@ -157,3 +157,74 @@ span.admin-security__ip,
     color: var(--accent);
   }
 }
+
+// The system block (admin::dashboard/system): four parts side by side, one under another on a phone.
+
+.admin-system__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1.25rem 1.5rem;
+}
+
+.admin-system__part {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  min-width: 0;
+
+  .admin-facts {
+    width: 100%;
+    gap: 0.375rem;
+  }
+
+  // A narrow column: the label takes what it needs, the value the rest, at the right edge.
+  .admin-facts__row {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .admin-facts__label {
+    flex: none;
+  }
+
+  .admin-facts__value {
+    overflow-wrap: normal;
+    text-align: right;
+  }
+}
+
+.admin-system__title {
+  margin: 0;
+  font-family: $ui-font-mono;
+  font-size: 0.65625rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.admin-system__hint {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--fg-dim);
+}
+
+.admin-system__cron {
+  display: block;
+  max-width: 100%;
+  padding: 0.375rem 0.5rem;
+  border-radius: 0.375rem;
+  background: var(--bg-inset);
+  font-size: 0.75rem;
+  overflow-wrap: anywhere;
+}
+
+.admin-system__disk {
+  width: 100%;
+}
+
+.admin-system__disk--low {
+  --bs-progress-bar-bg: var(--danger);
+}

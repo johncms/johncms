@@ -6,6 +6,7 @@ namespace Tests\Unit\Scheduler;
 
 use Johncms\Console\Commands\ScheduleRunCommand;
 use Johncms\Scheduler\AsScheduledTask;
+use Johncms\Scheduler\ScheduleHeartbeatInterface;
 use Johncms\Scheduler\ScheduleMutexInterface;
 use Johncms\Scheduler\ScheduleRunner;
 use Johncms\Scheduler\ScheduledTaskRegistry;
@@ -25,7 +26,7 @@ final class ScheduleRunCommandTest extends TestCase
         $registry = new ScheduledTaskRegistry([$failingCommand]);
         $runner = new ScheduleRunner($registry, new TestNoopScheduleMutex(), $this->createMock(LoggerInterface::class));
 
-        $command = new ScheduleRunCommand($runner);
+        $command = new ScheduleRunCommand($runner, new TestScheduleHeartbeat());
         $application = new Application();
         $application->add($failingCommand);
         $application->add($command);
@@ -36,17 +37,49 @@ final class ScheduleRunCommandTest extends TestCase
         self::assertSame(1, $exitCode);
     }
 
+    public function testARunIsRecordedEvenWithNothingDue(): void
+    {
+        $heartbeat = new TestScheduleHeartbeat();
+        $command = new ScheduleRunCommand(
+            new ScheduleRunner(new ScheduledTaskRegistry([]), new TestNoopScheduleMutex(), $this->createMock(LoggerInterface::class)),
+            $heartbeat,
+        );
+        $application = new Application();
+        $application->add($command);
+
+        $before = time();
+        (new CommandTester($application->find('schedule:run')))->execute([]);
+
+        self::assertNotNull($heartbeat->lastBeat());
+        self::assertGreaterThanOrEqual($before, $heartbeat->lastBeat());
+    }
+
     public function testExecuteFailsWhenApplicationIsUnavailable(): void
     {
         $registry = new ScheduledTaskRegistry([]);
         $runner = new ScheduleRunner($registry, new TestNoopScheduleMutex(), $this->createMock(LoggerInterface::class));
 
-        $command = new ScheduleRunCommand($runner);
+        $command = new ScheduleRunCommand($runner, new TestScheduleHeartbeat());
         $tester = new CommandTester($command);
         $exitCode = $tester->execute([]);
 
         self::assertSame(1, $exitCode);
         self::assertStringContainsString('Console application is unavailable.', $tester->getDisplay());
+    }
+}
+
+final class TestScheduleHeartbeat implements ScheduleHeartbeatInterface
+{
+    private ?int $last = null;
+
+    public function beat(int $time): void
+    {
+        $this->last = $time;
+    }
+
+    public function lastBeat(): ?int
+    {
+        return $this->last;
     }
 }
 

@@ -16,6 +16,7 @@ final readonly class DashboardContextDTO
      * @param list<int>             $dayEnds   The last second of every day of the trends, oldest first.
      * @param list<FeedComment>     $comments  The latest comments the visitor moderates, the newest first.
      * @param SecurityOverviewDTO   $security  The sign-ins and the bans of the last day.
+     * @param SystemOverviewDTO|null $system   The state of the system; null for whoever does not manage the site.
      */
     public function __construct(
         public array $attention,
@@ -23,6 +24,7 @@ final readonly class DashboardContextDTO
         public array $dayEnds,
         public array $comments,
         public SecurityOverviewDTO $security,
+        public ?SystemOverviewDTO $system,
     ) {
     }
 }

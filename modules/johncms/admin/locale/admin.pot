@@ -207,6 +207,7 @@ msgid "Manage modules"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:64
+#: modules/johncms/admin/templates/dashboard/system.twig:10
 #: modules/johncms/admin/templates/modules.twig:81
 msgid "System"
 msgstr ""
@@ -237,6 +238,7 @@ msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:70
 #: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:25
+#: modules/johncms/admin/templates/dashboard/system.twig:11
 msgid "System check"
 msgstr ""
 
@@ -887,6 +889,7 @@ msgid "Required parameters"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:36
+#: modules/johncms/admin/templates/dashboard/system.twig:38
 msgid "Database"
 msgstr ""
 
@@ -1206,6 +1209,18 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Dashboard/PendingRegistrationsAttentionProvider.php:34
 #: modules/johncms/admin/src/Application/Notifications/PendingRegistrationsNotificationProvider.php:33
 msgid "Users on registration"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Dashboard/ServerAttentionProvider.php:44
+msgid "The task scheduler (cron) has never run"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Dashboard/ServerAttentionProvider.php:45
+msgid "The task scheduler (cron) has stopped"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Dashboard/ServerAttentionProvider.php:53
+msgid "The disk is running out of space"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Dashboard/SystemCheckAttentionProvider.php:47
@@ -1979,6 +1994,7 @@ msgid "Showing"
 msgstr ""
 
 #: modules/johncms/admin/templates/counter-form.twig:84
+#: modules/johncms/admin/templates/dashboard/system.twig:61
 msgid "Enabled"
 msgstr ""
 
@@ -2086,6 +2102,80 @@ msgstr ""
 
 #: modules/johncms/admin/templates/dashboard/security.twig:62
 msgid "Nobody of the staff has signed in yet."
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/system.twig:15
+msgid "Task scheduler (cron)"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/system.twig:17
+msgid "Runs"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/system.twig:19
+msgid "Has never run"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/system.twig:21
+msgid "Stopped"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/system.twig:24
+#: modules/johncms/admin/templates/maintenance.twig:50
+msgid "Last run"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/system.twig:24
+msgid "never"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/system.twig:27
+msgid "Mail, cleanups and the tasks of the panel wait for it. Add this line to the crontab of the server:"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/system.twig:29
+msgid "How to set up the scheduler"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/system.twig:34
+msgid "Versions"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/system.twig:43
+#: modules/johncms/admin/templates/dashboard/system.twig:47
+msgid "Disk"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/system.twig:50
+msgid "%s free of %s"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/system.twig:52
+msgid "The host does not tell."
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/system.twig:57
+msgid "Cache and logs"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/system.twig:59
+msgid "Cache"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/system.twig:60
+msgid "Logs"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/system.twig:61
+msgid "Debug mode"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/system.twig:61
+msgid "Disabled"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/system.twig:68
+msgid "Clear cache"
 msgstr ""
 
 #: modules/johncms/admin/templates/editor-images.twig:36
@@ -2540,10 +2630,6 @@ msgstr ""
 
 #: modules/johncms/admin/templates/maintenance.twig:37
 msgid "Background"
-msgstr ""
-
-#: modules/johncms/admin/templates/maintenance.twig:50
-msgid "Last run"
 msgstr ""
 
 #: modules/johncms/admin/templates/maintenance.twig:59

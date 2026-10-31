@@ -81,4 +81,10 @@
             {% include '@admin/dashboard/security.twig' with {security: data.security} only %}
         </div>
     </div>
+
+    {% if data.system %}
+        <div class="mt-3">
+            {% include '@admin/dashboard/system.twig' with {system: data.system} only %}
+        </div>
+    {% endif %}
 {% endblock %}

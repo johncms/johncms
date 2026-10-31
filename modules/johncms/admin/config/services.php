@@ -11,6 +11,9 @@ use Johncms\Modules\Admin\Domain\Repository\BanAmnestyRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\AuthConfigRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\AuthLogRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\SecurityOverviewRepositoryInterface;
+use Johncms\Modules\Admin\Domain\Services\ServerHealth;
+use Johncms\Modules\Admin\Domain\Services\ServerStatusInterface;
+use Johncms\Modules\Admin\Infrastructure\Server\LocalServerStatus;
 use Johncms\Modules\Admin\Domain\Repository\BanListRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\InactiveUsersRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\KarmaRepositoryInterface;
@@ -75,6 +78,8 @@ return static function (ContainerConfigurator $container): void {
 
     $services->set(DashboardRepositoryInterface::class, EloquentDashboardRepository::class)->public();
     $services->set(SecurityOverviewRepositoryInterface::class, EloquentSecurityOverviewRepository::class)->public();
+    $services->set(ServerStatusInterface::class, LocalServerStatus::class)->autowire()->public();
+    $services->set(ServerHealth::class);
     $services->set(UserListRepositoryInterface::class, EloquentUserListRepository::class)->public();
     $services->set(UserCardRepositoryInterface::class, EloquentUserCardRepository::class)->public();
     $services->set(UserEditRepositoryInterface::class, EloquentUserEditRepository::class)->public();

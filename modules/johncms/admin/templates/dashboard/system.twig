@@ -1,0 +1,73 @@
+{#
+    The system block of the dashboard: whether the scheduler runs, the versions, the disk, the cache
+    and the logs. Shown to whoever manages the site.
+
+    @var system \Johncms\Modules\Admin\Application\DTO\SystemOverviewDTO
+#}
+<section class="card admin-system" aria-labelledby="admin-system-title">
+    <div class="card-header">
+        {% include '@admin/components/ui/icon.twig' with {name: 'gauge', size: 15, class: 'text-body-tertiary'} only %}
+        <h2 class="flex-grow-1 m-0 fs-6 fw-semibold" id="admin-system-title">{{ __('System') }}</h2>
+        <a class="small" href="/admin/system_check">{{ __('System check') }}</a>
+    </div>
+    <div class="card-body admin-system__grid">
+        <div class="admin-system__part">
+            <h3 class="admin-system__title">{{ __('Task scheduler (cron)') }}</h3>
+            {% if system.schedulerRuns %}
+                <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ __('Runs') }}</span>
+            {% elseif system.schedulerLastRun is null %}
+                <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis badge-dot">{{ __('Has never run') }}</span>
+            {% else %}
+                <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis badge-dot">{{ __('Stopped') }}</span>
+            {% endif %}
+            {% include '@admin/components/ui/facts.twig' with {items: [
+                {label: __('Last run'), value: system.schedulerLastRun is null ? __('never') : system.schedulerLastRun|display_date},
+            ]} only %}
+            {% if not system.schedulerRuns %}
+                <p class="admin-system__hint">{{ __('Mail, cleanups and the tasks of the panel wait for it. Add this line to the crontab of the server:') }}</p>
+                <code class="admin-system__cron">{{ system.cronLine }}</code>
+                <a class="small" href="https://docs.johncms.com/konsol/planirovshchik-zadach-schedule" target="_blank" rel="noopener">{{ __('How to set up the scheduler') }}</a>
+            {% endif %}
+        </div>
+
+        <div class="admin-system__part">
+            <h3 class="admin-system__title">{{ __('Versions') }}</h3>
+            {% include '@admin/components/ui/facts.twig' with {items: [
+                {label: 'JohnCMS', value: system.cmsVersion},
+                {label: 'PHP', value: system.phpVersion},
+                {label: __('Database'), value: system.databaseVersion},
+            ]} only %}
+        </div>
+
+        <div class="admin-system__part">
+            <h3 class="admin-system__title">{{ __('Disk') }}</h3>
+            {% if system.diskTotal %}
+                {% set used = system.diskTotal - system.diskFree %}
+                <div class="progress admin-system__disk{{ system.diskLow ? ' admin-system__disk--low' }}" role="progressbar"
+                     aria-label="{{ __('Disk') }}" aria-valuenow="{{ (used / system.diskTotal * 100)|round }}" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar" style="width: {{ (used / system.diskTotal * 100)|round(1) }}%"></div>
+                </div>
+                <p class="admin-system__hint">{{ __('%s free of %s')|format(system.diskFree|format_size, system.diskTotal|format_size) }}</p>
+            {% else %}
+                <p class="admin-system__hint">{{ __('The host does not tell.') }}</p>
+            {% endif %}
+        </div>
+
+        <div class="admin-system__part">
+            <h3 class="admin-system__title">{{ __('Cache and logs') }}</h3>
+            {% include '@admin/components/ui/facts.twig' with {items: [
+                {label: __('Cache'), value: system.cacheSize|format_size},
+                {label: __('Logs'), value: system.logsSize|format_size},
+                {label: __('Debug mode'), value: system.debug ? __('Enabled') : __('Disabled')},
+            ]} only %}
+            <form action="/admin/maintenance/run" method="post" class="mt-2">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                <input type="hidden" name="command" value="cache:clear">
+                <button type="submit" class="btn btn-secondary btn-sm">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+                    {{ __('Clear cache') }}
+                </button>
+            </form>
+        </div>
+    </div>
+</section>

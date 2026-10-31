@@ -3206,3 +3206,60 @@ msgstr "Сотрудники пока не входили."
 
 msgid "Addresses that may be guessing passwords"
 msgstr "Адреса, похожие на подбор пароля"
+
+msgid "The task scheduler (cron) has never run"
+msgstr "Планировщик задач (cron) ни разу не запускался"
+
+msgid "The task scheduler (cron) has stopped"
+msgstr "Планировщик задач (cron) перестал запускаться"
+
+msgid "The disk is running out of space"
+msgstr "На диске заканчивается место"
+
+msgid "Task scheduler (cron)"
+msgstr "Планировщик задач (cron)"
+
+msgid "Runs"
+msgstr "Работает"
+
+msgid "Has never run"
+msgstr "Не запускался"
+
+msgid "Stopped"
+msgstr "Остановлен"
+
+msgid "never"
+msgstr "никогда"
+
+msgid "Mail, cleanups and the tasks of the panel wait for it. Add this line to the crontab of the server:"
+msgstr "Без него не уходит почта, не идут очистки и задачи панели. Добавьте эту строку в crontab сервера:"
+
+msgid "How to set up the scheduler"
+msgstr "Как настроить планировщик"
+
+msgid "Versions"
+msgstr "Версии"
+
+msgid "Disk"
+msgstr "Диск"
+
+msgid "%s free of %s"
+msgstr "Свободно %s из %s"
+
+msgid "The host does not tell."
+msgstr "Хостинг не сообщает."
+
+msgid "Cache and logs"
+msgstr "Кэш и логи"
+
+msgid "Cache"
+msgstr "Кэш"
+
+msgid "Logs"
+msgstr "Логи"
+
+msgid "Debug mode"
+msgstr "Режим отладки"
+
+msgid "Clear cache"
+msgstr "Очистить кэш"

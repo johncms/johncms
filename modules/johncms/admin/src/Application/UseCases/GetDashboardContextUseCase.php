@@ -23,6 +23,7 @@ final readonly class GetDashboardContextUseCase
         private DashboardMetrics $metrics,
         private CommentFeed $comments,
         private GetSecurityOverviewUseCase $security,
+        private GetSystemOverviewUseCase $system,
     ) {
     }
 
@@ -37,6 +38,7 @@ final readonly class GetDashboardContextUseCase
             dayEnds: $period->dayEnds(),
             comments: $this->comments->page(self::LATEST_COMMENTS),
             security: $this->security->execute($now),
+            system: $this->system->execute($now),
         );
     }
 }
