@@ -1,0 +1,6 @@
+{# Confirmation of signing out when opened without JavaScript. #}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@admin/components/ui/dialog-page.twig' with {dialog: '@admin/logout-dialog.twig', data: {}} only %}
+{% endblock %}

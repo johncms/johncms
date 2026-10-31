@@ -1,0 +1,14 @@
+{# Confirmation of signing out of the panel. #}
+{% embed '@admin/components/ui/dialog.twig' with {
+    title: d__('system', 'Exit'),
+    action: '/admin/logout',
+    close_url: '/admin',
+} only %}
+    {% block body %}
+        <p class="mb-0">{{ d__('auth', 'Are you sure you want to leave the site?') }}</p>
+    {% endblock %}
+    {% block footer %}
+        <a href="{{ close_url }}" class="btn btn-secondary" data-bs-dismiss="modal">{{ d__('admin', 'Cancel') }}</a>
+        <button type="submit" class="btn btn-danger">{{ d__('system', 'Exit') }}</button>
+    {% endblock %}
+{% endembed %}

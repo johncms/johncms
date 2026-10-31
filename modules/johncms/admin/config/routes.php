@@ -8,6 +8,7 @@ use Johncms\Modules\Admin\Application\Controllers\Settings\ExternalProvidersCont
 use Johncms\Modules\Admin\Application\Controllers\Access\RolesController;
 use Johncms\Modules\Admin\Application\Controllers\Access\UserRolesController;
 use Johncms\Modules\Admin\Application\Controllers\DashboardController;
+use Johncms\Modules\Admin\Application\Controllers\LogoutController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpSearchController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpWhoisController;
 use Johncms\Modules\Admin\Application\Controllers\Languages\LanguagesController;
@@ -58,6 +59,8 @@ return static function (RouteCollection $router): void {
     // win on first match (plain UrlMatcher, registration order).
     $adminGroup = $router->group('', function (RouteCollection $r): void {
         $r->get('/admin', DashboardController::class)->name('admin.index');
+        $r->get('/admin/logout', [LogoutController::class, 'confirm'])->name('admin.logout');
+        $r->post('/admin/logout', [LogoutController::class, 'logout'])->name('admin.logout.run');
         $r->get('/admin/users', UserListController::class)->name('admin.users');
         $r->get('/admin/users/{id:number}', UserCardController::class)->name('admin.users.view');
         // Who may change which account is decided by the use cases: the permission and the place
