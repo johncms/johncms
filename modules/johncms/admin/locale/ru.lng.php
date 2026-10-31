@@ -890,6 +890,10 @@
       'Updated' => 'Обновлено',
       'Source' => 'Источник',
       'Full answer of the registry' => 'Полный ответ регистратора',
+      'Needs attention' => 'Требует внимания',
+      'Nothing needs attention: the queues are empty and the server is fine.' => 'Всё разобрано: очереди пусты, с сервером всё в порядке.',
+      'PHP does not meet the requirements of the site' => 'PHP не отвечает требованиям сайта',
+      'Recommendations to speed up PHP' => 'Рекомендации по ускорению PHP',
     ),
   ),
 );

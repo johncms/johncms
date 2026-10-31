@@ -4,9 +4,9 @@ msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php:51
 #: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php:286
-#: modules/johncms/downloads/src/Application/Controllers/CommentsReviewController.php:51
-#: modules/johncms/downloads/src/Application/Controllers/CommentsReviewController.php:114
+#: modules/johncms/downloads/src/Application/Controllers/CommentsReviewController.php:53
 #: modules/johncms/downloads/src/Application/Controllers/CommentsReviewController.php:116
+#: modules/johncms/downloads/src/Application/Controllers/CommentsReviewController.php:118
 #: modules/johncms/downloads/src/Application/Controllers/CreateCategoryController.php:38
 #: modules/johncms/downloads/src/Application/Controllers/CreateCategoryController.php:50
 #: modules/johncms/downloads/src/Application/Controllers/DeleteCategoryController.php:30
@@ -55,8 +55,8 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/TopUsersController.php:57
 #: modules/johncms/downloads/src/Application/Controllers/UserFilesController.php:45
 #: modules/johncms/downloads/src/Application/Controllers/UserFilesController.php:49
+#: modules/johncms/downloads/src/Application/Controllers/UserFilesController.php:75
 #: modules/johncms/downloads/src/Application/Controllers/UserFilesController.php:77
-#: modules/johncms/downloads/src/Application/Controllers/UserFilesController.php:79
 #: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php:93
 #: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php:129
 #: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php:174
@@ -66,7 +66,7 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Middlewares/DownloadsAdminMiddleware.php:27
 #: modules/johncms/downloads/src/Application/Middlewares/DownloadsAdminMiddleware.php:31
 #: modules/johncms/downloads/src/Application/Services/DownloadsPermissions.php:39
-#: modules/johncms/downloads/templates/public/comments-review.twig:108
+#: modules/johncms/downloads/templates/public/comments-review.twig:119
 #: modules/johncms/downloads/templates/public/favorites.twig:30
 #: modules/johncms/downloads/templates/public/index.twig:144
 #: modules/johncms/downloads/templates/public/moderation.twig:39
@@ -194,13 +194,13 @@ msgstr ""
 msgid "File not found"
 msgstr ""
 
-#: modules/johncms/downloads/src/Application/Controllers/CommentsReviewController.php:47
 #: modules/johncms/downloads/src/Application/Controllers/CommentsReviewController.php:49
+#: modules/johncms/downloads/src/Application/Controllers/CommentsReviewController.php:51
 #: modules/johncms/downloads/src/Application/Controllers/FileCommentsController.php:45
 msgid "Comments are disabled"
 msgstr ""
 
-#: modules/johncms/downloads/src/Application/Controllers/CommentsReviewController.php:113
+#: modules/johncms/downloads/src/Application/Controllers/CommentsReviewController.php:115
 #: modules/johncms/downloads/templates/public/index.twig:147
 msgid "Review comments"
 msgstr ""
@@ -309,7 +309,7 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/FileCommentsController.php:111
 #: modules/johncms/downloads/src/Application/Controllers/FileCommentsController.php:116
 #: modules/johncms/downloads/src/Application/Controllers/FileCommentsController.php:141
-#: modules/johncms/downloads/templates/public/comments-review.twig:54
+#: modules/johncms/downloads/templates/public/comments-review.twig:65
 #: modules/johncms/downloads/templates/public/view.twig:119
 msgid "Comments"
 msgstr ""
@@ -465,9 +465,14 @@ msgstr ""
 msgid "User does not exists"
 msgstr ""
 
-#: modules/johncms/downloads/src/Application/Controllers/UserFilesController.php:76
+#: modules/johncms/downloads/src/Application/Controllers/UserFilesController.php:74
 #: modules/johncms/downloads/templates/public/components/user-row.twig:26
 msgid "User Files"
+msgstr ""
+
+#: modules/johncms/downloads/src/Application/Dashboard/ModerationAttentionProvider.php:34
+#: modules/johncms/downloads/src/Application/Notifications/ModerationNotificationProvider.php:33
+msgid "Downloads on moderation"
 msgstr ""
 
 #: modules/johncms/downloads/src/Application/Exceptions/DownloadsErrorCode.php:25
@@ -476,10 +481,6 @@ msgstr ""
 
 #: modules/johncms/downloads/src/Application/Middlewares/DownloadsAdminMiddleware.php:29
 msgid "Not found"
-msgstr ""
-
-#: modules/johncms/downloads/src/Application/Notifications/ModerationNotificationProvider.php:33
-msgid "Downloads on moderation"
 msgstr ""
 
 #: modules/johncms/downloads/src/Application/Services/DownloadsPermissions.php:51
@@ -699,13 +700,13 @@ msgid "Current files"
 msgstr ""
 
 #: modules/johncms/downloads/templates/public/additional-files.twig:23
-#: modules/johncms/downloads/templates/public/comments-review.twig:86
+#: modules/johncms/downloads/templates/public/comments-review.twig:97
 #: modules/johncms/downloads/templates/public/index.twig:59
 msgid "Edit"
 msgstr ""
 
 #: modules/johncms/downloads/templates/public/additional-files.twig:24
-#: modules/johncms/downloads/templates/public/comments-review.twig:89
+#: modules/johncms/downloads/templates/public/comments-review.twig:100
 #: modules/johncms/downloads/templates/public/components/file-row.twig:22
 #: modules/johncms/downloads/templates/public/confirm-delete.twig:19
 #: modules/johncms/downloads/templates/public/delete-category.twig:21
@@ -840,11 +841,11 @@ msgstr ""
 msgid "The list is empty"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/comments-review.twig:33
+#: modules/johncms/downloads/templates/public/comments-review.twig:44
 msgid "Edited:"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/comments-review.twig:34
+#: modules/johncms/downloads/templates/public/comments-review.twig:45
 msgid "Edited"
 msgstr ""
 

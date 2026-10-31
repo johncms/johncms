@@ -236,6 +236,9 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Notifications/SystemNotification.php',
                 // And one block a module puts on the home page.
                 ROOT_PATH . 'system/src/View/Homepage/HomepageBlock.php',
+                // And one line a module puts on the dashboard of the panel, with its level.
+                ROOT_PATH . 'system/src/View/Dashboard/AttentionItem.php',
+                ROOT_PATH . 'system/src/View/Dashboard/AttentionLevel.php',
                 ROOT_PATH . 'system/src/Modules/ModuleRegistry.php',
                 ROOT_PATH . 'system/src/Modules/ModuleState.php',
                 ROOT_PATH . 'system/src/Modules/ModuleStateRecord.php',
@@ -591,6 +594,8 @@ return static function (ContainerConfigurator $container): void {
         ->arg('$providers', tagged_iterator('johncms.system_notification_provider'));
     $services->set(\Johncms\View\Homepage\HomepageBlocks::class)
         ->arg('$providers', tagged_iterator('johncms.homepage_block_provider'));
+    $services->set(\Johncms\View\Dashboard\DashboardAttention::class)
+        ->arg('$providers', tagged_iterator('johncms.dashboard_attention_provider'));
     // The content pipeline. Both registries are handed the services a module tagged by simply
     // implementing the interface — see PSRContainerFactory::registerExtensionPoints().
     $services->set(ContentTransformerRegistry::class)

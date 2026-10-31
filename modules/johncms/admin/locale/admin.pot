@@ -242,7 +242,7 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-#: themes/default/templates/admin/components/topbar.twig:69
+#: themes/default/templates/admin/components/topbar.twig:88
 #: themes/default/templates/admin/layouts/default.twig:44
 #: themes/default/templates/admin/layouts/default.twig:46
 msgid "Back to the site"
@@ -1186,8 +1186,17 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
+#: modules/johncms/admin/src/Application/Dashboard/PendingRegistrationsAttentionProvider.php:34
 #: modules/johncms/admin/src/Application/Notifications/PendingRegistrationsNotificationProvider.php:33
 msgid "Users on registration"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Dashboard/SystemCheckAttentionProvider.php:47
+msgid "PHP does not meet the requirements of the site"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Dashboard/SystemCheckAttentionProvider.php:51
+msgid "Recommendations to speed up PHP"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Services/AdminPermissions.php:35
@@ -2076,19 +2085,27 @@ msgstr ""
 msgid "Give this address to the service when registering the application."
 msgstr ""
 
-#: modules/johncms/admin/templates/index.twig:10
+#: modules/johncms/admin/templates/index.twig:14
 msgid "Show admin menu"
 msgstr ""
 
-#: modules/johncms/admin/templates/index.twig:18
+#: modules/johncms/admin/templates/index.twig:20
+msgid "Needs attention"
+msgstr ""
+
+#: modules/johncms/admin/templates/index.twig:45
+msgid "Nothing needs attention: the queues are empty and the server is fine."
+msgstr ""
+
+#: modules/johncms/admin/templates/index.twig:51
 msgid "registered visitors today"
 msgstr ""
 
-#: modules/johncms/admin/templates/index.twig:26
+#: modules/johncms/admin/templates/index.twig:52
 msgid "users registered today"
 msgstr ""
 
-#: modules/johncms/admin/templates/index.twig:34
+#: modules/johncms/admin/templates/index.twig:53
 msgid "posts on the forum today"
 msgstr ""
 

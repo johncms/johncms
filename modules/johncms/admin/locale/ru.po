@@ -3137,3 +3137,15 @@ msgstr "Источник"
 
 msgid "Full answer of the registry"
 msgstr "Полный ответ регистратора"
+
+msgid "Needs attention"
+msgstr "Требует внимания"
+
+msgid "Nothing needs attention: the queues are empty and the server is fine."
+msgstr "Всё разобрано: очереди пусты, с сервером всё в порядке."
+
+msgid "PHP does not meet the requirements of the site"
+msgstr "PHP не отвечает требованиям сайта"
+
+msgid "Recommendations to speed up PHP"
+msgstr "Рекомендации по ускорению PHP"

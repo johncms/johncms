@@ -261,12 +261,13 @@ msgstr ""
 msgid "By comments"
 msgstr ""
 
-#: modules/johncms/library/src/Application/Middlewares/LibraryAccessMiddleware.php:31
-msgid "Library is closed"
-msgstr ""
-
+#: modules/johncms/library/src/Application/Dashboard/ModerationAttentionProvider.php:34
 #: modules/johncms/library/src/Application/Notifications/ModerationNotificationProvider.php:33
 msgid "Articles on moderation"
+msgstr ""
+
+#: modules/johncms/library/src/Application/Middlewares/LibraryAccessMiddleware.php:31
+msgid "Library is closed"
 msgstr ""
 
 #: modules/johncms/library/src/Application/Services/LibraryPermissions.php:33

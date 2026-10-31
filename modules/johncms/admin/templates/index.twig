@@ -1,39 +1,52 @@
 {#
-    The dashboard of the admin panel: what happened on the site today.
+    The dashboard of the admin panel: what needs the administrator, and what happened on the site
+    today.
 
     @var \Johncms\Modules\Admin\Application\DTO\DashboardContextDTO data
 #}
 {% extends '@admin/layouts/default.twig' %}
 
+{% set level_icons = {danger: 'circle-alert', warning: 'triangle-alert', pending: 'inbox'} %}
+{% set level_badges = {danger: 'text-bg-danger', warning: 'text-bg-warning', pending: 'text-bg-light'} %}
+
 {% block content %}
-    <div class="d-block d-lg-none text-center">
+    <div class="d-block d-lg-none text-center mb-3">
         <button type="button" class="btn btn-outline-primary w-100" data-admin-nav-open aria-controls="admin-sidebar">{{ __('Show admin menu') }}</button>
     </div>
 
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3">
-        <div class="col mt-3">
-            <div class="card text-center h-100">
-                <div class="card-body">
-                    <div class="h1 fw-bold">{{ data.activeUsersToday }}</div>
-                    <div class="mt-2 h4">{{ __('registered visitors today') }}</div>
-                </div>
-            </div>
+    <section class="card admin-attention mb-3" aria-labelledby="admin-attention-title">
+        <div class="card-header">
+            {% include '@admin/components/ui/icon.twig' with {name: 'bell', size: 15, class: 'text-body-tertiary'} only %}
+            <h2 class="flex-grow-1 m-0 fs-6 fw-semibold" id="admin-attention-title">{{ __('Needs attention') }}</h2>
         </div>
-        <div class="col mt-3">
-            <div class="card text-center h-100">
-                <div class="card-body">
-                    <div class="h1 fw-bold">{{ data.registeredUsersToday }}</div>
-                    <div class="mt-2 h4">{{ __('users registered today') }}</div>
-                </div>
+        {% if data.attention %}
+            <div class="list-group list-group-flush">
+                {% for item in data.attention %}
+                    <a href="{{ item.url }}" class="list-group-item list-group-item-action admin-attention__item admin-attention__item--{{ item.level.value }}">
+                        <span class="admin-attention__icon">
+                            {% include '@admin/components/ui/icon.twig' with {name: item.icon ?: level_icons[item.level.value], size: 16} only %}
+                        </span>
+                        <span class="flex-grow-1">{{ item.name }}</span>
+                        {% if item.count is not null %}
+                            <span class="badge {{ level_badges[item.level.value] }}">{{ item.count|format_number }}</span>
+                        {% endif %}
+                        {% include '@admin/components/ui/icon.twig' with {name: 'chevron-right', size: 15, class: 'text-body-tertiary'} only %}
+                    </a>
+                {% endfor %}
             </div>
-        </div>
-        <div class="col mt-3">
-            <div class="card text-center h-100">
-                <div class="card-body">
-                    <div class="h1 fw-bold">{{ data.forumMessagesToday }}</div>
-                    <div class="mt-2 h4">{{ __('posts on the forum today') }}</div>
-                </div>
+        {% else %}
+            <div class="card-body admin-attention__clear">
+                <span class="admin-attention__icon">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'circle-check', size: 16} only %}
+                </span>
+                {{ __('Nothing needs attention: the queues are empty and the server is fine.') }}
             </div>
-        </div>
+        {% endif %}
+    </section>
+
+    <div class="admin-stats">
+        {% include '@admin/components/ui/stat-card.twig' with {label: __('registered visitors today'), value: data.activeUsersToday} only %}
+        {% include '@admin/components/ui/stat-card.twig' with {label: __('users registered today'), value: data.registeredUsersToday} only %}
+        {% include '@admin/components/ui/stat-card.twig' with {label: __('posts on the forum today'), value: data.forumMessagesToday} only %}
     </div>
 {% endblock %}

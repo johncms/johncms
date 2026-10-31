@@ -1,0 +1,40 @@
+// The dashboard of the panel (admin::index): the lines that need the administrator.
+
+.admin-attention__item,
+.admin-attention__clear {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.admin-attention__item {
+  padding-block: 0.625rem;
+}
+
+.admin-attention__clear {
+  color: var(--fg-dim);
+  font-size: 0.8125rem;
+}
+
+// A tile in the colour of the level; the pending queues and the all-clear share the accent.
+.admin-attention__icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  background: var(--bs-success-bg-subtle);
+  color: var(--bs-success-text-emphasis);
+}
+
+.admin-attention__item--danger .admin-attention__icon {
+  background: var(--bs-danger-bg-subtle);
+  color: var(--bs-danger-text-emphasis);
+}
+
+.admin-attention__item--warning .admin-attention__icon {
+  background: var(--bs-warning-bg-subtle);
+  color: var(--bs-warning-text-emphasis);
+}

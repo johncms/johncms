@@ -6,6 +6,7 @@ namespace Johncms\Modules\Admin\Application\UseCases;
 
 use Johncms\Modules\Admin\Application\DTO\DashboardContextDTO;
 use Johncms\Modules\Admin\Domain\Repository\DashboardRepositoryInterface;
+use Johncms\View\Dashboard\DashboardAttention;
 
 final readonly class GetDashboardContextUseCase
 {
@@ -13,6 +14,7 @@ final readonly class GetDashboardContextUseCase
 
     public function __construct(
         private DashboardRepositoryInterface $dashboardRepository,
+        private DashboardAttention $attention,
     ) {
     }
 
@@ -24,6 +26,7 @@ final readonly class GetDashboardContextUseCase
             activeUsersToday: $this->dashboardRepository->countActiveUsersSince($dayAgo),
             registeredUsersToday: $this->dashboardRepository->countRegisteredUsersSince($dayAgo),
             forumMessagesToday: $this->dashboardRepository->countForumMessagesSince($dayAgo),
+            attention: $this->attention->all(),
         );
     }
 }
