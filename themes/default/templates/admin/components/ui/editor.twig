@@ -1,0 +1,30 @@
+{#
+    The panel's editor, independent of the public theme's Vue component and editor build.
+    Without JavaScript the textarea remains an ordinary form field.
+
+    @param string name
+    @param string id
+    @param string label
+    @param string value
+    @param string errors
+    @param string upload_url
+    @param bool allow_upload
+#}
+<div class="admin-editor" data-admin-editor
+     data-language="{{ app.locale }}"
+     data-upload-url="{{ allow_upload|default(false) ? upload_url|default('') : '' }}"
+     data-loading-message="{{ d__('system', 'Please wait...') }}"
+     data-upload-message="{{ d__('system', 'Wait for the image upload to finish.') }}"
+     data-error-message="{{ d__('system', 'Could not load the editor. You can edit the HTML below.') }}">
+    {% if label|default('') %}
+        <label class="form-label" for="{{ id|default(name) }}">{{ label }}</label>
+    {% endif %}
+    <textarea class="form-control{{ errors|default('') ? ' is-invalid' : '' }}"
+              name="{{ name }}" id="{{ id|default(name) }}" rows="8"
+              aria-label="{{ label|default('') ?: d__('system', 'Text') }}"
+              {% if errors|default('') %}aria-invalid="true" aria-describedby="{{ id|default(name) }}-errors"{% endif %}>{{ value|default('') }}</textarea>
+    {% if errors|default('') %}
+        <div class="invalid-feedback d-block" id="{{ id|default(name) }}-errors">{{ errors }}</div>
+    {% endif %}
+    <div class="form-text text-danger" data-admin-editor-status role="alert" hidden></div>
+</div>

@@ -1197,6 +1197,22 @@ msgstr ""
 msgid "Exit"
 msgstr ""
 
+#: themes/default/templates/admin/components/ui/editor.twig:16
+msgid "Please wait..."
+msgstr ""
+
+#: themes/default/templates/admin/components/ui/editor.twig:17
+msgid "Wait for the image upload to finish."
+msgstr ""
+
+#: themes/default/templates/admin/components/ui/editor.twig:18
+msgid "Could not load the editor. You can edit the HTML below."
+msgstr ""
+
+#: themes/default/templates/admin/components/ui/editor.twig:24
+msgid "Text"
+msgstr ""
+
 #: themes/default/templates/components/captcha/image.twig:9
 #: themes/default/templates/components/captcha/image.twig:19
 msgid "Verification code"

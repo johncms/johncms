@@ -119,9 +119,3 @@
   padding-top: 0.75rem;
   border-top: 1px solid var(--border);
 }
-
-
-// The card names the editor already: the label the component always draws stays out.
-.admin-news-form .card-body > .vue_app label:empty {
-  display: none;
-}

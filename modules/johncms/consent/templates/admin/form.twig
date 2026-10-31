@@ -53,7 +53,7 @@
                 <h2 class="h6 mb-0">{{ __('Consent text') }}</h2>
             </div>
             <div class="card-body">
-                {% include '@theme/components/editor.twig' with {name: 'text', label: __('Text'), value: fields.text, errors: errors.text|default([])|join(', ')} only %}
+                {% include '@admin/components/ui/editor.twig' with {name: 'text', label: __('Text'), value: fields.text, errors: errors.text|default([])|join(', ')} only %}
                 <div class="form-text">{{ __('Full text shown on a separate page. Leave empty if the checkbox should contain no link to a separate text page.') }}</div>
             </div>
         </div>

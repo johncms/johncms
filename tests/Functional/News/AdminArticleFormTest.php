@@ -135,7 +135,10 @@ final class AdminArticleFormTest extends FunctionalTestCase
 
         self::assertStringContainsString('<option value="' . $releases . '" selected>', $content);
         // The pictures of the text are uploaded where the panel takes them.
-        self::assertStringContainsString('upload_url="/admin/news/upload_file"', $content);
+        self::assertStringContainsString('data-upload-url="/admin/news/upload_file"', $content);
+        self::assertSame(2, substr_count($content, "data-admin-editor\n"));
+        self::assertStringNotContainsString('ckeditor-input-component', $content);
+        self::assertStringNotContainsString('/ckeditor5/ckeditor.js', $content);
     }
 
     public function testSaveAndCloseReturnsToTheListOfTheSection(): void

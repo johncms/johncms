@@ -1,0 +1,15 @@
+{% include '@admin/components/ui/editor.twig' with {
+    name: 'guide-text',
+    label: __('Text'),
+    value: '<p>JohnCMS</p>',
+} only %}
+
+<div class="card admin-editor-card mt-3">
+    <div class="card-header">{{ __('Text') }}</div>
+    <div class="card-body">
+        {% include '@admin/components/ui/editor.twig' with {
+            name: 'guide-card-text',
+            value: '<p>JohnCMS</p>',
+        } only %}
+    </div>
+</div>

@@ -1,24 +1,23 @@
-// The content edited in CKEditor: the tables and pictures it inserts as figures. Their dark look
-// is in ../_dark.scss.
+// Figures also appear in saved content displayed outside the editor.
 figure.table {
   table {
     border-collapse: collapse;
     border-spacing: 0;
     width: 100%;
     height: 100%;
-    border: 1px double #b3b3b3;
+    border: 1px double var(--border-strong);
   }
 
   th {
     font-weight: 700;
-    background: hsla(0, 0%, 0%, 0.05);
+    background: var(--bg-elev-2);
     padding: .4em;
-    border: 1px solid #bfbfbf;
+    border: 1px solid var(--border-strong);
     border-bottom: none;
   }
 
   td {
-    border: 1px solid #bfbfbf;
+    border: 1px solid var(--border-strong);
     padding: .4em;
   }
 }

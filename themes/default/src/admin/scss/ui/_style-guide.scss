@@ -134,7 +134,7 @@
   color: var(--fg-dim);
 }
 
-// The gallery of the icons, a Vue island (src/admin/js/components/IconGallery.vue).
+// The searchable icon gallery (src/admin/js/icon-gallery.js).
 .admin-guide-icons__search {
   max-width: 18rem;
   margin-bottom: 1rem;
@@ -158,6 +158,10 @@
   background: var(--bg-elev);
   color: var(--fg-muted);
   transition: color 0.12s, background-color 0.12s, border-color 0.12s;
+
+  &[hidden] {
+    display: none;
+  }
 
   &:hover {
     border-color: var(--border-strong);

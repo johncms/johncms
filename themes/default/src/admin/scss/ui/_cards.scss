@@ -28,6 +28,28 @@
   font-weight: 400;
 }
 
+// An editor can use the card's frame, including before its JavaScript has loaded.
+.admin-editor-card {
+  &:has(textarea.is-invalid) {
+    --bs-card-border-color: var(--danger);
+  }
+
+  > .card-body {
+    padding: 0;
+  }
+
+  .admin-editor > textarea.form-control {
+    border: 0;
+    border-radius: 0 0 var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius);
+  }
+
+  .admin-editor > .invalid-feedback,
+  .admin-editor > [data-admin-editor-status] {
+    margin: 0;
+    padding: 0.5rem 0.875rem;
+  }
+}
+
 // A table or a list put straight into a card: the card draws the frame, the rows run to its
 // edges.
 .card > .table,

@@ -103,7 +103,7 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Services/AuthLogControlsMapper.php:42
 #: modules/johncms/admin/src/Application/Services/BanListControlsMapper.php:39
 #: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:50
-#: modules/johncms/admin/templates/style-guide.twig:150
+#: modules/johncms/admin/templates/style-guide.twig:151
 #: modules/johncms/admin/templates/style-guide/examples/filter-chips.twig:3
 #: modules/johncms/admin/templates/style-guide/examples/input-group.twig:7
 #: modules/johncms/admin/templates/style-guide/examples/input-group.twig:8
@@ -3149,6 +3149,7 @@ msgid "Fields, code, sunken blocks"
 msgstr ""
 
 #: modules/johncms/admin/templates/style-guide.twig:97
+#: modules/johncms/admin/templates/style-guide/examples/editor.twig:3
 msgid "Text"
 msgstr ""
 
@@ -3196,12 +3197,16 @@ msgstr ""
 msgid "Contents"
 msgstr ""
 
-#: modules/johncms/admin/templates/style-guide.twig:151
+#: modules/johncms/admin/templates/style-guide.twig:147
 msgid "Copy the include"
 msgstr ""
 
-#: modules/johncms/admin/templates/style-guide.twig:152
+#: modules/johncms/admin/templates/style-guide.twig:148
 msgid "Copied"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:149
+msgid "Error"
 msgstr ""
 
 #: modules/johncms/admin/templates/style-guide/example.twig:13

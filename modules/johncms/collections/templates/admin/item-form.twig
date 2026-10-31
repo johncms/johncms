@@ -46,10 +46,10 @@
                             <div class="form-text">{{ __('The last part of the address. Leave it empty to make it from the name.') }}</div>
                         </div>
                         <div class="col-12">
-                            {% include '@theme/components/editor.twig' with {name: 'preview_text', label: __('Preview text'), value: fields.preview_text} only %}
+                            {% include '@admin/components/ui/editor.twig' with {name: 'preview_text', label: __('Preview text'), value: fields.preview_text} only %}
                         </div>
                         <div class="col-12">
-                            {% include '@theme/components/editor.twig' with {name: 'detail_text', label: __('Detail text'), value: fields.detail_text} only %}
+                            {% include '@admin/components/ui/editor.twig' with {name: 'detail_text', label: __('Detail text'), value: fields.detail_text} only %}
                         </div>
                     </div>
                 </div>

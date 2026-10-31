@@ -88,6 +88,12 @@ module lives in `modules/<vendor>/<module>/templates/*/components/`.
 Before writing a wrapper for something, look for an existing component: the ckeditor wrapper
 was copied into five modules before it became `@theme/components/editor.twig`.
 
+The panel uses its own `@admin/components/ui/editor.twig`: an ordinary textarea enhanced by
+`src/admin/js/editor.js`, with CKEditor and its CSS loaded lazily through Vite. It uses no Vue
+and must not load the public editor component or its legacy build. Features and translations
+are configured in `src/admin/js/editor/create.js`; `src/admin/scss/editor.scss` maps the editor
+to the panel's palette. The public editor stays independent.
+
 The components of the panel — stat cards, the search field and the filter dropdowns, the chips
 of applied filters, sortable column heads, the user cell, the menu of a row, the empty state —
 live in `themes/<theme>/templates/admin/components/ui/` and are shown with their markup on

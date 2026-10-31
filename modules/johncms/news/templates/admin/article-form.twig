@@ -70,14 +70,14 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card admin-editor-card">
                     <div class="card-header">
                         {% include '@admin/components/ui/icon.twig' with {name: 'file-text', size: 15, class: 'text-body-tertiary'} only %}
                         <span class="flex-grow-1">{{ __('Preview text') }}</span>
                         <span class="small fw-normal text-body-secondary">{{ __('In the lists of the news and on the home page') }}</span>
                     </div>
                     <div class="card-body">
-                        {% include '@theme/components/editor.twig' with {
+                        {% include '@admin/components/ui/editor.twig' with {
                             name: 'preview_text',
                             id: 'article-preview-text',
                             label: '',
@@ -87,13 +87,13 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card admin-editor-card">
                     <div class="card-header">
                         {% include '@admin/components/ui/icon.twig' with {name: 'newspaper', size: 15, class: 'text-body-tertiary'} only %}
                         {{ __('Text') }}
                     </div>
                     <div class="card-body">
-                        {% include '@theme/components/editor.twig' with {
+                        {% include '@admin/components/ui/editor.twig' with {
                             name: 'text',
                             id: 'article-text',
                             label: '',

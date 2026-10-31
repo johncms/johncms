@@ -56,7 +56,7 @@
             id: 'forms',
             title: __('Forms'),
             description: __('A label above every field, the help and the errors below it.'),
-            examples: ['form-fields', 'form-choices', 'input-group', 'form-footer'],
+            examples: ['form-fields', 'editor', 'form-choices', 'input-group', 'form-footer'],
         },
         {
             id: 'tables',
@@ -141,16 +141,16 @@
                 {% endfor %}
 
                 {% if section.id == 'icons' %}
-                    {# The gallery is compiled by Vue from the markup, so it stays apart from the
-                       examples: the source they print would be read as Vue interpolation. #}
                     <div class="admin-guide__example">
-                        <div class="admin-guide__demo vue_app">
-                            <icon-gallery
-                                sprite="{{ asset('icons/admin.svg', true) }}"
-                                search-label="{{ __('Search') }}"
-                                copy-label="{{ __('Copy the include') }}"
-                                copied-label="{{ __('Copied') }}"
-                            ></icon-gallery>
+                        <div class="admin-guide__demo admin-guide-icons" data-admin-icon-gallery
+                             data-sprite="{{ asset('icons/admin.svg', true) }}"
+                             data-copy-label="{{ __('Copy the include') }}"
+                             data-copied-label="{{ __('Copied') }}"
+                             data-error-message="{{ __('Error') }}">
+                            <input type="search" class="form-control admin-guide-icons__search"
+                                   placeholder="{{ __('Search') }}" aria-label="{{ __('Search') }}">
+                            <div class="admin-guide-icons__grid" data-icon-grid></div>
+                            <div class="form-text text-danger" data-icon-status role="alert" hidden></div>
                         </div>
                     </div>
                 {% endif %}

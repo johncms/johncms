@@ -102,6 +102,19 @@ export default defineConfig({
     publicDir: false,
 
     css: {
+        postcss: {
+            plugins: [{
+                postcssPlugin: 'johncms:admin-editor-tokens',
+                Rule(rule) {
+                    // Editor tokens must resolve on the body, where the panel's color scheme
+                    // lives. Otherwise their derived values stay frozen to the root palette.
+                    if (rule.source?.input.file?.endsWith('/ckeditor5/dist/ckeditor5.css')
+                        && rule.selector === ':root, :host') {
+                        rule.selector = 'body';
+                    }
+                },
+            }],
+        },
         preprocessorOptions: {
             scss: {
                 // Bootstrap still relies on APIs deprecated in Dart Sass, there is
