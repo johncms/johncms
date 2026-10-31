@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\UseCases;
 
 use Johncms\Auth\CurrentUser;
+use Johncms\Content\ContentContext;
+use Johncms\Content\ContentRendererInterface;
 use Johncms\Modules\Profile\Application\DTO\KarmaListDTO;
 use Johncms\Modules\Profile\Domain\Repository\KarmaRepositoryInterface;
-use Johncms\Smilies\SmiliesRendererInterface;
+use Johncms\Security\HtmlPolicy;
 use Johncms\Users\Karma;
 use Johncms\Utils\DateFormatterInterface;
 use Johncms\Utils\PlainTextFormatter;
@@ -17,7 +19,7 @@ final readonly class GetNewKarmaUseCase
     public function __construct(
         private KarmaRepositoryInterface $karmaRepository,
         private DateFormatterInterface $dateFormatter,
-        private SmiliesRendererInterface $smiliesRenderer,
+        private ContentRendererInterface $contentRenderer,
         private CurrentUser $currentUser,
     ) {
     }
@@ -43,7 +45,10 @@ final readonly class GetNewKarmaUseCase
                 'user_id'      => $vote->user_id,
                 'name'         => $vote->name,
                 'display_date' => $this->dateFormatter->format($vote->time),
-                'text'         => $this->smiliesRenderer->render(PlainTextFormatter::escape($vote->text)),
+                'text'         => $this->contentRenderer->renderOrNull(
+                    PlainTextFormatter::escape($vote->text),
+                    new ContentContext(policy: HtmlPolicy::Inline)
+                ),
             ];
         }
 

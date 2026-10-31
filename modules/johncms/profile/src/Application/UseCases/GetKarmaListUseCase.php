@@ -6,12 +6,14 @@ namespace Johncms\Modules\Profile\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Content\ContentContext;
+use Johncms\Content\ContentRendererInterface;
 use Johncms\Modules\Profile\Application\DTO\KarmaListDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Modules\Profile\Domain\Repository\KarmaRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
-use Johncms\Smilies\SmiliesRendererInterface;
+use Johncms\Security\HtmlPolicy;
 use Johncms\Users\Karma;
 use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
@@ -23,7 +25,7 @@ final readonly class GetKarmaListUseCase
         private ProfileUserRepositoryInterface $profileUserRepository,
         private KarmaRepositoryInterface $karmaRepository,
         private DateFormatterInterface $dateFormatter,
-        private SmiliesRendererInterface $smiliesRenderer,
+        private ContentRendererInterface $contentRenderer,
         private AccessCheckerInterface $accessChecker,
     ) {
     }
@@ -55,7 +57,10 @@ final readonly class GetKarmaListUseCase
                 'user_id'      => $vote->user_id,
                 'name'         => $vote->name,
                 'display_date' => $this->dateFormatter->format($vote->time),
-                'text'         => $this->smiliesRenderer->render(PlainTextFormatter::escape($vote->text)),
+                'text'         => $this->contentRenderer->renderOrNull(
+                    PlainTextFormatter::escape($vote->text),
+                    new ContentContext(policy: HtmlPolicy::Inline)
+                ),
             ];
             if ($mayDelete) {
                 $item['delete_url'] = $base . '/delete/' . $vote->id . '?type=' . $type;
