@@ -148,8 +148,12 @@ msgstr ""
 msgid "Your vote is accepted"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Menu/NewsMenuItemProvider.php:22
+#: modules/johncms/news/src/Application/Menu/NewsMenuItemProvider.php:24
 msgid "News archive"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Menu/NewsMenuItemProvider.php:37
+msgid "Write the news"
 msgstr ""
 
 #: modules/johncms/news/src/Application/Section.php:79

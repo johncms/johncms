@@ -3263,3 +3263,18 @@ msgstr "Режим отладки"
 
 msgid "Clear cache"
 msgstr "Очистить кэш"
+
+msgid "Find a user"
+msgstr "Найти пользователя"
+
+msgid "Search by IP"
+msgstr "Поиск по IP"
+
+msgid "Add an advertisement"
+msgstr "Добавить рекламу"
+
+msgid "Site settings"
+msgstr "Настройки сайта"
+
+msgid "Quick actions"
+msgstr "Быстрые действия"

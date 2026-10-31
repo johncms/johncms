@@ -695,3 +695,6 @@ msgstr "дней"
 
 msgid "Own: %s"
 msgstr "Своих: %s"
+
+msgid "Write the news"
+msgstr "Написать новость"

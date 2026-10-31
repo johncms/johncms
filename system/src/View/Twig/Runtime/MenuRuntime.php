@@ -16,7 +16,7 @@ final readonly class MenuRuntime implements RuntimeExtensionInterface
     }
 
     /**
-     * The items the modules add to a menu — "main" or "admin".
+     * The items the modules add to a menu — "main", "staff", "admin" or "admin_actions".
      *
      * Only the ones the visitor may open: what a template gets is already filtered, so a theme
      * never has to know which permission stands behind a line.

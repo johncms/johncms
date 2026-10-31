@@ -14,7 +14,7 @@ namespace Johncms\View\Menu;
 
 /**
  * Where a menu item belongs: the main menu a visitor navigates the site by, its own part for the
- * staff, and the menu an administrator works in.
+ * staff, the menu an administrator works in, and the quick actions on the dashboard of the panel.
  */
 enum MenuArea: string
 {
@@ -27,4 +27,10 @@ enum MenuArea: string
     case Staff = 'staff';
 
     case Admin = 'admin';
+
+    /**
+     * The buttons at the top of the dashboard of the panel: what the staff do often — write the
+     * news, find somebody — a click away.
+     */
+    case AdminActions = 'admin_actions';
 }

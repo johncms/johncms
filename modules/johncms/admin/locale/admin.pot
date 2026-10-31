@@ -6,7 +6,7 @@ msgstr ""
 #: themes/default/templates/admin/layouts/default.twig:25
 #: themes/default/templates/admin/layouts/default.twig:29
 #: modules/johncms/admin/src/Application/Controllers/DashboardController.php:22
-#: modules/johncms/admin/src/Application/Menu/AdminPanelMenuItemProvider.php:21
+#: modules/johncms/admin/src/Application/Menu/AdminPanelMenuItemProvider.php:22
 #: modules/johncms/admin/src/Application/Services/AdminPermissions.php:29
 #: modules/johncms/admin/templates/style-guide/examples/breadcrumbs.twig:5
 msgid "Admin Panel"
@@ -1239,6 +1239,22 @@ msgstr ""
 msgid "users registered today"
 msgstr ""
 
+#: modules/johncms/admin/src/Application/Menu/AdminPanelMenuItemProvider.php:29
+msgid "Find a user"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Menu/AdminPanelMenuItemProvider.php:30
+msgid "Search by IP"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Menu/AdminPanelMenuItemProvider.php:31
+msgid "Add an advertisement"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Menu/AdminPanelMenuItemProvider.php:32
+msgid "Site settings"
+msgstr ""
+
 #: modules/johncms/admin/src/Application/Services/AdminPermissions.php:35
 msgid "Open the report on the state of the installation"
 msgstr ""
@@ -1922,12 +1938,12 @@ msgid "Comments on files, articles, photos and news, the newest first. A comment
 msgstr ""
 
 #: modules/johncms/admin/templates/comments.twig:23
-#: modules/johncms/admin/templates/index.twig:74
+#: modules/johncms/admin/templates/index.twig:91
 msgid "No comments yet"
 msgstr ""
 
 #: modules/johncms/admin/templates/comments.twig:24
-#: modules/johncms/admin/templates/index.twig:75
+#: modules/johncms/admin/templates/index.twig:92
 msgid "Only the comments of the sections you moderate are shown here."
 msgstr ""
 
@@ -2272,18 +2288,22 @@ msgid "Show admin menu"
 msgstr ""
 
 #: modules/johncms/admin/templates/index.twig:20
+msgid "Quick actions"
+msgstr ""
+
+#: modules/johncms/admin/templates/index.twig:37
 msgid "Needs attention"
 msgstr ""
 
-#: modules/johncms/admin/templates/index.twig:42
+#: modules/johncms/admin/templates/index.twig:59
 msgid "Nothing needs attention: the queues are empty and the server is fine."
 msgstr ""
 
-#: modules/johncms/admin/templates/index.twig:60
+#: modules/johncms/admin/templates/index.twig:77
 msgid "Latest comments"
 msgstr ""
 
-#: modules/johncms/admin/templates/index.twig:62
+#: modules/johncms/admin/templates/index.twig:79
 msgid "All comments"
 msgstr ""
 

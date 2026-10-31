@@ -14,6 +14,23 @@
         <button type="button" class="btn btn-outline-primary w-100" data-admin-nav-open aria-controls="admin-sidebar">{{ __('Show admin menu') }}</button>
     </div>
 
+    {# What the modules offer to do from here; only the actions the visitor may take arrive. #}
+    {% set actions = menu_items('admin_actions') %}
+    {% if actions %}
+        <nav class="admin-actions mb-3" aria-label="{{ __('Quick actions') }}">
+            {% for action in actions %}
+                <a class="btn btn-secondary btn-sm" href="{{ action.url }}">
+                    {% if action.hasImageIcon %}
+                        <img src="{{ action.icon }}" width="14" height="14" alt="">
+                    {% elseif action.icon %}
+                        {% include '@admin/components/ui/icon.twig' with {name: action.icon, size: 14} only %}
+                    {% endif %}
+                    {{ action.title }}
+                </a>
+            {% endfor %}
+        </nav>
+    {% endif %}
+
     <section class="card admin-attention mb-3" aria-labelledby="admin-attention-title">
         <div class="card-header">
             {% include '@admin/components/ui/icon.twig' with {name: 'bell', size: 15, class: 'text-body-tertiary'} only %}

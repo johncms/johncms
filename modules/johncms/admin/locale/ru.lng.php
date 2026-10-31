@@ -932,6 +932,11 @@
       'Logs' => 'Логи',
       'Debug mode' => 'Режим отладки',
       'Clear cache' => 'Очистить кэш',
+      'Find a user' => 'Найти пользователя',
+      'Search by IP' => 'Поиск по IP',
+      'Add an advertisement' => 'Добавить рекламу',
+      'Site settings' => 'Настройки сайта',
+      'Quick actions' => 'Быстрые действия',
     ),
   ),
 );
