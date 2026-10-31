@@ -470,6 +470,10 @@ msgstr ""
 msgid "User Files"
 msgstr ""
 
+#: modules/johncms/downloads/src/Application/Dashboard/DownloadsMetricsProvider.php:25
+msgid "files added today"
+msgstr ""
+
 #: modules/johncms/downloads/src/Application/Dashboard/ModerationAttentionProvider.php:34
 #: modules/johncms/downloads/src/Application/Notifications/ModerationNotificationProvider.php:33
 msgid "Downloads on moderation"

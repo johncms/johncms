@@ -6,6 +6,7 @@ namespace Johncms\Modules\Guestbook\Infrastructure\Persistence\Repository;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Johncms\Database\Query\DailyCounts;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Modules\Guestbook\Domain\Repository\GuestbookEntryRepositoryInterface;
 
@@ -75,5 +76,10 @@ class EloquentGuestbookEntryRepository implements GuestbookEntryRepositoryInterf
         return GuestbookEntry::query()
             ->where('adm', $adminClub ? 1 : 0)
             ->when($olderThan !== null, fn (Builder $query) => $query->where('time', '<', $olderThan));
+    }
+
+    public function countPostedByDay(int $start, int $days): array
+    {
+        return DailyCounts::count(GuestbookEntry::query()->where('adm', 0), 'time', $start, $days);
     }
 }

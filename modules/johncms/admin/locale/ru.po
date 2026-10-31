@@ -3149,3 +3149,12 @@ msgstr "PHP не отвечает требованиям сайта"
 
 msgid "Recommendations to speed up PHP"
 msgstr "Рекомендации по ускорению PHP"
+
+msgid "The day before: %d"
+msgstr "Предыдущие сутки: %d"
+
+msgid "as the day before"
+msgstr "как в предыдущие сутки"
+
+msgid "Over %d days: from %d to %d a day"
+msgstr "За %d дн.: от %d до %d в сутки"

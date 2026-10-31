@@ -181,4 +181,11 @@ interface AlbumPhotoRepositoryInterface
      * @return array<int, int>
      */
     public function countByUsers(array $userIds, ?int $restrictToVisibleForUser): array;
+
+    /**
+     * The photos uploaded on each of the days starting at the given second.
+     *
+     * @return list<int> One number per day, oldest first.
+     */
+    public function countAddedByDay(int $start, int $days): array;
 }

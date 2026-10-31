@@ -5,17 +5,19 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Application\DTO;
 
 use Johncms\View\Dashboard\AttentionItem;
+use Johncms\View\Dashboard\DashboardMetric;
 
 final readonly class DashboardContextDTO
 {
     /**
-     * @param list<AttentionItem> $attention What the modules ask the administrator to look at, the most pressing first.
+     * @param list<AttentionItem>   $attention What the modules ask the administrator to look at, the most pressing first.
+     * @param list<DashboardMetric> $metrics   The numbers of the modules, counted over $dayEnds.
+     * @param list<int>             $dayEnds   The last second of every day of the trends, oldest first.
      */
     public function __construct(
-        public int $activeUsersToday,
-        public int $registeredUsersToday,
-        public int $forumMessagesToday,
         public array $attention,
+        public array $metrics,
+        public array $dayEnds,
     ) {
     }
 }

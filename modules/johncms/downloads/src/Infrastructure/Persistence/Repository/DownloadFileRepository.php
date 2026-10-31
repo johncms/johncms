@@ -7,6 +7,7 @@ namespace Johncms\Modules\Downloads\Infrastructure\Persistence\Repository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as SupportCollection;
+use Johncms\Database\Query\DailyCounts;
 use Johncms\Modules\Downloads\Domain\Enums\DownloadTopSort;
 use Johncms\Modules\Downloads\Domain\Models\DownloadComment;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
@@ -240,5 +241,10 @@ final class DownloadFileRepository implements DownloadFileRepositoryInterface
             ->where('refid', $fileId)
             ->orderBy('time')
             ->get();
+    }
+
+    public function countAddedByDay(int $start, int $days): array
+    {
+        return DailyCounts::count(DownloadFile::query()->where('type', 2), 'time', $start, $days);
     }
 }

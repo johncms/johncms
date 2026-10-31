@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Admin;
 
+use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\UserRole;
 use Johncms\Users\IpHistory;
@@ -59,7 +60,9 @@ final class UserCleanupTest extends FunctionalTestCase
     {
         $forgotten = $this->forgotten();
         Fixture::insert('cms_users_iphistory', ['user_id' => $forgotten->id, 'ip' => 1, 'ip_via_proxy' => 0, 'time' => time() - self::MONTH * 7]);
+        Fixture::insert('cms_forum_rdm', ['topic_id' => 1, 'user_id' => $forgotten->id, 'time' => time() - self::MONTH * 6]);
         $wroteInTheForum = $this->forgotten(['postforum' => 1]);
+        Fixture::insert('cms_forum_rdm', ['topic_id' => 1, 'user_id' => $wroteInTheForum->id, 'time' => time() - self::MONTH * 6]);
         $registeredLately = $this->forgotten(['datereg' => time() - self::MONTH]);
         $seenLately = $this->forgotten(['lastdate' => time() - self::MONTH]);
         // Staff that has kept quiet is staff all the same.
@@ -71,6 +74,7 @@ final class UserCleanupTest extends FunctionalTestCase
         self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
         self::assertNull(User::query()->find($forgotten->id));
         self::assertSame(0, IpHistory::query()->where('user_id', $forgotten->id)->count());
+        self::assertSame([$wroteInTheForum->id], $this->readersOfTheForum(), 'The read marks of the forum go with the account.');
         foreach ([$wroteInTheForum, $registeredLately, $seenLately, $quietModerator] as $kept) {
             self::assertNotNull(User::query()->find($kept->id), $kept->name . ' is not one the cleanup removes.');
         }
@@ -98,6 +102,14 @@ final class UserCleanupTest extends FunctionalTestCase
         self::assertSame(Response::HTTP_FORBIDDEN, $page->getStatusCode());
         self::assertSame(Response::HTTP_FORBIDDEN, $run->getStatusCode());
         self::assertNotNull(User::query()->find($forgotten->id));
+    }
+
+    /**
+     * @return list<int> The accounts whose read marks of the forum are left.
+     */
+    private function readersOfTheForum(): array
+    {
+        return array_map(intval(...), Capsule::table('cms_forum_rdm')->pluck('user_id')->all());
     }
 
     /**

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Auth\Authorization\UserRole;
 use Johncms\Auth\AuthTables;
+use Johncms\Database\Query\DailyCounts;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 
@@ -277,5 +278,10 @@ class ForumMessageRepository implements ForumMessageRepositoryInterface
         }
 
         return $authors;
+    }
+
+    public function countPostedByDay(int $start, int $days): array
+    {
+        return DailyCounts::count(ForumMessage::query(), 'date', $start, $days);
     }
 }

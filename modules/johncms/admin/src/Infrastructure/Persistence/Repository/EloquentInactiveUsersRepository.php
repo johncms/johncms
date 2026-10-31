@@ -6,7 +6,6 @@ namespace Johncms\Modules\Admin\Infrastructure\Persistence\Repository;
 
 use Illuminate\Database\Eloquent\Builder;
 use Johncms\Auth\Authorization\UserRole;
-use Johncms\Modules\Forum\Domain\Models\ForumUnread;
 use Johncms\Modules\Admin\Domain\Repository\InactiveUsersRepositoryInterface;
 use Johncms\Users\User;
 
@@ -22,15 +21,6 @@ final class EloquentInactiveUsersRepository implements InactiveUsersRepositoryIn
     public function getInactiveIds(): array
     {
         return $this->inactiveQuery()->pluck('id')->all();
-    }
-
-    public function deleteForumReadMarks(array $userIds): void
-    {
-        if ($userIds === []) {
-            return;
-        }
-
-        ForumUnread::query()->whereIn('user_id', $userIds)->delete();
     }
 
     /**

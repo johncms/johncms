@@ -567,6 +567,10 @@ msgstr ""
 msgid "Who in Topic"
 msgstr ""
 
+#: modules/johncms/forum/src/Application/Dashboard/ForumMetricsProvider.php:25
+msgid "posts on the forum today"
+msgstr ""
+
 #: modules/johncms/forum/src/Application/Exceptions/ForumErrorCode.php:49
 msgid "For registered users only"
 msgstr ""

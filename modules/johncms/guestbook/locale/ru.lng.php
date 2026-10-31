@@ -74,6 +74,7 @@ Inserting links: <a href="https://johncms.com">https://johncms.com</a>, images, 
       'Read the guestbook' => 'Читать гостевую книгу',
       'Leave an entry in the guestbook' => 'Оставлять записи в гостевой книге',
       'Admin Chat' => 'Админ Чат',
+      'guestbook entries today' => 'записей в гостевой сегодня',
     ),
   ),
 );

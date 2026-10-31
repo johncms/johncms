@@ -197,6 +197,7 @@
       'Read the comments of the files while they are switched off' => 'Читать комментарии к файлам, когда они отключены',
       'Open the downloads' => 'Открывать загрузки',
       'Downloads on moderation' => 'Загрузки на модерации',
+      'files added today' => 'файлов добавлено сегодня',
     ),
   ),
 );

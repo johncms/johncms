@@ -80,4 +80,11 @@ interface ForumMessageRepositoryInterface
      * @return array<int, array{user_id:int, user_name:string, count:int}>
      */
     public function getTopicAuthorFilterOptions(int $topicId): array;
+
+    /**
+     * The posts written on each of the days starting at the given second.
+     *
+     * @return list<int> One number per day, oldest first.
+     */
+    public function countPostedByDay(int $start, int $days): array;
 }

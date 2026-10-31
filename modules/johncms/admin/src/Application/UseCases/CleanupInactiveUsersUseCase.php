@@ -31,10 +31,9 @@ final readonly class CleanupInactiveUsersUseCase
             $this->userClean->removeMail($id);
             $this->userClean->removeKarma($id);
             $this->userClean->cleanComments($id);
+            $this->userClean->cleanForum($id);
             $this->userClean->removeUser($id);
         }
-
-        $this->repository->deleteForumReadMarks($ids);
 
         return count($ids);
     }

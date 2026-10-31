@@ -7,17 +7,14 @@ namespace Johncms\Modules\Admin\Domain\Repository;
 interface DashboardRepositoryInterface
 {
     /**
-     * Количество пользователей, активных с указанного момента (по lastdate).
+     * The accounts seen since the given moment (by lastdate).
      */
     public function countActiveUsersSince(int $timestamp): int;
 
     /**
-     * Количество подтверждённых пользователей, зарегистрированных с указанного момента (по datereg).
+     * The approved accounts registered on each of the days starting at the given second (by datereg).
+     *
+     * @return list<int> One number per day, oldest first.
      */
-    public function countRegisteredUsersSince(int $timestamp): int;
-
-    /**
-     * Количество сообщений форума, созданных с указанного момента (по date).
-     */
-    public function countForumMessagesSince(int $timestamp): int;
+    public function countRegisteredUsersByDay(int $start, int $days): array;
 }

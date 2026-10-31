@@ -1199,6 +1199,14 @@ msgstr ""
 msgid "Recommendations to speed up PHP"
 msgstr ""
 
+#: modules/johncms/admin/src/Application/Dashboard/UserMetricsProvider.php:25
+msgid "registered visitors today"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Dashboard/UserMetricsProvider.php:27
+msgid "users registered today"
+msgstr ""
+
 #: modules/johncms/admin/src/Application/Services/AdminPermissions.php:35
 msgid "Open the report on the state of the installation"
 msgstr ""
@@ -1996,6 +2004,19 @@ msgstr ""
 msgid "The site prints the counters in this order."
 msgstr ""
 
+#: modules/johncms/admin/templates/dashboard/metric.twig:18
+#: modules/johncms/admin/templates/dashboard/metric.twig:29
+msgid "The day before: %d"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/metric.twig:23
+msgid "as the day before"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/metric.twig:41
+msgid "Over %d days: from %d to %d a day"
+msgstr ""
+
 #: modules/johncms/admin/templates/editor-images.twig:36
 msgid "Upload limit"
 msgstr ""
@@ -2093,20 +2114,8 @@ msgstr ""
 msgid "Needs attention"
 msgstr ""
 
-#: modules/johncms/admin/templates/index.twig:45
+#: modules/johncms/admin/templates/index.twig:42
 msgid "Nothing needs attention: the queues are empty and the server is fine."
-msgstr ""
-
-#: modules/johncms/admin/templates/index.twig:51
-msgid "registered visitors today"
-msgstr ""
-
-#: modules/johncms/admin/templates/index.twig:52
-msgid "users registered today"
-msgstr ""
-
-#: modules/johncms/admin/templates/index.twig:53
-msgid "posts on the forum today"
 msgstr ""
 
 #: modules/johncms/admin/templates/ip-search.twig:32

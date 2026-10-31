@@ -8,6 +8,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Query\JoinClause;
+use Johncms\Database\Query\DailyCounts;
 use Johncms\Modules\Album\Domain\Enums\AlbumAccess;
 use Johncms\Modules\Album\Domain\Enums\TopFilter;
 use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
@@ -329,5 +330,10 @@ final class EloquentAlbumPhotoRepository implements AlbumPhotoRepositoryInterfac
         }
 
         return $query->groupBy('user_id')->pluck('aggregate', 'user_id')->all();
+    }
+
+    public function countAddedByDay(int $start, int $days): array
+    {
+        return DailyCounts::count(AlbumPhoto::query(), 'time', $start, $days);
     }
 }

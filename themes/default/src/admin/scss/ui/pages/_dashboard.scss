@@ -38,3 +38,68 @@
   background: var(--bs-warning-bg-subtle);
   color: var(--bs-warning-text-emphasis);
 }
+
+// The numbers of the modules (admin::dashboard/metric): a stat card with the change since the day
+// before and a line of the last days, the line recessive and today in the accent.
+
+.admin-metrics {
+  grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr));
+}
+
+.admin-metric__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.admin-metric__delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.125rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--fg-dim);
+}
+
+.admin-metric__delta--up {
+  color: var(--bs-success-text-emphasis);
+}
+
+.admin-metric__delta--down {
+  color: var(--bs-danger-text-emphasis);
+}
+
+.admin-metric__trend {
+  display: block;
+  width: 100%;
+  height: 2rem;
+  // Down to the bottom of the card, so the lines of a row stand level whatever the labels wrap to.
+  margin-top: auto;
+  overflow: visible;
+}
+
+.admin-metric__line {
+  fill: none;
+  stroke: var(--border-strong);
+  stroke-width: 2px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+// A line of no length with round caps: a dot that the stretched box of the chart does not squash.
+.admin-metric__now {
+  stroke: var(--accent);
+  stroke-width: 8px;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.admin-metric__hit {
+  fill: transparent;
+}
+
+.admin-metric__hit:hover {
+  fill: color-mix(in oklab, var(--accent) 10%, transparent);
+}

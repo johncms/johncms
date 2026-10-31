@@ -44,9 +44,11 @@
         {% endif %}
     </section>
 
-    <div class="admin-stats">
-        {% include '@admin/components/ui/stat-card.twig' with {label: __('registered visitors today'), value: data.activeUsersToday} only %}
-        {% include '@admin/components/ui/stat-card.twig' with {label: __('users registered today'), value: data.registeredUsersToday} only %}
-        {% include '@admin/components/ui/stat-card.twig' with {label: __('posts on the forum today'), value: data.forumMessagesToday} only %}
-    </div>
+    {% if data.metrics %}
+        <div class="admin-stats admin-metrics">
+            {% for metric in data.metrics %}
+                {% include '@admin/dashboard/metric.twig' with {metric: metric, day_ends: data.dayEnds} only %}
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}

@@ -35,4 +35,11 @@ interface GuestbookEntryRepositoryInterface
     public function getEntriesToClear(bool $adminClub, ?int $olderThan = null): Collection;
 
     public function deleteEntries(bool $adminClub, ?int $olderThan = null): void;
+
+    /**
+     * The entries of the public guestbook written on each of the days starting at the given second.
+     *
+     * @return list<int> One number per day, oldest first.
+     */
+    public function countPostedByDay(int $start, int $days): array;
 }

@@ -5,28 +5,29 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Application\UseCases;
 
 use Johncms\Modules\Admin\Application\DTO\DashboardContextDTO;
-use Johncms\Modules\Admin\Domain\Repository\DashboardRepositoryInterface;
 use Johncms\View\Dashboard\DashboardAttention;
+use Johncms\View\Dashboard\DashboardMetrics;
+use Johncms\View\Dashboard\MetricPeriod;
 
 final readonly class GetDashboardContextUseCase
 {
-    private const DAY_IN_SECONDS = 86400;
+    /** Two weeks: enough for the weekly rhythm of a site to show in the trend. */
+    private const int TREND_DAYS = 14;
 
     public function __construct(
-        private DashboardRepositoryInterface $dashboardRepository,
         private DashboardAttention $attention,
+        private DashboardMetrics $metrics,
     ) {
     }
 
     public function execute(): DashboardContextDTO
     {
-        $dayAgo = time() - self::DAY_IN_SECONDS;
+        $period = MetricPeriod::endingAt(time(), self::TREND_DAYS);
 
         return new DashboardContextDTO(
-            activeUsersToday: $this->dashboardRepository->countActiveUsersSince($dayAgo),
-            registeredUsersToday: $this->dashboardRepository->countRegisteredUsersSince($dayAgo),
-            forumMessagesToday: $this->dashboardRepository->countForumMessagesSince($dayAgo),
             attention: $this->attention->all(),
+            metrics: $this->metrics->all($period),
+            dayEnds: $period->dayEnds(),
         );
     }
 }

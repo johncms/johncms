@@ -30,4 +30,11 @@ interface LibraryTextRepositoryInterface
 
     /** @return Collection<int, \Johncms\Modules\Library\Domain\Models\LibraryText> */
     public function search(string $query, bool $inTitle, int $page, int $perPage): Collection;
+
+    /**
+     * The published articles, by the day they were added on each of the days starting at the given second.
+     *
+     * @return list<int> One number per day, oldest first.
+     */
+    public function countAddedByDay(int $start, int $days): array;
 }

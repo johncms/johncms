@@ -67,4 +67,11 @@ interface DownloadFileRepositoryInterface
     public function existsByCategoryAndSlug(int $categoryId, string $slug, ?int $excludeFileId = null): bool;
 
     public function findAdditionalFiles(int $fileId): Collection;
+
+    /**
+     * The files that passed moderation, by the day they were uploaded on each of the days starting at the given second.
+     *
+     * @return list<int> One number per day, oldest first.
+     */
+    public function countAddedByDay(int $start, int $days): array;
 }

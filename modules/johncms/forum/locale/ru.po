@@ -1792,3 +1792,6 @@ msgstr "Они удалятся насовсем вместе с файлами.
 
 msgid "They are deleted for good with their posts and files. This cannot be undone."
 msgstr "Они удалятся насовсем вместе с сообщениями и файлами. Это нельзя отменить."
+
+msgid "posts on the forum today"
+msgstr "постов на форуме сегодня"

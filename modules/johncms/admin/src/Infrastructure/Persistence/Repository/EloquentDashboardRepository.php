@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Infrastructure\Persistence\Repository;
 
+use Johncms\Database\Query\DailyCounts;
 use Johncms\Modules\Admin\Domain\Repository\DashboardRepositoryInterface;
-use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Users\User;
 
 final class EloquentDashboardRepository implements DashboardRepositoryInterface
@@ -15,13 +15,8 @@ final class EloquentDashboardRepository implements DashboardRepositoryInterface
         return User::query()->where('lastdate', '>', $timestamp)->count();
     }
 
-    public function countRegisteredUsersSince(int $timestamp): int
+    public function countRegisteredUsersByDay(int $start, int $days): array
     {
-        return User::query()->approved()->where('datereg', '>', $timestamp)->count();
-    }
-
-    public function countForumMessagesSince(int $timestamp): int
-    {
-        return ForumMessage::query()->where('date', '>', $timestamp)->count();
+        return DailyCounts::count(User::query()->approved(), 'datereg', $start, $days);
     }
 }

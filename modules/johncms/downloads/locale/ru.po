@@ -1096,3 +1096,6 @@ msgstr "Открывать загрузки"
 
 msgid "Downloads on moderation"
 msgstr "Загрузки на модерации"
+
+msgid "files added today"
+msgstr "файлов добавлено сегодня"

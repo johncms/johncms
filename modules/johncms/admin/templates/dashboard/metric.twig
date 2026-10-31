@@ -1,0 +1,52 @@
+{#
+    A number of the dashboard: today's value, how it moved since the day before, and a line of the
+    days of the period with the last one marked. A metric without history is the number alone.
+
+    @var metric   \Johncms\View\Dashboard\DashboardMetric
+    @var day_ends array The last second of every day of the trend, oldest first.
+#}
+{% set previous = metric.previous() %}
+{% set trend = metric.trend %}
+{% set tag = metric.url ? 'a' : 'div' %}
+<{{ tag }} class="admin-stat admin-metric"{% if metric.url %} href="{{ metric.url }}"{% endif %}>
+    <span class="admin-stat__label">{{ metric.label }}</span>
+    <span class="admin-metric__row">
+        <span class="admin-stat__value">{{ metric.value|format_number }}</span>
+        {% if previous is not null and (previous or metric.value) %}
+            {% set diff = metric.value - previous %}
+            {% set direction = diff > 0 ? 'up' : (diff < 0 ? 'down' : 'flat') %}
+            <span class="admin-metric__delta admin-metric__delta--{{ direction }}" title="{{ __('The day before: %d')|format(previous) }}">
+                {% if direction != 'flat' %}
+                    {% include '@admin/components/ui/icon.twig' with {name: direction == 'up' ? 'arrow-up' : 'arrow-down', size: 12} only %}
+                {% endif %}
+                {% if direction == 'flat' %}
+                    {{ __('as the day before') }}
+                {% elseif previous == 0 %}
+                    {{ diff|abs|format_number }}
+                {% else %}
+                    {{ (diff / previous * 100)|abs|round|format_number }}&nbsp;%
+                {% endif %}
+                <span class="visually-hidden">{{ __('The day before: %d')|format(previous) }}</span>
+            </span>
+        {% endif %}
+    </span>
+    {% if trend|length > 1 %}
+        {% set top = max(trend) ?: 1 %}
+        {% set step = 100 / (trend|length - 1) %}
+        {% set points = [] %}
+        {% for count in trend %}
+            {% set points = points|merge([(loop.index0 * step)|round(2) ~ ',' ~ (30 - count / top * 28)|round(2)]) %}
+        {% endfor %}
+        <svg class="admin-metric__trend" viewBox="0 0 100 32" preserveAspectRatio="none" role="img"
+             aria-label="{{ __('Over %d days: from %d to %d a day')|format(trend|length, min(trend), max(trend)) }}">
+            <polyline class="admin-metric__line" points="{{ points|join(' ') }}"/>
+            {% set last = points|last|split(',') %}
+            <line class="admin-metric__now" x1="{{ last[0] }}" y1="{{ last[1] }}" x2="{{ last[0] }}" y2="{{ last[1] }}"/>
+            {% for count in trend %}
+                <rect class="admin-metric__hit" x="{{ max(0, (loop.index0 - 0.5) * step)|round(2) }}" y="0" width="{{ step|round(2) }}" height="32">
+                    <title>{{ day_ends[loop.index0]|date('d.m') }}: {{ count|format_number }}</title>
+                </rect>
+            {% endfor %}
+        </svg>
+    {% endif %}
+</{{ tag }}>

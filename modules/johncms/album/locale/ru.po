@@ -596,3 +596,6 @@ msgstr "Читать комментарии к фотографиям, когд�
 
 msgid "Photo Albums"
 msgstr "Фотоальбомы"
+
+msgid "photos added today"
+msgstr "фото добавлено сегодня"

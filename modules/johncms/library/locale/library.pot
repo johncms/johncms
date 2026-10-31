@@ -261,6 +261,10 @@ msgstr ""
 msgid "By comments"
 msgstr ""
 
+#: modules/johncms/library/src/Application/Dashboard/LibraryMetricsProvider.php:25
+msgid "articles added today"
+msgstr ""
+
 #: modules/johncms/library/src/Application/Dashboard/ModerationAttentionProvider.php:34
 #: modules/johncms/library/src/Application/Notifications/ModerationNotificationProvider.php:33
 msgid "Articles on moderation"

@@ -894,6 +894,9 @@
       'Nothing needs attention: the queues are empty and the server is fine.' => 'Всё разобрано: очереди пусты, с сервером всё в порядке.',
       'PHP does not meet the requirements of the site' => 'PHP не отвечает требованиям сайта',
       'Recommendations to speed up PHP' => 'Рекомендации по ускорению PHP',
+      'The day before: %d' => 'Предыдущие сутки: %d',
+      'as the day before' => 'как в предыдущие сутки',
+      'Over %d days: from %d to %d a day' => 'За %d дн.: от %d до %d в сутки',
     ),
   ),
 );

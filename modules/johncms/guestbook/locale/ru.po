@@ -249,3 +249,6 @@ msgstr "Оставлять записи в гостевой книге"
 
 msgid "Admin Chat"
 msgstr "Админ Чат"
+
+msgid "guestbook entries today"
+msgstr "записей в гостевой сегодня"

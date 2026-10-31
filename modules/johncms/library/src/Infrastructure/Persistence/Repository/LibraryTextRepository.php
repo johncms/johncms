@@ -6,6 +6,7 @@ namespace Johncms\Modules\Library\Infrastructure\Persistence\Repository;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Eloquent\Collection;
+use Johncms\Database\Query\DailyCounts;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\Modules\Library\Domain\Repository\LibraryTextRepositoryInterface;
 
@@ -84,5 +85,10 @@ class LibraryTextRepository implements LibraryTextRepositoryInterface
             ->orderByDesc('rel')
             ->forPage($page, $perPage)
             ->get();
+    }
+
+    public function countAddedByDay(int $start, int $days): array
+    {
+        return DailyCounts::count(LibraryText::query()->where('premod', 1), 'time', $start, $days);
     }
 }

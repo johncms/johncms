@@ -74,6 +74,10 @@ msgstr ""
 msgid "Your reply to the message was saved"
 msgstr ""
 
+#: modules/johncms/guestbook/src/Application/Dashboard/GuestbookMetricsProvider.php:25
+msgid "guestbook entries today"
+msgstr ""
+
 #: modules/johncms/guestbook/src/Application/Menu/GuestbookMenuItemProvider.php:39
 msgid "Admin Chat"
 msgstr ""

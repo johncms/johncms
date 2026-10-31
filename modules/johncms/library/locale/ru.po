@@ -784,3 +784,6 @@ msgstr "Читать библиотеку"
 
 msgid "Articles on moderation"
 msgstr "Статьи на модерации"
+
+msgid "articles added today"
+msgstr "статей добавлено сегодня"
