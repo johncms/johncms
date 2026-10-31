@@ -22,18 +22,21 @@ final readonly class GetDashboardContextUseCase
         private DashboardAttention $attention,
         private DashboardMetrics $metrics,
         private CommentFeed $comments,
+        private GetSecurityOverviewUseCase $security,
     ) {
     }
 
     public function execute(): DashboardContextDTO
     {
-        $period = MetricPeriod::endingAt(time(), self::TREND_DAYS);
+        $now = time();
+        $period = MetricPeriod::endingAt($now, self::TREND_DAYS);
 
         return new DashboardContextDTO(
             attention: $this->attention->all(),
             metrics: $this->metrics->all($period),
             dayEnds: $period->dayEnds(),
             comments: $this->comments->page(self::LATEST_COMMENTS),
+            security: $this->security->execute($now),
         );
     }
 }

@@ -15,12 +15,14 @@ final readonly class DashboardContextDTO
      * @param list<DashboardMetric> $metrics   The numbers of the modules, counted over $dayEnds.
      * @param list<int>             $dayEnds   The last second of every day of the trends, oldest first.
      * @param list<FeedComment>     $comments  The latest comments the visitor moderates, the newest first.
+     * @param SecurityOverviewDTO   $security  The sign-ins and the bans of the last day.
      */
     public function __construct(
         public array $attention,
         public array $metrics,
         public array $dayEnds,
         public array $comments,
+        public SecurityOverviewDTO $security,
     ) {
     }
 }

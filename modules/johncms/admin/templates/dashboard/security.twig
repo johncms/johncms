@@ -1,0 +1,66 @@
+{#
+    The security block of the dashboard: the sign-ins refused over the last day and where they came
+    from, who of the staff signed in lately, the bans. What comes from the sign-in log is shown only
+    to whoever may read the log.
+
+    @var security \Johncms\Modules\Admin\Application\DTO\SecurityOverviewDTO
+#}
+{% set failed_query = {event: 'login.failed', period: 'day'} %}
+<section class="card admin-security h-100" aria-labelledby="admin-security-title">
+    <div class="card-header">
+        {% include '@admin/components/ui/icon.twig' with {name: 'shield', size: 15, class: 'text-body-tertiary'} only %}
+        <h2 class="flex-grow-1 m-0 fs-6 fw-semibold" id="admin-security-title">{{ __('Security') }}</h2>
+        {% if security.signInLog %}
+            <a class="small" href="/admin/auth-log">{{ __('Sign-in log') }}</a>
+        {% endif %}
+    </div>
+    <div class="card-body">
+        <div class="admin-security__figures">
+            {% if security.signInLog %}
+                {% include '@admin/components/ui/stat-card.twig' with {
+                    label: __('Failed sign-ins today'),
+                    value: security.failedSignIns,
+                    url: '/admin/auth-log?' ~ failed_query|url_encode,
+                    tone: security.failedSignIns ? 'danger' : '',
+                } only %}
+            {% endif %}
+            {% include '@admin/components/ui/stat-card.twig' with {label: __('Active bans'), value: security.activeBans, url: '/admin/bans'} only %}
+            {% include '@admin/components/ui/stat-card.twig' with {label: __('Bans issued today'), value: security.bansToday} only %}
+        </div>
+
+        {% if security.signInLog %}
+            <h3 class="admin-security__title">{{ __('Refused most often today') }}</h3>
+            {% if security.suspiciousIps %}
+                <ul class="list-group">
+                    {% for ip, attempts in security.suspiciousIps %}
+                        <li class="list-group-item d-flex align-items-center gap-2">
+                            <a class="admin-security__ip flex-grow-1" href="/admin/auth-log?{{ failed_query|merge({q: ip})|url_encode }}">{{ ip }}</a>
+                            <span class="badge text-bg-danger" title="{{ __('Refused attempts') }}">{{ attempts|format_number }}</span>
+                            <a class="admin-security__whois" href="/admin/ip-whois?ip={{ ip|url_encode }}" title="{{ __('IP Whois') }}">
+                                {% include '@admin/components/ui/icon.twig' with {name: 'network', size: 14, label: __('IP Whois')} only %}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="admin-security__none">{{ __('No sign-in was refused.') }}</p>
+            {% endif %}
+
+            <h3 class="admin-security__title">{{ __('Staff sign-ins') }}</h3>
+            {% if security.staffSignIns %}
+                <ul class="list-group">
+                    {% for sign_in in security.staffSignIns %}
+                        <li class="list-group-item d-flex align-items-center gap-2">
+                            <img class="admin-security__avatar" src="{{ avatar(sign_in.userId) }}" width="24" height="24" alt="" loading="lazy">
+                            <a class="fw-semibold" href="/admin/auth-log?user={{ sign_in.userId }}">{{ sign_in.name ?: '#' ~ sign_in.userId }}</a>
+                            <span class="admin-security__ip">{{ sign_in.ip }}</span>
+                            <time class="admin-security__time ms-auto" datetime="{{ sign_in.time|date('c') }}">{{ sign_in.time|display_date }}</time>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="admin-security__none">{{ __('Nobody of the staff has signed in yet.') }}</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</section>

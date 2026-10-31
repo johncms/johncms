@@ -83,6 +83,8 @@ msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:37
 #: modules/johncms/admin/src/Application/Controllers/Ip/IpWhoisController.php:26
+#: modules/johncms/admin/templates/dashboard/security.twig:39
+#: modules/johncms/admin/templates/dashboard/security.twig:40
 msgid "IP Whois"
 msgstr ""
 
@@ -109,6 +111,7 @@ msgstr ""
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:40
 #: modules/johncms/admin/src/Application/Controllers/Access/AuthLogController.php:64
 #: modules/johncms/admin/src/Application/Services/UserActionsMapper.php:66
+#: modules/johncms/admin/templates/dashboard/security.twig:14
 msgid "Sign-in log"
 msgstr ""
 
@@ -892,6 +895,7 @@ msgid "Recommended parameters"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:38
+#: modules/johncms/admin/templates/dashboard/security.twig:12
 msgid "Security"
 msgstr ""
 
@@ -1193,6 +1197,10 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Users/UsersController.php:173
 #: modules/johncms/admin/templates/login.twig:46
 msgid "Login"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Dashboard/PasswordGuessingAttentionProvider.php:41
+msgid "Addresses that may be guessing passwords"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Dashboard/PendingRegistrationsAttentionProvider.php:34
@@ -1899,12 +1907,12 @@ msgid "Comments on files, articles, photos and news, the newest first. A comment
 msgstr ""
 
 #: modules/johncms/admin/templates/comments.twig:23
-#: modules/johncms/admin/templates/index.twig:72
+#: modules/johncms/admin/templates/index.twig:74
 msgid "No comments yet"
 msgstr ""
 
 #: modules/johncms/admin/templates/comments.twig:24
-#: modules/johncms/admin/templates/index.twig:73
+#: modules/johncms/admin/templates/index.twig:75
 msgid "Only the comments of the sections you moderate are shown here."
 msgstr ""
 
@@ -2048,6 +2056,38 @@ msgstr ""
 msgid "Over %d days: from %d to %d a day"
 msgstr ""
 
+#: modules/johncms/admin/templates/dashboard/security.twig:21
+msgid "Failed sign-ins today"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/security.twig:27
+msgid "Active bans"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/security.twig:28
+msgid "Bans issued today"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/security.twig:32
+msgid "Refused most often today"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/security.twig:38
+msgid "Refused attempts"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/security.twig:46
+msgid "No sign-in was refused."
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/security.twig:49
+msgid "Staff sign-ins"
+msgstr ""
+
+#: modules/johncms/admin/templates/dashboard/security.twig:62
+msgid "Nobody of the staff has signed in yet."
+msgstr ""
+
 #: modules/johncms/admin/templates/editor-images.twig:36
 msgid "Upload limit"
 msgstr ""
@@ -2149,11 +2189,11 @@ msgstr ""
 msgid "Nothing needs attention: the queues are empty and the server is fine."
 msgstr ""
 
-#: modules/johncms/admin/templates/index.twig:58
+#: modules/johncms/admin/templates/index.twig:60
 msgid "Latest comments"
 msgstr ""
 
-#: modules/johncms/admin/templates/index.twig:60
+#: modules/johncms/admin/templates/index.twig:62
 msgid "All comments"
 msgstr ""
 

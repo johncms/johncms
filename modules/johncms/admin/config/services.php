@@ -10,6 +10,7 @@ use Johncms\Modules\Admin\Domain\Repository\AdRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\BanAmnestyRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\AuthConfigRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\AuthLogRepositoryInterface;
+use Johncms\Modules\Admin\Domain\Repository\SecurityOverviewRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\BanListRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\InactiveUsersRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\KarmaRepositoryInterface;
@@ -31,6 +32,7 @@ use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentAuthLogR
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentBanListRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentCounterRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentDashboardRepository;
+use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentSecurityOverviewRepository;
 use Johncms\Modules\Admin\Infrastructure\Config\FileSystemAuthConfigRepository;
 use Johncms\Modules\Admin\Infrastructure\Config\FileCaptchaConfigRepository;
 use Johncms\Modules\Admin\Infrastructure\Config\FileMailConfigRepository;
@@ -72,6 +74,7 @@ return static function (ContainerConfigurator $container): void {
         ->autoconfigure();
 
     $services->set(DashboardRepositoryInterface::class, EloquentDashboardRepository::class)->public();
+    $services->set(SecurityOverviewRepositoryInterface::class, EloquentSecurityOverviewRepository::class)->public();
     $services->set(UserListRepositoryInterface::class, EloquentUserListRepository::class)->public();
     $services->set(UserCardRepositoryInterface::class, EloquentUserCardRepository::class)->public();
     $services->set(UserEditRepositoryInterface::class, EloquentUserEditRepository::class)->public();

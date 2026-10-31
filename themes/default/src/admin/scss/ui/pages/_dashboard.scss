@@ -103,3 +103,57 @@
 .admin-metric__hit:hover {
   fill: color-mix(in oklab, var(--accent) 10%, transparent);
 }
+
+// The security block (admin::dashboard/security): three numbers, then the addresses refused most
+// often and the sign-ins of the staff.
+
+.admin-security__figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: 0.5rem;
+}
+
+.admin-security__title {
+  margin: 1.25rem 0 0.5rem;
+  font-family: $ui-font-mono;
+  font-size: 0.65625rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.admin-security__ip {
+  font-family: $ui-font-mono;
+  font-size: 0.75rem;
+}
+
+span.admin-security__ip,
+.admin-security__time,
+.admin-security__none {
+  color: var(--fg-dim);
+}
+
+.admin-security__time {
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.admin-security__none {
+  margin: 0;
+  font-size: 0.8125rem;
+}
+
+.admin-security__avatar {
+  flex: none;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.admin-security__whois {
+  color: var(--fg-dim);
+
+  &:hover {
+    color: var(--accent);
+  }
+}

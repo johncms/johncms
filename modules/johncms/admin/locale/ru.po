@@ -3179,3 +3179,30 @@ msgstr "Последние комментарии"
 
 msgid "All comments"
 msgstr "Все комментарии"
+
+msgid "Failed sign-ins today"
+msgstr "Неудачных входов сегодня"
+
+msgid "Active bans"
+msgstr "Активных банов"
+
+msgid "Bans issued today"
+msgstr "Банов выдано сегодня"
+
+msgid "Refused most often today"
+msgstr "Чаще всего отказано сегодня"
+
+msgid "Refused attempts"
+msgstr "Отклонённых попыток"
+
+msgid "No sign-in was refused."
+msgstr "Неудачных входов не было."
+
+msgid "Staff sign-ins"
+msgstr "Входы сотрудников"
+
+msgid "Nobody of the staff has signed in yet."
+msgstr "Сотрудники пока не входили."
+
+msgid "Addresses that may be guessing passwords"
+msgstr "Адреса, похожие на подбор пароля"
