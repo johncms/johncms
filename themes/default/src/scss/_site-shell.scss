@@ -397,7 +397,7 @@
 .site-footer-content {
   inline-size: 100%;
   max-inline-size: 78rem;
-  margin-inline: auto;
+  margin-inline: 0 auto;
   padding-inline: 2rem;
 }
 
@@ -466,7 +466,7 @@
 
 // A temporary strip until the debug bar replaces it.
 .site-debug {
-  padding: .375rem max(2rem, calc((100% - 78rem) / 2 + 2rem));
+  padding: .375rem 2rem;
   border-block-start: 1px solid var(--border);
   background: var(--bg-elev-2);
   color: var(--fg-dim);
