@@ -7,8 +7,9 @@ $body-bg: #fafaf7;
 $body-color: #171c24;
 
 // Typography
-$font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-$font-family-monospace: ui-monospace, 'SF Mono', Menlo, 'Cascadia Mono', Consolas, monospace;
+// The design fonts come with the bundle; the system ones cover the scripts they lack.
+$font-family-sans-serif: 'Inter Variable', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+$font-family-monospace: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', Menlo, 'Cascadia Mono', Consolas, monospace;
 $font-size-base: 0.875rem;
 $line-height-base: 1.6;
 

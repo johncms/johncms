@@ -46,8 +46,9 @@ $ui-dark: (
   'info': oklch(0.74 0.12 240),
 );
 
-$ui-font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
-$ui-font-mono: ui-monospace, 'SF Mono', Menlo, 'Cascadia Mono', Consolas, monospace;
+// The design fonts come with the bundle; the system ones cover the scripts they lack.
+$ui-font-sans: 'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
+$ui-font-mono: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', Menlo, 'Cascadia Mono', Consolas, monospace;
 
 // The color as sRGB, for the places that cannot take OKLCH: the color functions Bootstrap runs
 // while it is compiled, and the "-rgb" triplets it builds rgba() from.

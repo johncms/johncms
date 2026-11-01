@@ -8,6 +8,11 @@
 
 // Must stay first: it publishes jQuery, axios and lodash as globals.
 import './bootstrap';
+// Self-hosted fonts of the design (SIL OFL 1.1, see THIRD-PARTY-NOTICES.md). Every script is
+// declared with its unicode-range, so a browser downloads only the ones a page uses.
+// The optical size axis lets small text open up its spacing for the screen.
+import '@fontsource-variable/inter/opsz.css';
+import '@fontsource-variable/jetbrains-mono';
 import '../scss/app.scss';
 
 import './jquery.magnific-popup';
