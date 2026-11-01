@@ -13,14 +13,14 @@ final class AdminTaskScannerTest extends TestCase
     public function testTheTitleAndTheDescriptionOfATaskAreCollectedIntoItsDomain(): void
     {
         $system = Translations::create('system');
-        $file = ROOT_PATH . 'system/src/Console/Commands/AuthSyncRolesCommand.php';
+        $file = ROOT_PATH . 'system/src/Console/Commands/MigrateCommand.php';
 
         (new AdminTaskScanner(['system' => $system]))->scanFile($file);
 
-        $title = $system->find(null, 'Synchronise roles and permissions');
+        $title = $system->find(null, 'Update the database');
         self::assertNotNull($title);
         self::assertSame([$file], array_keys($title->getReferences()->toArray()));
-        self::assertNotNull($system->find(null, 'Creates the built-in roles of this version and grants them the permissions they are missing. Only adds, never takes away. Safe to run after every update.'));
+        self::assertNotNull($system->find(null, 'Brings the database up to what the files of the site expect. Safe to run more than once: what has already been applied is skipped.'));
     }
 
     public function testAFileWithoutATaskAddsNothing(): void

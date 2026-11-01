@@ -122,6 +122,7 @@ class PSRContainerFactory
             MenuItemProviderInterface::class        => 'johncms.menu_provider',
             // The tag of Symfony itself: AddConsoleCommandPass below reads it.
             Command::class                          => 'console.command',
+            \Johncms\Updates\DeclarationSynchronizerInterface::class => 'johncms.declaration_synchronizer',
             SitemapUrlProviderInterface::class      => 'johncms.sitemap_provider',
             VisitorPlaceProviderInterface::class    => 'johncms.visitor_place_provider',
             SystemNotificationProviderInterface::class => 'johncms.system_notification_provider',

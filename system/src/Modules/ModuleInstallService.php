@@ -336,7 +336,7 @@ final readonly class ModuleInstallService
      *
      * Only adds, and only what the container knows about: the services of a module installed a
      * moment ago were not there when it was compiled, so its own permissions arrive on the next
-     * run — which is why `auth:sync-roles` exists and why the documentation says to run it after
+     * run — which is why `system:update` exists and why the documentation says to run it after
      * installing a module.
      */
     private function grantDefaultPermissions(ModuleOperationResult $result): void
@@ -344,7 +344,7 @@ final readonly class ModuleInstallService
         $granted = $this->defaultPermissions->apply();
 
         $granted === []
-            ? $result->skipped('grant the default permissions', 'run auth:sync-roles once the module is loaded')
+            ? $result->skipped('grant the default permissions', 'run system:update once the module is loaded')
             : $result->done('grant the default permissions', sprintf('%d roles updated', count($granted)));
     }
 
@@ -436,15 +436,6 @@ final readonly class ModuleInstallService
             return null;
         }
 
-        foreach (array_keys($manifest->autoload->psr4) as $prefix) {
-            $class = $prefix . 'Install\\Installer';
-            if (is_a($class, Installer::class, true)) {
-                return new $class($manifest->alias);
-            }
-        }
-
-        $class = 'Johncms\\Modules\\' . ucfirst(basename($manifest->key)) . '\\Install\\Installer';
-
-        return is_a($class, Installer::class, true) ? new $class($manifest->alias) : null;
+        return (new ModuleInstallerFactory())->create($manifest);
     }
 }

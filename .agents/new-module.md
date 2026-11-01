@@ -195,7 +195,7 @@ final class BlogMenu implements MenuItemProviderInterface
   (`/modules/blog/img/icon.svg`).
 * `weight` orders them: lighter floats up, equal weights fall back to the title.
 
-**Permissions.** A module declaring them gets them granted by `auth:sync-roles`, and installing it
+**Permissions.** A module declaring them gets them granted by `system:update`, and installing it
 prints a reminder to run that — the container was compiled before the module existed, so its
 providers are not in it yet. `--purge` takes them back out of every role, after writing what it
 removes to `data/backups/permissions-<vendor>-<name>-<date>.json`; a plain uninstall keeps them,
@@ -386,3 +386,13 @@ the panel) and fills `{% block content %}`.
 
 The full set of rules — namespaces, environments, components, the traps — is in
 `.agents/templates.md`.
+
+## Update declarations and hooks
+
+`system:update` runs migrations, safe declaration synchronization, every loaded module's
+`Installer::update()` hook (including bundled modules), final declaration validation and cache clearing.
+Hooks must inspect database state, tolerate equal versions and be safe to retry after failure.
+Implement `Johncms\Updates\DeclarationSynchronizerInterface` to register a declaration provider;
+`owner()` returns the module key (or `system` for core). Implementations are automatically tagged.
+`synchronize()` makes safe changes; leave resolvable differences for hooks. `validate()` throws an
+actionable exception if differences remain after all hooks. Neither phase may silently swallow errors.

@@ -39,7 +39,8 @@ abstract class Installer
     }
 
     /**
-     * A one-off step between two versions of the module, run after its migrations.
+     * Called after migrations and declaration synchronization on every system:update.
+     * Determine required work from database state, not version equality. Safe to retry after failure.
      *
      * @param string $from The version that was installed, or the version of the CMS for a module
      *                     of the release.

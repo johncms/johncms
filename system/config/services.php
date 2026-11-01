@@ -511,6 +511,9 @@ return static function (ContainerConfigurator $container): void {
 
     // The registry the boot already built: the container is compiled from the modules it names,
     // so it cannot be the thing that creates it.
+    $services->set(\Johncms\Console\Commands\SystemUpdateCommand::class)
+        ->arg('$mutex', service(\Johncms\AdminTasks\FileAdminTaskMutex::class))
+        ->arg('$synchronizers', tagged_iterator('johncms.declaration_synchronizer'));
     $services->set(ModuleRegistry::class)
         ->factory([ModuleRegistryFactory::class, 'registry']);
     // What the modules add to the two menus. Tagged by PSRContainerFactory, like the other

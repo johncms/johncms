@@ -30,6 +30,30 @@ final readonly class ModuleDependencyGraph
     {
     }
 
+    /** @return list<string> Dependencies first, with lexical ordering among ready modules. */
+    public function ordered(): array
+    {
+        $remaining = $this->modules;
+        $ordered = [];
+        while ($remaining !== []) {
+            $ready = [];
+            foreach ($remaining as $key => $manifest) {
+                if (array_intersect_key($manifest->requires->modules, $remaining) === []) {
+                    $ready[] = $key;
+                }
+            }
+            if ($ready === []) {
+                throw new \RuntimeException('Module dependency cycle: ' . implode(', ', array_keys($remaining)));
+            }
+            sort($ready);
+            $key = $ready[0];
+            $ordered[] = $key;
+            unset($remaining[$key]);
+        }
+
+        return $ordered;
+    }
+
     /**
      * The modules that require the given one, directly or through another module.
      *

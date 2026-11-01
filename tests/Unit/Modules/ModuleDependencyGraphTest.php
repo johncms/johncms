@@ -14,6 +14,23 @@ use PHPUnit\Framework\TestCase;
  */
 final class ModuleDependencyGraphTest extends TestCase
 {
+    public function testDependenciesPrecedeDependentsWithLexicalTies(): void
+    {
+        $graph = $this->graph([
+            'test/a' => ['test/z' => '*'],
+            'test/z' => [],
+            'test/b' => [],
+        ]);
+        self::assertSame(['test/b', 'test/z', 'test/a'], $graph->ordered());
+    }
+
+    public function testOrderingRejectsCycles(): void
+    {
+        $graph = $this->graph(['test/a' => ['test/b' => '*'], 'test/b' => ['test/a' => '*']]);
+        $this->expectException(\RuntimeException::class);
+        $graph->ordered();
+    }
+
     /**
      * What a refusal to switch something off is built on: everything that would stop working, not
      * only the module that names it.

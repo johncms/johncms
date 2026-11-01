@@ -14,9 +14,8 @@ use Johncms\Auth\Authorization\Role;
 use Johncms\Auth\Authorization\RoleSeeder;
 use Johncms\Auth\Authorization\SystemRole;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentRoleRepository;
-use Johncms\Console\Commands\AuthSyncRolesCommand;
+use Johncms\Updates\RolesDeclarationSynchronizer;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Console\Tester\CommandTester;
 use Tests\Support\BootsInMemoryDatabase;
 use Tests\Support\RunsMigrations;
 
@@ -26,7 +25,7 @@ use Tests\Support\RunsMigrations;
  * A fresh installation gets them from the installer; an existing one has nothing that would give
  * it a role added after it was installed, which is what this command is for.
  */
-final class AuthSyncRolesCommandTest extends TestCase
+final class RolesDeclarationSynchronizerTest extends TestCase
 {
     use BootsInMemoryDatabase;
     use RunsMigrations;
@@ -58,9 +57,8 @@ final class AuthSyncRolesCommandTest extends TestCase
     {
         self::assertSame(0, Role::query()->count());
 
-        $tester = $this->sync();
+        $this->sync();
 
-        self::assertSame(0, $tester->getStatusCode());
         self::assertSame(count(SystemRole::cases()), Role::query()->count());
 
         foreach (SystemRole::cases() as $systemRole) {
@@ -103,25 +101,19 @@ final class AuthSyncRolesCommandTest extends TestCase
     public function testRunningItAgainChangesNothing(): void
     {
         $this->sync();
-        $tester = $this->sync();
+        $this->sync();
 
-        self::assertSame(0, $tester->getStatusCode());
-        self::assertStringContainsString('already have everything', $tester->getDisplay());
         self::assertSame(count(SystemRole::cases()), Role::query()->count());
     }
 
-    private function sync(): CommandTester
+    private function sync(): void
     {
-        $tester = new CommandTester(
-            new AuthSyncRolesCommand(
-                new RoleSeeder($this->roles, $this->defaults()),
-                new DefaultPermissionsApplier($this->roles, $this->defaults())
-            )
+        $synchronizer = new RolesDeclarationSynchronizer(
+            new RoleSeeder($this->roles, $this->defaults()),
+            new DefaultPermissionsApplier($this->roles, $this->defaults())
         );
-
-        $tester->execute([]);
-
-        return $tester;
+        $synchronizer->synchronize();
+        $synchronizer->validate();
     }
 
     private function defaults(): DefaultPermissions
