@@ -90,11 +90,12 @@ final class SystemUpdateCommandTest extends TestCase
         $state = new ModuleStateStore(sys_get_temp_dir() . '/absent-update-state-' . uniqid() . '.php');
         $repo = $this->createMock(ModuleRepositoryInterface::class);
         $repo->method('all')->willReturn($modules);
-        return new CommandTester(new SystemUpdateCommand(
+        return new CommandTester(new SystemUpdateCommand(new \Johncms\Updates\SystemUpdater(
             $runner, new PendingMigrations($migrator, $this->createMock(CacheInterface::class), new NullLogger()),
-            new ModuleRegistry($repo, $state, array_keys($modules)), $state, new ModuleInstallerFactory(), $mutex,
+            new ModuleRegistry($repo, $state, array_keys($modules)), $state, new ModuleInstallerFactory(), new \Johncms\Updates\SystemUpdateLock($mutex),
+            $this->createMock(\Johncms\Updates\SystemUpdateStateInterface::class),
             new CacheClearCommand(sys_get_temp_dir() . '/absent-update-cache-' . uniqid()), $sync === null ? [] : [$sync]
-        ));
+        )));
     }
 }
 

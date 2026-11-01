@@ -837,14 +837,6 @@ msgstr ""
 msgid "Message already exists"
 msgstr ""
 
-#: system/src/Console/Commands/AuthSyncRolesCommand.php:40
-msgid "Synchronise roles and permissions"
-msgstr ""
-
-#: system/src/Console/Commands/AuthSyncRolesCommand.php:40
-msgid "Creates the built-in roles of this version and grants them the permissions they are missing. Only adds, never takes away. Safe to run after every update."
-msgstr ""
-
 #: system/src/Console/Commands/CacheClearCommand.php:20
 msgid "Clear cache"
 msgstr ""
@@ -939,6 +931,14 @@ msgstr ""
 
 #: system/src/Console/Commands/ModuleUpdateCommand.php:27
 msgid "Runs the migrations of a module and its update hook."
+msgstr ""
+
+#: system/src/Console/Commands/SystemUpdateCommand.php:20
+msgid "Update the system"
+msgstr ""
+
+#: system/src/Console/Commands/SystemUpdateCommand.php:20
+msgid "Applies migrations, synchronizes declarations and completes module updates."
 msgstr ""
 
 #: system/src/Http/Controller/ExternalAuthController.php:74
@@ -1662,7 +1662,7 @@ msgstr ""
 msgid "Online"
 msgstr ""
 
-#: themes/default/templates/layouts/default.twig:59
+#: themes/default/templates/layouts/default.twig:60
 msgid "Scroll page"
 msgstr ""
 

@@ -141,6 +141,10 @@ final class InstallerTest extends TestCase
             'install_demo'   => 1,
         ]));
         self::assertFileExists(CONFIG_PATH . 'autoload/system.local.php');
+        self::assertFileExists(DATA_PATH . 'system-update.json');
+        $completion = json_decode((string) file_get_contents(DATA_PATH . 'system-update.json'), true, flags: JSON_THROW_ON_ERROR);
+        self::assertSame(CMS_VERSION, $completion['cms']);
+        self::assertFalse($completion['running']);
         self::assertSame(200, $this->get('/install/?step=5')->getStatusCode(), 'The last step did not open.');
 
         // Once the site exists, the installer is closed: anybody could build it again otherwise.
@@ -149,6 +153,63 @@ final class InstallerTest extends TestCase
         // The site, opened by the administrator the installer signed in.
         self::assertSame(200, $this->get('/')->getStatusCode(), 'The home page of the new site did not open.');
         self::assertSame(200, $this->get('/admin')->getStatusCode(), 'The panel did not let the new administrator in.');
+        $this->assertModuleUpdatesUseFreshServices();
+    }
+
+    private function assertModuleUpdatesUseFreshServices(): void
+    {
+        $directory = ROOT_PATH . 'modules/test/updatefixture';
+        mkdir($directory . '/src/Install', 0o777, true);
+        mkdir($directory . '/config', 0o777, true);
+        $manifest = [
+            'key' => 'test/updatefixture', 'alias' => 'updatefixture', 'name' => 'Update fixture', 'version' => '1.0.0',
+            'autoload' => ['psr-4' => ['UpdateFixture\\' => 'src/']],
+        ];
+        file_put_contents($directory . '/module.php', '<?php return ' . var_export($manifest, true) . ';');
+        file_put_contents($directory . '/config/services.php', <<<'PHP'
+<?php
+return static function (\Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator $container): void {
+    $container->services()->set(\UpdateFixture\Sync::class)->autowire()->autoconfigure();
+};
+PHP);
+        file_put_contents($directory . '/src/Sync.php', <<<'PHP'
+<?php
+namespace UpdateFixture;
+final class Sync implements \Johncms\Updates\DeclarationSynchronizerInterface
+{
+    public function owner(): string { return 'test/updatefixture'; }
+    public function synchronize(): void { file_put_contents(DATA_PATH . 'fixture-update.log', "sync\n"); }
+    public function validate(): void { file_put_contents(DATA_PATH . 'fixture-update.log', "validate\n", FILE_APPEND); }
+}
+PHP);
+        file_put_contents($directory . '/src/Install/Installer.php', <<<'PHP'
+<?php
+namespace UpdateFixture\Install;
+final class Installer extends \Johncms\Modules\Installer
+{
+    public function update(string $from, string $to): void
+    {
+        if (file_get_contents(DATA_PATH . 'fixture-update.log') !== "sync\n") {
+            throw new \RuntimeException('Declarations were not synchronized before the hook.');
+        }
+        file_put_contents(DATA_PATH . 'fixture-update.log', "hook\n", FILE_APPEND);
+    }
+}
+PHP);
+        try {
+            foreach (['module:install', 'module:disable', 'module:enable', 'module:update'] as $command) {
+                $lines = [];
+                exec(escapeshellarg(PHP_BINARY) . ' ' . escapeshellarg(ROOT_PATH . 'system/bin/console')
+                    . ' ' . escapeshellarg($command) . ' test/updatefixture 2>&1', $lines, $code);
+                self::assertSame(0, $code, implode(PHP_EOL, $lines));
+                if ($command !== 'module:disable') {
+                    self::assertSame("sync\nhook\nvalidate\n", file_get_contents(DATA_PATH . 'fixture-update.log'));
+                    unlink(DATA_PATH . 'fixture-update.log');
+                }
+            }
+        } finally {
+            exec('rm -rf ' . escapeshellarg($directory));
+        }
     }
 
     private function get(string $uri): ResponseInterface

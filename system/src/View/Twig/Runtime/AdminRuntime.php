@@ -22,8 +22,13 @@ final class AdminRuntime implements RuntimeExtensionInterface
     /** @var array<string, int>|null */
     private ?array $counters = null;
 
-    public function __construct(private readonly PendingMigrations $pendingMigrations)
+    public function __construct(private readonly PendingMigrations $pendingMigrations, private readonly \Johncms\Updates\SystemUpdateStateInterface $updateState)
     {
+    }
+
+    public function systemUpdateRequired(): bool
+    {
+        return $this->updateState->isRequired();
     }
 
     /**

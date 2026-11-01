@@ -961,6 +961,9 @@
       'Documentation' => 'Документация',
       'Homepage welcome text' => 'Приветственный текст главной',
       'Optional plain text below the site name on the homepage. Independent of the search engine description.' => 'Необязательный обычный текст под названием сайта на главной. Не зависит от описания для поисковых систем.',
+      'The system update is not complete' => 'Обновление системы не завершено',
+      'Run the system update to synchronize declarations and complete module updates.' => 'Запустите обновление системы, чтобы синхронизировать настройки и завершить обновление модулей.',
+      'Update the system' => 'Обновить систему',
     ),
   ),
 );

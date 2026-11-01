@@ -25,6 +25,7 @@ final class SiteExtension extends AbstractExtension
             new TwigFunction('ads', [SiteRuntime::class, 'ads']),
             new TwigFunction('analytics', [SiteRuntime::class, 'analytics']),
             new TwigFunction('admin_counters', [AdminRuntime::class, 'counters']),
+            new TwigFunction('system_update_required', [AdminRuntime::class, 'systemUpdateRequired']),
             new TwigFunction('pending_migrations', [AdminRuntime::class, 'pendingMigrations']),
             new TwigFunction('debug_stats', [DebugPanelRuntime::class, 'stats']),
         ];

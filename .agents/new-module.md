@@ -195,9 +195,9 @@ final class BlogMenu implements MenuItemProviderInterface
   (`/modules/blog/img/icon.svg`).
 * `weight` orders them: lighter floats up, equal weights fall back to the title.
 
-**Permissions.** A module declaring them gets them granted by `system:update`, and installing it
-prints a reminder to run that — the container was compiled before the module existed, so its
-providers are not in it yet. `--purge` takes them back out of every role, after writing what it
+**Permissions.** Installation and enabling finish with a fresh PHP process, so the updated
+container includes the module providers and synchronizes their permissions automatically.
+Run `system:update` to retry a failed completion. `--purge` takes them back out of every role, after writing what it
 removes to `data/backups/permissions-<vendor>-<name>-<date>.json`; a plain uninstall keeps them,
 the same way it keeps the tables.
 
@@ -396,3 +396,11 @@ Implement `Johncms\Updates\DeclarationSynchronizerInterface` to register a decla
 `owner()` returns the module key (or `system` for core). Implementations are automatically tagged.
 `synchronize()` makes safe changes; leave resolvable differences for hooks. `validate()` throws an
 actionable exception if differences remain after all hooks. Neither phase may silently swallow errors.
+
+`Johncms\Updates\SystemUpdateStateInterface::isRequired()` reports an incomplete CMS/module update
+or pending migrations. A module that cannot serve its data until an update completes should use
+this service to refuse mutations and render a maintenance response. Completion markers live outside
+the cache. Only a successful full update acknowledges the CMS version; scoped module completion
+does not acknowledge an unrelated failed full update. Lifecycle mutations and their fresh-process
+completion acquire the same lock in separate phases, with a pending marker between them.
+Module update completion requires CLI PHP at `PHP_BINDIR . '/php'` and `proc_open`.

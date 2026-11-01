@@ -40,11 +40,67 @@ final readonly class ModuleInstallService
         private ModuleAssetPublisher $assets,
         private RolePermissionPurger $permissions,
         private DefaultPermissionsApplier $defaultPermissions,
+        private \Johncms\Updates\SystemUpdateLock $updateLock,
+        private \Johncms\Updates\ModuleUpdateFinisherInterface $finisher,
+        private \Johncms\Updates\SystemUpdateStateInterface $completion,
         private ModuleCompatibilityChecker $compatibility = new ModuleCompatibilityChecker(),
     ) {
     }
 
     public function install(string $key, bool $withDemoData = false): ModuleOperationResult
+    {
+        return $this->operate($key, fn (): ModuleOperationResult => $this->installModule($key, $withDemoData));
+    }
+
+    public function enable(string $key): ModuleOperationResult
+    {
+        return $this->operate($key, fn (): ModuleOperationResult => $this->enableModule($key));
+    }
+
+    public function update(string $key): ModuleOperationResult
+    {
+        return $this->operate($key, fn (): ModuleOperationResult => $this->updateModule($key));
+    }
+
+    public function disable(string $key): ModuleOperationResult
+    {
+        return $this->operate($key, fn (): ModuleOperationResult => $this->disableModule($key), false);
+    }
+
+    public function uninstall(string $key, bool $purge = false): ModuleOperationResult
+    {
+        return $this->operate($key, fn (): ModuleOperationResult => $this->uninstallModule($key, $purge), false);
+    }
+
+    /** @param callable(): ModuleOperationResult $operation */
+    private function operate(string $key, callable $operation, bool $finish = true): ModuleOperationResult
+    {
+        $result = new ModuleOperationResult();
+        try {
+            $result = $this->updateLock->run(function () use ($operation, $key, $finish): ModuleOperationResult {
+                $result = $operation();
+                if ($finish && $result->isSuccessful()) {
+                    $this->completion->begin($key);
+                }
+                return $result;
+            });
+            if ($finish && $result->isSuccessful()) {
+                if (isset($this->registry->enabled()[$key])) {
+                    // The child obtains the same lock and boots with the changed module set.
+                    // Until it succeeds the durable marker keeps the module pending.
+                    $this->finisher->finish($key);
+                    $result->done('synchronize declarations and complete the update');
+                } else {
+                    $result->skipped('complete the update', 'the module will be synchronized when enabled');
+                }
+            }
+        } catch (Throwable $exception) {
+            return $result->failed('complete the module operation', $exception->getMessage());
+        }
+        return $result;
+    }
+
+    private function installModule(string $key, bool $withDemoData = false): ModuleOperationResult
     {
         $result = new ModuleOperationResult();
 
@@ -113,7 +169,7 @@ final readonly class ModuleInstallService
         return $result;
     }
 
-    public function enable(string $key): ModuleOperationResult
+    private function enableModule(string $key): ModuleOperationResult
     {
         $result = new ModuleOperationResult();
 
@@ -145,7 +201,7 @@ final readonly class ModuleInstallService
         return $result;
     }
 
-    public function disable(string $key): ModuleOperationResult
+    private function disableModule(string $key): ModuleOperationResult
     {
         $result = new ModuleOperationResult();
 
@@ -188,7 +244,7 @@ final readonly class ModuleInstallService
     /**
      * Run after the files of a module have been replaced with a newer version.
      */
-    public function update(string $key): ModuleOperationResult
+    private function updateModule(string $key): ModuleOperationResult
     {
         $result = new ModuleOperationResult();
 
@@ -220,15 +276,12 @@ final readonly class ModuleInstallService
             return $result->failed('check the requirements', $problem);
         }
 
-        $from = $record->version ?? CMS_VERSION;
         $to = $manifest->version ?? CMS_VERSION;
 
         try {
             $applied = $this->migrator->run($record->alias);
             $result->done('run the migrations', sprintf('%d applied', count($applied)));
 
-            $this->installer($manifest)?->update($from, $to);
-            $result->done('run the update hook', sprintf('%s -> %s', $from, $to));
 
             $this->publishAssets($manifest, $result);
             $this->grantDefaultPermissions($result);
@@ -249,7 +302,7 @@ final readonly class ModuleInstallService
      *
      * @param bool $purge Also undo its migrations, which is what actually deletes its data.
      */
-    public function uninstall(string $key, bool $purge = false): ModuleOperationResult
+    private function uninstallModule(string $key, bool $purge = false): ModuleOperationResult
     {
         $result = new ModuleOperationResult();
 

@@ -396,6 +396,8 @@ final class ModuleInstallServiceTest extends TestCase
 
         $this->repository = $repository;
 
+        $mutex = $this->createStub(\Johncms\Scheduler\ScheduleMutexInterface::class);
+        $mutex->method('acquire')->willReturn(true);
         return new ModuleInstallService(
             new ModuleRegistry($repository, new ModuleStateStore($this->stateFile), reserved: $reserved),
             $repository,
@@ -405,6 +407,9 @@ final class ModuleInstallServiceTest extends TestCase
             new ModuleAssetPublisher($this->root . 'public' . DS),
             new RolePermissionPurger([], $roles, $this->root . 'backups'),
             new DefaultPermissionsApplier($roles, new DefaultPermissions(new PermissionRegistry())),
+            new \Johncms\Updates\SystemUpdateLock($mutex),
+            $this->createStub(\Johncms\Updates\ModuleUpdateFinisherInterface::class),
+            $this->createStub(\Johncms\Updates\SystemUpdateStateInterface::class),
         );
     }
 }

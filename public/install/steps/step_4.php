@@ -11,7 +11,7 @@
 declare(strict_types=1);
 
 use Johncms\Auth\Authorization\RoleRepositoryInterface;
-use Johncms\Auth\Authorization\RoleSeeder;
+use Johncms\Console\Commands\SystemUpdateCommand;
 use Johncms\Auth\Authorization\SystemRole;
 use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Auth\Session\AuthCookieFactory;
@@ -85,7 +85,9 @@ if ($request->getMethod() === 'POST') {
         if (file_put_contents(CONFIG_PATH . 'autoload/system.local.php', $configFile)) {
             // The built-in roles, from the same seeder the upgrade command uses, so a fresh
             // installation and an upgraded one cannot end up with different sets.
-            di(RoleSeeder::class)->seed();
+            if (di(SystemUpdateCommand::class)->run(new ArrayInput([]), new NullOutput()) !== 0) {
+                throw new RuntimeException('The system update failed. Run system:update before completing installation.');
+            }
 
             // Регистрируем пользователя
             $hasher = di(PasswordHasherInterface::class);

@@ -30,7 +30,7 @@ final class PendingMigrationsBannerTest extends TestCase
     {
         $html = $this->render(canManageSite: true, pending: 3);
 
-        self::assertStringContainsString('The database needs to be updated', $html);
+        self::assertStringContainsString('The system update is not complete', $html);
         self::assertStringContainsString('3 changes', $html);
         self::assertStringContainsString('/admin/maintenance', $html);
     }
@@ -56,7 +56,14 @@ final class PendingMigrationsBannerTest extends TestCase
         self::assertSame('', trim($this->render(canManageSite: false, pending: 3)));
     }
 
-    private function render(bool $canManageSite, int $pending): string
+    public function testIncompleteUpdateIsShownWithoutPendingMigrations(): void
+    {
+        $html = $this->render(canManageSite: true, pending: 0, incomplete: true);
+        self::assertStringContainsString('The system update is not complete', $html);
+        self::assertStringContainsString('synchronize declarations', $html);
+    }
+
+    private function render(bool $canManageSite, int $pending, bool $incomplete = false): string
     {
         $twig = new Environment(new FilesystemLoader([THEMES_PATH . 'default/templates/admin'], THEMES_PATH), [
             'strict_variables' => true,
@@ -64,6 +71,7 @@ final class PendingMigrationsBannerTest extends TestCase
 
         $twig->addExtension(new I18nExtension());
         $twig->addFunction(new TwigFunction('can', static fn (string $permission): bool => $canManageSite));
+        $twig->addFunction(new TwigFunction('system_update_required', static fn (): bool => $incomplete));
         $twig->addFunction(new TwigFunction('pending_migrations', static fn (): int => $pending));
 
         return $twig->render('components/pending-migrations.twig');

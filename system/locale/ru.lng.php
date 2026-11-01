@@ -437,6 +437,8 @@ The number is shown so that support for the old scheme is not removed while it i
       'Click an icon to copy its Twig markup.' => 'Нажмите на иконку, чтобы скопировать её Twig-разметку.',
       'Content cards' => 'Контентные карточки',
       'Nothing to display yet.' => 'Пока нечего показать.',
+      'Update the system' => 'Обновить систему',
+      'Applies migrations, synchronizes declarations and completes module updates.' => 'Применяет миграции, синхронизирует настройки и завершает обновление модулей.',
     ),
   ),
 );

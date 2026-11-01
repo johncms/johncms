@@ -1584,3 +1584,9 @@ msgstr "Контентные карточки"
 
 msgid "Nothing to display yet."
 msgstr "Пока нечего показать."
+
+msgid "Update the system"
+msgstr "Обновить систему"
+
+msgid "Applies migrations, synchronizes declarations and completes module updates."
+msgstr "Применяет миграции, синхронизирует настройки и завершает обновление модулей."
