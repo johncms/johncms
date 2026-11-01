@@ -1,22 +1,68 @@
-@media (max-width: 500px) {
-  .pagination {
-    span.page-link {
+// Pages are separate buttons, as in the mockups; the current one is filled with the accent.
+.pagination {
+  --bs-pagination-padding-x: .625rem;
+  --bs-pagination-padding-y: 0;
+  --bs-pagination-font-size: .75rem;
+  --bs-pagination-color: var(--fg-muted);
+  --bs-pagination-bg: var(--bg-elev);
+  --bs-pagination-border-color: var(--border);
+  --bs-pagination-border-radius: .4375rem;
+  --bs-pagination-hover-color: var(--fg);
+  --bs-pagination-hover-bg: var(--bg-elev);
+  --bs-pagination-hover-border-color: var(--border-strong);
+  --bs-pagination-focus-color: var(--fg);
+  --bs-pagination-focus-bg: var(--bg-elev);
+  --bs-pagination-focus-box-shadow: 0 0 0 3px var(--bs-focus-ring-color);
+  --bs-pagination-active-color: var(--accent-ink);
+  --bs-pagination-active-bg: var(--accent);
+  --bs-pagination-active-border-color: var(--accent);
+  --bs-pagination-disabled-color: var(--fg-dim);
+  --bs-pagination-disabled-bg: var(--bg-elev);
+  --bs-pagination-disabled-border-color: var(--border);
+
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .25rem;
+  font-family: var(--bs-font-monospace);
+
+  .page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-inline-size: 1.875rem;
+    block-size: 1.875rem;
+    // The body line height leaves extra room under the digits and lifts them off the center.
+    line-height: 1;
+    margin: 0;
+    border-radius: var(--bs-pagination-border-radius);
+    transition: color .12s, border-color .12s;
+  }
+
+  // Bootstrap joins the items into one bar; separate buttons keep every corner and border.
+  .page-item:not(:first-child) .page-link { margin-inline-start: 0; }
+
+  .active > .page-link { font-weight: 600; }
+
+  // The gap between numbers is plain text, without a button around it.
+  .disabled:not(:first-child, :last-child) > .page-link {
+    min-inline-size: 0;
+    padding-inline: .25rem;
+    border-color: transparent;
+    background: none;
+    color: var(--fg-dim);
+  }
+
+  // On a phone only the links of pages stay, and the current one: the disabled arrows and the
+  // gaps between the numbers go.
+  // The whole item goes, so the gap between the buttons does not stay behind.
+  @media (max-width: 500px) {
+    .page-item:not(.active):has(> span.page-link) {
       display: none;
-    }
-
-    .page-link {
-      font-size: 0.7rem;
-      padding: 0.5rem 0.5rem;
-    }
-
-    .active {
-      .page-link {
-        display: block;
-      }
     }
   }
 }
 
+// Pagination in the footer of a card, where the card gives the spacing.
 .pagination-no-padding {
   .pagination {
     margin-bottom: 0;

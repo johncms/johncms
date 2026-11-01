@@ -1,0 +1,11 @@
+{# @var name string Example name from the fixed set used by the guide page. #}
+{% set template = '@theme/components/style-guide/examples/' ~ name ~ '.twig' %}
+<div class="site-guide__example">
+    <div class="site-guide__demo">
+        {% include template only %}
+    </div>
+    <details class="site-guide__code">
+        <summary>{{ d__('system', 'Markup') }}</summary>
+        <pre><code>{{ source(template)|trim }}</code></pre>
+    </details>
+</div>

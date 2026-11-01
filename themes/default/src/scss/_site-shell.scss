@@ -494,7 +494,7 @@
   &:focus { transform: none; }
 }
 
-.site-shell :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.site-shell :focus-visible:not(.form-control, .form-select, .form-check-input, .btn) { outline: 2px solid var(--accent); outline-offset: 3px; }
 .site-content:focus { outline: none; }
 
 .site-sidebar__close {

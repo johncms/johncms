@@ -1,0 +1,18 @@
+<div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+    {% include '@theme/components/icon.twig' with {name: 'users'} only %}
+    {% include '@theme/components/icon.twig' with {name: 'users', size: 20} only %}
+    {% include '@theme/components/icon.twig' with {name: 'users', size: 24, class: 'text-success'} only %}
+    {% include '@theme/components/icon.twig' with {name: 'info', label: d__('system', 'Information')} only %}
+</div>
+<div class="site-guide-icons" data-site-icon-gallery
+     data-sprite="{{ asset('icons/public.svg', true) }}"
+     data-copy-label="{{ d__('system', 'Copy the include') }}"
+     data-copied-label="{{ d__('system', 'Copied') }}"
+     data-error-message="{{ d__('system', 'Could not copy the icon markup.') }}"
+     data-load-error-message="{{ d__('system', 'Could not load the icons.') }}">
+    <input type="search" class="form-control site-guide-icons__search"
+           placeholder="{{ d__('system', 'Search icons') }}" aria-label="{{ d__('system', 'Search icons') }}">
+    <p class="form-text">{{ d__('system', 'Click an icon to copy its Twig markup.') }}</p>
+    <div class="site-guide-icons__grid" data-icon-grid></div>
+    <p class="form-text mb-0" data-icon-status role="status" aria-live="polite"></p>
+</div>

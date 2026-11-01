@@ -11,6 +11,7 @@
 @import "sidebar";
 // Шапка
 @import "site-shell";
+@import "style-guide";
 // Иконки
 @import "icons";
 @import "posts";
@@ -18,6 +19,8 @@
 @import "lists";
 @import "inputs";
 @import "buttons";
+@import "alerts";
+@import "badges";
 @import "user";
 @import "../css/prism.css";
 @import "../css/magnific-popup.css";

@@ -13,6 +13,14 @@ import '../scss/app.scss';
 import './jquery.magnific-popup';
 import './menu';
 import './preferences';
+
+if (document.querySelector('[data-site-icon-gallery]')) {
+    import('./icon-gallery');
+}
+if (document.querySelector('[data-site-palette]')) {
+    import('./palette-contrast');
+}
+
 import './prism';
 import './forum';
 import './modals';

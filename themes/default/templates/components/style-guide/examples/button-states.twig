@@ -1,0 +1,15 @@
+<div class="d-flex flex-wrap align-items-center gap-2">
+    <button type="button" class="btn btn-primary btn-sm">btn-sm</button>
+    <button type="button" class="btn btn-primary">btn</button>
+    <button type="button" class="btn btn-primary btn-lg">btn-lg</button>
+    <button type="button" class="btn btn-primary" disabled>disabled</button>
+</div>
+<div class="d-flex flex-wrap align-items-center gap-2 mt-3">
+    <button type="button" class="btn btn-outline-secondary">
+        {% include '@theme/components/icon.twig' with {name: 'pencil', size: 14} only %}
+        {{ d__('system', 'Edit') }}
+    </button>
+    <button type="button" class="btn btn-outline-secondary btn-icon" aria-label="{{ d__('system', 'Edit') }}" title="{{ d__('system', 'Edit') }}">
+        {% include '@theme/components/icon.twig' with {name: 'pencil', size: 14} only %}
+    </button>
+</div>

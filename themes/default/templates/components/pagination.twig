@@ -11,29 +11,29 @@
         <ul class="pagination">
             {% for item in items %}
                 {# The arrows are written as entities, so they are literals of the template and
-                   the escaper leaves them alone. #}
+                   the escaper leaves them alone. Single angle quotes mirror themselves in RTL. #}
                 {% if item.type == 'prev' %}
                     {% if item.url %}
                         <li class="page-item">
-                            <a class="page-link" href="{{ item.url }}" rel="prev" aria-label="Previous page">&laquo;</a>
+                            <a class="page-link" href="{{ item.url }}" rel="prev" aria-label="{{ d__('system', 'Previous page') }}">&lsaquo;</a>
                         </li>
                     {% else %}
-                        <li class="page-item disabled" aria-disabled="true" aria-label="Previous">
-                            <span class="page-link" aria-hidden="true">&laquo;</span>
+                        <li class="page-item disabled" aria-disabled="true" aria-label="{{ d__('system', 'Previous page') }}">
+                            <span class="page-link" aria-hidden="true">&lsaquo;</span>
                         </li>
                     {% endif %}
                 {% elseif item.type == 'next' %}
                     {% if item.url %}
                         <li class="page-item">
-                            <a class="page-link" href="{{ item.url }}" rel="next" aria-label="Next page">&raquo;</a>
+                            <a class="page-link" href="{{ item.url }}" rel="next" aria-label="{{ d__('system', 'Next page') }}">&rsaquo;</a>
                         </li>
                     {% else %}
-                        <li class="page-item disabled" aria-disabled="true" aria-label="Next">
-                            <span class="page-link" aria-hidden="true">&raquo;</span>
+                        <li class="page-item disabled" aria-disabled="true" aria-label="{{ d__('system', 'Next page') }}">
+                            <span class="page-link" aria-hidden="true">&rsaquo;</span>
                         </li>
                     {% endif %}
                 {% elseif item.type == 'ellipsis' %}
-                    <li class="page-item disabled" aria-disabled="true"><span class="page-link">...</span></li>
+                    <li class="page-item disabled" aria-disabled="true"><span class="page-link">&hellip;</span></li>
                 {% elseif item.active %}
                     <li class="page-item active" aria-current="page"><span class="page-link">{{ item.page }}</span></li>
                 {% else %}

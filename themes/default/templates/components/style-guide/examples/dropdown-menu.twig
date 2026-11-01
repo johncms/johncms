@@ -1,0 +1,33 @@
+{# A menu of actions: a header, items with icons and counters, a divider and a destructive item. #}
+<div class="site-guide-popovers">
+    <details class="site-popover site-popover--account" data-site-popover open>
+        <summary class="site-topbar__account">
+            <img class="site-avatar site-topbar__avatar" src="{{ avatar(0) }}" alt="" width="24" height="24">
+            <span class="site-topbar__account-name">user</span>
+            {% include '@theme/components/icon.twig' with {name: 'chevron-down', size: 12} only %}
+        </summary>
+        <ul class="site-popover__panel">
+            <li class="site-popover__header">user</li>
+            <li>
+                <a class="site-popover__item" href="#dropdowns">
+                    {% include '@theme/components/icon.twig' with {name: 'user', size: 14} only %}
+                    <span>{{ d__('system', 'Profile') }}</span>
+                </a>
+            </li>
+            <li>
+                <a class="site-popover__item" href="#dropdowns">
+                    {% include '@theme/components/icon.twig' with {name: 'bell', size: 14} only %}
+                    <span>{{ d__('system', 'Notifications') }}</span>
+                    <span class="site-nav__badge" dir="ltr">3</span>
+                </a>
+            </li>
+            <li><hr class="site-popover__divider"></li>
+            <li>
+                <a class="site-popover__item site-popover__item--danger" href="#dropdowns">
+                    {% include '@theme/components/icon.twig' with {name: 'log-out', size: 14} only %}
+                    <span>{{ d__('system', 'Exit') }}</span>
+                </a>
+            </li>
+        </ul>
+    </details>
+</div>

@@ -47,6 +47,12 @@
                                 <span>{{ d__('admin', 'Admin Panel') }}</span>
                             </a>
                         </li>
+                        <li>
+                            <a class="site-popover__item" href="/style-guide">
+                                {% include '@theme/components/icon.twig' with {name: 'book-open', size: 14} only %}
+                                <span>{{ d__('system', 'Style guide') }}</span>
+                            </a>
+                        </li>
                     {% endif %}
                     <li><hr class="site-popover__divider"></li>
                     <li>

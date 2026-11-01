@@ -1,3 +1,137 @@
+@use 'sass:map';
+
+// Form controls: sunken fields that light up with the accent while focused.
+
+.form-control,
+.form-select {
+  background-color: var(--bg-inset);
+  border-color: var(--border);
+  color: var(--fg);
+  letter-spacing: -0.005em;
+  transition: border-color 0.12s, background-color 0.12s, box-shadow 0.12s;
+
+  &::placeholder {
+    color: var(--fg-dim);
+  }
+
+  &:hover:not(:disabled, :focus) {
+    border-color: var(--border-strong);
+  }
+
+  &:focus {
+    background-color: var(--bg-elev);
+    border-color: var(--accent);
+    color: var(--fg);
+    box-shadow: 0 0 0 3px var(--bs-focus-ring-color);
+  }
+
+  // Faded, not lighter: a lighter field would read as the active one.
+  &:disabled {
+    background-color: var(--bg-inset);
+    color: var(--fg-dim);
+    opacity: .6;
+    cursor: not-allowed;
+  }
+}
+
+// A phone zooms into a field whose text is smaller than 16px, so on a phone it gets exactly that.
+@include media-breakpoint-down(md) {
+  .form-control,
+  .form-select {
+    font-size: 1rem;
+  }
+}
+
+.form-label {
+  color: var(--fg);
+  letter-spacing: -0.005em;
+}
+
+.form-text {
+  color: var(--fg-dim);
+}
+
+.input-group-text {
+  background-color: var(--bg-elev-2);
+  border-color: var(--border);
+  color: var(--fg-muted);
+}
+
+.form-check-input {
+  background-color: var(--bg-inset);
+  border: 1.5px solid var(--border-strong);
+
+  &:checked,
+  &[type="checkbox"]:indeterminate {
+    background-color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  &:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--bs-focus-ring-color);
+  }
+}
+
+// The switch of the design is a little longer and taller than the one of Bootstrap.
+.form-switch {
+  padding-inline-start: 2.75em;
+
+  .form-check-input {
+    inline-size: 2.25em;
+    block-size: 1.25em;
+    margin-block-start: 0.125em;
+    margin-inline-start: -2.75em;
+  }
+}
+
+// The marks inside the controls are SVG images, so they are drawn once per color scheme.
+@mixin public-form-images($palette) {
+  $mark: public-svg-color(map.get($palette, 'accent-ink'));
+  $idle: public-svg-color(map.get($palette, 'fg-dim'));
+  $focus: public-svg-color(map.get($palette, 'accent'));
+
+  .form-select {
+    --bs-form-select-bg-img: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$idle}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>"))};
+  }
+
+  .form-check-input:checked[type="checkbox"] {
+    --bs-form-check-bg-image: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{$mark}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/></svg>"))};
+  }
+
+  .form-check-input:checked[type="radio"] {
+    --bs-form-check-bg-image: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='2' fill='#{$mark}'/></svg>"))};
+  }
+
+  .form-check-input[type="checkbox"]:indeterminate {
+    --bs-form-check-bg-image: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{$mark}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/></svg>"))};
+  }
+
+  .form-switch .form-check-input {
+    --bs-form-switch-bg: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$idle}'/></svg>"))};
+  }
+
+  .form-switch .form-check-input:focus {
+    --bs-form-switch-bg: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$focus}'/></svg>"))};
+  }
+
+  .form-switch .form-check-input:checked {
+    --bs-form-switch-bg: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$mark}'/></svg>"))};
+  }
+}
+
+@include public-form-images($public-light);
+
+body.dark {
+  @include public-form-images($public-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+  body.auto {
+    @include public-form-images($public-dark);
+  }
+}
+
 .input-with-inner-btn {
   display: flex;
 

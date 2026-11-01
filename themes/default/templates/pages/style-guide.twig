@@ -1,0 +1,69 @@
+{# Public components use the site's own bundle; every example also shows its Twig source. #}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block meta %}<meta name="robots" content="noindex,follow">{% endblock %}
+
+{% block content %}
+    <div class="site-guide">
+        <p class="text-body-secondary">{{ d__('system', 'Basic components of the public theme, rendered with the same styles as the site.') }}</p>
+        <nav class="site-guide__nav" aria-label="{{ d__('system', 'Style guide') }}">
+            <a href="#colors">{{ d__('system', 'Colors') }}</a>
+            <a href="#typography">{{ d__('system', 'Typography') }}</a>
+            <a href="#buttons">{{ d__('system', 'Buttons') }}</a>
+            <a href="#icons">{{ d__('system', 'Icons') }}</a>
+            <a href="#forms">{{ d__('system', 'Forms') }}</a>
+            <a href="#messages">{{ d__('system', 'Messages') }}</a>
+            <a href="#badges">{{ d__('system', 'Badges') }}</a>
+            <a href="#cards">{{ d__('system', 'Cards') }}</a>
+            <a href="#tables">{{ d__('system', 'Tables') }}</a>
+            <a href="#pagination">{{ d__('system', 'Pagination') }}</a>
+            <a href="#dropdowns">{{ d__('system', 'Dropdown menus') }}</a>
+        </nav>
+        <section class="site-guide__section" id="colors" aria-labelledby="colors-title">
+            <h2 id="colors-title">{{ d__('system', 'Colors') }}</h2>
+            {% include '@theme/components/style-guide/example.twig' with {name: 'colors'} only %}
+        </section>
+        <section class="site-guide__section" id="typography" aria-labelledby="typography-title">
+            <h2 id="typography-title">{{ d__('system', 'Typography') }}</h2>
+            {% include '@theme/components/style-guide/example.twig' with {name: 'typography'} only %}
+        </section>
+        <section class="site-guide__section" id="buttons" aria-labelledby="buttons-title">
+            <h2 id="buttons-title">{{ d__('system', 'Buttons') }}</h2>
+            {% include '@theme/components/style-guide/example.twig' with {name: 'buttons'} only %}
+            {% include '@theme/components/style-guide/example.twig' with {name: 'button-states'} only %}
+        </section>
+        <section class="site-guide__section" id="icons" aria-labelledby="icons-title">
+            <h2 id="icons-title">{{ d__('system', 'Icons') }}</h2>
+            {% include '@theme/components/style-guide/example.twig' with {name: 'icons'} only %}
+        </section>
+        <section class="site-guide__section" id="forms" aria-labelledby="forms-title">
+            <h2 id="forms-title">{{ d__('system', 'Forms') }}</h2>
+            {% include '@theme/components/style-guide/example.twig' with {name: 'forms'} only %}
+        </section>
+        <section class="site-guide__section" id="messages" aria-labelledby="messages-title">
+            <h2 id="messages-title">{{ d__('system', 'Messages') }}</h2>
+            {% include '@theme/components/style-guide/example.twig' with {name: 'messages'} only %}
+        </section>
+        <section class="site-guide__section" id="badges" aria-labelledby="badges-title">
+            <h2 id="badges-title">{{ d__('system', 'Badges') }}</h2>
+            {% include '@theme/components/style-guide/example.twig' with {name: 'badges'} only %}
+        </section>
+        <section class="site-guide__section" id="cards" aria-labelledby="cards-title">
+            <h2 id="cards-title">{{ d__('system', 'Cards') }}</h2>
+            {% include '@theme/components/style-guide/example.twig' with {name: 'cards'} only %}
+        </section>
+        <section class="site-guide__section" id="tables" aria-labelledby="tables-title">
+            <h2 id="tables-title">{{ d__('system', 'Tables') }}</h2>
+            {% include '@theme/components/style-guide/example.twig' with {name: 'tables'} only %}
+        </section>
+        <section class="site-guide__section" id="pagination" aria-labelledby="pagination-title">
+            <h2 id="pagination-title">{{ d__('system', 'Pagination') }}</h2>
+            {% include '@theme/components/style-guide/example.twig' with {name: 'pagination'} only %}
+        </section>
+        <section class="site-guide__section" id="dropdowns" aria-labelledby="dropdowns-title">
+            <h2 id="dropdowns-title">{{ d__('system', 'Dropdown menus') }}</h2>
+            {% include '@theme/components/style-guide/example.twig' with {name: 'dropdowns'} only %}
+            {% include '@theme/components/style-guide/example.twig' with {name: 'dropdown-menu'} only %}
+        </section>
+    </div>
+{% endblock %}

@@ -1,71 +1,57 @@
-// Public palette. Keep runtime aliases on body so switching its scheme also updates Bootstrap.
-@mixin public-light-palette {
-  color-scheme: light;
-  --bg: oklch(0.985 0.005 85);
-  --bg-elev: #fff;
-  --bg-elev-2: oklch(0.965 0.008 85);
-  --bg-inset: oklch(0.94 0.008 85);
-  --fg: oklch(0.18 0.012 250);
-  --fg-muted: oklch(0.45 0.012 250);
-  --fg-dim: oklch(0.60 0.012 250);
-  --border: oklch(0.90 0.008 85);
-  --border-strong: oklch(0.82 0.010 85);
-  // Slightly darker than the mockup so white button labels meet normal-text contrast.
-  --accent: #15804a;
-  --accent-rgb: 21, 128, 74;
-  --accent-hover: #116b3e;
-  --accent-ink: #fff;
-  --accent-soft: oklch(0.93 0.06 155);
-  --danger: #bd3543;
-  --danger-rgb: 189, 53, 67;
-  --danger-soft: #fce8eb;
-  --warn: #91600d;
-  --warn-soft: #fff4d6;
-  --info: #23678b;
-  --info-soft: #e6f2fa;
-  --on-solid: #fff;
-  --focus-ring: rgb(21 128 74 / 25%);
-}
+@use 'sass:map';
 
-@mixin public-dark-palette {
-  color-scheme: dark;
-  --bg: oklch(0.18 0.015 250);
-  --bg-elev: oklch(0.22 0.015 250);
-  --bg-elev-2: oklch(0.25 0.015 250);
-  --bg-inset: oklch(0.15 0.015 250);
-  --fg: oklch(0.97 0.008 250);
-  --fg-muted: oklch(0.72 0.012 250);
-  --fg-dim: oklch(0.55 0.012 250);
-  --border: oklch(0.30 0.012 250);
-  --border-strong: oklch(0.38 0.015 250);
-  --accent: #55d68b;
-  --accent-rgb: 85, 214, 139;
-  --accent-hover: #79e3a5;
-  --accent-ink: oklch(0.20 0.05 155);
-  --accent-soft: oklch(0.30 0.08 155);
-  --danger: #f28a94;
-  --danger-rgb: 242, 138, 148;
-  --danger-soft: #3b222b;
-  --warn: #efc16d;
-  --warn-soft: #352b1b;
-  --info: #86c6ec;
-  --info-soft: #1b2d3b;
-  --focus-ring: rgb(85 214 139 / 25%);
+// Keep the tokens and every derived Bootstrap color on the element that selects the scheme.
+@mixin public-palette($palette, $scheme) {
+  color-scheme: $scheme;
+
+  @each $name, $value in $palette {
+    --#{$name}: #{$value};
+  }
+
+  @each $name in (accent, danger, warn, info) {
+    --#{$name}-rgb: #{public-rgb(map.get($palette, $name))};
+  }
+
+  --accent-hover: #{public-link-hover($palette)};
+  --focus-ring: color-mix(in oklab, var(--accent) 35%, transparent);
+  --bs-body-bg-rgb: #{public-rgb(map.get($palette, 'bg'))};
+  --bs-body-color-rgb: #{public-rgb(map.get($palette, 'fg'))};
+  --bs-emphasis-color-rgb: #{public-rgb(map.get($palette, 'fg'))};
+  --bs-secondary-color-rgb: #{public-rgb(map.get($palette, 'fg-muted'))};
+  --bs-secondary-bg-rgb: #{public-rgb(map.get($palette, 'bg-elev-2'))};
+  --bs-tertiary-color-rgb: #{public-rgb(map.get($palette, 'fg-dim'))};
+  --bs-tertiary-bg-rgb: #{public-rgb(map.get($palette, 'bg-inset'))};
+  --bs-link-hover-color-rgb: #{public-rgb(public-link-hover($palette))};
+
+  @each $color, $token in (primary: accent, secondary: fg-muted, success: accent, info: info, warning: warn, danger: danger) {
+    --bs-#{$color}: var(--#{$token});
+    --bs-#{$color}-rgb: #{public-rgb(map.get($palette, $token))};
+    --bs-#{$color}-text-emphasis: color-mix(in oklab, var(--#{$token}) 75%, var(--fg));
+    --bs-#{$color}-bg-subtle: color-mix(in oklab, var(--#{$token}) 14%, var(--bg-elev));
+    --bs-#{$color}-border-subtle: color-mix(in oklab, var(--#{$token}) 35%, var(--border));
+  }
 }
 
 body {
-  @include public-light-palette;
+  @include public-palette($public-light, light);
 
   &.dark {
-    @include public-dark-palette;
+    @include public-palette($public-dark, dark);
   }
 
   &.auto {
     @media (prefers-color-scheme: dark) {
-      @include public-dark-palette;
+      @include public-palette($public-dark, dark);
     }
   }
 
+  --danger-soft: var(--bs-danger-bg-subtle);
+  --warn-soft: var(--bs-warning-bg-subtle);
+  --info-soft: var(--bs-info-bg-subtle);
+  --bs-heading-color: var(--fg);
+  --bs-code-color: var(--accent);
+  --bs-highlight-color: var(--fg);
+  --bs-highlight-bg: color-mix(in oklab, var(--warn) 30%, transparent);
   --font-size-normal: 14px;
   --font-size-small: 12px;
   --font-size-x-small: 11px;
@@ -80,18 +66,15 @@ body {
   --bs-tertiary-bg: var(--bg-inset);
   --bs-border-color: var(--border);
   --bs-border-color-translucent: var(--border);
-  --bs-primary: var(--accent);
-  --bs-primary-rgb: var(--accent-rgb);
-  --bs-success: var(--accent);
-  --bs-success-rgb: var(--accent-rgb);
-  --bs-danger: var(--danger);
-  --bs-danger-rgb: var(--danger-rgb);
   --bs-link-color: var(--accent);
   --bs-link-color-rgb: var(--accent-rgb);
   --bs-link-hover-color: var(--accent-hover);
-  --bs-link-hover-color-rgb: var(--accent-rgb);
   --bs-dark-brown-rgb: var(--accent-rgb);
   --bs-yellow-light: var(--warn-soft);
   --bs-focus-ring-color: var(--focus-ring);
   --swiper-theme-color: var(--accent);
+  --bs-form-valid-color: var(--accent);
+  --bs-form-valid-border-color: var(--accent);
+  --bs-form-invalid-color: var(--danger);
+  --bs-form-invalid-border-color: var(--danger);
 }

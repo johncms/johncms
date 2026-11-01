@@ -1,0 +1,12 @@
+{% include '@theme/components/alert.twig' with {
+    alert: d__('system', 'Changes saved successfully.'), alert_type: 'alert-success'
+} only %}
+{% include '@theme/components/alert.twig' with {
+    alert: d__('system', 'This is an informational message.'), alert_type: 'alert-info'
+} only %}
+{% include '@theme/components/alert.twig' with {
+    alert: d__('system', 'Check the entered data before continuing.'), alert_type: 'alert-warning'
+} only %}
+{% include '@theme/components/alert.twig' with {
+    alert: d__('system', 'Access denied'), alert_type: 'alert-danger mb-0'
+} only %}

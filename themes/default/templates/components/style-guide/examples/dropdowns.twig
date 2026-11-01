@@ -1,0 +1,28 @@
+{#
+    A popover of the topbar: a native <details>, so it opens without JavaScript; the script closes
+    it on Escape and on a click outside. The panel keeps to the end of its trigger.
+#}
+<div class="site-guide-popovers">
+    <details class="site-popover" data-site-popover open>
+        <summary class="site-control">
+            <img class="site-flag" src="{{ asset('images/flags/ru.svg') }}" alt="" width="18" height="13">
+            <span class="site-control__label">Русский</span>
+            {% include '@theme/components/icon.twig' with {name: 'chevron-down', size: 12} only %}
+        </summary>
+        <ul class="site-popover__panel">
+            <li>
+                <a class="site-popover__item" href="#dropdowns" lang="en">
+                    <img class="site-flag" src="{{ asset('images/flags/en.svg') }}" alt="" width="18" height="13">
+                    <span>English</span>
+                </a>
+            </li>
+            <li>
+                <a class="site-popover__item" href="#dropdowns" lang="ru" aria-current="true">
+                    <img class="site-flag" src="{{ asset('images/flags/ru.svg') }}" alt="" width="18" height="13">
+                    <span>Русский</span>
+                    {% include '@theme/components/icon.twig' with {name: 'check', size: 14} only %}
+                </a>
+            </li>
+        </ul>
+    </details>
+</div>

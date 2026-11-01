@@ -1458,3 +1458,123 @@ msgstr "Допустимый размер изображения в настро
 
 msgid "The check could not be completed. See the application log for details and run the check again."
 msgstr "Не удалось завершить проверку. Подробности смотрите в журнале приложения, затем запустите проверку повторно."
+
+msgid "Style guide"
+msgstr "Стайлгайд"
+
+msgid "Colors"
+msgstr "Цвета"
+
+msgid "Pagination"
+msgstr "Пагинация"
+
+msgid "Dropdown menus"
+msgstr "Выпадающие меню"
+
+msgid "Previous page"
+msgstr "Предыдущая страница"
+
+msgid "Next page"
+msgstr "Следующая страница"
+
+msgid "Typography"
+msgstr "Типографика"
+
+msgid "Buttons"
+msgstr "Кнопки"
+
+msgid "Markup"
+msgstr "Разметка"
+
+msgid "Basic components of the public theme, rendered with the same styles as the site."
+msgstr "Базовые компоненты публичной темы с теми же стилями, что и на сайте."
+
+msgid "The text of a page: a description, a hint, a paragraph of help."
+msgstr "Текст страницы: описание, подсказка, абзац справки."
+
+msgid "Forms"
+msgstr "Формы"
+
+msgid "Messages"
+msgstr "Сообщения"
+
+msgid "Badges"
+msgstr "Бейджи"
+
+msgid "Cards"
+msgstr "Карточки"
+
+msgid "Tables"
+msgstr "Таблицы"
+
+msgid "Name"
+msgstr "Название"
+
+msgid "A short name displayed on the site."
+msgstr "Короткое название, отображаемое на сайте."
+
+msgid "Email"
+msgstr "Электронная почта"
+
+msgid "Enter a valid email address."
+msgstr "Введите корректный адрес электронной почты."
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Published"
+msgstr "Опубликовано"
+
+msgid "Draft"
+msgstr "Черновик"
+
+msgid "Disabled field"
+msgstr "Недоступное поле"
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Changes saved successfully."
+msgstr "Изменения успешно сохранены."
+
+msgid "This is an informational message."
+msgstr "Это информационное сообщение."
+
+msgid "Check the entered data before continuing."
+msgstr "Проверьте введённые данные перед продолжением."
+
+msgid "Title"
+msgstr "Заголовок"
+
+msgid "Additional information"
+msgstr "Дополнительная информация"
+
+msgid "Example of a table with a highlighted row."
+msgstr "Пример таблицы с выделенной строкой."
+
+msgid "Icons"
+msgstr "Иконки"
+
+msgid "Information"
+msgstr "Информация"
+
+msgid "Warning"
+msgstr "Предупреждение"
+
+msgid "Copy the include"
+msgstr "Копировать подключение"
+
+msgid "Copied"
+msgstr "Скопировано"
+
+msgid "Could not copy the icon markup."
+msgstr "Не удалось скопировать разметку иконки."
+
+msgid "Could not load the icons."
+msgstr "Не удалось загрузить иконки."
+
+msgid "Search icons"
+msgstr "Поиск иконок"
+
+msgid "Click an icon to copy its Twig markup."
+msgstr "Нажмите на иконку, чтобы скопировать её Twig-разметку."

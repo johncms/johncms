@@ -1,0 +1,74 @@
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+
+// Public palette, matched to the admin colors. This bundle owns its definitions and SVG colors.
+$public-light: (
+  'bg': oklch(0.985 0.005 85),
+  'bg-elev': oklch(1 0 0),
+  'bg-elev-2': oklch(0.965 0.008 85),
+  'bg-inset': oklch(0.94 0.008 85),
+  'fg': oklch(0.18 0.012 250),
+  'fg-muted': oklch(0.45 0.012 250),
+  'fg-dim': oklch(0.60 0.012 250),
+  'border': oklch(0.90 0.008 85),
+  'border-strong': oklch(0.82 0.010 85),
+  // Darker than the admin colors: text and labels on fills keep 4.5:1 against the page.
+  'accent': oklch(0.51 0.14 155),
+  'accent-ink': oklch(0.98 0.01 155),
+  'accent-soft': oklch(0.93 0.06 155),
+  'danger': oklch(0.56 0.19 25),
+  'warn': oklch(0.54 0.12 70),
+  'info': oklch(0.53 0.12 240),
+  'on-solid': oklch(1 0 0),
+);
+
+$public-dark: (
+  'bg': oklch(0.18 0.015 250),
+  'bg-elev': oklch(0.22 0.015 250),
+  'bg-elev-2': oklch(0.25 0.015 250),
+  'bg-inset': oklch(0.15 0.015 250),
+  'fg': oklch(0.97 0.008 250),
+  'fg-muted': oklch(0.72 0.012 250),
+  'fg-dim': oklch(0.55 0.012 250),
+  'border': oklch(0.30 0.012 250),
+  'border-strong': oklch(0.38 0.015 250),
+  'accent': oklch(0.74 0.17 155),
+  'accent-ink': oklch(0.20 0.05 155),
+  'accent-soft': oklch(0.30 0.08 155),
+  'danger': oklch(0.70 0.19 25),
+  'warn': oklch(0.80 0.15 80),
+  'info': oklch(0.74 0.12 240),
+  // The fills of the dark scheme are light, so their labels are dark.
+  'on-solid': oklch(0.18 0.015 250),
+);
+
+// The color as sRGB, for the places that cannot take OKLCH: the color functions Bootstrap runs
+// while it is compiled, and the "-rgb" triplets it builds rgba() from.
+@function public-srgb($color) {
+  @return color.to-gamut(color.to-space($color, rgb), $method: local-minde);
+}
+
+// The "r, g, b" triplet of a color, the form of Bootstrap's --bs-*-rgb properties.
+@function public-rgb($color) {
+  $rgb: public-srgb($color);
+
+  @return math.round(color.channel($rgb, 'red', $space: rgb)),
+    math.round(color.channel($rgb, 'green', $space: rgb)),
+    math.round(color.channel($rgb, 'blue', $space: rgb));
+}
+
+// The color in plain sRGB, for the SVG images Bootstrap draws its controls with: an image is a
+// document of its own and reads no custom property.
+@function public-svg-color($color) {
+  $rgb: public-rgb($color);
+
+  @return rgb(list.nth($rgb, 1), list.nth($rgb, 2), list.nth($rgb, 3));
+}
+
+// What a link turns into under the pointer: a step towards the text color, which is darker in
+// the light scheme and lighter in the dark one.
+@function public-link-hover($palette) {
+  @return color.mix(map.get($palette, 'accent'), map.get($palette, 'fg'), 80%, $method: oklab);
+}

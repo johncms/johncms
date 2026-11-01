@@ -6,9 +6,14 @@ use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Http\Controller\ExternalAuthController;
 use Johncms\Http\Controller\FileController;
 use Johncms\Http\Controller\ImpersonationController;
+use Johncms\Http\Controller\StyleGuideController;
 use Johncms\Router\RouteCollection;
 
 return static function (RouteCollection $router): void {
+    $router->get('/style-guide', StyleGuideController::class)
+        ->name('style_guide')
+        ->permission(CorePermissions::ADMIN_ACCESS);
+
     // Stored files that the web server cannot hand out itself, because their disk is not public.
     // The address is built by FileStore::DOWNLOAD_PATH, which is what the modules render.
     $router->get('/file/{id:number}', [FileController::class, 'download'])->name('file.download');

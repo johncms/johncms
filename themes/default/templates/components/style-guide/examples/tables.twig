@@ -1,0 +1,24 @@
+<div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+        <caption>{{ d__('system', 'Example of a table with a highlighted row.') }}</caption>
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">{{ d__('system', 'Title') }}</th>
+                <th scope="col">{{ d__('system', 'Status') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>{{ d__('system', 'Typography') }}</td>
+                <td><span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ d__('system', 'Published') }}</span></td>
+            </tr>
+            <tr class="table-active">
+                <th scope="row">2</th>
+                <td>{{ d__('system', 'Buttons') }}</td>
+                <td><span class="badge rounded-pill text-bg-light badge-dot">{{ d__('system', 'Draft') }}</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

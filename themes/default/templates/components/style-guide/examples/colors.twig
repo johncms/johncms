@@ -1,0 +1,23 @@
+{# Text and fill pairs of the palette; the contrast is measured in the browser for the current scheme. #}
+<div class="site-guide-palette" data-site-palette>
+    {% for pair in [
+        {fg: 'fg', bg: 'bg'},
+        {fg: 'fg-muted', bg: 'bg-elev'},
+        {fg: 'fg-dim', bg: 'bg-elev'},
+        {fg: 'accent', bg: 'bg-elev'},
+        {fg: 'danger', bg: 'bg-elev'},
+        {fg: 'warn', bg: 'bg-elev'},
+        {fg: 'info', bg: 'bg-elev'},
+        {fg: 'accent-ink', bg: 'accent'},
+        {fg: 'on-solid', bg: 'danger'},
+        {fg: 'on-solid', bg: 'warn'},
+        {fg: 'on-solid', bg: 'info'},
+        {fg: 'fg', bg: 'accent-soft'},
+    ] %}
+        <div class="site-guide-palette__item" style="color: var(--{{ pair.fg }}); background: var(--{{ pair.bg }});" data-contrast-pair>
+            <span class="site-guide-palette__sample">Aa</span>
+            <code class="site-guide-palette__name">--{{ pair.fg }} / --{{ pair.bg }}</code>
+            <span class="site-guide-palette__ratio" data-contrast></span>
+        </div>
+    {% endfor %}
+</div>

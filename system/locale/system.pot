@@ -89,6 +89,7 @@ msgstr ""
 
 #: config/places.global.php:24
 #: themes/default/templates/components/site-topbar.twig:27
+#: themes/default/templates/components/style-guide/examples/dropdown-menu.twig:14
 msgid "Profile"
 msgstr ""
 
@@ -132,6 +133,7 @@ msgstr ""
 #: themes/default/templates/admin/components/topbar.twig:74
 #: themes/default/templates/components/site-topbar.twig:13
 #: themes/default/templates/components/site-topbar.twig:39
+#: themes/default/templates/components/style-guide/examples/dropdown-menu.twig:20
 msgid "Notifications"
 msgstr ""
 
@@ -430,6 +432,7 @@ msgstr ""
 #: system/src/Auth/Impersonation/ImpersonationManager.php:162
 #: system/src/Http/EditorImageUploadResponder.php:92
 #: system/src/Http/ExceptionResponseFactory.php:128
+#: themes/default/templates/components/style-guide/examples/messages.twig:11
 msgid "Access denied"
 msgstr ""
 
@@ -800,6 +803,8 @@ msgstr ""
 #: system/src/Comments.php:292
 #: system/src/Comments.php:358
 #: system/src/Comments.php:359
+#: themes/default/templates/components/style-guide/examples/button-states.twig:10
+#: themes/default/templates/components/style-guide/examples/button-states.twig:12
 #: themes/default/templates/pages/comments-list.twig:118
 msgid "Edit"
 msgstr ""
@@ -969,6 +974,12 @@ msgstr ""
 
 #: system/src/Http/Controller/ExternalAuthController.php:302
 msgid "Finish signing up"
+msgstr ""
+
+#: system/src/Http/Controller/StyleGuideController.php:18
+#: themes/default/templates/components/site-topbar.twig:53
+#: themes/default/templates/pages/style-guide.twig:9
+msgid "Style guide"
 msgstr ""
 
 #: system/src/Http/EditorImageUploadResponder.php:59
@@ -1189,7 +1200,8 @@ msgid "Set Dark Theme"
 msgstr ""
 
 #: themes/default/templates/admin/components/topbar.twig:94
-#: themes/default/templates/components/site-topbar.twig:47
+#: themes/default/templates/components/site-topbar.twig:61
+#: themes/default/templates/components/style-guide/examples/dropdown-menu.twig:28
 #: modules/johncms/admin/src/Application/Controllers/LogoutController.php:22
 #: modules/johncms/admin/templates/logout-dialog.twig:3
 #: modules/johncms/admin/templates/logout-dialog.twig:12
@@ -1265,6 +1277,16 @@ msgstr ""
 msgid "Return to my account"
 msgstr ""
 
+#: themes/default/templates/components/pagination.twig:18
+#: themes/default/templates/components/pagination.twig:21
+msgid "Previous page"
+msgstr ""
+
+#: themes/default/templates/components/pagination.twig:28
+#: themes/default/templates/components/pagination.twig:31
+msgid "Next page"
+msgstr ""
+
 #: themes/default/templates/components/sidebar-main-menu.twig:10
 #: themes/default/templates/components/site-topbar.twig:4
 #: themes/default/templates/layouts/default.twig:12
@@ -1272,7 +1294,7 @@ msgid "Menu"
 msgstr ""
 
 #: themes/default/templates/components/sidebar-user-menu.twig:6
-#: themes/default/templates/components/site-topbar.twig:53
+#: themes/default/templates/components/site-topbar.twig:67
 #: modules/johncms/auth/templates/public/registration-email-confirmed.twig:15
 msgid "Log In"
 msgstr ""
@@ -1303,6 +1325,8 @@ msgid "Cookie Policy"
 msgstr ""
 
 #: themes/default/templates/components/site-footer.twig:22
+#: themes/default/templates/components/style-guide/examples/badges.twig:10
+#: themes/default/templates/components/style-guide/examples/icons.twig:5
 msgid "Information"
 msgstr ""
 
@@ -1329,6 +1353,128 @@ msgstr ""
 #: themes/default/templates/components/site-topbar.twig:17
 #: themes/default/templates/components/site-topbar.twig:33
 msgid "Personal"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/example.twig:8
+msgid "Markup"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/badges.twig:8
+#: themes/default/templates/components/style-guide/examples/forms.twig:15
+#: themes/default/templates/components/style-guide/examples/tables.twig:15
+msgid "Published"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/badges.twig:9
+#: themes/default/templates/components/style-guide/examples/forms.twig:16
+#: themes/default/templates/components/style-guide/examples/tables.twig:20
+msgid "Draft"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/badges.twig:11
+msgid "Warning"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/cards.twig:2
+#: themes/default/templates/pages/style-guide.twig:17
+#: themes/default/templates/pages/style-guide.twig:52
+msgid "Cards"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/cards.twig:4
+#: themes/default/templates/components/style-guide/examples/tables.twig:7
+msgid "Title"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/cards.twig:5
+#: themes/default/templates/components/style-guide/examples/typography.twig:7
+msgid "The text of a page: a description, a hint, a paragraph of help."
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/cards.twig:6
+#: themes/default/templates/components/style-guide/examples/tables.twig:14
+#: themes/default/templates/pages/style-guide.twig:11
+#: themes/default/templates/pages/style-guide.twig:27
+msgid "Typography"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/cards.twig:8
+msgid "Additional information"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/forms.twig:3
+msgid "Name"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/forms.twig:5
+msgid "A short name displayed on the site."
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/forms.twig:8
+msgid "Email"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/forms.twig:10
+msgid "Enter a valid email address."
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/forms.twig:13
+#: themes/default/templates/components/style-guide/examples/tables.twig:8
+msgid "Status"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/forms.twig:20
+msgid "Disabled field"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/forms.twig:24
+msgid "Description"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/icons.twig:9
+msgid "Copy the include"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/icons.twig:10
+msgid "Copied"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/icons.twig:11
+msgid "Could not copy the icon markup."
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/icons.twig:12
+msgid "Could not load the icons."
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/icons.twig:14
+msgid "Search icons"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/icons.twig:15
+msgid "Click an icon to copy its Twig markup."
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/messages.twig:2
+msgid "Changes saved successfully."
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/messages.twig:5
+msgid "This is an informational message."
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/messages.twig:8
+msgid "Check the entered data before continuing."
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/tables.twig:3
+msgid "Example of a table with a highlighted row."
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/tables.twig:19
+#: themes/default/templates/pages/style-guide.twig:12
+#: themes/default/templates/pages/style-guide.twig:31
+msgid "Buttons"
 msgstr ""
 
 #: themes/default/templates/emails/changed-email-notification.twig:9
@@ -1542,4 +1688,48 @@ msgstr ""
 
 #: themes/default/templates/pages/external-auth-profile.twig:39
 msgid "Continue"
+msgstr ""
+
+#: themes/default/templates/pages/style-guide.twig:8
+msgid "Basic components of the public theme, rendered with the same styles as the site."
+msgstr ""
+
+#: themes/default/templates/pages/style-guide.twig:10
+#: themes/default/templates/pages/style-guide.twig:23
+msgid "Colors"
+msgstr ""
+
+#: themes/default/templates/pages/style-guide.twig:13
+#: themes/default/templates/pages/style-guide.twig:36
+msgid "Icons"
+msgstr ""
+
+#: themes/default/templates/pages/style-guide.twig:14
+#: themes/default/templates/pages/style-guide.twig:40
+msgid "Forms"
+msgstr ""
+
+#: themes/default/templates/pages/style-guide.twig:15
+#: themes/default/templates/pages/style-guide.twig:44
+msgid "Messages"
+msgstr ""
+
+#: themes/default/templates/pages/style-guide.twig:16
+#: themes/default/templates/pages/style-guide.twig:48
+msgid "Badges"
+msgstr ""
+
+#: themes/default/templates/pages/style-guide.twig:18
+#: themes/default/templates/pages/style-guide.twig:56
+msgid "Tables"
+msgstr ""
+
+#: themes/default/templates/pages/style-guide.twig:19
+#: themes/default/templates/pages/style-guide.twig:60
+msgid "Pagination"
+msgstr ""
+
+#: themes/default/templates/pages/style-guide.twig:20
+#: themes/default/templates/pages/style-guide.twig:64
+msgid "Dropdown menus"
 msgstr ""

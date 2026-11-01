@@ -1,0 +1,53 @@
+<div class="row g-3">
+    <div class="col-md-6">
+        <label class="form-label" for="guide-name">{{ d__('system', 'Name') }}</label>
+        <input class="form-control" id="guide-name" type="text" aria-describedby="guide-name-help">
+        <div class="form-text" id="guide-name-help">{{ d__('system', 'A short name displayed on the site.') }}</div>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label" for="guide-email">{{ d__('system', 'Email') }}</label>
+        <input class="form-control is-invalid" id="guide-email" type="email" value="example" aria-invalid="true" aria-describedby="guide-email-error">
+        <div class="invalid-feedback" id="guide-email-error">{{ d__('system', 'Enter a valid email address.') }}</div>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label" for="guide-status">{{ d__('system', 'Status') }}</label>
+        <select class="form-select" id="guide-status">
+            <option>{{ d__('system', 'Published') }}</option>
+            <option>{{ d__('system', 'Draft') }}</option>
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label" for="guide-disabled">{{ d__('system', 'Disabled field') }}</label>
+        <input class="form-control" id="guide-disabled" type="text" value="JohnCMS" disabled>
+    </div>
+    <div class="col-12">
+        <label class="form-label" for="guide-description">{{ d__('system', 'Description') }}</label>
+        <textarea class="form-control" id="guide-description" rows="3"></textarea>
+    </div>
+    <div class="col-md-4">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="guide-check" checked>
+            <label class="form-check-label" for="guide-check">Checkbox</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="guide-check-disabled" disabled>
+            <label class="form-check-label" for="guide-check-disabled">Checkbox · disabled</label>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="guide-radio" id="guide-radio-1" checked>
+            <label class="form-check-label" for="guide-radio-1">Radio · 1</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="guide-radio" id="guide-radio-2">
+            <label class="form-check-label" for="guide-radio-2">Radio · 2</label>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="guide-switch" checked>
+            <label class="form-check-label" for="guide-switch">Switch</label>
+        </div>
+    </div>
+</div>

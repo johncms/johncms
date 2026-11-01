@@ -100,6 +100,11 @@ live in `themes/<theme>/templates/admin/components/ui/` and are shown with their
 `/admin/style-guide`. A component added there gets an example in
 `modules/johncms/admin/templates/style-guide/examples/` at once.
 
+The public theme has its own `/style-guide`, available with `admin.access`, rendered with the
+public layout and bundle. Add examples of new public components to
+`themes/default/templates/components/style-guide/examples/`; the guide shows their Twig source
+alongside the rendered example. Do not import admin templates or assets into this page.
+
 ## Live lists (the panel)
 
 For admin lists with tabs, search or filters, use the live-list pattern so they update without a
