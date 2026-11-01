@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Api;
 
-use Illuminate\Database\Eloquent\Collection;
+use Johncms\Modules\Collections\Application\DTO\CollectionItemDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionRecordDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionItemPageDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionItemPatchDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemCodeAlreadyExistsException;
-use Johncms\Modules\Collections\Domain\Models\ContentCollection;
-use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 
 /**
@@ -22,14 +23,14 @@ interface CollectionsApiInterface
     /**
      * Resolve a collection by its machine code (`blog`, `catalog`, ...).
      */
-    public function findCollection(string $code): ?ContentCollection;
+    public function findCollection(string $code): ?CollectionRecordDTO;
 
     /**
      * Select items matching the query specification (the `CIBlockElement::GetList` analog).
      *
-     * @return Collection<int, ContentCollectionItem>
+     * @return list<CollectionItemDTO>
      */
-    public function getItems(ContentCollectionItemQuery $query): Collection;
+    public function getItems(ContentCollectionItemQuery $query): array;
 
     /**
      * Count items matching the query specification (without limit/offset).
@@ -37,15 +38,14 @@ interface CollectionsApiInterface
     public function countItems(ContentCollectionItemQuery $query): int;
 
     /**
-     * Load a single item by id together with its custom field values eager loaded,
-     * so {@see ContentCollectionItem::getValuesMap()} can be called without N+1.
+     * Load an item with typed custom values, without exposing ORM models.
      */
-    public function getItem(int $id): ?ContentCollectionItem;
+    public function getItem(int $id): ?CollectionItemDTO;
 
     /**
      * Load a single item by code within a collection/section.
      */
-    public function getItemByCode(int $collectionId, ?int $sectionId, string $code): ?ContentCollectionItem;
+    public function getItemByCode(int $collectionId, ?int $sectionId, string $code): ?CollectionItemDTO;
 
     /**
      * Create an item and its custom field values. Returns the new item id
@@ -68,4 +68,11 @@ interface CollectionsApiInterface
      * Delete an item (its EAV values cascade via FK).
      */
     public function deleteItem(int $id): void;
+
+    public function getPage(ContentCollectionItemQuery $query): CollectionItemPageDTO;
+
+    public function patchItem(int $id, CollectionItemPatchDTO $patch, ?int $actorId = null): void;
+
+    /** Call only for public views; hidden and out-of-window items are rejected. */
+    public function incrementViews(int $id): void;
 }

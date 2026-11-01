@@ -176,6 +176,11 @@
       'Choose a section of this collection.' => 'Выберите раздел этой коллекции.',
       'Choose a valid author or use a system operation.' => 'Укажите корректного автора или выполните системную операцию.',
       'Its part of the address: letters, digits, dot, plus, hyphen or underscore.' => 'Часть адреса: латинские буквы, цифры, точка, плюс, дефис и подчёркивание.',
+      'The item is missing or not published.' => 'Элемент не найден или не опубликован.',
+      'The section description must not exceed 65535 bytes.' => 'Описание раздела не должно превышать 65535 байт.',
+      'Item not found.' => 'Элемент не найден.',
+      'Unknown patch property or invalid value type.' => 'Неизвестное свойство обновления или неверный тип значения.',
+      'This field cannot be cleared.' => 'Это поле нельзя очистить.',
     ),
   ),
 );

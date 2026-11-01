@@ -25,18 +25,35 @@ use Symfony\Component\Validator\Validation;
 
 final class CollectionItemWriterFactory
 {
-    public static function create(?ContentCollectionItemValueRepositoryInterface $values = null): SaveCollectionItemUseCase
+    public static function create(?ContentCollectionItemValueRepositoryInterface $values = null, ?\Johncms\Updates\SystemOperationContext $context = null): SaveCollectionItemUseCase
     {
-        TranslatorFunctions::register(new Translator());
-        $validator = new SymfonyValidator(
-            Validation::createValidatorBuilder()->setTranslator(new GettextTranslator())->getValidator(),
-            new RuleCompiler([new StringLengthRuleFactory(), new PatternRuleFactory()])
-        );
+        $validator = self::validator();
         $fields = new ContentCollectionFieldRepository();
         return new SaveCollectionItemUseCase(
             new ContentCollectionItemRepository($fields, new ContentCollectionItemQueryCompiler()), $fields,
             $values ?? new ContentCollectionItemValueRepository(), new ContentCollectionRepository(),
-            new ContentCollectionSectionRepository(), new CollectionTransaction(), new CollectionItemValidator($validator)
+            new ContentCollectionSectionRepository(), new CollectionTransaction(), new CollectionItemValidator($validator), $context ?? new \Johncms\Updates\SystemOperationContext()
+        );
+    }    public static function validator(): \Johncms\Validator\ValidatorInterface
+    {
+        TranslatorFunctions::register(new Translator());
+        return new SymfonyValidator(
+            Validation::createValidatorBuilder()->setTranslator(new GettextTranslator())->getValidator(),
+            new RuleCompiler([new StringLengthRuleFactory(), new PatternRuleFactory()])
         );
     }
+    public static function api(): \Johncms\Modules\Collections\Application\Api\CollectionsApi
+    {
+        $fields = new ContentCollectionFieldRepository();
+        $items = new ContentCollectionItemRepository($fields, new ContentCollectionItemQueryCompiler());
+        $collections = new ContentCollectionRepository();
+        $writer = self::create();
+        return new \Johncms\Modules\Collections\Application\Api\CollectionsApi(
+            $collections, $items, $writer,
+            new \Johncms\Modules\Collections\Application\UseCases\DeleteCollectionItemUseCase($items),
+            new \Johncms\Modules\Collections\Application\UseCases\PatchCollectionItemUseCase($items, $collections, $fields, new CollectionTransaction(), $writer),
+            new \Johncms\Modules\Collections\Application\Services\CollectionApiMapper()
+        );
+    }
+
 }

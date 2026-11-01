@@ -98,7 +98,7 @@ final class ContentCollectionItemRepositoryTest extends TestCase
         $query = new ContentCollectionItemQuery(
             collectionId: $this->collectionId,
             sectionId: $this->sectionA,
-            orderBy: [new OrderByDTO('sort', SortDirection::Desc)],
+            orderBy: [new OrderByDTO('item.sort', SortDirection::Desc)],
         );
 
         $codes = $this->repository->findItems($query)->pluck('code')->all();
@@ -133,7 +133,7 @@ final class ContentCollectionItemRepositoryTest extends TestCase
     {
         $query = new ContentCollectionItemQuery(
             collectionId: $this->collectionId,
-            filters: [new FieldFilterDTO('rating', FilterOperator::Gte, 5)],
+            filters: [new FieldFilterDTO('field.rating', FilterOperator::Gte, 5)],
         );
 
         $codes = $this->repository->findItems($query)->pluck('code')->all();
@@ -147,7 +147,7 @@ final class ContentCollectionItemRepositoryTest extends TestCase
     {
         $query = new ContentCollectionItemQuery(
             collectionId: $this->collectionId,
-            filters: [new FieldFilterDTO('author', FilterOperator::Eq, 'Bob')],
+            filters: [new FieldFilterDTO('field.author', FilterOperator::Eq, 'Bob')],
         );
 
         $codes = $this->repository->findItems($query)->pluck('code')->all();
@@ -159,7 +159,7 @@ final class ContentCollectionItemRepositoryTest extends TestCase
     {
         $query = new ContentCollectionItemQuery(
             collectionId: $this->collectionId,
-            filters: [new FieldFilterDTO('tag', FilterOperator::Eq, 'php')],
+            filters: [new FieldFilterDTO('field.tag', FilterOperator::Eq, 'php')],
         );
 
         $codes = $this->repository->findItems($query)->pluck('code')->all();
@@ -172,7 +172,7 @@ final class ContentCollectionItemRepositoryTest extends TestCase
     {
         $query = new ContentCollectionItemQuery(
             collectionId: $this->collectionId,
-            filters: [new FieldFilterDTO('rating', FilterOperator::In, [1, 5])],
+            filters: [new FieldFilterDTO('field.rating', FilterOperator::In, [1, 5])],
         );
 
         $codes = $this->repository->findItems($query)->pluck('code')->all();
@@ -186,12 +186,12 @@ final class ContentCollectionItemRepositoryTest extends TestCase
         $asc = new ContentCollectionItemQuery(
             collectionId: $this->collectionId,
             sectionId: $this->sectionA,
-            orderBy: [new OrderByDTO('rating', SortDirection::Asc)],
+            orderBy: [new OrderByDTO('field.rating', SortDirection::Asc)],
         );
         $desc = new ContentCollectionItemQuery(
             collectionId: $this->collectionId,
             sectionId: $this->sectionA,
-            orderBy: [new OrderByDTO('rating', SortDirection::Desc)],
+            orderBy: [new OrderByDTO('field.rating', SortDirection::Desc)],
         );
 
         // Section A active items: a-high (rating 1), a-low (rating 9). Custom sort

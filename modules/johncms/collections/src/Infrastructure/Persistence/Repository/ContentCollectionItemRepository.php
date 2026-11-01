@@ -31,11 +31,16 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
         $builder = $this->baseQuery($query, $fields);
         $this->compiler->applyOrder($builder, $query, $fields);
 
-        if ($query->limit !== null) {
-            $builder->offset($query->offset)->limit($query->limit);
-        }
-
-        return $builder->get();
+        $builder->offset($query->offset)->limit($query->limit);
+        return $builder->with([
+            'values' => static function ($values) use ($query): void {
+                $values->orderBy('sort')->orderBy('id');
+                if ($query->fields !== null) {
+                    $values->whereHas('field', static fn ($field) => $field->whereIn('code', $query->fields));
+                }
+            },
+            'values.field',
+        ])->get();
     }
 
     public function countItems(ContentCollectionItemQuery $query): int
@@ -65,7 +70,27 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
 
     public function findWithValues(int $id): ?ContentCollectionItem
     {
-        return ContentCollectionItem::query()->with('values.field')->find($id);
+        return ContentCollectionItem::query()->with(['values' => static fn ($values) => $values->orderBy('sort')->orderBy('id'), 'values.field'])->find($id);
+    }
+
+    public function findWithValuesForUpdate(int $id): ?ContentCollectionItem
+    {
+        $query = ContentCollectionItem::query()->with([
+            'values' => static fn ($values) => $values->lockForUpdate()->orderBy('sort')->orderBy('id'),
+            'values.field',
+        ]);
+        $query->lockForUpdate();
+        return $query->find($id);
+    }
+
+    public function incrementViews(int $id): bool
+    {
+        $now = Carbon::now();
+        return ContentCollectionItem::query()->where('id', $id)->where('active', true)
+            ->whereHas('collection', static fn (Builder $collection) => $collection->where('active', true))
+            ->where(static fn (Builder $q) => $q->whereNull('active_from')->orWhere('active_from', '<=', $now))
+            ->where(static fn (Builder $q) => $q->whereNull('active_to')->orWhere('active_to', '>=', $now))
+            ->toBase()->update(['view_count' => new \Illuminate\Database\Query\Expression('COALESCE(view_count, 0) + 1')]) === 1;
     }
 
     public function create(array $attributes): ContentCollectionItem
@@ -212,23 +237,19 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
                 ->where(static fn (Builder $q) => $q->whereNull('active_to')->orWhere('active_to', '>=', $now));
         }
 
+        $this->compiler->validate($query, $fields);
         $this->compiler->applyFilters($builder, $query, $fields);
 
         return $builder;
     }
 
     /**
-     * Resolves the collection fields referenced by the query's custom-field
-     * filters/ordering, keyed by code. Base-only queries skip the lookup.
+     * Field definitions used to validate references and selected custom values.
      *
      * @return array<string, ContentCollectionField>
      */
     private function resolveFields(ContentCollectionItemQuery $query): array
     {
-        if ($this->compiler->referencedFieldCodes($query) === []) {
-            return [];
-        }
-
         return $this->fieldRepository->getByCollection($query->collectionId)
             ->keyBy('code')
             ->all();

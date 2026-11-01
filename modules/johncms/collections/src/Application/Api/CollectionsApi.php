@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Api;
 
-use Illuminate\Database\Eloquent\Collection;
+use Johncms\Modules\Collections\Application\DTO\CollectionItemDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionRecordDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionItemPageDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionItemPatchDTO;
+use Johncms\Modules\Collections\Application\Services\CollectionApiMapper;
+use Johncms\Modules\Collections\Application\UseCases\PatchCollectionItemUseCase;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionItemUseCase;
 use Johncms\Modules\Collections\Application\UseCases\SaveCollectionItemUseCase;
-use Johncms\Modules\Collections\Domain\Models\ContentCollection;
-use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
@@ -21,17 +25,20 @@ final readonly class CollectionsApi implements CollectionsApiInterface
         private ContentCollectionItemRepositoryInterface $itemRepository,
         private SaveCollectionItemUseCase $saveItem,
         private DeleteCollectionItemUseCase $deleteItem,
+        private PatchCollectionItemUseCase $patch,
+        private CollectionApiMapper $mapper,
     ) {
     }
 
-    public function findCollection(string $code): ?ContentCollection
+    public function findCollection(string $code): ?CollectionRecordDTO
     {
-        return $this->collectionRepository->findByCode($code);
+        $collection = $this->collectionRepository->findByCode($code);
+        return $collection === null ? null : $this->mapper->collection($collection);
     }
 
-    public function getItems(ContentCollectionItemQuery $query): Collection
+    public function getItems(ContentCollectionItemQuery $query): array
     {
-        return $this->itemRepository->findItems($query);
+        return $this->itemRepository->findItems($query)->map($this->mapper->item(...))->all();
     }
 
     public function countItems(ContentCollectionItemQuery $query): int
@@ -39,14 +46,16 @@ final readonly class CollectionsApi implements CollectionsApiInterface
         return $this->itemRepository->countItems($query);
     }
 
-    public function getItem(int $id): ?ContentCollectionItem
+    public function getItem(int $id): ?CollectionItemDTO
     {
-        return $this->itemRepository->findWithValues($id);
+        $item = $this->itemRepository->findWithValues($id);
+        return $item === null ? null : $this->mapper->item($item);
     }
 
-    public function getItemByCode(int $collectionId, ?int $sectionId, string $code): ?ContentCollectionItem
+    public function getItemByCode(int $collectionId, ?int $sectionId, string $code): ?CollectionItemDTO
     {
-        return $this->itemRepository->findByCode($collectionId, $sectionId, $code);
+        $item = $this->itemRepository->findByCode($collectionId, $sectionId, $code);
+        return $item === null ? null : $this->getItem($item->id);
     }
 
     public function addItem(CollectionItemFormDTO $item, ?int $actorId = null): int
@@ -57,6 +66,23 @@ final readonly class CollectionsApi implements CollectionsApiInterface
     public function updateItem(int $id, CollectionItemFormDTO $item, ?int $actorId = null): void
     {
         $this->saveItem->execute($id, $item, $actorId);
+    }
+
+    public function getPage(ContentCollectionItemQuery $query): CollectionItemPageDTO
+    {
+        return new CollectionItemPageDTO($this->getItems($query), $this->countItems($query), $query->limit, $query->offset);
+    }
+
+    public function patchItem(int $id, CollectionItemPatchDTO $patch, ?int $actorId = null): void
+    {
+        $this->patch->execute($id, $patch, $actorId);
+    }
+
+    public function incrementViews(int $id): void
+    {
+        if (! $this->itemRepository->incrementViews($id)) {
+            throw new CollectionItemFormException(['id' => [d__('collections', 'The item is missing or not published.')]]);
+        }
     }
 
     public function deleteItem(int $id): void

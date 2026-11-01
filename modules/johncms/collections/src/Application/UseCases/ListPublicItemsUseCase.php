@@ -45,8 +45,9 @@ final readonly class ListPublicItemsUseCase
             collectionId: $collectionId,
             sectionId: $sectionId,
             onlyActive: true,
-            limit: $limit,
+            limit: $limit ?? 100,
             offset: $offset,
+            fields: [],
         );
     }
 }

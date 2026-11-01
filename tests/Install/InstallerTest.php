@@ -189,6 +189,7 @@ final class Installer extends \Johncms\Modules\Installer
 {
     public function update(string $from, string $to): void
     {
+        di(\Johncms\Updates\SystemOperationContext::class)->requireActive();
         if (file_get_contents(DATA_PATH . 'fixture-update.log') !== "sync\n") {
             throw new \RuntimeException('Declarations were not synchronized before the hook.');
         }

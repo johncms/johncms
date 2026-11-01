@@ -50,6 +50,8 @@ final class ContentCollectionItem extends Model
         'active_from',
         'active_to',
         'sort',
+        'created_at',
+        'updated_at',
         'preview_text',
         'detail_text',
         'view_count',

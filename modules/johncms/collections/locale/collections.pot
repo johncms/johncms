@@ -2,6 +2,29 @@ msgid ""
 msgstr ""
 "X-Domain: collections\n"
 
+#: modules/johncms/collections/src/Application/Api/CollectionsApi.php:84
+msgid "The item is missing or not published."
+msgstr ""
+
+#: modules/johncms/collections/src/Application/Api/CollectionsImportApi.php:49
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:60
+msgid "Collection not found."
+msgstr ""
+
+#: modules/johncms/collections/src/Application/Api/CollectionsImportApi.php:54
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:71
+msgid "Choose a section of this collection."
+msgstr ""
+
+#: modules/johncms/collections/src/Application/Api/CollectionsImportApi.php:58
+#: modules/johncms/collections/src/Application/Services/CollectionItemValidator.php:38
+msgid "Enter an integer between -2147483648 and 2147483647."
+msgstr ""
+
+#: modules/johncms/collections/src/Application/Api/CollectionsImportApi.php:61
+msgid "The section description must not exceed 65535 bytes."
+msgstr ""
+
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:46
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:366
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:367
@@ -281,10 +304,6 @@ msgstr ""
 msgid "New collection"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/CollectionItemValidator.php:38
-msgid "Enter an integer between -2147483648 and 2147483647."
-msgstr ""
-
 #: modules/johncms/collections/src/Application/Services/CollectionItemValidator.php:41
 msgid "The preview text must not exceed 65535 bytes."
 msgstr ""
@@ -298,6 +317,7 @@ msgid "The end date must not precede the start date."
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Services/CollectionItemValidator.php:56
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:80
 msgid "Unknown collection field."
 msgstr ""
 
@@ -368,20 +388,25 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:46
-msgid "Collection not found."
+#: modules/johncms/collections/src/Application/UseCases/PatchCollectionItemUseCase.php:28
+#: modules/johncms/collections/src/Application/UseCases/PatchCollectionItemUseCase.php:32
+msgid "Item not found."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:51
+#: modules/johncms/collections/src/Application/UseCases/PatchCollectionItemUseCase.php:49
+msgid "Unknown patch property or invalid value type."
+msgstr ""
+
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:65
 msgid "The item does not belong to this collection or no longer exists."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:57
-msgid "Choose a section of this collection."
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:75
+msgid "Choose a valid author or use a system operation."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:61
-msgid "Choose a valid author or use a system operation."
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:85
+msgid "This field cannot be cleared."
 msgstr ""
 
 #: modules/johncms/collections/src/Install/Installer.php:34

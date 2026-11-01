@@ -56,5 +56,9 @@ return static function (ContainerConfigurator $container): void {
         \Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface::class,
         \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction::class
     )->autowire();
+    $services->set(
+        \Johncms\Modules\Collections\Application\Api\CollectionsImportApiInterface::class,
+        \Johncms\Modules\Collections\Application\Api\CollectionsImportApi::class
+    )->autowire()->public();
     $services->set(CollectionsApiInterface::class, CollectionsApi::class)->autowire()->public();
 };

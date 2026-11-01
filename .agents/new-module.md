@@ -404,3 +404,9 @@ the cache. Only a successful full update acknowledges the CMS version; scoped mo
 does not acknowledge an unrelated failed full update. Lifecycle mutations and their fresh-process
 completion acquire the same lock in separate phases, with a pending marker between them.
 Module update completion requires CLI PHP at `PHP_BINDIR . '/php'` and `proc_open`.
+
+Historical collection imports use `CollectionsImportApiInterface` inside `Installer::update()`.
+`SystemUpdater` opens the shared `SystemOperationContext` only around the hook and closes it in
+`finally`; declarations and ordinary user operations have no import scope. No request parameter
+can enable it. Use the collections API for reads and mutations; it returns immutable DTOs,
+with explicit `item.*` / `field.*` query references. See `docs/moduli/collections.md`.

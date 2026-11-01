@@ -44,6 +44,13 @@ final class ContentCollectionSectionRepository implements ContentCollectionSecti
             ->first();
     }
 
+    public function findByCodeForUpdate(int $collectionId, ?int $parent, string $code): ?ContentCollectionSection
+    {
+        $query = ContentCollectionSection::query()->where('collection_id', $collectionId)->where('parent', $parent)->where('code', $code);
+        $query->lockForUpdate();
+        return $query->first();
+    }
+
     public function findById(int $id): ?ContentCollectionSection
     {
         return ContentCollectionSection::query()->find($id);

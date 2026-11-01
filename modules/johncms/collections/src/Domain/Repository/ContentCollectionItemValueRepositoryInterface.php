@@ -11,6 +11,9 @@ interface ContentCollectionItemValueRepositoryInterface
      */
     public function deleteByItem(int $itemId): void;
 
+    /** @param list<int> $fieldIds */
+    public function deleteFields(int $itemId, array $fieldIds): void;
+
     /**
      * Bulk insert prepared value rows (raw typed columns).
      *

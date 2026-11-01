@@ -23,14 +23,14 @@ final class ContentCollectionItemQueryTest extends TestCase
         self::assertSame([], $query->filters);
         self::assertTrue($query->onlyActive);
         self::assertSame([], $query->orderBy);
-        self::assertNull($query->limit);
+        self::assertSame(100, $query->limit);
         self::assertSame(0, $query->offset);
     }
 
     public function testCarriesTypedFiltersAndOrdering(): void
     {
-        $filter = new FieldFilterDTO('rating', FilterOperator::Gte, 3);
-        $order = new OrderByDTO('sort', SortDirection::Desc);
+        $filter = new FieldFilterDTO('field.rating', FilterOperator::Gte, 3);
+        $order = new OrderByDTO('item.sort', SortDirection::Desc);
 
         $query = new ContentCollectionItemQuery(
             collectionId: 1,
@@ -46,7 +46,7 @@ final class ContentCollectionItemQueryTest extends TestCase
         self::assertSame(10, $query->sectionId);
         self::assertTrue($query->includeSubsections);
         self::assertSame([$filter], $query->filters);
-        self::assertSame('rating', $query->filters[0]->fieldCode);
+        self::assertSame('field.rating', $query->filters[0]->fieldCode);
         self::assertSame(FilterOperator::Gte, $query->filters[0]->operator);
         self::assertSame(3, $query->filters[0]->value);
         self::assertFalse($query->onlyActive);
@@ -58,8 +58,20 @@ final class ContentCollectionItemQueryTest extends TestCase
 
     public function testOrderByDefaultsToAscending(): void
     {
-        $order = new OrderByDTO('name');
+        $order = new OrderByDTO('item.name');
 
         self::assertSame(SortDirection::Asc, $order->direction);
     }
+    #[\PHPUnit\Framework\Attributes\DataProvider('invalidPagination')]
+    public function testPaginationIsBounded(int $limit, int $offset): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ContentCollectionItemQuery(1, limit: $limit, offset: $offset);
+    }
+
+    public static function invalidPagination(): array
+    {
+        return [[0, 0], [-1, 0], [1001, 0], [1, -1], [1, 1000001]];
+    }
+
 }

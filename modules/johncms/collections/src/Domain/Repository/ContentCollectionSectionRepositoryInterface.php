@@ -33,6 +33,8 @@ interface ContentCollectionSectionRepositoryInterface
 
     public function findByCode(int $collectionId, ?int $parent, string $code): ?ContentCollectionSection;
 
+    public function findByCodeForUpdate(int $collectionId, ?int $parent, string $code): ?ContentCollectionSection;
+
     public function findById(int $id): ?ContentCollectionSection;
 
     public function findForUpdate(int $id): ?ContentCollectionSection;

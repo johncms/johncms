@@ -104,6 +104,40 @@ final class ConcurrentCollectionItemSaveTest extends TestCase
         self::assertSame(0, Capsule::table('collection_items')->count());
     }
 
+    public function testConcurrentViewsDoNotLoseIncrementsOrModifyUpdatedAt(): void
+    {
+        $id = CollectionItemWriterFactory::create()->execute(null, $this->form());
+        Capsule::table('collection_items')->where('id', $id)->update(['updated_at' => '2000-01-01 00:00:00']);
+        [$first, $firstOutput] = $this->start('50', $id, 'views');
+        [$second, $secondOutput] = $this->start('50', $id, 'views');
+        self::assertSame(0, $this->finish($first, $firstOutput));
+        self::assertSame(0, $this->finish($second, $secondOutput));
+        $item = Capsule::table('collection_items')->where('id', $id)->first();
+        self::assertSame(100, $item->view_count);
+        self::assertSame('2000-01-01 00:00:00', $item->updated_at);
+    }
+
+    public function testConcurrentPatchesPreserveTheOtherCustomField(): void
+    {
+        foreach (['first', 'second'] as $code) {
+            Capsule::table('collection_fields')->insert(['collection_id' => $this->collection, 'code' => $code, 'name' => $code, 'type' => 'string']);
+        }
+        $id = CollectionItemWriterFactory::create()->execute(null, $this->form());
+        Capsule::connection()->beginTransaction();
+        Capsule::table('collections')->where('id', $this->collection)->lockForUpdate()->first();
+        try {
+            [$first, $firstOutput] = $this->start('first', $id, 'values');
+            [$second, $secondOutput] = $this->start('second', $id, 'values');
+            $this->connectionId($firstOutput);
+            $this->connectionId($secondOutput);
+        } finally {
+            Capsule::connection()->rollBack();
+        }
+        self::assertSame(0, $this->finish($first, $firstOutput));
+        self::assertSame(0, $this->finish($second, $secondOutput));
+        self::assertSame(['first' => 'Patched', 'second' => 'Patched'], CollectionItemWriterFactory::api()->getItem($id)->values);
+    }
+
     /** @param list<int> $expected */
     private function concurrent(string $code, array $expected): void
     {
@@ -139,13 +173,16 @@ final class ConcurrentCollectionItemSaveTest extends TestCase
     }
 
     /** @return array{resource, resource} */
-    private function start(string $code, ?int $id = null): array
+    private function start(string $code, ?int $id = null, ?string $mode = null): array
     {
         $output = tmpfile();
         self::assertIsResource($output);
         $arguments = [PHP_BINARY, ROOT_PATH . 'tests/Support/collection-item-writer.php', (string) $this->collection, $code];
         if ($id !== null) {
             $arguments[] = (string) $id;
+        }
+        if ($mode !== null) {
+            $arguments[] = $mode;
         }
         $process = proc_open($arguments, [0 => ['pipe', 'r'], 1 => $output, 2 => $output], $pipes, ROOT_PATH);
         self::assertIsResource($process);

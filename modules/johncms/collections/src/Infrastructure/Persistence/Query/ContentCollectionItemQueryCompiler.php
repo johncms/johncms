@@ -27,16 +27,11 @@ final class ContentCollectionItemQueryCompiler
     private const ITEMS_TABLE = 'collection_items';
     private const VALUES_TABLE = 'collection_item_values';
 
-    /** Base item columns allowed in filters. */
-    private const FILTERABLE_COLUMNS = [
-        'id', 'section_id', 'code', 'name', 'active',
-        'sort', 'view_count', 'active_from', 'active_to', 'created_at', 'updated_at',
-    ];
-
-    /** Base item columns allowed for ordering. */
-    private const SORTABLE_COLUMNS = [
-        'id', 'sort', 'name', 'code', 'view_count', 'active_from', 'active_to', 'created_at', 'updated_at',
-    ];
+    /** @param array<string, ContentCollectionField> $fields */
+    public function validate(ContentCollectionItemQuery $query, array $fields): void
+    {
+        (new \Johncms\Modules\Collections\Domain\Query\ItemQueryValidator())->validate($query, $fields);
+    }
 
     /**
      * @param Builder<ContentCollectionItem> $builder
@@ -45,16 +40,11 @@ final class ContentCollectionItemQueryCompiler
     public function applyFilters(Builder $builder, ContentCollectionItemQuery $query, array $fields): void
     {
         foreach ($query->filters as $filter) {
-            if (in_array($filter->fieldCode, self::FILTERABLE_COLUMNS, true)) {
+            if (str_starts_with($filter->fieldCode, 'item.')) {
                 $this->applyBaseFilter($builder, $filter);
-                continue;
+            } else {
+                $this->applyCustomFieldFilter($builder, $filter, $fields[substr($filter->fieldCode, 6)]);
             }
-
-            $field = $fields[$filter->fieldCode] ?? null;
-            if ($field !== null) {
-                $this->applyCustomFieldFilter($builder, $filter, $field);
-            }
-            // Unknown field codes are ignored: they never reach SQL (security).
         }
     }
 
@@ -64,48 +54,21 @@ final class ContentCollectionItemQueryCompiler
      */
     public function applyOrder(Builder $builder, ContentCollectionItemQuery $query, array $fields): void
     {
-        $applied = false;
+        if ($query->orderBy === []) {
+            $builder->orderBy('sort');
+        }
+        $hasId = false;
         foreach ($query->orderBy as $order) {
-            if (in_array($order->fieldCode, self::SORTABLE_COLUMNS, true)) {
-                $builder->orderBy($order->fieldCode, $order->direction->value);
-                $applied = true;
-                continue;
-            }
-
-            $field = $fields[$order->fieldCode] ?? null;
-            if ($field !== null) {
-                $this->applyCustomFieldOrder($builder, $field, $order);
-                $applied = true;
+            if (str_starts_with($order->fieldCode, 'item.')) {
+                $builder->orderBy(substr($order->fieldCode, 5), $order->direction->value);
+                $hasId = $hasId || $order->fieldCode === 'item.id';
+            } else {
+                $this->applyCustomFieldOrder($builder, $fields[substr($order->fieldCode, 6)], $order);
             }
         }
-
-        if (! $applied) {
-            $builder->orderBy('sort')->orderBy('id');
+        if (! $hasId) {
+            $builder->orderBy('id');
         }
-    }
-
-    /**
-     * Custom-field codes referenced by the query (i.e. not base columns). The
-     * repository resolves only these to field definitions, so base-only queries
-     * cost no extra lookup.
-     *
-     * @return list<string>
-     */
-    public function referencedFieldCodes(ContentCollectionItemQuery $query): array
-    {
-        $codes = [];
-        foreach ($query->filters as $filter) {
-            if (! in_array($filter->fieldCode, self::FILTERABLE_COLUMNS, true)) {
-                $codes[$filter->fieldCode] = true;
-            }
-        }
-        foreach ($query->orderBy as $order) {
-            if (! in_array($order->fieldCode, self::SORTABLE_COLUMNS, true)) {
-                $codes[$order->fieldCode] = true;
-            }
-        }
-
-        return array_keys($codes);
     }
 
     /**
@@ -114,12 +77,12 @@ final class ContentCollectionItemQueryCompiler
     private function applyBaseFilter(Builder $builder, FieldFilterDTO $filter): void
     {
         if ($filter->operator === FilterOperator::In) {
-            $builder->whereIn($filter->fieldCode, (array) $filter->value);
+            $builder->whereIn(substr($filter->fieldCode, 5), $this->sqlValue($filter->value));
 
             return;
         }
 
-        $builder->where($filter->fieldCode, $filter->operator->sqlOperator(), $filter->value);
+        $builder->where(substr($filter->fieldCode, 5), $filter->operator->sqlOperator(), $this->sqlValue($filter->value));
     }
 
     /**
@@ -129,16 +92,25 @@ final class ContentCollectionItemQueryCompiler
     {
         $valueColumn = $field->type->valueColumn();
 
-        $builder->whereExists(static function (QueryBuilder $query) use ($field, $valueColumn, $filter): void {
+        if ($filter->operator === FilterOperator::Eq && $filter->value === null) {
+            $builder->whereNotExists(static function (QueryBuilder $query) use ($field): void {
+                $query->selectRaw('1')->from(self::VALUES_TABLE)
+                    ->whereColumn(self::VALUES_TABLE . '.item_id', self::ITEMS_TABLE . '.id')
+                    ->where('field_id', $field->id);
+            });
+            return;
+        }
+        $value = $this->sqlValue($filter->value);
+        $builder->whereExists(static function (QueryBuilder $query) use ($field, $valueColumn, $filter, $value): void {
             $query->selectRaw('1')
                 ->from(self::VALUES_TABLE)
                 ->whereColumn(self::VALUES_TABLE . '.item_id', self::ITEMS_TABLE . '.id')
                 ->where(self::VALUES_TABLE . '.field_id', $field->id);
 
             if ($filter->operator === FilterOperator::In) {
-                $query->whereIn($valueColumn, (array) $filter->value);
+                $query->whereIn($valueColumn, $value);
             } else {
-                $query->where($valueColumn, $filter->operator->sqlOperator(), $filter->value);
+                $query->where($valueColumn, $filter->operator->sqlOperator(), $value);
             }
         });
     }
@@ -160,10 +132,18 @@ final class ContentCollectionItemQueryCompiler
                     ->from(self::VALUES_TABLE)
                     ->whereColumn(self::VALUES_TABLE . '.item_id', self::ITEMS_TABLE . '.id')
                     ->where(self::VALUES_TABLE . '.field_id', $field->id)
-                    ->orderBy('sort')
+                    ->orderBy('sort')->orderBy('id')
                     ->limit(1);
             },
             $order->direction->value
         );
+    }
+
+    private function sqlValue(mixed $value): mixed
+    {
+        if ($value instanceof \DateTimeImmutable) {
+            return $value->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d H:i:s');
+        }
+        return is_array($value) ? array_map($this->sqlValue(...), $value) : $value;
     }
 }

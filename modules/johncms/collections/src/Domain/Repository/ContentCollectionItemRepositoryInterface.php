@@ -32,6 +32,10 @@ interface ContentCollectionItemRepositoryInterface
      */
     public function findWithValues(int $id): ?ContentCollectionItem;
 
+    public function findWithValuesForUpdate(int $id): ?ContentCollectionItem;
+
+    public function incrementViews(int $id): bool;
+
     public function findByCode(int $collectionId, ?int $sectionId, string $code): ?ContentCollectionItem;
 
     /**

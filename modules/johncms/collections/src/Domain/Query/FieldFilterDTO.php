@@ -6,13 +6,7 @@ namespace Johncms\Modules\Collections\Domain\Query;
 
 use Johncms\Modules\Collections\Domain\Enums\FilterOperator;
 
-/**
- * A single filter condition for CollectionItemQuery.
- *
- * `fieldCode` refers either to a base item column (resolved against an allowlist)
- * or to a custom field code (resolved to a field id in the repository). It is never
- * interpolated into SQL directly.
- */
+/** A typed comparison using item.<column> or field.<code>; IN takes a list. */
 final readonly class FieldFilterDTO
 {
     public function __construct(

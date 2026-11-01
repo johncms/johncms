@@ -707,3 +707,18 @@ msgstr "Укажите корректного автора или выполни
 
 msgid "Its part of the address: letters, digits, dot, plus, hyphen or underscore."
 msgstr "Часть адреса: латинские буквы, цифры, точка, плюс, дефис и подчёркивание."
+
+msgid "The item is missing or not published."
+msgstr "Элемент не найден или не опубликован."
+
+msgid "The section description must not exceed 65535 bytes."
+msgstr "Описание раздела не должно превышать 65535 байт."
+
+msgid "Item not found."
+msgstr "Элемент не найден."
+
+msgid "Unknown patch property or invalid value type."
+msgstr "Неизвестное свойство обновления или неверный тип значения."
+
+msgid "This field cannot be cleared."
+msgstr "Это поле нельзя очистить."

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Collections\Application\UseCases;
 
 use Illuminate\Support\Str;
+use Johncms\Modules\Collections\Application\DTO\CollectionItemHistoryDTO;
+use Johncms\Updates\SystemOperationContext;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
 use Johncms\Modules\Collections\Application\Services\CollectionItemValidator;
 use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface;
@@ -28,6 +30,7 @@ final readonly class SaveCollectionItemUseCase
         private ContentCollectionSectionRepositoryInterface $sections,
         private CollectionTransactionInterface $transaction,
         private CollectionItemValidator $validator,
+        private SystemOperationContext $systemContext = new SystemOperationContext(),
     ) {
     }
 
@@ -35,11 +38,22 @@ final readonly class SaveCollectionItemUseCase
      * Creates or updates an item and rebuilds its custom field values. Returns
      * the item id. A non-null id must belong to an existing item in this collection.
      *
+     * @param list<string>|null $valueFields Null replaces all values; a list changes only those fields.
+     * @param list<string> $clearFields
      * @throws CollectionItemCodeAlreadyExistsException when an explicit code belongs to another item in the same section
      */
-    public function execute(?int $id, CollectionItemFormDTO $dto, ?int $actorId = null): int
+    public function execute(?int $id, CollectionItemFormDTO $dto, ?int $actorId = null, ?CollectionItemHistoryDTO $history = null, ?array $valueFields = null, array $clearFields = []): int
     {
-        return $this->transaction->run(function () use ($id, $dto, $actorId): int {
+        if ($id === null && $valueFields !== null) {
+            throw new \InvalidArgumentException('Partial value writes require an existing item.');
+        }
+        if ($history !== null) {
+            $this->systemContext->requireActive();
+            if ($id !== null) {
+                throw new \InvalidArgumentException('Historical import creates new records only.');
+            }
+        }
+        return $this->transaction->run(function () use ($id, $dto, $actorId, $history, $valueFields, $clearFields): int {
             // Serialize writes, including root codes which a nullable unique index cannot protect.
             $collection = $this->collections->findForUpdate($dto->collectionId);
             if ($collection === null) {
@@ -60,7 +74,18 @@ final readonly class SaveCollectionItemUseCase
             if ($actorId !== null && $actorId < 1) {
                 throw new CollectionItemFormException(['actor_id' => [d__('collections', 'Choose a valid author or use a system operation.')]]);
             }
-            $dto = $this->validator->validate($dto, $this->fieldRepository->getByCollection($dto->collectionId));
+            $definitions = $this->fieldRepository->getByCollection($dto->collectionId)->keyBy('code');
+            foreach ([...($valueFields ?? []), ...$clearFields] as $code) {
+                if (! isset($definitions[$code])) {
+                    throw new CollectionItemFormException(['values.' . $code => [d__('collections', 'Unknown collection field.')]]);
+                }
+            }
+            foreach ($clearFields as $code) {
+                if ($definitions[$code]->required || ($valueFields !== null && ! in_array($code, $valueFields, true))) {
+                    throw new CollectionItemFormException(['values.' . $code => [d__('collections', 'This field cannot be cleared.')]]);
+                }
+            }
+            $dto = $this->validator->validate($dto, $definitions->values());
             $attributes = [
                 'collection_id' => $dto->collectionId, 'section_id' => $dto->sectionId,
                 'code' => $this->resolveCode($id, $dto), 'name' => $dto->name,
@@ -73,9 +98,12 @@ final readonly class SaveCollectionItemUseCase
                 $itemId = $id;
             } else {
                 $attributes['created_by'] = $actorId;
+                if ($history !== null) {
+                    $attributes = array_replace($attributes, $history->attributes());
+                }
                 $itemId = $this->itemRepository->create($attributes)->id;
             }
-            $this->rebuildValues($itemId, $dto);
+            $this->rebuildValues($itemId, $dto, $valueFields, $clearFields);
             return $itemId;
         });
     }
@@ -115,16 +143,24 @@ final readonly class SaveCollectionItemUseCase
         }
     }
 
-    private function rebuildValues(int $itemId, CollectionItemFormDTO $dto): void
+    /** @param list<string>|null $valueFields
+     * @param list<string> $clearFields
+     */
+    private function rebuildValues(int $itemId, CollectionItemFormDTO $dto, ?array $valueFields, array $clearFields): void
     {
-        // Full replace: the form submits the complete set of values.
-        $this->valueRepository->deleteByItem($itemId);
-
-        $rows = [];
-        foreach ($this->fieldRepository->getByCollection($dto->collectionId) as $field) {
-            $rows = array_merge($rows, $this->rowsForField($itemId, $field, $dto->values[$field->code] ?? null));
+        $fields = $this->fieldRepository->getByCollection($dto->collectionId);
+        if ($valueFields === null) {
+            $this->valueRepository->deleteByItem($itemId);
+        } else {
+            $fields = $fields->filter(static fn (ContentCollectionField $field): bool => in_array($field->code, $valueFields, true));
+            $this->valueRepository->deleteFields($itemId, $fields->pluck('id')->all());
         }
-
+        $rows = [];
+        foreach ($fields as $field) {
+            if (! in_array($field->code, $clearFields, true)) {
+                $rows = array_merge($rows, $this->rowsForField($itemId, $field, $dto->values[$field->code] ?? null));
+            }
+        }
         $this->valueRepository->insertMany($rows);
     }
 

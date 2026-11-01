@@ -42,6 +42,8 @@ final class ContentCollectionSection extends Model
         'description',
         'active',
         'sort',
+        'created_at',
+        'updated_at',
     ];
 
     protected $casts = [

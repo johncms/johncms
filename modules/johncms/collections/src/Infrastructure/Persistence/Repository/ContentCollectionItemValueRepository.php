@@ -14,6 +14,11 @@ final class ContentCollectionItemValueRepository implements ContentCollectionIte
         ContentCollectionItemValue::query()->where('item_id', $itemId)->delete();
     }
 
+    public function deleteFields(int $itemId, array $fieldIds): void
+    {
+        ContentCollectionItemValue::query()->where('item_id', $itemId)->whereIn('field_id', $fieldIds)->delete();
+    }
+
     public function insertMany(array $rows): void
     {
         if ($rows === []) {

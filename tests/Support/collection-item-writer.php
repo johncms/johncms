@@ -12,9 +12,21 @@ use Tests\Support\CollectionWriterDatabase;
 CollectionWriterDatabase::boot();
 echo \Illuminate\Database\Capsule\Manager::connection()->selectOne('SELECT CONNECTION_ID() AS id')->id . PHP_EOL;
 flush();
-$form = new CollectionItemFormDTO((int) $argv[1], null, $argv[2], 'Writer', true, null, null, 100, null, null, []);
+$mode = $argv[4] ?? 'save';
 try {
-    CollectionItemWriterFactory::create()->execute(isset($argv[3]) ? (int) $argv[3] : null, $form);
+    if ($mode === 'views') {
+        $api = CollectionItemWriterFactory::api();
+        for ($i = 0; $i < (int) $argv[2]; ++$i) {
+            $api->incrementViews((int) $argv[3]);
+        }
+    } elseif ($mode === 'values') {
+        CollectionItemWriterFactory::api()->patchItem((int) $argv[3],
+            new \Johncms\Modules\Collections\Application\DTO\CollectionItemPatchDTO(values: [$argv[2] => 'Patched'])
+        );
+    } else {
+        $form = new CollectionItemFormDTO((int) $argv[1], null, $argv[2], 'Writer', true, null, null, 100, null, null, []);
+        CollectionItemWriterFactory::create()->execute(isset($argv[3]) ? (int) $argv[3] : null, $form);
+    }
     exit(0);
 } catch (CollectionItemCodeAlreadyExistsException) {
     exit(2);

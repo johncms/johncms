@@ -33,6 +33,7 @@ final class SystemUpdater
         private readonly SystemUpdateStateInterface $completion,
         private readonly CacheClearCommand $clearCache,
         private readonly iterable $synchronizers,
+        private readonly SystemOperationContext $systemContext = new SystemOperationContext(),
     ) {
     }
 
@@ -70,7 +71,7 @@ final class SystemUpdater
                     $io->text($step);
                     $manifest = $modules[$key];
                     $version = $manifest->version ?? CMS_VERSION;
-                    $this->installers->create($manifest)?->update($this->state->find($key)->version ?? CMS_VERSION, $version);
+                    $this->systemContext->runTrusted(fn () => $this->installers->create($manifest)?->update($this->state->find($key)->version ?? CMS_VERSION, $version));
                 }
                 foreach ($owners as $owner) {
                     foreach ($synchronizers as $synchronizer) {

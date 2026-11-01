@@ -4,19 +4,13 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Domain\Query;
 
-/**
- * Immutable query specification for selecting collection items.
- *
- * Analogous to Bitrix `CIBlockElement::GetList`: it collects the selection
- * conditions and is passed to the repository, giving a single query API to any
- * collection. Custom-field (EAV) filtering/sorting is implemented in a later
- * iteration; the core iteration honors collection/section/active/order/limit.
- */
+/** Immutable item selection; base references use item.*, custom references use field.*. */
 final readonly class ContentCollectionItemQuery
 {
     /**
      * @param list<FieldFilterDTO> $filters
      * @param list<OrderByDTO> $orderBy
+     * @param list<string>|null $fields Custom field codes: null loads all, [] loads none.
      */
     public function __construct(
         public int $collectionId,
@@ -25,8 +19,12 @@ final readonly class ContentCollectionItemQuery
         public array $filters = [],
         public bool $onlyActive = true,
         public array $orderBy = [],
-        public ?int $limit = null,
+        public int $limit = 100,
         public int $offset = 0,
+        public ?array $fields = null,
     ) {
+        if ($collectionId < 1 || ($sectionId !== null && $sectionId < 1) || $limit < 1 || $limit > 1000 || $offset < 0 || $offset > 1000000) {
+            throw new \InvalidArgumentException('Use valid collection/section ids, limit 1..1000 and offset 0..1000000.');
+        }
     }
 }
