@@ -32,6 +32,7 @@
       'You have not entered login' => 'Вы не ввели логин',
       'You have not entered password' => 'Вы не ввели пароль',
       'Personal' => 'Личное',
+      'Powered by %s' => 'Работает на %s',
       'Logout' => 'Выход',
       'Authorization failed' => 'Ошибка авторизации',
       'The security code is not correct' => 'Проверочный код введен неверно',

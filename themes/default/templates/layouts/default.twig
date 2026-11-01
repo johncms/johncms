@@ -18,7 +18,7 @@
             </div>
             <div class="site-sidebar__body">
                 {% block sidebar_user %}
-                    {% include '@theme/components/sidebar-user-menu.twig' with {notifications: layout_notifications} only %}
+                    {% include '@theme/components/sidebar-user-menu.twig' only %}
                 {% endblock %}
                 {% block sidebar_menu %}
                     {% include '@theme/components/sidebar-main-menu.twig' only %}

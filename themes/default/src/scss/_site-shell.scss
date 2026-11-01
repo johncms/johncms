@@ -111,10 +111,6 @@
   padding: .625rem;
   color: var(--fg);
   text-decoration: none;
-  list-style: none;
-  cursor: pointer;
-
-  &::-webkit-details-marker { display: none; }
 }
 
 .site-user__name {
@@ -128,28 +124,6 @@
   padding: 0 .625rem .625rem;
   font-size: .75rem;
   color: var(--fg-muted);
-}
-
-.site-user__links {
-  display: grid;
-  gap: .125rem;
-  padding: .375rem;
-  border-block-start: 1px solid var(--border);
-
-  a {
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    padding: .5rem;
-    border-radius: .375rem;
-    color: var(--fg-muted);
-    text-decoration: none;
-    overflow-wrap: anywhere;
-
-    > span:not(.site-nav__badge) { flex: 1; min-inline-size: 0; }
-
-    &:hover { background: var(--bg-elev-2); color: var(--fg); }
-  }
 }
 
 .site-avatar {
@@ -309,14 +283,6 @@
   background: var(--danger);
 }
 
-.site-notification-dot {
-  flex-shrink: 0;
-  inline-size: 6px;
-  block-size: 6px;
-  border-radius: 50%;
-  background: var(--danger);
-}
-
 .site-flag {
   flex-shrink: 0;
   inline-size: 1.125rem;
@@ -403,7 +369,7 @@
   text-decoration: none;
   overflow-wrap: anywhere;
 
-  span:not(.site-notification-dot) { flex: 1; }
+  > span:not(.site-nav__badge) { flex: 1; }
   &:hover { background: var(--bg-elev-2); color: var(--fg); }
   &[aria-current], &[aria-pressed="true"] { background: var(--bg-elev-2); color: var(--fg); }
 
@@ -415,13 +381,12 @@
 
 .site-popover__item[aria-pressed="false"] .site-theme-check { visibility: hidden; }
 
+// The account name keeps its own letter case: nicknames are case-sensitive.
 .site-popover__header {
   padding: .375rem .625rem .25rem;
-  color: var(--fg-dim);
-  font-size: .625rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
+  color: var(--fg-muted);
+  font-size: .75rem;
+  font-weight: 600;
   overflow-wrap: anywhere;
 }
 
@@ -465,28 +430,51 @@
   }
 }
 
-.site-footer__inner { padding-block: 1.5rem; }
+.site-footer__inner { padding-block: 1.25rem; }
 
-.site-footer__links,
-.site-footer__bottom,
-.site-footer__meta,
+// Script-only counters draw nothing, so the row gets its spacing only when something is visible.
 .site-footer__counters {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: .5rem 1rem;
+  gap: .5rem;
+
+  &:has(:is(img, iframe, svg, canvas, object, embed, a, span)) { margin-block-end: 1rem; }
+  // Scripts still run inside a hidden wrapper; one that draws later becomes visible again.
+  > div:not(:has(:is(img, iframe, svg, canvas, object, embed, a, span))) { display: none; }
+}
+
+.site-footer__site,
+.site-footer__copyright,
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .25rem 1rem;
+  min-inline-size: 0;
   overflow-wrap: anywhere;
 }
 
-.site-footer__links {
-  padding-block-end: 1rem;
-  margin-block-end: 1rem;
-  border-block-end: 1px solid var(--border);
+// Beside the links the copyright keeps to the end; alone on a line it starts at the edge.
+.site-footer__site { justify-content: space-between; }
+.site-footer__copyright { gap: .25rem .5rem; margin: 0; }
+.site-footer__powered::before {
+  content: '·';
+  margin-inline-end: .5rem;
+  color: var(--fg-dim);
 }
-.site-footer__copyright { min-inline-size: 0; }
-.site-footer__meta { margin-inline-start: auto; }
-.site-footer__counters { gap: .5rem; }
-.site-footer__debug { color: var(--fg-dim); font-size: .6875rem; }
+
+// A temporary strip until the debug bar replaces it.
+.site-debug {
+  padding: .375rem max(2rem, calc((100% - 78rem) / 2 + 2rem));
+  border-block-start: 1px solid var(--border);
+  background: var(--bg-elev-2);
+  color: var(--fg-dim);
+  font-family: var(--bs-font-monospace);
+  font-size: .6875rem;
+
+  a { color: inherit; }
+}
 
 .site-skip-link {
   position: fixed;
@@ -541,6 +529,7 @@
   .site-content,
   .site-footer__inner,
   .site-footer-content { padding-inline: 1rem; }
+  .site-debug { padding-inline: 1rem; }
   .site-content { padding-block: 1.25rem 2rem; }
   .site-page-heading h1 { font-size: 1.5rem; }
 
@@ -605,8 +594,7 @@
 }
 
 @media (max-width: 575.98px) {
-  .site-footer__bottom { flex-direction: column; align-items: flex-start; }
-  .site-footer__meta { margin-inline-start: 0; }
+  .site-footer__site { flex-direction: column; align-items: flex-start; }
 
   .site-topbar .site-popover__panel {
     position: fixed;

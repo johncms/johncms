@@ -68,6 +68,12 @@ if (sidebar && main && opener) {
       (mobile.matches ? opener : sidebar.querySelector('a[href]')).focus();
     }
   });
+  // A page restored from the back-forward cache comes back as it was left, with the drawer open.
+  window.addEventListener('pageshow', event => {
+    if (!event.persisted) return;
+    document.body.classList.remove('site-nav-motion');
+    close(false);
+  });
   document.body.classList.add('site-nav-ready');
   close(false);
   document.documentElement.classList.remove('site-nav-pending');

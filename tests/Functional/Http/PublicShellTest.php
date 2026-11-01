@@ -29,13 +29,11 @@ final class PublicShellTest extends FunctionalTestCase
         $response = $this->handleRequest('/forum/', cookies: $this->actingAs($user));
         $page = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
 
-        self::assertSame('A <member>', $page->querySelector('.site-user__name')?->textContent);
-        self::assertNotNull($page->querySelector('.site-user a[href="/profile/account"]'));
-        self::assertNotNull($page->querySelector('.site-user a[href="/notifications/"]'));
-        self::assertNotNull($page->querySelector('.site-user a[href="/logout"]'));
+        self::assertNull($page->querySelector('.site-user'), 'The account menu of a member lives in the topbar only.');
         self::assertNull($page->querySelector('[data-site-menu="staff"]'));
         self::assertSame('A <member>', $page->querySelector('[data-site-account] .site-popover__header')?->textContent);
         self::assertNotNull($page->querySelector('[data-site-account] a[href="/profile/' . $user->id . '"]'));
+        self::assertNotNull($page->querySelector('[data-site-account] a[href="/profile/account"]'));
         self::assertNotNull($page->querySelector('[data-site-account] a[href="/notifications/"]'));
         self::assertNotNull($page->querySelector('[data-site-account] a[href="/logout"]'));
         self::assertNull($page->querySelector('[data-site-account] a[href="/"]'));
@@ -69,6 +67,10 @@ final class PublicShellTest extends FunctionalTestCase
             self::assertNotNull($page->querySelector('.site-footer a[href="/privacy"]'));
             self::assertNotNull($page->querySelector('.site-footer a[href="/terms"]'));
             self::assertNull($page->querySelector('.site-footer a[href="https://twitter.com/johncms"]'));
+            // The row of the site closes the footer, whatever height the counters above it take.
+            self::assertSame('site-footer__site', $page->querySelector('.site-footer__inner')?->lastElementChild?->className);
+            self::assertStringContainsString('Local <site>', (string) $page->querySelector('.site-footer__copyright')?->textContent);
+            self::assertNotNull($page->querySelector('.site-footer__copyright a[href="https://johncms.com"]'));
         });
     }
 

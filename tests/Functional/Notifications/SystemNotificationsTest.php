@@ -138,6 +138,14 @@ final class SystemNotificationsTest extends FunctionalTestCase
         self::assertNotNull($bell);
         self::assertSame('', trim($bell->textContent));
 
-        return $page->querySelector('[data-site-notifications].site-control--dot') !== null;
+        // The bell only shows a dot; the number is in its label and in the account menu.
+        $dot = $page->querySelector('[data-site-notifications].site-control--dot') !== null;
+        $count = $page->querySelector('[data-site-account] a[href="/notifications/"] .site-nav__badge')?->textContent;
+        self::assertSame($dot, $count !== null);
+        if ($count !== null) {
+            self::assertStringEndsWith(': ' . $count, (string) $bell->getAttribute('aria-label'));
+        }
+
+        return $dot;
     }
 }

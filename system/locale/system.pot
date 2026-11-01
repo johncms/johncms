@@ -88,6 +88,7 @@ msgid "Reading the news"
 msgstr ""
 
 #: config/places.global.php:24
+#: themes/default/templates/components/site-topbar.twig:27
 msgid "Profile"
 msgstr ""
 
@@ -129,8 +130,8 @@ msgstr ""
 #: themes/default/templates/admin/components/topbar.twig:58
 #: themes/default/templates/admin/components/topbar.twig:59
 #: themes/default/templates/admin/components/topbar.twig:74
-#: themes/default/templates/components/sidebar-user-menu.twig:18
-#: themes/default/templates/components/site-topbar.twig:17
+#: themes/default/templates/components/site-topbar.twig:13
+#: themes/default/templates/components/site-topbar.twig:39
 msgid "Notifications"
 msgstr ""
 
@@ -942,7 +943,7 @@ msgstr ""
 
 #: system/src/Http/Controller/ExternalAuthController.php:185
 #: system/src/Http/Controller/ExternalAuthController.php:194
-#: themes/default/templates/components/sidebar-user-menu.twig:34
+#: themes/default/templates/components/sidebar-user-menu.twig:9
 msgid "Registration"
 msgstr ""
 
@@ -1028,7 +1029,6 @@ msgstr ""
 #: system/src/NavChain.php:76
 #: themes/default/templates/admin/pages/errors/403.twig:21
 #: themes/default/templates/components/sidebar-main-menu.twig:13
-#: themes/default/templates/components/site-topbar.twig:12
 #: themes/default/templates/pages/errors/403.twig:19
 msgid "Home"
 msgstr ""
@@ -1189,7 +1189,7 @@ msgid "Set Dark Theme"
 msgstr ""
 
 #: themes/default/templates/admin/components/topbar.twig:94
-#: themes/default/templates/components/sidebar-user-menu.twig:23
+#: themes/default/templates/components/site-topbar.twig:47
 #: modules/johncms/admin/src/Application/Controllers/LogoutController.php:22
 #: modules/johncms/admin/templates/logout-dialog.twig:3
 #: modules/johncms/admin/templates/logout-dialog.twig:12
@@ -1271,14 +1271,8 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-#: themes/default/templates/components/sidebar-user-menu.twig:11
-#: themes/default/templates/components/sidebar-user-menu.twig:14
-#: themes/default/templates/components/site-topbar.twig:21
-msgid "Personal"
-msgstr ""
-
-#: themes/default/templates/components/sidebar-user-menu.twig:31
-#: themes/default/templates/components/site-topbar.twig:26
+#: themes/default/templates/components/sidebar-user-menu.twig:6
+#: themes/default/templates/components/site-topbar.twig:53
 #: modules/johncms/auth/templates/public/registration-email-confirmed.twig:15
 msgid "Log In"
 msgstr ""
@@ -1308,24 +1302,33 @@ msgstr ""
 msgid "Cookie Policy"
 msgstr ""
 
-#: themes/default/templates/components/site-footer.twig:11
+#: themes/default/templates/components/site-footer.twig:22
 msgid "Information"
 msgstr ""
 
-#: themes/default/templates/components/site-preferences.twig:22
+#: themes/default/templates/components/site-footer.twig:28
+msgid "Powered by %s"
+msgstr ""
+
+#: themes/default/templates/components/site-preferences.twig:32
 msgid "Theme"
 msgstr ""
 
-#: themes/default/templates/components/site-preferences.twig:26
+#: themes/default/templates/components/site-preferences.twig:36
 msgid "Light theme"
 msgstr ""
 
-#: themes/default/templates/components/site-preferences.twig:26
+#: themes/default/templates/components/site-preferences.twig:36
 msgid "Dark theme"
 msgstr ""
 
-#: themes/default/templates/components/site-preferences.twig:26
+#: themes/default/templates/components/site-preferences.twig:36
 msgid "System theme"
+msgstr ""
+
+#: themes/default/templates/components/site-topbar.twig:17
+#: themes/default/templates/components/site-topbar.twig:33
+msgid "Personal"
 msgstr ""
 
 #: themes/default/templates/emails/changed-email-notification.twig:9
@@ -1493,7 +1496,7 @@ msgid "Skip to content"
 msgstr ""
 
 #: themes/default/templates/layouts/default.twig:15
-#: themes/default/templates/layouts/default.twig:35
+#: themes/default/templates/layouts/default.twig:34
 msgid "Close menu"
 msgstr ""
 
@@ -1501,7 +1504,7 @@ msgstr ""
 msgid "Online"
 msgstr ""
 
-#: themes/default/templates/layouts/default.twig:60
+#: themes/default/templates/layouts/default.twig:59
 msgid "Scroll page"
 msgstr ""
 

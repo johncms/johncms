@@ -1,30 +1,5 @@
-{# @var notifications array Unread counters from notifications(); guest model access is guarded. #}
-{% set unread = notifications.all|default(0) %}
-{% if app.user.isValid %}
-    <details class="site-user">
-        <summary class="site-user__summary">
-            <img class="site-avatar" src="{{ avatar(app.user.id) }}" alt="" width="28" height="28">
-            <span class="site-user__name">{{ app.user.name }}</span>
-            {% if unread %}<span class="site-nav__badge" dir="ltr">{{ unread|format_number }}</span>{% endif %}
-            {% include '@theme/components/icon.twig' with {name: 'chevron-down', size: 14} only %}
-        </summary>
-        <nav class="site-user__links" aria-label="{{ d__('system', 'Personal') }}">
-            <a href="/profile/account">
-                {% include '@theme/components/icon.twig' with {name: 'user', size: 14} only %}
-                <span>{{ d__('system', 'Personal') }}</span>
-            </a>
-            <a href="/notifications/">
-                {% include '@theme/components/icon.twig' with {name: 'bell', size: 14} only %}
-                <span>{{ d__('system', 'Notifications') }}</span>
-                {% if unread %}<span class="site-nav__badge" dir="ltr">{{ unread|format_number }}</span>{% endif %}
-            </a>
-            <a href="/logout">
-                {% include '@theme/components/icon.twig' with {name: 'log-out', size: 14} only %}
-                <span>{{ d__('system', 'Exit') }}</span>
-            </a>
-        </nav>
-    </details>
-{% else %}
+{# The account of a signed-in user lives in the topbar; the sidebar invites a guest to sign in. #}
+{% if not app.user.isValid %}
     <div class="site-user site-user--guest">
         <a class="site-user__summary" href="/login/">
             {% include '@theme/components/icon.twig' with {name: 'log-in', size: 14} only %}

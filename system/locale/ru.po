@@ -153,6 +153,9 @@ msgstr "Вы не ввели пароль"
 msgid "Personal"
 msgstr "Личное"
 
+msgid "Powered by %s"
+msgstr "Работает на %s"
+
 #: modules/login/src/Application/Controllers/LogoutController.php:44
 #: modules/login/templates/logout.phtml:4
 #: modules/login/templates/logout.phtml:5

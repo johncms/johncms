@@ -10,7 +10,7 @@
     <div class="site-topbar__actions">
         {% include '@theme/components/site-preferences.twig' only %}
         {% if app.user.isValid %}
-            <a class="site-control site-control--icon{{ unread ? ' site-control--dot' }}" href="/notifications/" data-site-notifications aria-label="{{ d__('system', 'Notifications') }}" title="{{ d__('system', 'Notifications') }}">
+            <a class="site-control site-control--icon{{ unread ? ' site-control--dot' }}" href="/notifications/" data-site-notifications aria-label="{{ d__('system', 'Notifications') }}{{ unread ? ': ' ~ unread|format_number }}" title="{{ d__('system', 'Notifications') }}">
                 {% include '@theme/components/icon.twig' with {name: 'bell'} only %}
             </a>
             <details class="site-popover site-popover--account" data-site-popover data-site-account>
@@ -22,16 +22,22 @@
                 <ul class="site-popover__panel">
                     <li class="site-popover__header">{{ app.user.name }}</li>
                     <li>
-                        <a class="site-popover__item" href="/notifications/">
-                            {% include '@theme/components/icon.twig' with {name: 'bell', size: 14} only %}
-                            <span>{{ d__('system', 'Notifications') }}</span>
-                            {% if unread %}<span class="site-notification-dot" aria-hidden="true"></span>{% endif %}
-                        </a>
-                    </li>
-                    <li>
                         <a class="site-popover__item" href="/profile/{{ app.user.id }}">
                             {% include '@theme/components/icon.twig' with {name: 'user', size: 14} only %}
                             <span>{{ d__('system', 'Profile') }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="site-popover__item" href="/profile/account">
+                            {% include '@theme/components/icon.twig' with {name: 'settings', size: 14} only %}
+                            <span>{{ d__('system', 'Personal') }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="site-popover__item" href="/notifications/">
+                            {% include '@theme/components/icon.twig' with {name: 'bell', size: 14} only %}
+                            <span>{{ d__('system', 'Notifications') }}</span>
+                            {% if unread %}<span class="site-nav__badge" dir="ltr">{{ unread|format_number }}</span>{% endif %}
                         </a>
                     </li>
                     <li><hr class="site-popover__divider"></li>
