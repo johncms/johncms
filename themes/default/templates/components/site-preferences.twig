@@ -38,6 +38,7 @@
                 <button type="button" class="site-popover__item" data-site-theme="{{ scheme }}" aria-pressed="{{ scheme == app.color_scheme ? 'true' : 'false' }}">
                     {% include '@theme/components/icon.twig' with {name: scheme == 'light' ? 'sun' : (scheme == 'dark' ? 'moon' : 'settings')} only %}
                     <span>{{ label }}</span>
+                    {% include '@theme/components/icon.twig' with {name: 'check', size: 14, class: 'site-theme-check'} only %}
                 </button>
             </li>
         {% endfor %}

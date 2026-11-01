@@ -7,19 +7,23 @@
 }|filter(url => url is not empty) %}
 {% set counters = analytics() %}
 <footer class="site-footer">
-    {% if legal_links %}
-        <nav class="site-footer__links" aria-label="{{ d__('system', 'Information') }}">
-            {% for label, url in legal_links %}<a href="{{ url }}">{{ label }}</a>{% endfor %}
-        </nav>
-    {% endif %}
-    <div class="site-footer__bottom">
-        <span>&copy; {{ 'now'|date('Y') }}, {{ config('johncms.copyright') }}</span>
-        <a href="https://johncms.com" target="_blank" rel="nofollow noopener">JohnCMS</a>
-        {% if counters %}
-            <div class="site-footer__counters">
-                {% for counter in counters %}<div>{{ counter }}</div>{% endfor %}
-            </div>
+    <div class="site-footer__inner">
+        {% if legal_links %}
+            <nav class="site-footer__links" aria-label="{{ d__('system', 'Information') }}">
+                {% for label, url in legal_links %}<a href="{{ url }}">{{ label }}</a>{% endfor %}
+            </nav>
         {% endif %}
-        {% include '@theme/components/debug.twig' with {trigger_class: 'site-footer__debug', trigger_style: ''} only %}
+        <div class="site-footer__bottom">
+            <span class="site-footer__copyright">&copy; {{ 'now'|date('Y') }}, {{ config('johncms.copyright') }}</span>
+            <div class="site-footer__meta">
+                <a href="https://johncms.com" target="_blank" rel="nofollow noopener">JohnCMS</a>
+                {% if counters %}
+                    <div class="site-footer__counters">
+                        {% for counter in counters %}<div>{{ counter }}</div>{% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {% include '@theme/components/debug.twig' with {trigger_class: 'site-footer__debug', trigger_style: 'margin-top: 1rem;'} only %}
     </div>
 </footer>
