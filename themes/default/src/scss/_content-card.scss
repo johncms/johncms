@@ -62,8 +62,6 @@
 
   .site-content-card__head { padding: 1rem 1.25rem; }
   .site-content-card__head h2 { font-size: .875rem; letter-spacing: -.01em; }
-  .site-content-card__head > a { padding: .25rem .5rem; border-radius: .375rem; font: .71875rem var(--bs-font-monospace); }
-  .site-content-card__head > a:hover { color: var(--fg); background: var(--bg-inset); }
   .site-content-card__body { padding: 0; }
   .site-content-card__item {
     display: flex;
@@ -124,6 +122,8 @@
   &__author a { color: var(--fg-muted); text-decoration: none; }
   &__author a:hover { color: var(--accent); }
   .site-avatar { flex-shrink: 0; }
+  &__date,
+  &__replies { font-family: var(--bs-font-monospace); }
   &__date { display: inline-flex; align-items: center; gap: .5rem; }
   &__replies { display: inline-flex; align-items: center; gap: .375rem; margin-inline-start: auto; color: var(--fg-muted); font-size: .6875rem; text-decoration: none; white-space: nowrap; }
   &__replies:hover { color: var(--accent); }

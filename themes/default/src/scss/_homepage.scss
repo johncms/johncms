@@ -41,6 +41,8 @@
   &__online { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; padding: 0; margin: 0; list-style: none; }
   &__online li { display: flex; align-items: center; gap: .625rem; min-inline-size: 0; overflow-wrap: anywhere; }
   &__online .site-avatar { flex-shrink: 0; }
+  &__online a { color: var(--fg); text-decoration: none; }
+  &__online a:hover { color: var(--accent); }
   &__sections { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; }
 
   &__tile {
