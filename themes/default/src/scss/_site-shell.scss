@@ -348,19 +348,23 @@
 }
 
 .site-popover {
+  --site-popover-trigger-height: 1.875rem;
+  --site-popover-top: calc((var(--site-topbar-height) + var(--site-popover-trigger-height)) / 2 + .125rem);
   position: relative;
 
   &[open] > summary { background: var(--bg-elev-2); color: var(--fg); }
 }
 
+.site-popover--account { --site-popover-trigger-height: 2rem; }
+
 .site-popover__panel {
   position: absolute;
-  inset-block-start: calc(100% + .5rem);
+  inset-block-start: calc(100% + .125rem);
   inset-inline-end: 0;
   inline-size: max-content;
   min-inline-size: 12.5rem;
   max-inline-size: min(20rem, calc(100vw - 2rem));
-  max-block-size: min(24rem, 70dvh);
+  max-block-size: calc(100dvh - var(--site-popover-top) - 1rem);
   overflow-y: auto;
   list-style: none;
   padding: .375rem;
@@ -383,6 +387,7 @@
   color: var(--fg-muted);
   font: inherit;
   font-size: .8125rem;
+  line-height: 1.5;
   text-align: start;
   text-decoration: none;
   overflow-wrap: anywhere;
@@ -531,7 +536,7 @@
 @media (max-width: 575.98px) {
   .site-topbar .site-popover__panel {
     position: fixed;
-    inset-block-start: calc(var(--site-topbar-height) + .5rem);
+    inset-block-start: var(--site-popover-top);
     inset-inline-end: 1rem;
   }
 }

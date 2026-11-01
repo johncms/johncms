@@ -13,7 +13,7 @@
             <a class="site-control site-control--icon{{ unread ? ' site-control--dot' }}" href="/notifications/" data-site-notifications aria-label="{{ d__('system', 'Notifications') }}" title="{{ d__('system', 'Notifications') }}">
                 {% include '@theme/components/icon.twig' with {name: 'bell'} only %}
             </a>
-            <details class="site-popover" data-site-popover data-site-account>
+            <details class="site-popover site-popover--account" data-site-popover data-site-account>
                 <summary class="site-topbar__account" aria-label="{{ d__('system', 'Personal') }}: {{ app.user.name }}">
                     <img class="site-avatar site-topbar__avatar" src="{{ avatar(app.user.id) }}" alt="" width="24" height="24">
                     <span class="site-topbar__account-name">{{ app.user.name }}</span>
