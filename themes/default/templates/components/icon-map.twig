@@ -1,0 +1,47 @@
+{# Generated from themes/default/src/icons/icons.json by npm run icons; do not edit. #}
+{% macro resolve(name) %}
+    {% set names = [
+        "bell",
+        "book-open",
+        "chart-column",
+        "check",
+        "chevron-down",
+        "chevron-left",
+        "chevron-right",
+        "chevron-up",
+        "download",
+        "external-link",
+        "house",
+        "images",
+        "info",
+        "languages",
+        "log-in",
+        "log-out",
+        "mail",
+        "menu",
+        "message-square",
+        "messages-square",
+        "moon",
+        "newspaper",
+        "pencil",
+        "search",
+        "settings",
+        "sun",
+        "user",
+        "user-plus",
+        "users",
+        "x"
+    ] %}
+    {% set aliases = {
+        "bar-chart": "chart-column",
+        "book": "newspaper",
+        "chat": "message-square",
+        "chevron-bottom": "chevron-down",
+        "forum": "messages-square",
+        "home": "house",
+        "messages": "messages-square",
+        "picasa": "images",
+        "text": "book-open"
+    } %}
+    {{- aliases[name]|default(name in names ? name : '') -}}
+{% endmacro %}

@@ -20,13 +20,12 @@
             <li>
                 <a href="{{ item.url }}">
                     {% if item.icon %}
-                        {% if item.hasImageIcon %}
-                            <img class="icon" src="{{ item.icon }}" alt="">
-                        {% else %}
-                            <svg class="icon">
-                                <use xlink:href="{{ asset('icons/sprite.svg') }}#{{ item.icon }}"/>
-                            </svg>
-                        {% endif %}
+                        {% include '@theme/components/icon.twig' with {
+                            name: item.icon,
+                            image: item.hasImageIcon,
+                            size: 24,
+                            class: 'icon'
+                        } only %}
                     {% endif %}
                     <span class="flex-grow-1">{{ item.title }}</span>
                     {% if badge > 0 %}
@@ -45,13 +44,12 @@
                 {% endif %}
                 <a href="{{ item.url }}">
                     {% if item.icon %}
-                        {% if item.hasImageIcon %}
-                            <img class="icon" src="{{ item.icon }}" alt="">
-                        {% else %}
-                            <svg class="icon text-danger">
-                                <use xlink:href="{{ asset('icons/sprite.svg') }}#{{ item.icon }}"/>
-                            </svg>
-                        {% endif %}
+                        {% include '@theme/components/icon.twig' with {
+                            name: item.icon,
+                            image: item.hasImageIcon,
+                            size: 24,
+                            class: 'icon text-danger'
+                        } only %}
                     {% endif %}
                     <span class="flex-grow-1 text-danger">{{ item.title }}</span>
                     {% if badge > 0 %}

@@ -1,0 +1,26 @@
+{#
+    Public icon, independent of the admin theme.
+    Known names and legacy aliases use Lucide; other names use the old sprite.
+    Rebuild the sprite and name map after editing src/icons/icons.json: npm run icons -- public.
+
+    @var name string|null Icon name or an image URL when image is true.
+    @var image bool Whether name is a module-provided image (MenuItem.hasImageIcon).
+    @var size int Width and height in pixels; defaults to 16.
+    @var class string Additional classes.
+    @var label string Accessible label; empty for a decorative icon.
+#}
+{% set name = name|default('') %}
+{% set size = size|default(16) %}
+{% set label = label|default('') %}
+{% if name %}
+    {% if image|default(false) %}
+        <img class="site-icon site-icon--image {{ class|default('') }}" src="{{ name }}" width="{{ size }}" height="{{ size }}" alt="{{ label }}"{% if not label %} aria-hidden="true"{% endif %}>
+    {% else %}
+        {% import '@theme/components/icon-map.twig' as icons %}
+        {% set symbol = icons.resolve(name)|trim %}
+        <svg class="site-icon site-icon--{{ symbol ? 'lucide' : 'legacy' }} {{ class|default('') }}" width="{{ size }}" height="{{ size }}" focusable="false"
+            {%- if label %} role="img" aria-label="{{ label }}"{% else %} aria-hidden="true"{% endif %}>
+            <use href="{{ asset(symbol ? 'icons/public.svg' : 'icons/sprite.svg', true) }}#{{ symbol ?: name }}"/>
+        </svg>
+    {% endif %}
+{% endif %}
