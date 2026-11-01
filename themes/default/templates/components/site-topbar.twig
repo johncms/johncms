@@ -40,6 +40,14 @@
                             {% if unread %}<span class="site-nav__badge" dir="ltr">{{ unread|format_number }}</span>{% endif %}
                         </a>
                     </li>
+                    {% if can('admin.access') %}
+                        <li>
+                            <a class="site-popover__item" href="/admin/">
+                                {% include '@theme/components/icon.twig' with {name: 'settings', size: 14} only %}
+                                <span>{{ d__('admin', 'Admin Panel') }}</span>
+                            </a>
+                        </li>
+                    {% endif %}
                     <li><hr class="site-popover__divider"></li>
                     <li>
                         <a class="site-popover__item site-popover__item--danger" href="/logout">

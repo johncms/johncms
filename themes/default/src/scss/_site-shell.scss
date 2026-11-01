@@ -200,9 +200,14 @@
   white-space: nowrap;
 }
 
+.site-sidebar__body > .site-ads--sidebar:first-child { padding-block-start: 0; }
+
 .site-ads {
+  display: grid;
+  gap: .25rem;
   overflow-wrap: anywhere;
 
+  a { text-decoration: none; }
   img { max-inline-size: 100%; block-size: auto; }
 
   &--sidebar {
