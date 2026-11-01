@@ -1,0 +1,179 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\Unit\Modules\Collections\Infrastructure\Persistence;
+
+use Illuminate\Database\Capsule\Manager as Capsule;
+use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionItemCodeAlreadyExistsException;
+use Johncms\Modules\Collections\Domain\Exceptions\CollectionWriteConflictException;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\TestCase;
+use Tests\Support\CollectionItemWriterFactory;
+use Tests\Support\CollectionWriterDatabase;
+use Tests\Support\FunctionalDatabase;
+use Tests\Support\RunsMigrations;
+
+#[RunTestsInSeparateProcesses]
+#[PreserveGlobalState(false)]
+final class ConcurrentCollectionItemSaveTest extends TestCase
+{
+    use RunsMigrations;
+
+    private int $collection;
+
+    protected function setUp(): void
+    {
+        if (! FunctionalDatabase::fromEnvironment()->isMysql()) {
+            self::markTestSkipped('Concurrent row locking requires MySQL or MariaDB.');
+        }
+        $url = (string) getenv(FunctionalDatabase::VARIABLE);
+        // Keep this test's committed fixtures separate from the transactional functional suite.
+        $url = preg_replace('~/[^/]+$~', '/johncms_collection_writers_test', $url);
+        putenv(FunctionalDatabase::VARIABLE . '=' . $url);
+        FunctionalDatabase::fromEnvironment()->prepare();
+        CollectionWriterDatabase::boot();
+        $this->migrate('collections');
+        $this->collection = Capsule::table('collections')->insertGetId(['code' => 'concurrent', 'name' => 'Concurrent']);
+    }
+
+    public function testConcurrentExplicitRootCodesCannotDuplicate(): void
+    {
+        $this->concurrent('hello', [0, 2]);
+        self::assertSame(1, Capsule::table('collection_items')->count());
+    }
+
+    public function testConcurrentGeneratedRootCodesReceiveDifferentSuffixes(): void
+    {
+        $this->concurrent('', [0, 0]);
+        self::assertSame(['writer', 'writer-2'], Capsule::table('collection_items')->orderBy('code')->pluck('code')->all());
+    }
+
+    public function testUniquenessUsesCurrentReadsInsideAnExistingSnapshot(): void
+    {
+        Capsule::connection()->beginTransaction();
+        Capsule::table('collection_items')->count();
+        [$process, $output] = $this->start('hello');
+        self::assertSame(0, $this->finish($process, $output));
+        try {
+            CollectionItemWriterFactory::create()->execute(null, $this->form());
+            self::fail('The committed code must be visible to the locking read.');
+        } catch (CollectionItemCodeAlreadyExistsException) {
+            self::assertSame(1, Capsule::connection()->transactionLevel());
+        } catch (CollectionWriteConflictException) {
+            self::assertTrue($this->snapshotIsolation(), 'Traditional current reads should see the committed code.');
+        } finally {
+            Capsule::connection()->rollBack();
+        }
+        self::assertSame(1, Capsule::table('collection_items')->count());
+    }
+
+    public function testUpdateDoesNotUseStaleModelAttributesFromTheOuterSnapshot(): void
+    {
+        $writer = CollectionItemWriterFactory::create();
+        $id = $writer->execute(null, $this->form());
+        Capsule::connection()->beginTransaction();
+        Capsule::table('collection_items')->where('id', $id)->first();
+        [$process, $output] = $this->start('hello', $id);
+        self::assertSame(0, $this->finish($process, $output));
+        try {
+            $writer->execute($id, $this->form());
+            Capsule::connection()->commit();
+        } catch (CollectionWriteConflictException) {
+            self::assertTrue($this->snapshotIsolation(), 'Traditional current reads should permit the update.');
+            Capsule::connection()->rollBack();
+            // Snapshot isolation requires retrying the entire transaction, not just the savepoint.
+            $writer->execute($id, $this->form());
+        }
+        self::assertSame('Hello', Capsule::table('collection_items')->where('id', $id)->value('name'));
+    }
+
+    public function testNativeOuterTransactionCanRollbackTheSave(): void
+    {
+        $connection = new \Johncms\Database\PdoConnection(Capsule::connection()->getPdo());
+        try {
+            $connection->transaction(function (): void {
+                CollectionItemWriterFactory::create()->execute(null, $this->form());
+                throw new \RuntimeException('Rollback native transaction');
+            });
+        } catch (\RuntimeException $exception) {
+            self::assertSame('Rollback native transaction', $exception->getMessage());
+        }
+        self::assertSame(0, Capsule::table('collection_items')->count());
+    }
+
+    /** @param list<int> $expected */
+    private function concurrent(string $code, array $expected): void
+    {
+        Capsule::connection()->beginTransaction();
+        Capsule::table('collections')->where('id', $this->collection)->lockForUpdate()->first();
+        try {
+            [$first, $firstOutput] = $this->start($code);
+            [$second, $secondOutput] = $this->start($code);
+            // Neither writer can finish before both independent connections have started.
+            $this->connectionId($firstOutput);
+            $this->connectionId($secondOutput);
+        } finally {
+            Capsule::connection()->rollBack();
+        }
+        $codes = [$this->finish($first, $firstOutput), $this->finish($second, $secondOutput)];
+        sort($codes);
+        self::assertSame($expected, $codes);
+    }
+
+    /** @param resource $output */
+    private function connectionId($output): int
+    {
+        $deadline = microtime(true) + 10;
+        do {
+            rewind($output);
+            $line = fgets($output);
+            if ($line !== false && ctype_digit(trim($line))) {
+                return (int) trim($line);
+            }
+            usleep(10000);
+        } while (microtime(true) < $deadline);
+        self::fail('The concurrent writer did not connect.');
+    }
+
+    /** @return array{resource, resource} */
+    private function start(string $code, ?int $id = null): array
+    {
+        $output = tmpfile();
+        self::assertIsResource($output);
+        $arguments = [PHP_BINARY, ROOT_PATH . 'tests/Support/collection-item-writer.php', (string) $this->collection, $code];
+        if ($id !== null) {
+            $arguments[] = (string) $id;
+        }
+        $process = proc_open($arguments, [0 => ['pipe', 'r'], 1 => $output, 2 => $output], $pipes, ROOT_PATH);
+        self::assertIsResource($process);
+        fclose($pipes[0]);
+        return [$process, $output];
+    }
+
+    /** @param resource $process
+     * @param resource $output
+     */
+    private function finish($process, $output): int
+    {
+        $code = proc_close($process);
+        rewind($output);
+        $message = stream_get_contents($output);
+        fclose($output);
+        self::assertContains($code, [0, 2], $message === false ? '' : $message);
+        return $code;
+    }
+
+    private function snapshotIsolation(): bool
+    {
+        $rows = Capsule::connection()->select("SHOW VARIABLES LIKE 'innodb_snapshot_isolation'");
+        return $rows !== [] && in_array($rows[0]->Value, ['ON', '1', 1], true);
+    }
+
+    private function form(): CollectionItemFormDTO
+    {
+        return new CollectionItemFormDTO($this->collection, null, 'hello', 'Hello', true, null, null, 100, null, null, []);
+    }
+}

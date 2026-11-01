@@ -49,6 +49,13 @@ final class ContentCollectionSectionRepository implements ContentCollectionSecti
         return ContentCollectionSection::query()->find($id);
     }
 
+    public function findForUpdate(int $id): ?ContentCollectionSection
+    {
+        $query = ContentCollectionSection::query();
+        $query->lockForUpdate();
+        return $query->find($id);
+    }
+
     public function create(array $attributes): ContentCollectionSection
     {
         return ContentCollectionSection::query()->create($attributes);

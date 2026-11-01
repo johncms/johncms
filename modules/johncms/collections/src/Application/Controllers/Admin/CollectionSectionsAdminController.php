@@ -319,8 +319,8 @@ final readonly class CollectionSectionsAdminController
             $errors[] = __('The required fields are not filled');
         }
 
-        if ($fields['code'] !== '' && ! preg_match('/^[a-z0-9_-]+$/', (string) $fields['code'])) {
-            $errors[] = __('The code may contain only lowercase latin letters, digits, hyphen and underscore');
+        if ($fields['code'] !== '' && ! preg_match('/^[\w.+-]+$/D', (string) $fields['code'])) {
+            $errors[] = d__('collections', 'Use letters, digits, dot, plus, hyphen or underscore in the code.');
         }
 
         return $errors;

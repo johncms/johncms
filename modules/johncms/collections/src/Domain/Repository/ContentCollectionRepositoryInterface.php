@@ -17,6 +17,9 @@ interface ContentCollectionRepositoryInterface
 
     public function findById(int $id): ?ContentCollection;
 
+    /** Acquire a collection write lock inside the caller's transaction. */
+    public function findForUpdate(int $id): ?ContentCollection;
+
     /**
      * A page of the collections, each with the number of its items, sections and fields
      * (items_count, sections_count, fields_count).

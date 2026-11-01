@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Collections\Application\DTO;
 
 /**
- * Validated input for creating or updating a collection item.
+ * Submitted input for creating or updating a collection item.
  *
  * `values` holds the submitted custom field values keyed by field code: a string
  * for single-valued fields, or a list of strings for multiple-valued fields.
@@ -23,7 +23,7 @@ final readonly class CollectionItemFormDTO
         public bool $active,
         public ?string $activeFrom,
         public ?string $activeTo,
-        public int $sort,
+        public int|string $sort,
         public ?string $previewText,
         public ?string $detailText,
         public array $values,

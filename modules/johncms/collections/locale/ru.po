@@ -665,3 +665,45 @@ msgstr "Чем меньше число, тем выше раздел среди 
 
 msgid "A turned off section and what stands in it are not shown on the site."
 msgstr "Выключенный раздел и всё, что в нём, не показываются на сайте."
+
+msgid "The data changed during saving. Please try again."
+msgstr "Данные изменились во время сохранения. Повторите попытку."
+
+msgid "Use letters, digits, dot, plus, hyphen or underscore in the code."
+msgstr "Код может содержать латинские буквы, цифры, точку, плюс, дефис и подчёркивание."
+
+msgid "Enter an integer between -2147483648 and 2147483647."
+msgstr "Введите целое число от -2147483648 до 2147483647."
+
+msgid "The preview text must not exceed 65535 bytes."
+msgstr "Текст анонса не должен превышать 65535 байт."
+
+msgid "Enter a valid date and time."
+msgstr "Введите корректные дату и время."
+
+msgid "The end date must not precede the start date."
+msgstr "Дата окончания не должна быть раньше даты начала."
+
+msgid "Unknown collection field."
+msgstr "Неизвестное поле коллекции."
+
+msgid "Submit a single value or a list as defined by the field."
+msgstr "Передайте одно значение или список в соответствии с настройками поля."
+
+msgid "Enter a valid value for this field type."
+msgstr "Введите корректное значение для этого типа поля."
+
+msgid "Collection not found."
+msgstr "Коллекция не найдена."
+
+msgid "The item does not belong to this collection or no longer exists."
+msgstr "Элемент не принадлежит этой коллекции или больше не существует."
+
+msgid "Choose a section of this collection."
+msgstr "Выберите раздел этой коллекции."
+
+msgid "Choose a valid author or use a system operation."
+msgstr "Укажите корректного автора или выполните системную операцию."
+
+msgid "Its part of the address: letters, digits, dot, plus, hyphen or underscore."
+msgstr "Часть адреса: латинские буквы, цифры, точка, плюс, дефис и подчёркивание."

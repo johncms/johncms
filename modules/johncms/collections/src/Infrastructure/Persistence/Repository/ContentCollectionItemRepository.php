@@ -48,6 +48,21 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
         return ContentCollectionItem::query()->find($id);
     }
 
+    public function findForUpdate(int $id): ?ContentCollectionItem
+    {
+        $query = ContentCollectionItem::query();
+        $query->lockForUpdate();
+        return $query->find($id);
+    }
+
+    public function findByCodeForUpdate(int $collectionId, ?int $sectionId, string $code): ?ContentCollectionItem
+    {
+        $query = ContentCollectionItem::query()->where('collection_id', $collectionId)
+            ->where('section_id', $sectionId)->where('code', $code);
+        $query->lockForUpdate();
+        return $query->first();
+    }
+
     public function findWithValues(int $id): ?ContentCollectionItem
     {
         return ContentCollectionItem::query()->with('values.field')->find($id);
@@ -60,7 +75,7 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
 
     public function update(int $id, array $attributes): void
     {
-        $item = ContentCollectionItem::query()->find($id);
+        $item = $this->findForUpdate($id);
         if ($item === null) {
             return;
         }

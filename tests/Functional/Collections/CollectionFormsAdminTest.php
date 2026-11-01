@@ -67,6 +67,30 @@ final class CollectionFormsAdminTest extends FunctionalTestCase
         self::assertStringContainsString('Tech › PHP', $content);
     }
 
+    public function testInvalidDatesAreNotSilentlyDiscarded(): void
+    {
+        $response = $this->save(['name' => 'Invalid date', 'code' => 'invalid-date', 'active_from' => '2026-02-30T09:30']);
+        self::assertSame(200, $response->getStatusCode());
+        self::assertStringContainsString('id="active_from"', (string) $response->getContent());
+        self::assertStringContainsString('is-invalid', (string) $response->getContent());
+        self::assertFalse(ContentCollectionItem::query()->where('code', 'invalid-date')->exists());
+    }
+
+    public function testInvalidSortDoesNotTurnIntoZero(): void
+    {
+        $response = $this->save(['name' => 'Invalid sort', 'code' => 'invalid-sort', 'sort' => 'abc']);
+        self::assertSame(200, $response->getStatusCode());
+        self::assertFalse(ContentCollectionItem::query()->where('code', 'invalid-sort')->exists());
+    }
+
+    public function testUppercaseAndPunctuationInPublicCodesArePreserved(): void
+    {
+        $response = $this->save(['name' => 'Release', 'code' => 'Release.V10+RC_1']);
+        self::assertSame(302, $response->getStatusCode());
+        $item = ContentCollectionItem::query()->where('code', 'Release.V10+RC_1')->firstOrFail();
+        self::assertGreaterThan(0, $item->created_by);
+    }
+
     /**
      * @param array<string, string> $fields
      */

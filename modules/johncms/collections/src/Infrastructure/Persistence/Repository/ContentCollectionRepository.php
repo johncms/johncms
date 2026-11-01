@@ -20,6 +20,13 @@ final class ContentCollectionRepository implements ContentCollectionRepositoryIn
         return ContentCollection::query()->find($id);
     }
 
+    public function findForUpdate(int $id): ?ContentCollection
+    {
+        $query = ContentCollection::query();
+        $query->lockForUpdate();
+        return $query->find($id);
+    }
+
     public function getAll(int $limit, int $offset): Collection
     {
         return ContentCollection::query()

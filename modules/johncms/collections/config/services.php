@@ -52,5 +52,9 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ContentCollectionItemValueRepositoryInterface::class, ContentCollectionItemValueRepository::class)->public();
     $services->set(CollectionCodeCacheInterface::class, CollectionCodeCache::class)->autowire()->public();
     $services->set(ReservedCodeCheckerInterface::class, ReservedCodeChecker::class)->autowire()->public();
+    $services->set(
+        \Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface::class,
+        \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction::class
+    )->autowire();
     $services->set(CollectionsApiInterface::class, CollectionsApi::class)->autowire()->public();
 };

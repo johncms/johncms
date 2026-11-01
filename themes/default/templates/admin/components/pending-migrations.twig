@@ -7,7 +7,7 @@
 {% if can('admin.settings.manage') %}
     {% set pending_migrations_count = pending_migrations() %}
     {% if pending_migrations_count or system_update_required() %}
-        <div class="alert alert-warning shadow border-0 d-flex flex-wrap align-items-center gap-3 mt-3">
+        <div class="alert alert-warning shadow border-0 d-flex flex-wrap align-items-center gap-3">
             <div class="me-auto">
                 <strong>{{ d__('admin', 'The system update is not complete') }}</strong>
                 <div class="small">

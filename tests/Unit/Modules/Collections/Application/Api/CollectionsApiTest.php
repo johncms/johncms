@@ -9,12 +9,10 @@ use Johncms\Modules\Collections\Application\Api\CollectionsApi;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemCodeAlreadyExistsException;
 use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionItemUseCase;
-use Johncms\Modules\Collections\Application\UseCases\SaveCollectionItemUseCase;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Query\ContentCollectionItemQueryCompiler;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionFieldRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemRepository;
-use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemValueRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionRepository;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
@@ -34,14 +32,13 @@ final class CollectionsApiTest extends TestCase
         $this->migrate('collections');
 
         $fieldRepository = new ContentCollectionFieldRepository();
-        $valueRepository = new ContentCollectionItemValueRepository();
         $itemRepository = new ContentCollectionItemRepository($fieldRepository, new ContentCollectionItemQueryCompiler());
         $collectionRepository = new ContentCollectionRepository();
 
         $this->api = new CollectionsApi(
             $collectionRepository,
             $itemRepository,
-            new SaveCollectionItemUseCase($itemRepository, $fieldRepository, $valueRepository),
+            \Tests\Support\CollectionItemWriterFactory::create(),
             new DeleteCollectionItemUseCase($itemRepository),
         );
 

@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Collections\Application\Controllers\Admin;
 
 use Illuminate\Database\Eloquent\Collection;
+use Johncms\Auth\CurrentUser;
+use Johncms\Modules\Collections\Domain\Exceptions\CollectionWriteConflictException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -18,7 +21,6 @@ use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
-use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Modules\Collections\Application\Services\CollectionWorkspaceMapper;
 use Johncms\Modules\Collections\Application\Services\ItemListControlsMapper;
@@ -35,7 +37,6 @@ final readonly class CollectionItemsAdminController
         private NavChain $navChain,
         private CollectionWorkspaceMapper $workspace,
         private ContentCollectionRepositoryInterface $collectionRepository,
-        private ContentCollectionSectionRepositoryInterface $sectionRepository,
         private ContentCollectionFieldRepositoryInterface $fieldRepository,
         private ContentCollectionItemRepositoryInterface $itemRepository,
         private ListCollectionItemsUseCase $listItems,
@@ -121,7 +122,7 @@ final readonly class CollectionItemsAdminController
         return $this->renderForm($collection, $id, $this->fieldsFromItem($item), $item->getValuesMap());
     }
 
-    public function store(Request $request, int $collection_id): ViewResponse
+    public function store(Request $request, CurrentUser $user, int $collection_id): ViewResponse
     {
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
@@ -135,16 +136,14 @@ final readonly class CollectionItemsAdminController
 
         $fieldDefs = $this->fieldRepository->getByCollection($collection_id);
         $fields = $this->fieldsFromRequest($request, $collection, $fieldDefs);
-        $errors = [...$this->validate($collection, $fields), ...$this->missingRequired($fieldDefs, $fields['values'])];
-
-        if ($errors !== []) {
-            return $this->renderFormWithFields($collection, $id, $fields, $errors);
-        }
-
         try {
-            $this->saveItem->execute($id, $this->dtoFromFields($collection_id, $fields));
+            $this->saveItem->execute($id, $this->dtoFromFields($collection_id, $fields), $user->id());
+        } catch (CollectionItemFormException $exception) {
+            return $this->renderFormWithFields($collection, $id, $fields, $exception->errors);
+        } catch (CollectionWriteConflictException) {
+            return $this->renderFormWithFields($collection, $id, $fields, ['_form' => [d__('collections', 'The data changed during saving. Please try again.')]]);
         } catch (CollectionItemCodeAlreadyExistsException) {
-            return $this->renderFormWithFields($collection, $id, $fields, [__('An item with this code already exists')]);
+            return $this->renderFormWithFields($collection, $id, $fields, ['code' => [__('An item with this code already exists')]]);
         }
 
         // $id is non-null only for an existing, owned item (guarded above), so it reliably marks an update.
@@ -220,7 +219,7 @@ final readonly class CollectionItemsAdminController
 
     /**
      * @param array<string, mixed> $valueMap field code => cast value(s)
-     * @param list<string> $errors
+     * @param array<string, list<string>> $errors
      */
     private function renderForm(ContentCollection $collection, ?int $id, array $fields, array $valueMap, array $errors = []): ViewResponse
     {
@@ -237,8 +236,9 @@ final readonly class CollectionItemsAdminController
             'fields'          => $fields,
             'has_sections'    => $hasSections,
             'section_options' => $hasSections ? $this->sectionOptions($collection->id) : [],
-            'field_defs'      => $this->buildFieldDefs($this->fieldRepository->getByCollection($collection->id), $valueMap),
-            'errors'          => $errors,
+            'field_defs'      => $this->buildFieldDefs($this->fieldRepository->getByCollection($collection->id), $valueMap, $errors),
+            'errors'          => array_merge([], ...array_values($errors)),
+            'field_errors'    => $errors,
         ]);
     }
 
@@ -247,7 +247,7 @@ final readonly class CollectionItemsAdminController
      * custom field values so nothing is lost.
      *
      * @param array<string, mixed> $fields
-     * @param list<string> $errors
+     * @param array<string, list<string>> $errors
      */
     private function renderFormWithFields(ContentCollection $collection, ?int $id, array $fields, array $errors): ViewResponse
     {
@@ -259,7 +259,7 @@ final readonly class CollectionItemsAdminController
      * @param array<string, mixed> $valueMap
      * @return list<array<string, mixed>>
      */
-    private function buildFieldDefs(Collection $fields, array $valueMap): array
+    private function buildFieldDefs(Collection $fields, array $valueMap, array $errors): array
     {
         $defs = [];
         foreach ($fields as $field) {
@@ -286,6 +286,7 @@ final readonly class CollectionItemsAdminController
                 'multiple'   => $field->multiple,
                 'required'   => $field->required,
                 'value'      => $value,
+                'errors'     => $errors['values.' . $field->code] ?? [],
             ];
         }
 
@@ -314,7 +315,7 @@ final readonly class CollectionItemsAdminController
             'active'       => $request->hasBody('active') ? 1 : 0,
             'active_from'  => trim($request->body('active_from', '')),
             'active_to'    => trim($request->body('active_to', '')),
-            'sort'         => $request->bodyInt('sort', 100),
+            'sort'         => $request->body('sort', '100'),
             'preview_text' => trim($request->body('preview_text', '')),
             'detail_text'  => trim($request->body('detail_text', '')),
             'values'       => $this->submittedValues($request, $fieldDefs),
@@ -369,64 +370,13 @@ final readonly class CollectionItemsAdminController
             code: (string) $fields['code'],
             name: (string) $fields['name'],
             active: (bool) $fields['active'],
-            activeFrom: $this->dateTime((string) $fields['active_from']),
-            activeTo: $this->dateTime((string) $fields['active_to']),
-            sort: (int) $fields['sort'],
+            activeFrom: $fields['active_from'],
+            activeTo: $fields['active_to'],
+            sort: $fields['sort'],
             previewText: $fields['preview_text'] !== '' ? (string) $fields['preview_text'] : null,
             detailText: $fields['detail_text'] !== '' ? (string) $fields['detail_text'] : null,
             values: $fields['values'] ?? [],
         );
-    }
-
-    /**
-     * @param array<string, mixed> $fields
-     * @return list<string>
-     */
-    private function validate(ContentCollection $collection, array $fields): array
-    {
-        $errors = [];
-        // Code is optional: when left empty it is generated from the name as a unique slug.
-        if ($fields['name'] === '') {
-            $errors[] = __('The required fields are not filled');
-        }
-
-        if ($fields['code'] !== '' && ! preg_match('/^[a-z0-9_-]+$/', (string) $fields['code'])) {
-            $errors[] = __('The code may contain only lowercase latin letters, digits, hyphen and underscore');
-        }
-
-        if (
-            $this->hasSections($collection) && $fields['section_id'] !== null
-            && ! $this->sectionBelongs($collection->id, (int) $fields['section_id'])
-        ) {
-            $errors[] = __('Wrong data');
-        }
-
-        return $errors;
-    }
-
-    /**
-     * A message for every required field left empty. A yes/no field always has a value: off is
-     * an answer too.
-     *
-     * @param Collection<int, \Johncms\Modules\Collections\Domain\Models\ContentCollectionField> $fieldDefs
-     * @param array<string, string|list<string>> $values
-     * @return list<string>
-     */
-    private function missingRequired(Collection $fieldDefs, array $values): array
-    {
-        $errors = [];
-        foreach ($fieldDefs as $field) {
-            if (! $field->required || $field->type === FieldType::Boolean) {
-                continue;
-            }
-
-            $value = $values[$field->code] ?? '';
-            if ($value === [] || (is_string($value) && trim($value) === '')) {
-                $errors[] = __('Fill in the field "%s"', $field->name);
-            }
-        }
-
-        return $errors;
     }
 
     /**
@@ -468,28 +418,6 @@ final readonly class CollectionItemsAdminController
         return $options;
     }
 
-    /**
-     * A date and time as the column keeps it, from the value of an <input type="datetime-local">
-     * ("2026-10-30T12:00") or one typed by hand; null for none or one that is not a date.
-     */
-    private function dateTime(string $value): ?string
-    {
-        if ($value === '') {
-            return null;
-        }
-
-        $timestamp = strtotime(str_replace('T', ' ', $value));
-
-        return $timestamp !== false ? date('Y-m-d H:i:s', $timestamp) : null;
-    }
-
-    private function sectionBelongs(int $collectionId, int $sectionId): bool
-    {
-        $section = $this->sectionRepository->findById($sectionId);
-
-        return $section !== null && $section->collection_id === $collectionId;
-    }
-
     private function hasSections(ContentCollection $collection): bool
     {
         return ! empty($collection->settings['has_sections']);
@@ -502,7 +430,7 @@ final readonly class CollectionItemsAdminController
 
     private function postSection(Request $request): ?int
     {
-        return ($request->bodyInt('section_id')) ?: null;
+        return filter_var($request->body('section_id', '0'), FILTER_VALIDATE_INT) ?: ($request->body('section_id', '0') === '0' ? null : -1);
     }
 
     private function baseUrl(int $collectionId): string

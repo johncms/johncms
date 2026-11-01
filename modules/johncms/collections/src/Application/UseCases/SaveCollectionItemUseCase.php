@@ -5,6 +5,11 @@ declare(strict_types=1);
 namespace Johncms\Modules\Collections\Application\UseCases;
 
 use Illuminate\Support\Str;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
+use Johncms\Modules\Collections\Application\Services\CollectionItemValidator;
+use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemCodeAlreadyExistsException;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
@@ -19,42 +24,60 @@ final readonly class SaveCollectionItemUseCase
         private ContentCollectionItemRepositoryInterface $itemRepository,
         private ContentCollectionFieldRepositoryInterface $fieldRepository,
         private ContentCollectionItemValueRepositoryInterface $valueRepository,
+        private ContentCollectionRepositoryInterface $collections,
+        private ContentCollectionSectionRepositoryInterface $sections,
+        private CollectionTransactionInterface $transaction,
+        private CollectionItemValidator $validator,
     ) {
     }
 
     /**
      * Creates or updates an item and rebuilds its custom field values. Returns
-     * the item id (the newly created one when $id was null or missing).
+     * the item id. A non-null id must belong to an existing item in this collection.
      *
      * @throws CollectionItemCodeAlreadyExistsException when an explicit code belongs to another item in the same section
      */
-    public function execute(?int $id, CollectionItemFormDTO $dto): int
+    public function execute(?int $id, CollectionItemFormDTO $dto, ?int $actorId = null): int
     {
-        $code = $this->resolveCode($id, $dto);
-
-        $attributes = [
-            'collection_id' => $dto->collectionId,
-            'section_id'    => $dto->sectionId,
-            'code'          => $code,
-            'name'          => $dto->name,
-            'active'        => $dto->active,
-            'active_from'   => $dto->activeFrom,
-            'active_to'     => $dto->activeTo,
-            'sort'          => $dto->sort,
-            'preview_text'  => $dto->previewText,
-            'detail_text'   => $dto->detailText,
-        ];
-
-        if ($id !== null && $this->itemRepository->findById($id) !== null) {
-            $this->itemRepository->update($id, $attributes);
-            $itemId = $id;
-        } else {
-            $itemId = $this->itemRepository->create($attributes)->id;
-        }
-
-        $this->rebuildValues($itemId, $dto);
-
-        return $itemId;
+        return $this->transaction->run(function () use ($id, $dto, $actorId): int {
+            // Serialize writes, including root codes which a nullable unique index cannot protect.
+            $collection = $this->collections->findForUpdate($dto->collectionId);
+            if ($collection === null) {
+                throw new CollectionItemFormException(['collection_id' => [d__('collections', 'Collection not found.')]]);
+            }
+            if ($id !== null) {
+                $item = $this->itemRepository->findForUpdate($id);
+                if ($item === null || $item->collection_id !== $dto->collectionId) {
+                    throw new CollectionItemFormException(['id' => [d__('collections', 'The item does not belong to this collection or no longer exists.')]]);
+                }
+            }
+            if ($dto->sectionId !== null) {
+                $section = $this->sections->findForUpdate($dto->sectionId);
+                if ($section === null || $section->collection_id !== $dto->collectionId) {
+                    throw new CollectionItemFormException(['section_id' => [d__('collections', 'Choose a section of this collection.')]]);
+                }
+            }
+            if ($actorId !== null && $actorId < 1) {
+                throw new CollectionItemFormException(['actor_id' => [d__('collections', 'Choose a valid author or use a system operation.')]]);
+            }
+            $dto = $this->validator->validate($dto, $this->fieldRepository->getByCollection($dto->collectionId));
+            $attributes = [
+                'collection_id' => $dto->collectionId, 'section_id' => $dto->sectionId,
+                'code' => $this->resolveCode($id, $dto), 'name' => $dto->name,
+                'active' => $dto->active, 'active_from' => $dto->activeFrom, 'active_to' => $dto->activeTo,
+                'sort' => $dto->sort, 'preview_text' => $dto->previewText, 'detail_text' => $dto->detailText,
+            ];
+            if ($id !== null) {
+                $attributes['updated_by'] = $actorId;
+                $this->itemRepository->update($id, $attributes);
+                $itemId = $id;
+            } else {
+                $attributes['created_by'] = $actorId;
+                $itemId = $this->itemRepository->create($attributes)->id;
+            }
+            $this->rebuildValues($itemId, $dto);
+            return $itemId;
+        });
     }
 
     /**
@@ -67,7 +90,7 @@ final readonly class SaveCollectionItemUseCase
     private function resolveCode(?int $id, CollectionItemFormDTO $dto): string
     {
         if ($dto->code !== '') {
-            $existing = $this->itemRepository->findByCode($dto->collectionId, $dto->sectionId, $dto->code);
+            $existing = $this->itemRepository->findByCodeForUpdate($dto->collectionId, $dto->sectionId, $dto->code);
             if ($existing !== null && $existing->id !== $id) {
                 throw new CollectionItemCodeAlreadyExistsException();
             }
@@ -75,7 +98,7 @@ final readonly class SaveCollectionItemUseCase
             return $dto->code;
         }
 
-        $base = Str::slug($dto->name);
+        $base = mb_substr(Str::slug($dto->name), 0, 240);
         if ($base === '') {
             $base = 'item';
         }
@@ -83,7 +106,7 @@ final readonly class SaveCollectionItemUseCase
         $candidate = $base;
         $suffix = 1;
         while (true) {
-            $existing = $this->itemRepository->findByCode($dto->collectionId, $dto->sectionId, $candidate);
+            $existing = $this->itemRepository->findByCodeForUpdate($dto->collectionId, $dto->sectionId, $candidate);
             if ($existing === null || $existing->id === $id) {
                 return $candidate;
             }
@@ -151,16 +174,9 @@ final readonly class SaveCollectionItemUseCase
         return match ($type) {
             FieldType::Integer, FieldType::Relation => (int) $raw,
             FieldType::Double                       => (float) $raw,
-            FieldType::Date, FieldType::Datetime    => $this->normalizeDate($raw),
+            FieldType::Date, FieldType::Datetime    => $raw,
             default                                 => $raw,
         };
-    }
-
-    private function normalizeDate(string $raw): ?string
-    {
-        $timestamp = strtotime(str_replace('T', ' ', $raw));
-
-        return $timestamp !== false ? date('Y-m-d H:i:s', $timestamp) : null;
     }
 
     /**

@@ -11,6 +11,7 @@
     @var array  field_defs      Fields of the collection: input_name, name, type, multiple,
                                 required, value.
     @var array  errors          Validation messages, empty on the first render.
+    @var array  field_errors    Validation messages keyed by field name.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
@@ -38,15 +39,17 @@
                     <div class="row g-3">
                         <div class="col-md-7">
                             <label class="form-label" for="name">{{ __('Name') }}</label>
-                            <input type="text" name="name" class="form-control" id="name" value="{{ fields.name }}" required>
+                            <input type="text" name="name" class="form-control{{ field_errors.name|default([]) ? ' is-invalid' : '' }}" id="name" value="{{ fields.name }}" required>
+                            {% include '@theme/components/field-errors.twig' with {errors: field_errors.name|default([])} only %}
                         </div>
                         <div class="col-md-5">
                             <label class="form-label" for="code">{{ __('Code') }}</label>
-                            <input type="text" name="code" class="form-control font-monospace" id="code" value="{{ fields.code }}" pattern="[a-z0-9_-]*">
+                            <input type="text" name="code" class="form-control{{ field_errors.code|default([]) ? ' is-invalid' : '' }} font-monospace" id="code" value="{{ fields.code }}" pattern="[\w.+\-]*">
+                            {% include '@theme/components/field-errors.twig' with {errors: field_errors.code|default([])} only %}
                             <div class="form-text">{{ __('The last part of the address. Leave it empty to make it from the name.') }}</div>
                         </div>
                         <div class="col-12">
-                            {% include '@admin/components/ui/editor.twig' with {name: 'preview_text', label: __('Preview text'), value: fields.preview_text} only %}
+                            {% include '@admin/components/ui/editor.twig' with {name: 'preview_text', label: __('Preview text'), value: fields.preview_text, errors: field_errors.preview_text|default([])|join(' ')} only %}
                         </div>
                         <div class="col-12">
                             {% include '@admin/components/ui/editor.twig' with {name: 'detail_text', label: __('Detail text'), value: fields.detail_text} only %}
@@ -66,7 +69,7 @@
                                 <div class="{{ wide ? 'col-12' : 'col-md-6' }}">
                                     {% if def.type == 'boolean' and not def.multiple %}
                                         <div class="form-check form-switch mt-md-4">
-                                            <input type="checkbox" class="form-check-input" role="switch" name="{{ def.input_name }}" value="1" id="{{ input_id }}"{% if def.value == '1' %} checked{% endif %}>
+                                            <input type="checkbox" class="form-check-input{{ def.errors ? ' is-invalid' : '' }}" role="switch" name="{{ def.input_name }}" value="1" id="{{ input_id }}"{% if def.value == '1' %} checked{% endif %}>
                                             <label class="form-check-label" for="{{ input_id }}">{{ def.name }}</label>
                                         </div>
                                     {% else %}
@@ -74,20 +77,21 @@
                                             {{ def.name }}{% if def.required %} <span class="text-danger" title="{{ __('Required') }}">*</span>{% endif %}
                                         </label>
                                         {% if def.multiple %}
-                                            <textarea name="{{ def.input_name }}" class="form-control" id="{{ input_id }}" rows="3">{{ def.value }}</textarea>
+                                            <textarea name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" rows="3">{{ def.value }}</textarea>
                                             <div class="form-text">{{ __('One value per line') }}</div>
                                         {% elseif def.type in ['text', 'html'] %}
-                                            <textarea name="{{ def.input_name }}" class="form-control" id="{{ input_id }}" rows="4">{{ def.value }}</textarea>
+                                            <textarea name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" rows="4">{{ def.value }}</textarea>
                                         {% elseif def.type in ['integer', 'double'] %}
-                                            <input type="number"{% if def.type == 'double' %} step="any"{% endif %} name="{{ def.input_name }}" class="form-control" id="{{ input_id }}" value="{{ def.value }}">
+                                            <input type="number"{% if def.type == 'double' %} step="any"{% endif %} name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" value="{{ def.value }}">
                                         {% elseif def.type == 'date' %}
-                                            <input type="date" name="{{ def.input_name }}" class="form-control" id="{{ input_id }}" value="{{ def.value }}">
+                                            <input type="date" name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" value="{{ def.value }}">
                                         {% elseif def.type == 'datetime' %}
-                                            <input type="datetime-local" name="{{ def.input_name }}" class="form-control" id="{{ input_id }}" value="{{ def.value }}">
+                                            <input type="datetime-local" name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" value="{{ def.value }}">
                                         {% else %}
-                                            <input type="text" name="{{ def.input_name }}" class="form-control" id="{{ input_id }}" value="{{ def.value }}">
+                                            <input type="text" name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" value="{{ def.value }}">
                                         {% endif %}
                                     {% endif %}
+                                    {% include '@theme/components/field-errors.twig' with {errors: def.errors} only %}
                                 </div>
                             {% endfor %}
                         </div>
@@ -107,11 +111,13 @@
                     </div>
                     <div>
                         <label class="form-label" for="active_from">{{ __('Active from') }}</label>
-                        <input type="datetime-local" name="active_from" class="form-control" id="active_from" value="{{ fields.active_from }}">
+                        <input type="datetime-local" name="active_from" class="form-control{{ field_errors.active_from|default([]) ? ' is-invalid' : '' }}" id="active_from" value="{{ fields.active_from }}">
+                            {% include '@theme/components/field-errors.twig' with {errors: field_errors.active_from|default([])} only %}
                     </div>
                     <div>
                         <label class="form-label" for="active_to">{{ __('Active to') }}</label>
-                        <input type="datetime-local" name="active_to" class="form-control" id="active_to" value="{{ fields.active_to }}">
+                        <input type="datetime-local" name="active_to" class="form-control{{ field_errors.active_to|default([]) ? ' is-invalid' : '' }}" id="active_to" value="{{ fields.active_to }}">
+                            {% include '@theme/components/field-errors.twig' with {errors: field_errors.active_to|default([])} only %}
                         <div class="form-text">{{ __('Leave the dates empty to show the item from the moment it is saved and without an end.') }}</div>
                     </div>
                 </div>
@@ -123,17 +129,19 @@
                     {% if has_sections %}
                         <div>
                             <label class="form-label" for="section_id">{{ __('Section') }}</label>
-                            <select name="section_id" class="form-select" id="section_id">
+                            <select name="section_id" class="form-select{{ field_errors.section_id|default([]) ? ' is-invalid' : '' }}" id="section_id">
                                 <option value="0">{{ __('Without a section') }}</option>
                                 {% for section_id, title in section_options %}
                                     <option value="{{ section_id }}"{% if fields.section_id == section_id %} selected{% endif %}>{{ title }}</option>
                                 {% endfor %}
                             </select>
+                            {% include '@theme/components/field-errors.twig' with {errors: field_errors.section_id|default([])} only %}
                         </div>
                     {% endif %}
                     <div>
                         <label class="form-label" for="sort">{{ __('Sorting') }}</label>
-                        <input type="number" name="sort" class="form-control" id="sort" value="{{ fields.sort }}">
+                        <input type="number" name="sort" class="form-control{{ field_errors.sort|default([]) ? ' is-invalid' : '' }}" id="sort" value="{{ fields.sort }}">
+                            {% include '@theme/components/field-errors.twig' with {errors: field_errors.sort|default([])} only %}
                         <div class="form-text">{{ __('The smaller the number, the higher the item in the lists.') }}</div>
                     </div>
                 </div>

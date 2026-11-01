@@ -35,6 +35,8 @@ interface ContentCollectionSectionRepositoryInterface
 
     public function findById(int $id): ?ContentCollectionSection;
 
+    public function findForUpdate(int $id): ?ContentCollectionSection;
+
     /**
      * @param array<string, mixed> $attributes
      */

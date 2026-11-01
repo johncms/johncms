@@ -54,7 +54,7 @@ interface CollectionsApiInterface
      *
      * @throws CollectionItemCodeAlreadyExistsException when an explicit code is taken in the same collection/section
      */
-    public function addItem(CollectionItemFormDTO $item): int;
+    public function addItem(CollectionItemFormDTO $item, ?int $actorId = null): int;
 
     /**
      * Update an existing item and rebuild its custom field values
@@ -62,7 +62,7 @@ interface CollectionsApiInterface
      *
      * @throws CollectionItemCodeAlreadyExistsException when the code belongs to another item in the same collection/section
      */
-    public function updateItem(int $id, CollectionItemFormDTO $item): void;
+    public function updateItem(int $id, CollectionItemFormDTO $item, ?int $actorId = null): void;
 
     /**
      * Delete an item (its EAV values cascade via FK).

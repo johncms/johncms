@@ -36,8 +36,8 @@
                         </div>
                         <div class="col-md-5">
                             <label class="form-label" for="code">{{ __('Code') }}</label>
-                            <input type="text" name="code" class="form-control font-monospace" id="code" value="{{ fields.code }}" required pattern="[a-z0-9_-]+">
-                            <div class="form-text">{{ __('Its part of the address of the items: lowercase latin letters, digits, hyphen and underscore.') }}</div>
+                            <input type="text" name="code" class="form-control font-monospace" id="code" value="{{ fields.code }}" required pattern="[\w.+\-]+">
+                            <div class="form-text">{{ __('Its part of the address: letters, digits, dot, plus, hyphen or underscore.') }}</div>
                         </div>
                         <div class="col-12">
                             <label class="form-label" for="description">{{ __('Description') }}</label>

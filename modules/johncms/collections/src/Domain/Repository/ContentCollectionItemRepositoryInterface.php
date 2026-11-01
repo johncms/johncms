@@ -23,6 +23,10 @@ interface ContentCollectionItemRepositoryInterface
 
     public function findById(int $id): ?ContentCollectionItem;
 
+    public function findForUpdate(int $id): ?ContentCollectionItem;
+
+    public function findByCodeForUpdate(int $collectionId, ?int $sectionId, string $code): ?ContentCollectionItem;
+
     /**
      * Load an item together with its custom field values (values.field eager loaded).
      */

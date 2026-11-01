@@ -49,14 +49,14 @@ final readonly class CollectionsApi implements CollectionsApiInterface
         return $this->itemRepository->findByCode($collectionId, $sectionId, $code);
     }
 
-    public function addItem(CollectionItemFormDTO $item): int
+    public function addItem(CollectionItemFormDTO $item, ?int $actorId = null): int
     {
-        return $this->saveItem->execute(null, $item);
+        return $this->saveItem->execute(null, $item, $actorId);
     }
 
-    public function updateItem(int $id, CollectionItemFormDTO $item): void
+    public function updateItem(int $id, CollectionItemFormDTO $item, ?int $actorId = null): void
     {
-        $this->saveItem->execute($id, $item);
+        $this->saveItem->execute($id, $item, $actorId);
     }
 
     public function deleteItem(int $id): void
