@@ -34,6 +34,11 @@ final class PublicShellTest extends FunctionalTestCase
         self::assertNotNull($page->querySelector('.site-user a[href="/notifications/"]'));
         self::assertNotNull($page->querySelector('.site-user a[href="/logout"]'));
         self::assertNull($page->querySelector('[data-site-menu="staff"]'));
+        self::assertSame('A <member>', $page->querySelector('[data-site-account] .site-popover__header')?->textContent);
+        self::assertNotNull($page->querySelector('[data-site-account] a[href="/profile/' . $user->id . '"]'));
+        self::assertNotNull($page->querySelector('[data-site-account] a[href="/notifications/"]'));
+        self::assertNotNull($page->querySelector('[data-site-account] a[href="/logout"]'));
+        self::assertNull($page->querySelector('[data-site-account] a[href="/"]'));
 
         $response = $this->handleRequest('/forum/', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()));
         $page = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
@@ -72,6 +77,7 @@ final class PublicShellTest extends FunctionalTestCase
         $this->withConfig(['johncms' => ['lng' => 'en', 'lng_list' => [
             'en' => ['name' => 'English', 'version' => 1.0],
             'ru' => ['name' => 'Русский', 'version' => 1.0],
+            'zz' => ['name' => 'Custom language', 'version' => 1.0],
         ]]], function (): void {
             $response = $this->handleRequest('/forum/', cookies: ['siteTheme' => 'dark']);
             $page = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
@@ -80,6 +86,11 @@ final class PublicShellTest extends FunctionalTestCase
             self::assertSame('true', $page->querySelector('[data-site-theme="dark"]')?->getAttribute('aria-pressed'));
             self::assertNotNull($page->querySelector('[data-site-theme="auto"]'));
             self::assertSame('?setlng=ru', $page->querySelector('[data-site-language="ru"]')?->getAttribute('href'));
+            self::assertStringEndsWith('/images/flags/ru.svg', $page->querySelector('[data-site-language="ru"] .site-flag')?->getAttribute('src'));
+            self::assertStringEndsWith('/images/flags/en.svg', $page->querySelector('[data-site-language="en"] .site-flag')?->getAttribute('src'));
+            self::assertNotNull($page->querySelector('.site-topbar summary .site-flag'));
+            self::assertNotNull($page->querySelector('[data-site-language="zz"] svg'));
+            self::assertNull($page->querySelector('[data-site-language="zz"] img'));
         });
     }
 

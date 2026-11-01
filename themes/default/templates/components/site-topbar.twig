@@ -1,8 +1,8 @@
 {# @var notifications array Unread counters from notifications(). #}
 {% set unread = notifications.all|default(0) %}
 <header class="site-topbar">
-    <a class="site-control site-topbar__menu" href="#site-sidebar" data-site-nav-open aria-controls="site-sidebar" aria-expanded="false" aria-label="{{ d__('system', 'Menu') }}">
-        {% include '@theme/components/icon.twig' with {name: 'menu', size: 20} only %}
+    <a class="site-control site-control--icon site-topbar__menu" href="#site-sidebar" data-site-nav-open aria-controls="site-sidebar" aria-expanded="false" aria-label="{{ d__('system', 'Menu') }}">
+        {% include '@theme/components/icon.twig' with {name: 'menu'} only %}
     </a>
     <div class="site-topbar__brand">
         {% include '@theme/components/site-brand.twig' only %}
@@ -10,17 +10,42 @@
     <div class="site-topbar__actions">
         {% include '@theme/components/site-preferences.twig' only %}
         {% if app.user.isValid %}
-            <a class="site-control site-control--notification" href="/notifications/" aria-label="{{ d__('system', 'Notifications') }}{{ unread ? ': ' ~ unread }}" title="{{ d__('system', 'Notifications') }}">
-                {% include '@theme/components/icon.twig' with {name: 'bell', size: 20} only %}
-                {% if unread %}<span class="site-control__badge">{{ unread|format_number }}</span>{% endif %}
+            <a class="site-control site-control--icon{{ unread ? ' site-control--dot' }}" href="/notifications/" data-site-notifications aria-label="{{ d__('system', 'Notifications') }}" title="{{ d__('system', 'Notifications') }}">
+                {% include '@theme/components/icon.twig' with {name: 'bell'} only %}
             </a>
-            <a class="site-topbar__account" href="/profile/account" aria-label="{{ d__('system', 'Personal') }}: {{ app.user.name }}">
-                <img class="site-avatar" src="{{ avatar(app.user.id) }}" alt="" width="28" height="28">
-                <span>{{ app.user.name }}</span>
-            </a>
+            <details class="site-popover" data-site-popover data-site-account>
+                <summary class="site-topbar__account" aria-label="{{ d__('system', 'Personal') }}: {{ app.user.name }}">
+                    <img class="site-avatar site-topbar__avatar" src="{{ avatar(app.user.id) }}" alt="" width="24" height="24">
+                    <span class="site-topbar__account-name">{{ app.user.name }}</span>
+                    {% include '@theme/components/icon.twig' with {name: 'chevron-down', size: 12} only %}
+                </summary>
+                <ul class="site-popover__panel">
+                    <li class="site-popover__header">{{ app.user.name }}</li>
+                    <li>
+                        <a class="site-popover__item" href="/notifications/">
+                            {% include '@theme/components/icon.twig' with {name: 'bell', size: 14} only %}
+                            <span>{{ d__('system', 'Notifications') }}</span>
+                            {% if unread %}<span class="site-notification-dot" aria-hidden="true"></span>{% endif %}
+                        </a>
+                    </li>
+                    <li>
+                        <a class="site-popover__item" href="/profile/{{ app.user.id }}">
+                            {% include '@theme/components/icon.twig' with {name: 'user', size: 14} only %}
+                            <span>{{ d__('system', 'Profile') }}</span>
+                        </a>
+                    </li>
+                    <li><hr class="site-popover__divider"></li>
+                    <li>
+                        <a class="site-popover__item site-popover__item--danger" href="/logout">
+                            {% include '@theme/components/icon.twig' with {name: 'log-out', size: 14} only %}
+                            <span>{{ d__('system', 'Exit') }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </details>
         {% else %}
-            <a class="site-control" href="/login/" aria-label="{{ d__('system', 'Log In') }}" title="{{ d__('system', 'Log In') }}">
-                {% include '@theme/components/icon.twig' with {name: 'log-in', size: 20} only %}
+            <a class="site-control site-control--icon" href="/login/" aria-label="{{ d__('system', 'Log In') }}" title="{{ d__('system', 'Log In') }}">
+                {% include '@theme/components/icon.twig' with {name: 'log-in'} only %}
             </a>
         {% endif %}
     </div>

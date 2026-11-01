@@ -12,7 +12,7 @@ use Tests\Support\FunctionalUserFactory;
 
 /**
  * What waits for a signed-in visitor: the list on the notifications page, one line per thing with
- * a link to where it is, and the badge of the header adding them up.
+ * a link to where it is, and the unread marker in the header.
  *
  * A line is told by the address it leads to, not by its words: the site answers in its own
  * language.
@@ -24,7 +24,7 @@ final class SystemNotificationsTest extends FunctionalTestCase
         $page = $this->notificationsOf(FunctionalUserFactory::create());
 
         self::assertSame([], $this->listed($page));
-        self::assertNull($this->badge($page));
+        self::assertFalse($this->hasUnread($page));
     }
 
     public function testTheLettersAMemberHasNotReadAreCounted(): void
@@ -38,7 +38,8 @@ final class SystemNotificationsTest extends FunctionalTestCase
         $page = $this->notificationsOf($member);
 
         self::assertSame(['/mail/incoming'], $this->listed($page));
-        self::assertSame('2', $this->badge($page));
+        self::assertSame('2', $page->querySelector('a.list-item[href="/mail/incoming"] .badge')?->textContent);
+        self::assertTrue($this->hasUnread($page));
     }
 
     public function testTheStaffAreShownTheQueuesTheyLookAfter(): void
@@ -50,7 +51,7 @@ final class SystemNotificationsTest extends FunctionalTestCase
         $page = $this->notificationsOf(FunctionalUserFactory::createSupervisor());
 
         self::assertEqualsCanonicalizing(['/admin/users?status=pending', '/library/premod', '/downloads/moderation'], $this->listed($page));
-        self::assertSame('3', $this->badge($page));
+        self::assertTrue($this->hasUnread($page));
     }
 
     public function testAMemberIsNotShownTheQueuesOfTheStaff(): void
@@ -63,7 +64,7 @@ final class SystemNotificationsTest extends FunctionalTestCase
     }
 
     /**
-     * The ban is a line of its own without a number on it, and still counts one in the header.
+     * The ban is a line of its own without a number on it, and still activates the unread marker in the header.
      */
     public function testABannedMemberIsShownWhereTheBanIs(): void
     {
@@ -73,7 +74,7 @@ final class SystemNotificationsTest extends FunctionalTestCase
         $page = $this->notificationsOf($member);
 
         self::assertSame(['/profile/' . $member->id . '/bans'], $this->listed($page));
-        self::assertSame('1', $this->badge($page));
+        self::assertTrue($this->hasUnread($page));
     }
 
     public function testTheNewEntriesInTheGuestbookOfAMemberAreCounted(): void
@@ -83,7 +84,8 @@ final class SystemNotificationsTest extends FunctionalTestCase
         $page = $this->notificationsOf($member);
 
         self::assertSame(['/profile/' . $member->id . '/guestbook'], $this->listed($page));
-        self::assertSame('2', $this->badge($page));
+        self::assertSame('2', $page->querySelector('a.list-item .badge')?->textContent);
+        self::assertTrue($this->hasUnread($page));
     }
 
     public function testTheUnreadCommentsOnThePhotosOfAMemberAreCounted(): void
@@ -94,7 +96,8 @@ final class SystemNotificationsTest extends FunctionalTestCase
         $page = $this->notificationsOf($member);
 
         self::assertSame(['/album/top/my-comments'], $this->listed($page));
-        self::assertSame('1', $this->badge($page));
+        self::assertSame('1', $page->querySelector('a.list-item .badge')?->textContent);
+        self::assertTrue($this->hasUnread($page));
     }
 
     public function testTheUnreadTopicsOfTheForumAreShownToAMemberWhoAskedForThem(): void
@@ -129,8 +132,12 @@ final class SystemNotificationsTest extends FunctionalTestCase
         return $links;
     }
 
-    private function badge(HTMLDocument $page): ?string
+    private function hasUnread(HTMLDocument $page): bool
     {
-        return $page->querySelector('.site-topbar a[href="/notifications/"] .site-control__badge')?->textContent;
+        $bell = $page->querySelector('[data-site-notifications]');
+        self::assertNotNull($bell);
+        self::assertSame('', trim($bell->textContent));
+
+        return $page->querySelector('[data-site-notifications].site-control--dot') !== null;
     }
 }

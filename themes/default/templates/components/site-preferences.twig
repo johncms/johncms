@@ -3,15 +3,25 @@
 {% if languages|length > 1 %}
     <details class="site-popover" data-site-popover>
         <summary class="site-control" aria-label="{{ d__('system', 'Select language') }}" title="{{ d__('system', 'Select language') }}">
-            {% include '@theme/components/icon.twig' with {name: 'languages', size: 20} only %}
+            {% if asset_exists('images/flags/' ~ app.locale|lower ~ '.svg') %}
+                <img class="site-flag" src="{{ asset('images/flags/' ~ app.locale|lower ~ '.svg') }}" alt="" width="18" height="13">
+            {% else %}
+                {% include '@theme/components/icon.twig' with {name: 'languages'} only %}
+            {% endif %}
             <span class="site-control__label">{{ languages[app.locale].name|default(app.locale) }}</span>
+            {% include '@theme/components/icon.twig' with {name: 'chevron-down', size: 12} only %}
         </summary>
         <ul class="site-popover__panel site-language-menu">
             {% for code, language in languages %}
                 <li>
                     <a class="site-popover__item" href="?setlng={{ code|url_encode }}" lang="{{ code }}" data-site-language="{{ code }}"{% if code == app.locale %} aria-current="true"{% endif %}>
+                        {% if asset_exists('images/flags/' ~ code|lower ~ '.svg') %}
+                            <img class="site-flag" src="{{ asset('images/flags/' ~ code|lower ~ '.svg') }}" alt="" width="18" height="13">
+                        {% else %}
+                            {% include '@theme/components/icon.twig' with {name: 'languages'} only %}
+                        {% endif %}
                         <span>{{ language.name|default(code) }}</span>
-                        {% if code == app.locale %}{% include '@theme/components/icon.twig' with {name: 'check'} only %}{% endif %}
+                        {% if code == app.locale %}{% include '@theme/components/icon.twig' with {name: 'check', size: 14} only %}{% endif %}
                     </a>
                 </li>
             {% endfor %}
@@ -19,8 +29,8 @@
     </details>
 {% endif %}
 <details class="site-popover" data-site-popover data-site-theme-picker data-current-theme="{{ app.color_scheme }}" data-icon-sprite="{{ asset('icons/public.svg', true) }}">
-    <summary class="site-control" aria-label="{{ d__('system', 'Theme') }}" title="{{ d__('system', 'Theme') }}">
-        {% include '@theme/components/icon.twig' with {name: app.dark_scheme ? 'moon' : 'sun', size: 20} only %}
+    <summary class="site-control site-control--icon" aria-label="{{ d__('system', 'Theme') }}" title="{{ d__('system', 'Theme') }}">
+        {% include '@theme/components/icon.twig' with {name: app.dark_scheme ? 'moon' : 'sun'} only %}
     </summary>
     <ul class="site-popover__panel">
         {% for scheme, label in {light: d__('system', 'Light theme'), dark: d__('system', 'Dark theme'), auto: d__('system', 'System theme')} %}
