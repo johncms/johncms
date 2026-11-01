@@ -156,12 +156,11 @@
   font-size: .8125rem;
 
   a {
+    position: relative;
     display: flex;
     align-items: center;
     gap: .625rem;
     padding: .5rem .625rem;
-    padding-inline-start: .4375rem;
-    border-inline-start: .1875rem solid transparent;
     border-radius: .4375rem;
     color: var(--fg-muted);
     text-decoration: none;
@@ -173,7 +172,19 @@
     &[aria-current] {
       background: var(--bg-elev);
       color: var(--fg);
-      border-inline-start-color: var(--accent);
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset-inline-start: -1rem;
+        inset-block-start: 50%;
+        inline-size: .1875rem;
+        block-size: 1rem;
+        transform: translateY(-50%);
+        border-start-end-radius: .125rem;
+        border-end-end-radius: .125rem;
+        background: var(--accent);
+      }
 
       > .site-icon { color: var(--accent); }
     }
