@@ -146,7 +146,7 @@ final class SectionCountersTest extends FunctionalTestCase
     {
         $lines = [];
 
-        foreach ($page->querySelectorAll('ul.nav.nav__vertical:not(.ps-2) > li > a') as $link) {
+        foreach ($page->querySelectorAll('[data-site-menu] > li > a') as $link) {
             $badge = $link->querySelector('.badge')?->textContent;
             $lines[(string) $link->getAttribute('href')] = $badge === null ? null : trim($badge);
         }

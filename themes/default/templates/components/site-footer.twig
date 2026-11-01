@@ -1,0 +1,25 @@
+{# Settings and live counters only; project-specific marketing belongs in a child theme. #}
+{% set legal_links = {
+    (d__('system', 'Privacy Policy')): config('johncms.privacy_policy_url')|default(''),
+    (d__('system', 'Terms of Use')): config('johncms.terms_of_use_url')|default(''),
+    (d__('system', 'Personal Data Processing Policy')): config('johncms.personal_data_policy_url')|default(''),
+    (d__('system', 'Cookie Policy')): config('johncms.cookie_policy_url')|default('')
+}|filter(url => url is not empty) %}
+{% set counters = analytics() %}
+<footer class="site-footer">
+    {% if legal_links %}
+        <nav class="site-footer__links" aria-label="{{ d__('system', 'Information') }}">
+            {% for label, url in legal_links %}<a href="{{ url }}">{{ label }}</a>{% endfor %}
+        </nav>
+    {% endif %}
+    <div class="site-footer__bottom">
+        <span>&copy; {{ 'now'|date('Y') }}, {{ config('johncms.copyright') }}</span>
+        <a href="https://johncms.com" target="_blank" rel="nofollow noopener">JohnCMS</a>
+        {% if counters %}
+            <div class="site-footer__counters">
+                {% for counter in counters %}<div>{{ counter }}</div>{% endfor %}
+            </div>
+        {% endif %}
+        {% include '@theme/components/debug.twig' with {trigger_class: 'site-footer__debug', trigger_style: ''} only %}
+    </div>
+</footer>

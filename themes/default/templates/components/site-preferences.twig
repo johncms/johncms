@@ -1,0 +1,35 @@
+{# Native disclosures keep the language links available without JavaScript. #}
+{% set languages = config('johncms.lng_list')|default({}) %}
+{% if languages|length > 1 %}
+    <details class="site-popover" data-site-popover>
+        <summary class="site-control" aria-label="{{ d__('system', 'Select language') }}" title="{{ d__('system', 'Select language') }}">
+            {% include '@theme/components/icon.twig' with {name: 'languages', size: 20} only %}
+            <span class="site-control__label">{{ languages[app.locale].name|default(app.locale) }}</span>
+        </summary>
+        <ul class="site-popover__panel site-language-menu">
+            {% for code, language in languages %}
+                <li>
+                    <a class="site-popover__item" href="?setlng={{ code|url_encode }}" lang="{{ code }}" data-site-language="{{ code }}"{% if code == app.locale %} aria-current="true"{% endif %}>
+                        <span>{{ language.name|default(code) }}</span>
+                        {% if code == app.locale %}{% include '@theme/components/icon.twig' with {name: 'check'} only %}{% endif %}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </details>
+{% endif %}
+<details class="site-popover" data-site-popover data-site-theme-picker data-current-theme="{{ app.color_scheme }}" data-icon-sprite="{{ asset('icons/public.svg', true) }}">
+    <summary class="site-control" aria-label="{{ d__('system', 'Theme') }}" title="{{ d__('system', 'Theme') }}">
+        {% include '@theme/components/icon.twig' with {name: app.dark_scheme ? 'moon' : 'sun', size: 20} only %}
+    </summary>
+    <ul class="site-popover__panel">
+        {% for scheme, label in {light: d__('system', 'Light theme'), dark: d__('system', 'Dark theme'), auto: d__('system', 'System theme')} %}
+            <li>
+                <button type="button" class="site-popover__item" data-site-theme="{{ scheme }}" aria-pressed="{{ scheme == app.color_scheme ? 'true' : 'false' }}">
+                    {% include '@theme/components/icon.twig' with {name: scheme == 'light' ? 'sun' : (scheme == 'dark' ? 'moon' : 'settings')} only %}
+                    <span>{{ label }}</span>
+                </button>
+            </li>
+        {% endfor %}
+    </ul>
+</details>

@@ -1,0 +1,6 @@
+{# Universal branding from the site settings, shared by the sidebar and the mobile top bar. #}
+{% set site_name = config('johncms.copyright') %}
+<a class="site-brand" href="/">
+    <span class="site-brand__mark" aria-hidden="true">{{ site_name|slice(0, 1)|upper }}</span>
+    <span class="site-brand__name">{{ site_name }}</span>
+</a>

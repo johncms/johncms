@@ -1,0 +1,31 @@
+{# @var notifications array Unread counters from notifications(). #}
+{% set unread = notifications.all|default(0) %}
+<header class="site-topbar">
+    <a class="site-control site-topbar__menu" href="#site-sidebar" data-site-nav-open aria-controls="site-sidebar" aria-expanded="false" aria-label="{{ d__('system', 'Menu') }}">
+        {% include '@theme/components/icon.twig' with {name: 'menu', size: 20} only %}
+    </a>
+    <div class="site-topbar__brand">
+        {% include '@theme/components/site-brand.twig' only %}
+    </div>
+    <a class="site-topbar__home" href="/">
+        {% include '@theme/components/icon.twig' with {name: 'house'} only %}
+        {{ d__('system', 'Home') }}
+    </a>
+    <div class="site-topbar__actions">
+        {% include '@theme/components/site-preferences.twig' only %}
+        {% if app.user.isValid %}
+            <a class="site-control site-control--notification" href="/notifications/" aria-label="{{ d__('system', 'Notifications') }}{{ unread ? ': ' ~ unread }}" title="{{ d__('system', 'Notifications') }}">
+                {% include '@theme/components/icon.twig' with {name: 'bell', size: 20} only %}
+                {% if unread %}<span class="site-control__badge">{{ unread|format_number }}</span>{% endif %}
+            </a>
+            <a class="site-topbar__account" href="/profile/account" aria-label="{{ d__('system', 'Personal') }}: {{ app.user.name }}">
+                <img class="site-avatar" src="{{ avatar(app.user.id) }}" alt="" width="28" height="28">
+                <span>{{ app.user.name }}</span>
+            </a>
+        {% else %}
+            <a class="site-control" href="/login/" aria-label="{{ d__('system', 'Log In') }}" title="{{ d__('system', 'Log In') }}">
+                {% include '@theme/components/icon.twig' with {name: 'log-in', size: 20} only %}
+            </a>
+        {% endif %}
+    </div>
+</header>

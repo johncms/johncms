@@ -30,8 +30,8 @@ final class HomePageTest extends FunctionalTestCase
         self::assertStringContainsString('<title>', $content);
         // The sidebar, the main menu and the footer are includes of the layout: a page that
         // rendered without them would still be valid HTML.
-        self::assertStringContainsString('sidebar__user', $content);
-        self::assertStringContainsString('nav__vertical', $content);
-        self::assertStringContainsString('page-footer', $content);
+        self::assertStringContainsString('site-user', $content);
+        self::assertStringContainsString('site-nav__list', $content);
+        self::assertStringContainsString('site-footer', $content);
     }
 }

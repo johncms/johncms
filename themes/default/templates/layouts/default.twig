@@ -1,209 +1,75 @@
 {#
-    The layout of the public site: sidebar, top bar, breadcrumbs, footer.
+    Public shell; module content and the existing extension blocks remain server-rendered.
 
-    @param string page_title Heading printed above the content.
+    @var page_title string Heading above the content, omitted when the page owns its heading.
 #}
 {% extends '@theme/layouts/base.twig' %}
 
 {% block body %}
     {% set layout_notifications = notifications() %}
-    <div class="wrapper min-vh-100 d-flex flex-column justify-content-between" id="app">
-        <div class="page_layout justify-content-end d-flex w-100">
-            <div class="sidebar">
-                <div class="sidebar__inner">
-                    <div class="sidebar__logo">
-                        <a href="/">
-                            <span class="logo__image"><img src="{{ asset('images/logo.svg') }}" alt="logo" style="width: 70%;" class="img-fluid"></span>
-                        </a>
-                    </div>
-                    <div class="sidebar__wrapper d-flex flex-column">
-                        {% block sidebar_user %}
-                            {% include '@theme/components/sidebar-user-menu.twig' with {notifications: layout_notifications} only %}
-                        {% endblock %}
-                        {% block sidebar_menu %}
-                            {% include '@theme/components/sidebar-main-menu.twig' only %}
-                        {% endblock %}
-                    </div>
-                </div>
+    <a class="site-skip-link" href="#site-content">{{ d__('system', 'Skip to content') }}</a>
+    <div class="site-shell" id="app">
+        <aside class="site-sidebar" id="site-sidebar" tabindex="-1" aria-label="{{ d__('system', 'Menu') }}">
+            <div class="site-sidebar__brand">
+                {% include '@theme/components/site-brand.twig' only %}
+                <button type="button" class="site-control site-sidebar__close" data-site-nav-close aria-label="{{ d__('system', 'Close menu') }}">
+                    {% include '@theme/components/icon.twig' with {name: 'x', size: 20} only %}
+                </button>
             </div>
-            <div class="content-container content-container-padding d-flex flex-column shadow">
-                <nav class="navbar navbar-expand-lg top_nav fixed-top border-bottom shadow">
-                    <div class="container-fluid">
-                        <div class="navbar-wrapper d-flex w-100 justify-content-between">
-                            <div class="navbar-toggle">
-                                <button type="button" class="navbar-toggler">
-                                    <span class="navbar-toggler-bar bar1"></span>
-                                    <span class="navbar-toggler-bar bar2"></span>
-                                    <span class="navbar-toggler-bar bar3"></span>
-                                </button>
-                            </div>
-                            <div class="logo">
-                                <a href="/">
-                                    <img src="{{ asset('images/logo_mobile.svg') }}" alt="logo" class="img-fluid" style="height: 30px; margin-bottom: -18px;">
-                                </a>
-                            </div>
-                            <div>
-                                {% if app.user.isValid %}
-                                    <a href="/notifications/" class="icon_with_badge me-2">
-                                        <svg class="icon icon_messages">
-                                            <use xlink:href="{{ asset('icons/sprite.svg') }}#messages"/>
-                                        </svg>
-                                        {% if layout_notifications.all|default(0) %}
-                                            <span class="badge bg-danger rounded-pill">{{ layout_notifications.all }}</span>
-                                        {% endif %}
-                                    </a>
-                                {% else %}
-                                    <a href="/login/" class="icon_with_badge">
-                                        <svg class="icon ms-n2">
-                                            <use xlink:href="{{ asset('icons/sprite.svg') }}#log-in"/>
-                                        </svg>
-                                    </a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-                <div class="container-fluid flex-grow-1">
-                    {% include '@theme/components/impersonation-banner.twig' only %}
-                    {% if page_title|default('') %}
-                        <h1 class="mb-0">{{ page_title }}</h1>
-                    {% endif %}
+            <div class="site-sidebar__body">
+                {% block sidebar_user %}
+                    {% include '@theme/components/sidebar-user-menu.twig' with {notifications: layout_notifications} only %}
+                {% endblock %}
+                {% block sidebar_menu %}
+                    {% include '@theme/components/sidebar-main-menu.twig' only %}
+                {% endblock %}
+            </div>
+            <div class="site-sidebar__foot">
+                <a href="/online/" class="site-online">
+                    <span class="site-online__dot" aria-hidden="true"></span>
+                    <span>{{ d__('system', 'Online') }}</span>
+                    <span>{{ online() }}</span>
+                </a>
+            </div>
+        </aside>
+        <button type="button" class="site-scrim" data-site-nav-close tabindex="-1" aria-label="{{ d__('system', 'Close menu') }}"></button>
+        <div class="site-main">
+            {% include '@theme/components/site-topbar.twig' with {notifications: layout_notifications} only %}
+            <main class="site-content" id="site-content" tabindex="-1">
+                {% include '@theme/components/impersonation-banner.twig' only %}
+                <div class="site-page-heading">
                     {% block breadcrumbs %}
                         {% include '@theme/components/breadcrumbs.twig' only %}
                     {% endblock %}
-                    {% set layout_header_ads = ads('content_header') %}
-                    {% if layout_header_ads %}
-                        <div class="pb-3">
-                            {% for block in layout_header_ads %}
-                                <div>{{ block }}</div>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                    {% block content %}{% endblock %}
-
-                    <div class="to-top to-top_hidden">
-                        <button class="btn btn__top">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"/>
-                            </svg>
-                        </button>
-                    </div>
-                    {% set layout_footer_ads = ads('content_footer') %}
-                    {% if layout_footer_ads %}
-                        <div class="pb-3 pt-2">
-                            {% for block in layout_footer_ads %}
-                                <div>{{ block }}</div>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+                    {% if page_title|default('') %}<h1>{{ page_title }}</h1>{% endif %}
                 </div>
-            </div>
-        </div>
-        <div class="page_layout container">
-            {% block footer_content %}{% endblock %}
-        </div>
-        <div class="overlay"></div>
-        <div class="page_layout w-100">
-            {% set layout_legal_links = {
-                (d__('system', 'Privacy Policy')): config('johncms.privacy_policy_url')|default(''),
-                (d__('system', 'Terms of Use')): config('johncms.terms_of_use_url')|default(''),
-                (d__('system', 'Personal Data Processing Policy')): config('johncms.personal_data_policy_url')|default(''),
-                (d__('system', 'Cookie Policy')): config('johncms.cookie_policy_url')|default('')
-            }|filter(url => url is not empty) %}
-            <div class="content-container-padding footer-padding">
-                <div class="row justify-content-between align-items-center border-top py-3 page-footer">
-                    {% if layout_legal_links %}
-                        <div class="col-12 col-md-4 mb-2 mb-md-0">
-                            <div class="legal-footer-links">
-                                {% for label, url in layout_legal_links %}
-                                    <a href="{{ url }}" class="me-3 small text-muted">{{ label }}</a> <br>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
-                    <div class="col-6 col-md-4 {{ layout_legal_links ? 'text-md-center' }}">
-                        <a href="https://twitter.com/johncms" title="Twitter" target="_blank" rel="nofollow" class="me-3 text-muted text-decoration-none">
-                            <svg class="icon">
-                                <use xlink:href="{{ asset('icons/sprite.svg') }}#twitter"/>
-                            </svg>
-                        </a>
-                        <a href="https://t.me/johncms_official" title="Telegram" target="_blank" rel="nofollow" class="me-3 text-muted text-decoration-none">
-                            <svg class="icon">
-                                <use xlink:href="{{ asset('icons/sprite.svg') }}#telegram"/>
-                            </svg>
-                        </a>
-                        <a href="https://www.youtube.com/channel/UCIzwmZMHJgnBPEicpU9Itsw" title="YouTube" target="_blank" rel="nofollow" class="me-2 text-muted text-decoration-none">
-                            <svg class="icon">
-                                <use xlink:href="{{ asset('icons/sprite.svg') }}#youtube2"/>
-                            </svg>
-                        </a>
+                {% set layout_header_ads = ads('content_header') %}
+                {% if layout_header_ads %}
+                    <div class="site-ads site-ads--content">
+                        {% for block in layout_header_ads %}<div>{{ block }}</div>{% endfor %}
                     </div>
-                    <div class="col-6 col-md-4 justify-content-end text-end d-flex flex-wrap position-relative">
-                        {% set layout_analytics = analytics() %}
-                        {% if layout_analytics %}
-                            {# Counters #}
-                            <div class="me-2 d-flex">
-                                {% for counter in layout_analytics %}
-                                    <div>{{ counter }}</div>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                        <div class="flex-grow-1 w-100 text-nowrap">
-                            &copy; {{ 'now'|date('Y') }}, <a href="https://johncms.com" target="_blank" rel="nofollow" class="text-info">JohnCMS</a>
-                        </div>
-                        {% include '@theme/components/debug.twig' only %}
+                {% endif %}
+                {% block content %}{% endblock %}
+                {% set layout_footer_ads = ads('content_footer') %}
+                {% if layout_footer_ads %}
+                    <div class="site-ads site-ads--content">
+                        {% for block in layout_footer_ads %}<div>{{ block }}</div>{% endfor %}
                     </div>
+                {% endif %}
+                <div class="to-top to-top_hidden">
+                    <button class="btn btn__top" aria-label="{{ d__('system', 'Scroll page') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"/>
+                        </svg>
+                    </button>
                 </div>
-            </div>
+            </main>
+            <div class="site-footer-content">{% block footer_content %}{% endblock %}</div>
+            {% include '@theme/components/site-footer.twig' only %}
         </div>
     </div>
     <div class="modal fade ajax_modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content"></div>
-        </div>
+        <div class="modal-dialog" role="document"><div class="modal-content"></div></div>
     </div>
-    {% set layout_cookie_banner = cookie_banner() %}
-    {% if layout_cookie_banner %}
-        <div id="cookie-consent-banner" class="cookie-consent-banner" style="display: none; position: fixed; left: 15px; right: 15px; bottom: 15px; max-width: 380px; z-index: 1000;">
-            <div class="cookie-consent-banner__text">
-                {% if layout_cookie_banner.text %}
-                    {{ layout_cookie_banner.text }}
-                {% else %}
-                    {# The link label lives inside the translatable string so each language can decline it. #}
-                    {% set layout_privacy_url = config('johncms.privacy_policy_url')|default('') %}
-                    {% set layout_open_tag = layout_privacy_url ? '<a href="' ~ layout_privacy_url|e('html_attr') ~ '">' : '' %}
-                    {% set layout_close_tag = layout_privacy_url ? '</a>' : '' %}
-                    {{ d__('system', 'We use cookies to improve the site. By continuing to use the site, you agree to our %sPrivacy Policy%s.', layout_open_tag, layout_close_tag)|raw }}
-                {% endif %}
-            </div>
-            <button type="button" id="cookie-consent-accept" class="btn btn-primary btn-sm cookie-consent-banner__accept">{{ d__('system', 'Accept') }}</button>
-        </div>
-        <script>
-            (function () {
-                var version = '{{ layout_cookie_banner.version }}';
-                var banner = document.getElementById('cookie-consent-banner');
-                var button = document.getElementById('cookie-consent-accept');
-                if (!banner || !button) {
-                    return;
-                }
-                var accepted = null;
-                try {
-                    accepted = localStorage.getItem('cookie_consent_accepted');
-                } catch (e) {
-                    accepted = null;
-                }
-                if (accepted !== version) {
-                    banner.style.display = 'block';
-                }
-                button.addEventListener('click', function () {
-                    try {
-                        localStorage.setItem('cookie_consent_accepted', version);
-                    } catch (e) {
-                    }
-                    banner.style.display = 'none';
-                    document.dispatchEvent(new CustomEvent('cookie-consent-accepted'));
-                });
-            })();
-        </script>
-    {% endif %}
+    {% include '@theme/components/site-cookie-consent.twig' only %}
 {% endblock %}

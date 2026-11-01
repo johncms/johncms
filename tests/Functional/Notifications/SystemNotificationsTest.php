@@ -131,6 +131,6 @@ final class SystemNotificationsTest extends FunctionalTestCase
 
     private function badge(HTMLDocument $page): ?string
     {
-        return $page->querySelector('a.icon_with_badge[href="/notifications/"] .badge')?->textContent;
+        return $page->querySelector('.site-topbar a[href="/notifications/"] .site-control__badge')?->textContent;
     }
 }
