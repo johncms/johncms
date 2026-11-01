@@ -7,10 +7,6 @@
     <div class="site-topbar__brand">
         {% include '@theme/components/site-brand.twig' only %}
     </div>
-    <a class="site-topbar__home" href="/">
-        {% include '@theme/components/icon.twig' with {name: 'house'} only %}
-        {{ d__('system', 'Home') }}
-    </a>
     <div class="site-topbar__actions">
         {% include '@theme/components/site-preferences.twig' only %}
         {% if app.user.isValid %}

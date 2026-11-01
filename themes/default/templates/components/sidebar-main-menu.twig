@@ -21,7 +21,7 @@
                         {% include '@theme/components/icon.twig' with {name: item.icon, image: item.hasImageIcon, size: 18} only %}
                     {% endif %}
                     <span>{{ item.title }}</span>
-                    {% if badge > 0 %}<span class="site-nav__badge badge">+ {{ badge|format_number }}</span>{% endif %}
+                    {% if badge > 0 %}<span class="site-nav__badge badge" dir="ltr">+{{ badge|format_number }}</span>{% endif %}
                 </a>
             </li>
         {% endfor %}
@@ -36,7 +36,7 @@
                             {% include '@theme/components/icon.twig' with {name: item.icon, image: item.hasImageIcon, size: 18} only %}
                         {% endif %}
                         <span>{{ item.title }}</span>
-                        {% if badge > 0 %}<span class="site-nav__badge badge">{{ badge|format_number }}</span>{% endif %}
+                        {% if badge > 0 %}<span class="site-nav__badge badge" dir="ltr">+{{ badge|format_number }}</span>{% endif %}
                     </a>
                 </li>
             {% endfor %}

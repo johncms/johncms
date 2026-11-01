@@ -14,8 +14,19 @@ if (picker) {
     picker.querySelectorAll('[data-site-theme]').forEach(button => {
       button.setAttribute('aria-pressed', String(button.dataset.siteTheme === selected));
     });
-    const themeColor = document.querySelector('meta[name="theme-color"]');
-    if (themeColor) themeColor.content = dark ? '#0e1218' : '#fafaf7';
+    const colors = selected === 'auto'
+      ? [['#fafaf7', '(prefers-color-scheme: light)'], ['#0e1218', '(prefers-color-scheme: dark)']]
+      : [[dark ? '#0e1218' : '#fafaf7', null]];
+    const metas = [...document.querySelectorAll('meta[name="theme-color"]')];
+    colors.forEach(([color, media], index) => {
+      const meta = metas[index] || document.createElement('meta');
+      meta.name = 'theme-color';
+      meta.content = color;
+      if (media) meta.setAttribute('media', media);
+      else meta.removeAttribute('media');
+      if (!meta.isConnected) document.head.append(meta);
+    });
+    metas.slice(colors.length).forEach(meta => meta.remove());
   }
 
   picker.addEventListener('click', event => {

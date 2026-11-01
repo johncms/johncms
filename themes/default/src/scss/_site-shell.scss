@@ -254,15 +254,6 @@
   background: var(--bg);
 }
 
-.site-topbar__home {
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  color: var(--fg-muted);
-  text-decoration: none;
-  font-size: .8125rem;
-}
-
 .site-topbar__actions {
   display: flex;
   align-items: center;
@@ -438,7 +429,6 @@
   .site-sidebar__body { overflow: visible; }
   .site-main { min-block-size: 100dvh; }
   .site-topbar { padding-inline: 1rem; gap: .5rem; }
-  .site-topbar__home,
   .site-control__label,
   .site-topbar__account span { display: none; }
   .site-topbar__menu { display: inline-flex; flex-shrink: 0; }

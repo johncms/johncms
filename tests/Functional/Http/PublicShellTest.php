@@ -20,6 +20,7 @@ final class PublicShellTest extends FunctionalTestCase
         self::assertNull($page->querySelector('a[href="/logout"]'));
         self::assertSame('#site-sidebar', $page->querySelector('[data-site-nav-open]')?->getAttribute('href'));
         self::assertNotNull($page->querySelector('main#site-content'));
+        self::assertCount(1, $page->querySelectorAll('.site-topbar a[href="/"]'));
     }
 
     public function testMemberKeepsPersonalActionsAndStaffPermissionsAreRespected(): void
@@ -80,6 +81,24 @@ final class PublicShellTest extends FunctionalTestCase
             self::assertNotNull($page->querySelector('[data-site-theme="auto"]'));
             self::assertSame('?setlng=ru', $page->querySelector('[data-site-language="ru"]')?->getAttribute('href'));
         });
+    }
+
+    public function testBrowserThemeColorIsCorrectBeforeJavaScriptRuns(): void
+    {
+        foreach (['light', 'dark', 'auto'] as $scheme) {
+            $response = $this->handleRequest('/forum/', cookies: ['siteTheme' => $scheme]);
+            $page = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
+            $metas = $page->querySelectorAll('meta[name="theme-color"]');
+            $expected = $scheme === 'auto'
+                ? [['#fafaf7', '(prefers-color-scheme: light)'], ['#0e1218', '(prefers-color-scheme: dark)']]
+                : [[$scheme === 'dark' ? '#0e1218' : '#fafaf7', null]];
+
+            self::assertCount(count($expected), $metas);
+            foreach ($metas as $index => $meta) {
+                self::assertSame($expected[$index][0], $meta->getAttribute('content'));
+                self::assertSame($expected[$index][1], $meta->getAttribute('media'));
+            }
+        }
     }
 
     private function page(string $url): HTMLDocument

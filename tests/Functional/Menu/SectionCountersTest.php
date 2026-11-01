@@ -65,7 +65,7 @@ final class SectionCountersTest extends FunctionalTestCase
     {
         Fixture::insert('forum_topic', ['name' => 'Unread', 'last_post_date' => time()]);
 
-        self::assertSame('+ 1', $this->menu($this->page('/', FunctionalUserFactory::create()))['/forum/']);
+        self::assertSame('+1', $this->menu($this->page('/', FunctionalUserFactory::create()))['/forum/']);
         self::assertNull($this->menu($this->page('/'))['/forum/'], 'A guest has read nothing and nothing is new for them.');
     }
 
@@ -77,8 +77,8 @@ final class SectionCountersTest extends FunctionalTestCase
 
         $menu = $this->menu($this->page('/', FunctionalUserFactory::createSupervisor()));
 
-        self::assertSame('+ 1', $menu['/guestbook/ga']);
-        self::assertSame('2', $menu['/guestbook/ga?do=set']);
+        self::assertSame('+1', $menu['/guestbook/ga']);
+        self::assertSame('+2', $menu['/guestbook/ga?do=set']);
     }
 
     public function testTheNewFilesArticlesAndPhotosAreCounted(): void
@@ -89,9 +89,9 @@ final class SectionCountersTest extends FunctionalTestCase
 
         $menu = $this->menu($this->page('/', FunctionalUserFactory::create()));
 
-        self::assertSame('+ 1', $menu['/downloads/']);
-        self::assertSame('+ 1', $menu['/library/']);
-        self::assertSame('+ 1', $menu['/album/']);
+        self::assertSame('+1', $menu['/downloads/']);
+        self::assertSame('+1', $menu['/library/']);
+        self::assertSame('+1', $menu['/album/']);
     }
 
     public function testTheMembersWhoJoinedToday(): void
@@ -99,7 +99,7 @@ final class SectionCountersTest extends FunctionalTestCase
         FunctionalUserFactory::create();
         FunctionalUserFactory::create();
 
-        self::assertSame('+ 2', $this->menu($this->page('/'))['/community/']);
+        self::assertSame('+2', $this->menu($this->page('/'))['/community/']);
     }
 
     /**
@@ -114,7 +114,7 @@ final class SectionCountersTest extends FunctionalTestCase
 
         $page = $this->withConfig(['news' => ['homepage_days' => 3]], fn (): HTMLDocument => $this->page('/'));
 
-        self::assertSame('+ 1', $this->menu($page)['/news/']);
+        self::assertSame('+1', $this->menu($page)['/news/']);
         self::assertSame('1', $this->tiles($page)['/news/']);
     }
 
@@ -147,7 +147,11 @@ final class SectionCountersTest extends FunctionalTestCase
         $lines = [];
 
         foreach ($page->querySelectorAll('[data-site-menu] > li > a') as $link) {
-            $badge = $link->querySelector('.badge')?->textContent;
+            $element = $link->querySelector('.badge');
+            if ($element !== null) {
+                self::assertSame('ltr', $element->getAttribute('dir'));
+            }
+            $badge = $element?->textContent;
             $lines[(string) $link->getAttribute('href')] = $badge === null ? null : trim($badge);
         }
 

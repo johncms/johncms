@@ -36,7 +36,12 @@
     {% if canonical|default('') %}
         <link rel="canonical" href="{{ canonical }}">
     {% endif %}
-    <meta name="theme-color" content="#fafaf7">
+    {% if app.color_scheme == 'auto' %}
+        <meta name="theme-color" content="#fafaf7" media="(prefers-color-scheme: light)">
+        <meta name="theme-color" content="#0e1218" media="(prefers-color-scheme: dark)">
+    {% else %}
+        <meta name="theme-color" content="{{ app.dark_scheme ? '#0e1218' : '#fafaf7' }}">
+    {% endif %}
     {% block vite %}{{ vite('public', app.locale == 'ar') }}{% endblock %}
     {% block module_assets %}{{ module_assets('public') }}{% endblock %}
     <link rel="icon" type="image/svg+xml" href="{{ asset('images/icon.svg') }}">
