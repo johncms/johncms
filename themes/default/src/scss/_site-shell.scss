@@ -506,6 +506,8 @@
 .site-topbar__brand { display: none; }
 
 @media (max-width: 991.98px) {
+  .site-nav-pending .site-sidebar { display: none; }
+
   // Without JS the sidebar is ordinary document content and every navigation link is usable.
   .site-shell { display: flex; flex-direction: column; }
   .site-sidebar { position: static; inline-size: 100%; block-size: auto; padding-block: 1.25rem; border-inline-end: 0; }
@@ -539,7 +541,6 @@
       visibility: hidden;
       pointer-events: none;
       transform: translateX(var(--site-drawer-offset));
-      transition: transform .2s ease, visibility 0s linear .2s;
     }
 
     .site-sidebar__body { overflow-y: auto; }
@@ -556,7 +557,11 @@
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity .2s ease, visibility 0s linear .2s;
+    }
+
+    &.site-nav-motion {
+      .site-sidebar { transition: transform .2s ease, visibility 0s linear .2s; }
+      .site-scrim { transition: opacity .2s ease, visibility 0s linear .2s; }
     }
 
     &.site-nav-open {
@@ -579,8 +584,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .site-nav-ready .site-sidebar,
-  .site-nav-ready .site-scrim { transition: none; }
+  .site-nav-ready.site-nav-motion .site-sidebar,
+  .site-nav-ready.site-nav-motion .site-scrim { transition: none; }
 }
 
 @media (max-width: 575.98px) {

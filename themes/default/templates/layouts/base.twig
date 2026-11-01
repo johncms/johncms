@@ -42,6 +42,12 @@
     {% else %}
         <meta name="theme-color" content="{{ app.dark_scheme ? '#0e1218' : '#fafaf7' }}">
     {% endif %}
+    <script>
+        document.documentElement.classList.add('site-nav-pending');
+        document.addEventListener('DOMContentLoaded', function () {
+            document.documentElement.classList.remove('site-nav-pending');
+        }, {once: true});
+    </script>
     {% block vite %}{{ vite('public', app.locale == 'ar') }}{% endblock %}
     {% block module_assets %}{{ module_assets('public') }}{% endblock %}
     <link rel="icon" type="image/svg+xml" href="{{ asset('images/icon.svg') }}">

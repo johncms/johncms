@@ -26,7 +26,7 @@ if (sidebar && main && opener) {
     event.preventDefault();
     returnFocus = document.activeElement;
     document.querySelectorAll('[data-site-popover][open]').forEach(details => { details.open = false; });
-    document.body.classList.add('site-nav-open');
+    document.body.classList.add('site-nav-motion', 'site-nav-open');
     sidebar.inert = false;
     main.inert = true;
     sidebar.setAttribute('role', 'dialog');
@@ -62,6 +62,7 @@ if (sidebar && main && opener) {
   mobile.addEventListener('change', () => {
     const focused = document.activeElement;
     const wasInSidebar = sidebar.contains(focused);
+    document.body.classList.remove('site-nav-motion');
     close(false);
     if (wasInSidebar && (mobile.matches || focused.getClientRects().length === 0)) {
       (mobile.matches ? opener : sidebar.querySelector('a[href]')).focus();
@@ -69,6 +70,7 @@ if (sidebar && main && opener) {
   });
   document.body.classList.add('site-nav-ready');
   close(false);
+  document.documentElement.classList.remove('site-nav-pending');
 }
 
 // Match the most specific section URL without changing module menu contracts.
