@@ -1249,12 +1249,6 @@ parameters:
 			path: modules/johncms/forum/src/Domain/Models/ForumMessage.php
 
 		-
-			message: '#^Access to an undefined property Johncms\\Modules\\Forum\\Domain\\Models\\ForumMessage\:\:\$status\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/forum/src/Domain/Models/ForumMessage.php
-
-		-
 			message: '#^Method Johncms\\Modules\\Forum\\Domain\\Models\\ForumMessage\:\:scopeUsers\(\) should return Illuminate\\Database\\Eloquent\\Builder but returns Illuminate\\Database\\Query\\Builder\.$#'
 			identifier: return.type
 			count: 1

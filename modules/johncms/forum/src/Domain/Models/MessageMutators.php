@@ -193,7 +193,7 @@ trait MessageMutators
                 [
                     'id'           => $this->user_id,
                     'lastdate'     => $this->lastdate,
-                    'status'       => $this->status,
+                    'status'       => $this->status ?? '',
                     'datereg'      => $this->datereg,
                     'ip'           => $this->ip,
                     'ip_via_proxy' => $this->ip_via_proxy,
