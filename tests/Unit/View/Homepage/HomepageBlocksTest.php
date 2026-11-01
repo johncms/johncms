@@ -6,6 +6,7 @@ namespace Tests\Unit\View\Homepage;
 
 use Johncms\View\Homepage\HomepageBlock;
 use Johncms\View\Homepage\HomepageBlockProviderInterface;
+use Johncms\View\Homepage\HomepageBlockPosition;
 use Johncms\View\Homepage\HomepageBlocks;
 use PHPUnit\Framework\TestCase;
 
@@ -27,6 +28,17 @@ final class HomepageBlocksTest extends TestCase
     public function testAModuleWithNothingToShowAddsNoBlock(): void
     {
         self::assertSame([], (new HomepageBlocks([$this->provider()]))->all());
+    }
+
+    public function testExistingProvidersStayInContentAndBottomBlocksKeepTheirPosition(): void
+    {
+        $blocks = new HomepageBlocks([$this->provider(
+            new HomepageBlock('@shop/offers.twig'),
+            new HomepageBlock('@online/homepage/users.twig', position: HomepageBlockPosition::Bottom),
+        )]);
+
+        self::assertSame(HomepageBlockPosition::Content, $blocks->all()[0]->position);
+        self::assertSame(HomepageBlockPosition::Bottom, $blocks->all()[1]->position);
     }
 
     private function provider(HomepageBlock ...$blocks): HomepageBlockProviderInterface

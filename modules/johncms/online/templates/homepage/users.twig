@@ -1,0 +1,27 @@
+{# @var users list<array> Public user names and permitted profile links. @var user_count int @var guest_count int #}
+{% embed '@theme/components/content-card.twig' with {
+    id: 'home-online', title: d__('online', 'Who is online?'), icon: 'users', url: '/online/', link_label: d__('online', 'Full list'),
+    users: users, user_count: user_count, guest_count: guest_count
+} only %}
+    {% block body %}
+        <p class="site-content-card__meta mb-3">
+            <span>{{ d__('online', 'Users') }}: {{ user_count|format_number }}</span>
+            <span>{{ d__('online', 'Guests') }}: {{ guest_count|format_number }}</span>
+        </p>
+        {% if users %}
+            <ul class="site-home__online">
+                {% for user in users %}
+                    <li>
+                        <img src="{{ avatar(user.id) }}" width="32" height="32" alt="" class="site-avatar">
+                        {% if user.url %}<a href="{{ user.url }}">{{ user.name }}</a>{% else %}<span>{{ user.name }}</span>{% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            {% include '@theme/components/empty-state.twig' with {
+                icon: 'users', title: d__('online', 'No members online'),
+                description: d__('online', 'Members currently browsing the site will appear here.')
+            } only %}
+        {% endif %}
+    {% endblock %}
+{% endembed %}

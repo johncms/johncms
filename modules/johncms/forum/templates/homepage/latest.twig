@@ -1,0 +1,42 @@
+{# @var topics list<array> Public latest topics mapped by the forum provider. #}
+{% embed '@theme/components/content-card.twig' with {
+    class: 'site-content-card--topics', id: 'home-forum', title: d__('forum', 'Latest discussions'), icon: 'messages-square', url: '/forum/', link_label: d__('forum', 'All topics'), topics: topics
+} only %}
+    {% block body %}
+        {% for topic in topics %}
+            <article class="site-topic{{ topic.unread ? ' site-topic--unread' : '' }}">
+                <div class="site-topic__heading">
+                    <h3>
+                        {% if topic.unread %}<span class="site-topic__unread" title="{{ d__('forum', 'Unread') }}"><span class="visually-hidden">{{ d__('forum', 'Unread') }}: </span></span>{% endif %}
+                        <a href="{{ topic.url }}" title="{{ topic.name }}">{{ topic.name }}</a>
+                    </h3>
+                    <span class="site-topic__states">
+                        {% if topic.pinned %}{% include '@theme/components/icon.twig' with {name: 'pin', size: 12, label: d__('forum', 'Pinned topic')} only %}{% endif %}
+                        {% if topic.closed %}{% include '@theme/components/icon.twig' with {name: 'lock-keyhole', size: 12, label: d__('forum', 'Closed topic')} only %}{% endif %}
+                        {% if topic.has_poll %}{% include '@theme/components/icon.twig' with {name: 'list-checks', size: 12, label: d__('forum', 'Poll')} only %}{% endif %}
+                    </span>
+                </div>
+                <div class="site-topic__section">
+                    {% include '@theme/components/icon.twig' with {name: 'folder', size: 12} only %}
+                    {% if topic.section_url %}<a href="{{ topic.section_url }}">{{ topic.section }}</a>{% else %}{{ topic.section }}{% endif %}
+                </div>
+                <div class="site-topic__last" aria-label="{{ d__('forum', 'Last reply') }}">
+                    <span class="site-topic__author">
+                        <img src="{{ avatar(topic.author_id) }}" width="24" height="24" alt="" class="site-avatar">
+                        {% if topic.author_url %}<a href="{{ topic.author_url }}">{{ topic.author }}</a>{% else %}<span>{{ topic.author }}</span>{% endif %}
+                    </span>
+                    <span class="site-topic__date"><span class="site-meta-separator" aria-hidden="true">·</span>{{ topic.date }}</span>
+                    <a class="site-topic__replies" href="{{ topic.url }}" title="{{ d__('forum', 'Replies') }}" aria-label="{{ d__('forum', 'Replies') }}: {{ topic.replies|format_number }}">
+                        {% include '@theme/components/icon.twig' with {name: 'message-square', size: 13} only %}
+                        {{ topic.replies|format_number }}
+                    </a>
+                </div>
+            </article>
+        {% else %}
+            {% include '@theme/components/empty-state.twig' with {
+                icon: 'messages-square', title: d__('forum', 'No discussions yet'),
+                description: d__('forum', 'New forum topics will appear here.')
+            } only %}
+        {% endfor %}
+    {% endblock %}
+{% endembed %}

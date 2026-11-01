@@ -698,3 +698,15 @@ msgstr "Своих: %s"
 
 msgid "Write the news"
 msgstr "Написать новость"
+
+msgid "All news"
+msgstr "Все новости"
+
+msgid "No news yet"
+msgstr "Новостей пока нет"
+
+msgid "Published news will appear here."
+msgstr "Здесь появятся опубликованные новости."
+
+msgid "Rating"
+msgstr "Рейтинг"

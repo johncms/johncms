@@ -77,3 +77,6 @@ msgstr "Свободная лицензия"
 msgid "The GNU GPL-3 license gives you the right to distribute and modify JohnCMS."
 msgstr "Лицензия GNU GPL-3 дает вам право распространять и модифицировать JohnCMS."
 
+
+msgid "Site sections"
+msgstr "Разделы сайта"

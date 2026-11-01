@@ -66,6 +66,11 @@
                             <label class="form-label" for="copyright">{{ __('Site copyright') }}</label>
                             <input type="text" id="copyright" name="copyright" class="form-control" value="{{ settings.copyright }}">
                         </div>
+                        <div class="col-12">
+                            <label class="form-label" for="homepage_welcome">{{ __('Homepage welcome text') }}</label>
+                            <textarea rows="3" id="homepage_welcome" name="homepage_welcome" class="form-control" aria-describedby="homepage-welcome-help">{{ settings.homepage_welcome }}</textarea>
+                            <div class="form-text" id="homepage-welcome-help">{{ __('Optional plain text below the site name on the homepage. Independent of the search engine description.') }}</div>
+                        </div>
                     </div>
                 </div>
             </section>

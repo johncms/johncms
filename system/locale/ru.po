@@ -1578,3 +1578,9 @@ msgstr "Поиск иконок"
 
 msgid "Click an icon to copy its Twig markup."
 msgstr "Нажмите на иконку, чтобы скопировать её Twig-разметку."
+
+msgid "Content cards"
+msgstr "Контентные карточки"
+
+msgid "Nothing to display yet."
+msgstr "Пока нечего показать."

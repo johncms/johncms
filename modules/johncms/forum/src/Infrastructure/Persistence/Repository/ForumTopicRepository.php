@@ -165,7 +165,7 @@ final class ForumTopicRepository implements ForumTopicRepositoryInterface
             ->all();
     }
 
-    public function getLatest(int $limit): array
+    public function getLatest(int $limit, bool $onlyPublished = false, ?int $readerId = null): array
     {
         return ForumTopic::query()
             ->from('forum_topic as tpc')
@@ -179,6 +179,16 @@ final class ForumTopicRepository implements ForumTopicRepositoryInterface
             ->where(static function ($query): void {
                 $query->where('tpc.deleted', '!=', 1)
                     ->orWhereNull('tpc.deleted');
+            })
+            ->when($onlyPublished, static function ($query): void {
+                $query->where('tpc.post_count', '>', 0)->whereNotNull('rzd.id')
+                    ->leftJoin('users as last_author', 'last_author.id', '=', 'tpc.last_post_author')
+                    ->addSelect('last_author.id as last_author_id', 'last_author.name as last_author_display_name');
+            })
+            ->when($readerId !== null, static function ($query) use ($readerId): void {
+                $query->leftJoin('cms_forum_rdm as rdm', static function ($join) use ($readerId): void {
+                    $join->on('rdm.topic_id', '=', 'tpc.id')->where('rdm.user_id', '=', $readerId);
+                })->addSelect('rdm.time as read_at');
             })
             ->orderByDesc('tpc.last_post_date')
             ->limit(max(1, $limit))

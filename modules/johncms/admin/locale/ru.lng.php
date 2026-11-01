@@ -959,6 +959,8 @@
       'Skipped' => 'Пропущена',
       'Could not check' => 'Не удалось проверить',
       'Documentation' => 'Документация',
+      'Homepage welcome text' => 'Приветственный текст главной',
+      'Optional plain text below the site name on the homepage. Independent of the search engine description.' => 'Необязательный обычный текст под названием сайта на главной. Не зависит от описания для поисковых систем.',
     ),
   ),
 );

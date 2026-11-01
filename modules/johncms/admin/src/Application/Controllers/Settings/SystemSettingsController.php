@@ -59,6 +59,7 @@ final readonly class SystemSettingsController
             email: $request->body('madm', 'example@example.com'),
             timeShift: max(self::SHIFT_MIN, min(self::SHIFT_MAX, $request->bodyInt('timeshift'))),
             copyright: $request->body('copyright', 'JohnCMS'),
+            homepageWelcome: trim($request->body('homepage_welcome', '')),
             homeUrl: $request->body('homeurl', $currentHost),
             maxFileSize: $request->bodyInt('flsz'),
             metaTitle: $request->body('meta_title', 'johncms'),
@@ -131,6 +132,7 @@ final readonly class SystemSettingsController
         return [
             'homeurl'                 => (string) config('johncms.homeurl', ''),
             'copyright'               => (string) config('johncms.copyright', ''),
+            'homepage_welcome'        => (string) config('johncms.homepage_welcome', ''),
             'email'                   => (string) config('johncms.email', ''),
             'flsz'                    => (int) config('johncms.flsz', 0),
             'user_email_required'     => (bool) config('johncms.user_email_required', false),

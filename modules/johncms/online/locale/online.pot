@@ -4,6 +4,7 @@ msgstr ""
 
 #: modules/johncms/online/src/Application/Controllers/GuestController.php:28
 #: modules/johncms/online/src/Application/FiltersBuilder.php:25
+#: modules/johncms/online/templates/homepage/users.twig:9
 msgid "Guests"
 msgstr ""
 
@@ -25,6 +26,7 @@ msgid "History"
 msgstr ""
 
 #: modules/johncms/online/src/Application/Controllers/IndexController.php:28
+#: modules/johncms/online/templates/homepage/users.twig:3
 msgid "Who is online?"
 msgstr ""
 
@@ -34,6 +36,7 @@ msgid "IP Activity"
 msgstr ""
 
 #: modules/johncms/online/src/Application/FiltersBuilder.php:20
+#: modules/johncms/online/templates/homepage/users.twig:8
 msgid "Users"
 msgstr ""
 
@@ -43,6 +46,18 @@ msgstr ""
 
 #: modules/johncms/online/src/Application/UseCases/GetOnlineGuestsUseCase.php:34
 msgid "Guest"
+msgstr ""
+
+#: modules/johncms/online/templates/homepage/users.twig:3
+msgid "Full list"
+msgstr ""
+
+#: modules/johncms/online/templates/homepage/users.twig:22
+msgid "No members online"
+msgstr ""
+
+#: modules/johncms/online/templates/homepage/users.twig:23
+msgid "Members currently browsing the site will appear here."
 msgstr ""
 
 #: modules/johncms/online/templates/public/ip.twig:34

@@ -115,7 +115,7 @@ final class SectionCountersTest extends FunctionalTestCase
         $page = $this->withConfig(['news' => ['homepage_days' => 3]], fn (): HTMLDocument => $this->page('/'));
 
         self::assertSame('+1', $this->menu($page)['/news/']);
-        self::assertSame('1', $this->tiles($page)['/news/']);
+        self::assertSame('+1', $this->tiles($page)['/news/']);
     }
 
     /**
@@ -128,7 +128,7 @@ final class SectionCountersTest extends FunctionalTestCase
         $tiles = $this->tiles($this->page('/'));
 
         self::assertSame(self::SECTIONS, array_keys($tiles));
-        self::assertSame('1', $tiles['/downloads/']);
+        self::assertSame('+1', $tiles['/downloads/']);
         self::assertNull($tiles['/forum/']);
     }
 
@@ -165,7 +165,7 @@ final class SectionCountersTest extends FunctionalTestCase
     {
         $tiles = [];
 
-        foreach ($page->querySelectorAll('.mobile_tiles a.card') as $tile) {
+        foreach ($page->querySelectorAll('.site-home__tile') as $tile) {
             $badge = $tile->querySelector('.badge')?->textContent;
             $tiles[(string) $tile->getAttribute('href')] = $badge === null ? null : trim($badge);
         }

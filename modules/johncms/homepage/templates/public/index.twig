@@ -1,137 +1,58 @@
 {#
-    @param list<HomepageBlock> blocks What the modules put on the home page, in order.
+    @var blocks list<\Johncms\View\Homepage\HomepageBlock> Module blocks, in order.
+    @var bottom_blocks list<\Johncms\View\Homepage\HomepageBlock> Blocks below the navigation tiles.
+    @var site_name string Site name from the system settings.
+    @var welcome_text string Optional plain text, independent of the SEO description.
 #}
 {% extends '@theme/layouts/default.twig' %}
 
 {% block content %}
-    <div class="pt-2 pb-4 bg-white mt-3 mobile_jumbotron border-bottom full-mobile-width">
-        <h1 class="display-4 fw-bold">JohnCMS {{ app.cms_version }}</h1>
-        <p class="lead">
-            {{ __('Free, Open Source content management system') }}
-        </p>
-        <hr class="my-sm-3 my-md-4 full-mobile-width">
-        <a class="btn btn-success btn-lg me-1" href="https://johncms.com/downloads/">
-            <svg class="icon">
-                <use xlink:href="{{ asset('icons/sprite.svg') }}#download"/>
-            </svg>
-            <span class="hide-xs">{{ __('Download') }}</span>
-        </a>
-        <a class="btn btn-primary btn-lg me-1" href="https://docs.johncms.com/">
-            <svg class="icon">
-                <use xlink:href="{{ asset('icons/sprite.svg') }}#book-open"/>
-            </svg>
-            <span class="hide-xs">{{ __('Documentation') }}</span>
-        </a>
-        <a href="https://github.com/johncms" title="GitHub" class="btn btn-primary btn-lg-icon me-1" target="_blank" rel="nofollow">
-            <svg class="icon">
-                <use xlink:href="{{ asset('icons/sprite.svg') }}#github"/>
-            </svg>
-        </a>
-        <a href="https://translate.johncms.com" title="Translate" class="btn btn-primary btn-lg-icon" target="_blank" rel="nofollow">
-            <svg class="icon">
-                <use xlink:href="{{ asset('icons/sprite.svg', true) }}#translate"/>
-            </svg>
-        </a>
-    </div>
-
-    <div class="d-block d-md-none mobile_tiles">
-        <div class="row">
-            {# The sections of the main menu, a tile each, with what is new in it. #}
-            {% for item in menu_items('main') %}
-                {% set badge = item.badge %}
-                <div class="col-6 col-sm-4 mt-3 tile">
-                    <a href="{{ item.url }}" class="card border text-center">
-                        <div class="card-body">
-                            <div class="icon_with_badge d-inline-block">
-                                {% if item.hasImageIcon %}
-                                    <img class="icon-40" src="{{ item.icon }}" alt="">
-                                {% elseif item.icon %}
-                                    <svg class="icon-40">
-                                        <use xlink:href="{{ asset('icons/sprite.svg') }}#{{ item.icon }}"/>
-                                    </svg>
-                                {% endif %}
-                                {% if badge > 0 %}
-                                    <span class="badge rounded-pill bg-danger ms-3 mt-1">{{ badge|format_number }}</span>
-                                {% endif %}
-                            </div>
-                            <div class="mt-2 tile_name">{{ item.title }}</div>
-                        </div>
-                    </a>
+    <div class="site-home">
+        <section class="site-home__welcome" aria-labelledby="site-home-title">
+            <h1 id="site-home-title">{{ site_name }}</h1>
+            {% if welcome_text %}<p class="site-home__intro">{{ welcome_text }}</p>{% endif %}
+            {% if not app.user.isValid %}
+                <div class="site-home__actions">
+                    {% if can('registration.register') %}
+                        <a class="btn btn-primary" href="/registration">
+                            {% include '@theme/components/icon.twig' with {name: 'user-plus', size: 14} only %}
+                            {{ d__('system', 'Registration') }}
+                        </a>
+                    {% endif %}
+                    <a class="btn btn-secondary" href="/login">{{ d__('system', 'Log In') }}</a>
                 </div>
-            {% endfor %}
-        </div>
+            {% endif %}
+        </section>
+
+        {% if blocks %}
+            <div class="site-home__blocks">
+                {% for block in blocks %}
+                    {% include block.template with block.data only %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% set sections = menu_items('main') %}
+        {% if sections %}
+            <nav class="site-home__sections" aria-label="{{ __('Site sections') }}">
+                {% for item in sections %}
+                    {% set badge = item.badge %}
+                    <a class="site-home__tile" href="{{ item.url }}">
+                        <span class="site-home__tile-head">
+                            {% if item.icon %}
+                                <span class="site-home__tile-icon">
+                                    {% include '@theme/components/icon.twig' with {name: item.icon, image: item.hasImageIcon, size: 18} only %}
+                                </span>
+                            {% endif %}
+                            {% if badge > 0 %}<span class="badge text-bg-light" dir="ltr">+{{ badge|format_number }}</span>{% endif %}
+                        </span>
+                        <span class="site-home__tile-title">{{ item.title }}</span>
+                    </a>
+                {% endfor %}
+            </nav>
+        {% endif %}
+        {% for block in bottom_blocks %}
+            {% include block.template with block.data only %}
+        {% endfor %}
     </div>
-
-    {# What the switched-on modules put on the home page, each block with its own template. #}
-    {% for block in blocks %}
-        {% include block.template with block.data only %}
-    {% endfor %}
-
-    <h2 class="h1 fw-bold mt-4 mb-4">{{ __('Features') }}</h2>
-    <dl class="ms-4">
-        <dt class="h3 fw-bold">
-            <svg class="icon">
-                <use xlink:href="{{ asset('icons/sprite.svg') }}#check"/>
-            </svg>
-            {{ __('Responsive Layout') }}
-        </dt>
-        <dd class="mb-3">
-            {{ __('Your site will appear equally well on both computers and mobile devices.') }}
-        </dd>
-
-        <dt class="h3 fw-bold">
-            <svg class="icon">
-                <use xlink:href="{{ asset('icons/sprite.svg') }}#check"/>
-            </svg>
-            {{ __('Template System') }}
-        </dt>
-        <dd class="mb-3">
-            {{ __('Using templates, you can completely change the style of your site so that it becomes unique and not like the others.') }}
-        </dd>
-
-        <dt class="h3 fw-bold">
-            <svg class="icon">
-                <use xlink:href="{{ asset('icons/sprite.svg') }}#check"/>
-            </svg>
-            {{ __('High Performance') }}
-        </dt>
-        <dd class="mb-3">
-            {# The line break is part of the translated string, so it is printed as markup. #}
-            {{ __('When developing JohnCMS we pay special attention to system performance.<br>Your website will not require a powerful server for as long as possible.')|raw }}
-        </dd>
-
-        <dt class="h3 fw-bold">
-            <svg class="icon">
-                <use xlink:href="{{ asset('icons/sprite.svg') }}#check"/>
-            </svg>
-            {{ __('Multilingual') }}
-        </dt>
-        <dd class="mb-3">
-            {{ __('Reach the maximum audience in different languages. Several languages have already been built into the system.<br>And if you don\'t have the desired language, you can easily add it using advanced translation tools that support johnCMS.')|raw }}
-        </dd>
-
-        <dt class="h3 fw-bold">
-            <svg class="icon">
-                <use xlink:href="{{ asset('icons/sprite.svg') }}#check"/>
-            </svg>
-            {{ __('Modularity') }}
-        </dt>
-        <dd>
-            {{ __('The most popular modules are built into the system.<br>You can install ready-made additional modules, create them yourself or order development of new modules from other developers.')|raw }}
-        </dd>
-    </dl>
-
-    <h2 class="h1 fw-bold mt-4 mb-4">{{ __('Free License') }}</h2>
-
-    <dl class="ms-4">
-        <dt class="h3 fw-bold">
-            <svg class="icon">
-                <use xlink:href="{{ asset('icons/sprite.svg') }}#check"/>
-            </svg>
-            GPL-3
-        </dt>
-        <dd class="mb-3">
-            {{ __('The GNU GPL-3 license gives you the right to distribute and modify JohnCMS.') }}
-        </dd>
-    </dl>
 {% endblock %}

@@ -24,6 +24,7 @@ return [
             'convert'    => 'original',
         ],
         'copyright'               => 'JohnCMS',
+        'homepage_welcome'        => '',
         'email'                   => 'no-reply@example.com',
         'flsz'                    => 1000,
         'gzip'                    => 1,

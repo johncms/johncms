@@ -436,6 +436,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/MarkAllTopicsReadController.php:36
 #: modules/johncms/forum/src/Application/Controllers/MarkAllTopicsReadController.php:37
 #: modules/johncms/forum/src/Application/Controllers/UnreadTopicsController.php:46
+#: modules/johncms/forum/templates/homepage/latest.twig:10
 #: modules/johncms/forum/templates/public/components/header.twig:21
 msgid "Unread"
 msgstr ""
@@ -583,6 +584,12 @@ msgstr ""
 msgid "Search query must be between 2 and 64 characters"
 msgstr ""
 
+#: modules/johncms/forum/src/Application/Homepage/LatestTopicsBlockProvider.php:57
+#: modules/johncms/forum/src/Application/Services/ForumVisitorRowMapper.php:51
+#: modules/johncms/forum/src/Application/Services/ForumVisitorRowMapper.php:76
+msgid "Guest"
+msgstr ""
+
 #: modules/johncms/forum/src/Application/Notifications/UnreadTopicsNotificationProvider.php:35
 msgid "New forum posts"
 msgstr ""
@@ -723,11 +730,6 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:161
 #: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:171
 msgid "In the Topic"
-msgstr ""
-
-#: modules/johncms/forum/src/Application/Services/ForumVisitorRowMapper.php:51
-#: modules/johncms/forum/src/Application/Services/ForumVisitorRowMapper.php:76
-msgid "Guest"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Services/HiddenListControlsMapper.php:59
@@ -1283,6 +1285,50 @@ msgstr ""
 msgid "Topic description"
 msgstr ""
 
+#: modules/johncms/forum/templates/homepage/latest.twig:3
+msgid "Latest discussions"
+msgstr ""
+
+#: modules/johncms/forum/templates/homepage/latest.twig:3
+msgid "All topics"
+msgstr ""
+
+#: modules/johncms/forum/templates/homepage/latest.twig:14
+#: modules/johncms/forum/templates/public/topic-list.twig:40
+#: modules/johncms/forum/templates/public/topics.twig:47
+msgid "Pinned topic"
+msgstr ""
+
+#: modules/johncms/forum/templates/homepage/latest.twig:15
+#: modules/johncms/forum/templates/public/topic-list.twig:54
+#: modules/johncms/forum/templates/public/topics.twig:61
+msgid "Closed topic"
+msgstr ""
+
+#: modules/johncms/forum/templates/homepage/latest.twig:16
+#: modules/johncms/forum/templates/public/add-poll.twig:17
+#: modules/johncms/forum/templates/public/add-poll.twig:18
+#: modules/johncms/forum/templates/public/edit-poll.twig:21
+#: modules/johncms/forum/templates/public/edit-poll.twig:22
+msgid "Poll"
+msgstr ""
+
+#: modules/johncms/forum/templates/homepage/latest.twig:23
+msgid "Last reply"
+msgstr ""
+
+#: modules/johncms/forum/templates/homepage/latest.twig:29
+msgid "Replies"
+msgstr ""
+
+#: modules/johncms/forum/templates/homepage/latest.twig:37
+msgid "No discussions yet"
+msgstr ""
+
+#: modules/johncms/forum/templates/homepage/latest.twig:38
+msgid "New forum topics will appear here."
+msgstr ""
+
 #: modules/johncms/forum/templates/public/add-file.twig:14
 msgid "File attached"
 msgstr ""
@@ -1313,13 +1359,6 @@ msgstr ""
 
 #: modules/johncms/forum/templates/public/add-file.twig:33
 msgid "Upload"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/add-poll.twig:17
-#: modules/johncms/forum/templates/public/add-poll.twig:18
-#: modules/johncms/forum/templates/public/edit-poll.twig:21
-#: modules/johncms/forum/templates/public/edit-poll.twig:22
-msgid "Poll"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/add-poll.twig:20
@@ -1606,19 +1645,9 @@ msgstr ""
 msgid "Show period"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/topic-list.twig:40
-#: modules/johncms/forum/templates/public/topics.twig:47
-msgid "Pinned topic"
-msgstr ""
-
 #: modules/johncms/forum/templates/public/topic-list.twig:47
 #: modules/johncms/forum/templates/public/topics.twig:54
 msgid "Topic has poll"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/topic-list.twig:54
-#: modules/johncms/forum/templates/public/topics.twig:61
-msgid "Closed topic"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/topic-list.twig:61

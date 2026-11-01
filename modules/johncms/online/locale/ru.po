@@ -66,3 +66,12 @@ msgstr "Список пуст"
 msgid "Total"
 msgstr "Всего"
 
+
+msgid "Full list"
+msgstr "Полный список"
+
+msgid "No members online"
+msgstr "Пользователей онлайн пока нет"
+
+msgid "Members currently browsing the site will appear here."
+msgstr "Здесь появятся пользователи, которые сейчас просматривают сайт."

@@ -13,11 +13,13 @@ final readonly class HomepageBlock
      * @param string               $template A template of the module, by its namespace — "@news/homepage/latest.twig".
      * @param array<string, mixed> $data     What the template is rendered with, and nothing else.
      * @param int                  $weight   Lighter blocks go higher; equal weights keep the order of the modules.
+     * @param HomepageBlockPosition $position Content before the section tiles, or the bottom of the page.
      */
     public function __construct(
         public string $template,
         public array $data = [],
         public int $weight = 100,
+        public HomepageBlockPosition $position = HomepageBlockPosition::Content,
     ) {
     }
 }

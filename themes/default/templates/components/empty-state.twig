@@ -1,0 +1,6 @@
+{# @var title string Empty state heading. @var description string Explanatory plain text. @var icon string Public icon name. #}
+<div class="site-empty-state">
+    <span class="site-empty-state__icon">{% include '@theme/components/icon.twig' with {name: icon, size: 22} only %}</span>
+    <p class="site-empty-state__title">{{ title }}</p>
+    <p class="site-empty-state__description">{{ description }}</p>
+</div>

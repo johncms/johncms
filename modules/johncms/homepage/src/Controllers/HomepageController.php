@@ -8,6 +8,8 @@ use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\View\Homepage\HomepageBlocks;
+use Johncms\View\Homepage\HomepageBlock;
+use Johncms\View\Homepage\HomepageBlockPosition;
 
 final readonly class HomepageController
 {
@@ -26,6 +28,7 @@ final readonly class HomepageController
         $this->navChain->showHomePage(false);
 
         $config = config('johncms');
+        $blocks = $this->blocks->all();
 
         return new ViewResponse(
             '@homepage/public/index.twig',
@@ -34,7 +37,10 @@ final readonly class HomepageController
                 'title'       => $config['meta_title'] ?? '',
                 'keywords'    => $config['meta_key'],
                 'description' => $config['meta_desc'],
-                'blocks'      => $this->blocks->all(),
+                'blocks'      => array_values(array_filter($blocks, static fn (HomepageBlock $block): bool => $block->position === HomepageBlockPosition::Content)),
+                'bottom_blocks' => array_values(array_filter($blocks, static fn (HomepageBlock $block): bool => $block->position === HomepageBlockPosition::Bottom)),
+                'site_name'   => $config['copyright'],
+                'welcome_text' => trim($config['homepage_welcome'] ?? ''),
             ]
         );
     }

@@ -435,6 +435,8 @@ The number is shown so that support for the old scheme is not removed while it i
       'Could not load the icons.' => 'Не удалось загрузить иконки.',
       'Search icons' => 'Поиск иконок',
       'Click an icon to copy its Twig markup.' => 'Нажмите на иконку, чтобы скопировать её Twig-разметку.',
+      'Content cards' => 'Контентные карточки',
+      'Nothing to display yet.' => 'Пока нечего показать.',
     ),
   ),
 );

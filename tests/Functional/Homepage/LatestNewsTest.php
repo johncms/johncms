@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Homepage;
 
+use Dom\HTMLDocument;
 use Tests\Functional\FunctionalTestCase;
 use Tests\Support\Fixture;
 
@@ -47,6 +48,15 @@ final class LatestNewsTest extends FunctionalTestCase
         self::assertSame([], $this->shown($this->homePage(['homepage_show' => false])));
     }
 
+    public function testDraftAndScheduledArticlesAreNotAdvertised(): void
+    {
+        Fixture::insert('news_articles', ['name' => 'Draft', 'code' => 'draft', 'active' => 0]);
+        $this->article('Future', '+1 day');
+        $this->article('Public', '-1 hour');
+
+        self::assertSame(['Public'], $this->shown($this->homePage()));
+    }
+
     private function article(string $name, string $published): void
     {
         $time = date('Y-m-d H:i:s', strtotime($published));
@@ -73,8 +83,12 @@ final class LatestNewsTest extends FunctionalTestCase
      */
     private function shown(string $page): array
     {
-        preg_match_all('~<a class="h4 fw-bold" href="[^"]*">([^<]+)</a>~', $page, $matches);
+        $document = HTMLDocument::createFromString($page, LIBXML_NOERROR);
+        $titles = [];
+        foreach ($document->querySelectorAll('#home-news .site-content-card__item h3 a') as $link) {
+            $titles[] = $link->textContent;
+        }
 
-        return $matches[1];
+        return $titles;
     }
 }

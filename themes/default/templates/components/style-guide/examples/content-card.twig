@@ -1,0 +1,10 @@
+{% embed '@theme/components/content-card.twig' with {
+    title: d__('system', 'Content cards'), icon: 'newspaper', url: '#cards', link_label: d__('system', 'Cards')
+} only %}
+    {% block body %}
+        {% include '@theme/components/empty-state.twig' with {
+            icon: 'newspaper', title: d__('system', 'Nothing to display yet.'),
+            description: d__('system', 'The text of a page: a description, a hint, a paragraph of help.')
+        } only %}
+    {% endblock %}
+{% endembed %}

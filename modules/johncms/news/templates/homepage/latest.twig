@@ -1,30 +1,37 @@
-{#
-    The latest articles, as a block of the home page. The page belongs to another module, so the
-    strings name the domain of the news.
-
-    @param iterable<NewsArticle> news Never empty: no articles, no block.
-#}
-<div class="mb-n3">
-    <h2 class="h1 fw-bold mt-4 mb-2">{{ d__('news', 'News') }}</h2>
-    <div class="row row-cols-1">
+{# @var news iterable<\Johncms\Modules\News\Domain\Models\NewsArticle> Published articles selected by the module settings. #}
+{% embed '@theme/components/content-card.twig' with {
+    class: 'site-content-card--news', marker: true, id: 'home-news', title: d__('news', 'News'), icon: 'newspaper', url: '/news/', link_label: d__('news', 'All news'), news: news
+} only %}
+    {% block body %}
         {% for article in news %}
-            <div class="col mb-3">
-                <a class="h4 fw-bold" href="{{ article.url }}">{{ article.name }}</a>
+            <article class="site-content-card__item">
+                <h3><a href="{{ article.url }}">{{ article.name }}</a></h3>
                 {% if article.preview_text_safe is not empty %}
-                    {# Sanitized by the news module, so it stays markup. #}
-                    <div class="mb-n3 mt-1">{{ article.preview_text_safe }}</div>
+                    <div class="site-content-card__preview">{{ article.preview_text_safe }}</div>
                 {% endif %}
-                <div class="text-muted small pt-1 link-no-underline">{{ article.display_date }},
-                    <svg class="icon ms-1" style="width: 13px; margin-top: -3px;">
-                        <use xlink:href="{{ asset('icons/sprite.svg') }}#rating"/>
-                    </svg> {{ article.rating }},
-                    <a href="{{ article.url }}#article-comments">
-                        <svg class="icon ms-2" style="width: 13px;">
-                            <use xlink:href="{{ asset('icons/sprite.svg') }}#forum"/>
-                        </svg> {{ article.comments_count }}
+                <div class="site-news-meta">
+                    <a class="site-news-meta__item" href="{{ article.url }}#article-comments" aria-label="{{ d__('news', 'Comments') }}: {{ article.comments_count|format_number }}" title="{{ d__('news', 'Comments') }}">
+                        {% include '@theme/components/icon.twig' with {name: 'message-square', size: 11} only %}
+                        {{ article.comments_count|format_number }}
                     </a>
+                    <span class="site-news-meta__item" title="{{ d__('news', 'Views') }}">
+                        <span class="site-meta-separator" aria-hidden="true">·</span>
+                        {% include '@theme/components/icon.twig' with {name: 'eye', size: 11} only %}
+                        <span class="visually-hidden">{{ d__('news', 'Views') }}: </span>{{ article.view_count|format_number }}
+                    </span>
+                    <span class="site-news-meta__item" title="{{ d__('news', 'Rating') }}">
+                        <span class="site-meta-separator" aria-hidden="true">·</span>
+                        {% include '@theme/components/icon.twig' with {name: 'chart-column', size: 11} only %}
+                        <span class="visually-hidden">{{ d__('news', 'Rating') }}: </span>{{ article.rating|format_number }}
+                    </span>
+                    <span class="site-news-meta__date"><span class="site-meta-separator" aria-hidden="true">·</span>{{ article.display_date }}</span>
                 </div>
-            </div>
+            </article>
+        {% else %}
+            {% include '@theme/components/empty-state.twig' with {
+                icon: 'newspaper', title: d__('news', 'No news yet'),
+                description: d__('news', 'Published news will appear here.')
+            } only %}
         {% endfor %}
-    </div>
-</div>
+    {% endblock %}
+{% endembed %}

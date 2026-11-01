@@ -34,7 +34,7 @@ interface ForumTopicRepositoryInterface
     /**
      * @return array<int, array<string, mixed>>
      */
-    public function getLatest(int $limit): array;
+    public function getLatest(int $limit, bool $onlyPublished = false, ?int $readerId = null): array;
 
     public function countReadBySectionId(int $sectionId): int;
 

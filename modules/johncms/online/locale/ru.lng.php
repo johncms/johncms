@@ -15,6 +15,9 @@
       'Guest' => 'Гость',
       'List is empty' => 'Список пуст',
       'Total' => 'Всего',
+      'Full list' => 'Полный список',
+      'No members online' => 'Пользователей онлайн пока нет',
+      'Members currently browsing the site will appear here.' => 'Здесь появятся пользователи, которые сейчас просматривают сайт.',
     ),
   ),
 );

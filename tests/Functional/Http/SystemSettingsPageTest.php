@@ -53,6 +53,15 @@ final class SystemSettingsPageTest extends FunctionalTestCase
         self::assertSame(404, $response->getStatusCode());
     }
 
+    public function testTheWelcomeTextIsAnIndependentPlainTextSetting(): void
+    {
+        $content = $this->withConfig(['johncms' => ['homepage_welcome' => '<b>Welcome</b>']], fn (): string => $this->page());
+
+        self::assertStringContainsString('name="homepage_welcome"', $content);
+        self::assertStringContainsString('&lt;b&gt;Welcome&lt;/b&gt;</textarea>', $content);
+        self::assertStringContainsString('name="meta_desc"', $content);
+    }
+
     private function page(): string
     {
         $response = $this->handleRequest('/admin/settings', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()));

@@ -3344,3 +3344,9 @@ msgstr "Не удалось проверить"
 
 msgid "Documentation"
 msgstr "Документация"
+
+msgid "Homepage welcome text"
+msgstr "Приветственный текст главной"
+
+msgid "Optional plain text below the site name on the homepage. Independent of the search engine description."
+msgstr "Необязательный обычный текст под названием сайта на главной. Не зависит от описания для поисковых систем."

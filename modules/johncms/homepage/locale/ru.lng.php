@@ -21,6 +21,7 @@
       'The most popular modules are built into the system.<br>You can install ready-made additional modules, create them yourself or order development of new modules from other developers.' => 'В систему встроены основные наиболее популярные модули.<br>Благодаря модульной системе Вы сможете устанавливать уже готовые дополнительные модули, создавать самостоятельно или же заказывать разработку новых модулей у других разработчиков.',
       'Free License' => 'Свободная лицензия',
       'The GNU GPL-3 license gives you the right to distribute and modify JohnCMS.' => 'Лицензия GNU GPL-3 дает вам право распространять и модифицировать JohnCMS.',
+      'Site sections' => 'Разделы сайта',
     ),
   ),
 );

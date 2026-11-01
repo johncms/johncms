@@ -428,6 +428,13 @@
       'They are deleted for good with their files. This cannot be undone.' => 'Они удалятся насовсем вместе с файлами. Это нельзя отменить.',
       'They are deleted for good with their posts and files. This cannot be undone.' => 'Они удалятся насовсем вместе с сообщениями и файлами. Это нельзя отменить.',
       'posts on the forum today' => 'постов на форуме сегодня',
+      'Latest discussions' => 'Свежее на форуме',
+      'All topics' => 'Все темы',
+      'Replies' => 'Ответы',
+      'No discussions yet' => 'Обсуждений пока нет',
+      'New forum topics will appear here.' => 'Здесь появятся новые темы форума.',
+      'Last reply' => 'Последний ответ',
+      'No replies yet' => 'Нет ответов',
     ),
   ),
 );

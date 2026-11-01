@@ -36,12 +36,13 @@
             {% include '@theme/components/site-topbar.twig' with {notifications: layout_notifications} only %}
             <main class="site-content" id="site-content" tabindex="-1">
                 {% include '@theme/components/impersonation-banner.twig' only %}
-                <div class="site-page-heading">
+                {% set layout_page_heading %}
                     {% block breadcrumbs %}
                         {% include '@theme/components/breadcrumbs.twig' only %}
                     {% endblock %}
                     {% if page_title|default('') %}<h1>{{ page_title }}</h1>{% endif %}
-                </div>
+                {% endset %}
+                {% if layout_page_heading|trim %}<div class="site-page-heading">{{ layout_page_heading }}</div>{% endif %}
                 {% set layout_header_ads = ads('content_header') %}
                 {% if layout_header_ads %}
                     <div class="site-ads site-ads--content">

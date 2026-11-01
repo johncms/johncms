@@ -10,7 +10,7 @@ use Johncms\View\Homepage\HomepageBlockProviderInterface;
 
 /**
  * The latest articles on the home page, as many and as fresh as the settings of the news ask for;
- * no block when they switch it off or there is nothing to show.
+ * no block when switched off, an empty state when no publication matches.
  */
 final readonly class LatestNewsBlockProvider implements HomepageBlockProviderInterface
 {
@@ -33,8 +33,6 @@ final readonly class LatestNewsBlockProvider implements HomepageBlockProviderInt
             ->orderByDesc('id')
             ->get();
 
-        if ($articles->isNotEmpty()) {
-            yield new HomepageBlock('@news/homepage/latest.twig', ['news' => $articles], weight: 10);
-        }
+        yield new HomepageBlock('@news/homepage/latest.twig', ['news' => $articles], weight: 10);
     }
 }

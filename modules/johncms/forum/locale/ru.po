@@ -1795,3 +1795,24 @@ msgstr "Они удалятся насовсем вместе с сообщен�
 
 msgid "posts on the forum today"
 msgstr "постов на форуме сегодня"
+
+msgid "Latest discussions"
+msgstr "Свежее на форуме"
+
+msgid "All topics"
+msgstr "Все темы"
+
+msgid "Replies"
+msgstr "Ответы"
+
+msgid "No discussions yet"
+msgstr "Обсуждений пока нет"
+
+msgid "New forum topics will appear here."
+msgstr "Здесь появятся новые темы форума."
+
+msgid "Last reply"
+msgstr "Последний ответ"
+
+msgid "No replies yet"
+msgstr "Нет ответов"

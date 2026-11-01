@@ -27,6 +27,7 @@ final readonly class SystemSettingsDTO
         public bool $libraryComments,
         public bool $downloadsComments,
         public bool $registrationModeration,
+        public string $homepageWelcome = '',
     ) {
     }
 }

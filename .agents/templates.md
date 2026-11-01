@@ -103,7 +103,14 @@ live in `themes/<theme>/templates/admin/components/ui/` and are shown with their
 The public theme has its own `/style-guide`, available with `admin.access`, rendered with the
 public layout and bundle. Add examples of new public components to
 `themes/default/templates/components/style-guide/examples/`; the guide shows their Twig source
-alongside the rendered example. Do not import admin templates or assets into this page.
+alongside the rendered example. Do not import admin templates or assets into this page. Shared
+public content panels and empty states are `@theme/components/content-card.twig` (embed its
+`body` block) and `@theme/components/empty-state.twig`.
+
+Modules contribute home-page content through `HomepageBlockProviderInterface`. The optional
+`HomepageBlock.position` defaults to `HomepageBlockPosition::Content`; use `Bottom` for a block
+below the section tiles. Weights still order blocks within each position. Existing providers
+need no change and keep full-width rendering unless they opt into the shared content card.
 
 ## Live lists (the panel)
 

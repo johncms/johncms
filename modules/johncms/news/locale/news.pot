@@ -21,7 +21,7 @@ msgstr ""
 #: modules/johncms/news/src/Application/MetaTagsManager.php:105
 #: modules/johncms/news/src/Application/MetaTagsManager.php:106
 #: modules/johncms/news/src/Application/Services/NewsPermissions.php:29
-#: modules/johncms/news/templates/homepage/latest.twig:8
+#: modules/johncms/news/templates/homepage/latest.twig:3
 msgid "News"
 msgstr ""
 
@@ -484,6 +484,8 @@ msgstr ""
 
 #: modules/johncms/news/templates/admin/article-form.twig:201
 #: modules/johncms/news/templates/admin/components/articles-table.twig:15
+#: modules/johncms/news/templates/homepage/latest.twig:17
+#: modules/johncms/news/templates/homepage/latest.twig:20
 msgid "Views"
 msgstr ""
 
@@ -680,6 +682,28 @@ msgstr ""
 msgid "Used where the article has no title, keywords or description of its own."
 msgstr ""
 
+#: modules/johncms/news/templates/homepage/latest.twig:3
+msgid "All news"
+msgstr ""
+
+#: modules/johncms/news/templates/homepage/latest.twig:13
+#: modules/johncms/news/templates/public/article.twig:73
+msgid "Comments"
+msgstr ""
+
+#: modules/johncms/news/templates/homepage/latest.twig:22
+#: modules/johncms/news/templates/homepage/latest.twig:25
+msgid "Rating"
+msgstr ""
+
+#: modules/johncms/news/templates/homepage/latest.twig:32
+msgid "No news yet"
+msgstr ""
+
+#: modules/johncms/news/templates/homepage/latest.twig:33
+msgid "Published news will appear here."
+msgstr ""
+
 #: modules/johncms/news/templates/public/article.twig:16
 msgid "Published:"
 msgstr ""
@@ -710,10 +734,6 @@ msgstr ""
 
 #: modules/johncms/news/templates/public/article.twig:72
 msgid "Reply"
-msgstr ""
-
-#: modules/johncms/news/templates/public/article.twig:73
-msgid "Comments"
 msgstr ""
 
 #: modules/johncms/news/templates/public/article.twig:74

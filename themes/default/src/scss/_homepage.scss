@@ -1,60 +1,78 @@
-.mobile_tiles {
-  @media (max-width: 575px) {
-    padding: 0 15px;
-  }
+// The universal home page uses the real site name, module blocks and navigation.
+.site-home {
+  display: grid;
+  gap: 2rem;
 
-  .tile {
+  &__welcome {
+    padding: 2.75rem 2rem;
+    border: 1px solid var(--border);
+    border-radius: .75rem;
+    background: var(--bg-elev);
+    text-align: center;
 
-    @media (max-width: 400px) {
-      padding: 0;
-      &:nth-child(odd) {
-        padding-right: 5px;
-      }
-      &:nth-child(even) {
-        padding-left: 5px;
-      }
-
-      .icon-40 {
-        height: 30px;
-        width: 30px;
-      }
-    }
-
-    @media (min-width: 401px) and (max-width: 575px) {
-      padding: 0;
-      &:nth-child(odd) {
-        padding-right: 10px;
-      }
-      &:nth-child(even) {
-        padding-left: 10px;
-      }
-    }
-
-  }
-
-  .tile_name {
-    font-size: 1.1rem;
-    @media (max-width: 400px) {
-      font-size: 0.9rem;
+    h1 {
+      margin: 0;
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -.025em;
+      overflow-wrap: anywhere;
     }
   }
 
-}
+  &__intro {
+    max-inline-size: 44rem;
+    margin: 1rem auto 0;
+    color: var(--fg-muted);
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+  }
 
-.mobile_jumbotron {
-  @media (max-width: 525px) {
+  &__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .625rem; margin-block-start: 1.5rem; }
+  &__blocks {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    min-inline-size: 0;
+    > * { grid-column: 1 / -1; min-inline-size: 0; }
+    > .site-content-card { grid-column: auto; }
+    > .site-content-card:only-child { grid-column: 1 / -1; }
+  }
+  &__online { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; padding: 0; margin: 0; list-style: none; }
+  &__online li { display: flex; align-items: center; gap: .625rem; min-inline-size: 0; overflow-wrap: anywhere; }
+  &__online .site-avatar { flex-shrink: 0; }
+  &__sections { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; }
 
-    .btn {
-      .icon {
-        width: 20px;
-      }
-    }
-    .hide-xs {
-      display: none;
-    }
+  &__tile {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-inline-size: 0;
+    padding: 1.125rem;
+    border: 1px solid var(--border);
+    border-radius: .625rem;
+    background: var(--bg-elev);
+    color: var(--fg);
+    text-decoration: none;
+    transition: border-color .12s, background-color .12s;
 
-    .lead {
-      font-size: 0.95rem;
-    }
+    &:hover,
+    &:focus-visible { border-color: var(--border-strong); background: var(--bg-elev-2); color: var(--fg); text-decoration: none; }
+  }
+
+  &__tile-head { display: flex; justify-content: space-between; align-items: flex-start; gap: .75rem; min-block-size: 2.25rem; }
+  &__tile-head > .badge { margin-inline-start: auto; }
+  &__tile-icon { display: inline-flex; align-items: center; justify-content: center; inline-size: 2.25rem; block-size: 2.25rem; border-radius: .5rem; background: var(--bg-inset); color: var(--accent); }
+  &__tile-title { font-weight: 600; overflow-wrap: anywhere; }
+
+  @include media-breakpoint-down(lg) {
+    &__blocks { grid-template-columns: minmax(0, 1fr); }
+    &__sections { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @include media-breakpoint-down(sm) {
+    gap: 1.5rem;
+    &__welcome { padding: 2rem 1.25rem; }
+    &__sections { grid-template-columns: minmax(0, 1fr); }
   }
 }

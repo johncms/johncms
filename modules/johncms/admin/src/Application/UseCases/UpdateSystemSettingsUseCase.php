@@ -26,6 +26,7 @@ final readonly class UpdateSystemSettingsUseCase
         $config['email'] = $dto->email;
         $config['timeshift'] = $dto->timeShift;
         $config['copyright'] = $dto->copyright;
+        $config['homepage_welcome'] = $dto->homepageWelcome;
         $config['homeurl'] = rtrim($dto->homeUrl, '/');
         $config['flsz'] = $dto->maxFileSize;
         $config['meta_title'] = $dto->metaTitle;

@@ -949,6 +949,7 @@ msgstr ""
 #: system/src/Http/Controller/ExternalAuthController.php:185
 #: system/src/Http/Controller/ExternalAuthController.php:194
 #: themes/default/templates/components/sidebar-user-menu.twig:9
+#: modules/johncms/homepage/templates/public/index.twig:19
 msgid "Registration"
 msgstr ""
 
@@ -1296,6 +1297,7 @@ msgstr ""
 #: themes/default/templates/components/sidebar-user-menu.twig:6
 #: themes/default/templates/components/site-topbar.twig:67
 #: modules/johncms/auth/templates/public/registration-email-confirmed.twig:15
+#: modules/johncms/homepage/templates/public/index.twig:22
 msgid "Log In"
 msgstr ""
 
@@ -1376,6 +1378,7 @@ msgid "Warning"
 msgstr ""
 
 #: themes/default/templates/components/style-guide/examples/cards.twig:2
+#: themes/default/templates/components/style-guide/examples/content-card.twig:2
 #: themes/default/templates/pages/style-guide.twig:17
 #: themes/default/templates/pages/style-guide.twig:52
 msgid "Cards"
@@ -1387,6 +1390,7 @@ msgid "Title"
 msgstr ""
 
 #: themes/default/templates/components/style-guide/examples/cards.twig:5
+#: themes/default/templates/components/style-guide/examples/content-card.twig:7
 #: themes/default/templates/components/style-guide/examples/typography.twig:7
 msgid "The text of a page: a description, a hint, a paragraph of help."
 msgstr ""
@@ -1400,6 +1404,14 @@ msgstr ""
 
 #: themes/default/templates/components/style-guide/examples/cards.twig:8
 msgid "Additional information"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/content-card.twig:2
+msgid "Content cards"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/content-card.twig:6
+msgid "Nothing to display yet."
 msgstr ""
 
 #: themes/default/templates/components/style-guide/examples/forms.twig:3
@@ -1720,16 +1732,16 @@ msgid "Badges"
 msgstr ""
 
 #: themes/default/templates/pages/style-guide.twig:18
-#: themes/default/templates/pages/style-guide.twig:56
+#: themes/default/templates/pages/style-guide.twig:57
 msgid "Tables"
 msgstr ""
 
 #: themes/default/templates/pages/style-guide.twig:19
-#: themes/default/templates/pages/style-guide.twig:60
+#: themes/default/templates/pages/style-guide.twig:61
 msgid "Pagination"
 msgstr ""
 
 #: themes/default/templates/pages/style-guide.twig:20
-#: themes/default/templates/pages/style-guide.twig:64
+#: themes/default/templates/pages/style-guide.twig:65
 msgid "Dropdown menus"
 msgstr ""
