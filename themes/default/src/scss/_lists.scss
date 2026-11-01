@@ -1,7 +1,7 @@
 .list-items {
 
   a.list-item {
-    color: #000000;
+    color: var(--fg);
 
     &:hover {
       text-decoration: none;
@@ -9,18 +9,18 @@
   }
 
   .list-item {
-    background: #ffffff;
+    background: var(--bg-elev);
     justify-content: space-between;
     padding: 0 0 0 0.95rem;
 
     .item-content, .icon-right {
-      border-bottom: 1px solid #dbdbdb;
+      border-bottom: 1px solid var(--border);
       padding: 0.5rem 0 0.5rem 0;
     }
 
     .icon-right {
       padding: 0 0.95rem 0 0.5rem;
-      color: #6c757d;
+      color: var(--fg-muted);
       display: flex;
       align-items: center;
 
@@ -33,11 +33,11 @@
 
     .item-name {
       font-size: 1rem;
-      color: $link-color;
+      color: var(--accent);
     }
 
     .item-desc {
-      color: #6c757d;
+      color: var(--fg-muted);
       font-size: 0.75rem;
     }
 

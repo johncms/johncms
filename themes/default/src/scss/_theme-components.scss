@@ -1,0 +1,230 @@
+// Bootstrap components declare local variables; connect those to the body's runtime palette.
+.card {
+  --bs-card-bg: var(--bg-elev);
+  --bs-card-color: var(--fg);
+  --bs-card-cap-bg: var(--bg-elev-2);
+}
+
+.list-group {
+  --bs-list-group-bg: var(--bg-elev);
+  --bs-list-group-color: var(--fg);
+  --bs-list-group-action-color: var(--fg);
+  --bs-list-group-action-hover-color: var(--fg);
+  --bs-list-group-action-hover-bg: var(--bg-elev-2);
+  --bs-list-group-action-active-color: var(--fg);
+  --bs-list-group-action-active-bg: var(--bg-inset);
+  --bs-list-group-active-bg: var(--accent);
+  --bs-list-group-active-color: var(--accent-ink);
+  --bs-list-group-active-border-color: var(--accent);
+}
+
+.modal-content {
+  --bs-modal-bg: var(--bg-elev);
+  --bs-modal-color: var(--fg);
+}
+
+.dropdown-menu {
+  --bs-dropdown-bg: var(--bg-elev);
+  --bs-dropdown-color: var(--fg);
+  --bs-dropdown-link-color: var(--fg);
+  --bs-dropdown-link-hover-bg: var(--bg-elev-2);
+  --bs-dropdown-link-hover-color: var(--fg);
+  --bs-dropdown-link-active-bg: var(--accent);
+  --bs-dropdown-link-active-color: var(--accent-ink);
+}
+
+.form-control,
+.form-select {
+  background-color: var(--bg-elev);
+  color: var(--fg);
+  border-color: var(--border-strong);
+
+  &:focus {
+    color: var(--fg);
+    background-color: var(--bg-elev);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 .25rem var(--focus-ring);
+  }
+
+  &:disabled {
+    color: var(--fg-muted);
+    background-color: var(--bg-inset);
+  }
+
+  &::placeholder {
+    color: var(--fg-muted);
+    opacity: 1;
+  }
+}
+
+.form-select {
+  // A CSS arrow follows the scheme without a second embedded SVG.
+  --bs-form-select-bg-img: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--fg-muted) 50%),
+    linear-gradient(135deg, var(--fg-muted) 50%, transparent 50%);
+  background-position: right .95rem center, right .65rem center;
+  background-size: .3rem .3rem;
+}
+
+[dir="rtl"] .form-select {
+  background-position: left .65rem center, left .95rem center;
+}
+
+.form-check-input {
+  background-color: var(--bg-elev);
+  border-color: var(--border-strong);
+
+  &:checked {
+    background-color: #15804a;
+    border-color: var(--accent);
+  }
+
+  &:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 .25rem var(--focus-ring);
+  }
+}
+
+.input-group-text {
+  color: var(--fg-muted);
+  background: var(--bg-elev-2);
+}
+
+.btn-primary,
+.btn-success {
+  --bs-btn-color: var(--accent-ink);
+  --bs-btn-bg: var(--accent);
+  --bs-btn-border-color: var(--accent);
+  --bs-btn-hover-color: var(--accent-ink);
+  --bs-btn-hover-bg: var(--accent-hover);
+  --bs-btn-hover-border-color: var(--accent-hover);
+  --bs-btn-active-color: var(--accent-ink);
+  --bs-btn-active-bg: var(--accent-hover);
+  --bs-btn-active-border-color: var(--accent-hover);
+  --bs-btn-disabled-color: var(--accent-ink);
+  --bs-btn-disabled-bg: var(--accent);
+  --bs-btn-disabled-border-color: var(--accent);
+  --bs-btn-focus-shadow-rgb: var(--accent-rgb);
+}
+
+.btn-outline-primary,
+.btn-outline-success {
+  --bs-btn-color: var(--accent);
+  --bs-btn-border-color: var(--accent);
+  --bs-btn-hover-color: var(--accent-ink);
+  --bs-btn-hover-bg: var(--accent);
+  --bs-btn-hover-border-color: var(--accent);
+  --bs-btn-active-color: var(--accent-ink);
+  --bs-btn-active-bg: var(--accent);
+  --bs-btn-active-border-color: var(--accent);
+  --bs-btn-disabled-color: var(--accent);
+  --bs-btn-disabled-border-color: var(--accent);
+}
+
+.btn-link {
+  --bs-btn-color: var(--accent);
+  --bs-btn-hover-color: var(--accent-hover);
+  --bs-btn-active-color: var(--accent-hover);
+}
+
+.pagination {
+  --bs-pagination-color: var(--accent);
+  --bs-pagination-bg: var(--bg-elev);
+  --bs-pagination-border-color: var(--border);
+  --bs-pagination-hover-color: var(--accent-hover);
+  --bs-pagination-hover-bg: var(--bg-elev-2);
+  --bs-pagination-hover-border-color: var(--border-strong);
+  --bs-pagination-focus-color: var(--accent);
+  --bs-pagination-focus-bg: var(--bg-elev-2);
+  --bs-pagination-focus-box-shadow: 0 0 0 .25rem var(--focus-ring);
+  --bs-pagination-active-color: var(--accent-ink);
+  --bs-pagination-active-bg: var(--accent);
+  --bs-pagination-active-border-color: var(--accent);
+  --bs-pagination-disabled-color: var(--fg-muted);
+  --bs-pagination-disabled-bg: var(--bg-inset);
+  --bs-pagination-disabled-border-color: var(--border);
+}
+
+.table {
+  --bs-table-color: var(--fg);
+  --bs-table-bg: var(--bg-elev);
+  --bs-table-border-color: var(--border);
+  --bs-table-striped-color: var(--fg);
+  --bs-table-striped-bg: var(--bg-elev-2);
+  --bs-table-hover-color: var(--fg);
+  --bs-table-hover-bg: var(--bg-elev-2);
+  --bs-table-active-color: var(--fg);
+  --bs-table-active-bg: var(--accent-soft);
+}
+
+@each $name, $color, $background in (
+  (primary, accent, accent-soft),
+  (success, accent, accent-soft),
+  (danger, danger, danger-soft),
+  (warning, warn, warn-soft),
+  (info, info, info-soft),
+  (secondary, fg-muted, bg-elev-2)
+) {
+  .alert-#{$name} {
+    --bs-alert-color: var(--#{$color});
+    --bs-alert-bg: var(--#{$background});
+    --bs-alert-border-color: var(--#{$color});
+    --bs-alert-link-color: var(--#{$color});
+  }
+}
+
+.tooltip {
+  --bs-tooltip-bg: var(--fg);
+  --bs-tooltip-color: var(--bg);
+}
+
+.popover {
+  --bs-popover-bg: var(--bg-elev);
+  --bs-popover-header-bg: var(--bg-elev-2);
+  --bs-popover-header-color: var(--fg);
+  --bs-popover-body-color: var(--fg);
+}
+
+.btn-close {
+  // The mask retains the familiar Bootstrap cross in both palettes.
+  background: var(--fg);
+  mask: var(--bs-btn-close-bg) center / 1em no-repeat;
+}
+
+hr {
+  border-color: var(--border);
+  opacity: 1;
+}
+
+.ck-content pre {
+  background: var(--bg-elev-2);
+  color: var(--fg);
+}
+
+// Legacy utilities remain readable until the module templates are migrated.
+.bg-white,
+.bg-light {
+  background-color: var(--bg-elev) !important;
+}
+
+.text-dark,
+.text-black {
+  color: var(--fg) !important;
+}
+
+.text-info {
+  color: var(--info) !important;
+}
+
+.text-warning {
+  color: var(--warn) !important;
+}
+
+.text-bg-primary,
+.text-bg-success {
+  color: var(--accent-ink) !important;
+}
+
+.text-secondary {
+  color: var(--fg-muted) !important;
+}

@@ -1,6 +1,6 @@
 .forum-section {
   padding: 0.8rem 0;
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid var(--border);
   margin-bottom: 0 !important;
 
   &.shadow {
@@ -56,6 +56,6 @@
 
   .section-name {
     font-weight: 500;
-    color: $dark_brown;
+    color: var(--fg);
   }
 }

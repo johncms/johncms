@@ -2,6 +2,7 @@
 @import 'variables';
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+@import 'tokens';
 // Основные стили шаблона
 @import "base_styles";
 // Анимации
@@ -36,3 +37,7 @@
 // Editor
 
 @import 'flatpickr/dist/flatpickr.css';
+
+// Runtime component colors follow the public palette in every scheme.
+@import "theme-components";
+@import "dark";

@@ -1,38 +1,38 @@
 .btn-info {
-  color: $white;
+  color: var(--on-solid);
 }
 
 .btn-success {
-  --bs-btn-color: #fff;
-  --bs-btn-hover-color: #fff;
+  --bs-btn-color: var(--on-solid);
+  --bs-btn-hover-color: var(--on-solid);
 }
 
 .btn-outline-info {
   &:hover {
-    color: $white;
+    color: var(--on-solid);
   }
 }
 
 .btn-outline-secondary {
-  --bs-btn-active-color: #fff;
-  --bs-btn-hover-color: #fff;
+  --bs-btn-active-color: var(--on-solid);
+  --bs-btn-hover-color: var(--on-solid);
 }
 
 .btn-secondary {
-  --bs-btn-color: #fff;
-  --bs-btn-active-color: #fff;
-  --bs-btn-hover-color: #fff;
+  --bs-btn-color: var(--on-solid);
+  --bs-btn-active-color: var(--on-solid);
+  --bs-btn-hover-color: var(--on-solid);
 }
 
 .btn-danger {
-  --bs-btn-color: #fff;
-  --bs-btn-active-color: #fff;
-  --bs-btn-hover-color: #fff;
+  --bs-btn-color: var(--on-solid);
+  --bs-btn-active-color: var(--on-solid);
+  --bs-btn-hover-color: var(--on-solid);
 }
 
 .btn-outline-danger {
-  --bs-btn-active-color: #fff;
-  --bs-btn-hover-color: #fff;
+  --bs-btn-active-color: var(--on-solid);
+  --bs-btn-hover-color: var(--on-solid);
 }
 
 .btn-lg-icon {
@@ -43,9 +43,9 @@
 }
 
 .btn__top {
-  --bs-btn-bg: #e4e4e4;
-  --bs-btn-color: #8c8c8c;
-  --bs-btn-hover-bg: #919191;
+  --bs-btn-bg: var(--bg-elev-2);
+  --bs-btn-color: var(--fg-muted);
+  --bs-btn-hover-bg: var(--bg-inset);
   --bs-btn-border-radius: 50%;
   --bs-btn-padding-x: 5px;
   --bs-btn-padding-y: 5px;
@@ -65,10 +65,10 @@
   }
 
   &.liked {
-    color: #036a0c;
+    color: var(--accent);
   }
 
   &.disliked {
-    color: #ff0000;
+    color: var(--danger);
   }
 }

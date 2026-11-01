@@ -2,7 +2,7 @@ $sidebar_width: 15rem;
 
 .sidebar {
   position: sticky;
-  color: #ffffff;
+  color: var(--fg);
   font-size: 0.95rem;
   font-weight: 500;
   top: 0;
@@ -13,7 +13,7 @@ $sidebar_width: 15rem;
   z-index: 999;
 
   a {
-    color: #55514c;
+    color: var(--fg-muted);
     opacity: 0.8;
     transition: opacity 0.2s;
     text-decoration: none;
@@ -24,7 +24,7 @@ $sidebar_width: 15rem;
   }
 
   .dropdown-divider {
-    border-top: 1px solid #dce0e6;
+    border-top: 1px solid var(--border);
   }
 }
 
@@ -58,7 +58,7 @@ $sidebar_width: 15rem;
     width: 100%;
 
     &.active {
-      background: #f0f0f0;
+      background: var(--accent-soft);
     }
 
     > a {
@@ -165,10 +165,10 @@ $sidebar_width: 15rem;
   .top_nav {
     padding: 0 1rem;
     min-height: 3rem;
-    background: #fff;
+    background: var(--bg-elev);
 
     a {
-      color: #4a5865;
+      color: var(--fg);
     }
   }
 
@@ -201,8 +201,8 @@ $sidebar_width: 15rem;
     transform: translate3d(-$sidebar_width, 0, 0);
     transition: all .5s;
     position: fixed;
-    background-color: #ffffff;
-    border-right: 1px solid #dadada;
+    background-color: var(--bg-elev);
+    border-right: 1px solid var(--border);
     display: flex;
   }
 
@@ -263,7 +263,7 @@ $sidebar_width: 15rem;
     width: 22px;
     height: 1px;
     border-radius: 1px;
-    background: #66615b;
+    background: var(--fg);
   }
 
   .navbar .navbar-toggler-bar + .navbar-toggler-bar {

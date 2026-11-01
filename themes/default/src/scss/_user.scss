@@ -1,6 +1,6 @@
 .user-row {
   padding: 0.8rem 0;
-  border-bottom: 1px solid $border-color !important;
+  border-bottom: 1px solid var(--border) !important;
   border-radius: 0;
 
   @media (max-width: 768px) {
