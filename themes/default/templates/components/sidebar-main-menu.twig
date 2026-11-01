@@ -9,7 +9,7 @@
 {% endif %}
 <nav class="site-nav" aria-label="{{ d__('system', 'Menu') }}">
     <a class="site-nav__home" href="/"{% if app.is_home_page %} aria-current="page"{% endif %}>
-        {% include '@theme/components/icon.twig' with {name: 'house', size: 18} only %}
+        {% include '@theme/components/icon.twig' with {name: 'house', size: 15} only %}
         <span>{{ d__('system', 'Home') }}</span>
     </a>
     <ul class="site-nav__list" data-site-menu="main">
@@ -18,7 +18,7 @@
             <li>
                 <a href="{{ item.url }}">
                     {% if item.icon %}
-                        {% include '@theme/components/icon.twig' with {name: item.icon, image: item.hasImageIcon, size: 18} only %}
+                        {% include '@theme/components/icon.twig' with {name: item.icon, image: item.hasImageIcon, size: 15} only %}
                     {% endif %}
                     <span>{{ item.title }}</span>
                     {% if badge > 0 %}<span class="site-nav__badge badge" dir="ltr">+{{ badge|format_number }}</span>{% endif %}
@@ -33,7 +33,7 @@
                 <li>
                     <a href="{{ item.url }}">
                         {% if item.icon %}
-                            {% include '@theme/components/icon.twig' with {name: item.icon, image: item.hasImageIcon, size: 18} only %}
+                            {% include '@theme/components/icon.twig' with {name: item.icon, image: item.hasImageIcon, size: 15} only %}
                         {% endif %}
                         <span>{{ item.title }}</span>
                         {% if badge > 0 %}<span class="site-nav__badge badge" dir="ltr">+{{ badge|format_number }}</span>{% endif %}

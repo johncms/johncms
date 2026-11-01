@@ -8,6 +8,7 @@
 }
 
 .site-sidebar {
+  --site-drawer-offset: -100%;
   position: sticky;
   inset-block-start: 0;
   align-self: start;
@@ -15,6 +16,7 @@
   flex-direction: column;
   block-size: 100dvh;
   min-inline-size: 0;
+  padding-inline: 1rem;
   border-inline-end: 1px solid var(--border);
   background: var(--bg-inset);
   z-index: 1010;
@@ -25,7 +27,8 @@
   align-items: center;
   gap: .5rem;
   min-block-size: var(--site-topbar-height);
-  padding-inline: 1.25rem;
+  flex-shrink: 0;
+  padding-inline: .625rem;
   border-block-end: 1px solid var(--border);
 }
 
@@ -64,24 +67,25 @@
   flex: 1;
   min-block-size: 0;
   overflow-y: auto;
+  margin-inline: -1rem;
   padding: 1rem;
   scrollbar-width: thin;
 }
 
 .site-sidebar__foot {
-  padding: .875rem 1.5rem;
+  padding: .875rem .625rem;
   border-block-start: 1px solid var(--border);
 }
 
 .site-online {
   display: flex;
   align-items: center;
-  gap: .5rem;
-  color: var(--fg-muted);
+  gap: .625rem;
+  color: var(--fg);
+  font-family: var(--bs-font-monospace);
   font-size: .75rem;
+  line-height: 1.5;
   text-decoration: none;
-
-  > :last-child { margin-inline-start: auto; }
 }
 
 .site-online__dot {
@@ -89,6 +93,7 @@
   block-size: .375rem;
   border-radius: 50%;
   background: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 25%, transparent);
 }
 
 .site-user {
@@ -109,11 +114,11 @@
   list-style: none;
   cursor: pointer;
 
-  > :last-child { margin-inline-start: auto; }
   &::-webkit-details-marker { display: none; }
 }
 
 .site-user__name {
+  flex: 1;
   min-inline-size: 0;
   overflow-wrap: anywhere;
 }
@@ -141,6 +146,8 @@
     text-decoration: none;
     overflow-wrap: anywhere;
 
+    > span:not(.site-nav__badge) { flex: 1; min-inline-size: 0; }
+
     &:hover { background: var(--bg-elev-2); color: var(--fg); }
   }
 }
@@ -154,15 +161,16 @@
 
 .site-nav {
   font-size: .8125rem;
+  line-height: 1.5;
 
   a {
     position: relative;
     display: flex;
     align-items: center;
     gap: .625rem;
-    padding: .5rem .625rem;
+    padding: .4375rem .625rem;
     border-radius: .4375rem;
-    color: var(--fg-muted);
+    color: var(--fg);
     text-decoration: none;
 
     > span:not(.site-nav__badge) { min-inline-size: 0; overflow-wrap: anywhere; }
@@ -171,7 +179,6 @@
 
     &[aria-current] {
       background: var(--bg-elev);
-      color: var(--fg);
 
       &::before {
         content: '';
@@ -192,6 +199,7 @@
 }
 
 [dir="rtl"] .site-icon--directional { transform: scaleX(-1); }
+[dir="rtl"] .site-sidebar { --site-drawer-offset: 100%; }
 
 .site-nav__list {
   list-style: none;
@@ -206,6 +214,7 @@
 }
 
 .site-nav__badge {
+  flex-shrink: 0;
   margin-inline-start: auto;
   padding: .125rem .375rem;
   border: 1px solid var(--border);
@@ -478,6 +487,19 @@
 
 .site-shell :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .site-content:focus { outline: none; }
+
+.site-sidebar__close {
+  flex-shrink: 0;
+  inline-size: 1.75rem;
+  block-size: 1.75rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: .375rem;
+  background: transparent;
+  color: var(--fg-muted);
+  cursor: pointer;
+}
+
 .site-scrim,
 .site-sidebar__close,
 .site-topbar__menu,
@@ -486,8 +508,10 @@
 @media (max-width: 991.98px) {
   // Without JS the sidebar is ordinary document content and every navigation link is usable.
   .site-shell { display: flex; flex-direction: column; }
-  .site-sidebar { position: static; block-size: auto; border-inline-end: 0; }
-  .site-sidebar__body { overflow: visible; }
+  .site-sidebar { position: static; inline-size: 100%; block-size: auto; padding-block: 1.25rem; border-inline-end: 0; }
+  .site-sidebar__brand { min-block-size: 3.75rem; padding-block: .375rem .875rem; }
+  .site-sidebar__body { overflow: visible; padding-block: 1.25rem; }
+  .site-sidebar__foot { padding-block-end: 0; }
   .site-main { min-block-size: 100dvh; }
   .site-topbar { padding-inline: 1rem; gap: .5rem; }
   .site-control__label,
@@ -504,33 +528,59 @@
 
   .site-nav-ready {
     .site-sidebar {
-      display: none;
       position: fixed;
       inset-block: 0;
       inset-inline-start: 0;
-      inline-size: min(20rem, calc(100% - 3rem));
+      inline-size: 17.5rem;
+      max-inline-size: 85vw;
       block-size: 100dvh;
       border-inline-end: 1px solid var(--border);
       z-index: 1045;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateX(var(--site-drawer-offset));
+      transition: transform .2s ease, visibility 0s linear .2s;
     }
 
     .site-sidebar__body { overflow-y: auto; }
-    .site-sidebar__close { display: inline-flex; margin-inline-start: auto; }
+    .site-sidebar__close { display: grid; place-items: center; margin-inline-start: auto; }
+
+    .site-scrim {
+      display: block;
+      position: fixed;
+      inset: 0;
+      z-index: 1040;
+      border: 0;
+      background: rgb(0 0 0 / 50%);
+      backdrop-filter: blur(2px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .2s ease, visibility 0s linear .2s;
+    }
 
     &.site-nav-open {
       overflow: hidden;
 
-      .site-sidebar { display: flex; }
+      .site-sidebar {
+        visibility: visible;
+        pointer-events: auto;
+        transform: none;
+        transition-delay: 0s;
+      }
       .site-scrim {
-        display: block;
-        position: fixed;
-        inset: 0;
-        z-index: 1040;
-        border: 0;
-        background: rgb(0 0 0 / 45%);
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition-delay: 0s;
       }
     }
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-nav-ready .site-sidebar,
+  .site-nav-ready .site-scrim { transition: none; }
 }
 
 @media (max-width: 575.98px) {

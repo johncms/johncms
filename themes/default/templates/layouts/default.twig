@@ -12,8 +12,8 @@
         <aside class="site-sidebar" id="site-sidebar" tabindex="-1" aria-label="{{ d__('system', 'Menu') }}">
             <div class="site-sidebar__brand">
                 {% include '@theme/components/site-brand.twig' only %}
-                <button type="button" class="site-control site-sidebar__close" data-site-nav-close aria-label="{{ d__('system', 'Close menu') }}">
-                    {% include '@theme/components/icon.twig' with {name: 'x', size: 20} only %}
+                <button type="button" class="site-sidebar__close" data-site-nav-close aria-label="{{ d__('system', 'Close menu') }}">
+                    {% include '@theme/components/icon.twig' with {name: 'x', size: 12} only %}
                 </button>
             </div>
             <div class="site-sidebar__body">
@@ -27,8 +27,7 @@
             <div class="site-sidebar__foot">
                 <a href="/online/" class="site-online">
                     <span class="site-online__dot" aria-hidden="true"></span>
-                    <span>{{ d__('system', 'Online') }}</span>
-                    <span>{{ online() }}</span>
+                    <span>{{ d__('system', 'Online') }} <bdi dir="ltr">{{ online() }}</bdi></span>
                 </a>
             </div>
         </aside>

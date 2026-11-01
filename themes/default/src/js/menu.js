@@ -18,7 +18,7 @@ if (sidebar && main && opener) {
     sidebar.removeAttribute('role');
     sidebar.removeAttribute('aria-modal');
     opener.setAttribute('aria-expanded', 'false');
-    if (restoreFocus) returnFocus.focus();
+    if (restoreFocus) returnFocus.focus({preventScroll: true});
   }
 
   opener.addEventListener('click', event => {
@@ -32,7 +32,7 @@ if (sidebar && main && opener) {
     sidebar.setAttribute('role', 'dialog');
     sidebar.setAttribute('aria-modal', 'true');
     opener.setAttribute('aria-expanded', 'true');
-    sidebar.querySelector('[data-site-nav-close]').focus();
+    sidebar.querySelector('[data-site-nav-close]').focus({preventScroll: true});
   });
 
   document.querySelectorAll('[data-site-nav-close]').forEach(button => {
@@ -51,10 +51,10 @@ if (sidebar && main && opener) {
       const last = focusable.at(-1);
       if (event.shiftKey && document.activeElement === first) {
         event.preventDefault();
-        last.focus();
+        last.focus({preventScroll: true});
       } else if (!event.shiftKey && document.activeElement === last) {
         event.preventDefault();
-        first.focus();
+        first.focus({preventScroll: true});
       }
     }
   });
