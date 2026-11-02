@@ -95,6 +95,8 @@ final readonly class CollectionsAdminController
 
         try {
             $savedId = $this->saveCollection->execute($id, $this->dtoFromFields($fields));
+        } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException $exception) {
+            return $this->renderAgain($id, $fields, [$exception->getMessage()]);
         } catch (CollectionCodeAlreadyExistsException) {
             return $this->renderAgain($id, $fields, [__('A collection with this code already exists')]);
         } catch (CollectionCodeReservedException) {
@@ -238,6 +240,7 @@ final readonly class CollectionsAdminController
      */
     private function renderSettings(ContentCollection $collection, array $fields, array $errors = []): ViewResponse
     {
+        $fields['managed'] = $collection->owner_module !== null;
         $this->navChain->add(__('Collections'), self::URL);
         $this->navChain->add($collection->name, CollectionWorkspaceMapper::url($collection->id));
 
@@ -350,8 +353,8 @@ final readonly class CollectionsAdminController
             $errors[] = __('The required fields are not filled');
         }
 
-        if ($fields['code'] !== '' && ! preg_match('/^[a-z0-9_-]+$/', (string) $fields['code'])) {
-            $errors[] = __('The code may contain only lowercase latin letters, digits, hyphen and underscore');
+        if ($fields['code'] !== '' && ! preg_match('/^(?!\.{1,2}$)[\w.+-]+$/D', (string) $fields['code'])) {
+            $errors[] = d__('collections', 'Use letters, digits, dot, plus, hyphen or underscore in the code.');
         }
 
         return $errors;

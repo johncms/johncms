@@ -41,6 +41,12 @@ final readonly class CollectionsApi implements CollectionsApiInterface
         return $collection === null ? null : $this->mapper->collection($collection);
     }
 
+    public function findDeclaredCollection(string $owner, string $key): ?CollectionRecordDTO
+    {
+        $collection = $this->collectionRepository->findByDeclaration($owner, $key);
+        return $collection === null ? null : $this->mapper->collection($collection);
+    }
+
     public function getItems(ContentCollectionItemQuery $query): array
     {
         return $this->itemRepository->findItems($query)->map($this->mapper->item(...))->all();

@@ -15,6 +15,8 @@ interface ContentCollectionRepositoryInterface
      */
     public function findByCode(string $code): ?ContentCollection;
 
+    public function findByDeclaration(string $owner, string $key): ?ContentCollection;
+
     public function findById(int $id): ?ContentCollection;
 
     /** Acquire a collection write lock inside the caller's transaction. */

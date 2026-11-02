@@ -20,6 +20,8 @@ final readonly class CollectionRecordDTO
         public array $settings,
         public ?DateTimeImmutable $createdAt,
         public ?DateTimeImmutable $updatedAt,
+        public ?string $ownerModule = null,
+        public ?string $declarationKey = null,
     ) {
     }
 }

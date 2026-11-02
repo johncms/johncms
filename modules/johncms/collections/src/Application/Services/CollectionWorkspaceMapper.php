@@ -17,6 +17,10 @@ final readonly class CollectionWorkspaceMapper
     public const string FIELDS = 'fields';
     public const string SETTINGS = 'settings';
 
+    public function __construct(private ?CollectionOwnerUrls $ownerUrls = null, private CollectionApiMapper $apiMapper = new CollectionApiMapper())
+    {
+    }
+
     public static function url(int $collectionId, string $tab = self::ITEMS): string
     {
         return '/admin/collections/' . $collectionId . '/' . $tab;
@@ -42,7 +46,7 @@ final readonly class CollectionWorkspaceMapper
             'code'       => $collection->code,
             'active'     => $collection->active,
             'public'     => $collection->public,
-            'public_url' => $collection->publicUrl(),
+            'public_url' => $collection->owner_module !== null && $collection->active ? ($this->ownerUrls?->collection($this->apiMapper->collection($collection)) ?? '') : $collection->publicUrl(),
             'tabs'       => array_values(array_map(
                 static fn (array $tab): array => [
                     'title'  => $tab[1],

@@ -9,54 +9,80 @@ use Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeStateDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionFieldCodeAlreadyExistsException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface;
+use Johncms\Updates\SystemOperationContext;
 
 final readonly class SaveCollectionFieldUseCase
 {
     public function __construct(
         private ContentCollectionFieldRepositoryInterface $repository,
-        private \Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface $transaction,
+        private CollectionTransactionInterface $transaction,
+        private ContentCollectionRepositoryInterface $collections,
         private CollectionChangeDispatcher $changes = new CollectionChangeDispatcher(),
+        private SystemOperationContext $context = new SystemOperationContext(),
     ) {
     }
 
-    /**
-     * Creates or updates a field. Returns true when an existing field was updated.
-     *
-     * @throws CollectionFieldCodeAlreadyExistsException when the code belongs to another field of the collection
-     */
-    public function execute(?int $id, CollectionFieldFormDTO $dto): bool
+    public function execute(?int $id, CollectionFieldFormDTO $dto, ?\Johncms\Modules\Collections\Application\DTO\CollectionFieldDeclarationDTO $owned = null): int
     {
-        return $this->transaction->run(function () use ($id, $dto): bool {
-            $current = $id !== null ? $this->repository->findById($id) : null;
+        return $this->transaction->run(function () use ($id, $dto, $owned): int {
+            $collection = $this->collections->findForUpdate($dto->collectionId);
+            if ($collection === null) {
+                throw new CollectionSchemaException(d__('collections', 'Collection not found.'));
+            }
+            $current = $id !== null ? $this->repository->findForUpdate($id) : null;
+            if ($id !== null && ($current === null || $current->collection_id !== $dto->collectionId)) {
+                throw new CollectionSchemaException(d__('collections', 'The field does not belong to this collection or no longer exists.'));
+            }
+            if ($owned !== null && (! $this->context->isActive() || $collection->owner_module === null)) {
+                throw new CollectionSchemaException(d__('collections', 'Owned fields can only be prepared by a trusted update hook of an owned collection.'));
+            }
+            if ($owned !== null && $current !== null && $current->owner_module !== $collection->owner_module) {
+                throw new CollectionSchemaException(d__('collections', 'A custom field cannot be adopted as an owner field. Rename it before updating.'));
+            }
+            if ($current?->owner_module !== null && ! $this->context->isActive()) {
+                throw new CollectionSchemaException(d__('collections', 'This field is managed by its module. Change the declaration or use its trusted update hook.'));
+            }
+            if (
+                ! preg_match('/^[a-z0-9_-]{1,255}$/D', $dto->code) || trim($dto->name) === '' || mb_strlen($dto->name) > 255
+                || ($dto->role !== null && ! preg_match('/^[a-z0-9_]{1,255}$/D', $dto->role))
+            ) {
+                throw new CollectionSchemaException(d__('collections', 'Use a valid field code, label and role.'));
+            }
+            if ($dto->sort < -2147483648 || $dto->sort > 2147483647) {
+                throw new CollectionSchemaException(d__('collections', 'Enter an integer between -2147483648 and 2147483647.'));
+            }
             $before = $current !== null ? new CollectionChangeStateDTO(null, null, $current->code) : null;
             $existing = $this->repository->findByCode($dto->collectionId, $dto->code);
             if ($existing !== null && $existing->id !== $id) {
                 throw new CollectionFieldCodeAlreadyExistsException();
             }
-
-            $attributes = [
-            'collection_id' => $dto->collectionId,
-            'code'          => $dto->code,
-            'name'          => $dto->name,
-            'type'          => $dto->type->value,
-            'required'      => $dto->required,
-            'multiple'      => $dto->multiple,
-            'in_list'       => $dto->inList,
-            'sort'          => $dto->sort,
-            ];
-
-            if ($id !== null && $this->repository->findById($id) !== null) {
-                $this->repository->update($id, $attributes);
-
-                $this->changes->dispatch(new CollectionChangeDTO('field', 'saved', $dto->collectionId, $id, $before, new CollectionChangeStateDTO(null, null, $dto->code)));
-                return true;
+            $roleHolder = $dto->role !== null ? $this->repository->findByRole($dto->collectionId, $dto->role) : null;
+            if ($roleHolder !== null && $roleHolder->id !== $id) {
+                throw new CollectionSchemaException(d__('collections', 'Another field already uses this role.'));
             }
-
-            $field = $this->repository->create($attributes);
-            $this->changes->dispatch(new CollectionChangeDTO('field', 'saved', $dto->collectionId, $field->id, null, new CollectionChangeStateDTO(null, null, $dto->code)));
-
-            return false;
+            json_encode($dto->settings, JSON_THROW_ON_ERROR);
+            $attributes = [
+                'collection_id' => $dto->collectionId, 'code' => $dto->code, 'name' => $current?->owner_module !== null ? $current->getRawOriginal('name') : $dto->name,
+                'type' => $dto->type->value, 'required' => $dto->required, 'multiple' => $dto->multiple,
+                'in_list' => $dto->inList, 'sort' => $dto->sort, 'role' => $dto->role,
+                'settings' => array_replace($current->settings ?? [], $dto->settings),
+            ];
+            if ($owned !== null) {
+                $attributes['owner_module'] = $collection->owner_module;
+                $attributes['name'] = $owned->label->message;
+                $attributes['label_domain'] = $owned->label->domain;
+            }
+            if ($current !== null) {
+                $this->repository->update($id, $attributes);
+            } else {
+                $id = $this->repository->create($attributes)->id;
+            }
+            $this->changes->dispatch(new CollectionChangeDTO('field', 'saved', $dto->collectionId, $id, $before, new CollectionChangeStateDTO(null, null, $dto->code)));
+            return $id;
         });
     }
 }

@@ -17,6 +17,8 @@ use Johncms\Casts\FormattedDate;
  * @property int $id
  * @property string|null $owner_module
  * @property string $code
+ * @property string|null $declaration_key
+ * @property string|null $label_domain
  * @property string $name
  * @property string|null $description
  * @property array|null $settings
@@ -38,6 +40,9 @@ final class ContentCollection extends Model
         'code',
         'owner_module',
         'name',
+        'declaration_key',
+        'label_domain',
+
         'description',
         'settings',
         'sort',
@@ -54,13 +59,19 @@ final class ContentCollection extends Model
         'updated_at' => FormattedDate::class,
     ];
 
+    public function getNameAttribute(?string $value): string
+    {
+        $domain = $this->attributes['label_domain'] ?? null;
+        return $value !== null && $value !== '' && is_string($domain) && $domain !== '' ? \Gettext\TranslatorFunctions::getTranslator()->dgettext($domain, $value) : ($value ?? '');
+    }
+
     /**
      * Where the collection is on the site; empty for one the site does not show — turned off, or
      * private and available only through the API.
      */
     public function publicUrl(): string
     {
-        return $this->active && $this->public ? '/' . $this->code : '';
+        return $this->owner_module === null && $this->active && $this->public ? '/' . $this->code : '';
     }
 
     public function fields(): HasMany

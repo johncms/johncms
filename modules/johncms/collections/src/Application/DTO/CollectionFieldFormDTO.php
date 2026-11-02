@@ -11,6 +11,7 @@ use Johncms\Modules\Collections\Domain\Enums\FieldType;
  */
 final readonly class CollectionFieldFormDTO
 {
+    /** @param array<string, mixed> $settings */
     public function __construct(
         public int $collectionId,
         public string $code,
@@ -20,6 +21,8 @@ final readonly class CollectionFieldFormDTO
         public bool $multiple,
         public int $sort,
         public bool $inList = false,
+        public ?string $role = null,
+        public array $settings = [],
     ) {
     }
 }

@@ -425,3 +425,15 @@ Direct raw-PDO transaction boundaries cannot deliver after-commit callbacks and 
 collection mutations. `AfterCommitException` means the original data is already committed: fix and
 rebuild derived data instead of repeating the mutation. Independent post-commit callbacks still run
 when one fails. Do not catch and hide required-handler or derived-handler errors.
+
+
+## Declared collections
+
+Modules can implement `CollectionDeclarationProviderInterface` and register the provider
+with `johncms.collections.declaration_provider`. Use the installed module key in `owner()`
+and stable declaration keys. Labels use `CollectionLabelDTO::translatableLabel()` with
+literal domain/message arguments. Declare a dependency on collections. Schema synchronizes
+before update hooks; incompatible changes require explicit trusted schema/data conversion
+and are validated after hooks. Never adopt custom fields on code collisions. Register
+`CollectionOwnerUrlProviderInterface` with `johncms.collections.owner_urls` for owner URLs;
+owned collections have no duplicate catch-all pages. See `docs/moduli/collections.md`.

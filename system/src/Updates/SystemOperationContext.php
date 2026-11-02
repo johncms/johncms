@@ -11,6 +11,11 @@ final class SystemOperationContext
 {
     private int $depth = 0;
 
+    public function isActive(): bool
+    {
+        return $this->depth > 0;
+    }
+
     public function requireActive(): void
     {
         if ($this->depth === 0) {

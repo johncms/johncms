@@ -19,6 +19,10 @@ interface ContentCollectionFieldRepositoryInterface
 
     public function findByCode(int $collectionId, string $code): ?ContentCollectionField;
 
+    public function findByRole(int $collectionId, string $role): ?ContentCollectionField;
+
+    public function findForUpdate(int $id): ?ContentCollectionField;
+
     public function findById(int $id): ?ContentCollectionField;
 
     /**

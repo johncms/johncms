@@ -18,6 +18,9 @@ use Johncms\Modules\Collections\Domain\Enums\FieldType;
  * @property int $id
  * @property int $collection_id
  * @property string $code
+ * @property string|null $owner_module
+ * @property string|null $label_domain
+ * @property string|null $role
  * @property string $name
  * @property FieldType $type
  * @property bool $required
@@ -43,6 +46,10 @@ final class ContentCollectionField extends Model
         'collection_id',
         'code',
         'name',
+        'owner_module',
+        'label_domain',
+        'role',
+
         'type',
         'required',
         'multiple',
@@ -62,6 +69,12 @@ final class ContentCollectionField extends Model
         'created_at'    => FormattedDate::class,
         'updated_at'    => FormattedDate::class,
     ];
+
+    public function getNameAttribute(?string $value): string
+    {
+        $domain = $this->attributes['label_domain'] ?? null;
+        return $value !== null && $value !== '' && is_string($domain) && $domain !== '' ? \Gettext\TranslatorFunctions::getTranslator()->dgettext($domain, $value) : ($value ?? '');
+    }
 
     public function collection(): BelongsTo
     {

@@ -24,11 +24,11 @@
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label class="form-label" for="name">{{ __('Name') }}</label>
-                        <input type="text" name="name" class="form-control" id="name" value="{{ fields.name }}" required>
+                        <input type="text" name="name" class="form-control" id="name" value="{{ fields.name }}" required{% if fields.managed|default(false) %} readonly{% endif %}>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label" for="code">{{ __('Code') }}</label>
-                        <input type="text" name="code" class="form-control font-monospace" id="code" value="{{ fields.code }}" required pattern="[a-z0-9_-]+">
+                        <input type="text" name="code" class="form-control font-monospace" id="code" value="{{ fields.code }}" required pattern="[\w.+\-]+"{% if fields.managed|default(false) %} readonly{% endif %}>
                         <div class="form-text">{{ __('The address of the collection on the site and its name in the API: lowercase latin letters, digits, hyphen and underscore.') }}</div>
                     </div>
                     <div class="col-12">
@@ -53,7 +53,7 @@
                     <div class="form-text mt-0">{{ __('A turned off collection is not shown on the site and not given out by the API.') }}</div>
                 </div>
                 <div class="form-check form-switch">
-                    <input type="checkbox" class="form-check-input" role="switch" name="public" value="1" id="public"{% if fields.public %} checked{% endif %}>
+                    <input type="checkbox" class="form-check-input" role="switch" name="public" value="1" id="public"{% if fields.public %} checked{% endif %}{% if fields.managed|default(false) %} disabled{% endif %}>
                     <label class="form-check-label" for="public">{{ __('Public (accessible by URL)') }}</label>
                     <div class="form-text mt-0">{{ __('A private collection has no public page and is available only through the API') }}</div>
                 </div>

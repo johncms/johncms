@@ -43,7 +43,7 @@ final class SaveCollectionFieldUseCaseTest extends TestCase
             ->willReturn($created);
         $repository->expects(self::never())->method('update');
 
-        self::assertFalse((new SaveCollectionFieldUseCase($repository, \Tests\Support\CollectionItemWriterFactory::immediateTransaction()))->execute(null, $this->dto()));
+        self::assertSame(1, (new SaveCollectionFieldUseCase($repository, \Tests\Support\CollectionItemWriterFactory::immediateTransaction(), $this->collections()))->execute(null, $this->dto()));
     }
 
     public function testUpdatesExistingField(): void
@@ -53,11 +53,11 @@ final class SaveCollectionFieldUseCaseTest extends TestCase
 
         $repository = $this->createMock(ContentCollectionFieldRepositoryInterface::class);
         $repository->method('findByCode')->willReturn($existing);
-        $repository->method('findById')->with(7)->willReturn($existing);
+        $repository->method('findForUpdate')->with(7)->willReturn($existing);
         $repository->expects(self::once())->method('update')->with(7, self::anything());
         $repository->expects(self::never())->method('create');
 
-        self::assertTrue((new SaveCollectionFieldUseCase($repository, \Tests\Support\CollectionItemWriterFactory::immediateTransaction()))->execute(7, $this->dto()));
+        self::assertSame(7, (new SaveCollectionFieldUseCase($repository, \Tests\Support\CollectionItemWriterFactory::immediateTransaction(), $this->collections()))->execute(7, $this->dto()));
     }
 
     public function testThrowsWhenCodeBelongsToAnotherFieldOfCollection(): void
@@ -72,6 +72,13 @@ final class SaveCollectionFieldUseCaseTest extends TestCase
 
         $this->expectException(CollectionFieldCodeAlreadyExistsException::class);
 
-        (new SaveCollectionFieldUseCase($repository, \Tests\Support\CollectionItemWriterFactory::immediateTransaction()))->execute(null, $this->dto());
+        (new SaveCollectionFieldUseCase($repository, \Tests\Support\CollectionItemWriterFactory::immediateTransaction(), $this->collections()))->execute(null, $this->dto());
     }
+    private function collections(): \Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface
+    {
+        $repository = $this->createMock(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface::class);
+        $repository->method('findForUpdate')->willReturn(new \Johncms\Modules\Collections\Domain\Models\ContentCollection(['code' => 'schema', 'name' => 'Schema']));
+        return $repository;
+    }
+
 }

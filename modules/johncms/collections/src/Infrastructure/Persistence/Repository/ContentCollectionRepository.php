@@ -15,6 +15,11 @@ final class ContentCollectionRepository implements ContentCollectionRepositoryIn
         return ContentCollection::query()->where('code', $code)->first();
     }
 
+    public function findByDeclaration(string $owner, string $key): ?ContentCollection
+    {
+        return ContentCollection::query()->where('owner_module', $owner)->where('declaration_key', $key)->first();
+    }
+
     public function findById(int $id): ?ContentCollection
     {
         return ContentCollection::query()->find($id);
@@ -53,6 +58,7 @@ final class ContentCollectionRepository implements ContentCollectionRepositoryIn
         return ContentCollection::query()
             ->where('active', true)
             ->where('public', true)
+            ->whereNull('owner_module')
             ->pluck('id', 'code')
             ->map(static fn (int $id): int => $id)
             ->all();
@@ -67,7 +73,7 @@ final class ContentCollectionRepository implements ContentCollectionRepositoryIn
     {
         // Load and save via the model so the `settings` array cast is applied
         // (a query-builder update() would bypass casting the JSON column).
-        $collection = ContentCollection::query()->find($id);
+        $collection = $this->findForUpdate($id);
         if ($collection === null) {
             return;
         }

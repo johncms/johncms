@@ -164,12 +164,14 @@ final class InstallerTest extends TestCase
         $manifest = [
             'key' => 'test/updatefixture', 'alias' => 'updatefixture', 'name' => 'Update fixture', 'version' => '1.0.0',
             'autoload' => ['psr-4' => ['UpdateFixture\\' => 'src/']],
+            'requires' => ['modules' => ['johncms/collections' => '*']],
         ];
         file_put_contents($directory . '/module.php', '<?php return ' . var_export($manifest, true) . ';');
         file_put_contents($directory . '/config/services.php', <<<'PHP'
 <?php
 return static function (\Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator $container): void {
     $container->services()->set(\UpdateFixture\Sync::class)->autowire()->autoconfigure();
+    $container->services()->set(\UpdateFixture\Collections::class)->autowire()->tag('johncms.collections.declaration_provider');
 };
 PHP);
         file_put_contents($directory . '/src/Sync.php', <<<'PHP'
@@ -182,6 +184,30 @@ final class Sync implements \Johncms\Updates\DeclarationSynchronizerInterface
     public function validate(): void { file_put_contents(DATA_PATH . 'fixture-update.log', "validate\n", FILE_APPEND); }
 }
 PHP);
+        file_put_contents($directory . '/src/Collections.php', <<<'PHP'
+<?php
+namespace UpdateFixture;
+final class Collections implements \Johncms\Modules\Collections\Application\Extension\CollectionDeclarationProviderInterface
+{
+    public function owner(): string { return 'test/updatefixture'; }
+    public function collections(): iterable
+    {
+        $v2 = is_file(DATA_PATH . 'fixture-declaration-v2');
+        $fields = [new \Johncms\Modules\Collections\Application\DTO\CollectionFieldDeclarationDTO(
+            'title', new \Johncms\Modules\Collections\Application\DTO\CollectionLabelDTO('collections', 'Fixture title'),
+            $v2 ? \Johncms\Modules\Collections\Domain\Enums\FieldType::Integer : \Johncms\Modules\Collections\Domain\Enums\FieldType::String_
+        )];
+        if ($v2) {
+            $fields[] = new \Johncms\Modules\Collections\Application\DTO\CollectionFieldDeclarationDTO(
+                'extra', new \Johncms\Modules\Collections\Application\DTO\CollectionLabelDTO('collections', 'Fixture extra'),
+                \Johncms\Modules\Collections\Domain\Enums\FieldType::String_
+            );
+        }
+        yield new \Johncms\Modules\Collections\Application\DTO\CollectionDeclarationDTO('articles', 'fixture_articles',
+            new \Johncms\Modules\Collections\Application\DTO\CollectionLabelDTO('collections', 'Fixture articles'), 'collections.manage', $fields);
+    }
+}
+PHP);
         file_put_contents($directory . '/src/Install/Installer.php', <<<'PHP'
 <?php
 namespace UpdateFixture\Install;
@@ -192,6 +218,30 @@ final class Installer extends \Johncms\Modules\Installer
         di(\Johncms\Updates\SystemOperationContext::class)->requireActive();
         if (file_get_contents(DATA_PATH . 'fixture-update.log') !== "sync\n") {
             throw new \RuntimeException('Declarations were not synchronized before the hook.');
+        }
+        $api = di(\Johncms\Modules\Collections\Application\Api\CollectionsApiInterface::class);
+        $schema = di(\Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface::class);
+        $collection = $api->findDeclaredCollection('test/updatefixture', 'articles');
+        if ($collection === null) { throw new \RuntimeException('The owned collection was not synchronized before the hook.'); }
+        $identityFile = DATA_PATH . 'fixture-owned-id';
+        if (is_file($identityFile) && (int) file_get_contents($identityFile) !== $collection->id) { throw new \RuntimeException('Collection identity changed.'); }
+        file_put_contents($identityFile, (string) $collection->id);
+        $entry = $api->getItemByCode($collection->id, null, 'entry');
+        if ($entry === null) {
+            $id = $api->addItem(new \Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO($collection->id, null, 'entry', 'Entry', true, null, null, 100, null, null, ['title' => '12']));
+            $entry = $api->getItem($id);
+        }
+        if (is_file(DATA_PATH . 'fixture-declaration-v2')) {
+            $fields = $schema->getFields($collection->id);
+            if (count($fields) !== 2) { throw new \RuntimeException('New field was not added on enable/update.'); }
+            $title = array_values(array_filter($fields, static fn ($field) => $field->code === 'title'))[0];
+            if ($title->type !== \Johncms\Modules\Collections\Domain\Enums\FieldType::Integer) {
+                di(\Johncms\Database\ConnectionInterface::class)->transaction(function () use ($schema, $api, $entry, $title, $collection): void {
+                    $schema->saveField($title->id, new \Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO($collection->id, 'title', $title->messageId, \Johncms\Modules\Collections\Domain\Enums\FieldType::Integer, false, false, 100));
+                    $api->patchItem($entry->id, new \Johncms\Modules\Collections\Application\DTO\CollectionItemPatchDTO(values: ['title' => (string) $entry->values['title']]));
+                });
+            }
+            if ($api->getItem($entry->id)->values['title'] !== 12) { throw new \RuntimeException('Hook conversion did not preserve the item value.'); }
         }
         file_put_contents(DATA_PATH . 'fixture-update.log', "hook\n", FILE_APPEND);
     }
@@ -206,10 +256,12 @@ PHP);
                 if ($command !== 'module:disable') {
                     self::assertSame("sync\nhook\nvalidate\n", file_get_contents(DATA_PATH . 'fixture-update.log'));
                     unlink(DATA_PATH . 'fixture-update.log');
+                    if ($command === 'module:install') { file_put_contents(DATA_PATH . 'fixture-declaration-v2', '1'); }
                 }
             }
         } finally {
             exec('rm -rf ' . escapeshellarg($directory));
+            foreach (['fixture-declaration-v2', 'fixture-owned-id'] as $file) { if (is_file(DATA_PATH . $file)) { unlink(DATA_PATH . $file); } }
         }
     }
 

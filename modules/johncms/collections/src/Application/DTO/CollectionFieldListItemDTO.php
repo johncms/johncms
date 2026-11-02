@@ -21,6 +21,7 @@ final readonly class CollectionFieldListItemDTO
         public bool $multiple,
         public int $sort,
         public bool $inList = false,
+        public bool $managed = false,
     ) {
     }
 }

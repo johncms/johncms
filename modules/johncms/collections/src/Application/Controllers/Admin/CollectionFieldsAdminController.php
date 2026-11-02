@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Collections\Application\Controllers\Admin;
 
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldListItemDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionFieldCodeAlreadyExistsException;
 use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionFieldUseCase;
@@ -100,12 +101,14 @@ final readonly class CollectionFieldsAdminController
         }
 
         try {
-            $isUpdate = $this->saveField->execute($id, $this->dtoFromFields($collection_id, $fields));
+            $this->saveField->execute($id, $this->dtoFromFields($collection_id, $fields));
+        } catch (CollectionSchemaException $exception) {
+            return $this->renderForm($collection, $id, $fields, [$exception->getMessage()]);
         } catch (CollectionFieldCodeAlreadyExistsException) {
             return $this->renderForm($collection, $id, $fields, [__('A field with this code already exists')]);
         }
 
-        $this->session->flash('success_message', $isUpdate ? __('Changes saved') : __('Created successfully'));
+        $this->session->flash('success_message', $id !== null ? __('Changes saved') : __('Created successfully'));
         redirect($this->baseUrl($collection_id));
     }
 
@@ -121,6 +124,9 @@ final readonly class CollectionFieldsAdminController
             return $this->wrongData($collection_id);
         }
 
+        if ($field->owner_module !== null) {
+            return $this->wrongData($collection_id, d__('collections', 'This field is managed by its module. Change the declaration or use its trusted update hook.'));
+        }
         $dialog = [
             'title'       => __('Delete field'),
             'message'     => __('Are you sure you want to delete the field?'),
@@ -148,7 +154,11 @@ final readonly class CollectionFieldsAdminController
         }
 
         if ($this->findOwnedField($collection_id, $id) !== null) {
-            $this->deleteField->execute($id);
+            try {
+                $this->deleteField->execute($id);
+            } catch (CollectionSchemaException $exception) {
+                return $this->wrongData($collection_id, $exception->getMessage());
+            }
             $this->session->flash('success_message', __('Deleted successfully'));
         }
 
@@ -184,7 +194,7 @@ final readonly class CollectionFieldsAdminController
                 'edit_url'   => $editUrl,
                 'actions'    => [
                     ['method' => 'get', 'url' => $editUrl, 'title' => __('Edit'), 'icon' => 'pencil', 'danger' => false, 'dialog' => false, 'fields' => []],
-                    ['method' => 'get', 'url' => $base . '/' . $item->id . '/delete', 'title' => __('Delete'), 'icon' => 'trash-2', 'danger' => true, 'dialog' => true, 'fields' => []],
+                    ...($item->managed ? [] : [['method' => 'get', 'url' => $base . '/' . $item->id . '/delete', 'title' => __('Delete'), 'icon' => 'trash-2', 'danger' => true, 'dialog' => true, 'fields' => []]]),
                 ],
             ];
         }
@@ -207,6 +217,7 @@ final readonly class CollectionFieldsAdminController
             'back_url'     => $this->baseUrl($collection->id),
             'id'           => $id,
             'fields'       => $fields,
+            'managed'      => $id !== null && $this->fieldRepository->findById($id)?->owner_module !== null,
             'type_options' => $this->typeOptions(),
             'errors'       => $errors,
         ]);
@@ -219,6 +230,7 @@ final readonly class CollectionFieldsAdminController
     {
         return [
             'code'     => trim($request->body('code', '')),
+            'role'     => $request->body('role', '') ?: null,
             'name'     => trim($request->body('name', '')),
             'type'     => $request->body('type', ''),
             'required' => $request->hasBody('required') ? 1 : 0,
@@ -235,6 +247,7 @@ final readonly class CollectionFieldsAdminController
     {
         return [
             'code'     => $field->code,
+            'role'     => $field->role,
             'name'     => $field->name,
             'type'     => $field->type->value,
             'required' => $field->required ? 1 : 0,
@@ -251,6 +264,7 @@ final readonly class CollectionFieldsAdminController
     {
         return [
             'code'     => '',
+            'role'     => null,
             'name'     => '',
             'type'     => FieldType::String_->value,
             'required' => 0,
@@ -268,6 +282,7 @@ final readonly class CollectionFieldsAdminController
         return new CollectionFieldFormDTO(
             collectionId: $collectionId,
             code: (string) $fields['code'],
+            role: $fields['role'] ?? null,
             name: (string) $fields['name'],
             type: FieldType::from((string) $fields['type']),
             required: (bool) $fields['required'],
@@ -361,12 +376,12 @@ final readonly class CollectionFieldsAdminController
         ]);
     }
 
-    private function wrongData(int $collectionId): ViewResponse
+    private function wrongData(int $collectionId, ?string $message = null): ViewResponse
     {
         return new ViewResponse('@admin/pages/result.twig', $this->menu(__('Fields'), __('Fields')) + [
             'title'    => __('Fields'),
             'type'     => 'alert-danger',
-            'message'  => __('Wrong data'),
+            'message'  => $message ?? __('Wrong data'),
             'back_url' => $this->baseUrl($collectionId),
         ]);
     }

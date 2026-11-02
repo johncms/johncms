@@ -28,7 +28,9 @@ final class CollectionApiMapper
             $collection->sort,
             $collection->settings ?? [],
             $this->date($collection->getRawOriginal('created_at')),
-            $this->date($collection->getRawOriginal('updated_at'))
+            $this->date($collection->getRawOriginal('updated_at')),
+            $collection->owner_module,
+            $collection->declaration_key
         );
     }
 

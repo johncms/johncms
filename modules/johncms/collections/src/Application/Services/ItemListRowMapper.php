@@ -23,6 +23,10 @@ final readonly class ItemListRowMapper
 {
     private const int TEXT_LENGTH = 60;
 
+    public function __construct(private ?CollectionOwnerUrls $ownerUrls = null, private CollectionApiMapper $apiMapper = new CollectionApiMapper())
+    {
+    }
+
     /**
      * @param Collection<int, ContentCollectionItem> $items  Loaded with their values and fields.
      * @param list<ContentCollectionField>           $fields The fields shown as columns.
@@ -35,6 +39,7 @@ final readonly class ItemListRowMapper
         $now ??= new DateTimeImmutable();
         $base = CollectionWorkspaceMapper::url($collection->id);
         $publicBase = $collection->publicUrl();
+        $collectionDto = $this->apiMapper->collection($collection);
         $visibleSections = array_fill_keys($tree->visibleIds(), true);
         $rows = [];
 
@@ -45,15 +50,21 @@ final readonly class ItemListRowMapper
             $section = $item->section_id;
 
             $actions = [['method' => 'get', 'url' => $editUrl, 'title' => __('Edit'), 'icon' => 'pencil', 'danger' => false, 'dialog' => false, 'fields' => []]];
+            $ownerItemUrl = $ownerPreviewUrl = null;
+            if ($collection->owner_module !== null && $this->ownerUrls !== null) {
+                $itemDto = $this->apiMapper->item($item);
+                $ownerItemUrl = $this->ownerUrls->item($collectionDto, $itemDto);
+                $ownerPreviewUrl = $this->ownerUrls->preview($collectionDto, $itemDto);
+            }
             $actions[] = [
-                'method' => 'get', 'url' => $base . '/' . $item->id . '/preview',
+                'method' => 'get', 'url' => $ownerPreviewUrl ?? $base . '/' . $item->id . '/preview',
                 'title' => __('Preview'), 'icon' => 'eye', 'danger' => false, 'dialog' => false, 'fields' => [],
             ];
-            if ($publicBase !== '' && $collection->active && $status === ItemStatus::PUBLISHED && ($section === null || isset($visibleSections[$section]))) {
+            if (($publicBase !== '' || $ownerItemUrl !== null) && $collection->active && $status === ItemStatus::PUBLISHED && ($section === null || isset($visibleSections[$section]))) {
                 $path = $section !== null ? $tree->codePathOf($section) : [];
                 $actions[] = [
                     'method' => 'get',
-                    'url'    => $publicBase . ($path !== [] ? '/' . implode('/', $path) : '') . '/' . $item->code . '.html',
+                    'url'    => $ownerItemUrl ?? $publicBase . ($path !== [] ? '/' . implode('/', $path) : '') . '/' . $item->code . '.html',
                     'title'  => __('Open on the site'),
                     'icon'   => 'external-link',
                     'danger' => false,

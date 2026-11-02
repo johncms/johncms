@@ -50,7 +50,7 @@ final readonly class CollectionRouterController
         }
 
         $collection = $this->collectionRepository->findById($map[$code]);
-        if ($collection === null || ! $collection->active || ! $collection->public) {
+        if ($collection === null || ! $collection->active || ! $collection->public || $collection->owner_module !== null) {
             $this->notFound();
         }
 

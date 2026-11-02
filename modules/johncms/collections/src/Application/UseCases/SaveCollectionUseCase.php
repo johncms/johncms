@@ -35,20 +35,21 @@ final readonly class SaveCollectionUseCase
     public function execute(?int $id, CollectionFormDTO $dto): int
     {
         return $this->transaction->run(function () use ($id, $dto): int {
-            if ($this->reservedCodeChecker->isReserved($dto->code)) {
+            $current = $id !== null ? $this->repository->findForUpdate($id) : null;
+            if ($current?->owner_module !== null && $current->code !== $dto->code) {
+                throw new \Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException(d__('collections', 'The identity of a module-owned collection cannot be changed here.'));
+            }
+            if ($current?->owner_module === null && $this->reservedCodeChecker->isReserved($dto->code)) {
                 throw new CollectionCodeReservedException();
             }
-
             $existing = $this->repository->findByCode($dto->code);
             if ($existing !== null && $existing->id !== $id) {
                 throw new CollectionCodeAlreadyExistsException();
             }
-
-            $current = $id !== null ? $this->repository->findForUpdate($id) : null;
             $before = $current !== null ? new CollectionChangeStateDTO(null, $current->active, $current->code) : null;
             $attributes = [
             'code'        => $dto->code,
-            'name'        => $dto->name,
+            'name'        => $current?->owner_module !== null ? $current->getRawOriginal('name') : $dto->name,
             'description' => $dto->description,
             'active'      => $dto->active,
             'public'      => $dto->public,

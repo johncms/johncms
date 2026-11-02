@@ -88,3 +88,12 @@ Rules:
 4. Run `composer translate` to regenerate `.lng.php`.
 5. Commit source changes together with the regenerated `.pot`, edited `.po`, and `.lng.php` files.
 6. Push to Crowdin only if asked: `make crowdin-upload-all`.
+
+
+## Deferred collection labels
+
+Use `CollectionLabelDTO::translatableLabel('domain', 'English label')` with literal arguments
+in module declarations. The scanner extracts it like `dgettext`; the DTO retains the original
+message and domain. Never translate a declaration before persisting it. Dynamic runtime
+translation uses `TranslatorFunctions::getTranslator()->dgettext($domain, $message)`;
+source extraction comes from the declaration marker, not the model accessor.

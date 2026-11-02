@@ -30,6 +30,7 @@ final readonly class ListCollectionFieldsUseCase
                 multiple: $field->multiple,
                 sort: $field->sort,
                 inList: $field->in_list,
+                managed: $field->owner_module !== null,
             ))
             ->all();
     }

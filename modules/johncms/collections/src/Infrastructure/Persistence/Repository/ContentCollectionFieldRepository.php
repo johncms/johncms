@@ -34,6 +34,18 @@ final class ContentCollectionFieldRepository implements ContentCollectionFieldRe
             ->first();
     }
 
+    public function findByRole(int $collectionId, string $role): ?ContentCollectionField
+    {
+        return ContentCollectionField::query()->where('collection_id', $collectionId)->where('role', $role)->first();
+    }
+
+    public function findForUpdate(int $id): ?ContentCollectionField
+    {
+        $query = ContentCollectionField::query();
+        $query->lockForUpdate();
+        return $query->find($id);
+    }
+
     public function findById(int $id): ?ContentCollectionField
     {
         return ContentCollectionField::query()->find($id);
@@ -46,7 +58,7 @@ final class ContentCollectionFieldRepository implements ContentCollectionFieldRe
 
     public function update(int $id, array $attributes): void
     {
-        $field = ContentCollectionField::query()->find($id);
+        $field = $this->findForUpdate($id);
         if ($field === null) {
             return;
         }

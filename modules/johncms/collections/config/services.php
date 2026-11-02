@@ -50,6 +50,12 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ContentCollectionSectionRepositoryInterface::class, ContentCollectionSectionRepository::class)->public();
     $services->set(ContentCollectionItemRepositoryInterface::class, ContentCollectionItemRepository::class)->autowire()->public();
     $services->set(ContentCollectionItemValueRepositoryInterface::class, ContentCollectionItemValueRepository::class)->public();
+    $services->set(\Johncms\Modules\Collections\Application\Services\CollectionOwnerUrls::class)
+        ->autowire()->public()->arg('$providers', tagged_iterator('johncms.collections.owner_urls'));
+    $services->set(\Johncms\Modules\Collections\Application\Services\CollectionDeclarationRegistry::class)
+        ->autowire()->public()->arg('$providers', tagged_iterator('johncms.collections.declaration_provider'));
+    $services->set(\Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer::class)
+        ->autowire()->public()->tag('johncms.declaration_synchronizer');
     $services->set(\Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher::class)
         ->autowire()->public()->arg('$handlers', tagged_iterator('johncms.collections.change_handler'));
     $services->set(\Johncms\Modules\Collections\Application\Services\CollectionCacheInvalidator::class)
@@ -75,6 +81,10 @@ return static function (ContainerConfigurator $container): void {
     $services->set(
         \Johncms\Modules\Collections\Application\Api\CollectionsPreviewApiInterface::class,
         \Johncms\Modules\Collections\Application\Api\CollectionsPreviewApi::class
+    )->autowire()->public();
+    $services->set(
+        \Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface::class,
+        \Johncms\Modules\Collections\Application\Api\CollectionSchemaApi::class
     )->autowire()->public();
     $services->set(CollectionsApiInterface::class, CollectionsApi::class)->autowire()->public();
 };

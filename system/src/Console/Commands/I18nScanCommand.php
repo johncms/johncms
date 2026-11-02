@@ -70,6 +70,7 @@ final class I18nScanCommand extends Command
             [
                 '__'  => 'gettext',
                 'd__' => 'dgettext',
+                'translatableLabel' => 'dgettext',
                 'n__' => 'ngettext',
                 'dn__' => 'dngettext',
             ]

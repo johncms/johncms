@@ -26,6 +26,8 @@ interface CollectionsApiInterface
      */
     public function findCollection(string $code): ?CollectionRecordDTO;
 
+    public function findDeclaredCollection(string $owner, string $key): ?CollectionRecordDTO;
+
     /**
      * Select items matching the query specification (the `CIBlockElement::GetList` analog).
      *
