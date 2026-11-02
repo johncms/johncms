@@ -30,6 +30,7 @@ final class SectionTreeTest extends TestCase
         self::assertSame(2, $tree->depthOf(3));
         self::assertSame([1, 2, 3], $tree->subtreeOf(1));
         self::assertSame([], $tree->pathOf(42));
+        self::assertSame([], $tree->subtreeOf(42));
     }
 
     public function testALoopInTheDataEnds(): void
@@ -39,4 +40,11 @@ final class SectionTreeTest extends TestCase
         self::assertSame([1, 2], $tree->subtreeOf(1));
         self::assertSame([2], $tree->ancestorsOf(1));
     }
+    public function testOrphanPathContainsOnlyExistingSections(): void
+    {
+        $tree = new SectionTree([1 => 99], [1 => 'Orphan']);
+        self::assertSame([], $tree->ancestorsOf(1));
+        self::assertSame(['Orphan'], $tree->pathOf(1));
+    }
+
 }

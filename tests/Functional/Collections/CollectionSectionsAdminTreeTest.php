@@ -71,6 +71,48 @@ final class CollectionSectionsAdminTreeTest extends FunctionalTestCase
         self::assertNull(ContentCollectionSection::query()->find($section));
     }
 
+    public function testEditFormCanMoveSectionAndSaveMetadataWithoutEscapingStorage(): void
+    {
+        $root = $this->section('Root', 'root');
+        $id = $this->section('Child', 'child');
+        $child = $this->section('Descendant', 'descendant', $id);
+        $user = FunctionalUserFactory::createSupervisor();
+        $form = $this->handleRequest('/admin/collections/' . $this->collection . '/sections/' . $id . '/edit', cookies: $this->actingAs($user));
+        $html = (string) $form->getContent();
+        self::assertStringContainsString('name="parent"', $html);
+        self::assertStringContainsString('<option value="' . $root . '"', $html);
+        self::assertStringNotContainsString('<option value="' . $id . '"', $html);
+        self::assertStringNotContainsString('<option value="' . $child . '"', $html);
+        $response = $this->postForm('/admin/collections/' . $this->collection . '/sections', [
+            'id' => $id, 'parent' => $root, 'code' => 'child', 'name' => 'A & B',
+            'description' => 'Raw <b>text</b>', 'sort' => '50', 'active' => '1',
+            'metadata' => '{"seo":{"title":"<script>alert(1)</script>"}}',
+        ], $user);
+        self::assertSame(302, $response->getStatusCode());
+        $section = ContentCollectionSection::query()->find($id);
+        self::assertSame($root, $section->parent);
+        self::assertSame('Raw <b>text</b>', $section->description);
+        self::assertSame('<script>alert(1)</script>', $section->metadata['seo']['title']);
+        $form = $this->handleRequest('/admin/collections/' . $this->collection . '/sections/' . $id . '/edit', cookies: $this->actingAs($user));
+        self::assertStringContainsString('&lt;script&gt;', (string) $form->getContent());
+        self::assertStringNotContainsString('<script>alert(1)</script>', (string) $form->getContent());
+    }
+
+    public function testForgedCycleAndMalformedMetadataDoNotSaveTheForm(): void
+    {
+        $root = $this->section('Root', 'root');
+        $child = $this->section('Child', 'child', $root);
+        $user = FunctionalUserFactory::createSupervisor();
+        foreach ([['parent' => $child, 'metadata' => '{}'], ['parent' => '', 'metadata' => '[1,2]']] as $invalid) {
+            $response = $this->postForm('/admin/collections/' . $this->collection . '/sections', $invalid + [
+                'id' => $root, 'code' => 'root', 'name' => 'Changed', 'sort' => '100', 'active' => '1',
+            ], $user);
+            self::assertSame(200, $response->getStatusCode());
+            self::assertSame('Root', ContentCollectionSection::query()->find($root)->name);
+            self::assertNull(ContentCollectionSection::query()->find($root)->parent);
+        }
+    }
+
     private function page(): string
     {
         $response = $this->handleRequest('/admin/collections/' . $this->collection . '/sections', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()));

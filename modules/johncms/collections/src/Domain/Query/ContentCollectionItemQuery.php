@@ -22,7 +22,11 @@ final readonly class ContentCollectionItemQuery
         public int $limit = 100,
         public int $offset = 0,
         public ?array $fields = null,
+        public bool $withoutSection = false,
     ) {
+        if (($withoutSection && ($sectionId !== null || $includeSubsections)) || ($includeSubsections && $sectionId === null)) {
+            throw new \InvalidArgumentException('Choose collection, root-only, exact section or section subtree explicitly.');
+        }
         if ($collectionId < 1 || ($sectionId !== null && $sectionId < 1) || $limit < 1 || $limit > 1000 || $offset < 0 || $offset > 1000000) {
             throw new \InvalidArgumentException('Use valid collection/section ids, limit 1..1000 and offset 0..1000000.');
         }

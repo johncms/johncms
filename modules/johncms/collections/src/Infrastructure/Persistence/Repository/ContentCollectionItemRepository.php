@@ -9,6 +9,8 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Collections\Domain\Enums\ItemStatus;
+use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
+use Johncms\Modules\Collections\Domain\Services\SectionTree;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
@@ -225,9 +227,15 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
     {
         $builder = ContentCollectionItem::query()->where('collection_id', $query->collectionId);
 
-        // Subsection expansion (includeSubsections) is deferred; only the exact section is matched.
-        if ($query->sectionId !== null) {
-            $builder->where('section_id', $query->sectionId);
+        if ($query->withoutSection) {
+            $builder->whereNull('section_id');
+        } elseif ($query->sectionId !== null) {
+            if ($query->includeSubsections) {
+                $tree = SectionTree::of(ContentCollectionSection::query()->where('collection_id', $query->collectionId)->get());
+                $builder->whereIn('section_id', $tree->subtreeOf($query->sectionId));
+            } else {
+                $builder->where('section_id', $query->sectionId);
+            }
         }
 
         if ($query->onlyActive) {

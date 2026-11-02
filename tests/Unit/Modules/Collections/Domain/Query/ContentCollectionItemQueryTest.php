@@ -74,4 +74,19 @@ final class ContentCollectionItemQueryTest extends TestCase
         return [[0, 0], [-1, 0], [1001, 0], [1, -1], [1, 1000001]];
     }
 
+    #[\PHPUnit\Framework\Attributes\DataProvider('conflictingScopes')]
+    public function testConflictingScopesAreRejected(?int $section, bool $subsections, bool $withoutSection): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new ContentCollectionItemQuery(1, sectionId: $section, includeSubsections: $subsections, withoutSection: $withoutSection);
+    }
+
+    public static function conflictingScopes(): iterable
+    {
+        yield [null, true, false];
+        yield [1, false, true];
+        yield [1, true, true];
+        yield [null, true, true];
+    }
+
 }

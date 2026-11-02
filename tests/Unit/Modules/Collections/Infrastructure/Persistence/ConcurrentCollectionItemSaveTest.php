@@ -135,7 +135,48 @@ final class ConcurrentCollectionItemSaveTest extends TestCase
         }
         self::assertSame(0, $this->finish($first, $firstOutput));
         self::assertSame(0, $this->finish($second, $secondOutput));
-        self::assertSame(['first' => 'Patched', 'second' => 'Patched'], CollectionItemWriterFactory::api()->getItem($id)->values);
+        $values = CollectionItemWriterFactory::api()->getItem($id)->values;
+        ksort($values);
+        self::assertSame(['first' => 'Patched', 'second' => 'Patched'], $values);
+    }
+
+    public function testConcurrentSectionRootCodesCannotDuplicate(): void
+    {
+        Capsule::connection()->beginTransaction();
+        Capsule::table('collections')->where('id', $this->collection)->lockForUpdate()->first();
+        try {
+            [$first, $firstOutput] = $this->start('same', 0, 'section');
+            [$second, $secondOutput] = $this->start('same', 0, 'section');
+            $this->connectionId($firstOutput);
+            $this->connectionId($secondOutput);
+        } finally {
+            Capsule::connection()->rollBack();
+        }
+        $codes = [$this->finish($first, $firstOutput), $this->finish($second, $secondOutput)];
+        sort($codes);
+        self::assertSame([0, 2], $codes);
+        self::assertSame(1, Capsule::table('collection_sections')->count());
+    }
+
+    public function testConcurrentOppositeMovesCannotCreateACycle(): void
+    {
+        $writer = CollectionItemWriterFactory::sectionWriter();
+        $firstId = $writer->execute(null, new \Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO($this->collection, null, 'first', 'First', null, true, 100));
+        $secondId = $writer->execute(null, new \Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO($this->collection, null, 'second', 'Second', null, true, 100));
+        Capsule::connection()->beginTransaction();
+        Capsule::table('collections')->where('id', $this->collection)->lockForUpdate()->first();
+        try {
+            [$first, $firstOutput] = $this->start((string) $secondId, $firstId, 'move-section');
+            [$second, $secondOutput] = $this->start((string) $firstId, $secondId, 'move-section');
+            $this->connectionId($firstOutput);
+            $this->connectionId($secondOutput);
+        } finally {
+            Capsule::connection()->rollBack();
+        }
+        $codes = [$this->finish($first, $firstOutput), $this->finish($second, $secondOutput)];
+        sort($codes);
+        self::assertSame([0, 2], $codes);
+        self::assertSame(1, Capsule::table('collection_sections')->whereNull('parent')->count());
     }
 
     /** @param list<int> $expected */

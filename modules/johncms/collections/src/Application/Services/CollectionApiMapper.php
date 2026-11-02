@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Services;
 
+use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
+use Johncms\Modules\Collections\Application\DTO\CollectionSectionDTO;
 use DateTimeImmutable;
 use DateTimeZone;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemDTO;
@@ -27,6 +29,23 @@ final class CollectionApiMapper
             $collection->settings ?? [],
             $this->date($collection->getRawOriginal('created_at')),
             $this->date($collection->getRawOriginal('updated_at'))
+        );
+    }
+
+    public function section(ContentCollectionSection $section): CollectionSectionDTO
+    {
+        return new CollectionSectionDTO(
+            $section->id,
+            $section->collection_id,
+            $section->parent,
+            $section->code,
+            $section->name,
+            $section->description,
+            $section->active,
+            $section->sort,
+            $section->metadata ?? [],
+            $this->date($section->getRawOriginal('created_at')),
+            $this->date($section->getRawOriginal('updated_at'))
         );
     }
 

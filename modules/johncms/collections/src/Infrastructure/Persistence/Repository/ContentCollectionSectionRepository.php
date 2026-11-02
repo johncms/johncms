@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Infrastructure\Persistence\Repository;
 
+use Johncms\Modules\Collections\Domain\Services\SectionTree;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
@@ -63,6 +64,13 @@ final class ContentCollectionSectionRepository implements ContentCollectionSecti
         return $query->find($id);
     }
 
+    public function getAllForUpdate(int $collectionId): Collection
+    {
+        $query = ContentCollectionSection::query()->where('collection_id', $collectionId)->orderBy('id');
+        $query->lockForUpdate();
+        return $query->get();
+    }
+
     public function create(array $attributes): ContentCollectionSection
     {
         return ContentCollectionSection::query()->create($attributes);
@@ -70,7 +78,7 @@ final class ContentCollectionSectionRepository implements ContentCollectionSecti
 
     public function update(int $id, array $attributes): void
     {
-        $section = ContentCollectionSection::query()->find($id);
+        $section = $this->findForUpdate($id);
         if ($section === null) {
             return;
         }
@@ -87,14 +95,17 @@ final class ContentCollectionSectionRepository implements ContentCollectionSecti
 
     public function getPathTo(int $sectionId): Collection
     {
-        // Ancestor walk from the section up to the root; bounded by tree depth.
         $path = new Collection();
-        $current = ContentCollectionSection::query()->find($sectionId);
-        while ($current !== null) {
-            $path->prepend($current);
-            $current = $current->parent !== null
-                ? ContentCollectionSection::query()->find($current->parent)
-                : null;
+        $current = $this->findById($sectionId);
+        if ($current === null) {
+            return $path;
+        }
+        $sections = $this->getAllByCollection($current->collection_id)->keyBy('id');
+        $tree = SectionTree::of($sections);
+        foreach ([...array_reverse($tree->ancestorsOf($sectionId)), $sectionId] as $id) {
+            if (isset($sections[$id])) {
+                $path->push($sections[$id]);
+            }
         }
 
         return $path;

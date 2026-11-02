@@ -36,8 +36,7 @@ final class CollectionsImportApiTest extends TestCase
         $this->migrate('collections');
         $this->context = new SystemOperationContext();
         $this->api = new CollectionsImportApi(
-            $this->context, CollectionItemWriterFactory::create(context: $this->context), new CollectionTransaction(),
-            new ContentCollectionRepository(), new ContentCollectionSectionRepository(), CollectionItemWriterFactory::validator()
+            $this->context, CollectionItemWriterFactory::create(context: $this->context), CollectionItemWriterFactory::sectionWriter($this->context)
         );
         $this->collection = Capsule::table('collections')->insertGetId(['code' => 'history', 'name' => 'History']);
     }

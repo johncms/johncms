@@ -33,7 +33,7 @@ final readonly class SectionTree
         }
 
         foreach ($children as $parent => $ids) {
-            usort($ids, fn (int $a, int $b): int => [$this->sorts[$a] ?? 0, $this->names[$a] ?? ''] <=> [$this->sorts[$b] ?? 0, $this->names[$b] ?? '']);
+            usort($ids, fn (int $a, int $b): int => [$this->sorts[$a] ?? 0, $this->names[$a] ?? '', $a] <=> [$this->sorts[$b] ?? 0, $this->names[$b] ?? '', $b]);
             $children[$parent] = $ids;
         }
 
@@ -68,6 +68,9 @@ final readonly class SectionTree
      */
     public function subtreeOf(int $id): array
     {
+        if (! $this->has($id)) {
+            return [];
+        }
         $ids = [$id];
         // A parent loop in the data would otherwise never end.
         for ($i = 0; $i < count($ids); $i++) {
@@ -93,7 +96,7 @@ final readonly class SectionTree
 
         while (isset($this->parents[$id])) {
             $id = $this->parents[$id];
-            if ($id === 0 || isset($seen[$id])) {
+            if ($id === 0 || isset($seen[$id]) || ! $this->has($id)) {
                 break;
             }
 

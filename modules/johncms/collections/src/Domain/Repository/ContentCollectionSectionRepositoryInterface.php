@@ -39,6 +39,9 @@ interface ContentCollectionSectionRepositoryInterface
 
     public function findForUpdate(int $id): ?ContentCollectionSection;
 
+    /** @return Collection<int, ContentCollectionSection> Current locking read for safe moves. */
+    public function getAllForUpdate(int $collectionId): Collection;
+
     /**
      * @param array<string, mixed> $attributes
      */

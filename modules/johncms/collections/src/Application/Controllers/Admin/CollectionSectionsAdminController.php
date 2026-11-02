@@ -7,6 +7,7 @@ namespace Johncms\Modules\Collections\Application\Controllers\Admin;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Application\DTO\SectionTreeItemDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSectionCodeAlreadyExistsException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionSectionFormException;
 use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionSectionUseCase;
 use Johncms\Modules\Collections\Application\UseCases\ListCollectionSectionsUseCase;
 use Johncms\Modules\Collections\Application\UseCases\SaveCollectionSectionUseCase;
@@ -93,35 +94,21 @@ final readonly class CollectionSectionsAdminController
 
         $id = $request->bodyInt('id') ?: null;
 
-        // The parent is fixed on edit (taken from the section) and comes from the
-        // form context on create; a create parent must belong to the collection.
-        if ($id !== null) {
-            $section = $this->findOwnedSection($collection_id, $id);
-            if ($section === null) {
-                return $this->wrongData($collection_id);
-            }
-            $parent = $section->parent;
-        } else {
-            $parent = $this->postParent($request);
-            if ($parent !== null && $this->resolveParent($collection_id, $parent) === null) {
-                return $this->wrongData($collection_id);
-            }
+        if ($id !== null && $this->findOwnedSection($collection_id, $id) === null) {
+            return $this->wrongData($collection_id);
         }
-
-        $fields = $this->fieldsFromRequest($request, $parent);
-        $errors = $this->validate($fields);
-
-        if ($errors !== []) {
-            return $this->renderForm($collection, $id, $fields, $errors);
-        }
-
+        $fields = $this->fieldsFromRequest($request, $this->postParent($request));
         try {
-            $isUpdate = $this->saveSection->execute($id, $this->dtoFromFields($collection_id, $fields));
+            $this->saveSection->execute($id, $this->dtoFromFields($collection_id, $fields));
+        } catch (CollectionSectionFormException $exception) {
+            return $this->renderForm($collection, $id, $fields, array_merge(...array_values($exception->errors)));
+        } catch (\JsonException) {
+            return $this->renderForm($collection, $id, $fields, [d__('collections', 'Use a JSON object of at most 65535 bytes for section metadata.')]);
         } catch (CollectionSectionCodeAlreadyExistsException) {
             return $this->renderForm($collection, $id, $fields, [__('A section with this code already exists')]);
         }
 
-        $this->session->flash('success_message', $isUpdate ? __('Changes saved') : __('Created successfully'));
+        $this->session->flash('success_message', $id !== null ? __('Changes saved') : __('Created successfully'));
         redirect($this->baseUrl($collection_id));
     }
 
@@ -165,7 +152,7 @@ final readonly class CollectionSectionsAdminController
         }
 
         if ($this->findOwnedSection($collection_id, $id) !== null) {
-            $this->deleteSection->execute($id);
+            $this->deleteSection->execute($id, $collection_id);
             $this->session->flash('success_message', __('Deleted successfully'));
         }
 
@@ -240,9 +227,7 @@ final readonly class CollectionSectionsAdminController
             'back_url'    => $this->baseUrl($collection->id),
             'id'          => $id,
             'fields'      => $fields,
-            'parent_path' => $fields['parent'] !== null
-                ? implode(' › ', SectionTree::of($this->sectionRepository->getAllByCollection($collection->id))->pathOf((int) $fields['parent']))
-                : '',
+            'section_options' => $this->sectionOptions($collection->id, $id),
             'errors'      => $errors,
         ]);
     }
@@ -258,7 +243,8 @@ final readonly class CollectionSectionsAdminController
             'name'        => trim($request->body('name', '')),
             'description' => trim($request->body('description', '')),
             'active'      => $request->hasBody('active') ? 1 : 0,
-            'sort'        => $request->bodyInt('sort', 100),
+            'sort'        => $request->body('sort', '100'),
+            'metadata'    => $request->body('metadata', '{}'),
         ];
     }
 
@@ -274,6 +260,7 @@ final readonly class CollectionSectionsAdminController
             'description' => (string) $section->description,
             'active'      => $section->active ? 1 : 0,
             'sort'        => $section->sort,
+            'metadata'    => json_encode($section->metadata ?: new \stdClass(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR),
         ];
     }
 
@@ -289,6 +276,7 @@ final readonly class CollectionSectionsAdminController
             'description' => '',
             'active'      => 1,
             'sort'        => 100,
+            'metadata'    => '{}',
         ];
     }
 
@@ -304,26 +292,32 @@ final readonly class CollectionSectionsAdminController
             name: (string) $fields['name'],
             description: $fields['description'] !== '' ? (string) $fields['description'] : null,
             active: (bool) $fields['active'],
-            sort: (int) $fields['sort'],
+            sort: $fields['sort'],
+            metadata: $this->metadataFromJson($fields['metadata']),
         );
     }
 
-    /**
-     * @param array<string, mixed> $fields
-     * @return list<string>
-     */
-    private function validate(array $fields): array
+    /** @return array<string, mixed> */
+    private function metadataFromJson(string $json): array
     {
-        $errors = [];
-        if ($fields['code'] === '' || $fields['name'] === '') {
-            $errors[] = __('The required fields are not filled');
+        if (! str_starts_with(ltrim($json), '{')) {
+            throw new \JsonException('Section metadata must be an object.');
         }
+        return json_decode($json, true, 32, JSON_THROW_ON_ERROR);
+    }
 
-        if ($fields['code'] !== '' && ! preg_match('/^[\w.+-]+$/D', (string) $fields['code'])) {
-            $errors[] = d__('collections', 'Use letters, digits, dot, plus, hyphen or underscore in the code.');
+    /** @return list<array{id: int, label: string}> */
+    private function sectionOptions(int $collectionId, ?int $id): array
+    {
+        $tree = SectionTree::of($this->sectionRepository->getAllByCollection($collectionId));
+        $excluded = $id !== null ? $tree->subtreeOf($id) : [];
+        $options = [];
+        foreach ($tree->ordered() as $sectionId) {
+            if (! in_array($sectionId, $excluded, true)) {
+                $options[] = ['id' => $sectionId, 'label' => implode(' › ', $tree->pathOf($sectionId))];
+            }
         }
-
-        return $errors;
+        return $options;
     }
 
     private function queryParent(Request $request): ?int

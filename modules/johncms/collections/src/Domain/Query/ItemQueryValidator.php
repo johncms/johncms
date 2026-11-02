@@ -24,9 +24,6 @@ final class ItemQueryValidator
     /** @param array<string, ContentCollectionField> $fields */
     public function validate(ContentCollectionItemQuery $query, array $fields): void
     {
-        if ($query->includeSubsections) {
-            throw new InvalidArgumentException('Subsection expansion is not supported yet.');
-        }
         foreach ($query->fields ?? [] as $code) {
             if (! is_string($code) || ! isset($fields[$code])) {
                 throw new InvalidArgumentException('Unknown selected collection field.');

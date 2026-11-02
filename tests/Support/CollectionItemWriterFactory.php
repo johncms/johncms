@@ -56,4 +56,23 @@ final class CollectionItemWriterFactory
         );
     }
 
+    public static function sectionWriter(?\Johncms\Updates\SystemOperationContext $context = null): \Johncms\Modules\Collections\Application\UseCases\SaveCollectionSectionUseCase
+    {
+        return new \Johncms\Modules\Collections\Application\UseCases\SaveCollectionSectionUseCase(
+            new ContentCollectionSectionRepository(), new ContentCollectionRepository(), new CollectionTransaction(),
+            self::validator(), $context ?? new \Johncms\Updates\SystemOperationContext()
+        );
+    }
+
+    public static function sectionsApi(): \Johncms\Modules\Collections\Application\Api\CollectionSectionsApi
+    {
+        $sections = new ContentCollectionSectionRepository();
+        return new \Johncms\Modules\Collections\Application\Api\CollectionSectionsApi(
+            $sections, new \Johncms\Modules\Collections\Application\UseCases\ListCollectionSectionsUseCase($sections),
+            self::sectionWriter(),
+            new \Johncms\Modules\Collections\Application\UseCases\DeleteCollectionSectionUseCase($sections, new ContentCollectionRepository(), new CollectionTransaction()),
+            new \Johncms\Modules\Collections\Application\Services\CollectionApiMapper()
+        );
+    }
+
 }

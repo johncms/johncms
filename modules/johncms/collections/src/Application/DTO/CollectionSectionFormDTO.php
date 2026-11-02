@@ -9,6 +9,7 @@ namespace Johncms\Modules\Collections\Application\DTO;
  */
 final readonly class CollectionSectionFormDTO
 {
+    /** @param array<string, mixed> $metadata */
     public function __construct(
         public int $collectionId,
         public ?int $parent,
@@ -16,7 +17,8 @@ final readonly class CollectionSectionFormDTO
         public string $name,
         public ?string $description,
         public bool $active,
-        public int $sort,
+        public int|string $sort,
+        public array $metadata = [],
     ) {
     }
 }

@@ -14,7 +14,13 @@ echo \Illuminate\Database\Capsule\Manager::connection()->selectOne('SELECT CONNE
 flush();
 $mode = $argv[4] ?? 'save';
 try {
-    if ($mode === 'views') {
+    if ($mode === 'section' || $mode === 'move-section') {
+        $form = new \Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO(
+            (int) $argv[1], $mode === 'move-section' ? (int) $argv[2] : null,
+            $mode === 'move-section' ? 'section-' . $argv[3] : $argv[2], 'Section', null, true, 100
+        );
+        CollectionItemWriterFactory::sectionWriter()->execute($mode === 'move-section' ? (int) $argv[3] : null, $form);
+    } elseif ($mode === 'views') {
         $api = CollectionItemWriterFactory::api();
         for ($i = 0; $i < (int) $argv[2]; ++$i) {
             $api->incrementViews((int) $argv[3]);
@@ -28,6 +34,6 @@ try {
         CollectionItemWriterFactory::create()->execute(isset($argv[3]) ? (int) $argv[3] : null, $form);
     }
     exit(0);
-} catch (CollectionItemCodeAlreadyExistsException) {
+} catch (CollectionItemCodeAlreadyExistsException | \Johncms\Modules\Collections\Application\Exceptions\CollectionSectionCodeAlreadyExistsException | \Johncms\Modules\Collections\Application\Exceptions\CollectionSectionFormException) {
     exit(2);
 }
