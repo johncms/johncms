@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Infrastructure\Persistence\Repository;
 
-use Carbon\Carbon;
 use DateTimeInterface;
+use DateTimeImmutable;
+use DateTimeZone;
+use Johncms\Modules\Collections\Infrastructure\Persistence\Query\CollectionPublicationQuery;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Collections\Domain\Enums\ItemStatus;
@@ -24,6 +26,7 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
     public function __construct(
         private readonly ContentCollectionFieldRepositoryInterface $fieldRepository,
         private readonly ContentCollectionItemQueryCompiler $compiler,
+        private readonly CollectionPublicationQuery $publication = new CollectionPublicationQuery(),
     ) {
     }
 
@@ -87,12 +90,13 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
 
     public function incrementViews(int $id): bool
     {
-        $now = Carbon::now();
-        return ContentCollectionItem::query()->where('id', $id)->where('active', true)
-            ->whereHas('collection', static fn (Builder $collection) => $collection->where('active', true))
-            ->where(static fn (Builder $q) => $q->whereNull('active_from')->orWhere('active_from', '<=', $now))
-            ->where(static fn (Builder $q) => $q->whereNull('active_to')->orWhere('active_to', '>=', $now))
-            ->toBase()->update(['view_count' => new \Illuminate\Database\Query\Expression('COALESCE(view_count, 0) + 1')]) === 1;
+        $collectionId = ContentCollectionItem::query()->where('id', $id)->value('collection_id');
+        if ($collectionId === null) {
+            return false;
+        }
+        $query = ContentCollectionItem::query()->where('id', $id);
+        $this->publication->apply($query, (int) $collectionId, new DateTimeImmutable('now', new DateTimeZone('UTC')));
+        return $query->toBase()->update(['view_count' => new \Illuminate\Database\Query\Expression('COALESCE(view_count, 0) + 1')]) === 1;
     }
 
     public function create(array $attributes): ContentCollectionItem
@@ -126,33 +130,26 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
         return $builder->first();
     }
 
-    public function getVisibleForSitemap(int $collectionId): iterable
+    public function getVisibleForSitemap(int $collectionId, ?DateTimeImmutable $at = null): iterable
     {
-        $now = Carbon::now();
-
-        return ContentCollectionItem::query()
-            ->select(['id', 'code', 'section_id', 'updated_at'])
-            ->where('collection_id', $collectionId)
-            ->where('active', true)
-            ->where(static fn (Builder $q) => $q->whereNull('active_from')->orWhere('active_from', '<=', $now))
-            ->where(static fn (Builder $q) => $q->whereNull('active_to')->orWhere('active_to', '>=', $now))
-            ->orderBy('id')
-            ->cursor();
+        $query = ContentCollectionItem::query();
+        $query->select(['id', 'code', 'section_id', 'updated_at']);
+        $this->publication->apply($query, $collectionId, $at ?? new DateTimeImmutable('now', new DateTimeZone('UTC')));
+        return $query->orderBy('id')->cursor();
     }
 
     public function findVisibleByCode(int $collectionId, ?int $sectionId, string $code): ?ContentCollectionItem
     {
-        $now = Carbon::now();
-        $builder = ContentCollectionItem::query()
-            ->with('values.field')
-            ->where('collection_id', $collectionId)
-            ->where('code', $code)
-            ->where('active', true)
-            ->where(static fn (Builder $q) => $q->whereNull('active_from')->orWhere('active_from', '<=', $now))
-            ->where(static fn (Builder $q) => $q->whereNull('active_to')->orWhere('active_to', '>=', $now));
-        $sectionId === null ? $builder->whereNull('section_id') : $builder->where('section_id', $sectionId);
+        $query = ContentCollectionItem::query()->with(['values' => static fn ($values) => $values->orderBy('sort')->orderBy('id'), 'values.field'])->where('code', $code)->where('section_id', $sectionId);
+        $this->publication->apply($query, $collectionId, new DateTimeImmutable('now', new DateTimeZone('UTC')));
+        return $query->first();
+    }
 
-        return $builder->first();
+    public function findVisibleById(int $collectionId, int $id): ?ContentCollectionItem
+    {
+        $query = ContentCollectionItem::query()->with(['values' => static fn ($values) => $values->orderBy('sort')->orderBy('id'), 'values.field'])->where('id', $id);
+        $this->publication->apply($query, $collectionId, new DateTimeImmutable('now', new DateTimeZone('UTC')));
+        return $query->first();
     }
 
     public function countForPanel(int $collectionId, ItemListFilter $filter, ?array $sectionIds, DateTimeInterface $now): int
@@ -239,10 +236,7 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
         }
 
         if ($query->onlyActive) {
-            $now = Carbon::now();
-            $builder->where('active', true)
-                ->where(static fn (Builder $q) => $q->whereNull('active_from')->orWhere('active_from', '<=', $now))
-                ->where(static fn (Builder $q) => $q->whereNull('active_to')->orWhere('active_to', '>=', $now));
+            $this->publication->apply($builder, $query->collectionId, $query->at);
         }
 
         $this->compiler->validate($query, $fields);

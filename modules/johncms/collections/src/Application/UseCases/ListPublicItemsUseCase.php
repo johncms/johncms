@@ -18,17 +18,17 @@ final readonly class ListPublicItemsUseCase
     ) {
     }
 
-    public function count(int $collectionId, ?int $sectionId): int
+    public function count(int $collectionId, ?int $sectionId, ?\DateTimeImmutable $at = null): int
     {
-        return $this->repository->countItems($this->query($collectionId, $sectionId));
+        return $this->repository->countItems($this->query($collectionId, $sectionId, at: $at));
     }
 
     /**
      * @return list<PublicItemDTO>
      */
-    public function getPage(int $collectionId, ?int $sectionId, int $limit, int $offset): array
+    public function getPage(int $collectionId, ?int $sectionId, int $limit, int $offset, ?\DateTimeImmutable $at = null): array
     {
-        return $this->repository->findItems($this->query($collectionId, $sectionId, $limit, $offset))
+        return $this->repository->findItems($this->query($collectionId, $sectionId, $limit, $offset, $at))
             ->map(fn (ContentCollectionItem $item): PublicItemDTO => new PublicItemDTO(
                 code: $item->code,
                 name: $item->name,
@@ -38,16 +38,17 @@ final readonly class ListPublicItemsUseCase
             ->all();
     }
 
-    private function query(int $collectionId, ?int $sectionId, ?int $limit = null, int $offset = 0): ContentCollectionItemQuery
+    private function query(int $collectionId, ?int $sectionId, ?int $limit = null, int $offset = 0, ?\DateTimeImmutable $at = null): ContentCollectionItemQuery
     {
         // Public listing: only published items (active + publish window).
-        return new ContentCollectionItemQuery(
+        return (new ContentCollectionItemQuery(
             collectionId: $collectionId,
             sectionId: $sectionId,
             onlyActive: true,
             limit: $limit ?? 100,
             offset: $offset,
             fields: [],
-        );
+            at: $at ?? new \DateTimeImmutable('now', new \DateTimeZone('UTC')),
+        ))->forPublication();
     }
 }

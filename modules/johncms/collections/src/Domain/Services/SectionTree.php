@@ -20,12 +20,14 @@ final readonly class SectionTree
      * @param array<int, string> $names
      * @param array<int, int>    $sorts
      * @param array<int, string> $codes   What a section adds to the address of its items.
+     * @param array<int, bool> $active
      */
     public function __construct(
         private array $parents,
         private array $names = [],
         private array $sorts = [],
         private array $codes = [],
+        private array $active = [],
     ) {
         $children = [];
         foreach ($parents as $id => $parent) {
@@ -45,15 +47,34 @@ final readonly class SectionTree
      */
     public static function of(iterable $sections): self
     {
-        $parents = $names = $sorts = $codes = [];
+        $parents = $names = $sorts = $codes = $active = [];
         foreach ($sections as $section) {
             $parents[$section->id] = $section->parent ?? 0;
             $names[$section->id] = $section->name;
             $sorts[$section->id] = $section->sort;
             $codes[$section->id] = $section->code;
+            $active[$section->id] = $section->active === true;
         }
 
-        return new self($parents, $names, $sorts, $codes);
+        return new self($parents, $names, $sorts, $codes, $active);
+    }
+
+    /** @return list<int> Only active sections reachable from a root through active ancestors. */
+    public function visibleIds(): array
+    {
+        $visible = [];
+        $queue = $this->children[0] ?? [];
+        for ($i = 0; $i < count($queue); ++$i) {
+            $id = $queue[$i];
+            if (! ($this->active[$id] ?? true) || isset($visible[$id])) {
+                continue;
+            }
+            $visible[$id] = $id;
+            foreach ($this->children[$id] ?? [] as $child) {
+                $queue[] = $child;
+            }
+        }
+        return array_values($visible);
     }
 
     public function has(int $id): bool

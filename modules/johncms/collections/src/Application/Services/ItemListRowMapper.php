@@ -35,6 +35,7 @@ final readonly class ItemListRowMapper
         $now ??= new DateTimeImmutable();
         $base = CollectionWorkspaceMapper::url($collection->id);
         $publicBase = $collection->publicUrl();
+        $visibleSections = array_fill_keys($tree->visibleIds(), true);
         $rows = [];
 
         foreach ($items as $item) {
@@ -44,7 +45,11 @@ final readonly class ItemListRowMapper
             $section = $item->section_id;
 
             $actions = [['method' => 'get', 'url' => $editUrl, 'title' => __('Edit'), 'icon' => 'pencil', 'danger' => false, 'dialog' => false, 'fields' => []]];
-            if ($publicBase !== '' && $status === ItemStatus::PUBLISHED) {
+            $actions[] = [
+                'method' => 'get', 'url' => $base . '/' . $item->id . '/preview',
+                'title' => __('Preview'), 'icon' => 'eye', 'danger' => false, 'dialog' => false, 'fields' => [],
+            ];
+            if ($publicBase !== '' && $collection->active && $status === ItemStatus::PUBLISHED && ($section === null || isset($visibleSections[$section]))) {
                 $path = $section !== null ? $tree->codePathOf($section) : [];
                 $actions[] = [
                     'method' => 'get',

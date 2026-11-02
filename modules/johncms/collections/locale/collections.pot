@@ -50,14 +50,14 @@ msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:186
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:203
-#: modules/johncms/collections/src/Application/Services/ItemListRowMapper.php:46
+#: modules/johncms/collections/src/Application/Services/ItemListRowMapper.php:47
 msgid "Edit"
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:187
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:207
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:168
-#: modules/johncms/collections/src/Application/Services/ItemListRowMapper.php:62
+#: modules/johncms/collections/src/Application/Services/ItemListRowMapper.php:67
 #: modules/johncms/collections/templates/admin/delete-dialog.twig:38
 msgid "Delete"
 msgstr ""
@@ -273,7 +273,7 @@ msgid "Settings"
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:166
-#: modules/johncms/collections/src/Application/Services/ItemListRowMapper.php:52
+#: modules/johncms/collections/src/Application/Services/ItemListRowMapper.php:57
 #: modules/johncms/collections/templates/admin/collection/layout.twig:17
 msgid "Open on the site"
 msgstr ""
@@ -377,7 +377,11 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/UseCases/DeleteCollectionSectionUseCase.php:27
+#: modules/johncms/collections/src/Application/Services/ItemListRowMapper.php:50
+msgid "Preview"
+msgstr ""
+
+#: modules/johncms/collections/src/Application/UseCases/DeleteCollectionSectionUseCase.php:28
 #: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:53
 msgid "The section does not belong to this collection or no longer exists."
 msgstr ""
@@ -715,6 +719,14 @@ msgstr ""
 
 #: modules/johncms/collections/templates/admin/item-form.twig:145
 msgid "The smaller the number, the higher the item in the lists."
+msgstr ""
+
+#: modules/johncms/collections/templates/admin/item-preview.twig:8
+msgid "Preview. This page does not publish the item or count a view."
+msgstr ""
+
+#: modules/johncms/collections/templates/admin/item-preview.twig:14
+msgid "Back"
 msgstr ""
 
 #: modules/johncms/collections/templates/admin/items-results.twig:19

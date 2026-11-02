@@ -18,7 +18,7 @@ final class ItemQueryValidator
         'sort' => FieldType::Integer, 'view_count' => FieldType::Integer,
         'created_by' => FieldType::Integer, 'updated_by' => FieldType::Integer,
         'active_from' => FieldType::Datetime, 'active_to' => FieldType::Datetime,
-        'created_at' => FieldType::Datetime, 'updated_at' => FieldType::Datetime,
+        'created_at' => FieldType::Datetime, 'updated_at' => FieldType::Datetime, 'published_at' => FieldType::Datetime,
     ];
 
     /** @param array<string, ContentCollectionField> $fields */

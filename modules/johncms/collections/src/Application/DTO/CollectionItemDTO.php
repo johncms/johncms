@@ -11,6 +11,8 @@ use DateTimeImmutable;
  */
 final readonly class CollectionItemDTO
 {
+    public ?DateTimeImmutable $publishedAt;
+
     /** @param array<string, ScalarValue|list<ScalarValue>> $values */
     public function __construct(
         public int $id,
@@ -31,5 +33,6 @@ final readonly class CollectionItemDTO
         public ?DateTimeImmutable $updatedAt,
         public array $values,
     ) {
+        $this->publishedAt = $activeFrom ?? $createdAt;
     }
 }

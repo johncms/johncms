@@ -1,0 +1,15 @@
+{#
+    @var item \Johncms\Modules\Collections\Application\DTO\PublicItemDetailDTO
+    @var back_url string
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div class="alert alert-info">{{ __('Preview. This page does not publish the item or count a view.') }}</div>
+    <section class="card mb-3">
+        <div class="card-body">
+            {% include '@collections/public/components/item-content.twig' with {item: item} only %}
+        </div>
+    </section>
+    <a href="{{ back_url }}" class="btn btn-outline-secondary">{{ __('Back') }}</a>
+{% endblock %}

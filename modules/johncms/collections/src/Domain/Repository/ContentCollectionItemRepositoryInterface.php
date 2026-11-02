@@ -42,6 +42,8 @@ interface ContentCollectionItemRepositoryInterface
      * Find an item by code that is currently published (active + within the
      * active_from/active_to window), with its values eager loaded. For the public site.
      */
+    public function findVisibleById(int $collectionId, int $id): ?ContentCollectionItem;
+
     public function findVisibleByCode(int $collectionId, ?int $sectionId, string $code): ?ContentCollectionItem;
 
     /**
@@ -49,7 +51,7 @@ interface ContentCollectionItemRepositoryInterface
      *
      * @return iterable<ContentCollectionItem>
      */
-    public function getVisibleForSitemap(int $collectionId): iterable;
+    public function getVisibleForSitemap(int $collectionId, ?\DateTimeImmutable $at = null): iterable;
 
     /**
      * @param array<string, mixed> $attributes

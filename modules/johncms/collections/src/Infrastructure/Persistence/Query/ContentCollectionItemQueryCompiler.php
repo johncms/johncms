@@ -60,7 +60,7 @@ final class ContentCollectionItemQueryCompiler
         $hasId = false;
         foreach ($query->orderBy as $order) {
             if (str_starts_with($order->fieldCode, 'item.')) {
-                $builder->orderBy(substr($order->fieldCode, 5), $order->direction->value);
+                $builder->orderBy($this->baseColumn($order->fieldCode), $order->direction->value);
                 $hasId = $hasId || $order->fieldCode === 'item.id';
             } else {
                 $this->applyCustomFieldOrder($builder, $fields[substr($order->fieldCode, 6)], $order);
@@ -77,12 +77,12 @@ final class ContentCollectionItemQueryCompiler
     private function applyBaseFilter(Builder $builder, FieldFilterDTO $filter): void
     {
         if ($filter->operator === FilterOperator::In) {
-            $builder->whereIn(substr($filter->fieldCode, 5), $this->sqlValue($filter->value));
+            $builder->whereIn($this->baseColumn($filter->fieldCode), $this->sqlValue($filter->value));
 
             return;
         }
 
-        $builder->where(substr($filter->fieldCode, 5), $filter->operator->sqlOperator(), $this->sqlValue($filter->value));
+        $builder->where($this->baseColumn($filter->fieldCode), $filter->operator->sqlOperator(), $this->sqlValue($filter->value));
     }
 
     /**
@@ -137,6 +137,13 @@ final class ContentCollectionItemQueryCompiler
             },
             $order->direction->value
         );
+    }
+
+    private function baseColumn(string $reference): string|\Illuminate\Database\Query\Expression
+    {
+        return $reference === 'item.published_at'
+            ? new \Illuminate\Database\Query\Expression('COALESCE(collection_items.active_from, collection_items.created_at)')
+            : substr($reference, 5);
     }
 
     private function sqlValue(mixed $value): mixed

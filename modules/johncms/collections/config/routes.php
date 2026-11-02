@@ -36,6 +36,8 @@ return static function (RouteCollection $router): void {
         $router->get('/admin/collections/{collection_id:number}/sections/{id:number}/delete', [CollectionSectionsAdminController::class, 'deleteConfirm'])->name('collections.admin.sections.delete_confirm');
         $router->post('/admin/collections/{collection_id:number}/sections/{id:number}/delete', [CollectionSectionsAdminController::class, 'delete'])->name('collections.admin.sections.delete');
 
+        $router->get('/admin/collections/{collection_id:number}/items/{id:number}/preview', \Johncms\Modules\Collections\Application\Controllers\Admin\CollectionItemPreviewController::class)->name('collections.admin.items.preview');
+
         // Items of a collection (with custom EAV fields).
         $router->get('/admin/collections/{collection_id:number}/items', [CollectionItemsAdminController::class, 'index'])->name('collections.admin.items');
         $router->get('/admin/collections/{collection_id:number}/items/new', [CollectionItemsAdminController::class, 'newForm'])->name('collections.admin.items.new');

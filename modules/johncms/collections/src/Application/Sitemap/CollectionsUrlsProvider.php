@@ -34,6 +34,7 @@ final class CollectionsUrlsProvider implements SitemapUrlProviderInterface
      */
     public function getEntries(string $homeUrl): iterable
     {
+        $at = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
         foreach ($this->collectionRepository->getPublicCodeMap() as $code => $collectionId) {
             $base = $homeUrl . '/' . $code;
             yield new SitemapUrlEntry($base);
@@ -43,7 +44,7 @@ final class CollectionsUrlsProvider implements SitemapUrlProviderInterface
                 yield new SitemapUrlEntry($base . '/' . $path);
             }
 
-            foreach ($this->itemRepository->getVisibleForSitemap($collectionId) as $item) {
+            foreach ($this->itemRepository->getVisibleForSitemap($collectionId, $at) as $item) {
                 $sectionId = $item->section_id;
                 if ($sectionId !== null && ! isset($sectionPaths[$sectionId])) {
                     // The item sits under an inactive/unreachable section; skip it.
@@ -63,44 +64,12 @@ final class CollectionsUrlsProvider implements SitemapUrlProviderInterface
      */
     private function buildSectionPaths(int $collectionId): array
     {
-        $nodes = [];
-        foreach ($this->sectionRepository->getAllByCollection($collectionId) as $section) {
-            if ($section->active) {
-                $nodes[$section->id] = ['parent' => $section->parent, 'code' => $section->code];
-            }
+        $tree = \Johncms\Modules\Collections\Domain\Services\SectionTree::of($this->sectionRepository->getAllByCollection($collectionId));
+        $paths = [];
+        foreach ($tree->visibleIds() as $id) {
+            $paths[$id] = implode('/', $tree->codePathOf($id));
         }
-
-        $cache = [];
-        foreach (array_keys($nodes) as $id) {
-            $this->resolvePath($id, $nodes, $cache);
-        }
-
-        return array_filter($cache, static fn (?string $path): bool => $path !== null);
-    }
-
-    /**
-     * @param array<int, array{parent: ?int, code: string}> $nodes
-     * @param array<int, ?string> $cache
-     */
-    private function resolvePath(int $id, array $nodes, array &$cache): ?string
-    {
-        if (array_key_exists($id, $cache)) {
-            return $cache[$id];
-        }
-
-        // An ancestor is inactive/missing: the section is unreachable publicly.
-        if (! isset($nodes[$id])) {
-            return $cache[$id] = null;
-        }
-
-        $node = $nodes[$id];
-        if ($node['parent'] === null) {
-            return $cache[$id] = $node['code'];
-        }
-
-        $parentPath = $this->resolvePath($node['parent'], $nodes, $cache);
-
-        return $cache[$id] = $parentPath !== null ? $parentPath . '/' . $node['code'] : null;
+        return $paths;
     }
 
     private function lastmod(ContentCollectionItem $item): ?string
@@ -110,8 +79,6 @@ final class CollectionsUrlsProvider implements SitemapUrlProviderInterface
             return null;
         }
 
-        $timestamp = strtotime($raw);
-
-        return $timestamp !== false ? gmdate('c', $timestamp) : null;
+        return (new \DateTimeImmutable($raw, new \DateTimeZone('UTC')))->format(DATE_ATOM);
     }
 }

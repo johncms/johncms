@@ -64,5 +64,13 @@ return static function (ContainerConfigurator $container): void {
         \Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface::class,
         \Johncms\Modules\Collections\Application\Api\CollectionSectionsApi::class
     )->autowire()->public();
+    $services->set(
+        \Johncms\Modules\Collections\Application\Api\CollectionsPublicApiInterface::class,
+        \Johncms\Modules\Collections\Application\Api\CollectionsPublicApi::class
+    )->autowire()->public();
+    $services->set(
+        \Johncms\Modules\Collections\Application\Api\CollectionsPreviewApiInterface::class,
+        \Johncms\Modules\Collections\Application\Api\CollectionsPreviewApi::class
+    )->autowire()->public();
     $services->set(CollectionsApiInterface::class, CollectionsApi::class)->autowire()->public();
 };

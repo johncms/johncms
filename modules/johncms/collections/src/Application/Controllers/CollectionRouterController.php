@@ -50,7 +50,7 @@ final readonly class CollectionRouterController
         }
 
         $collection = $this->collectionRepository->findById($map[$code]);
-        if ($collection === null || ! $collection->active) {
+        if ($collection === null || ! $collection->active || ! $collection->public) {
             $this->notFound();
         }
 
@@ -110,15 +110,16 @@ final readonly class CollectionRouterController
 
     private function renderListing(ContentCollection $collection, ?int $sectionId, string $basePath): ViewResponse
     {
+        $at = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
         $perPage = isset($collection->settings['per_page']) ? (int) $collection->settings['per_page'] : null;
-        $pagination = $this->paginationFactory->create($this->listItems->count($collection->id, $sectionId), $perPage);
+        $pagination = $this->paginationFactory->create($this->listItems->count($collection->id, $sectionId, $at), $perPage);
 
         $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
         if ($redirectUrl !== null) {
             redirect($redirectUrl);
         }
 
-        $items = $this->listItems->getPage($collection->id, $sectionId, $pagination->getPerPage(), $pagination->getOffset());
+        $items = $this->listItems->getPage($collection->id, $sectionId, $pagination->getPerPage(), $pagination->getOffset(), $at);
         $title = $this->breadcrumbs($collection, $sectionId);
 
         $meta = new PageMeta($title . ' — ' . $collection->name, $pagination->getCurrentPage(), $collection->description ?? '');

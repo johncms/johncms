@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\UseCases;
 
+use Johncms\Modules\Collections\Application\DTO\CollectionItemDTO;
+use Johncms\Modules\Collections\Application\Services\CollectionApiMapper;
 use Johncms\Modules\Collections\Application\DTO\PublicItemDetailDTO;
 use Johncms\Modules\Collections\Application\Services\ItemContentFormatter;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
@@ -15,6 +17,7 @@ final readonly class GetPublicItemUseCase
         private ContentCollectionItemRepositoryInterface $itemRepository,
         private ContentCollectionFieldRepositoryInterface $fieldRepository,
         private ItemContentFormatter $contentFormatter,
+        private CollectionApiMapper $mapper = new CollectionApiMapper(),
     ) {
     }
 
@@ -29,10 +32,15 @@ final readonly class GetPublicItemUseCase
             return null;
         }
 
-        $valueMap = $item->getValuesMap();
+        return $this->format($this->mapper->item($item));
+    }
+
+    public function format(CollectionItemDTO $item): PublicItemDetailDTO
+    {
+        $valueMap = $item->values;
 
         $values = [];
-        foreach ($this->fieldRepository->getByCollection($collectionId) as $field) {
+        foreach ($this->fieldRepository->getByCollection($item->collectionId) as $field) {
             $raw = $valueMap[$field->code] ?? null;
             $list = $this->normalizeValues($raw);
             if ($list !== []) {
@@ -42,8 +50,8 @@ final readonly class GetPublicItemUseCase
 
         return new PublicItemDetailDTO(
             name: $item->name,
-            previewText: $this->contentFormatter->format($item->preview_text),
-            detailText: $this->contentFormatter->format($item->detail_text),
+            previewText: $this->contentFormatter->format($item->previewText),
+            detailText: $this->contentFormatter->format($item->detailText),
             values: $values,
         );
     }
@@ -59,6 +67,6 @@ final readonly class GetPublicItemUseCase
 
         $list = is_array($raw) ? $raw : [$raw];
 
-        return array_values(array_map(static fn ($value): string => (string) $value, $list));
+        return array_values(array_map(static fn ($value): string => $value instanceof \DateTimeInterface ? $value->format('Y-m-d H:i:s') : (string) $value, $list));
     }
 }

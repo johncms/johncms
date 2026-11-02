@@ -737,3 +737,9 @@ msgstr "Метаданные раздела (JSON)"
 
 msgid "A JSON object with custom section settings. Use {} to clear it."
 msgstr "JSON-объект с дополнительными настройками раздела. Для очистки укажите {}."
+
+msgid "Preview"
+msgstr "Предпросмотр"
+
+msgid "Preview. This page does not publish the item or count a view."
+msgstr "Предпросмотр. Эта страница не публикует запись и не засчитывает просмотр."

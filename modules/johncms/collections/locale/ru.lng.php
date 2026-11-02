@@ -186,6 +186,8 @@
       'A section cannot be moved into itself or its descendants.' => 'Нельзя переместить раздел в самого себя или в один из его подразделов.',
       'Section metadata (JSON)' => 'Метаданные раздела (JSON)',
       'A JSON object with custom section settings. Use {} to clear it.' => 'JSON-объект с дополнительными настройками раздела. Для очистки укажите {}.',
+      'Preview' => 'Предпросмотр',
+      'Preview. This page does not publish the item or count a view.' => 'Предпросмотр. Эта страница не публикует запись и не засчитывает просмотр.',
     ),
   ),
 );

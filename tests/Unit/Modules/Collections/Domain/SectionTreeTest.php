@@ -47,4 +47,13 @@ final class SectionTreeTest extends TestCase
         self::assertSame(['Orphan'], $tree->pathOf(1));
     }
 
+    public function testVisibleSectionsRequireAnActivePathFromARoot(): void
+    {
+        $tree = new SectionTree(
+            [1 => 0, 2 => 1, 3 => 2, 4 => 0, 5 => 4, 6 => 7, 7 => 6, 8 => 99],
+            active: [1 => true, 2 => false, 3 => true, 4 => true, 5 => true, 6 => true, 7 => true, 8 => true]
+        );
+        self::assertSame([1, 4, 5], $tree->visibleIds());
+    }
+
 }
