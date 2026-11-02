@@ -16,4 +16,5 @@ return [
     'key'   => 'johncms/news',
     'alias' => 'news',
     'name'  => 'News',
+    'requires' => ['modules' => ['johncms/collections' => '^10.0']],
 ];

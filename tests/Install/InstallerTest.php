@@ -220,6 +220,7 @@ final class Installer extends \Johncms\Modules\Installer
             throw new \RuntimeException('Declarations were not synchronized before the hook.');
         }
         $api = di(\Johncms\Modules\Collections\Application\Api\CollectionsApiInterface::class);
+        if ($api->findDeclaredCollection('johncms/news', 'articles') === null) { throw new \RuntimeException('The news declaration was not synchronized.'); }
         $schema = di(\Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface::class);
         $collection = $api->findDeclaredCollection('test/updatefixture', 'articles');
         if ($collection === null) { throw new \RuntimeException('The owned collection was not synchronized before the hook.'); }

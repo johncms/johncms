@@ -710,3 +710,9 @@ msgstr "Здесь появятся опубликованные новости.
 
 msgid "Rating"
 msgstr "Рейтинг"
+
+msgid "Meta description"
+msgstr "Описание страницы"
+
+msgid "Meta keywords"
+msgstr "Ключевые слова"

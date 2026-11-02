@@ -6,6 +6,7 @@ msgstr ""
 msgid "The requested article was not found."
 msgstr ""
 
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:29
 #: modules/johncms/news/src/Application/CommentFeed/NewsCommentFeedSource.php:47
 #: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:131
 #: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:146
@@ -23,6 +24,24 @@ msgstr ""
 #: modules/johncms/news/src/Application/Services/NewsPermissions.php:29
 #: modules/johncms/news/templates/homepage/latest.twig:3
 msgid "News"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:32
+#: modules/johncms/news/templates/admin/article-form.twig:179
+msgid "Page title"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:33
+msgid "Meta description"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:34
+msgid "Meta keywords"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:35
+#: modules/johncms/news/templates/admin/article-form.twig:169
+msgid "Tags"
 msgstr ""
 
 #: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:61
@@ -424,20 +443,12 @@ msgid "Section and tags"
 msgstr ""
 
 #: modules/johncms/news/templates/admin/article-form.twig:169
-msgid "Tags"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/article-form.twig:169
 msgid "Enter words or phrases separated by commas"
 msgstr ""
 
 #: modules/johncms/news/templates/admin/article-form.twig:176
 #: modules/johncms/news/templates/admin/section-form.twig:104
 msgid "Search engines"
-msgstr ""
-
-#: modules/johncms/news/templates/admin/article-form.twig:179
-msgid "Page title"
 msgstr ""
 
 #: modules/johncms/news/templates/admin/article-form.twig:179

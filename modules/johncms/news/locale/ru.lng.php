@@ -197,6 +197,8 @@
       'No news yet' => 'Новостей пока нет',
       'Published news will appear here.' => 'Здесь появятся опубликованные новости.',
       'Rating' => 'Рейтинг',
+      'Meta description' => 'Описание страницы',
+      'Meta keywords' => 'Ключевые слова',
     ),
   ),
 );

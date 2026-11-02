@@ -39,6 +39,10 @@ return static function (ContainerConfigurator $container): void {
         ->autoconfigure();
 
     $services->set(Section::class, Section::class)->public();
+    $services->set(\Johncms\Modules\News\Application\Collections\NewsCollectionDeclaration::class)
+        ->autowire()->public()->tag('johncms.collections.declaration_provider');
+    $services->set(\Johncms\Modules\News\Application\Collections\NewsCollectionOwnerUrls::class)
+        ->autowire()->public()->tag('johncms.collections.owner_urls');
     $services->set(NewsArticleRepositoryInterface::class, EloquentNewsArticleRepository::class)->public();
     $services->set(NewsSectionRepositoryInterface::class, EloquentNewsSectionRepository::class)->public();
     $services->set(NewsCommentRepositoryInterface::class, EloquentNewsCommentRepository::class)->public();
