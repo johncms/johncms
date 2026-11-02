@@ -226,6 +226,9 @@ final readonly class FileStore
         $this->files->deleteByIds($files->pluck('id')->all());
 
         foreach ($files as $file) {
+            if ($this->files->hasPath($file->storage, $file->path)) {
+                continue;
+            }
             try {
                 $this->storages->disk($file->storage)->delete($file->path);
             } catch (StorageException $exception) {

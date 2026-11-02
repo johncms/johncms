@@ -35,6 +35,7 @@ final readonly class SaveCollectionItemUseCase
         private CollectionItemValidator $validator,
         private SystemOperationContext $systemContext = new SystemOperationContext(),
         private CollectionChangeDispatcher $changes = new CollectionChangeDispatcher(),
+        private ?\Johncms\Modules\Collections\Application\Services\CollectionItemFiles $files = null,
     ) {
     }
 
@@ -112,6 +113,12 @@ final readonly class SaveCollectionItemUseCase
                 $itemId = $this->itemRepository->create($attributes)->id;
             }
             $this->rebuildValues($itemId, $dto, $valueFields, $clearFields);
+            if ($dto->uploadContext !== null) {
+                if ($this->files === null) {
+                    throw new \LogicException('Collection upload tracking is not configured.');
+                }
+                $this->files->claim($dto->uploadContext, $dto->collectionId, $itemId, $actorId);
+            }
             $this->changes->dispatch(new CollectionChangeDTO(
                 'item',
                 $before !== null && $before->containerId !== $dto->sectionId ? 'moved' : 'saved',

@@ -27,6 +27,7 @@
     {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
 
     <form action="{{ form_action }}" method="post" id="item-form" class="row g-3 align-items-start">
+        <input type="hidden" name="upload_context" value="{{ fields.upload_context }}">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         {% if id is not null %}
             <input type="hidden" name="id" value="{{ id }}">
@@ -49,10 +50,10 @@
                             <div class="form-text">{{ __('The last part of the address. Leave it empty to make it from the name.') }}</div>
                         </div>
                         <div class="col-12">
-                            {% include '@admin/components/ui/editor.twig' with {name: 'preview_text', label: __('Preview text'), value: fields.preview_text, errors: field_errors.preview_text|default([])|join(' ')} only %}
+                            {% include '@admin/components/ui/editor.twig' with {name: 'preview_text', label: __('Preview text'), value: fields.preview_text, allow_upload: true, upload_url: upload_url, errors: field_errors.preview_text|default([])|join(' ')} only %}
                         </div>
                         <div class="col-12">
-                            {% include '@admin/components/ui/editor.twig' with {name: 'detail_text', label: __('Detail text'), value: fields.detail_text} only %}
+                            {% include '@admin/components/ui/editor.twig' with {name: 'detail_text', label: __('Detail text'), value: fields.detail_text, allow_upload: true, upload_url: upload_url} only %}
                         </div>
                     </div>
                 </div>

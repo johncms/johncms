@@ -18,6 +18,11 @@ use Johncms\Files\StoredFile;
 
 final class EloquentFileRepository implements FileRepositoryInterface
 {
+    public function hasPath(string $storage, string $path): bool
+    {
+        return StoredFile::query()->where('storage', $storage)->where('path', $path)->exists();
+    }
+
     public function findById(int $id): ?StoredFile
     {
         return StoredFile::query()->find($id);

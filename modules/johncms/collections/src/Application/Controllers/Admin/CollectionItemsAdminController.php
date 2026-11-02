@@ -48,6 +48,7 @@ final readonly class CollectionItemsAdminController
         private ItemListFilterMapper $filterMapper,
         private ItemListControlsMapper $controlsMapper,
         private ItemListRowMapper $rowMapper,
+        private \Johncms\Modules\Collections\Application\Services\CollectionItemFiles $files,
     ) {
     }
 
@@ -230,12 +231,14 @@ final readonly class CollectionItemsAdminController
     private function renderForm(ContentCollection $collection, ?int $id, array $fields, array $valueMap, array $errors = []): ViewResponse
     {
         $this->breadcrumbs($collection);
+        $fields['upload_context'] = $fields['upload_context'] ?? $this->files->createContext($collection->id, $id);
         $title = $id !== null ? __('Edit item') : __('New item');
         $this->navChain->add($title);
 
         $hasSections = $this->hasSections($collection);
 
         return new ViewResponse('@collections/admin/item-form.twig', $this->menu($title, $collection->name, $collection) + [
+            'upload_url'      => '/admin/collections/' . $collection->id . '/uploads?context=' . rawurlencode($fields['upload_context']),
             'form_action'     => $this->baseUrl($collection->id),
             'back_url'        => $this->baseUrl($collection->id),
             'id'              => $id,
@@ -315,6 +318,7 @@ final readonly class CollectionItemsAdminController
     private function fieldsFromRequest(Request $request, ContentCollection $collection, Collection $fieldDefs): array
     {
         return [
+            'upload_context' => $request->body('upload_context') ?: null,
             'section_id'   => $this->hasSections($collection) ? $this->postSection($request) : null,
             'code'         => trim($request->body('code', '')),
             'name'         => trim($request->body('name', '')),
@@ -382,6 +386,7 @@ final readonly class CollectionItemsAdminController
             previewText: $fields['preview_text'] !== '' ? (string) $fields['preview_text'] : null,
             detailText: $fields['detail_text'] !== '' ? (string) $fields['detail_text'] : null,
             values: $fields['values'] ?? [],
+            uploadContext: $fields['upload_context'] ?? null,
         );
     }
 

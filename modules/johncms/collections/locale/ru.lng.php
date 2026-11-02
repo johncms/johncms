@@ -225,6 +225,8 @@
       'Content permission' => 'Право наполнения',
       'Grant this permission to editors of this collection. Structure management requires collections.manage.' => 'Предоставьте это право редакторам коллекции. Для управления структурой требуется collections.manage.',
       'Choose a valid content permission.' => 'Выберите корректное право наполнения.',
+      'A registered file no longer exists.' => 'Зарегистрированный файл больше не существует.',
+      'The upload context is missing, expired or belongs to another editor. Reopen the form.' => 'Контекст загрузки отсутствует, устарел или принадлежит другому редактору. Откройте форму заново.',
     ),
   ),
 );

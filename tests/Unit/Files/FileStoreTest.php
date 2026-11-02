@@ -53,6 +53,19 @@ final class FileStoreTest extends TestCase
         rmdir($this->directory);
     }
 
+    public function testDeletingOneRegistryEntryPreservesBytesSharedByAnother(): void
+    {
+        $first = $this->store->storeContents('shared image', 'photo.png', 'collections');
+        $second = $this->store->storeContents('shared image', 'photo.png', 'collections');
+        $path = $this->files->findById($second->id)->path;
+        $this->store->delete($first->id);
+        self::assertNull($this->store->find($first->id));
+        self::assertNotNull($this->store->find($second->id));
+        self::assertTrue($this->disk->exists($path));
+        $this->store->delete($second->id);
+        self::assertFalse($this->disk->exists($path));
+    }
+
     public function testStoresTheFileAndRegistersIt(): void
     {
         $source = $this->localFile('photo.jpg', 'picture bytes');

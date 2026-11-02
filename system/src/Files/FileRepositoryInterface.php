@@ -24,6 +24,8 @@ interface FileRepositoryInterface
 {
     public function findById(int $id): ?StoredFile;
 
+    public function hasPath(string $storage, string $path): bool;
+
     /**
      * @param list<int> $ids
      * @return Collection<int, StoredFile>

@@ -60,6 +60,12 @@ return static function (ContainerConfigurator $container): void {
         ->autowire()->public()->arg('$handlers', tagged_iterator('johncms.collections.change_handler'));
     $services->set(\Johncms\Modules\Collections\Application\Services\CollectionCacheInvalidator::class)
         ->autowire()->tag('johncms.collections.change_handler');
+    $services->set(
+        \Johncms\Modules\Collections\Domain\Repository\CollectionFileRepositoryInterface::class,
+        \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\CollectionFileRepository::class
+    )->autowire()->public();
+    $services->set(\Johncms\Modules\Collections\Application\Services\CollectionItemFiles::class)
+        ->autowire()->public()->tag('johncms.collections.change_handler');
     $services->set(CollectionCodeCacheInterface::class, CollectionCodeCache::class)->autowire()->public();
     $services->set(ReservedCodeCheckerInterface::class, ReservedCodeChecker::class)->autowire()->public();
     $services->set(

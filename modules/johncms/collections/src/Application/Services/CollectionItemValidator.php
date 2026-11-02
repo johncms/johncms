@@ -106,7 +106,8 @@ final readonly class CollectionItemValidator
             $sort,
             $form->previewText,
             $form->detailText,
-            $values
+            $values,
+            $form->uploadContext
         );
     }
 

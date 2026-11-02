@@ -41,6 +41,16 @@ final class InMemoryFileRepository implements FileRepositoryInterface
         return array_values(array_map(static fn(StoredFile $file): int => $file->id, $this->files));
     }
 
+    public function hasPath(string $storage, string $path): bool
+    {
+        foreach ($this->files as $file) {
+            if ($file->storage === $storage && $file->path === $path) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function findById(int $id): ?StoredFile
     {
         return $this->files[$id] ?? null;

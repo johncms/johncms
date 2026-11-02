@@ -27,6 +27,7 @@ final readonly class CollectionItemFormDTO
         public ?string $previewText,
         public ?string $detailText,
         public array $values,
+        public ?string $uploadContext = null,
     ) {
     }
 }

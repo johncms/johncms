@@ -797,6 +797,7 @@ msgstr ""
 #: system/src/Comments.php:280
 #: system/src/Comments.php:372
 #: system/src/Http/EditorImageUploadResponder.php:60
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:36
 msgid "Wrong data"
 msgstr ""
 
@@ -984,6 +985,7 @@ msgid "Style guide"
 msgstr ""
 
 #: system/src/Http/EditorImageUploadResponder.php:59
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:36
 msgid "The file is too large for the server to accept"
 msgstr ""
 
@@ -991,6 +993,7 @@ msgstr ""
 #: system/src/Image/StoreEditorImageUseCase.php:111
 #: system/src/Image/StoreEditorImageUseCase.php:132
 #: system/src/Image/StoreEditorImageUseCase.php:184
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:46
 msgid "Error uploading file"
 msgstr ""
 

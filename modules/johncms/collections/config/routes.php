@@ -76,6 +76,13 @@ return static function (RouteCollection $router): void {
             ->name('collections.admin.items.preview')
             ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
 
+        $router->post('/admin/collections/{collection_id:number}/uploads/context', [\Johncms\Modules\Collections\Application\Controllers\Admin\CollectionUploadController::class, 'createContext'])
+            ->name('collections.admin.uploads.context')
+            ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
+        $router->post('/admin/collections/{collection_id:number}/uploads', [\Johncms\Modules\Collections\Application\Controllers\Admin\CollectionUploadController::class, 'upload'])
+            ->name('collections.admin.uploads.store')
+            ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
+
         // Items of a collection (with custom EAV fields).
         $router->get('/admin/collections/{collection_id:number}/items', [CollectionItemsAdminController::class, 'index'])
             ->name('collections.admin.items')

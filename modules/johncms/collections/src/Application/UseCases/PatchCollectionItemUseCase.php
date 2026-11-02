@@ -42,7 +42,7 @@ final readonly class PatchCollectionItemUseCase
                     'active' => is_bool($value),
                     'sort' => is_int($value) || is_string($value),
                     'sectionId' => $value === null || is_int($value),
-                    'previewText', 'detailText', 'activeFrom', 'activeTo' => $value === null || is_string($value),
+                    'previewText', 'detailText', 'activeFrom', 'activeTo', 'uploadContext' => $value === null || is_string($value),
                     default => false,
                 };
                 if (! $valid) {

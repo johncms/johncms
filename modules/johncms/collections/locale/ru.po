@@ -854,3 +854,9 @@ msgstr "Предоставьте это право редакторам колл
 
 msgid "Choose a valid content permission."
 msgstr "Выберите корректное право наполнения."
+
+msgid "A registered file no longer exists."
+msgstr "Зарегистрированный файл больше не существует."
+
+msgid "The upload context is missing, expired or belongs to another editor. Reopen the form."
+msgstr "Контекст загрузки отсутствует, устарел или принадлежит другому редактору. Откройте форму заново."
