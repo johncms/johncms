@@ -179,6 +179,49 @@ final class ConcurrentCollectionItemSaveTest extends TestCase
         self::assertSame(1, Capsule::table('collection_sections')->whereNull('parent')->count());
     }
 
+    public function testSectionDeletionUsesCurrentContentsInsideAnExistingSnapshot(): void
+    {
+        $sections = CollectionItemWriterFactory::sectionsApi();
+        $section = $sections->addSection(new \Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO($this->collection, null, 'section', 'Section', null, true, 100));
+        $preview = $sections->previewDeletion($this->collection, $section);
+        Capsule::connection()->beginTransaction();
+        Capsule::table('collection_items')->count();
+        [$process, $output] = $this->start('new', $section, 'section-item');
+        self::assertSame(0, $this->finish($process, $output));
+        try {
+            $sections->deleteSection($this->collection, $section, \Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode::DeleteItems, expectedRevision: $preview->revision);
+            self::fail('A new item was not part of the confirmed deletion.');
+        } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException $exception) {
+            self::assertArrayHasKey('revision', $exception->errors);
+        } catch (CollectionWriteConflictException) {
+            self::assertTrue($this->snapshotIsolation());
+        } finally {
+            Capsule::connection()->rollBack();
+        }
+        self::assertNotNull($sections->findSection($this->collection, $section));
+        self::assertSame(1, Capsule::table('collection_items')->where('section_id', $section)->count());
+    }
+
+    public function testConcurrentSectionDeleteAndItemSaveCannotCreateRootOrphans(): void
+    {
+        $sections = CollectionItemWriterFactory::sectionsApi();
+        $section = $sections->addSection(new \Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO($this->collection, null, 'section', 'Section', null, true, 100));
+        Capsule::connection()->beginTransaction();
+        Capsule::table('collections')->where('id', $this->collection)->lockForUpdate()->first();
+        try {
+            [$first, $firstOutput] = $this->start('new', $section, 'section-item');
+            [$second, $secondOutput] = $this->start('delete', $section, 'delete-section');
+            $this->connectionId($firstOutput);
+            $this->connectionId($secondOutput);
+        } finally {
+            Capsule::connection()->rollBack();
+        }
+        self::assertContains($this->finish($first, $firstOutput), [0, 2]);
+        self::assertSame(0, $this->finish($second, $secondOutput));
+        self::assertNull($sections->findSection($this->collection, $section));
+        self::assertSame(0, Capsule::table('collection_items')->count());
+    }
+
     /** @param list<int> $expected */
     private function concurrent(string $code, array $expected): void
     {

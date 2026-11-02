@@ -54,6 +54,9 @@ interface ContentCollectionSectionRepositoryInterface
 
     public function delete(int $id): void;
 
+    /** @param list<int> $sectionIds */
+    public function hasForeignChildrenForUpdate(int $collectionId, array $sectionIds): bool;
+
     /**
      * The section path from the root down to the given section (breadcrumbs/URL).
      *

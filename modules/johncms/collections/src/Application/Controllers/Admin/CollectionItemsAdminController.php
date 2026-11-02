@@ -192,7 +192,13 @@ final readonly class CollectionItemsAdminController
         }
 
         if ($this->findOwnedItem($collection_id, $id) !== null) {
-            $this->deleteItem->execute($id);
+            try {
+                $this->deleteItem->execute($id, $collection_id);
+            } catch (CollectionItemFormException) {
+                return $this->wrongData($collection_id);
+            } catch (CollectionWriteConflictException) {
+                return $this->wrongData($collection_id, d__('collections', 'The contents changed during deletion. Check the counts and try again.'));
+            }
             $this->session->flash('success_message', __('Deleted successfully'));
         }
 
@@ -470,12 +476,12 @@ final readonly class CollectionItemsAdminController
         ]);
     }
 
-    private function wrongData(int $collectionId): ViewResponse
+    private function wrongData(int $collectionId, ?string $message = null): ViewResponse
     {
         return new ViewResponse('@admin/pages/result.twig', $this->menu(__('Items'), __('Items')) + [
             'title'    => __('Items'),
             'type'     => 'alert-danger',
-            'message'  => __('Wrong data'),
+            'message'  => $message ?? __('Wrong data'),
             'back_url' => $this->baseUrl($collectionId),
         ]);
     }

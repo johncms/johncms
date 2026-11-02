@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Controllers\Admin;
 
+use Johncms\Modules\Collections\Domain\Exceptions\CollectionWriteConflictException;
+use Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -33,6 +36,7 @@ final readonly class CollectionsAdminController
         private ListCollectionsUseCase $listCollections,
         private SaveCollectionUseCase $saveCollection,
         private DeleteCollectionUseCase $deleteCollection,
+        private CollectionDeletionPlanner $deletions,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
         private Session $session,
@@ -109,21 +113,34 @@ final readonly class CollectionsAdminController
 
     public function deleteConfirm(Request $request, int $id): ViewResponse
     {
+        return $this->renderDeleteConfirm($request, $id);
+    }
+
+    /** @param list<string> $errors */
+    private function renderDeleteConfirm(Request $request, int $id, array $errors = []): ViewResponse
+    {
         $collection = $this->repository->findWithCounts($id);
         if ($collection === null) {
             return $this->error(__('Wrong data'));
         }
 
+        try {
+            $preview = $this->deletions->plan($id)->preview;
+        } catch (CollectionDeletionException) {
+            return $this->error(__('Wrong data'));
+        }
         $title = __('Delete collection');
         $dialog = [
             'title'       => $title,
             'message'     => __('The collection is deleted with all its items, sections and fields. This cannot be undone.'),
             'name'        => $collection->name,
             'facts'       => [
-                ['label' => __('Items'), 'value' => (int) $collection->getAttribute('items_count')],
-                ['label' => __('Sections'), 'value' => (int) $collection->getAttribute('sections_count')],
-                ['label' => __('Fields'), 'value' => (int) $collection->getAttribute('fields_count')],
+                ['label' => __('Items'), 'value' => $preview->items],
+                ['label' => __('Sections'), 'value' => $preview->sections],
+                ['label' => __('Fields'), 'value' => $preview->fields],
             ],
+            'hidden' => ['revision' => $preview->revision],
+            'errors' => $errors,
             'form_action' => self::URL . '/' . $id . '/delete',
             'back_url'    => CollectionWorkspaceMapper::url($id, CollectionWorkspaceMapper::SETTINGS),
         ];
@@ -140,9 +157,15 @@ final readonly class CollectionsAdminController
         ]);
     }
 
-    public function delete(int $id): ViewResponse
+    public function delete(Request $request, int $id): ViewResponse
     {
-        $this->deleteCollection->execute($id);
+        try {
+            $this->deleteCollection->execute($id, $request->body('revision', ''));
+        } catch (CollectionDeletionException $exception) {
+            return $this->renderDeleteConfirm($request, $id, array_merge(...array_values($exception->errors)));
+        } catch (CollectionWriteConflictException) {
+            return $this->renderDeleteConfirm($request, $id, [__('The contents changed during deletion. Check the counts and try again.')]);
+        }
         $this->session->flash('success_message', __('Deleted successfully'));
 
         redirect(self::URL);

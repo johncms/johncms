@@ -4,33 +4,54 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\UseCases;
 
-use Johncms\Modules\Collections\Domain\Services\SectionTree;
-use Johncms\Modules\Collections\Application\Exceptions\CollectionSectionFormException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException;
+use Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner;
+use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
 use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface;
-use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
 
 final readonly class DeleteCollectionSectionUseCase
 {
     public function __construct(
-        private ContentCollectionSectionRepositoryInterface $repository,
-        private ContentCollectionRepositoryInterface $collections,
+        private ContentCollectionSectionRepositoryInterface $sections,
+        private ContentCollectionItemRepositoryInterface $items,
         private CollectionTransactionInterface $transaction,
+        private CollectionDeletionPlanner $planner,
+        private DeleteCollectionItemUseCase $deleteItem,
     ) {
     }
 
-    public function execute(int $id, int $collectionId): void
+    public function execute(int $id, int $collectionId, SectionDeletionMode $mode, ?int $targetId = null, ?string $expectedRevision = null): void
     {
-        $this->transaction->run(function () use ($id, $collectionId): void {
-            $collection = $this->collections->findForUpdate($collectionId);
-            $section = $this->repository->findForUpdate($id);
-            if ($collection === null || $section === null || $section->collection_id !== $collectionId) {
-                throw new CollectionSectionFormException(['id' => [d__('collections', 'The section does not belong to this collection or no longer exists.')]]);
+        $this->transaction->run(function () use ($id, $collectionId, $mode, $targetId, $expectedRevision): void {
+            $plan = $this->planner->plan($collectionId, $id, true);
+            $this->planner->ensureRevision($plan->preview, $expectedRevision);
+            if ($mode === SectionDeletionMode::MoveItems) {
+                $target = $targetId !== null ? $this->sections->findForUpdate($targetId) : null;
+                if ($target === null || $target->collection_id !== $collectionId || in_array($targetId, $plan->sectionIds, true)) {
+                    throw new CollectionDeletionException(['target' => [d__('collections', 'Choose a destination section of this collection outside the deleted subtree.')]]);
+                }
+                foreach ($plan->itemIds as $itemId) {
+                    $item = $this->items->findForUpdate($itemId);
+                    if ($item === null) {
+                        throw new CollectionDeletionException(['revision' => [d__('collections', 'The contents changed during deletion. Check the counts and try again.')]]);
+                    }
+                    if ($this->items->findByCodeForUpdate($collectionId, $targetId, $item->code) !== null) {
+                        throw new CollectionDeletionException(['target' => [d__('collections', 'Item codes conflict in the destination. Rename the conflicting items or choose another section.')]]);
+                    }
+                    $this->items->update($itemId, ['section_id' => $targetId]);
+                }
+            } else {
+                if ($targetId !== null) {
+                    throw new CollectionDeletionException(['target' => [d__('collections', 'A destination is only allowed when moving items.')]]);
+                }
+                foreach ($plan->itemIds as $itemId) {
+                    $this->deleteItem->execute($itemId, $collectionId);
+                }
             }
-            $tree = SectionTree::of($this->repository->getAllForUpdate($collectionId));
-            // Delete leaves first so correctness does not depend on recursive FK support or depth.
-            foreach (array_reverse($tree->subtreeOf($id)) as $sectionId) {
-                $this->repository->delete($sectionId);
+            foreach (array_reverse($plan->sectionIds) as $sectionId) {
+                $this->sections->delete($sectionId);
             }
         });
     }

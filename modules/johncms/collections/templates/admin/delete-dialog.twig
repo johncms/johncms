@@ -18,8 +18,11 @@
     name: name,
     facts: facts|default([]),
     hidden: hidden|default({}),
+    errors: errors|default([]),
+    deletion: deletion|default(null),
 } only %}
     {% block body %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
         {% for field, value in hidden %}
             <input type="hidden" name="{{ field }}" value="{{ value }}">
         {% endfor %}
@@ -28,6 +31,26 @@
         {% if facts is not empty %}
             <div class="mt-3">
                 {% include '@admin/components/ui/facts.twig' with {items: facts} only %}
+            </div>
+        {% endif %}
+        {% if deletion is not null %}
+            <div class="mt-3">
+                <label for="deletion-mode" class="form-label">{{ __('Items of this section and its subsections') }}</label>
+                <select name="mode" id="deletion-mode" class="form-select" required>
+                    <option value=""{% if deletion.mode == '' %} selected{% endif %}>{{ __('Choose an action') }}</option>
+                    <option value="delete"{% if deletion.mode == 'delete' %} selected{% endif %}>{{ __('Permanently delete all items in the subtree') }}</option>
+                    <option value="move"{% if deletion.mode == 'move' %} selected{% endif %}>{{ __('Move all items to another section') }}</option>
+                </select>
+            </div>
+            <div class="mt-3">
+                <label for="deletion-target" class="form-label">{{ __('Destination section (when moving items)') }}</label>
+                <select name="target" id="deletion-target" class="form-select">
+                    <option value="">{{ __('Choose a section') }}</option>
+                    {% for option in deletion.options %}
+                        <option value="{{ option.id }}"{% if deletion.target == option.id %} selected{% endif %}>{{ option.label }}</option>
+                    {% endfor %}
+                </select>
+                <div class="form-text">{{ __('All nested sections will be deleted. Moved items keep their codes, publication settings and values; visibility follows the destination section.') }}</div>
             </div>
         {% endif %}
     {% endblock %}

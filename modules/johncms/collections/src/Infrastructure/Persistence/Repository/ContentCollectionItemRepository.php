@@ -114,6 +114,25 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
         $item->fill($attributes)->save();
     }
 
+    public function getForDeletion(int $collectionId, ?array $sectionIds, bool $forUpdate = false): Collection
+    {
+        $query = ContentCollectionItem::query()->where('collection_id', $collectionId)->orderBy('id');
+        if ($sectionIds !== null) {
+            $query->whereIn('section_id', $sectionIds);
+        }
+        if ($forUpdate) {
+            $query->lockForUpdate();
+        }
+        return $query->get(['id', 'section_id', 'code', 'updated_at']);
+    }
+
+    public function hasForeignItemsInSectionsForUpdate(int $collectionId, array $sectionIds): bool
+    {
+        $query = ContentCollectionItem::query()->where('collection_id', '!=', $collectionId)->whereIn('section_id', $sectionIds);
+        $query->lockForUpdate();
+        return $query->first(['id']) !== null;
+    }
+
     public function delete(int $id): void
     {
         // Values are removed by the FK cascade on collection_item_values.

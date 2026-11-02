@@ -743,3 +743,51 @@ msgstr "Предпросмотр"
 
 msgid "Preview. This page does not publish the item or count a view."
 msgstr "Предпросмотр. Эта страница не публикует запись и не засчитывает просмотр."
+
+msgid "Subsections"
+msgstr "Подразделы"
+
+msgid "Items in the subtree"
+msgstr "Записи в поддереве"
+
+msgid "Choose whether to delete or move the items."
+msgstr "Выберите, удалить записи или перенести их."
+
+msgid "The contents changed during deletion. Check the counts and try again."
+msgstr "Содержимое изменилось во время удаления. Проверьте количество записей и повторите попытку."
+
+msgid "Sections are referenced by another collection. Fix these links before deleting."
+msgstr "На разделы ссылается другая коллекция. Исправьте эти связи перед удалением."
+
+msgid "The contents changed after confirmation was opened. Check the new counts and confirm again."
+msgstr "Содержимое изменилось после открытия подтверждения. Проверьте новые количества и подтвердите действие ещё раз."
+
+msgid "Choose a destination section of this collection outside the deleted subtree."
+msgstr "Выберите раздел этой коллекции вне удаляемого поддерева для переноса записей."
+
+msgid "Item codes conflict in the destination. Rename the conflicting items or choose another section."
+msgstr "В разделе назначения совпадают коды записей. Измените конфликтующие коды или выберите другой раздел."
+
+msgid "A destination is only allowed when moving items."
+msgstr "Раздел назначения можно указать только при переносе записей."
+
+msgid "Items of this section and its subsections"
+msgstr "Записи этого раздела и его подразделов"
+
+msgid "Choose an action"
+msgstr "Выберите действие"
+
+msgid "Permanently delete all items in the subtree"
+msgstr "Безвозвратно удалить все записи в поддереве"
+
+msgid "Move all items to another section"
+msgstr "Перенести все записи в другой раздел"
+
+msgid "Destination section (when moving items)"
+msgstr "Раздел назначения (при переносе записей)"
+
+msgid "Choose a section"
+msgstr "Выберите раздел"
+
+msgid "All nested sections will be deleted. Moved items keep their codes, publication settings and values; visibility follows the destination section."
+msgstr "Все вложенные разделы будут удалены. Перенесённые записи сохранят коды, настройки публикации и значения полей; их доступность зависит от раздела назначения."

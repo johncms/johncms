@@ -40,12 +40,14 @@ final class CollectionsApiTest extends TestCase
             $collectionRepository,
             $itemRepository,
             $writer,
-            new DeleteCollectionItemUseCase($itemRepository),
+            \Tests\Support\CollectionItemWriterFactory::itemDeleter(),
             new \Johncms\Modules\Collections\Application\UseCases\PatchCollectionItemUseCase(
                 $itemRepository, $collectionRepository, $fieldRepository,
                 new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction(), $writer
             ),
             new \Johncms\Modules\Collections\Application\Services\CollectionApiMapper(),
+            \Tests\Support\CollectionItemWriterFactory::deletionPlanner(),
+            \Tests\Support\CollectionItemWriterFactory::collectionDeleter(),
         );
 
         $now = date('Y-m-d H:i:s');

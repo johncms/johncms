@@ -14,7 +14,11 @@ echo \Illuminate\Database\Capsule\Manager::connection()->selectOne('SELECT CONNE
 flush();
 $mode = $argv[4] ?? 'save';
 try {
-    if ($mode === 'section' || $mode === 'move-section') {
+    if ($mode === 'delete-section') {
+        CollectionItemWriterFactory::sectionsApi()->deleteSection((int) $argv[1], (int) $argv[3], \Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode::DeleteItems);
+    } elseif ($mode === 'section-item') {
+        CollectionItemWriterFactory::create()->execute(null, new CollectionItemFormDTO((int) $argv[1], (int) $argv[3], $argv[2], 'Writer', true, null, null, 100, null, null, []));
+    } elseif ($mode === 'section' || $mode === 'move-section') {
         $form = new \Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO(
             (int) $argv[1], $mode === 'move-section' ? (int) $argv[2] : null,
             $mode === 'move-section' ? 'section-' . $argv[3] : $argv[2], 'Section', null, true, 100
@@ -34,6 +38,6 @@ try {
         CollectionItemWriterFactory::create()->execute(isset($argv[3]) ? (int) $argv[3] : null, $form);
     }
     exit(0);
-} catch (CollectionItemCodeAlreadyExistsException | \Johncms\Modules\Collections\Application\Exceptions\CollectionSectionCodeAlreadyExistsException | \Johncms\Modules\Collections\Application\Exceptions\CollectionSectionFormException) {
+} catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException | \Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException | CollectionItemCodeAlreadyExistsException | \Johncms\Modules\Collections\Application\Exceptions\CollectionSectionCodeAlreadyExistsException | \Johncms\Modules\Collections\Application\Exceptions\CollectionSectionFormException) {
     exit(2);
 }

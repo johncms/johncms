@@ -9,7 +9,7 @@ use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsImportApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
-use Johncms\Modules\Collections\Application\Exceptions\CollectionSectionFormException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Updates\SystemOperationContext;
 use Tests\Functional\FunctionalTestCase;
@@ -110,12 +110,12 @@ final class CollectionSectionsApiTest extends FunctionalTestCase
         $child = $this->section('child', $root);
         $other = $this->section('other');
         try {
-            $this->sections->deleteSection($this->collection + 100, $root);
+            $this->sections->deleteSection($this->collection + 100, $root, \Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode::DeleteItems);
             self::fail('A foreign delete was accepted.');
-        } catch (CollectionSectionFormException) {
+        } catch (CollectionDeletionException) {
             self::assertNotNull($this->sections->findSection($this->collection, $root));
         }
-        $this->sections->deleteSection($this->collection, $root);
+        $this->sections->deleteSection($this->collection, $root, \Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode::DeleteItems);
         self::assertNull($this->sections->findSection($this->collection, $child));
         self::assertNotNull($this->sections->findSection($this->collection, $other));
     }

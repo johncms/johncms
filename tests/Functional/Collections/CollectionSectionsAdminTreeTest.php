@@ -63,7 +63,7 @@ final class CollectionSectionsAdminTreeTest extends FunctionalTestCase
         $response = $this->handleRequest(
             '/admin/collections/' . $this->collection . '/sections/' . $section . '/delete',
             'POST',
-            $this->withCsrfToken(),
+            $this->withCsrfToken(['mode' => 'delete', 'revision' => $this->container()->get(\Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface::class)->previewDeletion($this->collection, $section)->revision]),
             cookies: $this->actingAs(FunctionalUserFactory::createSupervisor())
         );
 

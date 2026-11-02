@@ -65,6 +65,14 @@ interface ContentCollectionItemRepositoryInterface
 
     public function delete(int $id): void;
 
+    /** @param list<int>|null $sectionIds
+     * @return Collection<int, ContentCollectionItem>
+     */
+    public function getForDeletion(int $collectionId, ?array $sectionIds, bool $forUpdate = false): Collection;
+
+    /** @param list<int> $sectionIds */
+    public function hasForeignItemsInSectionsForUpdate(int $collectionId, array $sectionIds): bool;
+
     /**
      * The items of the list of the panel: whatever their window, narrowed by the filter.
      *

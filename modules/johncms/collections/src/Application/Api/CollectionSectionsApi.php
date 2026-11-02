@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Api;
 
+use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
+use Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner;
+use Johncms\Modules\Collections\Application\DTO\CollectionDeletionPreviewDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionTreeNodeDTO;
@@ -22,6 +25,7 @@ final readonly class CollectionSectionsApi implements CollectionSectionsApiInter
         private SaveCollectionSectionUseCase $save,
         private DeleteCollectionSectionUseCase $delete,
         private CollectionApiMapper $mapper,
+        private CollectionDeletionPlanner $deletions,
     ) {
     }
 
@@ -83,8 +87,13 @@ final readonly class CollectionSectionsApi implements CollectionSectionsApiInter
         $this->save->execute($id, $section);
     }
 
-    public function deleteSection(int $collectionId, int $id): void
+    public function previewDeletion(int $collectionId, int $id): CollectionDeletionPreviewDTO
     {
-        $this->delete->execute($id, $collectionId);
+        return $this->deletions->plan($collectionId, $id)->preview;
+    }
+
+    public function deleteSection(int $collectionId, int $id, SectionDeletionMode $mode, ?int $targetId = null, ?string $expectedRevision = null): void
+    {
+        $this->delete->execute($id, $collectionId, $mode, $targetId, $expectedRevision);
     }
 }

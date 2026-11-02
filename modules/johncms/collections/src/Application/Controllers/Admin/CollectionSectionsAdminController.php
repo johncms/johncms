@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Controllers\Admin;
 
+use Johncms\Modules\Collections\Domain\Exceptions\CollectionWriteConflictException;
+use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
+use Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Application\DTO\SectionTreeItemDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSectionCodeAlreadyExistsException;
@@ -33,6 +37,7 @@ final readonly class CollectionSectionsAdminController
         private SaveCollectionSectionUseCase $saveSection,
         private DeleteCollectionSectionUseCase $deleteSection,
         private Session $session,
+        private CollectionDeletionPlanner $deletions,
     ) {
     }
 
@@ -114,6 +119,12 @@ final readonly class CollectionSectionsAdminController
 
     public function deleteConfirm(Request $request, int $collection_id, int $id): ViewResponse
     {
+        return $this->renderDeleteConfirm($request, $collection_id, $id);
+    }
+
+    /** @param list<string> $errors */
+    private function renderDeleteConfirm(Request $request, int $collection_id, int $id, array $errors = [], string $mode = '', string $target = ''): ViewResponse
+    {
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
             return $this->collectionNotFound();
@@ -124,11 +135,23 @@ final readonly class CollectionSectionsAdminController
             return $this->wrongData($collection_id);
         }
 
+        try {
+            $preview = $this->deletions->plan($collection_id, $id)->preview;
+        } catch (CollectionDeletionException) {
+            return $this->wrongData($collection_id);
+        }
         $dialog = [
             'title'       => __('Delete section'),
             'message'     => __('Are you sure you want to delete the section?')
                 . ' ' . __('Nested sections will be deleted too.'),
             'name'        => $section->name,
+            'facts' => [
+                ['label' => __('Subsections'), 'value' => $preview->sections - 1],
+                ['label' => __('Items in the subtree'), 'value' => $preview->items],
+            ],
+            'hidden' => ['revision' => $preview->revision],
+            'errors' => $errors,
+            'deletion' => ['mode' => $mode, 'target' => $target, 'options' => $this->sectionOptions($collection_id, $id)],
             'form_action' => $this->baseUrl($collection_id) . '/' . $id . '/delete',
             'back_url'    => $this->baseUrl($collection_id),
         ];
@@ -145,17 +168,30 @@ final readonly class CollectionSectionsAdminController
         ]);
     }
 
-    public function delete(int $collection_id, int $id): ViewResponse
+    public function delete(Request $request, int $collection_id, int $id): ViewResponse
     {
         if ($this->collectionRepository->findById($collection_id) === null) {
             return $this->collectionNotFound();
         }
-
-        if ($this->findOwnedSection($collection_id, $id) !== null) {
-            $this->deleteSection->execute($id, $collection_id);
-            $this->session->flash('success_message', __('Deleted successfully'));
+        if ($this->findOwnedSection($collection_id, $id) === null) {
+            return $this->wrongData($collection_id);
         }
-
+        $modeInput = $request->body('mode', '');
+        $targetInput = $request->body('target', '');
+        try {
+            $mode = SectionDeletionMode::tryFrom($modeInput);
+            if ($mode === null) {
+                throw new CollectionDeletionException(['mode' => [__('Choose whether to delete or move the items.')]]);
+            }
+            $targetId = $mode === SectionDeletionMode::MoveItems
+                ? filter_var($targetInput, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) : false;
+            $this->deleteSection->execute($id, $collection_id, $mode, $targetId !== false ? $targetId : null, $request->body('revision', ''));
+        } catch (CollectionDeletionException $exception) {
+            return $this->renderDeleteConfirm($request, $collection_id, $id, array_merge(...array_values($exception->errors)), $modeInput, $targetInput);
+        } catch (CollectionWriteConflictException) {
+            return $this->renderDeleteConfirm($request, $collection_id, $id, [__('The contents changed during deletion. Check the counts and try again.')], $modeInput, $targetInput);
+        }
+        $this->session->flash('success_message', __('Deleted successfully'));
         redirect($this->baseUrl($collection_id));
     }
 

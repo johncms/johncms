@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Api;
 
+use Johncms\Modules\Collections\Application\DTO\CollectionDeletionPreviewDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionRecordDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemPageDTO;
@@ -68,6 +69,10 @@ interface CollectionsApiInterface
      * Delete an item (its EAV values cascade via FK).
      */
     public function deleteItem(int $id): void;
+
+    public function previewCollectionDeletion(int $collectionId): CollectionDeletionPreviewDTO;
+
+    public function deleteCollection(int $collectionId, ?string $expectedRevision = null): void;
 
     public function getPage(ContentCollectionItemQuery $query): CollectionItemPageDTO;
 

@@ -86,6 +86,13 @@ final class ContentCollectionSectionRepository implements ContentCollectionSecti
         $section->fill($attributes)->save();
     }
 
+    public function hasForeignChildrenForUpdate(int $collectionId, array $sectionIds): bool
+    {
+        $query = ContentCollectionSection::query()->where('collection_id', '!=', $collectionId)->whereIn('parent', $sectionIds);
+        $query->lockForUpdate();
+        return $query->first(['id']) !== null;
+    }
+
     public function delete(int $id): void
     {
         // Child sections cascade via the self-referencing FK; items keep their

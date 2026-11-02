@@ -4,25 +4,43 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Modules\Collections\Application\UseCases;
 
-use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionSectionUseCase;
-use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
+use Illuminate\Database\Capsule\Manager as Capsule;
 use PHPUnit\Framework\TestCase;
+use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\CollectionItemWriterFactory;
+use Tests\Support\Fixture;
+use Tests\Support\RunsMigrations;
 
 final class DeleteCollectionSectionUseCaseTest extends TestCase
 {
-    public function testDelegatesDeletionToRepository(): void
-    {
-        $repository = $this->createMock(ContentCollectionSectionRepositoryInterface::class);
-        $repository->expects(self::once())->method('delete')->with(6);
+    use BootsInMemoryDatabase;
+    use RunsMigrations;
 
-        $section = new \Johncms\Modules\Collections\Domain\Models\ContentCollectionSection(['collection_id' => 1]);
-        $section->id = 6;
-        $repository->method('getAllForUpdate')->willReturn(new \Illuminate\Database\Eloquent\Collection([$section]));
-        $repository->method('findForUpdate')->with(6)->willReturn($section);
-        $collections = $this->createMock(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface::class);
-        $collections->method('findForUpdate')->with(1)->willReturn(new \Johncms\Modules\Collections\Domain\Models\ContentCollection());
-        $transaction = $this->createMock(\Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface::class);
-        $transaction->method('run')->willReturnCallback(static fn (callable $operation) => $operation());
-        (new DeleteCollectionSectionUseCase($repository, $collections, $transaction))->execute(6, 1);
+    protected function setUp(): void
+    {
+        $this->bootDatabase();
+        $this->migrate('collections');
+        CollectionItemWriterFactory::validator();
+    }
+
+    protected function tearDown(): void
+    {
+        $this->shutdownDatabase();
+    }
+
+    public function testDeletingSubtreeExplicitlyRemovesItsItemsAndValues(): void
+    {
+        $collection = Fixture::insert('collections', ['code' => 'blog', 'name' => 'Blog']);
+        $section = Fixture::insert('collection_sections', ['collection_id' => $collection, 'code' => 'section', 'name' => 'Section']);
+        $child = Fixture::insert('collection_sections', ['collection_id' => $collection, 'parent' => $section, 'code' => 'child', 'name' => 'Child']);
+        $item = Fixture::insert('collection_items', ['collection_id' => $collection, 'section_id' => $child, 'code' => 'item', 'name' => 'Item']);
+        Fixture::insert('collection_items', ['collection_id' => $collection, 'code' => 'kept', 'name' => 'Kept']);
+        $field = Fixture::insert('collection_fields', ['collection_id' => $collection, 'code' => 'text', 'name' => 'Text', 'type' => 'string']);
+        Fixture::insert('collection_item_values', ['item_id' => $item, 'field_id' => $field, 'value_string' => 'Value']);
+        Capsule::connection()->getPdo()->exec('PRAGMA foreign_keys = OFF');
+        CollectionItemWriterFactory::sectionsApi()->deleteSection($collection, $section, \Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode::DeleteItems);
+        self::assertSame(0, Capsule::table('collection_sections')->count());
+        self::assertSame(0, Capsule::table('collection_item_values')->count());
+        self::assertSame(['kept'], Capsule::table('collection_items')->pluck('code')->all());
     }
 }

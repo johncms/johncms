@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Api;
 
+use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
+use Johncms\Modules\Collections\Application\DTO\CollectionDeletionPreviewDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionTreeNodeDTO;
@@ -26,5 +28,7 @@ interface CollectionSectionsApiInterface
 
     public function updateSection(int $id, CollectionSectionFormDTO $section): void;
 
-    public function deleteSection(int $collectionId, int $id): void;
+    public function previewDeletion(int $collectionId, int $id): CollectionDeletionPreviewDTO;
+
+    public function deleteSection(int $collectionId, int $id, SectionDeletionMode $mode, ?int $targetId = null, ?string $expectedRevision = null): void;
 }

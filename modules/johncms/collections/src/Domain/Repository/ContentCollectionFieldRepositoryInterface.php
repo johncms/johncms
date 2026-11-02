@@ -14,6 +14,9 @@ interface ContentCollectionFieldRepositoryInterface
      */
     public function getByCollection(int $collectionId): Collection;
 
+    /** @return Collection<int, ContentCollectionField> */
+    public function getForUpdate(int $collectionId): Collection;
+
     public function findByCode(int $collectionId, string $code): ?ContentCollectionField;
 
     public function findById(int $id): ?ContentCollectionField;

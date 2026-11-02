@@ -50,9 +50,10 @@ final class CollectionItemWriterFactory
         $writer = self::create();
         return new \Johncms\Modules\Collections\Application\Api\CollectionsApi(
             $collections, $items, $writer,
-            new \Johncms\Modules\Collections\Application\UseCases\DeleteCollectionItemUseCase($items),
+            self::itemDeleter(),
             new \Johncms\Modules\Collections\Application\UseCases\PatchCollectionItemUseCase($items, $collections, $fields, new CollectionTransaction(), $writer),
-            new \Johncms\Modules\Collections\Application\Services\CollectionApiMapper()
+            new \Johncms\Modules\Collections\Application\Services\CollectionApiMapper(),
+            self::deletionPlanner(), self::collectionDeleter()
         );
     }
 
@@ -70,8 +71,35 @@ final class CollectionItemWriterFactory
         return new \Johncms\Modules\Collections\Application\Api\CollectionSectionsApi(
             $sections, new \Johncms\Modules\Collections\Application\UseCases\ListCollectionSectionsUseCase($sections),
             self::sectionWriter(),
-            new \Johncms\Modules\Collections\Application\UseCases\DeleteCollectionSectionUseCase($sections, new ContentCollectionRepository(), new CollectionTransaction()),
-            new \Johncms\Modules\Collections\Application\Services\CollectionApiMapper()
+            new \Johncms\Modules\Collections\Application\UseCases\DeleteCollectionSectionUseCase($sections, new ContentCollectionItemRepository(new ContentCollectionFieldRepository(), new ContentCollectionItemQueryCompiler()), new CollectionTransaction(), self::deletionPlanner(), self::itemDeleter()),
+            new \Johncms\Modules\Collections\Application\Services\CollectionApiMapper(), self::deletionPlanner()
+        );
+    }
+
+    public static function deletionPlanner(): \Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner
+    {
+        return new \Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner(
+            new ContentCollectionRepository(), new ContentCollectionSectionRepository(),
+            new ContentCollectionItemRepository(new ContentCollectionFieldRepository(), new ContentCollectionItemQueryCompiler()),
+            new ContentCollectionFieldRepository()
+        );
+    }
+
+    public static function itemDeleter(): \Johncms\Modules\Collections\Application\UseCases\DeleteCollectionItemUseCase
+    {
+        return new \Johncms\Modules\Collections\Application\UseCases\DeleteCollectionItemUseCase(
+            new ContentCollectionItemRepository(new ContentCollectionFieldRepository(), new ContentCollectionItemQueryCompiler()),
+            new ContentCollectionItemValueRepository(), new ContentCollectionRepository(), new CollectionTransaction()
+        );
+    }
+
+    public static function collectionDeleter(?\Johncms\Modules\Collections\Application\Services\CollectionCodeCacheInterface $cache = null): \Johncms\Modules\Collections\Application\UseCases\DeleteCollectionUseCase
+    {
+        $collections = new ContentCollectionRepository();
+        return new \Johncms\Modules\Collections\Application\UseCases\DeleteCollectionUseCase(
+            $collections, $cache ?? new \Johncms\Modules\Collections\Application\Services\CollectionCodeCache(InMemoryCache::create(), $collections),
+            new CollectionTransaction(), self::deletionPlanner(), self::itemDeleter(),
+            new ContentCollectionSectionRepository(), new ContentCollectionFieldRepository()
         );
     }
 

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Api;
 
+use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionUseCase;
+use Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner;
+use Johncms\Modules\Collections\Application\DTO\CollectionDeletionPreviewDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionRecordDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemPageDTO;
@@ -27,6 +30,8 @@ final readonly class CollectionsApi implements CollectionsApiInterface
         private DeleteCollectionItemUseCase $deleteItem,
         private PatchCollectionItemUseCase $patch,
         private CollectionApiMapper $mapper,
+        private CollectionDeletionPlanner $deletions,
+        private DeleteCollectionUseCase $deleteCollection,
     ) {
     }
 
@@ -83,6 +88,16 @@ final readonly class CollectionsApi implements CollectionsApiInterface
         if (! $this->itemRepository->incrementViews($id)) {
             throw new CollectionItemFormException(['id' => [d__('collections', 'The item is missing or not published.')]]);
         }
+    }
+
+    public function previewCollectionDeletion(int $collectionId): CollectionDeletionPreviewDTO
+    {
+        return $this->deletions->plan($collectionId)->preview;
+    }
+
+    public function deleteCollection(int $collectionId, ?string $expectedRevision = null): void
+    {
+        $this->deleteCollection->execute($collectionId, $expectedRevision);
     }
 
     public function deleteItem(int $id): void

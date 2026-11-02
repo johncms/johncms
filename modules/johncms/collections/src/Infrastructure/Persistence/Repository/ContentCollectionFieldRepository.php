@@ -19,6 +19,13 @@ final class ContentCollectionFieldRepository implements ContentCollectionFieldRe
             ->get();
     }
 
+    public function getForUpdate(int $collectionId): Collection
+    {
+        $query = ContentCollectionField::query()->where('collection_id', $collectionId)->orderBy('id');
+        $query->lockForUpdate();
+        return $query->get();
+    }
+
     public function findByCode(int $collectionId, string $code): ?ContentCollectionField
     {
         return ContentCollectionField::query()
