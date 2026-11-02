@@ -22,12 +22,12 @@ final readonly class CollectionContentAccessMiddleware implements MiddlewareInte
     {
         try {
             $this->guard->execute((int) $request->attributes->get('collection_id'));
+            return $next($request);
         } catch (CollectionAccessDeniedException) {
             if ($this->user->isGuest()) {
                 redirect('/login');
             }
             return $this->responses->forbidden($request->isXmlHttpRequest() || str_contains($request->headers->get('Accept', ''), 'application/json'));
         }
-        return $next($request);
     }
 }

@@ -195,11 +195,18 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
     {
         $builder = ContentCollectionItem::query()->where('collection_id', $collectionId);
 
-        if ($filter->search !== '') {
-            $search = $filter->search;
-            $builder->where(static function (Builder $query) use ($search): void {
-                $like = '%' . addcslashes($search, '%_\\') . '%';
-                $query->where('name', 'like', $like)->orWhere('code', 'like', $like);
+        $search = mb_substr(\Johncms\Modules\Collections\Domain\Services\CollectionTextNormalizer::normalize($filter->search), 0, 255);
+        if ($search !== '') {
+            $settings = \Johncms\Modules\Collections\Domain\Models\ContentCollection::query()->find($collectionId)->settings ?? [];
+            $codes = is_array($settings['search_fields'] ?? null) ? $settings['search_fields'] : [];
+            $definitions = $this->fieldRepository->getByCollection($collectionId)->keyBy('code')->all();
+            $types = [\Johncms\Modules\Collections\Domain\Enums\FieldType::String_, \Johncms\Modules\Collections\Domain\Enums\FieldType::Text, \Johncms\Modules\Collections\Domain\Enums\FieldType::Html];
+            $codes = array_values(array_filter($codes, static fn ($code): bool => is_string($code) && isset($definitions[$code]) && in_array($definitions[$code]->type, $types, true)));
+            $textSearch = new \Johncms\Modules\Collections\Domain\Query\CollectionTextSearchDTO($search, $codes);
+            $builder->where(function (Builder $query) use ($search, $textSearch): void {
+                $query->where(function (Builder $indexed) use ($textSearch): void {
+                    $this->compiler->applySearch($indexed, $textSearch);
+                })->orWhereRaw("code LIKE ? ESCAPE '!'", ['%' . str_replace(['!', '%', '_'], ['!!', '!%', '!_'], $search) . '%']);
                 if (ctype_digit($search)) {
                     $query->orWhere('id', (int) $search);
                 }

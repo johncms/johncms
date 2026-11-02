@@ -878,3 +878,27 @@ msgstr "Описание страницы"
 
 msgid "Meta keywords"
 msgstr "Ключевые слова"
+
+msgid "The tags role requires a multiple string field."
+msgstr "Роль tags требует множественного строкового поля."
+
+msgid "Choose existing text fields for search."
+msgstr "Выберите существующие текстовые поля для поиска."
+
+msgid "Additional searchable fields"
+msgstr "Дополнительные поля поиска"
+
+msgid "The name, preview and text are always searched. Select additional text fields here."
+msgstr "Поиск всегда выполняется по названию, анонсу и тексту. Здесь можно выбрать дополнительные текстовые поля."
+
+msgid "Add tag"
+msgstr "Добавить тег"
+
+msgid "Remove tag"
+msgstr "Удалить тег"
+
+msgid "Enter a tag"
+msgstr "Введите тег"
+
+msgid "Could not load tag suggestions."
+msgstr "Не удалось загрузить подсказки тегов."

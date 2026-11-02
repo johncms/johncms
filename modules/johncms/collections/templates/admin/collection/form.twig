@@ -43,6 +43,18 @@
                         </select>
                         <div class="form-text">{{ __('Grant this permission to editors of this collection. Structure management requires collections.manage.') }}</div>
                     </div>
+                    {% if fields.search_options is not empty %}
+                        <div class="col-12">
+                            <span class="form-label d-block">{{ __('Additional searchable fields') }}</span>
+                            {% for code, label in fields.search_options %}
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="search_{{ code }}" name="search_fields[]" value="{{ code }}"{% if code in fields.search_fields %} checked{% endif %}>
+                                    <label class="form-check-label" for="search_{{ code }}">{{ label }}</label>
+                                </div>
+                            {% endfor %}
+                            <div class="form-text">{{ __('The name, preview and text are always searched. Select additional text fields here.') }}</div>
+                        </div>
+                    {% endif %}
                     <div class="col-12">
                         <label class="form-label" for="description">{{ __('Description') }}</label>
                         <textarea name="description" class="form-control" id="description" rows="3">{{ fields.description }}</textarea>

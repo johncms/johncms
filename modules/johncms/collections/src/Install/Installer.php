@@ -11,10 +11,24 @@ use Johncms\System\i18n\Translator;
 
 class Installer extends \Johncms\Modules\Installer
 {
+    public function install(): void
+    {
+        di(\Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer::class)->rebuildAll();
+    }
+
+    public function update(string $from, string $to): void
+    {
+        di(\Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer::class)->rebuildAll();
+    }
+
     public function uninstall(): void
     {
         $schema = Capsule::schema();
         // Drop in reverse dependency order.
+        $schema->dropIfExists('collection_search_documents');
+        $schema->dropIfExists('collection_file_links');
+        $schema->dropIfExists('collection_file_assets');
+        $schema->dropIfExists('collection_upload_contexts');
         $schema->dropIfExists('collection_item_values');
         $schema->dropIfExists('collection_items');
         $schema->dropIfExists('collection_sections');

@@ -83,7 +83,8 @@ final class CollectionContentAccessTest extends FunctionalTestCase
             new EnsureCollectionContentAccessUseCase($access, $this->container()->get(ContentCollectionRepositoryInterface::class)),
             $this->container()->get(CollectionsApiInterface::class),
             $this->container()->get(CollectionSectionsApiInterface::class),
-            $this->container()->get(CurrentUser::class)
+            $this->container()->get(CurrentUser::class),
+            $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionTagSuggestions::class)
         );
         self::assertNotNull($api->getItem($this->collection, $this->item));
         self::assertNull($api->getItem($this->collection, $this->foreignItem));

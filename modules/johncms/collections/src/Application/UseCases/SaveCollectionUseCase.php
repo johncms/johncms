@@ -13,6 +13,7 @@ use Johncms\Modules\Collections\Application\Exceptions\CollectionCodeReservedExc
 use Johncms\Modules\Collections\Application\Services\CollectionCodeCacheInterface;
 use Johncms\Modules\Collections\Application\Services\ReservedCodeCheckerInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Enums\FieldType;
 
 final readonly class SaveCollectionUseCase
 {
@@ -22,6 +23,7 @@ final readonly class SaveCollectionUseCase
         private ReservedCodeCheckerInterface $reservedCodeChecker,
         private \Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface $transaction,
         private CollectionChangeDispatcher $changes = new CollectionChangeDispatcher(),
+        private ?\Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface $fields = null,
     ) {
     }
 
@@ -49,6 +51,18 @@ final readonly class SaveCollectionUseCase
             if ($existing !== null && $existing->id !== $id) {
                 throw new CollectionCodeAlreadyExistsException();
             }
+            $selected = $dto->searchFields ?? ($current->settings['search_fields'] ?? []);
+            if (! array_is_list($selected)) {
+                throw new \Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException(d__('collections', 'Choose existing text fields for search.'));
+            }
+            if ($selected !== []) {
+                $definitions = $this->fields?->getByCollection($id ?? 0)->keyBy('code')->all() ?? [];
+                foreach ($selected as $code) {
+                    if (! is_string($code) || ! isset($definitions[$code]) || ! in_array($definitions[$code]->type, [FieldType::String_, FieldType::Text, FieldType::Html], true)) {
+                        throw new \Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException(d__('collections', 'Choose existing text fields for search.'));
+                    }
+                }
+            }
             $before = $current !== null ? new CollectionChangeStateDTO(null, $current->active, $current->code) : null;
             $attributes = [
             'code'        => $dto->code,
@@ -60,6 +74,7 @@ final readonly class SaveCollectionUseCase
             'settings'    => array_replace($current->settings ?? [], [
                 'has_sections' => $dto->hasSections,
                 'per_page'     => $dto->perPage,
+                'search_fields' => array_values(array_unique($selected)),
                 '_content_permission' => $current?->owner_module !== null ? ($current->settings['_content_permission'] ?? 'collections.manage') : $dto->contentPermission,
             ]),
             ];

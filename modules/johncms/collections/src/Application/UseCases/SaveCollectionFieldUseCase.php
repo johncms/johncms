@@ -52,6 +52,9 @@ final readonly class SaveCollectionFieldUseCase
             ) {
                 throw new CollectionSchemaException(d__('collections', 'Use a valid field code, label and role.'));
             }
+            if ($dto->role === 'tags' && ($dto->type !== \Johncms\Modules\Collections\Domain\Enums\FieldType::String_ || ! $dto->multiple)) {
+                throw new CollectionSchemaException(d__('collections', 'The tags role requires a multiple string field.'));
+            }
             if ($dto->sort < -2147483648 || $dto->sort > 2147483647) {
                 throw new CollectionSchemaException(d__('collections', 'Enter an integer between -2147483648 and 2147483647.'));
             }

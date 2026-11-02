@@ -9,6 +9,7 @@ namespace Johncms\Modules\Collections\Application\DTO;
  */
 final readonly class CollectionFormDTO
 {
+    /** @param list<string>|null $searchFields Null preserves the current selection. */
     public function __construct(
         public string $code,
         public string $name,
@@ -19,6 +20,7 @@ final readonly class CollectionFormDTO
         public bool $hasSections,
         public int $perPage,
         public string $contentPermission = 'collections.manage',
+        public ?array $searchFields = null,
     ) {
     }
 }

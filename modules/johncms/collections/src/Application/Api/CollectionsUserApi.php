@@ -20,8 +20,19 @@ use Johncms\Modules\Collections\Application\Exceptions\CollectionAccessDeniedExc
 
 final readonly class CollectionsUserApi implements CollectionsUserApiInterface
 {
-    public function __construct(private EnsureCollectionContentAccessUseCase $guard, private CollectionsApiInterface $items, private CollectionSectionsApiInterface $sections, private CurrentUser $user)
+    public function __construct(
+        private EnsureCollectionContentAccessUseCase $guard,
+        private CollectionsApiInterface $items,
+        private CollectionSectionsApiInterface $sections,
+        private CurrentUser $user,
+        private \Johncms\Modules\Collections\Application\Services\CollectionTagSuggestions $tags,
+    ) {
+    }
+
+    public function suggestTags(int $collectionId, string $fieldCode, string $prefix = '', int $limit = 10): array
     {
+        $this->guard->execute($collectionId);
+        return $this->tags->suggest($collectionId, $fieldCode, $prefix, $limit, published: false);
     }
 
     public function getPage(ContentCollectionItemQuery $query): CollectionItemPageDTO

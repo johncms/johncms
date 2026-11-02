@@ -77,7 +77,14 @@
                                         <label class="form-label" for="{{ input_id }}">
                                             {{ def.name }}{% if def.required %} <span class="text-danger" title="{{ __('Required') }}">*</span>{% endif %}
                                         </label>
-                                        {% if def.type == 'html' and def.multiple %}
+                                        {% if def.role == 'tags' and def.multiple %}
+                                            <div data-collection-tags data-source="{{ def.tags_url }}"
+                                                 data-add-label="{{ __('Add tag') }}" data-remove-label="{{ __('Remove tag') }}"
+                                                 data-placeholder="{{ __('Enter a tag') }}" data-error="{{ __('Could not load tag suggestions.') }}">
+                                                <textarea name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" rows="3">{{ def.value }}</textarea>
+                                                <div class="form-text">{{ __('One value per line') }}</div>
+                                            </div>
+                                        {% elseif def.type == 'html' and def.multiple %}
                                             {% for entry in def.entries %}
                                                 {% include '@admin/components/ui/editor.twig' with {name: def.input_name ~ '[]', id: input_id ~ '_' ~ loop.index, value: entry, label: def.name ~ ' ' ~ loop.index, allow_upload: true, upload_url: upload_url, errors: def.errors|join(' ')} only %}
                                             {% endfor %}

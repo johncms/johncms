@@ -70,7 +70,7 @@ final readonly class CollectionItemValidator
                     $result = $result->withError($key, d__('collections', 'Submit a single value or a list as defined by the field.'));
                     continue;
                 }
-                $value = trim($value);
+                $value = $field->role === 'tags' ? \Johncms\Modules\Collections\Domain\Services\CollectionTextNormalizer::normalize($value) : trim($value);
                 if ($value === '' && $field->type !== FieldType::Boolean) {
                     continue;
                 }
@@ -91,6 +91,9 @@ final readonly class CollectionItemValidator
             }
             if ($field->required && ($field->type !== FieldType::Boolean || $field->multiple) && $prepared === [] && ! $result->hasError($key)) {
                 $result = $result->withError($key, d__('collections', 'Fill in the field "%s"', $field->name));
+            }
+            if ($field->role === 'tags') {
+                $prepared = array_values(array_unique($prepared));
             }
             $values[$field->code] = $field->multiple ? $prepared : ($prepared[0] ?? '');
         }

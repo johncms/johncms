@@ -68,6 +68,7 @@ final class CollectionItemsAdminListTest extends FunctionalTestCase
         $this->item('Vite move', 'vite');
         $this->item('Hidden draft', 'draft', active: false);
 
+        $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer::class)->rebuildCollection($this->collection);
         $found = $this->page('?q=queue');
         $hidden = $this->page('?status=hidden');
 

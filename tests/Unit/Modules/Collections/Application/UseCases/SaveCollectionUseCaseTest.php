@@ -55,7 +55,7 @@ final class SaveCollectionUseCaseTest extends TestCase
             ->method('create')
             ->with(self::callback(static function (array $attributes): bool {
                 return $attributes['code'] === 'blog'
-                    && $attributes['settings'] === ['has_sections' => true, 'per_page' => 10, '_content_permission' => 'collections.manage'];
+                    && $attributes['settings'] === ['has_sections' => true, 'per_page' => 10, 'search_fields' => [], '_content_permission' => 'collections.manage'];
             }))
             ->willReturnCallback(static function (): ContentCollection {
                 $created = new ContentCollection();

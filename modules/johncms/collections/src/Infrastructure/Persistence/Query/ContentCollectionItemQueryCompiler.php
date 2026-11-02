@@ -39,6 +39,9 @@ final class ContentCollectionItemQueryCompiler
      */
     public function applyFilters(Builder $builder, ContentCollectionItemQuery $query, array $fields): void
     {
+        if ($query->search !== null) {
+            $this->applySearch($builder, $query->search);
+        }
         foreach ($query->filters as $filter) {
             if (str_starts_with($filter->fieldCode, 'item.')) {
                 $this->applyBaseFilter($builder, $filter);
@@ -71,6 +74,17 @@ final class ContentCollectionItemQueryCompiler
         }
     }
 
+    /** @param Builder<ContentCollectionItem> $builder */
+    public function applySearch(Builder $builder, \Johncms\Modules\Collections\Domain\Query\CollectionTextSearchDTO $search): void
+    {
+        $like = '%' . str_replace(['!', '%', '_'], ['!!', '!%', '!_'], $search->term) . '%';
+        $builder->whereExists(static function (QueryBuilder $query) use ($like, $search): void {
+            $query->selectRaw('1')->from('collection_search_documents')
+                ->whereColumn('collection_search_documents.item_id', 'collection_items.id')
+                ->whereIn('reference', $search->references())->whereRaw("plain_text LIKE ? ESCAPE '!'", [$like]);
+        });
+    }
+
     /**
      * @param Builder<ContentCollectionItem> $builder
      */
@@ -101,6 +115,10 @@ final class ContentCollectionItemQueryCompiler
             return;
         }
         $value = $this->sqlValue($filter->value);
+        if ($field->role === 'tags') {
+            $normalize = \Johncms\Modules\Collections\Domain\Services\CollectionTextNormalizer::normalize(...);
+            $value = is_array($value) ? array_map($normalize, $value) : $normalize($value);
+        }
         $builder->whereExists(static function (QueryBuilder $query) use ($field, $valueColumn, $filter, $value): void {
             $query->selectRaw('1')
                 ->from(self::VALUES_TABLE)

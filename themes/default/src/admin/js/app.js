@@ -31,3 +31,5 @@ import './ad-form-preview';
 import './main';
 import './editor';
 import './icon-gallery';
+
+import './collection-tags';

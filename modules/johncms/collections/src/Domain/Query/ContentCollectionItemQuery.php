@@ -24,6 +24,7 @@ final readonly class ContentCollectionItemQuery
         public ?array $fields = null,
         public bool $withoutSection = false,
         public \DateTimeImmutable $at = new \DateTimeImmutable('now', new \DateTimeZone('UTC')),
+        public ?CollectionTextSearchDTO $search = null,
     ) {
         if (($withoutSection && ($sectionId !== null || $includeSubsections)) || ($includeSubsections && $sectionId === null)) {
             throw new \InvalidArgumentException('Choose collection, root-only, exact section or section subtree explicitly.');
@@ -49,7 +50,8 @@ final readonly class ContentCollectionItemQuery
             $this->offset,
             $this->fields,
             $this->withoutSection,
-            $this->at
+            $this->at,
+            $this->search
         );
     }
 }

@@ -32,6 +32,9 @@ final readonly class CollectionFieldDeclarationDTO
         if ($sort < -2147483648 || $sort > 2147483647) {
             throw new \InvalidArgumentException('Declared field sorting must fit a signed 32-bit integer.');
         }
+        if ($role === 'tags' && ($type !== FieldType::String_ || ! $multiple)) {
+            throw new \InvalidArgumentException('The tags role requires a multiple string field.');
+        }
         json_encode($settings, JSON_THROW_ON_ERROR);
     }
 }

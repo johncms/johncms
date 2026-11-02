@@ -24,6 +24,11 @@ final class ItemQueryValidator
     /** @param array<string, ContentCollectionField> $fields */
     public function validate(ContentCollectionItemQuery $query, array $fields): void
     {
+        foreach ($query->search->fields ?? [] as $code) {
+            if (! isset($fields[$code]) || ! in_array($fields[$code]->type, [FieldType::String_, FieldType::Text, FieldType::Html], true)) {
+                throw new InvalidArgumentException('Search requires an existing string, text or HTML field.');
+            }
+        }
         foreach ($query->fields ?? [] as $code) {
             if (! is_string($code) || ! isset($fields[$code])) {
                 throw new InvalidArgumentException('Unknown selected collection field.');
@@ -40,6 +45,9 @@ final class ItemQueryValidator
                 throw new InvalidArgumentException('Filtering requires FieldFilterDTO.');
             }
             $type = $this->type($filter->fieldCode, $fields);
+            if (str_starts_with($filter->fieldCode, 'field.') && $fields[substr($filter->fieldCode, 6)]->role === 'tags' && ! in_array($filter->operator, [FilterOperator::Eq, FilterOperator::In], true)) {
+                throw new InvalidArgumentException('Tags support exact equality or membership, not substring matching.');
+            }
             $text = in_array($type, [FieldType::String_, FieldType::Text, FieldType::Html, FieldType::Select, FieldType::File], true);
             if (
                 ($filter->operator === FilterOperator::Like && ! $text)

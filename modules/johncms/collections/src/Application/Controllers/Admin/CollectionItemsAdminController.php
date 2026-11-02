@@ -289,6 +289,8 @@ final readonly class CollectionItemsAdminController
             }
 
             $defs[] = [
+                'tags_url' => $field->role === 'tags' ? '/admin/collections/' . $field->collection_id . '/tags/' . $field->code : '',
+                'role' => $field->role,
                 'entries'    => $field->multiple && $field->type === FieldType::Html ? [...(is_array($current) ? $current : []), ''] : [],
                 'input_name' => 'field_' . $field->code,
                 'name'       => $field->name,

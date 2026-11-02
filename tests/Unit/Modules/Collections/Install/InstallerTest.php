@@ -23,6 +23,10 @@ final class InstallerTest extends TestCase
         'collection_sections',
         'collection_items',
         'collection_item_values',
+        'collection_upload_contexts',
+        'collection_file_assets',
+        'collection_file_links',
+        'collection_search_documents',
     ];
 
     protected function setUp(): void

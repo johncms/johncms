@@ -18,6 +18,9 @@ interface CollectionsPublicApiInterface
 
     public function getPage(ContentCollectionItemQuery $query): CollectionItemPageDTO;
 
+    /** @return list<string> */
+    public function suggestTags(int $collectionId, string $fieldCode, string $prefix = '', int $limit = 10): array;
+
     public function findItem(int $collectionId, int $id): ?CollectionItemDTO;
 
     public function findItemByCode(int $collectionId, ?int $sectionId, string $code): ?CollectionItemDTO;

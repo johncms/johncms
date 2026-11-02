@@ -20,6 +20,9 @@ interface CollectionsUserApiInterface
 {
     public function getPage(ContentCollectionItemQuery $query): CollectionItemPageDTO;
 
+    /** @return list<string> */
+    public function suggestTags(int $collectionId, string $fieldCode, string $prefix = '', int $limit = 10): array;
+
     public function getItem(int $collectionId, int $id): ?CollectionItemDTO;
 
     public function addItem(CollectionItemFormDTO $item): int;

@@ -16,6 +16,7 @@ final readonly class CollectionsPublicApi implements CollectionsPublicApiInterfa
         private CollectionsApiInterface $api,
         private ContentCollectionItemRepositoryInterface $items,
         private CollectionApiMapper $mapper,
+        private \Johncms\Modules\Collections\Application\Services\CollectionTagSuggestions $tags,
     ) {
     }
 
@@ -27,6 +28,11 @@ final readonly class CollectionsPublicApi implements CollectionsPublicApiInterfa
     public function countItems(ContentCollectionItemQuery $query): int
     {
         return $this->api->countItems($query->forPublication());
+    }
+
+    public function suggestTags(int $collectionId, string $fieldCode, string $prefix = '', int $limit = 10): array
+    {
+        return $this->tags->suggest($collectionId, $fieldCode, $prefix, $limit, published: true);
     }
 
     public function getPage(ContentCollectionItemQuery $query): CollectionItemPageDTO
