@@ -77,10 +77,17 @@
                                         <label class="form-label" for="{{ input_id }}">
                                             {{ def.name }}{% if def.required %} <span class="text-danger" title="{{ __('Required') }}">*</span>{% endif %}
                                         </label>
-                                        {% if def.multiple %}
+                                        {% if def.type == 'html' and def.multiple %}
+                                            {% for entry in def.entries %}
+                                                {% include '@admin/components/ui/editor.twig' with {name: def.input_name ~ '[]', id: input_id ~ '_' ~ loop.index, value: entry, label: def.name ~ ' ' ~ loop.index, allow_upload: true, upload_url: upload_url, errors: def.errors|join(' ')} only %}
+                                            {% endfor %}
+                                            <div class="form-text">{{ __('An empty editor adds another value. Save to add more values; clear an editor to remove its value.') }}</div>
+                                        {% elseif def.multiple %}
                                             <textarea name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" rows="3">{{ def.value }}</textarea>
                                             <div class="form-text">{{ __('One value per line') }}</div>
-                                        {% elseif def.type in ['text', 'html'] %}
+                                        {% elseif def.type == 'html' %}
+                                            {% include '@admin/components/ui/editor.twig' with {name: def.input_name, id: input_id, value: def.value, allow_upload: true, upload_url: upload_url, errors: def.errors|join(' ')} only %}
+                                        {% elseif def.type == 'text' %}
                                             <textarea name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" rows="4">{{ def.value }}</textarea>
                                         {% elseif def.type in ['integer', 'double'] %}
                                             <input type="number"{% if def.type == 'double' %} step="any"{% endif %} name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" value="{{ def.value }}">

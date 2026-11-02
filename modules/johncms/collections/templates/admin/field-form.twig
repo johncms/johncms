@@ -16,7 +16,7 @@
     {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
 
     <form action="{{ form_action }}" method="post" id="field-form" class="row g-3 align-items-start">
-        <input type="hidden" name="role" value="{{ fields.role ?? '' }}">
+
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         {% if id is not null %}
             <input type="hidden" name="id" value="{{ id }}">
@@ -49,6 +49,11 @@
                             {% if id is not null %}
                                 <div class="form-text">{{ __('Changing the type of a field the items already fill may lose their values.') }}</div>
                             {% endif %}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="field-role">{{ __('Field role') }}</label>
+                            <input type="text" name="role" class="form-control font-monospace" id="field-role" value="{{ fields.role ?? '' }}" pattern="[a-z0-9_]+"{% if managed %} disabled{% endif %}>
+                            <div class="form-text">{{ __('Use meta_title, meta_description or meta_keywords for SEO fields. Leave empty for ordinary content.') }}</div>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label" for="sort">{{ __('Sorting') }}</label>

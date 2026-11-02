@@ -289,6 +289,7 @@ final readonly class CollectionItemsAdminController
             }
 
             $defs[] = [
+                'entries'    => $field->multiple && $field->type === FieldType::Html ? [...(is_array($current) ? $current : []), ''] : [],
                 'input_name' => 'field_' . $field->code,
                 'name'       => $field->name,
                 'type'       => $field->type->value,
@@ -398,6 +399,10 @@ final readonly class CollectionItemsAdminController
     {
         $values = [];
         foreach ($fieldDefs as $field) {
+            if ($field->multiple && $field->type === FieldType::Html) {
+                $values[$field->code] = array_values(array_filter($request->bodyList('field_' . $field->code), static fn ($value): bool => is_string($value) && trim($value) !== ''));
+                continue;
+            }
             $raw = $request->body('field_' . $field->code, '');
             if ($field->multiple) {
                 $lines = preg_split('/\r\n|\r|\n/', $raw) ?: [];

@@ -11,16 +11,17 @@ use Johncms\Modules\Collections\Application\UseCases\ListPublicItemsUseCase;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
-use Johncms\Security\HtmlSanitizerInterface;
+use Johncms\Content\ContentRendererInterface;
 use PHPUnit\Framework\TestCase;
 
 final class ListPublicItemsUseCaseTest extends TestCase
 {
     private function useCase(ContentCollectionItemRepositoryInterface $repository): ListPublicItemsUseCase
     {
-        // Passthrough sanitizer: these tests assert mapping, not sanitization.
-        $sanitizer = $this->createMock(HtmlSanitizerInterface::class);
-        $sanitizer->method('sanitize')->willReturnArgument(0);
+        // Passthrough renderer: these tests assert mapping, not sanitization.
+        $sanitizer = $this->createMock(ContentRendererInterface::class);
+        $sanitizer->method('renderOrNull')->willReturnCallback(static fn (string $html): ?\Twig\Markup => $html !== '' ? new \Twig\Markup($html, 'UTF-8') : null);
+        $sanitizer->method('toPlainText')->willReturnCallback(static fn (string $html): string => trim(strip_tags($html)));
 
         return new ListPublicItemsUseCase($repository, new ItemContentFormatter($sanitizer));
     }

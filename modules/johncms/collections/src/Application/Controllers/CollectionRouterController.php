@@ -33,6 +33,7 @@ final readonly class CollectionRouterController
         private GetPublicItemUseCase $getItem,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
+        private \Johncms\Modules\Collections\Application\Services\ItemContentFormatter $content,
     ) {
     }
 
@@ -122,7 +123,14 @@ final readonly class CollectionRouterController
         $items = $this->listItems->getPage($collection->id, $sectionId, $pagination->getPerPage(), $pagination->getOffset(), $at);
         $title = $this->breadcrumbs($collection, $sectionId);
 
-        $meta = new PageMeta($title . ' — ' . $collection->name, $pagination->getCurrentPage(), $collection->description ?? '');
+        $section = $sectionId !== null ? $this->sectionRepository->findById($sectionId) : null;
+        $metadata = $section->metadata ?? [];
+        $text = static fn (string $key): string => is_string($metadata[$key] ?? null) ? $metadata[$key] : '';
+        $meta = new PageMeta(
+            $this->content->plain($text('meta_title')) ?: $this->content->plain($title . ' — ' . $collection->name),
+            $pagination->getCurrentPage(),
+            $this->content->plain($text('meta_description') ?: ($section?->description ?: $collection->description))
+        );
 
         // The root listing shows items from every section, so each URL must use the
         // item's own section path rather than the current listing path.
@@ -134,6 +142,7 @@ final readonly class CollectionRouterController
                 'title'       => $meta->title,
                 'page_title'  => $title,
                 'description' => $meta->description,
+                'keywords'    => $this->content->plain($text('meta_keywords')),
                 'sections'    => $this->childSectionRows($collection->id, $sectionId, $basePath),
                 'items'       => array_map(fn (PublicItemDTO $item): array => [
                     'name'    => $item->name,
@@ -182,7 +191,7 @@ final readonly class CollectionRouterController
         $this->breadcrumbs($collection, $sectionId);
         $this->navChain->add($detail->name);
 
-        $meta = new PageMeta($detail->name . ' — ' . $collection->name, 1, (string) $detail->previewText);
+        $meta = new PageMeta($detail->metaTitle ?: $this->content->plain($detail->name . ' — ' . $collection->name), 1, $detail->metaDescription);
 
         return new ViewResponse(
             '@collections/public/detail.twig',
@@ -190,6 +199,7 @@ final readonly class CollectionRouterController
                 'title'       => $meta->title,
                 'page_title'  => $detail->name,
                 'description' => $meta->description,
+                'keywords'    => $detail->metaKeywords,
                 'item'        => $detail,
             ]
         );

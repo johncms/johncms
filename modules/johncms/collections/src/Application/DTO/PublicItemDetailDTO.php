@@ -12,13 +12,16 @@ use Twig\Markup;
 final readonly class PublicItemDetailDTO
 {
     /**
-     * @param list<array{label: string, values: list<string>}> $values custom field values in field order
+     * @param list<array{label: string, values: list<string|Markup>}> $values custom field values in field order
      */
     public function __construct(
         public string $name,
         public ?Markup $previewText,
         public ?Markup $detailText,
         public array $values,
+        public string $metaTitle = '',
+        public string $metaDescription = '',
+        public string $metaKeywords = '',
     ) {
     }
 }

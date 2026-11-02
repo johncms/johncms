@@ -40,9 +40,17 @@ final readonly class GetPublicItemUseCase
         $valueMap = $item->values;
 
         $values = [];
+        $metadata = [];
         foreach ($this->fieldRepository->getByCollection($item->collectionId) as $field) {
             $raw = $valueMap[$field->code] ?? null;
             $list = $this->normalizeValues($raw);
+            if (in_array($field->role, ['meta_title', 'meta_description', 'meta_keywords'], true)) {
+                $metadata[$field->role] = $this->contentFormatter->plain($list[0] ?? null);
+                continue;
+            }
+            if ($field->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::Html) {
+                $list = array_values(array_filter(array_map($this->contentFormatter->format(...), $list), static fn ($value): bool => $value !== null));
+            }
             if ($list !== []) {
                 $values[] = ['label' => $field->name, 'values' => $list];
             }
@@ -53,6 +61,9 @@ final readonly class GetPublicItemUseCase
             previewText: $this->contentFormatter->format($item->previewText),
             detailText: $this->contentFormatter->format($item->detailText),
             values: $values,
+            metaTitle: $metadata['meta_title'] ?? '',
+            metaDescription: ($metadata['meta_description'] ?? '') ?: ($this->contentFormatter->plain($item->previewText) ?: $this->contentFormatter->plain($item->detailText)),
+            metaKeywords: $metadata['meta_keywords'] ?? '',
         );
     }
 

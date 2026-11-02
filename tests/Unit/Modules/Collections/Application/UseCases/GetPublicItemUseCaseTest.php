@@ -11,7 +11,7 @@ use Johncms\Modules\Collections\Application\UseCases\GetPublicItemUseCase;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Query\ContentCollectionItemQueryCompiler;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionFieldRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemRepository;
-use Johncms\Security\HtmlSanitizerInterface;
+use Johncms\Content\ContentRendererInterface;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
 use Tests\Support\RunsMigrations;
@@ -32,9 +32,10 @@ final class GetPublicItemUseCaseTest extends TestCase
         $fieldRepository = new ContentCollectionFieldRepository();
         $itemRepository = new ContentCollectionItemRepository($fieldRepository, new ContentCollectionItemQueryCompiler());
 
-        // Passthrough sanitizer: this test asserts value mapping, not sanitization.
-        $sanitizer = $this->createMock(HtmlSanitizerInterface::class);
-        $sanitizer->method('sanitize')->willReturnArgument(0);
+        // Passthrough renderer: this test asserts value mapping, not sanitization.
+        $sanitizer = $this->createMock(ContentRendererInterface::class);
+        $sanitizer->method('renderOrNull')->willReturnCallback(static fn (string $html): ?\Twig\Markup => $html !== '' ? new \Twig\Markup($html, 'UTF-8') : null);
+        $sanitizer->method('toPlainText')->willReturnCallback(static fn (string $html): string => trim(strip_tags($html)));
         $formatter = new ItemContentFormatter($sanitizer);
 
         $this->useCase = new GetPublicItemUseCase($itemRepository, $fieldRepository, $formatter);

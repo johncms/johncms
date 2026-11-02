@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Services;
 
-use Johncms\Security\HtmlSanitizerInterface;
+use Johncms\Content\ContentRendererInterface;
 use Twig\Markup;
 
 /**
- * Sanitizes rich HTML item content on output (escape/sanitize-on-output). Item
- * text is stored raw and purified only when rendered on the public site.
+ * Renders stored source HTML through the shared content pipeline on output.
  */
 final readonly class ItemContentFormatter
 {
     public function __construct(
-        private HtmlSanitizerInterface $sanitizer,
+        private ContentRendererInterface $content,
     ) {
     }
 
@@ -29,6 +28,11 @@ final readonly class ItemContentFormatter
             return null;
         }
 
-        return new Markup($this->sanitizer->sanitize($html), 'UTF-8');
+        return $this->content->renderOrNull($html);
+    }
+
+    public function plain(?string $html): string
+    {
+        return $html === null || $html === '' ? '' : $this->content->toPlainText($html);
     }
 }

@@ -227,6 +227,12 @@
       'Choose a valid content permission.' => 'Выберите корректное право наполнения.',
       'A registered file no longer exists.' => 'Зарегистрированный файл больше не существует.',
       'The upload context is missing, expired or belongs to another editor. Reopen the form.' => 'Контекст загрузки отсутствует, устарел или принадлежит другому редактору. Откройте форму заново.',
+      'Field role' => 'Роль поля',
+      'Use meta_title, meta_description or meta_keywords for SEO fields. Leave empty for ordinary content.' => 'Используйте meta_title, meta_description или meta_keywords для SEO-полей. Для обычного содержимого оставьте пустым.',
+      'An empty editor adds another value. Save to add more values; clear an editor to remove its value.' => 'Пустой редактор добавляет значение. Сохраните запись для добавления следующих значений; очистите редактор для удаления значения.',
+      'Meta title' => 'Заголовок страницы',
+      'Meta description' => 'Описание страницы',
+      'Meta keywords' => 'Ключевые слова',
     ),
   ),
 );

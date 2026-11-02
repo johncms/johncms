@@ -281,6 +281,11 @@ final readonly class CollectionSectionsAdminController
             'active'      => $request->hasBody('active') ? 1 : 0,
             'sort'        => $request->body('sort', '100'),
             'metadata'    => $request->body('metadata', '{}'),
+            'seo' => array_filter([
+                'meta_title' => $request->hasBody('meta_title') ? $request->body('meta_title') : null,
+                'meta_description' => $request->hasBody('meta_description') ? $request->body('meta_description') : null,
+                'meta_keywords' => $request->hasBody('meta_keywords') ? $request->body('meta_keywords') : null,
+            ], static fn ($value): bool => $value !== null),
         ];
     }
 
@@ -296,6 +301,7 @@ final readonly class CollectionSectionsAdminController
             'description' => (string) $section->description,
             'active'      => $section->active ? 1 : 0,
             'sort'        => $section->sort,
+            'seo' => array_filter($section->metadata ?? [], static fn ($value): bool => is_string($value)),
             'metadata'    => json_encode($section->metadata ?: new \stdClass(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR),
         ];
     }
@@ -313,6 +319,7 @@ final readonly class CollectionSectionsAdminController
             'active'      => 1,
             'sort'        => 100,
             'metadata'    => '{}',
+            'seo' => [],
         ];
     }
 
@@ -329,7 +336,7 @@ final readonly class CollectionSectionsAdminController
             description: $fields['description'] !== '' ? (string) $fields['description'] : null,
             active: (bool) $fields['active'],
             sort: $fields['sort'],
-            metadata: $this->metadataFromJson($fields['metadata']),
+            metadata: array_replace($this->metadataFromJson($fields['metadata']), $fields['seo'] ?? []),
         );
     }
 

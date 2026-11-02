@@ -41,6 +41,10 @@
                             <textarea name="description" class="form-control" id="description" rows="3">{{ fields.description }}</textarea>
                         </div>
                         <div class="col-12">
+                            {% for key, label in {meta_title: __('Meta title'), meta_description: __('Meta description'), meta_keywords: __('Meta keywords')} %}
+                                <label class="form-label" for="{{ key }}">{{ label }}</label>
+                                <input type="text" name="{{ key }}" id="{{ key }}" class="form-control mb-3" value="{{ attribute(fields.seo, key)|default('') }}">
+                            {% endfor %}
                             <label class="form-label" for="metadata">{{ __('Section metadata (JSON)') }}</label>
                             <textarea name="metadata" class="form-control font-monospace" id="metadata" rows="5">{{ fields.metadata }}</textarea>
                             <div class="form-text">{{ __('A JSON object with custom section settings. Use {} to clear it.') }}</div>

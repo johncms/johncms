@@ -1,5 +1,5 @@
 {# @var item \Johncms\Modules\Collections\Application\DTO\PublicItemDetailDTO #}
-    {# Both texts are sanitized by the content formatter of the module. #}
+    {# HTML values and texts are rendered by the shared content pipeline. #}
     {% if item.previewText %}
         <div class="lead mb-3">{{ item.previewText }}</div>
     {% endif %}
@@ -12,7 +12,7 @@
         <dl class="row">
             {% for value in item.values %}
                 <dt class="col-sm-3">{{ value.label }}</dt>
-                <dd class="col-sm-9">{{ value.values|join(', ') }}</dd>
+                <dd class="col-sm-9">{% for entry in value.values %}{{ entry }}{% if not loop.last %}, {% endif %}{% endfor %}</dd>
             {% endfor %}
         </dl>
     {% endif %}
