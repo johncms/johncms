@@ -54,11 +54,15 @@ final readonly class CollectionDeletionPlanner
                 count($sectionIds),
                 $items->count(),
                 $fields->count(),
-                $revision
+                $revision,
+                $collection->owner_module
             ),
             $sectionIds,
             $items->pluck('id')->all(),
-            $fields->pluck('id')->all()
+            $fields->pluck('id')->all(),
+            $affectedSections->keyBy('id')->map(static fn ($section) => new \Johncms\Modules\Collections\Application\DTO\CollectionChangeStateDTO($section->parent, $section->active, $section->code))->all(),
+            $fields->keyBy('id')->map(static fn ($field) => new \Johncms\Modules\Collections\Application\DTO\CollectionChangeStateDTO(null, null, $field->code))->all(),
+            new \Johncms\Modules\Collections\Application\DTO\CollectionChangeStateDTO(null, $collection->active, $collection->code)
         );
     }
 

@@ -183,6 +183,15 @@ final class CollectionPublicationTest extends FunctionalTestCase
         self::assertSame(['First', 'Later'], $this->public->getItems(new ContentCollectionItemQuery($this->collection))[0]->values['tags']);
     }
 
+    public function testCachedCodeMapDoesNotDelayPublicationWindowTransitions(): void
+    {
+        $this->container()->get(CollectionCodeCacheInterface::class)->map();
+        $this->item('timed', ['active_from' => '2030-01-01 00:00:00', 'active_to' => '2030-01-01 00:00:01']);
+        foreach (['2029-12-31T23:59:59Z' => 0, '2030-01-01T00:00:00Z' => 1, '2030-01-01T00:00:02Z' => 0] as $moment => $expected) {
+            self::assertSame($expected, $this->public->countItems(new ContentCollectionItemQuery($this->collection, at: new DateTimeImmutable($moment))));
+        }
+    }
+
     private function foreignSection(): int
     {
         $other = Fixture::insert('collections', ['code' => 'foreign', 'name' => 'Foreign', 'active' => 1, 'public' => 0]);

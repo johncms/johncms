@@ -410,3 +410,18 @@ Historical collection imports use `CollectionsImportApiInterface` inside `Instal
 `finally`; declarations and ordinary user operations have no import scope. No request parameter
 can enable it. Use the collections API for reads and mutations; it returns immutable DTOs,
 with explicit `item.*` / `field.*` query references. See `docs/moduli/collections.md`.
+
+## Collection content lifecycle
+
+A module consuming collections registers its `CollectionChangeHandlerInterface` implementation
+with the `johncms.collections.change_handler` tag. `withinTransaction()` performs required related-row
+changes using the shared `ConnectionInterface`/PDO and may abort the mutation. `afterCommit()`
+updates derived data or deletes physical files only after the outer transaction commits. Historical
+imports skip that phase; rebuild once at the end of the update hook. Handle `item`/`section` actions
+`saved`, `moved`, `deleted`; collection/schema changes use entities `collection` and `field`.
+
+Use `ConnectionInterface::transaction()` or the ORM transaction API for an outer transaction.
+Direct raw-PDO transaction boundaries cannot deliver after-commit callbacks and are rejected for
+collection mutations. `AfterCommitException` means the original data is already committed: fix and
+rebuild derived data instead of repeating the mutation. Independent post-commit callbacks still run
+when one fails. Do not catch and hide required-handler or derived-handler errors.

@@ -64,16 +64,24 @@ final readonly class PdoConnection implements ConnectionInterface
         }
 
         $this->pdo->beginTransaction();
+        TransactionCallbacks::begin($this->pdo);
 
         try {
             $result = $callback($this);
         } catch (Throwable $exception) {
-            $this->pdo->rollBack();
+            try {
+                if ($this->pdo->inTransaction()) {
+                    $this->pdo->rollBack();
+                }
+            } finally {
+                TransactionCallbacks::rollbackTo($this->pdo, 0);
+            }
 
             throw $exception;
         }
 
         $this->pdo->commit();
+        TransactionCallbacks::commit($this->pdo);
 
         return $result;
     }

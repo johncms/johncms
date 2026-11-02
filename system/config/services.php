@@ -186,6 +186,9 @@ return static function (ContainerConfigurator $container): void {
     )
         ->exclude(
             [
+                ROOT_PATH . 'system/src/Database/AfterCommitException.php',
+                ROOT_PATH . 'system/src/Database/TransactionCallbacks.php',
+                ROOT_PATH . 'system/src/Database/EloquentTransactionCallbacks.php',
                 ROOT_PATH . 'system/src/Counters.php',
                 ROOT_PATH . 'system/src/FileInfo.php',
                 ROOT_PATH . 'system/src/Config',

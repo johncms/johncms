@@ -65,7 +65,7 @@ final class SaveCollectionUseCaseTest extends TestCase
             });
         $repository->expects(self::never())->method('update');
 
-        $id = (new SaveCollectionUseCase($repository, $this->cache(true), $this->checker(false)))->execute(null, $this->dto());
+        $id = (new SaveCollectionUseCase($repository, $this->cache(true), $this->checker(false), \Tests\Support\CollectionItemWriterFactory::immediateTransaction()))->execute(null, $this->dto());
 
         self::assertSame(12, $id);
     }
@@ -77,11 +77,11 @@ final class SaveCollectionUseCaseTest extends TestCase
 
         $repository = $this->createMock(ContentCollectionRepositoryInterface::class);
         $repository->method('findByCode')->willReturn($existing);
-        $repository->method('findById')->with(7)->willReturn($existing);
+        $repository->method('findForUpdate')->with(7)->willReturn($existing);
         $repository->expects(self::once())->method('update')->with(7, self::anything());
         $repository->expects(self::never())->method('create');
 
-        $id = (new SaveCollectionUseCase($repository, $this->cache(true), $this->checker(false)))->execute(7, $this->dto());
+        $id = (new SaveCollectionUseCase($repository, $this->cache(true), $this->checker(false), \Tests\Support\CollectionItemWriterFactory::immediateTransaction()))->execute(7, $this->dto());
 
         self::assertSame(7, $id);
     }
@@ -98,7 +98,7 @@ final class SaveCollectionUseCaseTest extends TestCase
 
         $this->expectException(CollectionCodeAlreadyExistsException::class);
 
-        (new SaveCollectionUseCase($repository, $this->cache(false), $this->checker(false)))->execute(null, $this->dto());
+        (new SaveCollectionUseCase($repository, $this->cache(false), $this->checker(false), \Tests\Support\CollectionItemWriterFactory::immediateTransaction()))->execute(null, $this->dto());
     }
 
     public function testThrowsWhenCodeIsReserved(): void
@@ -110,6 +110,6 @@ final class SaveCollectionUseCaseTest extends TestCase
 
         $this->expectException(CollectionCodeReservedException::class);
 
-        (new SaveCollectionUseCase($repository, $this->cache(false), $this->checker(true)))->execute(null, $this->dto('admin'));
+        (new SaveCollectionUseCase($repository, $this->cache(false), $this->checker(true), \Tests\Support\CollectionItemWriterFactory::immediateTransaction()))->execute(null, $this->dto('admin'));
     }
 }

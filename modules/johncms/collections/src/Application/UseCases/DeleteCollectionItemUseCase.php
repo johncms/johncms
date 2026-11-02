@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\UseCases;
 
+use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
+use Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionChangeStateDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemValueRepositoryInterface;
@@ -17,6 +20,7 @@ final readonly class DeleteCollectionItemUseCase
         private ContentCollectionItemValueRepositoryInterface $values,
         private ContentCollectionRepositoryInterface $collections,
         private CollectionTransactionInterface $transaction,
+        private CollectionChangeDispatcher $changes = new CollectionChangeDispatcher(),
     ) {
     }
 
@@ -29,6 +33,15 @@ final readonly class DeleteCollectionItemUseCase
             if ($collection === null || $item === null || $item->collection_id !== $collectionId) {
                 throw new CollectionItemFormException(['id' => [d__('collections', 'The item does not belong to this collection or no longer exists.')]]);
             }
+            $this->changes->ensureOwnerLoaded($collection->owner_module);
+            $this->changes->dispatch(new CollectionChangeDTO(
+                'item',
+                'deleted',
+                $collectionId,
+                $id,
+                new CollectionChangeStateDTO($item->section_id, $item->active, $item->code),
+                null
+            ));
             $this->values->deleteByItem($id);
             $this->repository->delete($id);
         });

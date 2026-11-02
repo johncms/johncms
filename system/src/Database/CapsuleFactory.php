@@ -35,6 +35,7 @@ final class CapsuleFactory
             ]
         );
 
+        EloquentTransactionCallbacks::attach($capsule->getConnection());
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
 

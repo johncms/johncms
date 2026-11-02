@@ -1590,3 +1590,6 @@ msgstr "Обновить систему"
 
 msgid "Applies migrations, synchronizes declarations and completes module updates."
 msgstr "Применяет миграции, синхронизирует настройки и завершает обновление модулей."
+
+msgid "The operation was committed, but follow-up actions failed. Check the logs and rebuild derived data; do not repeat the operation."
+msgstr "Операция уже выполнена, но связанные действия завершились с ошибкой. Проверьте журнал и пересоберите производные данные. Не повторяйте исходную операцию."

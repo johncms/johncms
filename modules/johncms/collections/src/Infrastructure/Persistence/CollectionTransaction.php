@@ -20,6 +20,7 @@ final class CollectionTransaction implements CollectionTransactionInterface
         // Use the ORM connection so nested writes use savepoints in the caller's transaction.
         try {
             $connection = Capsule::connection();
+            \Johncms\Database\EloquentTransactionCallbacks::attach($connection);
             if ($connection->transactionLevel() === 0 && $connection->getPdo()->inTransaction()) {
                 return $this->withinPdoTransaction($connection->getPdo(), $operation);
             }
@@ -31,6 +32,13 @@ final class CollectionTransaction implements CollectionTransactionInterface
             throw $exception;
         }
     }
+    public function afterCommit(callable $callback): void
+    {
+        $connection = Capsule::connection();
+        \Johncms\Database\EloquentTransactionCallbacks::attach($connection);
+        \Johncms\Database\TransactionCallbacks::afterCommit($connection->getPdo(), $callback);
+    }
+
     /**
      * A caller using the core ConnectionInterface owns a PDO transaction outside ORM bookkeeping.
      * @template T
@@ -39,11 +47,17 @@ final class CollectionTransaction implements CollectionTransactionInterface
      */
     private function withinPdoTransaction(PDO $pdo, callable $operation): mixed
     {
+        $depth = \Johncms\Database\TransactionCallbacks::depth($pdo);
+        if ($depth === 0) {
+            throw new \LogicException('Use ConnectionInterface::transaction() to observe the outer PDO commit.');
+        }
         $savepoint = 'collection_' . bin2hex(random_bytes(8));
         $pdo->exec('SAVEPOINT ' . $savepoint);
+        \Johncms\Database\TransactionCallbacks::begin($pdo);
         try {
             $result = $operation();
         } catch (Throwable $exception) {
+            \Johncms\Database\TransactionCallbacks::rollbackTo($pdo, $depth);
             if ($pdo->inTransaction()) {
                 $pdo->exec('ROLLBACK TO SAVEPOINT ' . $savepoint);
                 $pdo->exec('RELEASE SAVEPOINT ' . $savepoint);
@@ -51,6 +65,7 @@ final class CollectionTransaction implements CollectionTransactionInterface
             throw $exception;
         }
         $pdo->exec('RELEASE SAVEPOINT ' . $savepoint);
+        \Johncms\Database\TransactionCallbacks::commit($pdo);
         return $result;
     }
 }

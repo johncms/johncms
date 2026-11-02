@@ -14,6 +14,7 @@ final readonly class CollectionDeletionPreviewDTO
         public int $items,
         public int $fields,
         public string $revision,
+        public ?string $ownerModule = null,
     ) {
     }
 }

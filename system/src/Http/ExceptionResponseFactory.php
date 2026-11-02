@@ -179,9 +179,11 @@ final readonly class ExceptionResponseFactory
      */
     public function internalServerError(Throwable $throwable, bool $showDetails): Response
     {
-        return new Response(
-            $showDetails ? sprintf('<pre>%s</pre>', htmlspecialchars((string) $throwable)) : 'Internal Server Error',
-            Response::HTTP_INTERNAL_SERVER_ERROR
-        );
+        $details = $showDetails ? sprintf('<pre>%s</pre>', htmlspecialchars((string) $throwable)) : '';
+        if ($throwable instanceof \Johncms\Database\AfterCommitException) {
+            $notice = d__('system', 'The operation was committed, but follow-up actions failed. Check the logs and rebuild derived data; do not repeat the operation.');
+            return new Response(htmlspecialchars($notice, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . $details, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        return new Response($showDetails ? $details : 'Internal Server Error', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

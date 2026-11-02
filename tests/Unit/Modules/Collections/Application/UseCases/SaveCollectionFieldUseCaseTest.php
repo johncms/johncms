@@ -31,6 +31,8 @@ final class SaveCollectionFieldUseCaseTest extends TestCase
     {
         $repository = $this->createMock(ContentCollectionFieldRepositoryInterface::class);
         $repository->method('findByCode')->with(1, 'author')->willReturn(null);
+        $created = new ContentCollectionField();
+        $created->id = 1;
         $repository->expects(self::once())
             ->method('create')
             ->with(self::callback(static function (array $attributes): bool {
@@ -38,10 +40,10 @@ final class SaveCollectionFieldUseCaseTest extends TestCase
                     && $attributes['code'] === 'author'
                     && $attributes['type'] === 'string';
             }))
-            ->willReturn(new ContentCollectionField());
+            ->willReturn($created);
         $repository->expects(self::never())->method('update');
 
-        self::assertFalse((new SaveCollectionFieldUseCase($repository))->execute(null, $this->dto()));
+        self::assertFalse((new SaveCollectionFieldUseCase($repository, \Tests\Support\CollectionItemWriterFactory::immediateTransaction()))->execute(null, $this->dto()));
     }
 
     public function testUpdatesExistingField(): void
@@ -55,7 +57,7 @@ final class SaveCollectionFieldUseCaseTest extends TestCase
         $repository->expects(self::once())->method('update')->with(7, self::anything());
         $repository->expects(self::never())->method('create');
 
-        self::assertTrue((new SaveCollectionFieldUseCase($repository))->execute(7, $this->dto()));
+        self::assertTrue((new SaveCollectionFieldUseCase($repository, \Tests\Support\CollectionItemWriterFactory::immediateTransaction()))->execute(7, $this->dto()));
     }
 
     public function testThrowsWhenCodeBelongsToAnotherFieldOfCollection(): void
@@ -70,6 +72,6 @@ final class SaveCollectionFieldUseCaseTest extends TestCase
 
         $this->expectException(CollectionFieldCodeAlreadyExistsException::class);
 
-        (new SaveCollectionFieldUseCase($repository))->execute(null, $this->dto());
+        (new SaveCollectionFieldUseCase($repository, \Tests\Support\CollectionItemWriterFactory::immediateTransaction()))->execute(null, $this->dto());
     }
 }

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\UseCases;
 
+use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
+use Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionChangeStateDTO;
 use Illuminate\Support\Str;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemHistoryDTO;
 use Johncms\Updates\SystemOperationContext;
@@ -31,6 +34,7 @@ final readonly class SaveCollectionItemUseCase
         private CollectionTransactionInterface $transaction,
         private CollectionItemValidator $validator,
         private SystemOperationContext $systemContext = new SystemOperationContext(),
+        private CollectionChangeDispatcher $changes = new CollectionChangeDispatcher(),
     ) {
     }
 
@@ -59,11 +63,15 @@ final readonly class SaveCollectionItemUseCase
             if ($collection === null) {
                 throw new CollectionItemFormException(['collection_id' => [d__('collections', 'Collection not found.')]]);
             }
+            $before = null;
             if ($id !== null) {
                 $item = $this->itemRepository->findForUpdate($id);
                 if ($item === null || $item->collection_id !== $dto->collectionId) {
                     throw new CollectionItemFormException(['id' => [d__('collections', 'The item does not belong to this collection or no longer exists.')]]);
                 }
+            }
+            if (isset($item)) {
+                $before = new CollectionChangeStateDTO($item->section_id, $item->active, $item->code);
             }
             if ($dto->sectionId !== null) {
                 $section = $this->sections->findForUpdate($dto->sectionId);
@@ -104,6 +112,15 @@ final readonly class SaveCollectionItemUseCase
                 $itemId = $this->itemRepository->create($attributes)->id;
             }
             $this->rebuildValues($itemId, $dto, $valueFields, $clearFields);
+            $this->changes->dispatch(new CollectionChangeDTO(
+                'item',
+                $before !== null && $before->containerId !== $dto->sectionId ? 'moved' : 'saved',
+                $dto->collectionId,
+                $itemId,
+                $before,
+                new CollectionChangeStateDTO($dto->sectionId, $dto->active, $attributes['code']),
+                $history !== null
+            ));
             return $itemId;
         });
     }

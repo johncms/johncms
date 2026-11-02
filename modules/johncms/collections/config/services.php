@@ -50,6 +50,10 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ContentCollectionSectionRepositoryInterface::class, ContentCollectionSectionRepository::class)->public();
     $services->set(ContentCollectionItemRepositoryInterface::class, ContentCollectionItemRepository::class)->autowire()->public();
     $services->set(ContentCollectionItemValueRepositoryInterface::class, ContentCollectionItemValueRepository::class)->public();
+    $services->set(\Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher::class)
+        ->autowire()->public()->arg('$handlers', tagged_iterator('johncms.collections.change_handler'));
+    $services->set(\Johncms\Modules\Collections\Application\Services\CollectionCacheInvalidator::class)
+        ->autowire()->tag('johncms.collections.change_handler');
     $services->set(CollectionCodeCacheInterface::class, CollectionCodeCache::class)->autowire()->public();
     $services->set(ReservedCodeCheckerInterface::class, ReservedCodeChecker::class)->autowire()->public();
     $services->set(

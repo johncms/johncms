@@ -42,7 +42,7 @@ msgid "Are you sure you want to delete the field?"
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:152
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:196
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:202
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:194
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:169
 msgid "Deleted successfully"
@@ -132,8 +132,8 @@ msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:339
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:357
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:448
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:466
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:454
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:472
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:376
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:394
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:57
@@ -147,8 +147,8 @@ msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:359
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:369
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:468
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:478
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:474
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:484
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:396
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:406
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:80
@@ -158,8 +158,8 @@ msgid "Wrong data"
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:95
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:475
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:476
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:481
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:482
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:138
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:181
 #: modules/johncms/collections/src/Application/Services/CollectionWorkspaceMapper.php:33
@@ -184,11 +184,18 @@ msgstr ""
 msgid "Are you sure you want to delete the item?"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:227
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:200
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:192
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:167
+#: modules/johncms/collections/src/Application/UseCases/DeleteCollectionSectionUseCase.php:43
+msgid "The contents changed during deletion. Check the counts and try again."
+msgstr ""
+
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:233
 msgid "Edit item"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:227
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:233
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:241
 #: modules/johncms/collections/templates/admin/items-results.twig:26
 #: modules/johncms/collections/templates/admin/items.twig:25
@@ -206,7 +213,7 @@ msgid "Sections"
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:111
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:77
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:85
 msgid "Use a JSON object of at most 65535 bytes for section metadata."
 msgstr ""
 
@@ -236,12 +243,6 @@ msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:184
 msgid "Choose whether to delete or move the items."
-msgstr ""
-
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:192
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:167
-#: modules/johncms/collections/src/Application/UseCases/DeleteCollectionSectionUseCase.php:38
-msgid "The contents changed during deletion. Check the counts and try again."
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:240
@@ -303,14 +304,18 @@ msgstr ""
 msgid "New collection"
 msgstr ""
 
+#: modules/johncms/collections/src/Application/Services/CollectionChangeDispatcher.php:30
+msgid "Enable the owning module before deleting its content."
+msgstr ""
+
 #: modules/johncms/collections/src/Application/Services/CollectionDeletionPlanner.php:32
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:60
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:48
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:64
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:52
 msgid "Collection not found."
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Services/CollectionDeletionPlanner.php:36
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:53
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:58
 msgid "The section does not belong to this collection or no longer exists."
 msgstr ""
 
@@ -318,7 +323,7 @@ msgstr ""
 msgid "Sections are referenced by another collection. Fix these links before deleting."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/CollectionDeletionPlanner.php:68
+#: modules/johncms/collections/src/Application/Services/CollectionDeletionPlanner.php:72
 msgid "The contents changed after confirmation was opened. Check the new counts and confirm again."
 msgstr ""
 
@@ -327,7 +332,7 @@ msgid "Use letters, digits, dot, plus, hyphen or underscore in the code."
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Services/CollectionItemValidator.php:38
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:66
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:74
 msgid "Enter an integer between -2147483648 and 2147483647."
 msgstr ""
 
@@ -344,7 +349,7 @@ msgid "The end date must not precede the start date."
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Services/CollectionItemValidator.php:56
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:80
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:88
 msgid "Unknown collection field."
 msgstr ""
 
@@ -419,20 +424,20 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/UseCases/DeleteCollectionItemUseCase.php:30
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:65
+#: modules/johncms/collections/src/Application/UseCases/DeleteCollectionItemUseCase.php:34
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:70
 msgid "The item does not belong to this collection or no longer exists."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/UseCases/DeleteCollectionSectionUseCase.php:33
+#: modules/johncms/collections/src/Application/UseCases/DeleteCollectionSectionUseCase.php:38
 msgid "Choose a destination section of this collection outside the deleted subtree."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/UseCases/DeleteCollectionSectionUseCase.php:41
+#: modules/johncms/collections/src/Application/UseCases/DeleteCollectionSectionUseCase.php:46
 msgid "Item codes conflict in the destination. Rename the conflicting items or choose another section."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/UseCases/DeleteCollectionSectionUseCase.php:47
+#: modules/johncms/collections/src/Application/UseCases/DeleteCollectionSectionUseCase.php:60
 msgid "A destination is only allowed when moving items."
 msgstr ""
 
@@ -445,24 +450,24 @@ msgstr ""
 msgid "Unknown patch property or invalid value type."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:71
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:59
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:79
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:67
 msgid "Choose a section of this collection."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:75
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:83
 msgid "Choose a valid author or use a system operation."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:85
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:93
 msgid "This field cannot be cleared."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:61
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:69
 msgid "A section cannot be moved into itself or its descendants."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:69
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:77
 msgid "The section description must not exceed 65535 bytes."
 msgstr ""
 

@@ -204,6 +204,7 @@
       'Destination section (when moving items)' => 'Раздел назначения (при переносе записей)',
       'Choose a section' => 'Выберите раздел',
       'All nested sections will be deleted. Moved items keep their codes, publication settings and values; visibility follows the destination section.' => 'Все вложенные разделы будут удалены. Перенесённые записи сохранят коды, настройки публикации и значения полей; их доступность зависит от раздела назначения.',
+      'Enable the owning module before deleting its content.' => 'Перед удалением содержимого включите модуль — владелец коллекции.',
     ),
   ),
 );

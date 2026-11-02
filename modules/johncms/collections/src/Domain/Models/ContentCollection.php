@@ -15,6 +15,7 @@ use Johncms\Casts\FormattedDate;
  * @mixin Builder
  *
  * @property int $id
+ * @property string|null $owner_module
  * @property string $code
  * @property string $name
  * @property string|null $description
@@ -35,6 +36,7 @@ final class ContentCollection extends Model
 
     protected $fillable = [
         'code',
+        'owner_module',
         'name',
         'description',
         'settings',

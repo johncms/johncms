@@ -1022,6 +1022,10 @@ msgstr ""
 msgid "Bad Request"
 msgstr ""
 
+#: system/src/Http/ExceptionResponseFactory.php:184
+msgid "The operation was committed, but follow-up actions failed. Check the logs and rebuild derived data; do not repeat the operation."
+msgstr ""
+
 #: system/src/Http/PageMeta.php:18
 #: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:87
 #: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:96

@@ -92,6 +92,16 @@ final class ExceptionResponseFactoryTest extends TestCase
         self::assertStringNotContainsString('<script>', $content);
     }
 
+    public function testPostCommitFailureExplainsThatTheOriginalOperationMustNotBeRepeated(): void
+    {
+        $factory = new ExceptionResponseFactory($this->createMock(RendererInterface::class), $this->createMock(LoggerInterface::class));
+        $response = $factory->internalServerError(new \Johncms\Database\AfterCommitException([new RuntimeException('secret details')]), false);
+        self::assertSame(500, $response->getStatusCode());
+        self::assertStringContainsString('was committed', (string) $response->getContent());
+        self::assertStringContainsString('do not repeat', (string) $response->getContent());
+        self::assertStringNotContainsString('secret details', (string) $response->getContent());
+    }
+
     public function testPageNotFoundExceptionIsRenderedWithStatus404(): void
     {
         $render = $this->createMock(RendererInterface::class);

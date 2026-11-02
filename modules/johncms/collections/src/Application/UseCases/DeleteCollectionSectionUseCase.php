@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\UseCases;
 
+use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
+use Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionChangeStateDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException;
 use Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner;
 use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
@@ -19,6 +22,7 @@ final readonly class DeleteCollectionSectionUseCase
         private CollectionTransactionInterface $transaction,
         private CollectionDeletionPlanner $planner,
         private DeleteCollectionItemUseCase $deleteItem,
+        private CollectionChangeDispatcher $changes = new CollectionChangeDispatcher(),
     ) {
     }
 
@@ -27,6 +31,7 @@ final readonly class DeleteCollectionSectionUseCase
         $this->transaction->run(function () use ($id, $collectionId, $mode, $targetId, $expectedRevision): void {
             $plan = $this->planner->plan($collectionId, $id, true);
             $this->planner->ensureRevision($plan->preview, $expectedRevision);
+            $this->changes->ensureOwnerLoaded($plan->preview->ownerModule);
             if ($mode === SectionDeletionMode::MoveItems) {
                 $target = $targetId !== null ? $this->sections->findForUpdate($targetId) : null;
                 if ($target === null || $target->collection_id !== $collectionId || in_array($targetId, $plan->sectionIds, true)) {
@@ -41,6 +46,14 @@ final readonly class DeleteCollectionSectionUseCase
                         throw new CollectionDeletionException(['target' => [d__('collections', 'Item codes conflict in the destination. Rename the conflicting items or choose another section.')]]);
                     }
                     $this->items->update($itemId, ['section_id' => $targetId]);
+                    $this->changes->dispatch(new CollectionChangeDTO(
+                        'item',
+                        'moved',
+                        $collectionId,
+                        $itemId,
+                        new CollectionChangeStateDTO($item->section_id, $item->active, $item->code),
+                        new CollectionChangeStateDTO($targetId, $item->active, $item->code)
+                    ));
                 }
             } else {
                 if ($targetId !== null) {
@@ -51,6 +64,7 @@ final readonly class DeleteCollectionSectionUseCase
                 }
             }
             foreach (array_reverse($plan->sectionIds) as $sectionId) {
+                $this->changes->dispatch(new CollectionChangeDTO('section', 'deleted', $collectionId, $sectionId, $plan->sectionStates[$sectionId], null));
                 $this->sections->delete($sectionId);
             }
         });

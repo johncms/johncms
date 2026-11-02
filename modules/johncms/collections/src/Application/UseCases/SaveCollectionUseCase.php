@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\UseCases;
 
+use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
+use Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionChangeStateDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionCodeAlreadyExistsException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionCodeReservedException;
@@ -17,6 +20,8 @@ final readonly class SaveCollectionUseCase
         private ContentCollectionRepositoryInterface $repository,
         private CollectionCodeCacheInterface $codeCache,
         private ReservedCodeCheckerInterface $reservedCodeChecker,
+        private \Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface $transaction,
+        private CollectionChangeDispatcher $changes = new CollectionChangeDispatcher(),
     ) {
     }
 
@@ -29,38 +34,44 @@ final readonly class SaveCollectionUseCase
      */
     public function execute(?int $id, CollectionFormDTO $dto): int
     {
-        if ($this->reservedCodeChecker->isReserved($dto->code)) {
-            throw new CollectionCodeReservedException();
-        }
+        return $this->transaction->run(function () use ($id, $dto): int {
+            if ($this->reservedCodeChecker->isReserved($dto->code)) {
+                throw new CollectionCodeReservedException();
+            }
 
-        $existing = $this->repository->findByCode($dto->code);
-        if ($existing !== null && $existing->id !== $id) {
-            throw new CollectionCodeAlreadyExistsException();
-        }
+            $existing = $this->repository->findByCode($dto->code);
+            if ($existing !== null && $existing->id !== $id) {
+                throw new CollectionCodeAlreadyExistsException();
+            }
 
-        $attributes = [
+            $current = $id !== null ? $this->repository->findForUpdate($id) : null;
+            $before = $current !== null ? new CollectionChangeStateDTO(null, $current->active, $current->code) : null;
+            $attributes = [
             'code'        => $dto->code,
             'name'        => $dto->name,
             'description' => $dto->description,
             'active'      => $dto->active,
             'public'      => $dto->public,
             'sort'        => $dto->sort,
-            'settings'    => [
+            'settings'    => array_replace($current->settings ?? [], [
                 'has_sections' => $dto->hasSections,
                 'per_page'     => $dto->perPage,
-            ],
-        ];
+            ]),
+            ];
 
-        if ($id !== null && $this->repository->findById($id) !== null) {
-            $this->repository->update($id, $attributes);
-            $this->codeCache->invalidate();
+            if ($current !== null) {
+                $this->repository->update($id, $attributes);
+                $this->changes->dispatch(new CollectionChangeDTO('collection', 'saved', $id, $id, $before, new CollectionChangeStateDTO(null, $dto->active, $dto->code)));
+                $this->transaction->afterCommit(fn () => $this->codeCache->invalidate());
 
-            return $id;
-        }
+                return $id;
+            }
 
-        $collection = $this->repository->create($attributes);
-        $this->codeCache->invalidate();
+            $collection = $this->repository->create($attributes);
+            $this->changes->dispatch(new CollectionChangeDTO('collection', 'saved', $collection->id, $collection->id, null, new CollectionChangeStateDTO(null, $dto->active, $dto->code)));
+            $this->transaction->afterCommit(fn () => $this->codeCache->invalidate());
 
-        return $collection->id;
+            return $collection->id;
+        });
     }
 }

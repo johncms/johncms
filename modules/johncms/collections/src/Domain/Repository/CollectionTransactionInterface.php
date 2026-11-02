@@ -12,4 +12,7 @@ interface CollectionTransactionInterface
      * @return T
      */
     public function run(callable $operation): mixed;
+
+    /** @param callable(): void $callback */
+    public function afterCommit(callable $callback): void;
 }

@@ -791,3 +791,6 @@ msgstr "Выберите раздел"
 
 msgid "All nested sections will be deleted. Moved items keep their codes, publication settings and values; visibility follows the destination section."
 msgstr "Все вложенные разделы будут удалены. Перенесённые записи сохранят коды, настройки публикации и значения полей; их доступность зависит от раздела назначения."
+
+msgid "Enable the owning module before deleting its content."
+msgstr "Перед удалением содержимого включите модуль — владелец коллекции."

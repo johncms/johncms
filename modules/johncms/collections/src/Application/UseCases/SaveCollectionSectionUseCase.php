@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\UseCases;
 
+use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
+use Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionChangeStateDTO;
 use DateTimeImmutable;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemHistoryDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
@@ -26,6 +29,7 @@ final readonly class SaveCollectionSectionUseCase
         private CollectionTransactionInterface $transaction,
         private ValidatorInterface $validator,
         private SystemOperationContext $context,
+        private CollectionChangeDispatcher $changes = new CollectionChangeDispatcher(),
     ) {
     }
 
@@ -47,11 +51,15 @@ final readonly class SaveCollectionSectionUseCase
             if ($this->collections->findForUpdate($dto->collectionId) === null) {
                 $result = $result->withError('collection_id', d__('collections', 'Collection not found.'));
             }
+            $before = null;
             if ($id !== null) {
                 $section = $this->repository->findForUpdate($id);
                 if ($section === null || $section->collection_id !== $dto->collectionId) {
                     $result = $result->withError('id', d__('collections', 'The section does not belong to this collection or no longer exists.'));
                 }
+            }
+            if (isset($section)) {
+                $before = new CollectionChangeStateDTO($section->parent, $section->active, $section->code);
             }
             if ($dto->parent !== null) {
                 $parent = $this->repository->findForUpdate($dto->parent);
@@ -88,13 +96,23 @@ final readonly class SaveCollectionSectionUseCase
             ];
             if ($id !== null) {
                 $this->repository->update($id, $attributes);
-                return $id;
+            } else {
+                if ($createdAt !== null && $updatedAt !== null) {
+                    $attributes['created_at'] = CollectionItemHistoryDTO::timestamp($createdAt);
+                    $attributes['updated_at'] = CollectionItemHistoryDTO::timestamp($updatedAt);
+                }
+                $id = $this->repository->create($attributes)->id;
             }
-            if ($createdAt !== null && $updatedAt !== null) {
-                $attributes['created_at'] = CollectionItemHistoryDTO::timestamp($createdAt);
-                $attributes['updated_at'] = CollectionItemHistoryDTO::timestamp($updatedAt);
-            }
-            return $this->repository->create($attributes)->id;
+            $this->changes->dispatch(new CollectionChangeDTO(
+                'section',
+                $before !== null && $before->containerId !== $dto->parent ? 'moved' : 'saved',
+                $dto->collectionId,
+                $id,
+                $before,
+                new CollectionChangeStateDTO($dto->parent, $dto->active, trim($dto->code)),
+                $createdAt !== null
+            ));
+            return $id;
         });
     }
 

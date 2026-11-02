@@ -18,7 +18,7 @@ final readonly class CollectionCodeCache implements CollectionCodeCacheInterface
     private const CACHE_KEY = 'collections_code_map';
 
     /** Tag the cached map is filed under */
-    private const CACHE_TAG = 'collections';
+    private const CACHE_TAG = 'collections_code_map';
 
     public function __construct(
         private CacheInterface $cache,
@@ -31,10 +31,13 @@ final readonly class CollectionCodeCache implements CollectionCodeCacheInterface
      */
     public function map(): array
     {
+        if (\Johncms\Database\TransactionCallbacks::hasActiveTransaction()) {
+            return $this->repository->getPublicCodeMap();
+        }
         return $this->cache->rememberForever(
             self::CACHE_KEY,
             fn (): array => $this->repository->getPublicCodeMap(),
-            [self::CACHE_TAG]
+            [self::CACHE_TAG, 'collections']
         );
     }
 
