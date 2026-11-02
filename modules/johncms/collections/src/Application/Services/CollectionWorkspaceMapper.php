@@ -17,8 +17,12 @@ final readonly class CollectionWorkspaceMapper
     public const string FIELDS = 'fields';
     public const string SETTINGS = 'settings';
 
-    public function __construct(private ?CollectionOwnerUrls $ownerUrls = null, private CollectionApiMapper $apiMapper = new CollectionApiMapper())
-    {
+    public function __construct(
+        private ?CollectionOwnerUrls $ownerUrls = null,
+        private CollectionApiMapper $apiMapper = new CollectionApiMapper(),
+        private ?\Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase $access = null,
+        private ?\Johncms\Modules\ModuleRegistry $modules = null
+    ) {
     }
 
     public static function url(int $collectionId, string $tab = self::ITEMS): string
@@ -40,23 +44,41 @@ final readonly class CollectionWorkspaceMapper
             [self::SETTINGS, __('Settings'), null],
         ];
 
+        if ($this->access !== null && ! $this->access->canManageSchema()) {
+            $tabs = array_values(array_filter($tabs, static fn (array $tab): bool => ! in_array($tab[0], [self::FIELDS, self::SETTINGS], true)));
+        }
+        $ownerSettings = $this->ownerUrls?->settings($this->apiMapper->collection($collection));
+        $mappedTabs = array_values(array_map(
+            static fn (array $tab): array => [
+                'title' => $tab[1], 'url' => self::url($collection->id, $tab[0]),
+                'active' => $tab[0] === $active, 'count' => $tab[2],
+            ],
+            array_filter($tabs, static fn (array $tab): bool => $tab[0] !== self::SECTIONS || $hasSections)
+        ));
+        if ($ownerSettings !== null) {
+            $mappedTabs[] = ['title' => d__('collections', 'Module settings'), 'url' => $ownerSettings, 'active' => false, 'count' => null];
+        }
         return [
-            'id'         => $collection->id,
+            'id'          => $collection->id,
             'name'       => $collection->name,
             'code'       => $collection->code,
             'active'     => $collection->active,
             'public'     => $collection->public,
             'public_url' => $collection->owner_module !== null && $collection->active ? ($this->ownerUrls?->collection($this->apiMapper->collection($collection)) ?? '') : $collection->publicUrl(),
-            'tabs'       => array_values(array_map(
-                static fn (array $tab): array => [
-                    'title'  => $tab[1],
-                    'url'    => self::url($collection->id, $tab[0]),
-                    'active' => $tab[0] === $active,
-                    'count'  => $tab[2],
-                ],
-                // The sections are shown only to a collection that uses them.
-                array_filter($tabs, static fn (array $tab): bool => $tab[0] !== self::SECTIONS || $hasSections)
-            )),
+            'tabs'       => $mappedTabs,
         ];
+    }
+
+    /** @return array<string, bool> */
+    public function menu(ContentCollection $collection): array
+    {
+        $owner = $collection->owner_module;
+        $alias = $owner !== null ? ($this->modules?->enabled()[$owner]->alias ?? null) : null;
+        return $alias !== null ? [$alias => true] : [($this->canManageSchema() ? 'collections' : self::url($collection->id)) => true];
+    }
+
+    public function canManageSchema(): bool
+    {
+        return $this->access?->canManageSchema() ?? true;
     }
 }

@@ -32,6 +32,18 @@
                         <div class="form-text">{{ __('The address of the collection on the site and its name in the API: lowercase latin letters, digits, hyphen and underscore.') }}</div>
                     </div>
                     <div class="col-12">
+                        <label class="form-label" for="content_permission">{{ __('Content permission') }}</label>
+                        {% if fields.managed|default(false) %}
+                            <input type="hidden" name="content_permission" value="{{ fields.content_permission }}">
+                        {% endif %}
+                        <select name="content_permission" class="form-select" id="content_permission"{% if fields.managed|default(false) %} disabled{% endif %}>
+                            {% for key, label in fields.permission_options %}
+                                <option value="{{ key }}"{% if key == fields.content_permission %} selected{% endif %}>{{ label }} ({{ key }})</option>
+                            {% endfor %}
+                        </select>
+                        <div class="form-text">{{ __('Grant this permission to editors of this collection. Structure management requires collections.manage.') }}</div>
+                    </div>
+                    <div class="col-12">
                         <label class="form-label" for="description">{{ __('Description') }}</label>
                         <textarea name="description" class="form-control" id="description" rows="3">{{ fields.description }}</textarea>
                     </div>

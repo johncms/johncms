@@ -16,10 +16,14 @@ final class CollectionsPreviewApiTest extends TestCase
     public function testDirectApiCallChecksCurrentIdentityBeforeReadingData(): void
     {
         $access = $this->createMock(AccessCheckerInterface::class);
-        $access->expects(self::once())->method('allows')->with(CollectionsPermissions::MANAGE)->willReturn(false);
+        $access->expects(self::atLeastOnce())->method('allows')->with(CollectionsPermissions::MANAGE)->willReturn(false);
         $api = $this->createMock(CollectionsApiInterface::class);
         $api->expects(self::never())->method('getItem');
         $this->expectException(CollectionPreviewAccessDeniedException::class);
-        (new CollectionsPreviewApi($access, $api))->findItem(1, 2);
+        $guard = new \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase(
+            $access,
+            $this->createMock(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface::class)
+        );
+        (new CollectionsPreviewApi($api, $guard))->findItem(1, 2);
     }
 }

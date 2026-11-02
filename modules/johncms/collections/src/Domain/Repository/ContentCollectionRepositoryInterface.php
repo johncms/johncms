@@ -35,6 +35,9 @@ interface ContentCollectionRepositoryInterface
      */
     public function findWithCounts(int $id): ?ContentCollection;
 
+    /** @return Collection<int, ContentCollection> */
+    public function getForContentMenu(): Collection;
+
     public function countAll(): int;
 
     /**

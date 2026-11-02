@@ -221,6 +221,10 @@
       'Another field already uses this role.' => 'Эту роль уже использует другое поле.',
       'The identity of a module-owned collection cannot be changed here.' => 'Идентификатор коллекции модуля нельзя изменить здесь.',
       'This field is managed by its module. Change its declaration in code.' => 'Этим полем управляет модуль. Измените его декларацию в коде.',
+      'Module settings' => 'Настройки модуля',
+      'Content permission' => 'Право наполнения',
+      'Grant this permission to editors of this collection. Structure management requires collections.manage.' => 'Предоставьте это право редакторам коллекции. Для управления структурой требуется collections.manage.',
+      'Choose a valid content permission.' => 'Выберите корректное право наполнения.',
     ),
   ),
 );

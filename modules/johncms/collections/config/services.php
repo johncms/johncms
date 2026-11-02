@@ -86,5 +86,9 @@ return static function (ContainerConfigurator $container): void {
         \Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface::class,
         \Johncms\Modules\Collections\Application\Api\CollectionSchemaApi::class
     )->autowire()->public();
+    $services->set(
+        \Johncms\Modules\Collections\Application\Api\CollectionsUserApiInterface::class,
+        \Johncms\Modules\Collections\Application\Api\CollectionsUserApi::class
+    )->autowire()->public();
     $services->set(CollectionsApiInterface::class, CollectionsApi::class)->autowire()->public();
 };

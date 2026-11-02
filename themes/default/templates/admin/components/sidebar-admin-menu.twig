@@ -18,6 +18,7 @@
 {% set module_items = [] %}
 {% for item in menu_items('admin') %}
     {% set module_items = module_items|merge([{
+        key: item.url,
         url: item.url,
         icon: item.icon,
         image: item.hasImageIcon,
@@ -51,7 +52,7 @@
         items: [
             {key: 'forum', url: '/admin/forum', icon: 'messages-square', title: d__('admin', 'Forum')},
             {key: 'news', url: '/admin/news/', icon: 'newspaper', title: d__('admin', 'News')},
-            {key: 'collections', url: '/admin/collections', icon: 'layout-grid', title: d__('admin', 'Collections')},
+            {key: 'collections', url: '/admin/collections', icon: 'layout-grid', title: d__('admin', 'Collections'), shown: can('collections.manage')},
             {key: 'ads', url: '/admin/ads', icon: 'megaphone', title: d__('admin', 'Advertisement')},
             {key: 'consents', url: '/admin/consents', icon: 'clipboard-check', title: d__('admin', 'Consents')},
             {key: 'contacts', url: '/admin/contacts', icon: 'inbox', title: d__('admin', 'Contacts')},

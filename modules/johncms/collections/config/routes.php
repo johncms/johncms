@@ -13,40 +13,90 @@ use Johncms\Router\RouteCollection;
 return static function (RouteCollection $router): void {
     // Admin panel. Public output (URL resolver) routes are added in a later iteration.
     $admin = $router->group('', function (RouteCollection $router): void {
-        $router->get('/admin/collections', [CollectionsAdminController::class, 'index'])->name('collections.admin.index');
-        $router->get('/admin/collections/new', [CollectionsAdminController::class, 'newForm'])->name('collections.admin.new');
-        $router->post('/admin/collections', [CollectionsAdminController::class, 'store'])->name('collections.admin.store');
-        $router->get('/admin/collections/{id:number}/settings', [CollectionsAdminController::class, 'settings'])->name('collections.admin.settings');
-        $router->get('/admin/collections/{id:number}/delete', [CollectionsAdminController::class, 'deleteConfirm'])->name('collections.admin.delete_confirm');
-        $router->post('/admin/collections/{id:number}/delete', [CollectionsAdminController::class, 'delete'])->name('collections.admin.delete');
+        $router->get('/admin/collections', [CollectionsAdminController::class, 'index'])
+            ->name('collections.admin.index')
+            ->permission(CollectionsPermissions::MANAGE);
+        $router->get('/admin/collections/new', [CollectionsAdminController::class, 'newForm'])
+            ->name('collections.admin.new')
+            ->permission(CollectionsPermissions::MANAGE);
+        $router->post('/admin/collections', [CollectionsAdminController::class, 'store'])
+            ->name('collections.admin.store')
+            ->permission(CollectionsPermissions::MANAGE);
+        $router->get('/admin/collections/{id:number}/settings', [CollectionsAdminController::class, 'settings'])
+            ->name('collections.admin.settings')
+            ->permission(CollectionsPermissions::MANAGE);
+        $router->get('/admin/collections/{id:number}/delete', [CollectionsAdminController::class, 'deleteConfirm'])
+            ->name('collections.admin.delete_confirm')
+            ->permission(CollectionsPermissions::MANAGE);
+        $router->post('/admin/collections/{id:number}/delete', [CollectionsAdminController::class, 'delete'])
+            ->name('collections.admin.delete')
+            ->permission(CollectionsPermissions::MANAGE);
 
         // Fields of a collection.
-        $router->get('/admin/collections/{collection_id:number}/fields', [CollectionFieldsAdminController::class, 'index'])->name('collections.admin.fields');
-        $router->get('/admin/collections/{collection_id:number}/fields/new', [CollectionFieldsAdminController::class, 'newForm'])->name('collections.admin.fields.new');
-        $router->post('/admin/collections/{collection_id:number}/fields', [CollectionFieldsAdminController::class, 'store'])->name('collections.admin.fields.store');
-        $router->get('/admin/collections/{collection_id:number}/fields/{id:number}/edit', [CollectionFieldsAdminController::class, 'editForm'])->name('collections.admin.fields.edit');
-        $router->get('/admin/collections/{collection_id:number}/fields/{id:number}/delete', [CollectionFieldsAdminController::class, 'deleteConfirm'])->name('collections.admin.fields.delete_confirm');
-        $router->post('/admin/collections/{collection_id:number}/fields/{id:number}/delete', [CollectionFieldsAdminController::class, 'delete'])->name('collections.admin.fields.delete');
+        $router->get('/admin/collections/{collection_id:number}/fields', [CollectionFieldsAdminController::class, 'index'])
+            ->name('collections.admin.fields')
+            ->permission(CollectionsPermissions::MANAGE);
+        $router->get('/admin/collections/{collection_id:number}/fields/new', [CollectionFieldsAdminController::class, 'newForm'])
+            ->name('collections.admin.fields.new')
+            ->permission(CollectionsPermissions::MANAGE);
+        $router->post('/admin/collections/{collection_id:number}/fields', [CollectionFieldsAdminController::class, 'store'])
+            ->name('collections.admin.fields.store')
+            ->permission(CollectionsPermissions::MANAGE);
+        $router->get('/admin/collections/{collection_id:number}/fields/{id:number}/edit', [CollectionFieldsAdminController::class, 'editForm'])
+            ->name('collections.admin.fields.edit')
+            ->permission(CollectionsPermissions::MANAGE);
+        $router->get('/admin/collections/{collection_id:number}/fields/{id:number}/delete', [CollectionFieldsAdminController::class, 'deleteConfirm'])
+            ->name('collections.admin.fields.delete_confirm')
+            ->permission(CollectionsPermissions::MANAGE);
+        $router->post('/admin/collections/{collection_id:number}/fields/{id:number}/delete', [CollectionFieldsAdminController::class, 'delete'])
+            ->name('collections.admin.fields.delete')
+            ->permission(CollectionsPermissions::MANAGE);
 
         // Sections of a collection (hierarchical).
-        $router->get('/admin/collections/{collection_id:number}/sections', [CollectionSectionsAdminController::class, 'index'])->name('collections.admin.sections');
-        $router->get('/admin/collections/{collection_id:number}/sections/new', [CollectionSectionsAdminController::class, 'newForm'])->name('collections.admin.sections.new');
-        $router->post('/admin/collections/{collection_id:number}/sections', [CollectionSectionsAdminController::class, 'store'])->name('collections.admin.sections.store');
-        $router->get('/admin/collections/{collection_id:number}/sections/{id:number}/edit', [CollectionSectionsAdminController::class, 'editForm'])->name('collections.admin.sections.edit');
-        $router->get('/admin/collections/{collection_id:number}/sections/{id:number}/delete', [CollectionSectionsAdminController::class, 'deleteConfirm'])->name('collections.admin.sections.delete_confirm');
-        $router->post('/admin/collections/{collection_id:number}/sections/{id:number}/delete', [CollectionSectionsAdminController::class, 'delete'])->name('collections.admin.sections.delete');
+        $router->get('/admin/collections/{collection_id:number}/sections', [CollectionSectionsAdminController::class, 'index'])
+            ->name('collections.admin.sections')
+            ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
+        $router->get('/admin/collections/{collection_id:number}/sections/new', [CollectionSectionsAdminController::class, 'newForm'])
+            ->name('collections.admin.sections.new')
+            ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
+        $router->post('/admin/collections/{collection_id:number}/sections', [CollectionSectionsAdminController::class, 'store'])
+            ->name('collections.admin.sections.store')
+            ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
+        $router->get('/admin/collections/{collection_id:number}/sections/{id:number}/edit', [CollectionSectionsAdminController::class, 'editForm'])
+            ->name('collections.admin.sections.edit')
+            ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
+        $router->get('/admin/collections/{collection_id:number}/sections/{id:number}/delete', [CollectionSectionsAdminController::class, 'deleteConfirm'])
+            ->name('collections.admin.sections.delete_confirm')
+            ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
+        $router->post('/admin/collections/{collection_id:number}/sections/{id:number}/delete', [CollectionSectionsAdminController::class, 'delete'])
+            ->name('collections.admin.sections.delete')
+            ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
 
-        $router->get('/admin/collections/{collection_id:number}/items/{id:number}/preview', \Johncms\Modules\Collections\Application\Controllers\Admin\CollectionItemPreviewController::class)->name('collections.admin.items.preview');
+        $router->get('/admin/collections/{collection_id:number}/items/{id:number}/preview', \Johncms\Modules\Collections\Application\Controllers\Admin\CollectionItemPreviewController::class)
+            ->name('collections.admin.items.preview')
+            ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
 
         // Items of a collection (with custom EAV fields).
-        $router->get('/admin/collections/{collection_id:number}/items', [CollectionItemsAdminController::class, 'index'])->name('collections.admin.items');
-        $router->get('/admin/collections/{collection_id:number}/items/new', [CollectionItemsAdminController::class, 'newForm'])->name('collections.admin.items.new');
-        $router->post('/admin/collections/{collection_id:number}/items', [CollectionItemsAdminController::class, 'store'])->name('collections.admin.items.store');
-        $router->get('/admin/collections/{collection_id:number}/items/{id:number}/edit', [CollectionItemsAdminController::class, 'editForm'])->name('collections.admin.items.edit');
-        $router->get('/admin/collections/{collection_id:number}/items/{id:number}/delete', [CollectionItemsAdminController::class, 'deleteConfirm'])->name('collections.admin.items.delete_confirm');
-        $router->post('/admin/collections/{collection_id:number}/items/{id:number}/delete', [CollectionItemsAdminController::class, 'delete'])->name('collections.admin.items.delete');
+        $router->get('/admin/collections/{collection_id:number}/items', [CollectionItemsAdminController::class, 'index'])
+            ->name('collections.admin.items')
+            ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
+        $router->get('/admin/collections/{collection_id:number}/items/new', [CollectionItemsAdminController::class, 'newForm'])
+            ->name('collections.admin.items.new')
+            ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
+        $router->post('/admin/collections/{collection_id:number}/items', [CollectionItemsAdminController::class, 'store'])
+            ->name('collections.admin.items.store')
+            ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
+        $router->get('/admin/collections/{collection_id:number}/items/{id:number}/edit', [CollectionItemsAdminController::class, 'editForm'])
+            ->name('collections.admin.items.edit')
+            ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
+        $router->get('/admin/collections/{collection_id:number}/items/{id:number}/delete', [CollectionItemsAdminController::class, 'deleteConfirm'])
+            ->name('collections.admin.items.delete_confirm')
+            ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
+        $router->post('/admin/collections/{collection_id:number}/items/{id:number}/delete', [CollectionItemsAdminController::class, 'delete'])
+            ->name('collections.admin.items.delete')
+            ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
     });
-    $admin->permission(CollectionsPermissions::MANAGE)->adminArea();
+    $admin->adminArea();
 
     // Public output. Low-priority catch-all that maps root URLs to collections;
     // real module routes have higher priority and win first. The custom

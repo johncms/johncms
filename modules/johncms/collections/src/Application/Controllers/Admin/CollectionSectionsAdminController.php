@@ -53,7 +53,7 @@ final readonly class CollectionSectionsAdminController
         return new ViewResponse('@collections/admin/sections.twig', [
             'page_title' => $collection->name,
             'collection' => $this->workspace->head($collection, CollectionWorkspaceMapper::SECTIONS),
-        ] + $this->menu(__('Sections'), $collection->name) + [
+        ] + $this->menu(__('Sections'), $collection->name, $collection) + [
             'rows'            => $this->mapRows($collection_id, $this->listSections->getTree($collection_id)),
             'add_url'         => $this->baseUrl($collection_id) . '/new',
             'success_message' => $this->session->getFlash('success_message') ?? '',
@@ -163,7 +163,7 @@ final readonly class CollectionSectionsAdminController
         $this->breadcrumbs($collection);
         $this->navChain->add($dialog['title']);
 
-        return new ViewResponse('@collections/admin/delete-confirm.twig', $this->menu($dialog['title'], $collection->name) + [
+        return new ViewResponse('@collections/admin/delete-confirm.twig', $this->menu($dialog['title'], $collection->name, $collection) + [
             'dialog' => $dialog,
         ]);
     }
@@ -258,7 +258,7 @@ final readonly class CollectionSectionsAdminController
         $title = $id !== null ? __('Edit section') : __('New section');
         $this->navChain->add($title);
 
-        return new ViewResponse('@collections/admin/section-form.twig', $this->menu($title, $collection->name) + [
+        return new ViewResponse('@collections/admin/section-form.twig', $this->menu($title, $collection->name, $collection) + [
             'form_action' => $this->baseUrl($collection->id),
             'back_url'    => $this->baseUrl($collection->id),
             'id'          => $id,
@@ -373,19 +373,21 @@ final readonly class CollectionSectionsAdminController
 
     private function breadcrumbs(ContentCollection $collection): void
     {
-        $this->navChain->add(__('Collections'), '/admin/collections');
+        if ($this->workspace->canManageSchema()) {
+            $this->navChain->add(__('Collections'), '/admin/collections');
+        }
         $this->navChain->add($collection->name, $this->baseUrl($collection->id));
     }
 
     /**
      * @return array<string, mixed>
      */
-    private function menu(string $title, string $collectionName): array
+    private function menu(string $title, string $collectionName, ?ContentCollection $collection = null): array
     {
         return [
             'title'       => $title . ' — ' . $collectionName,
             'page_title'  => $title,
-            'module_menu' => ['collections' => true],
+            'module_menu' => $collection !== null ? $this->workspace->menu($collection) : ['collections' => true],
         ];
     }
 

@@ -842,3 +842,15 @@ msgstr "Идентификатор коллекции модуля нельзя 
 
 msgid "This field is managed by its module. Change its declaration in code."
 msgstr "Этим полем управляет модуль. Измените его декларацию в коде."
+
+msgid "Module settings"
+msgstr "Настройки модуля"
+
+msgid "Content permission"
+msgstr "Право наполнения"
+
+msgid "Grant this permission to editors of this collection. Structure management requires collections.manage."
+msgstr "Предоставьте это право редакторам коллекции. Для управления структурой требуется collections.manage."
+
+msgid "Choose a valid content permission."
+msgstr "Выберите корректное право наполнения."

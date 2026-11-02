@@ -40,6 +40,7 @@ final readonly class CollectionsAdminController
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
         private Session $session,
+        private \Johncms\Auth\Authorization\PermissionRegistry $permissions,
     ) {
     }
 
@@ -220,6 +221,7 @@ final readonly class CollectionsAdminController
      */
     private function renderForm(?int $id, array $fields, array $errors = []): ViewResponse
     {
+        $fields['permission_options'] = $this->permissionOptions($fields['content_permission']);
         $title = __('New collection');
         $this->navChain->add(__('Collections'), self::URL);
         $this->navChain->add($title);
@@ -241,6 +243,7 @@ final readonly class CollectionsAdminController
     private function renderSettings(ContentCollection $collection, array $fields, array $errors = []): ViewResponse
     {
         $fields['managed'] = $collection->owner_module !== null;
+        $fields['permission_options'] = $this->permissionOptions($fields['content_permission']);
         $this->navChain->add(__('Collections'), self::URL);
         $this->navChain->add($collection->name, CollectionWorkspaceMapper::url($collection->id));
 
@@ -275,6 +278,17 @@ final readonly class CollectionsAdminController
     /**
      * @return array<string, mixed>
      */
+    private function permissionOptions(string $current): array
+    {
+        $options = [];
+        foreach ($this->permissions->all() as $key => $permission) {
+            $options[$key] = $permission->label;
+        }
+        $options[$current] ??= $current;
+        return $options;
+    }
+
+    /** @return array<string, mixed> */
     private function fieldsFromRequest(Request $request): array
     {
         return [
@@ -286,6 +300,7 @@ final readonly class CollectionsAdminController
             'sort'         => $request->bodyInt('sort', 100),
             'has_sections' => $request->hasBody('has_sections') ? 1 : 0,
             'per_page'     => max(1, abs($request->bodyInt('per_page', 10))),
+            'content_permission' => trim($request->body('content_permission', 'collections.manage')),
         ];
     }
 
@@ -305,6 +320,7 @@ final readonly class CollectionsAdminController
             'sort'         => $collection->sort,
             'has_sections' => ! empty($settings['has_sections']) ? 1 : 0,
             'per_page'     => (int) ($settings['per_page'] ?? 10),
+            'content_permission' => $settings['_content_permission'] ?? 'collections.manage',
         ];
     }
 
@@ -322,6 +338,7 @@ final readonly class CollectionsAdminController
             'sort'         => 100,
             'has_sections' => 1,
             'per_page'     => 10,
+            'content_permission' => 'collections.manage',
         ];
     }
 
@@ -339,6 +356,7 @@ final readonly class CollectionsAdminController
             sort: (int) $fields['sort'],
             hasSections: (bool) $fields['has_sections'],
             perPage: (int) $fields['per_page'],
+            contentPermission: $fields['content_permission'],
         );
     }
 

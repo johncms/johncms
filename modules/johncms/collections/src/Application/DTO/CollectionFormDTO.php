@@ -18,6 +18,7 @@ final readonly class CollectionFormDTO
         public int $sort,
         public bool $hasSections,
         public int $perPage,
+        public string $contentPermission = 'collections.manage',
     ) {
     }
 }

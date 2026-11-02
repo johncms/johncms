@@ -42,6 +42,9 @@ final readonly class SaveCollectionUseCase
             if ($current?->owner_module === null && $this->reservedCodeChecker->isReserved($dto->code)) {
                 throw new CollectionCodeReservedException();
             }
+            if (! preg_match('/^[a-z0-9_.-]+$/D', $dto->contentPermission)) {
+                throw new \Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException(d__('collections', 'Choose a valid content permission.'));
+            }
             $existing = $this->repository->findByCode($dto->code);
             if ($existing !== null && $existing->id !== $id) {
                 throw new CollectionCodeAlreadyExistsException();
@@ -57,6 +60,7 @@ final readonly class SaveCollectionUseCase
             'settings'    => array_replace($current->settings ?? [], [
                 'has_sections' => $dto->hasSections,
                 'per_page'     => $dto->perPage,
+                '_content_permission' => $current?->owner_module !== null ? ($current->settings['_content_permission'] ?? 'collections.manage') : $dto->contentPermission,
             ]),
             ];
 

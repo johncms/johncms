@@ -8,7 +8,7 @@ use Johncms\Auth\Authorization\PermissionDefinition;
 use Johncms\Auth\Authorization\PermissionProviderInterface;
 
 /**
- * The collections exist only in the admin panel so far, behind a single permission.
+ * Schema administration; collection-specific content permissions are configured separately.
  */
 final class CollectionsPermissions implements PermissionProviderInterface
 {
