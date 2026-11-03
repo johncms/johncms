@@ -43,6 +43,24 @@ return static function (ContainerConfigurator $container): void {
         ->autowire()->public()->tag('johncms.collections.declaration_provider');
     $services->set(\Johncms\Modules\News\Application\Collections\NewsCollectionOwnerUrls::class)
         ->autowire()->public()->tag('johncms.collections.owner_urls');
+    $services->set(
+        \Johncms\Modules\News\Application\Collections\NewsReadServiceInterface::class,
+        \Johncms\Modules\News\Application\Collections\NewsReadService::class
+    )->autowire()->public();
+    $services->set(
+        \Johncms\Modules\News\Application\Collections\NewsViewMapperInterface::class,
+        \Johncms\Modules\News\Application\Collections\NewsViewMapper::class
+    )->autowire()->public();
+    $services->set(
+        \Johncms\Modules\News\Application\Collections\NewsDiscussionServiceInterface::class,
+        \Johncms\Modules\News\Application\Collections\NewsDiscussionService::class
+    )->autowire()->public();
+    $services->set(
+        \Johncms\Modules\News\Domain\Repository\NewsDiscussionRepositoryInterface::class,
+        \Johncms\Modules\News\Infrastructure\Persistence\Repository\EloquentNewsDiscussionRepository::class
+    )->autowire()->public();
+    $services->set(\Johncms\Modules\News\Application\Collections\NewsCollectionChangeHandler::class)
+        ->autowire()->tag('johncms.collections.change_handler');
     $services->set(NewsArticleRepositoryInterface::class, EloquentNewsArticleRepository::class)->public();
     $services->set(NewsSectionRepositoryInterface::class, EloquentNewsSectionRepository::class)->public();
     $services->set(NewsCommentRepositoryInterface::class, EloquentNewsCommentRepository::class)->public();

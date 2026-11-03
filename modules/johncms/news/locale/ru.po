@@ -716,3 +716,30 @@ msgstr "Описание страницы"
 
 msgid "Meta keywords"
 msgstr "Ключевые слова"
+
+msgid "One of the comment attachments is not available."
+msgstr "Одно из вложений комментария недоступно."
+
+msgid "The comment is not available."
+msgstr "Комментарий недоступен."
+
+msgid "Choose an upvote or a downvote."
+msgstr "Выберите положительную или отрицательную оценку."
+
+msgid "The news collection is missing. Run system:update."
+msgstr "Коллекция новостей отсутствует. Выполните system:update."
+
+msgid "The requested article or section is not available."
+msgstr "Запрошенная статья или раздел недоступны."
+
+msgid "Vote on the news"
+msgstr "Оценивать новости"
+
+msgid "You are not allowed to comment on the news."
+msgstr "У вас нет права комментировать новости."
+
+msgid "You are not allowed to vote on the news."
+msgstr "У вас нет права оценивать новости."
+
+msgid "You are not allowed to delete this comment."
+msgstr "У вас нет права удалять этот комментарий."

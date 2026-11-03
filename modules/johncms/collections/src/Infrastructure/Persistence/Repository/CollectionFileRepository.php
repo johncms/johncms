@@ -84,9 +84,10 @@ final class CollectionFileRepository implements CollectionFileRepositoryInterfac
         return $ids;
     }
 
-    public function hasLinks(int $fileId): bool
+    public function hasLinks(int $fileId, bool $current = false): bool
     {
-        return CollectionFileLink::query()->where('file_id', $fileId)->exists();
+        $query = CollectionFileLink::query()->where('file_id', $fileId);
+        return $current ? $query->lockForUpdate()->first(['id']) !== null : $query->exists();
     }
 
     public function removeAsset(int $fileId): void

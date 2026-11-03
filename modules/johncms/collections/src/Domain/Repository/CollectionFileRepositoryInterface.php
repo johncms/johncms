@@ -31,7 +31,7 @@ interface CollectionFileRepositoryInterface
     /** @return list<int> */
     public function deleteContext(string $token): array;
 
-    public function hasLinks(int $fileId): bool;
+    public function hasLinks(int $fileId, bool $current = false): bool;
 
     public function removeAsset(int $fileId): void;
 

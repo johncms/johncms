@@ -8,6 +8,13 @@ use Johncms\Users\User;
 
 class EloquentUserRepository implements UserRepositoryInterface
 {
+    public function findMany(array $ids): array
+    {
+        /** @var array<int, User> $users */
+        $users = User::query()->whereIn('id', $ids)->get()->keyBy('id')->all();
+        return $users;
+    }
+
     public function find(int $id): ?User
     {
         return User::query()->find($id);

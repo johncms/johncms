@@ -21,6 +21,8 @@ final class NewsPermissions implements PermissionProviderInterface
     /** Write a comment under an article, and attach an image to it. */
     public const COMMENTS_POST = 'news.comments.post';
 
+    public const VOTE = 'news.vote';
+
     /** The news in the admin panel: the sections, the articles and the settings of the module. */
     public const MANAGE = 'news.manage';
 
@@ -43,6 +45,7 @@ final class NewsPermissions implements PermissionProviderInterface
                 $group,
                 [SystemRole::User->value]
             ),
+            new PermissionDefinition(self::VOTE, self::GROUP, d__('news', 'Vote on the news'), $group, [SystemRole::User->value]),
             // Nobody by default: the news were administered by the supervisor alone, and the
             // supervisor is answered by their level rather than by a list.
             new PermissionDefinition(

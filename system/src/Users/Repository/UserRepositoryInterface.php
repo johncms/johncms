@@ -13,6 +13,11 @@ interface UserRepositoryInterface
      */
     public function find(int $id): ?User;
 
+    /** @param list<int> $ids
+     * @return array<int, User> Keyed by user ID.
+     */
+    public function findMany(array $ids): array;
+
     /**
      * Register a new guestbook post for the user: increment the postguest
      * counter and refresh the last post timestamp.

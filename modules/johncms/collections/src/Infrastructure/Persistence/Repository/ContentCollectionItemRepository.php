@@ -36,6 +36,9 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
         $builder = $this->baseQuery($query, $fields);
         $this->compiler->applyOrder($builder, $query, $fields);
 
+        if (! $query->includeText) {
+            $builder->select(['id', 'collection_id', 'section_id', 'code', 'name', 'active', 'active_from', 'active_to', 'sort', 'view_count', 'created_by', 'updated_by', 'created_at', 'updated_at']);
+        }
         $builder->offset($query->offset)->limit($query->limit);
         return $builder->with([
             'values' => static function ($values) use ($query): void {
@@ -161,6 +164,14 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
     {
         $query = ContentCollectionItem::query()->with(['values' => static fn ($values) => $values->orderBy('sort')->orderBy('id'), 'values.field'])->where('code', $code)->where('section_id', $sectionId);
         $this->publication->apply($query, $collectionId, new DateTimeImmutable('now', new DateTimeZone('UTC')));
+        return $query->first();
+    }
+
+    public function findVisibleByIdForUpdate(int $collectionId, int $id): ?ContentCollectionItem
+    {
+        /** @var Builder<ContentCollectionItem> $query */
+        $query = ContentCollectionItem::query()->where('id', $id)->lockForUpdate();
+        $this->publication->apply($query, $collectionId, new DateTimeImmutable('now', new DateTimeZone('UTC')), current: true);
         return $query->first();
     }
 

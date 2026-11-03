@@ -44,6 +44,8 @@ interface ContentCollectionItemRepositoryInterface
      */
     public function findVisibleById(int $collectionId, int $id): ?ContentCollectionItem;
 
+    public function findVisibleByIdForUpdate(int $collectionId, int $id): ?ContentCollectionItem;
+
     public function findVisibleByCode(int $collectionId, ?int $sectionId, string $code): ?ContentCollectionItem;
 
     /**

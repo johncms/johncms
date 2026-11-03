@@ -26,6 +26,11 @@ final class FakeUserRepository implements UserRepositoryInterface
         }
     }
 
+    public function findMany(array $ids): array
+    {
+        return array_intersect_key($this->users, array_fill_keys($ids, true));
+    }
+
     public function find(int $id): ?User
     {
         return $this->users[$id] ?? null;

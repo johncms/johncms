@@ -142,3 +142,13 @@ Follow the existing convention across modules:
 * `get*` — returns a **guaranteed** value or a `Collection` (never a bare `null` for a missing single entity): `getContacts(): Collection`, `getBlocklist(): Collection`.
 
 Rule of thumb: if the return type is `?Entity`, name it `find*`. The use case decides what a missing result means (e.g. throw a `*NotFoundException`).
+
+
+## Collection owner lifecycle handlers
+
+Use `CollectionLookupApiInterface` for declaration identity inside a collection change handler.
+Injecting the full write API there creates a cycle through the dispatcher and its tagged handlers.
+Related owner writes use `CollectionItemRelationsApiInterface` to serialize with item deletion;
+`publishedOnly: true` checks the publication policy using current reads inside the transaction.
+Owner cleanup checks shared file references inside its cleanup transaction, through
+`CollectionFileReferencesApiInterface`. See `docs/moduli/collections.md`.
