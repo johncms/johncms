@@ -146,7 +146,7 @@ final readonly class NewsLegacyImporter
                         ));
                         $expectedFiles = [];
                         foreach ($this->fileIds($row['attached_files']) as $fileId) {
-                            if ($this->files->find($fileId) === null) {
+                            if (! $this->files->isRegistered($fileId)) {
                                 $warnings[] = "Article $oldId: file $fileId is missing from the file registry; no link imported.";
                                 continue;
                             }

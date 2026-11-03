@@ -175,6 +175,17 @@ final class NewsLegacyImportTest extends FunctionalTestCase
         self::assertSame($description, $metadata['meta_description']);
     }
 
+    public function testLegacyFilesWithoutOptionalSizeMetadataCanStillBeRegistered(): void
+    {
+        $file = $this->file('news');
+        Capsule::table('files')->where('id', $file)->update(['size' => null]);
+        $article = $this->article('Unsized', attributes: ['attached_files' => json_encode([$file])]);
+        $report = $this->runImport();
+        $item = $this->container()->get(CollectionsApiInterface::class)->getItem($report->articles[$article]);
+        self::assertSame([$file], $this->container()->get(CollectionItemFiles::class)->registeredFileIds($item->collectionId, $item->id));
+        self::assertNull(Capsule::table('files')->where('id', $file)->value('size'));
+    }
+
     public function testImportRequiresTrustedSystemContext(): void
     {
         $this->expectException(\LogicException::class);

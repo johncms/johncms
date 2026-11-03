@@ -21,7 +21,7 @@ final class RoutePermissionTest extends FunctionalTestCase
 {
     public function testAGuestIsSentToSignInInsteadOfA404(): void
     {
-        $response = $this->handleRequest('/admin/news');
+        $response = $this->handleRequest('/admin/news/settings');
 
         self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
         self::assertSame('/login', $response->headers->get('Location'));
@@ -36,10 +36,10 @@ final class RoutePermissionTest extends FunctionalTestCase
         /** @var RouteCollection $routes */
         $routes = $this->container()->get(RouteCollection::class);
 
-        self::assertNotNull($routes->get('news.admin.index'));
+        self::assertNotNull($routes->get('news.admin.settings'));
         self::assertSame(
             'news.manage',
-            $routes->get('news.admin.index')->getDefault('_permission')
+            $routes->get('news.admin.settings')->getDefault('_permission')
         );
     }
 
@@ -47,7 +47,7 @@ final class RoutePermissionTest extends FunctionalTestCase
     {
         $editor = FunctionalUserFactory::createWithPermissions([NewsPermissions::MANAGE]);
 
-        $response = $this->handleRequest('/admin/news', cookies: $this->actingAs($editor));
+        $response = $this->handleRequest('/admin/news/settings', cookies: $this->actingAs($editor));
 
         self::assertSame(Response::HTTP_OK, $response->getStatusCode());
     }
@@ -60,7 +60,7 @@ final class RoutePermissionTest extends FunctionalTestCase
     {
         $visitor = FunctionalUserFactory::create();
 
-        $response = $this->handleRequest('/admin/news', cookies: $this->actingAs($visitor));
+        $response = $this->handleRequest('/admin/news/settings', cookies: $this->actingAs($visitor));
 
         self::assertSame(Response::HTTP_FORBIDDEN, $response->getStatusCode());
     }
@@ -71,7 +71,7 @@ final class RoutePermissionTest extends FunctionalTestCase
      */
     public function testAnEndpointBehindAPermissionRefusesAGuest(): void
     {
-        $response = $this->handleRequest('/news/comments/upload_file');
+        $response = $this->handleRequest('/news/comments/upload_file', 'POST', $this->withCsrfToken([]));
 
         self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
         self::assertSame('/login', $response->headers->get('Location'));

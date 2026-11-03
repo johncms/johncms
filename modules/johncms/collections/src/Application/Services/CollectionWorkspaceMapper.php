@@ -74,7 +74,7 @@ final readonly class CollectionWorkspaceMapper
     {
         $owner = $collection->owner_module;
         $alias = $owner !== null ? ($this->modules?->enabled()[$owner]->alias ?? null) : null;
-        return $alias !== null ? [$alias => true] : [($this->canManageSchema() ? 'collections' : self::url($collection->id)) => true];
+        return $alias !== null ? [$alias => true, self::url($collection->id) => true] : [($this->canManageSchema() ? 'collections' : self::url($collection->id)) => true];
     }
 
     public function canManageSchema(): bool

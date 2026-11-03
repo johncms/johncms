@@ -60,7 +60,7 @@ final class EloquentNewsDiscussionRepository implements NewsDiscussionRepository
     public function addComment(int $itemId, int $userId, string $text, array $metadata, array $files): int
     {
         $comment = NewsItemComment::query()->create([
-            'item_id' => $itemId, 'article_id' => null, 'user_id' => $userId, 'text' => $text,
+            'item_id' => $itemId, 'user_id' => $userId, 'text' => $text,
             'user_data' => $metadata, 'attached_files' => $files, 'created_at' => gmdate('Y-m-d H:i:s'),
         ]);
         return $comment->id;
@@ -84,7 +84,7 @@ final class EloquentNewsDiscussionRepository implements NewsDiscussionRepository
         if ($existing !== null) {
             $existing->update(['vote' => $vote]);
         } else {
-            NewsItemVote::query()->create(['item_id' => $itemId, 'user_id' => $userId, 'article_id' => null, 'vote' => $vote]);
+            NewsItemVote::query()->create(['item_id' => $itemId, 'user_id' => $userId, 'vote' => $vote]);
         }
     }
 

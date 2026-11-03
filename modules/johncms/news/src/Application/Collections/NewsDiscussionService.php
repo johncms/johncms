@@ -75,7 +75,7 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
                 $row->user_id,
                 $this->content->render($row->text, new ContentContext(adminSmilies: $this->staff->isStaff($row->user_id))),
                 $this->dates->format((new \DateTimeImmutable($row->getRawOriginal('created_at'), new \DateTimeZone('UTC')))->getTimestamp()),
-                $author !== null ? new NewsAuthorDTO($author->id, $author->name) : null,
+                $author !== null ? new NewsAuthorDTO($author->id, $author->name, $author->status, $author->is_online, $author->rights_name) : null,
                 $this->user->isValid() && ($moderates || $this->user->id() === $row->user_id),
                 $canReply,
                 $moderates ? ($row->user_data ?? []) : []

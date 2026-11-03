@@ -20,6 +20,7 @@ final class KernelSmokeTest extends FunctionalTestCase
     #[DataProvider('publicRoutes')]
     public function testRouteAnswersSuccessfully(string $uri): void
     {
+        $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer::class)->synchronize();
         $response = $this->handleRequest($uri);
 
         $content = (string) $response->getContent();

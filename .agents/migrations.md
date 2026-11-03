@@ -129,3 +129,11 @@ the database the unit suite runs on.
 
 `BaselineSchemaParityTest` holds the `initial_*` snapshots to the schema they replaced. If a
 baseline is edited, that test is what says so.
+
+
+For portable cleanup of legacy constraints, use `hasForeignKeyForColumns($table, ['column'])`
+and `TableDefinition::dropForeignForColumns('column')`: SQLite does not expose constraint
+names. The adapter resolves actual names on databases that have them. Explicitly remove
+indexes involving a column before dropping that column; SQLite's native DROP COLUMN does not
+remove them for you. The news update hook is an intentional exception for dropping obsolete
+9.9 schema only after its atomic data phase, never for creating current schema.

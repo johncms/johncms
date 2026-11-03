@@ -10,7 +10,7 @@
 {% block content %}
     {% if can('news.manage') %}
         <div class="mb-3 mt-n1">
-            <a href="/admin/news/" class="btn btn-outline-danger btn-sm">{{ __('Admin panel') }}</a>
+            <a href="{{ workspace_url }}" class="btn btn-outline-danger btn-sm">{{ __('Admin panel') }}</a>
         </div>
     {% endif %}
 

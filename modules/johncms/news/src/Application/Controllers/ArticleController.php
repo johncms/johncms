@@ -4,46 +4,41 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Controllers;
 
-use Johncms\Auth\CurrentUser;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Modules\News\Application\Article;
-use Johncms\Modules\News\Application\MetaTagsManager;
-use Johncms\Modules\News\Application\Section;
+use Johncms\Modules\News\Application\Collections\NewsReadServiceInterface;
+use Johncms\Modules\News\Application\Exceptions\NewsItemNotFoundException;
+use Johncms\Modules\News\Application\Services\NewsPermissions;
 use Johncms\NavChain;
 
 final readonly class ArticleController
 {
     public function __construct(
+        private NewsReadServiceInterface $news,
         private NavChain $navChain,
-        private MetaTagsManager $metaTagsManager,
-        private CurrentUser $currentUser,
+        private AccessCheckerInterface $access,
     ) {
     }
 
-    /**
-     * Article page
-     *
-     * @param Section $section
-     * @param Article $article
-     * @param string $article_code
-     * @param string $category
-     */
-    public function index(Section $section, Article $article, string $article_code, string $category = ''): ViewResponse
+    public function index(string $article_code, string $category = ''): ViewResponse
     {
-        $this->navChain->add(__('News'), '/news/');
-
-        $section->checkPath($category);
-        $current_article = $article->getArticle($article_code);
-
-        return new ViewResponse(
-            '@news/public/article.twig',
-            $this->metaTagsManager->setForArticle($current_article)->toArray() + [
-                'article'         => $current_article,
-                'current_section' => $section->getLastSection(),
-                'can_write'       => $this->currentUser->isValid()
-                    && ! isset($this->currentUser->user()->ban['1'])
-                    && ! isset($this->currentUser->user()->ban['10']),
-            ]
-        );
+        $this->navChain->add(d__('news', 'News'), '/news/');
+        try {
+            $article = $this->news->findByCode($category, $article_code) ?? throw new NewsItemNotFoundException();
+        } catch (NewsItemNotFoundException) {
+            throw new PageNotFoundException();
+        }
+        $section = $article->record->sectionId !== null ? $this->news->section($article->record->sectionId) : null;
+        if ($section !== null) {
+            foreach ($this->news->breadcrumbs($section->record->id) as $crumb) {
+                $this->navChain->add($crumb->record->name, $crumb->url);
+            }
+        }
+        $this->news->registerView($article->record->id);
+        return new ViewResponse('@news/public/article.twig', $article->metadata() + [
+            'article' => $article->toTemplate(), 'current_section' => $section?->toTemplate(),
+            'can_write' => $this->access->allows(NewsPermissions::COMMENTS_POST),
+        ]);
     }
 }

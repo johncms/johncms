@@ -26,7 +26,7 @@ final class AdminAreaContextTest extends FunctionalTestCase
             NewsPermissions::MANAGE,
         ]);
 
-        $response = $this->handleRequest('/admin/news', cookies: $this->actingAs($editor));
+        $response = $this->handleRequest('/admin/news/settings', cookies: $this->actingAs($editor));
 
         self::assertSame(Response::HTTP_OK, $response->getStatusCode());
 
@@ -47,7 +47,7 @@ final class AdminAreaContextTest extends FunctionalTestCase
             NewsPermissions::MANAGE,
         ]);
 
-        $response = $this->handleRequest('/admin/news', cookies: $this->actingAs($editor));
+        $response = $this->handleRequest('/admin/news/settings', cookies: $this->actingAs($editor));
 
         self::assertStringContainsString('Админ панель', (string) $response->getContent());
     }

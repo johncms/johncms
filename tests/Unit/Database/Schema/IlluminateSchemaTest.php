@@ -35,6 +35,22 @@ final class IlluminateSchemaTest extends TestCase
         $this->shutdownDatabase();
     }
 
+    public function testForeignKeysCanBeDetectedAndRemovedByColumnsWithoutDatabaseSpecificNames(): void
+    {
+        $this->schema->create('news_sources', static function (TableDefinition $table): void {
+            $table->increments('id');
+        });
+        $this->schema->create('news_links', static function (TableDefinition $table): void {
+            $table->increments('id');
+            $table->integer('article_id')->unsigned()->nullable();
+            $table->foreign('article_id')->references('id')->on('news_sources');
+        });
+        self::assertTrue($this->schema->hasForeignKeyForColumns('news_links', ['article_id']));
+        $this->schema->alter('news_links', static fn (TableDefinition $table) => $table->dropForeignForColumns('article_id'));
+        self::assertFalse($this->schema->hasForeignKeyForColumns('news_links', ['article_id']));
+        self::assertFalse($this->schema->hasForeignKeyForColumns('missing_table', ['article_id']));
+    }
+
     public function testEveryColumnTypeReachesTheDatabase(): void
     {
         $this->schema->create('sample', static function (TableDefinition $table): void {

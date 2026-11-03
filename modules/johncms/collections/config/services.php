@@ -115,4 +115,6 @@ return static function (ContainerConfigurator $container): void {
         \Johncms\Modules\Collections\Application\Api\CollectionFileReferencesApi::class
     )->autowire()->public();
     $services->set(CollectionsApiInterface::class, CollectionsApi::class)->autowire()->public();
+    $services->set(\Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase::class)
+        ->autowire()->public()->arg('$owners', tagged_iterator('johncms.collections.content_access'));
 };

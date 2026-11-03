@@ -108,7 +108,9 @@ final class SectionCountersTest extends FunctionalTestCase
      */
     public function testTheNewsOfTheDaysTheHomePageKeepsThemAreCounted(): void
     {
-        Fixture::insert('news_articles', ['name' => 'Fresh', 'code' => 'fresh', 'active' => 1, 'created_at' => date('Y-m-d H:i:s')]);
+        $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer::class)->synchronize();
+        $collection = $this->container()->get(\Johncms\Modules\News\Application\Collections\NewsReadServiceInterface::class)->collection()->id;
+        Fixture::insert('collection_items', ['collection_id' => $collection, 'name' => 'Fresh', 'code' => 'fresh', 'active' => 1, 'created_at' => date('Y-m-d H:i:s')]);
 
         self::assertNull($this->menu($this->page('/'))['/news/']);
 

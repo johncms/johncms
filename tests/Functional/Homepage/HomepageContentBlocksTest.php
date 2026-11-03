@@ -12,6 +12,12 @@ use Tests\Support\FunctionalUserFactory;
 
 final class HomepageContentBlocksTest extends FunctionalTestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer::class)->synchronize();
+    }
+
     public function testEmptyModulesHaveRealEmptyStatesAndOnlineFollowsTheSections(): void
     {
         $page = $this->page();
@@ -64,7 +70,7 @@ final class HomepageContentBlocksTest extends FunctionalTestCase
 
     public function testOnlineShowsPublicNamesWithoutPrivateSessionFieldsOrForbiddenProfileLinks(): void
     {
-        FunctionalUserFactory::create(['name' => 'Visible member', 'ip' => '198.51.100.42', 'browser' => 'PrivateBrowser']);
+        FunctionalUserFactory::create(['name' => 'Visible member', 'ip' => ip2long('198.51.100.42'), 'browser' => 'PrivateBrowser']);
         FunctionalUserFactory::create(['name' => 'Offline member', 'lastdate' => time() - 3600]);
 
         $page = $this->page();

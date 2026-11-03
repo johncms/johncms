@@ -17,10 +17,19 @@ use Tests\Support\FunctionalUserFactory;
  */
 final class DashboardActionsTest extends FunctionalTestCase
 {
+    private int $collection;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer::class)->synchronize();
+        $this->collection = $this->container()->get(\Johncms\Modules\News\Application\Collections\NewsReadServiceInterface::class)->collection()->id;
+    }
+
     public function testWhoManagesTheSiteHasEveryAction(): void
     {
         self::assertSame(
-            ['/admin/users', '/admin/ip-search', '/admin/news/articles/new', '/admin/ads/new', '/admin/settings'],
+            ['/admin/users', '/admin/ip-search', '/admin/collections/' . $this->collection . '/items/new', '/admin/ads/new', '/admin/settings'],
             $this->actionsOf(FunctionalUserFactory::createSupervisor())
         );
     }
@@ -36,7 +45,7 @@ final class DashboardActionsTest extends FunctionalTestCase
     public function testTheEditorOfTheNewsMayWriteThem(): void
     {
         self::assertContains(
-            '/admin/news/articles/new',
+            '/admin/collections/' . $this->collection . '/items/new',
             $this->actionsOf(FunctionalUserFactory::createWithPermissions([CorePermissions::ADMIN_ACCESS, NewsPermissions::MANAGE]))
         );
     }

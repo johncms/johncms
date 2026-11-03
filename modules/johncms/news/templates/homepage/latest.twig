@@ -1,4 +1,4 @@
-{# @var news iterable<\Johncms\Modules\News\Domain\Models\NewsArticle> Published articles selected by the module settings. #}
+{# @var news iterable<array> Published articles selected by the module settings. #}
 {% embed '@theme/components/content-card.twig' with {
     class: 'site-content-card--news', marker: true, id: 'home-news', title: d__('news', 'News'), icon: 'newspaper', url: '/news/', link_label: d__('news', 'All news'), news: news
 } only %}

@@ -10,6 +10,12 @@ use Tests\Support\FunctionalUserFactory;
 
 final class PublicShellTest extends FunctionalTestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer::class)->synchronize();
+    }
+
     public function testGuestNavigationHasWorkingAuthenticationLinksAndNoStaffMenu(): void
     {
         $page = $this->page('/forum/');

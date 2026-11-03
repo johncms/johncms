@@ -56,6 +56,7 @@ abstract class FunctionalTestCase extends TestCase
     {
         $this->bootApplication();
 
+        $this->container()->get(\Johncms\Updates\SystemUpdateStateInterface::class)->complete();
         Capsule::connection()->beginTransaction();
         $this->container()->get(CacheInterface::class)->clear();
 
@@ -202,6 +203,12 @@ abstract class FunctionalTestCase extends TestCase
         $this->useMemoryCache();
         $this->useDatabase();
         $this->migrateEverything();
+        // Unlike unit fixtures, HTTP tests represent a site that has completed its schema update.
+        $journal = $this->container()->get(\Johncms\Database\Migrations\MigrationRepositoryInterface::class);
+        $journal->ensureStorageExists();
+        foreach ($this->locator()->locate() as $migration) {
+            $journal->log($migration, 1, 0);
+        }
         $this->container()->get(RoleSeeder::class)->seed();
     }
 
@@ -214,6 +221,7 @@ abstract class FunctionalTestCase extends TestCase
     private function useMemoryCache(): void
     {
         $config = ConfigRepository::all();
+        $config['updates']['state_file'] = sys_get_temp_dir() . '/johncms-functional-update-' . getmypid() . '.json';
         $config['cache'] = ['driver' => CacheDriver::Memory->value] + ($config['cache'] ?? []);
 
         ConfigRepository::init($config);

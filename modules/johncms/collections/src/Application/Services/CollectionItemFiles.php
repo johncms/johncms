@@ -106,7 +106,7 @@ final readonly class CollectionItemFiles implements CollectionChangeHandlerInter
                 }
                 $this->links->register($fileId, $transferOwnership);
                 $this->links->lockAsset($fileId);
-                if ($this->files->find($fileId) === null) {
+                if (! $this->files->isRegistered($fileId)) {
                     throw new CollectionItemFormException(['files' => [d__('collections', 'A registered file no longer exists.')]]);
                 }
                 $this->links->linkItem($itemId, $fileId);

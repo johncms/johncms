@@ -63,6 +63,7 @@ Reading and removing:
 
 | Method | What it does |
 | --- | --- |
+| `isRegistered($id)` | registry existence, without optional legacy metadata or resolving a disk URL |
 | `find($id)` / `getByIds($ids)` | `StoredFileDTO`, or null / a list |
 | `openStream($id)` | `StoredFileStream` for serving the file yourself |
 | `delete($id)` / `deleteMany($ids)` | removes the row **and** the file |

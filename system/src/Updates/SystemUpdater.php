@@ -34,6 +34,7 @@ final class SystemUpdater
         private readonly CacheClearCommand $clearCache,
         private readonly iterable $synchronizers,
         private readonly SystemOperationContext $systemContext = new SystemOperationContext(),
+        private readonly ?\Johncms\Sitemap\SitemapGenerator $sitemap = null,
     ) {
     }
 
@@ -71,7 +72,7 @@ final class SystemUpdater
                     $io->text($step);
                     $manifest = $modules[$key];
                     $version = $manifest->version ?? CMS_VERSION;
-                    $this->systemContext->runTrusted(fn () => $this->installers->create($manifest)?->update($this->state->find($key)->version ?? CMS_VERSION, $version));
+                    $this->systemContext->runTrusted(fn () => $this->installers->create($manifest)?->update($this->state->find($key)->version ?? CMS_VERSION, $version), fn (string $message) => $io->text($message));
                 }
                 foreach ($owners as $owner) {
                     foreach ($synchronizers as $synchronizer) {
@@ -80,6 +81,10 @@ final class SystemUpdater
                             $synchronizer->validate();
                         }
                     }
+                }
+                if ($this->sitemap !== null && $module === null) {
+                    $step = 'generate sitemap';
+                    $this->systemContext->runTrusted($this->sitemap->generate(...));
                 }
                 $step = 'clear cache';
                 if ($this->clearCache->run(new ArrayInput([]), $output) !== Command::SUCCESS) {

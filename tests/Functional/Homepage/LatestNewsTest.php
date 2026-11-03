@@ -14,6 +14,15 @@ use Tests\Support\Fixture;
  */
 final class LatestNewsTest extends FunctionalTestCase
 {
+    private int $collection;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer::class)->synchronize();
+        $this->collection = $this->container()->get(\Johncms\Modules\News\Application\Collections\NewsReadServiceInterface::class)->collection()->id;
+    }
+
     public function testTheLatestArticlesAreShownNewestFirst(): void
     {
         $this->article('Older', '-2 days');
@@ -50,7 +59,7 @@ final class LatestNewsTest extends FunctionalTestCase
 
     public function testDraftAndScheduledArticlesAreNotAdvertised(): void
     {
-        Fixture::insert('news_articles', ['name' => 'Draft', 'code' => 'draft', 'active' => 0]);
+        Fixture::insert('collection_items', ['collection_id' => $this->collection, 'name' => 'Draft', 'code' => 'draft', 'active' => 0]);
         $this->article('Future', '+1 day');
         $this->article('Public', '-1 hour');
 
@@ -61,7 +70,7 @@ final class LatestNewsTest extends FunctionalTestCase
     {
         $time = date('Y-m-d H:i:s', strtotime($published));
 
-        Fixture::insert('news_articles', [
+        Fixture::insert('collection_items', ['collection_id' => $this->collection,
             'name'        => $name,
             'code'        => strtolower($name),
             'active'      => 1,

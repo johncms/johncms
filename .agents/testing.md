@@ -182,3 +182,9 @@ than the engine, so the same cases accepted the engine that replaced it.
 * Anything MySQL answers differently from SQLite: a functional test has to pass on both, so a
   full-text search or a collation-dependent order belongs to a test that does not need a database
   at all.
+
+
+The functional harness records its applied migrations and uses an isolated `updates.state_file`
+completion marker. It must never read or overwrite the developer site's update marker. Tests
+that exercise DDL hooks use isolated processes and a separate disposable database, outside the
+per-test transaction; `NewsStorageUpdateTest` demonstrates the pattern.

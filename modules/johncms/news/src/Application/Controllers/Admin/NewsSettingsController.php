@@ -10,7 +10,8 @@ use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
 use Johncms\Modules\News\Application\DTO\NewsSettingsDTO;
 use Johncms\Modules\News\Application\Exceptions\NewsSettingsException;
-use Johncms\Modules\News\Application\Services\NewsListControlsMapper;
+use Johncms\Modules\Collections\Application\Api\CollectionLookupApiInterface;
+use Johncms\Modules\News\Application\Collections\NewsCollectionDeclaration;
 use Johncms\Modules\News\Application\UseCases\GetNewsSettingsUseCase;
 use Johncms\Modules\News\Application\UseCases\UpdateNewsSettingsUseCase;
 use Johncms\NavChain;
@@ -27,6 +28,7 @@ final readonly class NewsSettingsController
         private GetNewsSettingsUseCase $getSettings,
         private UpdateNewsSettingsUseCase $updateSettings,
         private Session $session,
+        private CollectionLookupApiInterface $collections,
     ) {
     }
 
@@ -70,17 +72,19 @@ final readonly class NewsSettingsController
     private function render(NewsSettingsDTO $settings, array $errors, string $errorMessage = ''): ViewResponse
     {
         $title = __('Settings');
-        $this->navChain->add(__('News'), NewsListControlsMapper::PATH);
+        $collection = $this->collections->findDeclared(NewsCollectionDeclaration::OWNER, NewsCollectionDeclaration::KEY);
+        $workspace = $collection !== null ? '/admin/collections/' . $collection->id . '/items' : '/admin/collections';
+        $this->navChain->add(__('News'), $workspace);
         $this->navChain->add($title);
 
         return new ViewResponse('@news/admin/settings.twig', [
             'title'           => $title,
             'page_title'      => __('News settings'),
-            'module_menu'     => ['news' => true],
+            'module_menu'     => ['news' => true, $workspace => true],
             'settings'        => $settings,
             'errors'          => $errors,
             'form_action'     => self::URL,
-            'list_url'        => NewsListControlsMapper::PATH,
+            'list_url'        => $workspace,
             'max_quantity'    => UpdateNewsSettingsUseCase::MAX_QUANTITY,
             'max_days'        => UpdateNewsSettingsUseCase::MAX_DAYS,
             'error_message'   => $errorMessage,

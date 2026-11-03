@@ -34,11 +34,13 @@ final readonly class BlueprintCompiler
     /**
      * The order is not cosmetic: a column is renamed before it is described, a key is dropped
      * before the column it covers, and a key is added only once its columns exist.
+     * @param array<string, string> $foreignKeyNames Actual constraint names keyed by column list.
      */
     public function compile(
         TableDefinition $description,
         Blueprint $blueprint,
         SchemaPlatform $platform = new SchemaPlatform(),
+        array $foreignKeyNames = [],
     ): void {
         foreach ($description->getRenamedColumns() as $rename) {
             $blueprint->renameColumn($rename['from'], $rename['to']);
@@ -49,7 +51,7 @@ final readonly class BlueprintCompiler
         }
 
         foreach ($description->getDroppedForeignKeys() as $name) {
-            $blueprint->dropForeign($name);
+            $blueprint->dropForeign(is_array($name) ? ($foreignKeyNames[implode(',', $name)] ?? $name) : $name);
         }
 
         foreach ($description->getDroppedIndexes() as $index) {

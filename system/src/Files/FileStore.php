@@ -148,6 +148,12 @@ final readonly class FileStore
         );
     }
 
+    /** Registry existence does not require optional historical metadata or a working disk URL. */
+    public function isRegistered(int $id): bool
+    {
+        return $this->files->findById($id) !== null;
+    }
+
     public function find(int $id): ?StoredFileDTO
     {
         $file = $this->files->findById($id);

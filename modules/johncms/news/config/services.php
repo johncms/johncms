@@ -4,15 +4,8 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Johncms\Modules\News\Application\Section;
-use Johncms\Modules\News\Domain\Repository\NewsArticleRepositoryInterface;
-use Johncms\Modules\News\Domain\Repository\NewsCommentRepositoryInterface;
 use Johncms\Modules\News\Domain\Repository\NewsConfigRepositoryInterface;
-use Johncms\Modules\News\Domain\Repository\NewsSectionRepositoryInterface;
 use Johncms\Modules\News\Infrastructure\Config\LocalNewsConfigRepository;
-use Johncms\Modules\News\Infrastructure\Persistence\Repository\EloquentNewsArticleRepository;
-use Johncms\Modules\News\Infrastructure\Persistence\Repository\EloquentNewsCommentRepository;
-use Johncms\Modules\News\Infrastructure\Persistence\Repository\EloquentNewsSectionRepository;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -38,7 +31,7 @@ return static function (ContainerConfigurator $container): void {
         ->autowire()
         ->autoconfigure();
 
-    $services->set(Section::class, Section::class)->public();
+    $services->set(\Johncms\Modules\News\Application\Collections\NewsCollectionAvailability::class)->autowire()->public()->tag('johncms.collections.content_access');
     $services->set(\Johncms\Modules\News\Application\Collections\NewsCollectionDeclaration::class)
         ->autowire()->public()->tag('johncms.collections.declaration_provider');
     $services->set(\Johncms\Modules\News\Application\Collections\NewsCollectionOwnerUrls::class)
@@ -62,8 +55,6 @@ return static function (ContainerConfigurator $container): void {
     $services->set(\Johncms\Modules\News\Application\Collections\NewsCollectionChangeHandler::class)
         ->autowire()->tag('johncms.collections.change_handler');
     $services->set(\Johncms\Modules\News\Domain\Repository\NewsLegacyRepositoryInterface::class, \Johncms\Modules\News\Infrastructure\Persistence\Repository\SqlNewsLegacyRepository::class)->autowire()->public();
-    $services->set(NewsArticleRepositoryInterface::class, EloquentNewsArticleRepository::class)->public();
-    $services->set(NewsSectionRepositoryInterface::class, EloquentNewsSectionRepository::class)->public();
-    $services->set(NewsCommentRepositoryInterface::class, EloquentNewsCommentRepository::class)->public();
+    $services->set(\Johncms\Modules\News\Domain\Repository\NewsLegacyStorageRepositoryInterface::class, \Johncms\Modules\News\Infrastructure\Persistence\Repository\SqlNewsLegacyStorageRepository::class)->autowire()->public();
     $services->set(NewsConfigRepositoryInterface::class, LocalNewsConfigRepository::class)->autowire()->public();
 };

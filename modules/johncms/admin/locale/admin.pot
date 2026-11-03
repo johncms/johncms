@@ -198,14 +198,10 @@ msgid "Forum"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:54
-msgid "News"
-msgstr ""
-
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:55
 msgid "Collections"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:56
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:55
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:56
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:169
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:203
@@ -214,21 +210,21 @@ msgstr ""
 msgid "Advertisement"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:57
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:56
 msgid "Consents"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:58
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:57
 #: modules/johncms/admin/templates/user/edit.twig:75
 msgid "Contacts"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:59
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:58
 #: modules/johncms/admin/templates/counter-form.twig:94
 msgid "Cookie banner"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:60
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:59
 #: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:41
 #: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:142
 #: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:166
@@ -236,17 +232,17 @@ msgstr ""
 msgid "Counters"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:61
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:60
 msgid "Manage modules"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:65
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:64
 #: modules/johncms/admin/templates/dashboard/system.twig:10
 #: modules/johncms/admin/templates/modules.twig:81
 msgid "System"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:68
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:67
 #: modules/johncms/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:63
 #: modules/johncms/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:72
 #: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:62
@@ -261,27 +257,27 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:69
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:68
 #: modules/johncms/admin/src/Application/Controllers/System/EmoticonsController.php:58
 msgid "Smilies"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:70
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:69
 msgid "Language Settings"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:71
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:70
 #: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:24
 #: modules/johncms/admin/templates/dashboard/system.twig:11
 msgid "System check"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:72
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:71
 #: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:69
 msgid "Maintenance"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:73
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:72
 #: modules/johncms/admin/src/Application/Controllers/System/StyleGuideController.php:23
 msgid "Style guide"
 msgstr ""

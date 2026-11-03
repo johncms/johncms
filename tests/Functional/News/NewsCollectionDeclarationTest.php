@@ -41,10 +41,8 @@ final class NewsCollectionDeclarationTest extends FunctionalTestCase
         self::assertSame(FieldType::Text, $fields[2]->type);
         self::assertTrue($fields[3]->multiple);
         self::assertSame('Legacy article', Capsule::table('news_articles')->where('id', $legacy)->value('name'));
-        $response = $this->handleRequest('/news/legacy-article.html', catch: false);
-        self::assertSame(200, $response->getStatusCode());
-        self::assertStringContainsString('Legacy body', (string) $response->getContent());
-        self::assertSame(200, $this->handleRequest('/admin/news', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()))->getStatusCode());
+        self::assertSame(404, $this->handleRequest('/news/legacy-article.html')->getStatusCode());
+        self::assertSame(404, $this->handleRequest('/admin/news', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()))->getStatusCode());
     }
 
     public function testOwnerUrlsKeepTheNewsShapeAndEditorCanUseTheCollectionWorkspace(): void
@@ -67,7 +65,7 @@ final class NewsCollectionDeclarationTest extends FunctionalTestCase
         $response = $this->handleRequest('/admin/collections/' . $collection->id . '/items', cookies: $this->actingAs($user));
         self::assertSame(200, $response->getStatusCode());
         self::assertStringContainsString('/admin/news/settings', (string) $response->getContent());
-        self::assertMatchesRegularExpression('~href="/admin/news/"[^>]*aria-current="page"~s', (string) $response->getContent());
+        self::assertMatchesRegularExpression('~href="/admin/collections/' . $collection->id . '/items"[^>]*aria-current="page"~s', (string) $response->getContent());
         self::assertSame(200, $this->handleRequest($urls->preview($collection, $api->getItem($rootId)), cookies: $this->actingAs($user))->getStatusCode());
     }
 

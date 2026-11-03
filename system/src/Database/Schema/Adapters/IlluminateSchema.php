@@ -47,8 +47,16 @@ final readonly class IlluminateSchema implements SchemaInterface
     {
         $description = $this->describe($table, $definition);
 
-        $this->builder->table($table, function (Blueprint $blueprint) use ($description): void {
-            $this->compiler->compile($description, $blueprint, $this->platform());
+        $foreignKeyNames = [];
+        if ($description->getDroppedForeignKeys() !== [] && $this->builder->getConnection()->getDriverName() !== 'sqlite') {
+            foreach ($this->builder->getForeignKeys($table) as $key) {
+                if (is_string($key['name'])) {
+                    $foreignKeyNames[implode(',', $key['columns'])] = $key['name'];
+                }
+            }
+        }
+        $this->builder->table($table, function (Blueprint $blueprint) use ($description, $foreignKeyNames): void {
+            $this->compiler->compile($description, $blueprint, $this->platform(), $foreignKeyNames);
         });
     }
 
@@ -94,6 +102,19 @@ final readonly class IlluminateSchema implements SchemaInterface
             }
         }
 
+        return false;
+    }
+
+    public function hasForeignKeyForColumns(string $table, array $columns): bool
+    {
+        if (! $this->builder->hasTable($table)) {
+            return false;
+        }
+        foreach ($this->builder->getForeignKeys($table) as $foreignKey) {
+            if ($foreignKey['columns'] === $columns) {
+                return true;
+            }
+        }
         return false;
     }
 

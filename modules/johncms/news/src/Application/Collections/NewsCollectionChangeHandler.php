@@ -12,12 +12,18 @@ use Johncms\Modules\News\Domain\Repository\NewsDiscussionRepositoryInterface;
 
 final readonly class NewsCollectionChangeHandler implements CollectionChangeHandlerInterface
 {
-    public function __construct(private CollectionLookupApiInterface $lookup, private NewsDiscussionRepositoryInterface $discussion, private CollectionTransactionInterface $transaction, private NewsDiscussionFiles $files)
-    {
+    public function __construct(
+        private CollectionLookupApiInterface $lookup,
+        private NewsDiscussionRepositoryInterface $discussion,
+        private CollectionTransactionInterface $transaction,
+        private NewsDiscussionFiles $files,
+        private ?NewsCollectionAvailability $availability = null,
+    ) {
     }
 
     public function withinTransaction(CollectionChangeDTO $change): void
     {
+        $this->availability?->assertAvailable($change->collectionId);
         if ($change->entity !== 'item' || $change->action !== 'deleted') {
             return;
         }

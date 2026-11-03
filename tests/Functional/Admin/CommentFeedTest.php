@@ -88,9 +88,11 @@ final class CommentFeedTest extends FunctionalTestCase
         Fixture::insert('download__comments', $legacy(1, $now - 4 * 3600));
         Fixture::insert('cms_library_comments', $legacy(2, $now - 3 * 3600));
         Fixture::insert('cms_album_comments', $legacy(3, $now - 2 * 3600));
-        $article = Fixture::insert('news_articles', ['name' => 'Opening', 'code' => 'opening']);
+        $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer::class)->synchronize();
+        $collection = $this->container()->get(\Johncms\Modules\News\Application\Collections\NewsReadServiceInterface::class)->collection()->id;
+        $article = Fixture::insert('collection_items', ['collection_id' => $collection, 'name' => 'Opening', 'code' => 'opening']);
         Fixture::insert('news_comments', [
-            'article_id' => $article,
+            'item_id' => $article,
             'user_id'    => 0,
             'text'       => 'A comment',
             'created_at' => date('Y-m-d H:i:s', $now - 3600),

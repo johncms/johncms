@@ -16,8 +16,13 @@ use Johncms\Modules\News\Application\Services\NewsPermissions;
 
 final readonly class EnsureNewsDiscussionAccessUseCase
 {
-    public function __construct(private CollectionLookupApiInterface $lookup, private CollectionsPublicApiInterface $items, private CurrentUser $user, private AccessCheckerInterface $access)
-    {
+    public function __construct(
+        private CollectionLookupApiInterface $lookup,
+        private CollectionsPublicApiInterface $items,
+        private CurrentUser $user,
+        private AccessCheckerInterface $access,
+        private \Johncms\Modules\News\Application\Collections\NewsCollectionAvailability $availability,
+    ) {
     }
 
     public function read(int $itemId): void
@@ -31,6 +36,9 @@ final readonly class EnsureNewsDiscussionAccessUseCase
 
     public function comment(): void
     {
+        if (! $this->availability->ready()) {
+            throw new NewsDiscussionAccessDeniedException(d__('news', 'News is unavailable until system:update completes.'));
+        }
         if (! $this->user->isValid() || ! $this->access->allows(NewsPermissions::COMMENTS_POST)) {
             throw new NewsDiscussionAccessDeniedException(d__('news', 'You are not allowed to comment on the news.'));
         }
@@ -38,6 +46,9 @@ final readonly class EnsureNewsDiscussionAccessUseCase
 
     public function vote(): void
     {
+        if (! $this->availability->ready()) {
+            throw new NewsDiscussionAccessDeniedException(d__('news', 'News is unavailable until system:update completes.'));
+        }
         if (! $this->user->isValid() || ! $this->access->allows(NewsPermissions::VOTE)) {
             throw new NewsDiscussionAccessDeniedException(d__('news', 'You are not allowed to vote on the news.'));
         }
@@ -45,6 +56,9 @@ final readonly class EnsureNewsDiscussionAccessUseCase
 
     public function delete(int $authorId): void
     {
+        if (! $this->availability->ready()) {
+            throw new NewsDiscussionAccessDeniedException(d__('news', 'News is unavailable until system:update completes.'));
+        }
         if (! $this->user->isValid() || ($this->user->id() !== $authorId && ! $this->access->allows(NewsPermissions::COMMENTS_MODERATE))) {
             throw new NewsDiscussionAccessDeniedException(d__('news', 'You are not allowed to delete this comment.'));
         }

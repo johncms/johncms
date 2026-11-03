@@ -12,7 +12,8 @@ use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInt
 
 final readonly class EnsureCollectionContentAccessUseCase
 {
-    public function __construct(private AccessCheckerInterface $access, private ContentCollectionRepositoryInterface $collections)
+    /** @param iterable<\Johncms\Modules\Collections\Application\Extension\CollectionContentAccessProviderInterface> $owners */
+    public function __construct(private AccessCheckerInterface $access, private ContentCollectionRepositoryInterface $collections, private iterable $owners = [])
     {
     }
 
@@ -32,6 +33,9 @@ final readonly class EnsureCollectionContentAccessUseCase
 
     public function execute(int $collectionId): void
     {
+        foreach ($this->owners as $owner) {
+            $owner->assertAvailable($collectionId);
+        }
         if ($this->canManageSchema()) {
             return;
         }

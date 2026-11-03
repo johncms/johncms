@@ -42,7 +42,7 @@ final class TableDefinition
     /** @var list<IndexDefinition> */
     private array $droppedIndexes = [];
 
-    /** @var list<string> */
+    /** @var list<string|list<string>> */
     private array $droppedForeignKeys = [];
 
     public function __construct(public readonly string $name)
@@ -251,6 +251,11 @@ final class TableDefinition
         $this->droppedForeignKeys[] = $name;
     }
 
+    public function dropForeignForColumns(string $column, string ...$otherColumns): void
+    {
+        $this->droppedForeignKeys[] = [$column, ...$otherColumns];
+    }
+
     // What the adapter reads.
 
     /**
@@ -302,7 +307,7 @@ final class TableDefinition
     }
 
     /**
-     * @return list<string>
+     * @return list<string|list<string>>
      */
     public function getDroppedForeignKeys(): array
     {

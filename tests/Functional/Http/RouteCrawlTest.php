@@ -46,6 +46,7 @@ final class RouteCrawlTest extends FunctionalTestCase
     #[DataProvider('visits')]
     public function testThePageAnswers(string $route, string $path, string $visitor, bool $panel): void
     {
+        $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer::class)->synchronize();
         $cookies = $this->cookiesOf($visitor);
         $response = $this->handleRequest($path, cookies: $cookies);
         $status = $response->getStatusCode();

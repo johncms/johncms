@@ -1,15 +1,15 @@
 {#
     One article with its rating and comments.
 
-    @param NewsArticle  article
-    @param ?NewsSection current_section
+    @param array  article
+    @param ?array current_section
 #}
 {% extends '@theme/layouts/default.twig' %}
 
 {% block content %}
     <div id="blog">
         <div class="p-no-margin overflow-hidden">
-            {# Sanitized by the model, with the media embedded, so it stays markup. #}
+            {# Sanitized by the shared content renderer, with the media embedded, so it stays markup. #}
             {{ article.text_safe }}
         </div>
         <div class="meta text-muted">
@@ -39,7 +39,7 @@
                 <likes-component
                     :article_id="{{ article.id }}"
                     :rating="{{ article.rating }}"
-                    :can_vote="{{ app.user.isValid ? 'true' : 'false' }}"
+                    :can_vote="{{ can('news.vote') ? 'true' : 'false' }}"
                     :voted="{{ article.current_vote }}"
                 ></likes-component>
             </div>

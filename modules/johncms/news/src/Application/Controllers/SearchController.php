@@ -4,144 +4,57 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Controllers;
 
-use Illuminate\Database\Eloquent\Builder;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
-use Johncms\Modules\News\Domain\Models\NewsArticle;
-use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\News\Application\Collections\NewsReadServiceInterface;
+use Johncms\Modules\News\Application\DTO\NewsQueryDTO;
+use Johncms\NavChain;
 
-final class SearchController
+final readonly class SearchController
 {
-    protected array $config;
-
     public function __construct(
-        private readonly NavChain $navChain,
-        private readonly PaginationFactory $paginationFactory,
-        private readonly PaginationGuard $paginationGuard,
+        private NewsReadServiceInterface $news,
+        private NavChain $navChain,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
-        $this->config = config('news') ?? [];
     }
 
-    /**
-     * The search page
-     *
-     * @param Request $request
-     */
     public function index(Request $request): ViewResponse
     {
-        $this->navChain->add(__('News'), '/news/');
-
-        $page_title = __('Search');
-        $this->navChain->add($page_title, '');
-
-        $query = $request->queryParam('query');
-        $articles = null;
-        $pagination = null;
-        if (! empty($query)) {
-            $like = '%' . $query . '%';
-            $pager = $this->paginationFactory->create($this->searchQuery($like)->count());
-
-            $redirectUrl = $this->paginationGuard->redirectUrl($pager);
-            if ($redirectUrl !== null) {
-                redirect($redirectUrl);
-            }
-
-            if ($pager->getTotal() > 0) {
-                $articles = $this->searchQuery($like)
-                    ->withCount('comments')
-                    ->offset($pager->getOffset())
-                    ->limit($pager->getPerPage())
-                    ->get();
-            }
-            $pagination = $pager->hasPages() ? $pager->render() : null;
-        }
-
-        return new ViewResponse(
-            '@news/public/search.twig',
-            [
-                'title'            => $page_title,
-                'page_title'       => $page_title,
-                'keywords'         => $this->config['meta_keywords'] ?? '',
-                'description'      => $this->config['meta_description'] ?? '',
-                'query'            => (string) $query,
-                'articles'         => $articles,
-                'pagination'       => $pagination,
-                'form_action'      => '/news/search/',
-                'form_field'       => 'query',
-                'form_placeholder' => __('Search query'),
-            ]
-        );
+        return $this->search($request, false);
     }
 
-    /**
-     * The search by tags page
-     *
-     * @param Request $request
-     */
     public function byTags(Request $request): ViewResponse
     {
-        $page_title = __('Search by tags');
-        $this->navChain->add($page_title, '');
+        return $this->search($request, true);
+    }
 
-        $query = $request->queryParam('tag');
-        $articles = null;
+    private function search(Request $request, bool $tags): ViewResponse
+    {
+        $this->navChain->add(d__('news', 'News'), '/news/');
+        $title = $tags ? d__('news', 'Search by tags') : d__('news', 'Search');
+        $this->navChain->add($title);
+        $query = trim($request->queryParam($tags ? 'tag' : 'query'));
+        $articles = [];
         $pagination = null;
-        if (! empty($query)) {
-            $like = '%' . $query . '%';
-            $pager = $this->paginationFactory->create($this->tagsQuery($like)->count());
-
-            $redirectUrl = $this->paginationGuard->redirectUrl($pager);
-            if ($redirectUrl !== null) {
-                redirect($redirectUrl);
+        if ($query !== '') {
+            $spec = new NewsQueryDTO(search: $tags ? '' : $query, tag: $tags ? $query : null);
+            $pager = $this->paginationFactory->create($this->news->count($spec));
+            $redirect = $this->paginationGuard->redirectUrl($pager);
+            if ($redirect !== null) {
+                redirect($redirect);
             }
-
-            if ($pager->getTotal() > 0) {
-                $articles = $this->tagsQuery($like)
-                    ->withCount('comments')
-                    ->offset($pager->getOffset())
-                    ->limit($pager->getPerPage())
-                    ->get();
-            }
+            $page = $this->news->page(new NewsQueryDTO(search: $spec->search, tag: $spec->tag, limit: $pager->getPerPage(), offset: $pager->getOffset()));
+            $articles = array_map(static fn ($entry): array => $entry->toTemplate(), $page->articles);
             $pagination = $pager->hasPages() ? $pager->render() : null;
         }
-
-        return new ViewResponse(
-            '@news/public/search.twig',
-            [
-                'title'            => $page_title,
-                'page_title'       => $page_title,
-                'keywords'         => $this->config['meta_keywords'],
-                'description'      => $this->config['meta_description'],
-                'query'            => (string) $query,
-                'articles'         => $articles,
-                'pagination'       => $pagination,
-                'form_action'      => '/news/search_tags/',
-                'form_field'       => 'tag',
-                'form_placeholder' => __('Enter a tag'),
-            ]
-        );
-    }
-
-    /**
-     * @return Builder<NewsArticle>
-     */
-    private function searchQuery(string $like): Builder
-    {
-        return (new NewsArticle())
-            ->active()
-            ->search()
-            ->where('news_search_index.text', 'like', $like);
-    }
-
-    /**
-     * @return Builder<NewsArticle>
-     */
-    private function tagsQuery(string $like): Builder
-    {
-        return (new NewsArticle())
-            ->active()
-            ->where('tags', 'like', $like);
+        return new ViewResponse('@news/public/search.twig', array_replace($this->news->rootMetadata(), [
+            'title' => $title, 'page_title' => $title, 'query' => $query, 'articles' => $articles, 'pagination' => $pagination,
+            'form_action' => $tags ? '/news/search_tags/' : '/news/search/', 'form_field' => $tags ? 'tag' : 'query',
+            'form_placeholder' => $tags ? d__('news', 'Enter a tag') : d__('news', 'Search query'),
+        ]));
     }
 }

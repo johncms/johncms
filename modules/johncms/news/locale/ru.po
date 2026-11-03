@@ -743,3 +743,6 @@ msgstr "У вас нет права оценивать новости."
 
 msgid "You are not allowed to delete this comment."
 msgstr "У вас нет права удалять этот комментарий."
+
+msgid "News is unavailable until system:update completes."
+msgstr "Новости недоступны до завершения system:update."

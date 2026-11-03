@@ -514,6 +514,7 @@ return static function (ContainerConfigurator $container): void {
 
     // The registry the boot already built: the container is compiled from the modules it names,
     // so it cannot be the thing that creates it.
+    $services->set(\Johncms\Updates\SystemUpdateState::class)->factory(service(\Johncms\Updates\SystemUpdateStateFactory::class));
     $services->alias(\Johncms\Updates\SystemUpdateStateInterface::class, \Johncms\Updates\SystemUpdateState::class);
     $services->set(\Johncms\Updates\SystemUpdateLock::class)
         ->arg('$mutex', service(\Johncms\AdminTasks\FileAdminTaskMutex::class));

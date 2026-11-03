@@ -54,6 +54,9 @@ interface SchemaInterface
      */
     public function hasForeignKey(string $table, string $name): bool;
 
+    /** @param non-empty-list<string> $columns */
+    public function hasForeignKeyForColumns(string $table, array $columns): bool;
+
     /**
      * The type of a column as the database itself reports it, or null when there is no such
      * column. The spelling belongs to the database, so a caller compares loosely — with
