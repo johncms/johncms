@@ -7,7 +7,7 @@ msgid "The requested article was not found."
 msgstr ""
 
 #: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:29
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:180
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:185
 #: modules/johncms/news/src/Application/Collections/NewsViewMapper.php:94
 #: modules/johncms/news/src/Application/CommentFeed/NewsCommentFeedSource.php:47
 #: modules/johncms/news/src/Application/Controllers/Admin/ArticleFormController.php:131
@@ -46,33 +46,33 @@ msgstr ""
 msgid "Tags"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:91
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:92
 #: modules/johncms/news/src/Application/Controllers/CommentsController.php:181
 msgid "Enter the comment text"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:95
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:104
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:96
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:105
 msgid "One of the comment attachments is not available."
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:114
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:124
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:119
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:129
 msgid "The comment is not available."
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:136
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:141
 msgid "Choose an upvote or a downvote."
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:200
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:205
 #: modules/johncms/news/src/Application/Collections/NewsReadService.php:49
 #: modules/johncms/news/src/Application/Collections/NewsReadService.php:208
 #: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:26
 msgid "The news collection is missing. Run system:update."
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:212
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:217
 #: modules/johncms/news/src/Application/Collections/NewsReadService.php:249
 #: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:28
 msgid "The requested article or section is not available."

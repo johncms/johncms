@@ -44,6 +44,7 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
         private NewsDiscussionRepositoryInterface $discussion,
         private NewsDiscussionFiles $cleanup,
         private FileStore $files,
+        private \Johncms\Modules\Collections\Application\Api\CollectionFileReferencesApiInterface $collectionFiles,
         private CurrentUser $user,
         private AccessCheckerInterface $access,
         private UserRepositoryInterface $users,
@@ -102,6 +103,10 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
             $allowed = $this->files->filterIdsInDirectory($files, 'news_comments');
             if (count($allowed) !== count($files)) {
                 throw new NewsDiscussionValidationException(d__('news', 'One of the comment attachments is not available.'));
+            }
+            sort($files);
+            foreach ($files as $fileId) {
+                $this->collectionFiles->transferOwnership($fileId, false);
             }
             return $this->discussion->addComment($itemId, $this->user->id(), $text, $metadata, $files);
         });

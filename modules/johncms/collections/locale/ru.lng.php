@@ -181,7 +181,7 @@
       'Item not found.' => 'Элемент не найден.',
       'Unknown patch property or invalid value type.' => 'Неизвестное свойство обновления или неверный тип значения.',
       'This field cannot be cleared.' => 'Это поле нельзя очистить.',
-      'Use a JSON object of at most 65535 bytes for section metadata.' => 'Укажите метаданные раздела как JSON-объект размером не более 65535 байт.',
+      'Use a JSON object of at most 1 MiB for section metadata.' => 'Укажите метаданные раздела как JSON-объект размером не более 1 МиБ.',
       'The section does not belong to this collection or no longer exists.' => 'Раздел не принадлежит этой коллекции или больше не существует.',
       'A section cannot be moved into itself or its descendants.' => 'Нельзя переместить раздел в самого себя или в один из его подразделов.',
       'Section metadata (JSON)' => 'Метаданные раздела (JSON)',

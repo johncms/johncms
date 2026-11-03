@@ -14,5 +14,5 @@ interface CollectionsImportApiInterface
 {
     public function importItem(CollectionItemFormDTO $form, CollectionItemHistoryDTO $history): int;
 
-    public function importSection(CollectionSectionFormDTO $form, DateTimeImmutable $createdAt, DateTimeImmutable $updatedAt): int;
+    public function importSection(CollectionSectionFormDTO $form, ?DateTimeImmutable $createdAt, ?DateTimeImmutable $updatedAt): int;
 }

@@ -139,6 +139,6 @@ final class SaveCollectionSectionUseCaseTest extends TestCase
         yield 'sort overflow' => ['tech', 'Tech', '2147483648', []];
         yield 'list metadata' => ['tech', 'Tech', 100, ['value']];
         yield 'object metadata' => ['tech', 'Tech', 100, ['value' => new \stdClass()]];
-        yield 'large metadata' => ['tech', 'Tech', 100, ['value' => str_repeat('x', 65536)]];
+        yield 'large metadata' => ['tech', 'Tech', 100, ['value' => str_repeat('x', 1048577)]];
     }
 }

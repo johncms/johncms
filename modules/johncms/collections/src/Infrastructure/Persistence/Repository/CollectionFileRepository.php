@@ -39,6 +39,16 @@ final class CollectionFileRepository implements CollectionFileRepositoryInterfac
         return $row?->getAttribute('managed') === true;
     }
 
+    public function setManaged(int $fileId, bool $managed): void
+    {
+        CollectionFileAsset::query()->where('file_id', $fileId)->update(['managed' => $managed]);
+    }
+
+    public function itemFiles(int $itemId): array
+    {
+        return CollectionFileLink::query()->where('item_id', $itemId)->orderBy('file_id')->pluck('file_id')->all();
+    }
+
     public function linkContext(string $token, int $fileId): void
     {
         CollectionFileLink::query()->firstOrCreate(['context_token' => $token, 'file_id' => $fileId], ['item_id' => null]);

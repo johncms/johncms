@@ -233,8 +233,8 @@ msgid "Sections"
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:111
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:85
-msgid "Use a JSON object of at most 65535 bytes for section metadata."
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:86
+msgid "Use a JSON object of at most 1 MiB for section metadata."
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:113
@@ -366,12 +366,12 @@ msgstr ""
 #: modules/johncms/collections/src/Application/Services/CollectionDeletionPlanner.php:32
 #: modules/johncms/collections/src/Application/UseCases/SaveCollectionFieldUseCase.php:34
 #: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:65
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:52
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:53
 msgid "Collection not found."
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Services/CollectionDeletionPlanner.php:36
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:58
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:59
 msgid "The section does not belong to this collection or no longer exists."
 msgstr ""
 
@@ -388,13 +388,13 @@ msgstr ""
 msgid "A registered file no longer exists."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/CollectionItemFiles.php:184
+#: modules/johncms/collections/src/Application/Services/CollectionItemFiles.php:193
 msgid "The upload context is missing, expired or belongs to another editor. Reopen the form."
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Services/CollectionItemValidator.php:38
 #: modules/johncms/collections/src/Application/UseCases/SaveCollectionFieldUseCase.php:59
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:74
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:75
 msgid "Enter an integer between -2147483648 and 2147483647."
 msgstr ""
 
@@ -537,7 +537,7 @@ msgid "Another field already uses this role."
 msgstr ""
 
 #: modules/johncms/collections/src/Application/UseCases/SaveCollectionItemUseCase.php:80
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:67
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:68
 msgid "Choose a section of this collection."
 msgstr ""
 
@@ -549,11 +549,11 @@ msgstr ""
 msgid "This field cannot be cleared."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:69
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:70
 msgid "A section cannot be moved into itself or its descendants."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:77
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionSectionUseCase.php:78
 msgid "The section description must not exceed 65535 bytes."
 msgstr ""
 

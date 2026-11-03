@@ -34,15 +34,16 @@ final readonly class SaveCollectionSectionUseCase
     }
 
     /** Creates or updates a section; historical dates are allowed only for trusted new imports. */
-    public function execute(?int $id, CollectionSectionFormDTO $dto, ?DateTimeImmutable $createdAt = null, ?DateTimeImmutable $updatedAt = null): int
+    public function execute(?int $id, CollectionSectionFormDTO $dto, ?DateTimeImmutable $createdAt = null, ?DateTimeImmutable $updatedAt = null, bool $imported = false): int
     {
-        if ($createdAt !== null || $updatedAt !== null) {
+        if ($imported || $createdAt !== null || $updatedAt !== null) {
             $this->context->requireActive();
-            if ($id !== null || $createdAt === null || $updatedAt === null) {
-                throw new \InvalidArgumentException('Import requires a new section and both historical dates.');
+            if ($id !== null) {
+                throw new \InvalidArgumentException('Historical section import creates new records only.');
             }
+            $imported = true;
         }
-        return $this->transaction->run(function () use ($id, $dto, $createdAt, $updatedAt): int {
+        return $this->transaction->run(function () use ($id, $dto, $createdAt, $updatedAt, $imported): int {
             // The collection lock serializes moves and sibling codes, including NULL parents.
             $result = $this->validator->validate(['name' => trim($dto->name), 'code' => trim($dto->code)], [
                 'name' => [new StringLength(max: 255)],
@@ -78,11 +79,11 @@ final readonly class SaveCollectionSectionUseCase
             }
             try {
                 $json = json_encode($dto->metadata, JSON_THROW_ON_ERROR, 32);
-                if (strlen($json) > 65535 || ($dto->metadata !== [] && array_is_list($dto->metadata)) || ! $this->isJsonData($dto->metadata)) {
+                if (strlen($json) > 1048576 || ($dto->metadata !== [] && array_is_list($dto->metadata)) || ! $this->isJsonData($dto->metadata)) {
                     throw new \JsonException();
                 }
             } catch (\JsonException) {
-                $result = $result->withError('metadata', d__('collections', 'Use a JSON object of at most 65535 bytes for section metadata.'));
+                $result = $result->withError('metadata', d__('collections', 'Use a JSON object of at most 1 MiB for section metadata.'));
             }
             $result->throwIfInvalid(static fn (array $errors): CollectionSectionFormException => new CollectionSectionFormException($errors));
             $existing = $this->repository->findByCodeForUpdate($dto->collectionId, $dto->parent, trim($dto->code));
@@ -97,9 +98,9 @@ final readonly class SaveCollectionSectionUseCase
             if ($id !== null) {
                 $this->repository->update($id, $attributes);
             } else {
-                if ($createdAt !== null && $updatedAt !== null) {
-                    $attributes['created_at'] = CollectionItemHistoryDTO::timestamp($createdAt);
-                    $attributes['updated_at'] = CollectionItemHistoryDTO::timestamp($updatedAt);
+                if ($imported) {
+                    $attributes['created_at'] = $createdAt !== null ? CollectionItemHistoryDTO::timestamp($createdAt) : null;
+                    $attributes['updated_at'] = $updatedAt !== null ? CollectionItemHistoryDTO::timestamp($updatedAt) : null;
                 }
                 $id = $this->repository->create($attributes)->id;
             }
@@ -110,7 +111,7 @@ final readonly class SaveCollectionSectionUseCase
                 $id,
                 $before,
                 new CollectionChangeStateDTO($dto->parent, $dto->active, trim($dto->code)),
-                $createdAt !== null
+                $imported
             ));
             return $id;
         });

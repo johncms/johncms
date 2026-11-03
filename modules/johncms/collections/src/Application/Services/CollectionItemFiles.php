@@ -114,6 +114,15 @@ final readonly class CollectionItemFiles implements CollectionChangeHandlerInter
         });
     }
 
+    /** Trusted module integration; does not grant a visitor access to file contents. @return list<int> */
+    public function registeredFileIds(int $collectionId, int $itemId): array
+    {
+        if ($this->items->findById($itemId)?->collection_id !== $collectionId) {
+            throw $this->invalidContext();
+        }
+        return $this->links->itemFiles($itemId);
+    }
+
     public function withinTransaction(CollectionChangeDTO $change): void
     {
         if ($change->entity === 'item' && $change->action === 'deleted') {

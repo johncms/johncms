@@ -77,6 +77,20 @@ final class CollectionsImportApiTest extends TestCase
         self::assertSame('Original text', $section->description);
     }
 
+    public function testAbsentHistoricalDatesRemainNullInsteadOfUsingTheImportTime(): void
+    {
+        $updated = new DateTimeImmutable('2002-03-04 05:06:07+00:00');
+        $id = $this->context->runTrusted(fn (): int => $this->api->importItem($this->form(), new CollectionItemHistoryDTO(null, $updated)));
+        $item = CollectionItemWriterFactory::api()->getItem($id);
+        self::assertNull($item->createdAt);
+        self::assertSame('2002-03-04 05:06:07', $item->updatedAt?->format('Y-m-d H:i:s'));
+        $section = $this->context->runTrusted(fn (): int => $this->api->importSection(
+            new CollectionSectionFormDTO($this->collection, null, 'undated', 'Undated', null, true, 100), null, null
+        ));
+        self::assertNull(Capsule::table('collection_sections')->where('id', $section)->value('created_at'));
+        self::assertNull(Capsule::table('collection_sections')->where('id', $section)->value('updated_at'));
+    }
+
     public function testImportUsesNormalRequiredFieldValidation(): void
     {
         Capsule::table('collection_fields')->insert(['collection_id' => $this->collection, 'code' => 'required', 'name' => 'Required', 'type' => 'integer', 'required' => true]);

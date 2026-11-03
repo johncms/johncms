@@ -27,9 +27,9 @@ final readonly class CollectionsImportApi implements CollectionsImportApiInterfa
         return $this->save->execute(null, $form, history: $history);
     }
 
-    public function importSection(CollectionSectionFormDTO $form, DateTimeImmutable $createdAt, DateTimeImmutable $updatedAt): int
+    public function importSection(CollectionSectionFormDTO $form, ?DateTimeImmutable $createdAt, ?DateTimeImmutable $updatedAt): int
     {
         $this->context->requireActive();
-        return $this->saveSection->execute(null, $form, $createdAt, $updatedAt);
+        return $this->saveSection->execute(null, $form, $createdAt, $updatedAt, imported: true);
     }
 }

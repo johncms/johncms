@@ -19,12 +19,17 @@ final readonly class NewsDiscussionFiles
     public function cleanup(array $ids, int $collectionId): void
     {
         $this->relations->withCollectionLock($collectionId, function () use ($ids): void {
-            $allowed = $this->files->filterIdsInDirectory($ids, 'news_comments');
+            $allowed = array_values(array_unique([...$this->files->filterIdsInDirectory($ids, 'news_comments'), ...$this->files->filterIdsInDirectory($ids, 'news')]));
             sort($allowed);
             foreach ($allowed as $id) {
-                if (! $this->discussion->referencesFile($id) && ! $this->collectionFiles->isReferenced($id)) {
-                    $this->files->delete($id);
+                if ($this->discussion->referencesFile($id)) {
+                    continue;
                 }
+                if ($this->collectionFiles->isReferenced($id)) {
+                    $this->collectionFiles->transferOwnership($id, true);
+                    continue;
+                }
+                $this->files->delete($id);
             }
         });
     }

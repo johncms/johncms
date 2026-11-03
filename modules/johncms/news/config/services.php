@@ -61,6 +61,7 @@ return static function (ContainerConfigurator $container): void {
     )->autowire()->public();
     $services->set(\Johncms\Modules\News\Application\Collections\NewsCollectionChangeHandler::class)
         ->autowire()->tag('johncms.collections.change_handler');
+    $services->set(\Johncms\Modules\News\Domain\Repository\NewsLegacyRepositoryInterface::class, \Johncms\Modules\News\Infrastructure\Persistence\Repository\SqlNewsLegacyRepository::class)->autowire()->public();
     $services->set(NewsArticleRepositoryInterface::class, EloquentNewsArticleRepository::class)->public();
     $services->set(NewsSectionRepositoryInterface::class, EloquentNewsSectionRepository::class)->public();
     $services->set(NewsCommentRepositoryInterface::class, EloquentNewsCommentRepository::class)->public();

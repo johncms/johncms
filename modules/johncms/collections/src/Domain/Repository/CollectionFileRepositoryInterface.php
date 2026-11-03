@@ -16,6 +16,11 @@ interface CollectionFileRepositoryInterface
     /** Lock the asset before changing any references. Returns whether collections own its bytes. */
     public function lockAsset(int $fileId): bool;
 
+    public function setManaged(int $fileId, bool $managed): void;
+
+    /** @return list<int> */
+    public function itemFiles(int $itemId): array;
+
     public function linkContext(string $token, int $fileId): void;
 
     /** @return list<int> */

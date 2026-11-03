@@ -12,6 +12,13 @@ final readonly class CollectionFileReferencesApi implements CollectionFileRefere
     {
     }
 
+    public function transferOwnership(int $fileId, bool $toCollections): void
+    {
+        $this->files->register($fileId, false);
+        $this->files->lockAsset($fileId);
+        $this->files->setManaged($fileId, $toCollections);
+    }
+
     public function isReferenced(int $fileId): bool
     {
         $this->files->lockAsset($fileId);

@@ -108,7 +108,7 @@ final readonly class CollectionSectionsAdminController
         } catch (CollectionSectionFormException $exception) {
             return $this->renderForm($collection, $id, $fields, array_merge(...array_values($exception->errors)));
         } catch (\JsonException) {
-            return $this->renderForm($collection, $id, $fields, [d__('collections', 'Use a JSON object of at most 65535 bytes for section metadata.')]);
+            return $this->renderForm($collection, $id, $fields, [d__('collections', 'Use a JSON object of at most 1 MiB for section metadata.')]);
         } catch (CollectionSectionCodeAlreadyExistsException) {
             return $this->renderForm($collection, $id, $fields, [__('A section with this code already exists')]);
         }

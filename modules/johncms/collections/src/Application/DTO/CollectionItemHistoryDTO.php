@@ -11,8 +11,8 @@ use InvalidArgumentException;
 final readonly class CollectionItemHistoryDTO
 {
     public function __construct(
-        public DateTimeImmutable $createdAt,
-        public DateTimeImmutable $updatedAt,
+        public ?DateTimeImmutable $createdAt,
+        public ?DateTimeImmutable $updatedAt,
         public ?int $createdBy = null,
         public ?int $updatedBy = null,
         public int $viewCount = 0,
@@ -28,7 +28,8 @@ final readonly class CollectionItemHistoryDTO
             }
         }
         return [
-            'created_at' => self::timestamp($this->createdAt), 'updated_at' => self::timestamp($this->updatedAt),
+            'created_at' => $this->createdAt !== null ? self::timestamp($this->createdAt) : null,
+            'updated_at' => $this->updatedAt !== null ? self::timestamp($this->updatedAt) : null,
             'created_by' => $this->createdBy, 'updated_by' => $this->updatedBy, 'view_count' => $this->viewCount,
         ];
     }
