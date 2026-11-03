@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Services;
 
-use DateTimeImmutable;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
@@ -16,12 +15,12 @@ use Johncms\Validator\ValidatorInterface;
 
 final readonly class CollectionItemValidator
 {
-    public function __construct(private ValidatorInterface $validator)
+    public function __construct(private ValidatorInterface $validator, private CollectionFieldValueRules $fieldValues = new CollectionFieldValueRules())
     {
     }
 
     /** @param Collection<int, ContentCollectionField> $definitions */
-    public function validate(CollectionItemFormDTO $form, Collection $definitions): CollectionItemFormDTO
+    public function validate(CollectionItemFormDTO $form, Collection $definitions, bool $applyDefaults = false): CollectionItemFormDTO
     {
         $name = trim($form->name);
         $code = trim($form->code);
@@ -40,8 +39,8 @@ final readonly class CollectionItemValidator
         if ($form->previewText !== null && strlen($form->previewText) > 65535) {
             $result = $result->withError('preview_text', d__('collections', 'The preview text must not exceed 65535 bytes.'));
         }
-        $from = $this->date($form->activeFrom);
-        $to = $this->date($form->activeTo);
+        $from = $this->fieldValues->date($form->activeFrom);
+        $to = $this->fieldValues->date($form->activeTo);
         foreach (['active_from' => [$form->activeFrom, $from], 'active_to' => [$form->activeTo, $to]] as $key => [$raw, $date]) {
             if ($raw !== null && trim($raw) !== '' && $date === null) {
                 $result = $result->withError($key, d__('collections', 'Enter a valid date and time.'));
@@ -58,7 +57,7 @@ final readonly class CollectionItemValidator
         }
         foreach ($definitions as $field) {
             $key = 'values.' . $field->code;
-            $raw = $form->values[$field->code] ?? ($field->multiple ? [] : '');
+            $raw = array_key_exists($field->code, $form->values) ? $form->values[$field->code] : ($applyDefaults ? ($field->settings['default'] ?? ($field->multiple ? [] : '')) : ($field->multiple ? [] : ''));
             if (($field->multiple && (! is_array($raw) || ! array_is_list($raw))) || (! $field->multiple && ! is_string($raw))) {
                 $result = $result->withError($key, d__('collections', 'Submit a single value or a list as defined by the field.'));
                 continue;
@@ -71,10 +70,10 @@ final readonly class CollectionItemValidator
                     continue;
                 }
                 $value = $field->role === 'tags' ? \Johncms\Modules\Collections\Domain\Services\CollectionTextNormalizer::normalize($value) : trim($value);
-                if ($value === '' && $field->type !== FieldType::Boolean) {
+                if ($value === '' && ($field->type !== FieldType::Boolean || $field->multiple)) {
                     continue;
                 }
-                $error = $this->valueError($field->type, $value);
+                $error = $this->fieldValues->error($field->type, $value, $field->settings ?? []);
                 if ($error !== null) {
                     $result = $result->withError($key, $error);
                     continue;
@@ -83,11 +82,14 @@ final readonly class CollectionItemValidator
                     $result = $result->merge($this->validator->validate([$key => $value], [$key => [new StringLength(max: 255)]]));
                 }
                 $prepared[] = match ($field->type) {
-                    FieldType::Date => $this->date($value, true),
-                    FieldType::Datetime => $this->date($value),
+                    FieldType::Date => $this->fieldValues->date($value, true),
+                    FieldType::Datetime => $this->fieldValues->date($value),
                     FieldType::Boolean => $value === '1' ? '1' : '0',
                     default => $value,
                 };
+            }
+            if (count($prepared) > ($field->settings['max_values'] ?? 1000)) {
+                $result = $result->withError($key, d__('collections', 'The field has too many values.'));
             }
             if ($field->required && ($field->type !== FieldType::Boolean || $field->multiple) && $prepared === [] && ! $result->hasError($key)) {
                 $result = $result->withError($key, d__('collections', 'Fill in the field "%s"', $field->name));
@@ -112,34 +114,5 @@ final readonly class CollectionItemValidator
             $values,
             $form->uploadContext
         );
-    }
-
-    private function valueError(FieldType $type, string $value): ?string
-    {
-        $valid = match ($type) {
-            FieldType::Integer => filter_var($value, FILTER_VALIDATE_INT) !== false,
-            FieldType::Relation => filter_var($value, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) !== false,
-            FieldType::Double => is_numeric($value) && is_finite((float) $value),
-            FieldType::Boolean => in_array($value, ['', '0', '1'], true),
-            FieldType::Date => $this->date($value, true) !== null,
-            FieldType::Datetime => $this->date($value) !== null,
-            default => true,
-        };
-        return $valid ? null : d__('collections', 'Enter a valid value for this field type.');
-    }
-
-    private function date(?string $raw, bool $dateOnly = false): ?string
-    {
-        if ($raw === null || trim($raw) === '' || str_contains($raw, "\0")) {
-            return null;
-        }
-        $raw = trim($raw);
-        foreach ($dateOnly ? ['Y-m-d', 'Y-m-d H:i:s'] : ['Y-m-d H:i:s', 'Y-m-d H:i', 'Y-m-d\TH:i:s', 'Y-m-d\TH:i'] as $format) {
-            $date = DateTimeImmutable::createFromFormat('!' . $format, $raw);
-            if ($date !== false && $date->format($format) === $raw && $date->format('Y') >= '1000' && (! $dateOnly || $date->format('H:i:s') === '00:00:00')) {
-                return $date->format('Y-m-d H:i:s');
-            }
-        }
-        return null;
     }
 }

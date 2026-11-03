@@ -902,3 +902,81 @@ msgstr "Введите тег"
 
 msgid "Could not load tag suggestions."
 msgstr "Не удалось загрузить подсказки тегов."
+
+msgid "The value does not meet the configured length limits."
+msgstr "Значение не соответствует ограничениям длины."
+
+msgid "The value is outside the configured numeric range."
+msgstr "Значение выходит за допустимый числовой диапазон."
+
+msgid "Field settings must be a JSON object of at most 65535 bytes."
+msgstr "Настройки поля должны быть JSON-объектом размером не более 65535 байт."
+
+msgid "Use a hint of at most 2000 characters."
+msgstr "Подсказка не должна превышать 2000 символов."
+
+msgid "Use valid integer limits for field length and number of values."
+msgstr "Укажите допустимые целые ограничения длины поля и количества значений."
+
+msgid "Numeric limits must be finite numbers on a numeric field."
+msgstr "Числовые границы допустимы только для числовых полей; для целого поля укажите целые числа."
+
+msgid "The minimum limit must not exceed the maximum."
+msgstr "Минимальное ограничение не должно превышать максимальное."
+
+msgid "Use a string default for one value or a list of strings for multiple values."
+msgstr "Значение по умолчанию задаётся строкой, а для множественного поля — списком строк."
+
+msgid "The default exceeds the configured number of values."
+msgstr "Количество значений по умолчанию превышает установленное ограничение."
+
+msgid "The default does not meet this field type and its limits."
+msgstr "Значение по умолчанию не соответствует типу поля или его ограничениям."
+
+msgid "Convert existing values explicitly before changing their type or multiplicity."
+msgstr "Перед сменой типа или множественности явно преобразуйте существующие значения."
+
+msgid "The field has too many values."
+msgstr "Превышено допустимое количество значений поля."
+
+msgid "Input settings"
+msgstr "Настройки ввода"
+
+msgid "Hint"
+msgstr "Подсказка"
+
+msgid "Use a default value"
+msgstr "Использовать значение по умолчанию"
+
+msgid "Default value"
+msgstr "Значение по умолчанию"
+
+msgid "Empty entries are ignored. Save to add another default value."
+msgstr "Пустые значения пропускаются. Сохраните поле, чтобы добавить следующее значение по умолчанию."
+
+msgid "Defaults apply only when creating an item without an explicit value. Dates use ISO format; booleans use 0 or 1."
+msgstr "Значение по умолчанию применяется только при создании записи без явного значения. Даты задаются в формате ISO, логические значения — 0 или 1."
+
+msgid "Minimum text length"
+msgstr "Минимальная длина текста"
+
+msgid "Maximum text length"
+msgstr "Максимальная длина текста"
+
+msgid "Minimum numeric value"
+msgstr "Минимальное числовое значение"
+
+msgid "Maximum numeric value"
+msgstr "Максимальное числовое значение"
+
+msgid "Maximum number of values"
+msgstr "Максимальное количество значений"
+
+msgid "For multiple fields. Leave limits empty to use the storage limits."
+msgstr "Для множественных полей. Пустые ограничения означают пределы хранилища."
+
+msgid "Empty entries are ignored. Save to add another value."
+msgstr "Пустые значения пропускаются. Сохраните запись, чтобы добавить следующее значение."
+
+msgid "No value"
+msgstr "Без значения"

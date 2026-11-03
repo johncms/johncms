@@ -47,7 +47,7 @@
                                 {% endfor %}
                             </select>
                             {% if id is not null %}
-                                <div class="form-text">{{ __('Changing the type of a field the items already fill may lose their values.') }}</div>
+                                <div class="form-text">{{ __('Convert existing values explicitly before changing their type or multiplicity.') }}</div>
                             {% endif %}
                         </div>
                         <div class="col-12">
@@ -63,6 +63,54 @@
                     </div>
                 </div>
             </section>
+
+            <fieldset class="card mt-3"{% if managed %} disabled{% endif %}>
+                <div class="card-header"><h2 class="h6 mb-0">{{ __('Input settings') }}</h2></div>
+                <div class="card-body row g-3">
+                    <div class="col-12">
+                        <label class="form-label" for="field-hint">{{ __('Hint') }}</label>
+                        <textarea class="form-control" id="field-hint" name="hint" rows="2" maxlength="2000">{{ fields.hint }}</textarea>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="use_default" id="use-default" value="1"{% if fields.use_default %} checked{% endif %}>
+                            <label class="form-check-label" for="use-default">{{ __('Use a default value') }}</label>
+                        </div>
+                        {% if fields.multiple %}
+                            {% for entry in fields.default_values|merge(['']) %}
+                                <label class="form-label" for="field-default-{{ loop.index }}">{{ __('Default value') }} {{ loop.index }}</label>
+                                <textarea class="form-control mb-2" id="field-default-{{ loop.index }}" name="default_values[]" rows="2">{{ entry }}</textarea>
+                            {% endfor %}
+                            <div class="form-text">{{ __('Empty entries are ignored. Save to add another default value.') }}</div>
+                        {% else %}
+                            <label class="form-label" for="field-default">{{ __('Default value') }}</label>
+                            <textarea class="form-control" id="field-default" name="default_value" rows="2">{{ fields.default_value }}</textarea>
+                        {% endif %}
+                        <div class="form-text">{{ __('Defaults apply only when creating an item without an explicit value. Dates use ISO format; booleans use 0 or 1.') }}</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="min-length">{{ __('Minimum text length') }}</label>
+                        <input type="number" class="form-control" min="0" id="min-length" name="min_length" value="{{ fields.min_length }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="max-length">{{ __('Maximum text length') }}</label>
+                        <input type="number" class="form-control" min="0" id="max-length" name="max_length" value="{{ fields.max_length }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="min-value">{{ __('Minimum numeric value') }}</label>
+                        <input type="number" step="any" class="form-control" id="min-value" name="min_value" value="{{ fields.min_value }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="max-value">{{ __('Maximum numeric value') }}</label>
+                        <input type="number" step="any" class="form-control" id="max-value" name="max_value" value="{{ fields.max_value }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="max-values">{{ __('Maximum number of values') }}</label>
+                        <input type="number" class="form-control" min="1" max="1000" id="max-values" name="max_values" value="{{ fields.max_values }}">
+                        <div class="form-text">{{ __('For multiple fields. Leave limits empty to use the storage limits.') }}</div>
+                    </div>
+                </div>
+            </fieldset>
         </div>
 
         <div class="col-lg-4">

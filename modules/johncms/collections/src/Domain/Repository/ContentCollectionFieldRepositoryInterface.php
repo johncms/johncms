@@ -25,6 +25,9 @@ interface ContentCollectionFieldRepositoryInterface
 
     public function findById(int $id): ?ContentCollectionField;
 
+    /** Current locking read under the collection lock. */
+    public function hasValues(int $id): bool;
+
     /**
      * @param array<string, mixed> $attributes
      */

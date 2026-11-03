@@ -94,7 +94,7 @@ final readonly class SaveCollectionItemUseCase
                     throw new CollectionItemFormException(['values.' . $code => [d__('collections', 'This field cannot be cleared.')]]);
                 }
             }
-            $dto = $this->validator->validate($dto, $definitions->values());
+            $dto = $this->validator->validate($dto, $definitions->values(), applyDefaults: $id === null && $history === null);
             $attributes = [
                 'collection_id' => $dto->collectionId, 'section_id' => $dto->sectionId,
                 'code' => $this->resolveCode($id, $dto), 'name' => $dto->name,

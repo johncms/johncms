@@ -237,6 +237,10 @@ final readonly class CollectionFieldsAdminController
             'multiple' => $request->hasBody('multiple') ? 1 : 0,
             'in_list'  => $request->hasBody('in_list') ? 1 : 0,
             'sort'     => $request->bodyInt('sort', 100),
+            'hint' => $request->body('hint'), 'use_default' => $request->hasBody('use_default'),
+            'default_value' => $request->body('default_value'), 'default_values' => array_values(array_filter($request->bodyList('default_values'), is_string(...))),
+            'min_length' => $request->body('min_length'), 'max_length' => $request->body('max_length'),
+            'min_value' => $request->body('min_value'), 'max_value' => $request->body('max_value'), 'max_values' => $request->body('max_values'),
         ];
     }
 
@@ -254,6 +258,7 @@ final readonly class CollectionFieldsAdminController
             'multiple' => $field->multiple ? 1 : 0,
             'in_list'  => $field->in_list ? 1 : 0,
             'sort'     => $field->sort,
+            ...$this->settingsToFields($field->settings ?? []),
         ];
     }
 
@@ -271,6 +276,7 @@ final readonly class CollectionFieldsAdminController
             'multiple' => 0,
             'in_list'  => 0,
             'sort'     => 100,
+            ...$this->settingsToFields([]),
         ];
     }
 
@@ -289,7 +295,39 @@ final readonly class CollectionFieldsAdminController
             multiple: (bool) $fields['multiple'],
             inList: (bool) $fields['in_list'],
             sort: (int) $fields['sort'],
+            settings: $this->settingsFromFields($fields),
         );
+    }
+
+    /** @param array<string, mixed> $settings
+     * @return array<string, mixed>
+     */
+    private function settingsToFields(array $settings): array
+    {
+        $default = $settings['default'] ?? null;
+        return [
+            'hint' => $settings['hint'] ?? '', 'use_default' => $default !== null,
+            'default_value' => is_string($default) ? $default : '', 'default_values' => is_array($default) ? $default : [],
+            'min_length' => $settings['min_length'] ?? '', 'max_length' => $settings['max_length'] ?? '',
+            'min_value' => $settings['min_value'] ?? '', 'max_value' => $settings['max_value'] ?? '', 'max_values' => $settings['max_values'] ?? '',
+        ];
+    }
+
+    /** @param array<string, mixed> $fields
+     * @return array<string, mixed>
+     */
+    private function settingsFromFields(array $fields): array
+    {
+        $default = $fields['multiple']
+            ? array_values(array_filter($fields['default_values'], static fn (string $value): bool => trim($value) !== ''))
+            : $fields['default_value'];
+        $settings = ['hint' => $fields['hint'], 'default' => $fields['use_default'] ? $default : null];
+        foreach (['min_length', 'max_length', 'min_value', 'max_value', 'max_values'] as $key) {
+            $raw = trim((string) $fields[$key]);
+            $integer = filter_var($raw, FILTER_VALIDATE_INT);
+            $settings[$key] = $raw === '' ? null : ($integer !== false ? $integer : (in_array($key, ['min_value', 'max_value'], true) && is_numeric($raw) ? (float) $raw : $raw));
+        }
+        return $settings;
     }
 
     /**

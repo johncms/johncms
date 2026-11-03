@@ -23,6 +23,7 @@ final readonly class SaveCollectionFieldUseCase
         private ContentCollectionRepositoryInterface $collections,
         private CollectionChangeDispatcher $changes = new CollectionChangeDispatcher(),
         private SystemOperationContext $context = new SystemOperationContext(),
+        private \Johncms\Modules\Collections\Application\Services\CollectionFieldSettingsValidator $settingsValidator = new \Johncms\Modules\Collections\Application\Services\CollectionFieldSettingsValidator(),
     ) {
     }
 
@@ -67,12 +68,16 @@ final readonly class SaveCollectionFieldUseCase
             if ($roleHolder !== null && $roleHolder->id !== $id) {
                 throw new CollectionSchemaException(d__('collections', 'Another field already uses this role.'));
             }
-            json_encode($dto->settings, JSON_THROW_ON_ERROR);
+            if ($current !== null && ($current->type !== $dto->type || $current->multiple !== $dto->multiple) && $this->repository->hasValues($current->id) && ! $this->context->isActive()) {
+                throw new CollectionSchemaException(d__('collections', 'Convert existing values explicitly before changing their type or multiplicity.'));
+            }
+            $settings = array_replace($current->settings ?? [], $dto->settings);
+            $this->settingsValidator->validate($dto->type, $dto->multiple, $settings);
             $attributes = [
                 'collection_id' => $dto->collectionId, 'code' => $dto->code, 'name' => $current?->owner_module !== null ? $current->getRawOriginal('name') : $dto->name,
                 'type' => $dto->type->value, 'required' => $dto->required, 'multiple' => $dto->multiple,
                 'in_list' => $dto->inList, 'sort' => $dto->sort, 'role' => $dto->role,
-                'settings' => array_replace($current->settings ?? [], $dto->settings),
+                'settings' => $settings,
             ];
             if ($owned !== null) {
                 $attributes['owner_module'] = $collection->owner_module;

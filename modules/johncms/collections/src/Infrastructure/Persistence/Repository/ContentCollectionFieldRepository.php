@@ -51,6 +51,11 @@ final class ContentCollectionFieldRepository implements ContentCollectionFieldRe
         return ContentCollectionField::query()->find($id);
     }
 
+    public function hasValues(int $id): bool
+    {
+        return \Johncms\Modules\Collections\Domain\Models\ContentCollectionItemValue::query()->where('field_id', $id)->lockForUpdate()->first(['id']) !== null;
+    }
+
     public function create(array $attributes): ContentCollectionField
     {
         return ContentCollectionField::query()->create($attributes);

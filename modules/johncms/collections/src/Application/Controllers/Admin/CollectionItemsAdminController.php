@@ -105,7 +105,13 @@ final readonly class CollectionItemsAdminController
             return $this->collectionNotFound();
         }
 
-        return $this->renderForm($collection, null, $this->defaultFields($this->querySection($request)), []);
+        $defaults = [];
+        foreach ($this->fieldRepository->getByCollection($collection_id) as $field) {
+            if (isset($field->settings['default'])) {
+                $defaults[$field->code] = $field->settings['default'];
+            }
+        }
+        return $this->renderForm($collection, null, $this->defaultFields($this->querySection($request)), $defaults);
     }
 
     public function editForm(int $collection_id, int $id): ViewResponse
@@ -273,6 +279,9 @@ final readonly class CollectionItemsAdminController
         $defs = [];
         foreach ($fields as $field) {
             $current = $valueMap[$field->code] ?? null;
+            if ($field->role === 'tags' && is_array($current)) {
+                $current = array_map(static fn (string $value): string => \Johncms\Modules\Collections\Domain\Services\CollectionTextNormalizer::normalize($value), $current);
+            }
 
             if ($field->multiple) {
                 $value = implode("\n", array_map(static fn ($v): string => (string) $v, is_array($current) ? $current : []));
@@ -291,9 +300,12 @@ final readonly class CollectionItemsAdminController
             $defs[] = [
                 'tags_url' => $field->role === 'tags' ? '/admin/collections/' . $field->collection_id . '/tags/' . $field->code : '',
                 'role' => $field->role,
-                'entries'    => $field->multiple && $field->type === FieldType::Html ? [...(is_array($current) ? $current : []), ''] : [],
+                'entries'    => $field->multiple ? [...array_map(fn ($entry): string => $this->inputValue($field->type, $entry), is_array($current) ? $current : []), ''] : [],
                 'input_name' => 'field_' . $field->code,
                 'name'       => $field->name,
+                'hint' => $field->settings['hint'] ?? '',
+                'min_length' => $field->settings['min_length'] ?? null, 'max_length' => $field->settings['max_length'] ?? null,
+                'min_value' => $field->settings['min_value'] ?? null, 'max_value' => $field->settings['max_value'] ?? null,
                 'type'       => $field->type->value,
                 'multiple'   => $field->multiple,
                 'required'   => $field->required,
@@ -303,6 +315,19 @@ final readonly class CollectionItemsAdminController
         }
 
         return $defs;
+    }
+
+    private function inputValue(FieldType $type, mixed $value): string
+    {
+        if ($type === FieldType::Boolean) {
+            return $value === false || $value === '0' ? '0' : ($value === true || $value === '1' ? '1' : '');
+        }
+        $value = (string) $value;
+        return match ($type) {
+            FieldType::Date => substr($value, 0, 10),
+            FieldType::Datetime => str_replace(' ', 'T', substr($value, 0, 16)),
+            default => $value,
+        };
     }
 
     /**
@@ -401,7 +426,7 @@ final readonly class CollectionItemsAdminController
     {
         $values = [];
         foreach ($fieldDefs as $field) {
-            if ($field->multiple && $field->type === FieldType::Html) {
+            if ($field->multiple && is_array($request->request->all()['field_' . $field->code] ?? null)) {
                 $values[$field->code] = array_values(array_filter($request->bodyList('field_' . $field->code), static fn ($value): bool => is_string($value) && trim($value) !== ''));
                 continue;
             }
