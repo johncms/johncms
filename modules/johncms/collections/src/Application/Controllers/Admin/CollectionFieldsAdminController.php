@@ -268,6 +268,7 @@ final readonly class CollectionFieldsAdminController
             'option_rows' => $this->optionsFromRequest($request),
             'target_collection_id' => $request->body('target_collection_id'),
             'relation_on_delete' => $request->body('relation_on_delete', 'restrict'),
+            'file_storage' => $request->body('file_storage', 'registry'),
             'hint' => $request->body('hint'), 'use_default' => $request->hasBody('use_default'),
             'default_value' => $request->body('default_value'), 'default_values' => array_values(array_filter($request->bodyList('default_values'), is_string(...))),
             'min_length' => $request->body('min_length'), 'max_length' => $request->body('max_length'),
@@ -308,6 +309,7 @@ final readonly class CollectionFieldsAdminController
             'in_list'  => 0,
             'sort'     => 100,
             ...$this->settingsToFields([]),
+            'file_storage' => 'registry',
         ];
     }
 
@@ -340,6 +342,7 @@ final readonly class CollectionFieldsAdminController
             'hint' => $settings['hint'] ?? '',
             'target_collection_id' => $settings['target_collection_id'] ?? '',
             'relation_on_delete' => $settings['on_delete'] ?? 'restrict',
+            'file_storage' => $settings['file_storage'] ?? 'legacy',
             'option_rows' => array_map(static fn (array $option): array => $option + ['active' => true], $settings['options'] ?? []), 'use_default' => $default !== null,
             'default_value' => is_string($default) ? $default : '', 'default_values' => is_array($default) ? $default : [],
             'min_length' => $settings['min_length'] ?? '', 'max_length' => $settings['max_length'] ?? '',
@@ -360,6 +363,9 @@ final readonly class CollectionFieldsAdminController
             $raw = trim((string) $fields[$key]);
             $integer = filter_var($raw, FILTER_VALIDATE_INT);
             $settings[$key] = $raw === '' ? null : ($integer !== false ? $integer : (in_array($key, ['min_value', 'max_value'], true) && is_numeric($raw) ? (float) $raw : $raw));
+        }
+        if ($fields['type'] === 'file') {
+            $settings['file_storage'] = $fields['file_storage'];
         }
         if ($fields['type'] === 'relation') {
             $target = filter_var($fields['target_collection_id'], FILTER_VALIDATE_INT);

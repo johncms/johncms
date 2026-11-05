@@ -30,14 +30,14 @@ final class CollectionItemWriterFactory
         return new ContentCollectionItemRepository(new ContentCollectionFieldRepository(), new ContentCollectionItemQueryCompiler());
     }
 
-    public static function create(?ContentCollectionItemValueRepositoryInterface $values = null, ?\Johncms\Updates\SystemOperationContext $context = null, ?\Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher $changes = null): SaveCollectionItemUseCase
+    public static function create(?ContentCollectionItemValueRepositoryInterface $values = null, ?\Johncms\Updates\SystemOperationContext $context = null, ?\Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher $changes = null, ?\Johncms\Modules\Collections\Application\Services\CollectionFileValues $fileValues = null, ?\Johncms\Modules\Collections\Application\Services\CollectionItemFiles $files = null): SaveCollectionItemUseCase
     {
         $validator = self::validator();
         $fields = new ContentCollectionFieldRepository();
         return new SaveCollectionItemUseCase(
             new ContentCollectionItemRepository($fields, new ContentCollectionItemQueryCompiler()), $fields,
             $values ?? new ContentCollectionItemValueRepository(), new ContentCollectionRepository(),
-            new ContentCollectionSectionRepository(), new CollectionTransaction(), new CollectionItemValidator($validator), $context ?? new \Johncms\Updates\SystemOperationContext(), $changes ?? new \Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher()
+            new ContentCollectionSectionRepository(), new CollectionTransaction(), new CollectionItemValidator($validator), $context ?? new \Johncms\Updates\SystemOperationContext(), $changes ?? new \Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher(), files: $files, fileValues: $fileValues
         );
     }    public static function validator(): \Johncms\Validator\ValidatorInterface
     {

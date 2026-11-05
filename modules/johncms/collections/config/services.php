@@ -64,6 +64,8 @@ return static function (ContainerConfigurator $container): void {
         \Johncms\Modules\Collections\Domain\Repository\CollectionFileRepositoryInterface::class,
         \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\CollectionFileRepository::class
     )->autowire()->public();
+    $services->set(\Johncms\Modules\Collections\Application\Services\CollectionFileValues::class)
+        ->autowire()->public()->tag('johncms.collections.change_handler');
     $services->set(\Johncms\Modules\Collections\Application\Services\CollectionItemFiles::class)
         ->autowire()->public()->tag('johncms.collections.change_handler');
     $services->set(

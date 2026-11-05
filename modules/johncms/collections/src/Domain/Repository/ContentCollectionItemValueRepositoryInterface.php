@@ -11,6 +11,9 @@ interface ContentCollectionItemValueRepositoryInterface
      */
     public function deleteByItem(int $itemId): void;
 
+    /** @return \Illuminate\Database\Eloquent\Collection<int, \Johncms\Modules\Collections\Domain\Models\ContentCollectionItemValue> */
+    public function getFieldValuesForUpdate(int $fieldId): \Illuminate\Database\Eloquent\Collection;
+
     /** @param list<int> $targetIds
      * @param list<int> $deletedItemIds
      * Current locking read; references inside the same deletion are ignored.

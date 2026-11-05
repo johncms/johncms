@@ -18,6 +18,7 @@ final readonly class CollectionFieldValueRules
         $valid = match ($type) {
             FieldType::Integer => filter_var($value, FILTER_VALIDATE_INT) !== false,
             FieldType::Relation => filter_var($value, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) !== false,
+            FieldType::File => ($settings['file_storage'] ?? 'legacy') !== 'registry' || filter_var($value, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) !== false,
             FieldType::Double => is_numeric($value) && is_finite((float) $value),
             FieldType::Boolean => in_array($value, ['', '0', '1'], true),
             FieldType::Date => $this->date($value, true) !== null,

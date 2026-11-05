@@ -69,6 +69,14 @@
             <fieldset class="card mt-3"{% if managed %} disabled{% endif %}>
                 <div class="card-header"><h2 class="h6 mb-0">{{ __('Input settings') }}</h2></div>
                 <div class="card-body row g-3">
+                    <div class="col-12" data-field-types="file">
+                        <label class="form-label" for="file-storage">{{ __('File storage') }}</label>
+                        <select class="form-select" id="file-storage" name="file_storage">
+                            <option value="registry"{% if fields.file_storage == 'registry' %} selected{% endif %}>{{ __('Registered files') }}</option>
+                            <option value="legacy"{% if fields.file_storage == 'legacy' %} selected{% endif %}>{{ __('Legacy file paths') }}</option>
+                        </select>
+                        <div class="form-text">{{ __('Existing paths require explicit conversion before switching to registered file IDs.') }}</div>
+                    </div>
                     <div class="col-12" data-field-types="relation">
                         <label class="form-label" for="relation-target">{{ __('Target collection ID') }}</label>
                         <input class="form-control" type="number" min="1" step="1" name="target_collection_id" id="relation-target" value="{{ fields.target_collection_id }}">

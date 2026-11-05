@@ -1136,3 +1136,27 @@ msgstr "Внешних полей связи, препятствующих уд�
 
 msgid "Relation cleanup applies when items are deleted. Moving items preserves their relations."
 msgstr "Связи очищаются при удалении записей. Перенос записей сохраняет их связи."
+
+msgid "Choose a registered file of this collection or upload it in your current form."
+msgstr "Выберите зарегистрированный файл этой коллекции или загрузите его в текущей форме."
+
+msgid "Choose registry or legacy storage for a file field."
+msgstr "Выберите режим registry или legacy для файлового поля."
+
+msgid "Convert existing file values explicitly before changing their storage mode."
+msgstr "Перед изменением режима хранения выполните явное преобразование существующих файловых значений."
+
+msgid "New file fields must use registered files."
+msgstr "Новые файловые поля должны использовать зарегистрированные файлы."
+
+msgid "File storage"
+msgstr "Хранение файлов"
+
+msgid "Registered files"
+msgstr "Зарегистрированные файлы"
+
+msgid "Legacy file paths"
+msgstr "Прежние пути к файлам"
+
+msgid "Existing paths require explicit conversion before switching to registered file IDs."
+msgstr "Перед переходом на ID зарегистрированных файлов необходимо явно преобразовать прежние пути."

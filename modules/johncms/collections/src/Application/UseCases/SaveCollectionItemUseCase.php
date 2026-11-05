@@ -36,6 +36,7 @@ final readonly class SaveCollectionItemUseCase
         private SystemOperationContext $systemContext = new SystemOperationContext(),
         private CollectionChangeDispatcher $changes = new CollectionChangeDispatcher(),
         private ?\Johncms\Modules\Collections\Application\Services\CollectionItemFiles $files = null,
+        private ?\Johncms\Modules\Collections\Application\Services\CollectionFileValues $fileValues = null,
     ) {
     }
 
@@ -98,6 +99,11 @@ final readonly class SaveCollectionItemUseCase
                 ? ($this->itemRepository->findWithValuesForUpdate($id)?->getValuesMap() ?? []) : [];
             $dto = $this->validator->validate($dto, $definitions->values(), applyDefaults: $id === null && $history === null, existingValues: $existingValues, allowInactiveOptions: $history !== null);
             $this->validateRelations($dto, $definitions->values(), $valueFields);
+            $registeredFiles = $definitions->contains(static fn ($field): bool => $field->type === FieldType::File && ($field->settings['file_storage'] ?? 'legacy') === 'registry');
+            if ($registeredFiles && $this->fileValues === null) {
+                throw new \LogicException('Collection file values are not configured.');
+            }
+            $fileReferences = $registeredFiles ? $this->fileValues->prepare($dto, $definitions->values(), $id, $actorId) : [];
             $attributes = [
                 'collection_id' => $dto->collectionId, 'section_id' => $dto->sectionId,
                 'code' => $this->resolveCode($id, $dto), 'name' => $dto->name,
@@ -116,6 +122,7 @@ final readonly class SaveCollectionItemUseCase
                 $itemId = $this->itemRepository->create($attributes)->id;
             }
             $this->rebuildValues($itemId, $dto, $valueFields, $clearFields, $definitions->values());
+            $this->fileValues?->synchronize($itemId, $fileReferences);
             if ($dto->uploadContext !== null) {
                 if ($this->files === null) {
                     throw new \LogicException('Collection upload tracking is not configured.');

@@ -7,6 +7,7 @@ namespace Johncms\Modules\Collections\Infrastructure\Persistence\Repository;
 use Johncms\Modules\Collections\Domain\Models\CollectionUploadContext;
 use Johncms\Modules\Collections\Domain\Models\CollectionFileAsset;
 use Johncms\Modules\Collections\Domain\Models\CollectionFileLink;
+use Johncms\Modules\Collections\Domain\Models\CollectionFileValueLink;
 use Johncms\Modules\Collections\Domain\Repository\CollectionFileRepositoryInterface;
 
 final class CollectionFileRepository implements CollectionFileRepositoryInterface
@@ -22,6 +23,39 @@ final class CollectionFileRepository implements CollectionFileRepositoryInterfac
         /** @var CollectionUploadContext|null $row */
         $row = ($lock ? $query->lockForUpdate() : $query)->find($token);
         return $row === null ? null : ['collection_id' => $row->getAttribute('collection_id'), 'user_id' => $row->getAttribute('user_id'), 'item_id' => $row->getAttribute('item_id'), 'created_at' => $row->getAttribute('created_at')];
+    }
+
+    public function availableForCollection(int $collectionId): array
+    {
+        $attachments = CollectionFileLink::query()->join('collection_items', 'collection_items.id', '=', 'collection_file_links.item_id')
+            ->where('collection_items.collection_id', $collectionId)->orderBy('collection_file_links.file_id')->lockForUpdate()->pluck('collection_file_links.file_id')->all();
+        $values = CollectionFileValueLink::query()->join('collection_fields', 'collection_fields.id', '=', 'collection_file_value_links.field_id')
+            ->where('collection_fields.collection_id', $collectionId)->orderBy('collection_file_value_links.file_id')->lockForUpdate()->pluck('collection_file_value_links.file_id')->all();
+        return array_values(array_unique([...$attachments, ...$values]));
+    }
+
+    public function replaceValueLinks(int $fieldId, ?int $itemId, array $fileIds): array
+    {
+        $query = CollectionFileValueLink::query()->where('field_id', $fieldId)->where('item_id', $itemId);
+        $old = (clone $query)->lockForUpdate()->orderBy('file_id')->pluck('file_id')->all();
+        foreach ($fileIds as $fileId) {
+            CollectionFileValueLink::query()->firstOrCreate(['field_id' => $fieldId, 'item_id' => $itemId, 'file_id' => $fileId]);
+        }
+        $query->whereNotIn('file_id', $fileIds)->delete();
+        return array_values(array_diff($old, $fileIds));
+    }
+
+    public function fieldItems(int $fieldId): array
+    {
+        return CollectionFileValueLink::query()->where('field_id', $fieldId)->whereNotNull('item_id')->orderBy('item_id')->lockForUpdate()->distinct()->pluck('item_id')->all();
+    }
+
+    public function unlinkField(int $fieldId): array
+    {
+        $query = CollectionFileValueLink::query()->where('field_id', $fieldId);
+        $ids = (clone $query)->lockForUpdate()->orderBy('file_id')->pluck('file_id')->all();
+        $query->delete();
+        return array_values(array_unique($ids));
     }
 
     public function register(int $fileId, bool $managed): void
@@ -44,9 +78,15 @@ final class CollectionFileRepository implements CollectionFileRepositoryInterfac
         CollectionFileAsset::query()->where('file_id', $fileId)->update(['managed' => $managed]);
     }
 
-    public function itemFiles(int $itemId): array
+    public function itemFiles(int $itemId, bool $current = false): array
     {
-        return CollectionFileLink::query()->where('item_id', $itemId)->orderBy('file_id')->pluck('file_id')->all();
+        $attachments = CollectionFileLink::query()->where('item_id', $itemId)->orderBy('file_id');
+        $values = CollectionFileValueLink::query()->where('item_id', $itemId)->orderBy('file_id');
+        if ($current) {
+            $attachments->lockForUpdate();
+            $values->lockForUpdate();
+        }
+        return array_values(array_unique([...$attachments->pluck('file_id')->all(), ...$values->pluck('file_id')->all()]));
     }
 
     public function linkContext(string $token, int $fileId): void
@@ -54,9 +94,13 @@ final class CollectionFileRepository implements CollectionFileRepositoryInterfac
         CollectionFileLink::query()->firstOrCreate(['context_token' => $token, 'file_id' => $fileId], ['item_id' => null]);
     }
 
-    public function contextFiles(string $token): array
+    public function contextFiles(string $token, bool $current = false): array
     {
-        return CollectionFileLink::query()->where('context_token', $token)->orderBy('file_id')->pluck('file_id')->all();
+        $query = CollectionFileLink::query()->where('context_token', $token)->orderBy('file_id');
+        if ($current) {
+            $query->lockForUpdate();
+        }
+        return $query->pluck('file_id')->all();
     }
 
     public function claim(string $token, int $itemId): void
@@ -75,11 +119,12 @@ final class CollectionFileRepository implements CollectionFileRepositoryInterfac
 
     public function unlinkItem(int $itemId): array
     {
-        $ids = CollectionFileLink::query()->where('item_id', $itemId)->orderBy('file_id')->pluck('file_id')->all();
+        $ids = $this->itemFiles($itemId, true);
         foreach ($ids as $fileId) {
             $this->lockAsset($fileId);
         }
         CollectionFileLink::query()->where('item_id', $itemId)->delete();
+        CollectionFileValueLink::query()->where('item_id', $itemId)->delete();
         return $ids;
     }
 
@@ -97,7 +142,11 @@ final class CollectionFileRepository implements CollectionFileRepositoryInterfac
     public function hasLinks(int $fileId, bool $current = false): bool
     {
         $query = CollectionFileLink::query()->where('file_id', $fileId);
-        return $current ? $query->lockForUpdate()->first(['id']) !== null : $query->exists();
+        if ($current ? $query->lockForUpdate()->first(['id']) !== null : $query->exists()) {
+            return true;
+        }
+        $values = CollectionFileValueLink::query()->where('file_id', $fileId);
+        return $current ? $values->lockForUpdate()->first(['id']) !== null : $values->exists();
     }
 
     public function removeAsset(int $fileId): void

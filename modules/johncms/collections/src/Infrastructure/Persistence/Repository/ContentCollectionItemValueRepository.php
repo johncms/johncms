@@ -37,6 +37,12 @@ final class ContentCollectionItemValueRepository implements ContentCollectionIte
         ContentCollectionItemValue::query()->whereIn('id', $ids)->delete();
     }
 
+    public function getFieldValuesForUpdate(int $fieldId): \Illuminate\Database\Eloquent\Collection
+    {
+        return ContentCollectionItemValue::query()->with(['item' => static fn ($items) => $items->lockForUpdate()])
+            ->where('field_id', $fieldId)->orderBy('item_id')->orderBy('sort')->orderBy('id')->lockForUpdate()->get();
+    }
+
     public function deleteByItem(int $itemId): void
     {
         ContentCollectionItemValue::query()->where('item_id', $itemId)->delete();

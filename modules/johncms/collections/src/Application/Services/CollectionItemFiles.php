@@ -73,6 +73,19 @@ final readonly class CollectionItemFiles implements CollectionChangeHandlerInter
         return $file;
     }
 
+    /** Current, authorized files of a still-open upload context. @return list<int> */
+    public function contextFiles(string $token, int $collectionId, ?int $itemId, ?int $actorId): array
+    {
+        if ($actorId === null) {
+            throw $this->invalidContext();
+        }
+        $context = $this->requireContext($token, $collectionId, $actorId, true);
+        if ($context['item_id'] !== null && $context['item_id'] !== $itemId) {
+            throw $this->invalidContext();
+        }
+        return $this->links->contextFiles($token, true);
+    }
+
     public function claim(string $token, int $collectionId, int $itemId, ?int $actorId): void
     {
         if ($actorId === null) {
@@ -158,13 +171,13 @@ final readonly class CollectionItemFiles implements CollectionChangeHandlerInter
     }
 
     /** @param list<int> $ids */
-    private function removeUnreferenced(array $ids): void
+    public function removeUnreferenced(array $ids): void
     {
         foreach ($ids as $id) {
             // Serialize cleanup with new references. This callback runs after the content commit.
             $this->transaction->run(function () use ($id): void {
                 $managed = $this->links->lockAsset($id);
-                if ($this->links->hasLinks($id)) {
+                if ($this->links->hasLinks($id, true)) {
                     return;
                 }
                 if ($managed) {

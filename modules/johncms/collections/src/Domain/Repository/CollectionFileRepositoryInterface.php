@@ -13,18 +13,33 @@ interface CollectionFileRepositoryInterface
 
     public function register(int $fileId, bool $managed): void;
 
+    /** Current references to committed content or defaults of the collection. @return list<int> */
+    public function availableForCollection(int $collectionId): array;
+
+    /** Null item identifies the schema default. Returns replaced references for deferred cleanup.
+     * @param list<int> $fileIds
+     * @return list<int>
+     */
+    public function replaceValueLinks(int $fieldId, ?int $itemId, array $fileIds): array;
+
+    /** @return list<int> */
+    public function unlinkField(int $fieldId): array;
+
+    /** @return list<int> */
+    public function fieldItems(int $fieldId): array;
+
     /** Lock the asset before changing any references. Returns whether collections own its bytes. */
     public function lockAsset(int $fileId): bool;
 
     public function setManaged(int $fileId, bool $managed): void;
 
     /** @return list<int> */
-    public function itemFiles(int $itemId): array;
+    public function itemFiles(int $itemId, bool $current = false): array;
 
     public function linkContext(string $token, int $fileId): void;
 
     /** @return list<int> */
-    public function contextFiles(string $token): array;
+    public function contextFiles(string $token, bool $current = false): array;
 
     public function claim(string $token, int $itemId): void;
 

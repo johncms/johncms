@@ -21,6 +21,7 @@ final readonly class CollectionDeclarationsSynchronizer implements DeclarationSy
         private ContentCollectionFieldRepositoryInterface $fields,
         private CollectionTransactionInterface $transaction,
         private CollectionFieldSettingsValidator $settingsValidator = new CollectionFieldSettingsValidator(),
+        private ?CollectionFileValues $fileValues = null,
     ) {
     }
 
@@ -96,9 +97,21 @@ final readonly class CollectionDeclarationsSynchronizer implements DeclarationSy
                         ) {
                             $fieldAttributes['settings']['target_collection_id'] = $field->settings['target_collection_id'] ?? null;
                         }
+                        if (
+                            $field->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::File
+                            && ($fieldAttributes['settings']['file_storage'] ?? 'legacy') !== ($field->settings['file_storage'] ?? 'legacy') && $this->fields->hasValues($field->id)
+                        ) {
+                            $fieldAttributes['settings']['file_storage'] = $field->settings['file_storage'] ?? 'legacy';
+                        }
                         $this->fields->update($field->id, $fieldAttributes);
                     }
                     $byCode[$declared->code] = $field;
+                    if ($declared->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::File && ($this->fields->findForUpdate($field->id)?->settings['file_storage'] ?? 'legacy') === 'registry') {
+                        if ($this->fileValues === null) {
+                            throw new \LogicException('Collection file values are not configured.');
+                        }
+                        $this->fileValues->withinTransaction(new \Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO('field', 'saved', $collection->id, $field->id, null, null));
+                    }
                 }
             });
         }
