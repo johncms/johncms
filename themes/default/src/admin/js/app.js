@@ -34,3 +34,4 @@ import './icon-gallery';
 
 import './collection-tags';
 import './collection-repeated-values';
+import './collection-relations';

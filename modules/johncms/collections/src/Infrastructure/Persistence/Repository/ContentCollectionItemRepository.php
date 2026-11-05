@@ -51,6 +51,13 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
         ])->get();
     }
 
+    public function getNameMatches(int $collectionId, string $term, int $limit): Collection
+    {
+        $like = '%' . str_replace(['!', '%', '_'], ['!!', '!%', '!_'], $term) . '%';
+        return ContentCollectionItem::query()->where('collection_id', $collectionId)->whereRaw("name LIKE ? ESCAPE '!'", [$like])
+            ->orderBy('sort')->orderBy('id')->limit($limit)->get(['id', 'name']);
+    }
+
     public function countItems(ContentCollectionItemQuery $query): int
     {
         return $this->baseQuery($query, $this->resolveFields($query))->count();

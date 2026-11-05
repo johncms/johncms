@@ -69,7 +69,15 @@
                             {% for def in field_defs %}
                                 {% set input_id = 'f_' ~ def.input_name %}
                                 {% set wide = def.multiple or def.type in ['text', 'html'] %}
-                                <div class="{{ wide ? 'col-12' : 'col-md-6' }}">
+                                <div class="{{ wide ? 'col-12' : 'col-md-6' }}"{% if def.type == 'relation' %} data-collection-relation data-source="{{ def.relation_url }}" data-error="{{ __('Could not load related items.') }}" data-loaded="{{ __('Related items loaded. Choose a value and save the form.') }}"{% endif %}>
+                                    {% if def.type == 'relation' %}
+                                        <label class="form-label" for="{{ input_id }}-query">{{ __('Search related items') }} — {{ def.name }}</label>
+                                        <div class="input-group mb-2">
+                                            <input class="form-control" type="search" id="{{ input_id }}-query" name="relation_query[{{ def.code }}]" value="{{ def.relation_query }}" maxlength="255" data-relation-query>
+                                            <button class="btn btn-outline-secondary" type="submit" name="relation_search" value="{{ def.code }}" formnovalidate data-relation-search>{{ __('Search') }}</button>
+                                        </div>
+                                        <div class="form-text mb-2" role="status" data-relation-status>{{ def.relation_error ? def.relation_error : (def.relation_available ? __('Up to 30 matching items. Refine your search to find another item.') : __('You need access to the target collection to choose related items.')) }}</div>
+                                    {% endif %}
                                     {% if def.type == 'boolean' and not def.multiple %}
                                         <div class="form-check form-switch mt-md-4">
                                             <input type="checkbox" class="form-check-input{{ def.errors ? ' is-invalid' : '' }}" role="switch" name="{{ def.input_name }}" value="1" id="{{ input_id }}"{% if def.value == '1' %} checked{% endif %}>
@@ -94,8 +102,8 @@
                                                 id_prefix: input_id, type: def.type, label: def.name, limit: def.limit, required: def.required, errors: def.errors,
                                                 allow_upload: true, upload_url: upload_url, options: def.options
                                             } only %}
-                                        {% elseif def.type == 'select' %}
-                                            <select name="{{ def.input_name }}" class="form-select{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}">
+                                        {% elseif def.type in ['select', 'relation'] %}
+                                            <select name="{{ def.input_name }}" class="form-select{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}"{% if def.type == 'relation' %} data-relation-select{% endif %}>
                                                 {% include '@collections/admin/components/select-options.twig' with {options: def.options, current: def.value} only %}
                                             </select>
                                         {% elseif def.type == 'html' %}

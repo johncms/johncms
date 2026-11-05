@@ -1088,3 +1088,18 @@ msgstr "ID целевой коллекции"
 
 msgid "Referenced items cannot be deleted until their relations are removed."
 msgstr "Записи нельзя удалить, пока на них ссылаются другие записи."
+
+msgid "Could not load related items."
+msgstr "Не удалось загрузить связанные записи."
+
+msgid "Related items loaded. Choose a value and save the form."
+msgstr "Записи загружены. Выберите значение и сохраните форму."
+
+msgid "Search related items"
+msgstr "Поиск связанных записей"
+
+msgid "Up to 30 matching items. Refine your search to find another item."
+msgstr "Показано до 30 подходящих записей. Уточните поиск, чтобы найти другую запись."
+
+msgid "You need access to the target collection to choose related items."
+msgstr "Для выбора связанных записей нужен доступ к целевой коллекции."

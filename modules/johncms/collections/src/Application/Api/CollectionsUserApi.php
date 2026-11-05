@@ -26,6 +26,9 @@ final readonly class CollectionsUserApi implements CollectionsUserApiInterface
         private CollectionSectionsApiInterface $sections,
         private CurrentUser $user,
         private \Johncms\Modules\Collections\Application\Services\CollectionTagSuggestions $tags,
+        private \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionRelationAccessUseCase $relations,
+        private \Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface $collections,
+        private \Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface $transaction,
     ) {
     }
 
@@ -51,19 +54,19 @@ final readonly class CollectionsUserApi implements CollectionsUserApiInterface
     public function addItem(CollectionItemFormDTO $item): int
     {
         $this->guard->execute($item->collectionId);
-        return $this->items->addItem($item, $this->user->id());
+        return $this->write($item->collectionId, $item->values, true, fn (): int => $this->items->addItem($item, $this->user->id()));
     }
 
     public function updateItem(int $id, CollectionItemFormDTO $item): void
     {
         $this->requireItem($item->collectionId, $id);
-        $this->items->updateItem($id, $item, $this->user->id());
+        $this->write($item->collectionId, $item->values, false, fn () => $this->items->updateItem($id, $item, $this->user->id()));
     }
 
     public function patchItem(int $collectionId, int $id, CollectionItemPatchDTO $patch): void
     {
         $this->requireItem($collectionId, $id);
-        $this->items->patchItem($id, $patch, $this->user->id());
+        $this->write($collectionId, $patch->values, false, fn () => $this->items->patchItem($id, $patch, $this->user->id()));
     }
 
     public function deleteItem(int $collectionId, int $id): void
@@ -107,6 +110,20 @@ final readonly class CollectionsUserApi implements CollectionsUserApiInterface
     {
         $this->requireSection($collectionId, $id);
         $this->sections->deleteSection($collectionId, $id, $mode, $targetId, $expectedRevision);
+    }
+
+    /** @template T
+     * @param array<string, mixed> $values
+     * @param callable(): T $operation
+     * @return T
+     */
+    private function write(int $collectionId, array $values, bool $applyDefaults, callable $operation): mixed
+    {
+        return $this->transaction->run(function () use ($collectionId, $values, $applyDefaults, $operation): mixed {
+            $this->collections->findForUpdate($collectionId);
+            $this->relations->execute($collectionId, $values, $applyDefaults);
+            return $operation();
+        });
     }
 
     private function requireItem(int $collectionId, int $id): void

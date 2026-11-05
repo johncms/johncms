@@ -21,6 +21,9 @@ interface ContentCollectionItemRepositoryInterface
 
     public function countItems(ContentCollectionItemQuery $query): int;
 
+    /** @return Collection<int, ContentCollectionItem> */
+    public function getNameMatches(int $collectionId, string $term, int $limit): Collection;
+
     public function findById(int $id): ?ContentCollectionItem;
 
     public function findForUpdate(int $id): ?ContentCollectionItem;

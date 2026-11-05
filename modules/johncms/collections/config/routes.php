@@ -88,6 +88,11 @@ return static function (RouteCollection $router): void {
             ->name('collections.admin.tags')
             ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
 
+        $router->get('/admin/collections/{collection_id:number}/relations/{code}', \Johncms\Modules\Collections\Application\Controllers\Admin\CollectionRelationsController::class)
+            ->requirements(['code' => '[a-z0-9_-]+'])
+            ->name('collections.admin.relations')
+            ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
+
         // Items of a collection (with custom EAV fields).
         $router->get('/admin/collections/{collection_id:number}/items', [CollectionItemsAdminController::class, 'index'])
             ->name('collections.admin.items')

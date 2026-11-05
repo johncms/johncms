@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Johncms\Modules\Collections\Application\Controllers\Admin;
 
 use Illuminate\Database\Eloquent\Collection;
-use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Collections\Domain\Exceptions\CollectionWriteConflictException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
 use Johncms\Http\PageMeta;
@@ -15,7 +14,6 @@ use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemCodeAlreadyExistsException;
 use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionItemUseCase;
 use Johncms\Modules\Collections\Application\UseCases\ListCollectionItemsUseCase;
-use Johncms\Modules\Collections\Application\UseCases\SaveCollectionItemUseCase;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
@@ -40,7 +38,7 @@ final readonly class CollectionItemsAdminController
         private ContentCollectionFieldRepositoryInterface $fieldRepository,
         private ContentCollectionItemRepositoryInterface $itemRepository,
         private ListCollectionItemsUseCase $listItems,
-        private SaveCollectionItemUseCase $saveItem,
+        private \Johncms\Modules\Collections\Application\Api\CollectionsUserApiInterface $userApi,
         private DeleteCollectionItemUseCase $deleteItem,
         private Session $session,
         private PaginationFactory $paginationFactory,
@@ -49,6 +47,7 @@ final readonly class CollectionItemsAdminController
         private ItemListControlsMapper $controlsMapper,
         private ItemListRowMapper $rowMapper,
         private \Johncms\Modules\Collections\Application\Services\CollectionItemFiles $files,
+        private \Johncms\Modules\Collections\Application\Services\CollectionRelationChoices $relationChoices,
         private \Johncms\Modules\Collections\Application\Services\CollectionRepeatedValues $repeated = new \Johncms\Modules\Collections\Application\Services\CollectionRepeatedValues(),
     ) {
     }
@@ -130,7 +129,7 @@ final readonly class CollectionItemsAdminController
         return $this->renderForm($collection, $id, $this->fieldsFromItem($item), $item->getValuesMap());
     }
 
-    public function store(Request $request, CurrentUser $user, int $collection_id): ViewResponse
+    public function store(Request $request, int $collection_id): ViewResponse
     {
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
@@ -148,6 +147,15 @@ final readonly class CollectionItemsAdminController
 
         $fieldDefs = $this->fieldRepository->getByCollection($collection_id);
         $fields = $this->fieldsFromRequest($request, $collection, $fieldDefs);
+        if ($request->hasBody('relation_search')) {
+            $code = $request->body('relation_search');
+            try {
+                $this->relationChoices->search($collection_id, $code, $fields['relation_queries'][$code] ?? '');
+                return $this->renderFormWithFields($collection, $id, $fields, []);
+            } catch (\InvalidArgumentException) {
+                return $this->renderFormWithFields($collection, $id, $fields, ['_form' => [d__('system', 'Wrong data')]]);
+            }
+        }
         if ($request->hasBody('repeat_action')) {
             try {
                 [$key, $operation, $index] = $this->repeated->action($request->body('repeat_action'));
@@ -163,7 +171,12 @@ final readonly class CollectionItemsAdminController
             }
         }
         try {
-            $this->saveItem->execute($id, $this->dtoFromFields($collection_id, $fields), $user->id());
+            $dto = $this->dtoFromFields($collection_id, $fields);
+            if ($id === null) {
+                $this->userApi->addItem($dto);
+            } else {
+                $this->userApi->updateItem($id, $dto);
+            }
         } catch (CollectionItemFormException $exception) {
             return $this->renderFormWithFields($collection, $id, $fields, $exception->errors);
         } catch (CollectionWriteConflictException) {
@@ -272,7 +285,7 @@ final readonly class CollectionItemsAdminController
             'fields'          => $fields,
             'has_sections'    => $hasSections,
             'section_options' => $hasSections ? $this->sectionOptions($collection->id) : [],
-            'field_defs'      => $this->buildFieldDefs($this->fieldRepository->getByCollection($collection->id), $valueMap, $errors, ! empty($fields['repeat_exact'])),
+            'field_defs'      => $this->buildFieldDefs($this->fieldRepository->getByCollection($collection->id), $valueMap, $errors, ! empty($fields['repeat_exact']), $fields['relation_queries'] ?? []),
             'repeat_message' => $fields['repeat_message'] ?? '',
             'errors'          => array_merge([], ...array_values($errors)),
             'field_errors'    => $errors,
@@ -294,9 +307,10 @@ final readonly class CollectionItemsAdminController
     /**
      * @param Collection<int, \Johncms\Modules\Collections\Domain\Models\ContentCollectionField> $fields
      * @param array<string, mixed> $valueMap
+     * @param array<string, string> $relationQueries
      * @return list<array<string, mixed>>
      */
-    private function buildFieldDefs(Collection $fields, array $valueMap, array $errors, bool $exactRows = false): array
+    private function buildFieldDefs(Collection $fields, array $valueMap, array $errors, bool $exactRows = false, array $relationQueries = []): array
     {
         $defs = [];
         foreach ($fields as $field) {
@@ -324,14 +338,33 @@ final readonly class CollectionItemsAdminController
             if ($field->multiple && ! $exactRows && count($entries) < $limit) {
                 $entries[] = '';
             }
+            $options = $field->settings['options'] ?? [];
+            $relationAvailable = true;
+            $relationError = '';
+            if ($field->type === FieldType::Relation) {
+                try {
+                    $options = $this->relationChoices->search($field->collection_id, $field->code, $relationQueries[$field->code] ?? '', $field->multiple ? $entries : [$value]);
+                } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionAccessDeniedException) {
+                    $options = [];
+                    $relationAvailable = false;
+                } catch (\InvalidArgumentException) {
+                    $options = [];
+                    $relationError = d__('system', 'Wrong data');
+                }
+            }
             $defs[] = [
+                'relation_url' => '/admin/collections/' . $field->collection_id . '/relations/' . $field->code,
+                'relation_available' => $relationAvailable,
+                'relation_error' => $relationError,
+                'relation_query' => $relationQueries[$field->code] ?? '',
+                'code' => $field->code,
                 'tags_url' => $field->role === 'tags' ? '/admin/collections/' . $field->collection_id . '/tags/' . $field->code : '',
                 'role' => $field->role,
                 'entries' => $entries, 'limit' => $limit,
                 'input_name' => 'field_' . $field->code,
                 'name'       => $field->name,
                 'hint' => $field->settings['hint'] ?? '',
-                'options' => $field->settings['options'] ?? [],
+                'options' => $options,
                 'min_length' => $field->settings['min_length'] ?? null, 'max_length' => $field->settings['max_length'] ?? null,
                 'min_value' => $field->settings['min_value'] ?? null, 'max_value' => $field->settings['max_value'] ?? null,
                 'type'       => $field->type->value,
@@ -375,6 +408,7 @@ final readonly class CollectionItemsAdminController
     {
         return [
             'repeat_exact' => true,
+            'relation_queries' => array_filter($request->bodyList('relation_query'), is_string(...)),
             'upload_context' => $request->body('upload_context') ?: null,
             'section_id'   => $this->hasSections($collection) ? $this->postSection($request) : null,
             'code'         => trim($request->body('code', '')),

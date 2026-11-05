@@ -303,6 +303,11 @@
       'Other collections have relation fields targeting this collection. Remove or retarget those fields before deleting it.' => 'В других коллекциях есть поля связи с этой коллекцией. Перед удалением удалите эти поля или измените их цель.',
       'Target collection ID' => 'ID целевой коллекции',
       'Referenced items cannot be deleted until their relations are removed.' => 'Записи нельзя удалить, пока на них ссылаются другие записи.',
+      'Could not load related items.' => 'Не удалось загрузить связанные записи.',
+      'Related items loaded. Choose a value and save the form.' => 'Записи загружены. Выберите значение и сохраните форму.',
+      'Search related items' => 'Поиск связанных записей',
+      'Up to 30 matching items. Refine your search to find another item.' => 'Показано до 30 подходящих записей. Уточните поиск, чтобы найти другую запись.',
+      'You need access to the target collection to choose related items.' => 'Для выбора связанных записей нужен доступ к целевой коллекции.',
     ),
   ),
 );
