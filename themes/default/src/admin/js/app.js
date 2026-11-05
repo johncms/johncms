@@ -33,3 +33,4 @@ import './editor';
 import './icon-gallery';
 
 import './collection-tags';
+import './collection-repeated-values';

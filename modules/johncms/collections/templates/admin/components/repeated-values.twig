@@ -1,0 +1,27 @@
+{# The controls are ordinary POST buttons; the panel script enhances them in place. #}
+<fieldset class="border-0 p-0 m-0"{% if errors|default([]) %} aria-invalid="true" aria-describedby="{{ id_prefix }}-errors"{% endif %} data-collection-repeat data-key="{{ action_key }}" data-limit="{{ limit }}"
+          data-limit-message="{{ __('The field has too many values.') }}"
+          data-error-message="{{ __('Could not change the value. Try again.') }}"
+          data-changed-message="{{ __('Values changed. Save the form to apply them.') }}">
+    <legend class="form-label fs-6">{{ label }}{% if required|default(false) %} <span class="text-danger" title="{{ __('Required') }}">*</span>{% endif %}</legend>
+    <div data-repeat-rows>
+        {% for entry in entries %}
+            {% include '@collections/admin/components/repeated-row.twig' with {
+                input_name: input_name, input_id: id_prefix ~ '_' ~ loop.index0, type: type, value: entry,
+                label: label, index: loop.index0, last: loop.last, action_key: action_key,
+                allow_upload: allow_upload, upload_url: upload_url
+            } only %}
+        {% endfor %}
+    </div>
+    <button type="submit" name="repeat_action" value="{{ action_key }}:add:0" data-repeat-op="add" class="btn btn-outline-secondary btn-sm" formnovalidate{% if entries|length >= limit %} disabled{% endif %}>{{ __('Add value') }}</button>
+    <p class="form-text mb-0" data-repeat-status role="status">{{ status|default('') }}</p>
+    {% if errors|default([]) %}
+        <div class="invalid-feedback d-block" id="{{ id_prefix }}-errors">{% for error in errors %}{{ error }}{% if not loop.last %}<br>{% endif %}{% endfor %}</div>
+    {% endif %}
+    <template data-repeat-template>
+        {% include '@collections/admin/components/repeated-row.twig' with {
+            input_name: input_name, input_id: id_prefix ~ '___INDEX__', type: type, value: '',
+            label: label, index: 0, last: true, action_key: action_key, allow_upload: allow_upload, upload_url: upload_url
+        } only %}
+    </template>
+</fieldset>

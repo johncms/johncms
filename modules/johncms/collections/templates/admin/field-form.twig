@@ -12,10 +12,11 @@
 {% extends '@admin/layouts/default.twig' %}
 
 {% block content %}
+    {% if repeat_message|default('') %}<div class="alert alert-info" role="status">{{ repeat_message }}</div>{% endif %}
     {% if managed %}<div class="alert alert-info">{{ __('This field is managed by its module. Change its declaration in code.') }}</div>{% endif %}
     {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
 
-    <form action="{{ form_action }}" method="post" id="field-form" class="row g-3 align-items-start">
+    <form action="{{ form_action }}" method="post" id="field-form" data-collection-field-settings class="row g-3 align-items-start">
 
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         {% if id is not null %}
@@ -76,16 +77,16 @@
                             <input class="form-check-input" type="checkbox" name="use_default" id="use-default" value="1"{% if fields.use_default %} checked{% endif %}>
                             <label class="form-check-label" for="use-default">{{ __('Use a default value') }}</label>
                         </div>
-                        {% if fields.multiple %}
-                            {% for entry in fields.default_values|merge(['']) %}
-                                <label class="form-label" for="field-default-{{ loop.index }}">{{ __('Default value') }} {{ loop.index }}</label>
-                                <textarea class="form-control mb-2" id="field-default-{{ loop.index }}" name="default_values[]" rows="2">{{ entry }}</textarea>
-                            {% endfor %}
-                            <div class="form-text">{{ __('Empty entries are ignored. Save to add another default value.') }}</div>
-                        {% else %}
+                        <div data-default-single>
                             <label class="form-label" for="field-default">{{ __('Default value') }}</label>
                             <textarea class="form-control" id="field-default" name="default_value" rows="2">{{ fields.default_value }}</textarea>
-                        {% endif %}
+                        </div>
+                        <div data-default-multiple class="mt-2">
+                            {% include '@collections/admin/components/repeated-values.twig' with {
+                                entries: default_entries, input_name: 'default_values', action_key: 'default', id_prefix: 'field-default',
+                                type: 'text', label: __('Default values'), limit: 1000, allow_upload: false, upload_url: ''
+                            } only %}
+                        </div>
                         <div class="form-text">{{ __('Defaults apply only when creating an item without an explicit value. Dates use ISO format; booleans use 0 or 1.') }}</div>
                     </div>
                     <div class="col-md-6">

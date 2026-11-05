@@ -980,3 +980,30 @@ msgstr "Пустые значения пропускаются. Сохранит
 
 msgid "No value"
 msgstr "Без значения"
+
+msgid "Choose an existing value and a valid action."
+msgstr "Выберите существующее значение и допустимое действие."
+
+msgid "Could not change the value. Try again."
+msgstr "Не удалось изменить значение. Попробуйте ещё раз."
+
+msgid "Values changed. Save the form to apply them."
+msgstr "Значения изменены. Сохраните форму, чтобы применить изменения."
+
+msgid "Value"
+msgstr "Значение"
+
+msgid "Move up"
+msgstr "Поднять"
+
+msgid "Move down"
+msgstr "Опустить"
+
+msgid "Remove value"
+msgstr "Удалить значение"
+
+msgid "Add value"
+msgstr "Добавить значение"
+
+msgid "Default values"
+msgstr "Значения по умолчанию"

@@ -33,6 +33,7 @@ final readonly class CollectionFieldsAdminController
         private SaveCollectionFieldUseCase $saveField,
         private DeleteCollectionFieldUseCase $deleteField,
         private Session $session,
+        private \Johncms\Modules\Collections\Application\Services\CollectionRepeatedValues $repeated = new \Johncms\Modules\Collections\Application\Services\CollectionRepeatedValues(),
     ) {
     }
 
@@ -94,6 +95,19 @@ final readonly class CollectionFieldsAdminController
         }
 
         $fields = $this->fieldsFromRequest($request);
+        if ($request->hasBody('repeat_action')) {
+            try {
+                [$key, $operation, $index] = $this->repeated->action($request->body('repeat_action'));
+                if ($key !== 'default') {
+                    throw new \InvalidArgumentException(d__('collections', 'Choose an existing value and a valid action.'));
+                }
+                $fields['default_values'] = $this->repeated->apply($fields['default_values'], $operation, $index);
+                $fields['repeat_message'] = d__('collections', 'Values changed. Save the form to apply them.');
+                return $this->renderForm($collection, $id, $fields);
+            } catch (\InvalidArgumentException $exception) {
+                return $this->renderForm($collection, $id, $fields, [$exception->getMessage()]);
+            }
+        }
         $errors = $this->validate($fields);
 
         if ($errors !== []) {
@@ -220,6 +234,8 @@ final readonly class CollectionFieldsAdminController
             'managed'      => $id !== null && $this->fieldRepository->findById($id)?->owner_module !== null,
             'type_options' => $this->typeOptions(),
             'errors'       => $errors,
+            'default_entries' => ! empty($fields['repeat_exact']) ? $fields['default_values'] : [...$fields['default_values'], ''],
+            'repeat_message' => $fields['repeat_message'] ?? '',
         ]);
     }
 
@@ -237,6 +253,7 @@ final readonly class CollectionFieldsAdminController
             'multiple' => $request->hasBody('multiple') ? 1 : 0,
             'in_list'  => $request->hasBody('in_list') ? 1 : 0,
             'sort'     => $request->bodyInt('sort', 100),
+            'repeat_exact' => true,
             'hint' => $request->body('hint'), 'use_default' => $request->hasBody('use_default'),
             'default_value' => $request->body('default_value'), 'default_values' => array_values(array_filter($request->bodyList('default_values'), is_string(...))),
             'min_length' => $request->body('min_length'), 'max_length' => $request->body('max_length'),

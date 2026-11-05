@@ -23,6 +23,7 @@
 {% endmacro %}
 
 {% block content %}
+    {% if repeat_message|default('') %}<div class="alert alert-info" role="status">{{ repeat_message }}</div>{% endif %}
     {% import _self as ui %}
     {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
 
@@ -74,9 +75,11 @@
                                             <label class="form-check-label" for="{{ input_id }}">{{ def.name }}</label>
                                         </div>
                                     {% else %}
-                                        <label class="form-label" for="{{ input_id }}">
-                                            {{ def.name }}{% if def.required %} <span class="text-danger" title="{{ __('Required') }}">*</span>{% endif %}
-                                        </label>
+                                        {% if not def.multiple or def.role == 'tags' %}
+                                            <label class="form-label" for="{{ input_id }}">
+                                                {{ def.name }}{% if def.required %} <span class="text-danger" title="{{ __('Required') }}">*</span>{% endif %}
+                                            </label>
+                                        {% endif %}
                                         {% if def.role == 'tags' and def.multiple %}
                                             <div data-collection-tags data-source="{{ def.tags_url }}"
                                                  data-add-label="{{ __('Add tag') }}" data-remove-label="{{ __('Remove tag') }}"
@@ -84,29 +87,12 @@
                                                 <textarea name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" rows="3">{{ def.value }}</textarea>
                                                 <div class="form-text">{{ __('One value per line') }}</div>
                                             </div>
-                                        {% elseif def.type == 'html' and def.multiple %}
-                                            {% for entry in def.entries %}
-                                                {% include '@admin/components/ui/editor.twig' with {name: def.input_name ~ '[]', id: input_id ~ '_' ~ loop.index, value: entry, label: def.name ~ ' ' ~ loop.index, allow_upload: true, upload_url: upload_url, errors: def.errors|join(' ')} only %}
-                                            {% endfor %}
-                                            <div class="form-text">{{ __('An empty editor adds another value. Save to add more values; clear an editor to remove its value.') }}</div>
                                         {% elseif def.multiple %}
-                                            {% for entry in def.entries %}
-                                                {% set entry_id = input_id ~ '_' ~ loop.index %}
-                                                <label class="visually-hidden" for="{{ entry_id }}">{{ def.name }} {{ loop.index }}</label>
-                                                {% if def.type == 'text' or (def.type == 'string' and entry matches '/[\r\n]/') %}
-                                                    <textarea name="{{ def.input_name }}[]" class="form-control mb-2" id="{{ entry_id }}" rows="3">{{ entry }}</textarea>
-                                                {% elseif def.type == 'boolean' %}
-                                                    <select name="{{ def.input_name }}[]" class="form-select mb-2" id="{{ entry_id }}">
-                                                        <option value=""{% if entry == '' %} selected{% endif %}>{{ __('No value') }}</option>
-                                                        <option value="1"{% if entry == '1' %} selected{% endif %}>{{ __('Yes') }}</option>
-                                                        <option value="0"{% if entry == '0' %} selected{% endif %}>{{ __('No') }}</option>
-                                                    </select>
-                                                {% else %}
-                                                    <input type="{{ def.type in ['integer', 'double'] ? 'number' : (def.type == 'date' ? 'date' : (def.type == 'datetime' ? 'datetime-local' : 'text')) }}"
-                                                           {% if def.type == 'double' %}step="any"{% endif %} name="{{ def.input_name }}[]" class="form-control mb-2" id="{{ entry_id }}" value="{{ entry }}">
-                                                {% endif %}
-                                            {% endfor %}
-                                            <div class="form-text">{{ __('Empty entries are ignored. Save to add another value.') }}</div>
+                                            {% include '@collections/admin/components/repeated-values.twig' with {
+                                                entries: def.entries, input_name: def.input_name, action_key: def.input_name,
+                                                id_prefix: input_id, type: def.type, label: def.name, limit: def.limit, required: def.required, errors: def.errors,
+                                                allow_upload: true, upload_url: upload_url
+                                            } only %}
                                         {% elseif def.type == 'html' %}
                                             {% include '@admin/components/ui/editor.twig' with {name: def.input_name, id: input_id, value: def.value, allow_upload: true, upload_url: upload_url, errors: def.errors|join(' ')} only %}
                                         {% elseif def.type == 'text' or (def.type == 'string' and def.value matches '/[\r\n]/') %}
@@ -122,7 +108,7 @@
                                         {% endif %}
                                     {% endif %}
                                     {% if def.hint %}<div class="form-text">{{ def.hint }}</div>{% endif %}
-                                    {% include '@theme/components/field-errors.twig' with {errors: def.errors} only %}
+                                    {% if not def.multiple or def.role == 'tags' %}{% include '@theme/components/field-errors.twig' with {errors: def.errors} only %}{% endif %}
                                 </div>
                             {% endfor %}
                         </div>

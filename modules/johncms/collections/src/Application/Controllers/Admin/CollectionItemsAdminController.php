@@ -49,6 +49,7 @@ final readonly class CollectionItemsAdminController
         private ItemListControlsMapper $controlsMapper,
         private ItemListRowMapper $rowMapper,
         private \Johncms\Modules\Collections\Application\Services\CollectionItemFiles $files,
+        private \Johncms\Modules\Collections\Application\Services\CollectionRepeatedValues $repeated = new \Johncms\Modules\Collections\Application\Services\CollectionRepeatedValues(),
     ) {
     }
 
@@ -143,6 +144,20 @@ final readonly class CollectionItemsAdminController
 
         $fieldDefs = $this->fieldRepository->getByCollection($collection_id);
         $fields = $this->fieldsFromRequest($request, $collection, $fieldDefs);
+        if ($request->hasBody('repeat_action')) {
+            try {
+                [$key, $operation, $index] = $this->repeated->action($request->body('repeat_action'));
+                $field = $fieldDefs->first(static fn ($field): bool => 'field_' . $field->code === $key && $field->multiple && $field->role !== 'tags');
+                if ($field === null || ! is_array($fields['values'][$field->code])) {
+                    throw new \InvalidArgumentException(d__('collections', 'Choose an existing value and a valid action.'));
+                }
+                $fields['values'][$field->code] = $this->repeated->apply($fields['values'][$field->code], $operation, $index, $field->settings['max_values'] ?? 1000);
+                $fields['repeat_message'] = d__('collections', 'Values changed. Save the form to apply them.');
+                return $this->renderFormWithFields($collection, $id, $fields, []);
+            } catch (\InvalidArgumentException $exception) {
+                return $this->renderFormWithFields($collection, $id, $fields, ['_form' => [$exception->getMessage()]]);
+            }
+        }
         try {
             $this->saveItem->execute($id, $this->dtoFromFields($collection_id, $fields), $user->id());
         } catch (CollectionItemFormException $exception) {
@@ -251,7 +266,8 @@ final readonly class CollectionItemsAdminController
             'fields'          => $fields,
             'has_sections'    => $hasSections,
             'section_options' => $hasSections ? $this->sectionOptions($collection->id) : [],
-            'field_defs'      => $this->buildFieldDefs($this->fieldRepository->getByCollection($collection->id), $valueMap, $errors),
+            'field_defs'      => $this->buildFieldDefs($this->fieldRepository->getByCollection($collection->id), $valueMap, $errors, ! empty($fields['repeat_exact'])),
+            'repeat_message' => $fields['repeat_message'] ?? '',
             'errors'          => array_merge([], ...array_values($errors)),
             'field_errors'    => $errors,
         ]);
@@ -274,7 +290,7 @@ final readonly class CollectionItemsAdminController
      * @param array<string, mixed> $valueMap
      * @return list<array<string, mixed>>
      */
-    private function buildFieldDefs(Collection $fields, array $valueMap, array $errors): array
+    private function buildFieldDefs(Collection $fields, array $valueMap, array $errors, bool $exactRows = false): array
     {
         $defs = [];
         foreach ($fields as $field) {
@@ -297,10 +313,15 @@ final readonly class CollectionItemsAdminController
                 }
             }
 
+            $entries = $field->multiple ? array_map(fn ($entry): string => $this->inputValue($field->type, $entry), is_array($current) ? $current : []) : [];
+            $limit = $field->settings['max_values'] ?? 1000;
+            if ($field->multiple && ! $exactRows && count($entries) < $limit) {
+                $entries[] = '';
+            }
             $defs[] = [
                 'tags_url' => $field->role === 'tags' ? '/admin/collections/' . $field->collection_id . '/tags/' . $field->code : '',
                 'role' => $field->role,
-                'entries'    => $field->multiple ? [...array_map(fn ($entry): string => $this->inputValue($field->type, $entry), is_array($current) ? $current : []), ''] : [],
+                'entries' => $entries, 'limit' => $limit,
                 'input_name' => 'field_' . $field->code,
                 'name'       => $field->name,
                 'hint' => $field->settings['hint'] ?? '',
@@ -346,6 +367,7 @@ final readonly class CollectionItemsAdminController
     private function fieldsFromRequest(Request $request, ContentCollection $collection, Collection $fieldDefs): array
     {
         return [
+            'repeat_exact' => true,
             'upload_context' => $request->body('upload_context') ?: null,
             'section_id'   => $this->hasSections($collection) ? $this->postSection($request) : null,
             'code'         => trim($request->body('code', '')),
@@ -427,7 +449,7 @@ final readonly class CollectionItemsAdminController
         $values = [];
         foreach ($fieldDefs as $field) {
             if ($field->multiple && is_array($request->request->all()['field_' . $field->code] ?? null)) {
-                $values[$field->code] = array_values(array_filter($request->bodyList('field_' . $field->code), static fn ($value): bool => is_string($value) && trim($value) !== ''));
+                $values[$field->code] = array_values(array_filter($request->bodyList('field_' . $field->code), is_string(...)));
                 continue;
             }
             $raw = $request->body('field_' . $field->code, '');

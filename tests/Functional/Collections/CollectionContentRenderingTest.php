@@ -104,7 +104,7 @@ final class CollectionContentRenderingTest extends FunctionalTestCase
         self::assertSame(302, $response->getStatusCode());
         self::assertSame($values, $this->container()->get(CollectionsApiInterface::class)->getItem($this->item)->values['rich']);
         $html = (string) $this->handleRequest($base . '/' . $this->item . '/edit', cookies: $this->actingAs($user))->getContent();
-        self::assertSame(3, substr_count($html, 'name="field_rich[]"'));
+        self::assertSame(3, \Dom\HTMLDocument::createFromString($html, LIBXML_NOERROR)->querySelectorAll('[data-key="field_rich"] [data-repeat-rows] textarea')->length);
         self::assertGreaterThanOrEqual(5, substr_count($html, 'data-admin-editor')); 
     }
 
