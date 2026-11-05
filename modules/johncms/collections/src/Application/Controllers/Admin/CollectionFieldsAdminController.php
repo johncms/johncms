@@ -267,6 +267,7 @@ final readonly class CollectionFieldsAdminController
             'repeat_exact' => true,
             'option_rows' => $this->optionsFromRequest($request),
             'target_collection_id' => $request->body('target_collection_id'),
+            'relation_on_delete' => $request->body('relation_on_delete', 'restrict'),
             'hint' => $request->body('hint'), 'use_default' => $request->hasBody('use_default'),
             'default_value' => $request->body('default_value'), 'default_values' => array_values(array_filter($request->bodyList('default_values'), is_string(...))),
             'min_length' => $request->body('min_length'), 'max_length' => $request->body('max_length'),
@@ -338,6 +339,7 @@ final readonly class CollectionFieldsAdminController
         return [
             'hint' => $settings['hint'] ?? '',
             'target_collection_id' => $settings['target_collection_id'] ?? '',
+            'relation_on_delete' => $settings['on_delete'] ?? 'restrict',
             'option_rows' => array_map(static fn (array $option): array => $option + ['active' => true], $settings['options'] ?? []), 'use_default' => $default !== null,
             'default_value' => is_string($default) ? $default : '', 'default_values' => is_array($default) ? $default : [],
             'min_length' => $settings['min_length'] ?? '', 'max_length' => $settings['max_length'] ?? '',
@@ -362,6 +364,7 @@ final readonly class CollectionFieldsAdminController
         if ($fields['type'] === 'relation') {
             $target = filter_var($fields['target_collection_id'], FILTER_VALIDATE_INT);
             $settings['target_collection_id'] = $target !== false ? $target : null;
+            $settings['on_delete'] = $fields['relation_on_delete'];
         }
         if ($fields['type'] === 'select') {
             $settings['options'] = array_values(array_filter($fields['option_rows'], static fn (array $option): bool => $option['code'] !== '' || $option['label'] !== ''));

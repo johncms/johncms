@@ -17,6 +17,15 @@ interface ContentCollectionItemValueRepositoryInterface
      */
     public function hasIncomingRelationsForUpdate(array $targetIds, array $deletedItemIds): bool;
 
+    /** @param list<int> $targetIds
+     * @param list<int> $deletedItemIds
+     * @return \Illuminate\Database\Eloquent\Collection<int, \Johncms\Modules\Collections\Domain\Models\ContentCollectionItemValue>
+     */
+    public function getIncomingRelations(array $targetIds, array $deletedItemIds, bool $forUpdate = false): \Illuminate\Database\Eloquent\Collection;
+
+    /** @param list<int> $ids */
+    public function deleteRelationValues(array $ids): void;
+
     /** @param list<int> $fieldIds */
     public function deleteFields(int $itemId, array $fieldIds): void;
 

@@ -21,6 +21,7 @@ final readonly class CollectionDeletionPlanner
         private ContentCollectionSectionRepositoryInterface $sections,
         private ContentCollectionItemRepositoryInterface $items,
         private ContentCollectionFieldRepositoryInterface $fields,
+        private CollectionRelationDeletion $relations,
     ) {
     }
 
@@ -43,7 +44,9 @@ final readonly class CollectionDeletionPlanner
         if ($forUpdate && ($this->sections->hasForeignChildrenForUpdate($collectionId, $sectionIds) || $this->items->hasForeignItemsInSectionsForUpdate($collectionId, $sectionIds))) {
             throw new CollectionDeletionException(['tree' => [d__('collections', 'Sections are referenced by another collection. Fix these links before deleting.')]]);
         }
+        $relationImpact = $this->relations->impact($collectionId, $items->pluck('id')->all(), $items->pluck('id')->all(), $forUpdate, $sectionId === null ? $collectionId : null);
         $revision = hash('sha256', serialize([
+            $relationImpact->revision,
             $collection->getRawOriginal(), $this->attributes($affectedSections), $this->attributes($items), $this->attributes($fields),
         ]));
         return new CollectionDeletionPlanDTO(
@@ -55,7 +58,8 @@ final readonly class CollectionDeletionPlanner
                 $items->count(),
                 $fields->count(),
                 $revision,
-                $collection->owner_module
+                $collection->owner_module,
+                $relationImpact
             ),
             $sectionIds,
             $items->pluck('id')->all(),

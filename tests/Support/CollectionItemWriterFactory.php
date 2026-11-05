@@ -81,12 +81,19 @@ final class CollectionItemWriterFactory
         );
     }
 
+    public static function relationDeletion(): \Johncms\Modules\Collections\Application\Services\CollectionRelationDeletion
+    {
+        return new \Johncms\Modules\Collections\Application\Services\CollectionRelationDeletion(
+            new ContentCollectionItemValueRepository(), new ContentCollectionFieldRepository(), self::itemRepository(), new ContentCollectionRepository()
+        );
+    }
+
     public static function deletionPlanner(): \Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner
     {
         return new \Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner(
             new ContentCollectionRepository(), new ContentCollectionSectionRepository(),
             new ContentCollectionItemRepository(new ContentCollectionFieldRepository(), new ContentCollectionItemQueryCompiler()),
-            new ContentCollectionFieldRepository()
+            new ContentCollectionFieldRepository(), self::relationDeletion()
         );
     }
 
@@ -94,7 +101,7 @@ final class CollectionItemWriterFactory
     {
         return new \Johncms\Modules\Collections\Application\UseCases\DeleteCollectionItemUseCase(
             new ContentCollectionItemRepository(new ContentCollectionFieldRepository(), new ContentCollectionItemQueryCompiler()),
-            new ContentCollectionItemValueRepository(), new ContentCollectionRepository(), new CollectionTransaction(), $changes ?? new \Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher()
+            new ContentCollectionItemValueRepository(), new ContentCollectionRepository(), new CollectionTransaction(), self::relationDeletion(), $changes ?? new \Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher()
         );
     }
 

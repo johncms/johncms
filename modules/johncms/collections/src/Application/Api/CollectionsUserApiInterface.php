@@ -31,7 +31,9 @@ interface CollectionsUserApiInterface
 
     public function patchItem(int $collectionId, int $id, CollectionItemPatchDTO $patch): void;
 
-    public function deleteItem(int $collectionId, int $id): void;
+    public function previewItemDeletion(int $collectionId, int $id): \Johncms\Modules\Collections\Application\DTO\CollectionRelationImpactDTO;
+
+    public function deleteItem(int $collectionId, int $id, ?string $expectedRelations = null): void;
 
     public function findSection(int $collectionId, int $id): ?CollectionSectionDTO;
 

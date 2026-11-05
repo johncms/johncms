@@ -192,6 +192,12 @@ final readonly class CollectionItemsAdminController
 
     public function deleteConfirm(Request $request, int $collection_id, int $id): ViewResponse
     {
+        return $this->renderDeleteConfirm($request, $collection_id, $id);
+    }
+
+    /** @param list<string> $errors */
+    private function renderDeleteConfirm(Request $request, int $collection_id, int $id, array $errors = []): ViewResponse
+    {
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
             return $this->collectionNotFound();
@@ -202,14 +208,17 @@ final readonly class CollectionItemsAdminController
             return $this->wrongData($collection_id);
         }
 
-        $back = $this->returnUrl($collection_id, $request->queryParam('back'));
+        $back = $this->returnUrl($collection_id, $request->queryParam('back') ?: $request->body('back'));
+        $impact = $this->userApi->previewItemDeletion($collection_id, $id);
         $dialog = [
             'title'       => __('Delete item'),
             'message'     => __('Are you sure you want to delete the item?'),
             'name'        => $item->name,
             'form_action' => $this->baseUrl($collection_id) . '/' . $id . '/delete',
             'back_url'    => $back,
-            'hidden'      => ['back' => $back],
+            'hidden'      => ['back' => $back, 'relation_revision' => $impact->revision],
+            'relation_impact' => $impact,
+            'errors' => $errors,
         ];
 
         if ($request->isXmlHttpRequest()) {
@@ -232,9 +241,9 @@ final readonly class CollectionItemsAdminController
 
         if ($this->findOwnedItem($collection_id, $id) !== null) {
             try {
-                $this->deleteItem->execute($id, $collection_id);
+                $this->deleteItem->execute($id, $collection_id, expectedRelations: $request->body('relation_revision', ''));
             } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException $exception) {
-                return $this->wrongData($collection_id, implode(" ", array_merge(...array_values($exception->errors))));
+                return $this->renderDeleteConfirm($request, $collection_id, $id, array_merge(...array_values($exception->errors)));
             } catch (CollectionItemFormException) {
                 return $this->wrongData($collection_id);
             } catch (CollectionWriteConflictException) {

@@ -30,6 +30,9 @@ interface ContentCollectionFieldRepositoryInterface
 
     public function hasExternalRelationsToCollectionForUpdate(int $collectionId): bool;
 
+    /** @return Collection<int, ContentCollectionField> */
+    public function getRelationsToCollection(int $collectionId, bool $forUpdate = false): Collection;
+
     /** @param list<string> $codes Current locking read under the collection lock. */
     public function hasSelectValuesOutside(int $id, array $codes): bool;
 

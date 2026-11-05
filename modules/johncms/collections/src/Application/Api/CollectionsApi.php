@@ -106,8 +106,13 @@ final readonly class CollectionsApi implements CollectionsApiInterface
         $this->deleteCollection->execute($collectionId, $expectedRevision);
     }
 
-    public function deleteItem(int $id): void
+    public function previewItemDeletion(int $id): \Johncms\Modules\Collections\Application\DTO\CollectionRelationImpactDTO
     {
-        $this->deleteItem->execute($id);
+        return $this->deleteItem->preview($id);
+    }
+
+    public function deleteItem(int $id, ?string $expectedRelations = null): void
+    {
+        $this->deleteItem->execute($id, expectedRelations: $expectedRelations);
     }
 }

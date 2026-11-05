@@ -144,6 +144,7 @@ final readonly class CollectionsAdminController
                 ['label' => __('Fields'), 'value' => $preview->fields],
             ],
             'hidden' => ['revision' => $preview->revision],
+            'relation_impact' => $preview->relations,
             'errors' => $errors,
             'form_action' => self::URL . '/' . $id . '/delete',
             'back_url'    => CollectionWorkspaceMapper::url($id, CollectionWorkspaceMapper::SETTINGS),

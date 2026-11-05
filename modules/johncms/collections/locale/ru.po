@@ -1103,3 +1103,36 @@ msgstr "Показано до 30 подходящих записей. Уточн
 
 msgid "You need access to the target collection to choose related items."
 msgstr "Для выбора связанных записей нужен доступ к целевой коллекции."
+
+msgid "Use restrict or clear for relation deletion. Required relations must use restrict."
+msgstr "Выберите restrict или clear для удаления связей. Для обязательных связей допустим только restrict."
+
+msgid "Relations or field defaults prevent deletion. Remove the references or change their deletion policy first."
+msgstr "Связи или значения полей по умолчанию препятствуют удалению. Сначала удалите ссылки или измените политику их удаления."
+
+msgid "When a related item is deleted"
+msgstr "При удалении связанной записи"
+
+msgid "Prevent deletion while referenced"
+msgstr "Запретить удаление при наличии ссылок"
+
+msgid "Clear optional relations"
+msgstr "Очищать необязательные связи"
+
+msgid "Required relations and field defaults must be resolved before deleting their targets."
+msgstr "Перед удалением целей необходимо изменить обязательные связи и значения полей по умолчанию."
+
+msgid "Optional relation values to clear"
+msgstr "Необязательных значений связей для очистки"
+
+msgid "Relation values preventing deletion"
+msgstr "Значений связей, препятствующих удалению"
+
+msgid "Field defaults preventing deletion"
+msgstr "Полей со значениями по умолчанию, препятствующими удалению"
+
+msgid "External relation fields preventing collection deletion"
+msgstr "Внешних полей связи, препятствующих удалению коллекции"
+
+msgid "Relation cleanup applies when items are deleted. Moving items preserves their relations."
+msgstr "Связи очищаются при удалении записей. Перенос записей сохраняет их связи."

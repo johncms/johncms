@@ -150,6 +150,7 @@ final readonly class CollectionSectionsAdminController
                 ['label' => __('Items in the subtree'), 'value' => $preview->items],
             ],
             'hidden' => ['revision' => $preview->revision],
+            'relation_impact' => $preview->relations,
             'errors' => $errors,
             'deletion' => ['mode' => $mode, 'target' => $target, 'options' => $this->sectionOptions($collection_id, $id)],
             'form_action' => $this->baseUrl($collection_id) . '/' . $id . '/delete',

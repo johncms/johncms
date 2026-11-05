@@ -61,7 +61,7 @@ final readonly class CollectionDeclarationsSynchronizer implements DeclarationSy
                 $this->collections->update($collection->id, $attributes);
                 $byCode = $this->fields->getForUpdate($collection->id)->keyBy('code');
                 foreach ($declaration->fields as $declared) {
-                    $this->settingsValidator->validate($declared->type, $declared->multiple, $declared->settings);
+                    $this->settingsValidator->validate($declared->type, $declared->multiple, $declared->settings, $declared->required);
                     $field = $byCode[$declared->code] ?? null;
                     if ($field !== null && $field->owner_module !== $owner) {
                         continue;

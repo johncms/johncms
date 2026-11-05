@@ -40,7 +40,7 @@ final readonly class DeleteCollectionUseCase
             }
             $this->changes->ensureOwnerLoaded($plan->preview->ownerModule);
             foreach ($plan->itemIds as $itemId) {
-                $this->deleteItem->execute($itemId, $id, $plan->itemIds);
+                $this->deleteItem->execute($itemId, $id, $plan->itemIds, deletedCollectionId: $id);
             }
             foreach (array_reverse($plan->sectionIds) as $sectionId) {
                 $this->changes->dispatch(new CollectionChangeDTO('section', 'deleted', $id, $sectionId, $plan->sectionStates[$sectionId], null));

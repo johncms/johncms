@@ -798,6 +798,7 @@ msgstr ""
 #: system/src/Comments.php:372
 #: system/src/Http/EditorImageUploadResponder.php:60
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:156
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:361
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionRelationsController.php:22
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionTagsController.php:22
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:36

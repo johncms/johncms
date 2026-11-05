@@ -100,6 +100,7 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
             self::assertSame($this->target, $this->schema->getFields($this->source)[0]->settings['target_collection_id']);
         }
         $this->api->deleteItem($source);
+        $this->field($this->target, $field, ['default' => null]);
         $this->api->deleteItem($target);
         $this->expectException(CollectionSchemaException::class);
         $this->field($this->target, $field, ['default' => (string) $target]);
@@ -213,6 +214,116 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
         }
         $api->patchItem($this->source, $source, new CollectionItemPatchDTO(values: ['related' => null]));
         self::assertArrayNotHasKey('related', $this->api->getItem($source)->values);
+    }
+
+    public function testClearRemovesOnlyDeletedTargetsAndDispatchesSourceChangesAtomically(): void
+    {
+        $this->schema->saveField(null, new CollectionFieldFormDTO($this->source, 'many', 'Many', FieldType::Relation, false, true, 100, settings: ['target_collection_id' => $this->target, 'on_delete' => 'clear']));
+        $first = $this->api->addItem($this->form($this->target, 'first'));
+        $second = $this->api->addItem($this->form($this->target, 'second'));
+        $source = $this->api->addItem(new CollectionItemFormDTO($this->source, null, 'source', 'Source', true, null, null, 100, null, null, []));
+        $this->api->patchItem($source, new CollectionItemPatchDTO(values: ['many' => [(string) $second, (string) $first, (string) $second]]));
+        \Illuminate\Database\Capsule\Manager::table('collection_items')->where('id', $source)->update(['updated_at' => '2000-01-01 00:00:00']);
+        $handler = new \Tests\Support\RecordingCollectionChangeHandler();
+        $changes = new \Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher([$handler], transaction: new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction());
+        $deleter = \Tests\Support\CollectionItemWriterFactory::itemDeleter($changes);
+        $handler->failWithin = true;
+        try {
+            $deleter->execute($first);
+            self::fail('A source handler failure must roll back all relation cleanup.');
+        } catch (\RuntimeException $exception) {
+            self::assertSame('Required collection handler failed.', $exception->getMessage());
+        }
+        self::assertNotNull($this->api->getItem($first));
+        self::assertSame([$second, $first, $second], $this->api->getItem($source)->values['many']);
+        self::assertSame('2000-01-01 00:00:00', \Illuminate\Database\Capsule\Manager::table('collection_items')->where('id', $source)->value('updated_at'));
+        $handler->failWithin = false;
+        $handler->within = [];
+        $deleter->execute($first);
+        self::assertSame([$second, $second], $this->api->getItem($source)->values['many']);
+        self::assertNull($this->api->getItem($first));
+        self::assertSame([['saved', $source], ['deleted', $first]], array_map(static fn ($change): array => [$change->action, $change->id], $handler->within));
+        self::assertNotSame('2000-01-01 00:00:00', \Illuminate\Database\Capsule\Manager::table('collection_items')->where('id', $source)->value('updated_at'));
+    }
+
+    public function testClearNeedsFreshHttpConfirmationAndCountsContainNoPrivateNames(): void
+    {
+        $this->field($this->target, settings: ['on_delete' => 'clear']);
+        $target = $this->api->addItem($this->form($this->target, 'target'));
+        $source = $this->api->addItem($this->form($this->source, 'private-source', (string) $target));
+        $impact = $this->api->previewItemDeletion($target);
+        self::assertSame(1, $impact->clearValues);
+        self::assertSame(0, $impact->blockedValues);
+        $user = FunctionalUserFactory::createSupervisor();
+        $url = '/admin/collections/' . $this->target . '/items/' . $target . '/delete';
+        $response = $this->handleRequest($url, cookies: $this->actingAs($user));
+        $html = (string) $response->getContent();
+        $dialog = \Dom\HTMLDocument::createFromString($html, LIBXML_NOERROR)->querySelector('form[action="' . $url . '"]');
+        self::assertStringNotContainsString('private-source', $dialog->textContent);
+        self::assertStringContainsString($impact->revision, $html);
+        self::assertSame(200, $this->postForm($url, [], $user)->getStatusCode());
+        self::assertNotNull($this->api->getItem($target));
+        $this->api->addItem($this->form($this->source, 'another-source', (string) $target));
+        self::assertSame(200, $this->postForm($url, ['relation_revision' => $impact->revision], $user)->getStatusCode());
+        self::assertSame($target, $this->api->getItem($source)->values['related']);
+        self::assertSame(302, $this->postForm($url, ['relation_revision' => $this->api->previewItemDeletion($target)->revision], $user)->getStatusCode());
+        self::assertNull($this->api->getItem($target));
+        self::assertArrayNotHasKey('related', $this->api->getItem($source)->values);
+    }
+
+    public function testRequiredRelationsCannotUseClearAndDefaultsStillPreventDeletion(): void
+    {
+        foreach ([['on_delete' => 'cascade'], ['on_delete' => 'clear']] as $settings) {
+            try {
+                $this->schema->saveField(null, new CollectionFieldFormDTO($this->source, 'related', 'Related', FieldType::Relation, true, false, 100, settings: ['target_collection_id' => $this->target] + $settings));
+                self::fail('Required relations must not be silently cleared.');
+            } catch (CollectionSchemaException) {
+                self::assertSame([], $this->schema->getFields($this->source));
+            }
+        }
+        $target = $this->api->addItem($this->form($this->target, 'default-target'));
+        $this->field($this->target, settings: ['on_delete' => 'clear', 'default' => (string) $target]);
+        self::assertSame(1, $this->api->previewItemDeletion($target)->defaultFields);
+        $this->expectException(CollectionDeletionException::class);
+        $this->api->deleteItem($target);
+    }
+
+    public function testBranchRevisionIncludesIncomingClearRelationsAndRollbackPreservesThem(): void
+    {
+        $sections = $this->container()->get(CollectionSectionsApiInterface::class);
+        $section = $sections->addSection(new CollectionSectionFormDTO($this->target, null, 'branch', 'Branch', null, true, 100));
+        $target = $this->api->addItem($this->form($this->target, 'target', section: $section));
+        $field = $this->field($this->target, settings: ['on_delete' => 'clear']);
+        $before = $sections->previewDeletion($this->target, $section);
+        $source = $this->api->addItem($this->form($this->source, 'external', (string) $target));
+        try {
+            $sections->deleteSection($this->target, $section, SectionDeletionMode::DeleteItems, expectedRevision: $before->revision);
+            self::fail('New incoming relations require a fresh confirmation.');
+        } catch (CollectionDeletionException $exception) {
+            self::assertArrayHasKey('revision', $exception->errors);
+        }
+        $current = $sections->previewDeletion($this->target, $section);
+        self::assertSame(1, $current->relations->clearValues);
+        $sections->deleteSection($this->target, $section, SectionDeletionMode::DeleteItems, expectedRevision: $current->revision);
+        self::assertArrayNotHasKey('related', $this->api->getItem($source)->values);
+        self::assertNull($this->api->getItem($target));
+        self::assertSame($field, $this->schema->getFields($this->source)[0]->id);
+    }
+
+    public function testClearCannotModifyContentOfAnUnavailableOwner(): void
+    {
+        $this->field($this->target, settings: ['on_delete' => 'clear']);
+        $target = $this->api->addItem($this->form($this->target, 'target'));
+        $source = $this->api->addItem($this->form($this->source, 'source', (string) $target));
+        \Illuminate\Database\Capsule\Manager::table('collections')->where('id', $this->source)->update(['owner_module' => 'missing/module']);
+        try {
+            $this->api->deleteItem($target);
+            self::fail('Unavailable owners must not lose their required lifecycle hooks.');
+        } catch (CollectionDeletionException $exception) {
+            self::assertArrayHasKey('owner', $exception->errors);
+        }
+        self::assertNotNull($this->api->getItem($target));
+        self::assertSame($target, $this->api->getItem($source)->values['related']);
     }
 
     /** @param array<string, mixed> $settings */

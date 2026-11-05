@@ -69,10 +69,16 @@ final readonly class CollectionsUserApi implements CollectionsUserApiInterface
         $this->write($collectionId, $patch->values, false, fn () => $this->items->patchItem($id, $patch, $this->user->id()));
     }
 
-    public function deleteItem(int $collectionId, int $id): void
+    public function previewItemDeletion(int $collectionId, int $id): \Johncms\Modules\Collections\Application\DTO\CollectionRelationImpactDTO
     {
         $this->requireItem($collectionId, $id);
-        $this->items->deleteItem($id);
+        return $this->items->previewItemDeletion($id);
+    }
+
+    public function deleteItem(int $collectionId, int $id, ?string $expectedRelations = null): void
+    {
+        $this->requireItem($collectionId, $id);
+        $this->items->deleteItem($id, $expectedRelations);
     }
 
     public function findSection(int $collectionId, int $id): ?CollectionSectionDTO

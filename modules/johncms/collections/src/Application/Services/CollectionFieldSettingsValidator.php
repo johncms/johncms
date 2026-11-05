@@ -14,7 +14,7 @@ final readonly class CollectionFieldSettingsValidator
     }
 
     /** @param array<string, mixed> $settings */
-    public function validate(FieldType $type, bool $multiple, array $settings): void
+    public function validate(FieldType $type, bool $multiple, array $settings, bool $required = false): void
     {
         try {
             if (strlen(json_encode($settings, JSON_THROW_ON_ERROR, 32)) > 65535 || ! $this->jsonData($settings) || ($settings !== [] && array_is_list($settings))) {
@@ -52,6 +52,9 @@ final readonly class CollectionFieldSettingsValidator
         }
         if ($type === FieldType::Relation && (! is_int($settings['target_collection_id'] ?? null) || $settings['target_collection_id'] < 1)) {
             throw new CollectionSchemaException(d__('collections', 'Choose a target collection for this relation field.'));
+        }
+        if ($type === FieldType::Relation && (! in_array($settings['on_delete'] ?? 'restrict', ['restrict', 'clear'], true) || ($required && ($settings['on_delete'] ?? 'restrict') === 'clear'))) {
+            throw new CollectionSchemaException(d__('collections', 'Use restrict or clear for relation deletion. Required relations must use restrict.'));
         }
         if ($type === FieldType::Select) {
             $this->options($settings['options'] ?? []);

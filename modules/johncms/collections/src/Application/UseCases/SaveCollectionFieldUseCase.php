@@ -73,7 +73,7 @@ final readonly class SaveCollectionFieldUseCase
                 throw new CollectionSchemaException(d__('collections', 'Convert existing values explicitly before changing their type or multiplicity.'));
             }
             $settings = array_replace($current->settings ?? [], $dto->settings);
-            $this->settingsValidator->validate($dto->type, $dto->multiple, $settings);
+            $this->settingsValidator->validate($dto->type, $dto->multiple, $settings, $dto->required);
             if ($dto->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::Relation) {
                 $target = $settings['target_collection_id'];
                 if ($this->collections->findForUpdate($target) === null) {

@@ -71,7 +71,9 @@ interface CollectionsApiInterface
     /**
      * Delete an item (its EAV values cascade via FK).
      */
-    public function deleteItem(int $id): void;
+    public function previewItemDeletion(int $id): \Johncms\Modules\Collections\Application\DTO\CollectionRelationImpactDTO;
+
+    public function deleteItem(int $id, ?string $expectedRelations = null): void;
 
     public function previewCollectionDeletion(int $collectionId): CollectionDeletionPreviewDTO;
 

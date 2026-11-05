@@ -72,7 +72,12 @@
                     <div class="col-12" data-field-types="relation">
                         <label class="form-label" for="relation-target">{{ __('Target collection ID') }}</label>
                         <input class="form-control" type="number" min="1" step="1" name="target_collection_id" id="relation-target" value="{{ fields.target_collection_id }}">
-                        <div class="form-text">{{ __('Referenced items cannot be deleted until their relations are removed.') }}</div>
+                        <label class="form-label mt-2" for="relation-on-delete">{{ __('When a related item is deleted') }}</label>
+                        <select class="form-select" id="relation-on-delete" name="relation_on_delete">
+                            <option value="restrict"{% if fields.relation_on_delete == 'restrict' %} selected{% endif %}>{{ __('Prevent deletion while referenced') }}</option>
+                            <option value="clear"{% if fields.relation_on_delete == 'clear' %} selected{% endif %}>{{ __('Clear optional relations') }}</option>
+                        </select>
+                        <div class="form-text">{{ __('Required relations and field defaults must be resolved before deleting their targets.') }}</div>
                     </div>
                     <div class="col-12" data-field-types="select">
                         {% include '@collections/admin/components/option-settings.twig' with {options: option_rows} only %}

@@ -20,6 +20,7 @@
     hidden: hidden|default({}),
     errors: errors|default([]),
     deletion: deletion|default(null),
+    relation_impact: relation_impact|default(null),
 } only %}
     {% block body %}
         {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
@@ -31,6 +32,17 @@
         {% if facts is not empty %}
             <div class="mt-3">
                 {% include '@admin/components/ui/facts.twig' with {items: facts} only %}
+            </div>
+        {% endif %}
+        {% if relation_impact is not null %}
+            <div class="mt-3">
+                {% include '@admin/components/ui/facts.twig' with {items: [
+                    {label: __('Optional relation values to clear'), value: relation_impact.clearValues},
+                    {label: __('Relation values preventing deletion'), value: relation_impact.blockedValues},
+                    {label: __('Field defaults preventing deletion'), value: relation_impact.defaultFields},
+                    {label: __('External relation fields preventing collection deletion'), value: relation_impact.schemaFields}
+                ]} only %}
+                <div class="form-text">{{ __('Relation cleanup applies when items are deleted. Moving items preserves their relations.') }}</div>
             </div>
         {% endif %}
         {% if deletion is not null %}

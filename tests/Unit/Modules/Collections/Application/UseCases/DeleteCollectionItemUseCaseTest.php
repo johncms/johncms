@@ -53,7 +53,7 @@ final class DeleteCollectionItemUseCaseTest extends TestCase
         $delete = new \Johncms\Modules\Collections\Application\UseCases\DeleteCollectionItemUseCase(
             $items, new \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemValueRepository(),
             new \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionRepository(),
-            new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction()
+            new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction(), CollectionItemWriterFactory::relationDeletion()
         );
         try {
             $delete->execute($id, $collection);
