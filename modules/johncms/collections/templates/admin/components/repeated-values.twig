@@ -9,7 +9,8 @@
             {% include '@collections/admin/components/repeated-row.twig' with {
                 input_name: input_name, input_id: id_prefix ~ '_' ~ loop.index0, type: type, value: entry,
                 label: label, index: loop.index0, last: loop.last, action_key: action_key,
-                allow_upload: allow_upload, upload_url: upload_url, options: options|default([])
+                allow_upload: allow_upload, upload_url: upload_url, options: options|default([]),
+                file_code: file_code|default(''), file_choices: file_choices|default([]), file_accept: file_accept|default(''), errors: errors|default([])
             } only %}
         {% endfor %}
     </div>
@@ -22,7 +23,8 @@
     <template data-repeat-template>
         {% include '@collections/admin/components/repeated-row.twig' with {
             input_name: input_name, input_id: id_prefix ~ '___INDEX__', type: type, value: '',
-            label: label, index: 0, last: true, action_key: action_key, allow_upload: allow_upload, upload_url: upload_url, options: options|default([])
+            label: label, index: 0, last: true, action_key: action_key, allow_upload: allow_upload, upload_url: upload_url, options: options|default([]),
+                file_code: file_code|default(''), file_choices: file_choices|default([]), file_accept: file_accept|default(''), errors: errors|default([])
         } only %}
     </template>
 </fieldset>

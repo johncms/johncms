@@ -15,6 +15,12 @@ document.querySelectorAll('[data-collection-repeat]').forEach(root => {
     entries.forEach((row, index) => {
       row.querySelector('[data-repeat-number]').textContent = index + 1;
       labelAdminEditors(row, `${root.querySelector('legend').textContent.trim()} ${index + 1}`);
+      row.querySelectorAll('[data-file-widget]').forEach(widget => {
+        widget.dataset.index = index;
+        widget.querySelector('[data-file-upload-input]').name = `file_uploads[${widget.dataset.code}][${index}]`;
+        widget.querySelector('[data-file-upload-button]').value = `${widget.dataset.code}:${index}`;
+        widget.querySelector('[data-file-clear]').value = `${widget.dataset.code}:${index}`;
+      });
       row.querySelectorAll('[data-repeat-op]').forEach(button => {
         const operation = button.dataset.repeatOp;
         button.value = `${root.dataset.key}:${operation}:${index}`;
@@ -22,6 +28,7 @@ document.querySelectorAll('[data-collection-repeat]').forEach(root => {
       });
     });
     add.disabled = entries.length >= limit;
+    root.dispatchEvent(new CustomEvent('collection:values-changed', {bubbles: true}));
   };
   refresh();
 
@@ -54,6 +61,11 @@ document.querySelectorAll('[data-collection-repeat]').forEach(root => {
           if (next.isConnected && (document.activeElement === document.body || next.contains(document.activeElement))) focusAdminEditor(next);
         });
       } else if (operation === 'remove') {
+        const pendingFile = row.querySelector('[data-file-widget][aria-busy="true"]');
+        if (pendingFile) {
+          status.textContent = pendingFile.closest('[data-file-field]').dataset.uploading;
+          return;
+        }
         const index = rows().indexOf(row);
         if (!await removeAdminEditors(row)) return;
         row.remove();

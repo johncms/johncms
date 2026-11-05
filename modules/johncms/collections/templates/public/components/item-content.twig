@@ -12,7 +12,13 @@
         <dl class="row">
             {% for value in item.values %}
                 <dt class="col-sm-3">{{ value.label }}</dt>
-                <dd class="col-sm-9">{% for entry in value.values %}{{ entry }}{% if not loop.last %}, {% endif %}{% endfor %}</dd>
+                <dd class="col-sm-9">
+                    {% if value.files|default([]) %}
+                        {% for file in value.files %}<a href="{{ file.url }}">{{ file.name }}</a> <span class="small text-body-secondary">({{ file.size|format_size }})</span>{% if not loop.last %}, {% endif %}{% endfor %}
+                    {% else %}
+                        {% for entry in value.values %}{{ entry }}{% if not loop.last %}, {% endif %}{% endfor %}
+                    {% endif %}
+                </dd>
             {% endfor %}
         </dl>
     {% endif %}

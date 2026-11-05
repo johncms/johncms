@@ -37,6 +37,12 @@ final readonly class UploadLimits
         return $limits === [] ? 0 : min($limits);
     }
 
+    /** Maximum count of nonempty uploads PHP parses from one request. */
+    public function maxFilesPerRequest(): int
+    {
+        return max(0, (int) $this->php->ini('max_file_uploads'));
+    }
+
     public function uploadMaxFilesizeBytes(): int
     {
         return $this->bytes('upload_max_filesize');

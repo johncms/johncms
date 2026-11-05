@@ -25,13 +25,17 @@ final class CollectionFileRepository implements CollectionFileRepositoryInterfac
         return $row === null ? null : ['collection_id' => $row->getAttribute('collection_id'), 'user_id' => $row->getAttribute('user_id'), 'item_id' => $row->getAttribute('item_id'), 'created_at' => $row->getAttribute('created_at')];
     }
 
-    public function availableForCollection(int $collectionId): array
+    public function availableForCollection(int $collectionId, bool $current = true): array
     {
         $attachments = CollectionFileLink::query()->join('collection_items', 'collection_items.id', '=', 'collection_file_links.item_id')
-            ->where('collection_items.collection_id', $collectionId)->orderBy('collection_file_links.file_id')->lockForUpdate()->pluck('collection_file_links.file_id')->all();
+            ->where('collection_items.collection_id', $collectionId)->orderBy('collection_file_links.file_id');
         $values = CollectionFileValueLink::query()->join('collection_fields', 'collection_fields.id', '=', 'collection_file_value_links.field_id')
-            ->where('collection_fields.collection_id', $collectionId)->orderBy('collection_file_value_links.file_id')->lockForUpdate()->pluck('collection_file_value_links.file_id')->all();
-        return array_values(array_unique([...$attachments, ...$values]));
+            ->where('collection_fields.collection_id', $collectionId)->orderBy('collection_file_value_links.file_id');
+        if ($current) {
+            $attachments->lockForUpdate();
+            $values->lockForUpdate();
+        }
+        return array_values(array_unique([...$attachments->pluck('collection_file_links.file_id')->all(), ...$values->pluck('collection_file_value_links.file_id')->all()]));
     }
 
     public function replaceValueLinks(int $fieldId, ?int $itemId, array $fileIds): array

@@ -12,7 +12,7 @@ use Twig\Markup;
 final readonly class PublicItemDetailDTO
 {
     /**
-     * @param list<array{label: string, values: list<string|Markup>}> $values custom field values in field order
+     * @param list<array{label: string, values: list<string|Markup>, files?: list<\Johncms\Files\StoredFileDTO>}> $values custom field values in field order
      */
     public function __construct(
         public string $name,

@@ -18,6 +18,7 @@ final readonly class GetPublicItemUseCase
         private ContentCollectionFieldRepositoryInterface $fieldRepository,
         private ItemContentFormatter $contentFormatter,
         private CollectionApiMapper $mapper = new CollectionApiMapper(),
+        private ?\Johncms\Files\FileStore $files = null,
     ) {
     }
 
@@ -46,6 +47,33 @@ final readonly class GetPublicItemUseCase
             $list = $this->normalizeValues($raw);
             if (in_array($field->role, ['meta_title', 'meta_description', 'meta_keywords'], true)) {
                 $metadata[$field->role] = $this->contentFormatter->plain($list[0] ?? null);
+                continue;
+            }
+            if ($field->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::File && ($field->settings['file_storage'] ?? 'legacy') === 'registry') {
+                if ($list === []) {
+                    continue;
+                }
+                if ($this->files === null) {
+                    throw new \LogicException('Collection file rendering is not configured.');
+                }
+                $files = [];
+                foreach ($list as $id) {
+                    $identifier = filter_var($id, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+                    if ($identifier === false) {
+                        continue;
+                    }
+                    try {
+                        $file = $this->files->find($identifier);
+                    } catch (\Johncms\Files\FileStoreException) {
+                        continue;
+                    }
+                    if ($file !== null) {
+                        $files[] = $file;
+                    }
+                }
+                if ($files !== []) {
+                    $values[] = ['label' => $field->name, 'values' => [], 'files' => $files];
+                }
                 continue;
             }
             if ($field->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::Select) {

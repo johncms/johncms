@@ -30,6 +30,8 @@ final class NewsCollectionReadTest extends FunctionalTestCase
     protected function setUp(): void
     {
         parent::setUp();
+        // Direct reader calls have no HTTP request and must start with a fresh guest identity.
+        $this->container()->get(\Johncms\Auth\CurrentUser::class)->reset();
         $this->container()->get(CollectionDeclarationsSynchronizer::class)->synchronize();
         $this->api = $this->container()->get(CollectionsApiInterface::class);
         $this->news = $this->container()->get(NewsReadServiceInterface::class);

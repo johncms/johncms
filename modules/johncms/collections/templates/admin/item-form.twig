@@ -27,7 +27,7 @@
     {% import _self as ui %}
     {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
 
-    <form action="{{ form_action }}" method="post" id="item-form" class="row g-3 align-items-start">
+    <form action="{{ form_action }}" method="post" enctype="multipart/form-data" id="item-form" class="row g-3 align-items-start">
         <input type="hidden" name="upload_context" value="{{ fields.upload_context }}">
         <input type="hidden" name="collection_form_started" value="1">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
@@ -69,7 +69,22 @@
                             {% for def in field_defs %}
                                 {% set input_id = 'f_' ~ def.input_name %}
                                 {% set wide = def.multiple or def.type in ['text', 'html'] %}
-                                <div class="{{ wide ? 'col-12' : 'col-md-6' }}"{% if def.type == 'relation' %} data-collection-relation data-source="{{ def.relation_url }}" data-error="{{ __('Could not load related items.') }}" data-loaded="{{ __('Related items loaded. Choose a value and save the form.') }}"{% endif %}>
+                                <div class="{{ wide ? 'col-12' : 'col-md-6' }}"{% if def.type == 'relation' %} data-collection-relation data-source="{{ def.relation_url }}" data-error="{{ __('Could not load related items.') }}" data-loaded="{{ __('Related items loaded. Choose a value and save the form.') }}"{% endif %}
+                                     {% if def.registered_file %} data-file-field data-source="{{ def.file_url }}" data-upload-url="{{ def.file_upload_url }}"
+                                     data-loading="{{ __('Loading files...') }}" data-no-file="{{ __('Choose a file to upload.') }}" data-empty="{{ __('No matching files were found. Change your search or upload a new file.') }}"
+                                     data-error="{{ __('Could not load files. Try again.') }}" data-loaded="{{ __('Files loaded. Choose a value and save the form.') }}"
+                                     data-unavailable="{{ __('The selected file is unavailable or incompatible. Choose another file or clear the value.') }}"
+                                     data-uploading="{{ __('A file is still uploading. Wait before changing values or saving.') }}" data-upload-error="{{ __('Could not upload the file. Try again.') }}"
+                                     data-uploaded="{{ __('Files uploaded. Save the form to apply the selection.') }}" data-cleared="{{ __('File selection cleared. Save the form to apply the change.') }}"{% endif %}>
+                                    {% if def.registered_file %}
+                                        <label class="form-label" for="{{ input_id }}-file-query">{{ __('Search available files') }} — {{ def.name }}</label>
+                                        <div class="input-group mb-2">
+                                            <input class="form-control" type="search" id="{{ input_id }}-file-query" name="file_query[{{ def.code }}]" value="{{ def.file_query }}" maxlength="255" data-file-query>
+                                            <button class="btn btn-outline-secondary" type="submit" name="file_search" value="{{ def.code }}" data-file-search formnovalidate>{{ __('Search') }}</button>
+                                        </div>
+                                        <div class="form-text mb-2" role="status" data-file-search-status>{{ def.file_error ? def.file_error : (def.file_choices|filter(choice => choice.inResults)|length ? __('Up to 30 matching files. Refine your search to find another file.') : __('No matching files were found. Change your search or upload a new file.')) }}</div>
+                                        <div class="form-text mb-2">{{ __('Maximum file size: %s')|format(def.max_file_bytes|format_size) }}</div>
+                                    {% endif %}
                                     {% if def.type == 'relation' %}
                                         <label class="form-label" for="{{ input_id }}-query">{{ __('Search related items') }} — {{ def.name }}</label>
                                         <div class="input-group mb-2">
@@ -100,7 +115,13 @@
                                             {% include '@collections/admin/components/repeated-values.twig' with {
                                                 entries: def.entries, input_name: def.input_name, action_key: def.input_name,
                                                 id_prefix: input_id, type: def.type, label: def.name, limit: def.limit, required: def.required, errors: def.errors,
-                                                allow_upload: true, upload_url: upload_url, options: def.options
+                                                allow_upload: true, upload_url: upload_url, options: def.options,
+                                                file_code: def.code, file_choices: def.file_choices, file_accept: def.file_accept
+                                            } only %}
+                                        {% elseif def.type == 'registered_file' %}
+                                            {% include '@collections/admin/components/file-value.twig' with {
+                                                code: def.code, index: 0, value: def.value, input_name: def.input_name, input_id: input_id,
+                                                choices: def.file_choices, accept: def.file_accept, errors: def.errors
                                             } only %}
                                         {% elseif def.type in ['select', 'relation'] %}
                                             <select name="{{ def.input_name }}" class="form-select{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}"{% if def.type == 'relation' %} data-relation-select{% endif %}>

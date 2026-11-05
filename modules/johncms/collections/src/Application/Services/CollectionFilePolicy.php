@@ -30,7 +30,7 @@ final readonly class CollectionFilePolicy
     }
 
     /** @param array<string, mixed> $settings */
-    public function assertStored(int $id, string $code, array $settings): void
+    public function assertStored(int $id, string $code, array $settings): string
     {
         try {
             $stream = $this->files->openStream($id);
@@ -42,6 +42,7 @@ final readonly class CollectionFilePolicy
         }
         try {
             $this->assertAllowed($code, $stream->size, $stream->mimeType, $settings);
+            return $stream->mimeType;
         } finally {
             fclose($stream->stream);
         }

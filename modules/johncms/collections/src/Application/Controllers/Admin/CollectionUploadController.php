@@ -39,7 +39,8 @@ final readonly class CollectionUploadController
             $file = $request->query->getString('field') !== ''
                 ? $this->fieldUploads->upload($collection_id, $request->query->getString('field'), $request->query->getString('context'), $this->mapper->fromUploadedFile($upload))
                 : $this->files->upload($collection_id, $request->query->getString('context'), $this->mapper->fromUploadedFile($upload));
-            return new JsonResponse(['id' => $file->id, 'name' => $file->name, 'url' => $file->url, 'uploaded' => 1]);
+            return new JsonResponse(['id' => $file->id, 'code' => (string) $file->id, 'name' => $file->name, 'url' => $file->url, 'uploaded' => 1, 'size' => $file->size, 'size_label' => format_size($file->size),
+                'image' => in_array(strtolower(pathinfo($file->name, PATHINFO_EXTENSION)), ['jpg', 'png', 'gif', 'webp'], true)]);
         } catch (CollectionItemFormException $exception) {
             return $this->formError($exception);
         } catch (EditorImageUploadException $exception) {

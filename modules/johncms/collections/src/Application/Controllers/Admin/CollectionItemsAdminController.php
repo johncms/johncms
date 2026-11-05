@@ -48,6 +48,10 @@ final readonly class CollectionItemsAdminController
         private ItemListRowMapper $rowMapper,
         private \Johncms\Modules\Collections\Application\Services\CollectionItemFiles $files,
         private \Johncms\Modules\Collections\Application\Services\CollectionRelationChoices $relationChoices,
+        private \Johncms\Modules\Collections\Application\Services\CollectionFileChoices $fileChoices,
+        private \Johncms\Modules\Collections\Application\Services\CollectionFieldUpload $fieldUploads,
+        private \Johncms\Http\UploadedFileMapper $uploadMapper,
+        private \Johncms\Http\UploadLimits $uploadLimits,
         private \Johncms\Modules\Collections\Application\Services\CollectionRepeatedValues $repeated = new \Johncms\Modules\Collections\Application\Services\CollectionRepeatedValues(),
     ) {
     }
@@ -136,6 +140,10 @@ final readonly class CollectionItemsAdminController
             return $this->collectionNotFound();
         }
 
+        if ($this->uploadLimits->postMaxSizeExceeded($request)) {
+            return $this->wrongData($collection_id, d__('system', 'The file is too large for the server to accept'));
+        }
+
         if ($request->hasBody('collection_form_started') && $request->body('collection_form_complete') !== '1') {
             return $this->wrongData($collection_id, d__('collections', 'The form was truncated. Nothing was saved. Reduce the number of values or ask the administrator to raise the form input limit.'));
         }
@@ -147,6 +155,36 @@ final readonly class CollectionItemsAdminController
 
         $fieldDefs = $this->fieldRepository->getByCollection($collection_id);
         $fields = $this->fieldsFromRequest($request, $collection, $fieldDefs);
+        try {
+            $this->processFileUploads($request, $collection_id, $fields, $fieldDefs);
+            if ($request->hasBody('file_search')) {
+                $code = $request->body('file_search');
+                $this->fileChoices->search($collection_id, $code, $fields['upload_context'], $fields['file_queries'][$code] ?? '');
+                return $this->renderFormWithFields($collection, $id, $fields, []);
+            }
+            if ($request->hasBody('file_clear')) {
+                [$code, $index] = $this->filePosition($request->body('file_clear'), $fieldDefs, $fields);
+                if (is_array($fields['values'][$code])) {
+                    $fields['values'][$code][$index] = '';
+                } else {
+                    $fields['values'][$code] = '';
+                }
+                $fields['repeat_message'] = d__('collections', 'File selection cleared. Save the form to apply the change.');
+                return $this->renderFormWithFields($collection, $id, $fields, []);
+            }
+            if ($request->hasBody('file_upload')) {
+                $fields['repeat_message'] = d__('collections', 'Files uploaded. Save the form to apply the selection.');
+                return $this->renderFormWithFields($collection, $id, $fields, []);
+            }
+        } catch (CollectionItemFormException $exception) {
+            return $this->renderFormWithFields($collection, $id, $fields, $exception->errors);
+        } catch (\Johncms\Image\EditorImageUploadException $exception) {
+            return $this->renderFormWithFields($collection, $id, $fields, ['_form' => [$exception->getMessage()]]);
+        } catch (\Johncms\Files\FileStoreException) {
+            return $this->renderFormWithFields($collection, $id, $fields, ['_form' => [d__('system', 'Error uploading file')]]);
+        } catch (\InvalidArgumentException) {
+            return $this->renderFormWithFields($collection, $id, $fields, ['_form' => [d__('system', 'Wrong data')]]);
+        }
         if ($request->hasBody('relation_search')) {
             $code = $request->body('relation_search');
             try {
@@ -294,7 +332,15 @@ final readonly class CollectionItemsAdminController
             'fields'          => $fields,
             'has_sections'    => $hasSections,
             'section_options' => $hasSections ? $this->sectionOptions($collection->id) : [],
-            'field_defs'      => $this->buildFieldDefs($this->fieldRepository->getByCollection($collection->id), $valueMap, $errors, ! empty($fields['repeat_exact']), $fields['relation_queries'] ?? []),
+            'field_defs' => $this->buildFieldDefs(
+                $this->fieldRepository->getByCollection($collection->id),
+                $valueMap,
+                $errors,
+                ! empty($fields['repeat_exact']),
+                $fields['relation_queries'] ?? [],
+                $fields['file_queries'] ?? [],
+                $fields['upload_context']
+            ),
             'repeat_message' => $fields['repeat_message'] ?? '',
             'errors'          => array_merge([], ...array_values($errors)),
             'field_errors'    => $errors,
@@ -316,10 +362,11 @@ final readonly class CollectionItemsAdminController
     /**
      * @param Collection<int, \Johncms\Modules\Collections\Domain\Models\ContentCollectionField> $fields
      * @param array<string, mixed> $valueMap
+     * @param array<string, string> $fileQueries
      * @param array<string, string> $relationQueries
      * @return list<array<string, mixed>>
      */
-    private function buildFieldDefs(Collection $fields, array $valueMap, array $errors, bool $exactRows = false, array $relationQueries = []): array
+    private function buildFieldDefs(Collection $fields, array $valueMap, array $errors, bool $exactRows = false, array $relationQueries = [], array $fileQueries = [], ?string $context = null): array
     {
         $defs = [];
         foreach ($fields as $field) {
@@ -361,7 +408,27 @@ final readonly class CollectionItemsAdminController
                     $relationError = d__('system', 'Wrong data');
                 }
             }
+            $fileChoices = [];
+            $fileError = '';
+            $registeredFile = $field->type === FieldType::File && ($field->settings['file_storage'] ?? 'legacy') === 'registry';
+            if ($registeredFile) {
+                try {
+                    $fileChoices = $this->fileChoices->search($field->collection_id, $field->code, $context, $fileQueries[$field->code] ?? '', $field->multiple ? $entries : [$value]);
+                } catch (CollectionItemFormException $exception) {
+                    $fileError = implode(' ', array_merge(...array_values($exception->errors)));
+                } catch (\InvalidArgumentException) {
+                    $fileError = d__('system', 'Wrong data');
+                }
+            }
             $defs[] = [
+                'registered_file' => $registeredFile,
+                'file_choices' => $fileChoices,
+                'file_query' => $fileQueries[$field->code] ?? '',
+                'file_error' => $fileError,
+                'file_url' => '/admin/collections/' . $field->collection_id . '/files/' . $field->code . '?context=' . rawurlencode($context ?? ''),
+                'file_upload_url' => '/admin/collections/' . $field->collection_id . '/uploads?field=' . $field->code . '&context=' . rawurlencode($context ?? ''),
+                'file_accept' => implode(',', $field->settings['allowed_mime_types'] ?? array_keys(\Johncms\Modules\Collections\Application\Services\CollectionFilePolicy::TYPES)),
+                'max_file_bytes' => $field->settings['max_file_bytes'] ?? \Johncms\Modules\Collections\Application\Services\CollectionFilePolicy::DEFAULT_MAX_BYTES,
                 'relation_url' => '/admin/collections/' . $field->collection_id . '/relations/' . $field->code,
                 'relation_available' => $relationAvailable,
                 'relation_error' => $relationError,
@@ -376,7 +443,7 @@ final readonly class CollectionItemsAdminController
                 'options' => $options,
                 'min_length' => $field->settings['min_length'] ?? null, 'max_length' => $field->settings['max_length'] ?? null,
                 'min_value' => $field->settings['min_value'] ?? null, 'max_value' => $field->settings['max_value'] ?? null,
-                'type'       => $field->type->value,
+                'type'       => $registeredFile ? 'registered_file' : $field->type->value,
                 'multiple'   => $field->multiple,
                 'required'   => $field->required,
                 'value'      => $value,
@@ -418,6 +485,7 @@ final readonly class CollectionItemsAdminController
         return [
             'repeat_exact' => true,
             'relation_queries' => array_filter($request->bodyList('relation_query'), is_string(...)),
+            'file_queries' => array_filter($request->bodyList('file_query'), is_string(...)),
             'upload_context' => $request->body('upload_context') ?: null,
             'section_id'   => $this->hasSections($collection) ? $this->postSection($request) : null,
             'code'         => trim($request->body('code', '')),
@@ -467,6 +535,72 @@ final readonly class CollectionItemsAdminController
             'preview_text' => '',
             'detail_text'  => '',
         ];
+    }
+
+    /** @param array<string, mixed> $fields
+     * @param Collection<int, \Johncms\Modules\Collections\Domain\Models\ContentCollectionField> $definitions
+     */
+    private function processFileUploads(Request $request, int $collectionId, array &$fields, Collection $definitions): void
+    {
+        $uploads = $request->files->all('file_uploads');
+        $count = 0;
+        foreach ($uploads as $rows) {
+            if (is_array($rows)) {
+                $count += count(array_filter($rows, static fn ($file): bool => $file instanceof \Symfony\Component\HttpFoundation\File\UploadedFile));
+            }
+        }
+        $limit = $this->uploadLimits->maxFilesPerRequest();
+        // PHP silently omits surplus file parts; at the boundary completeness cannot be proven.
+        if ($limit > 0 && $count >= $limit) {
+            throw new CollectionItemFormException(['_form' => [d__('collections', 'Too many files were selected for one request. Upload fewer files at once.')]]);
+        }
+        if ($request->hasBody('file_upload')) {
+            [$code, $index] = $this->filePosition($request->body('file_upload'), $definitions, $fields);
+            if (! ($uploads[$code][$index] ?? null) instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
+                throw new CollectionItemFormException(['values.' . $code => [d__('collections', 'Choose a file that was uploaded successfully.')]]);
+            }
+        }
+        foreach ($uploads as $code => $rows) {
+            if (! is_array($rows)) {
+                throw new \InvalidArgumentException('Submit file uploads as field and row arrays.');
+            }
+            foreach ($rows as $index => $upload) {
+                if ($upload === null) {
+                    continue;
+                }
+                [$fieldCode, $position] = $this->filePosition($code . ':' . $index, $definitions, $fields);
+                if (! $upload instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
+                    throw new \InvalidArgumentException('Submit an uploaded file.');
+                }
+                $file = $this->fieldUploads->upload($collectionId, $fieldCode, $fields['upload_context'] ?? '', $this->uploadMapper->fromUploadedFile($upload));
+                if (is_array($fields['values'][$fieldCode])) {
+                    $fields['values'][$fieldCode][$position] = (string) $file->id;
+                } else {
+                    $fields['values'][$fieldCode] = (string) $file->id;
+                }
+            }
+        }
+    }
+
+    /** @param Collection<int, \Johncms\Modules\Collections\Domain\Models\ContentCollectionField> $definitions
+     * @param array<string, mixed> $fields
+     * @return array{string, int}
+     */
+    private function filePosition(string $action, Collection $definitions, array $fields): array
+    {
+        if (! preg_match('/^([a-z0-9_-]+):([0-9]{1,4})$/D', $action, $match)) {
+            throw new \InvalidArgumentException('Choose a valid file row.');
+        }
+        $field = $definitions->first(static fn ($field): bool => $field->code === $match[1]);
+        $index = (int) $match[2];
+        $value = $fields['values'][$match[1]] ?? null;
+        if (
+            $field === null || $field->type !== FieldType::File || ($field->settings['file_storage'] ?? 'legacy') !== 'registry'
+            || ($field->multiple ? (! is_array($value) || ! array_key_exists($index, $value)) : ($index !== 0 || ! is_string($value)))
+        ) {
+            throw new \InvalidArgumentException('Choose an existing registered file field and row.');
+        }
+        return [$match[1], $index];
     }
 
     /**

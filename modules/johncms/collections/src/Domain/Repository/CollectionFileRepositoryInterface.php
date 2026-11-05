@@ -14,7 +14,7 @@ interface CollectionFileRepositoryInterface
     public function register(int $fileId, bool $managed): void;
 
     /** Current references to committed content or defaults of the collection. @return list<int> */
-    public function availableForCollection(int $collectionId): array;
+    public function availableForCollection(int $collectionId, bool $current = true): array;
 
     /** Null item identifies the schema default. Returns replaced references for deferred cleanup.
      * @param list<int> $fileIds

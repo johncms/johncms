@@ -1,0 +1,32 @@
+<div data-file-widget data-code="{{ code }}" data-index="{{ index }}">
+    {% set selected = null %}
+    <select class="form-select{{ errors|default([]) ? ' is-invalid' : '' }}"{% if errors|default([]) %} aria-invalid="true"{% endif %} name="{{ input_name }}" id="{{ input_id }}" data-file-select>
+        <option value=""{% if value is same as('') %} selected{% endif %}>{{ __('No value') }}</option>
+        {% for choice in choices %}
+            {% if choice.inResults or choice.code is same as(value) %}
+                {% if choice.code is same as(value) %}{% set selected = choice %}{% endif %}
+                <option value="{{ choice.code }}"{% if choice.code is same as(value) %} selected{% endif %}
+                        data-file-label="{{ choice.label }}" data-file-url="{{ choice.url }}" data-file-size="{{ choice.sizeLabel }}" data-file-image="{{ choice.image ? '1' : '0' }}">{{ choice.label }} ({{ choice.sizeLabel }})</option>
+            {% endif %}
+        {% endfor %}
+        {% if value != '' and selected is null %}<option value="{{ value }}" selected>{{ __('Unavailable file') }} #{{ value }}</option>{% endif %}
+    </select>
+    <div class="mt-2" data-file-preview{% if value == '' %} hidden{% endif %}>
+        {% if selected is not null %}
+            <div class="d-flex flex-wrap gap-2 align-items-baseline">
+                <a href="{{ selected.url }}" target="_blank" rel="noopener" class="text-break">{{ selected.label }}</a>
+                <span class="small text-body-secondary">{{ selected.sizeLabel }}</span>
+            </div>
+            {% if selected.image %}<img src="{{ selected.url }}" alt="{{ selected.label }}" class="img-thumbnail object-fit-contain mt-2" style="max-width: 100%; max-height: 160px;" loading="lazy">{% endif %}
+        {% elseif value != '' %}<div class="small text-danger">{{ __('The selected file is unavailable or incompatible. Choose another file or clear the value.') }}</div>{% endif %}
+    </div>
+    <div class="mt-2">
+        <label for="{{ input_id }}-upload" class="form-label small">{{ __('Upload a new file') }}</label>
+        <input type="file" class="form-control" id="{{ input_id }}-upload" name="file_uploads[{{ code }}][{{ index }}]" accept="{{ accept }}" data-file-upload-input>
+        <div class="d-flex flex-wrap gap-2 mt-2">
+            <button class="btn btn-outline-secondary btn-sm" type="submit" name="file_upload" value="{{ code }}:{{ index }}" data-file-upload-button formnovalidate>{{ __('Upload') }}</button>
+            <button class="btn btn-outline-secondary btn-sm" type="submit" name="file_clear" value="{{ code }}:{{ index }}" data-file-clear formnovalidate>{{ __('Clear file selection') }}</button>
+        </div>
+    </div>
+    <div class="form-text" role="status" data-file-status></div>
+</div>

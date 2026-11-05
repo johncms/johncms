@@ -23,7 +23,7 @@ final readonly class ItemListRowMapper
 {
     private const int TEXT_LENGTH = 60;
 
-    public function __construct(private ?CollectionOwnerUrls $ownerUrls = null, private CollectionApiMapper $apiMapper = new CollectionApiMapper())
+    public function __construct(private ?CollectionOwnerUrls $ownerUrls = null, private CollectionApiMapper $apiMapper = new CollectionApiMapper(), private ?\Johncms\Files\FileStore $files = null)
     {
     }
 
@@ -117,6 +117,7 @@ final readonly class ItemListRowMapper
         }
 
         return match ($field->type) {
+            FieldType::File => ['kind' => 'text', 'value' => $this->fileName($field, (string) $value)],
             FieldType::Select => ['kind' => 'text', 'value' => $this->shorten(CollectionSelectOptions::label($field->settings ?? [], (string) $value))],
             FieldType::Boolean                  => ['kind' => 'yes_no', 'value' => (bool) $value],
             FieldType::Integer, FieldType::Double => ['kind' => 'number', 'value' => $this->number($value)],
@@ -124,6 +125,26 @@ final readonly class ItemListRowMapper
             FieldType::Text, FieldType::Html    => ['kind' => 'text', 'value' => $this->shorten(strip_tags((string) $value))],
             default                             => ['kind' => 'text', 'value' => $this->shorten((string) $value)],
         };
+    }
+
+    private function fileName(ContentCollectionField $field, string $value): string
+    {
+        if (($field->settings['file_storage'] ?? 'legacy') !== 'registry') {
+            return $this->shorten($value);
+        }
+        if ($this->files === null) {
+            throw new \LogicException('Collection file rendering is not configured.');
+        }
+        $id = filter_var($value, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+        if ($id === false) {
+            return d__('collections', 'Unavailable file');
+        }
+        try {
+            $file = $this->files->find($id);
+            return $this->shorten($file !== null ? $file->name : d__('collections', 'Unavailable file'));
+        } catch (\Johncms\Files\FileStoreException) {
+            return d__('collections', 'Unavailable file');
+        }
     }
 
     /**
