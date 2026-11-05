@@ -994,10 +994,10 @@ msgid "The file is too large for the server to accept"
 msgstr ""
 
 #: system/src/Http/EditorImageUploadResponder.php:77
-#: system/src/Image/StoreEditorImageUseCase.php:111
-#: system/src/Image/StoreEditorImageUseCase.php:132
-#: system/src/Image/StoreEditorImageUseCase.php:184
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:46
+#: system/src/Image/StoreEditorImageUseCase.php:118
+#: system/src/Image/StoreEditorImageUseCase.php:139
+#: system/src/Image/StoreEditorImageUseCase.php:191
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:48
 msgid "Error uploading file"
 msgstr ""
 
@@ -1040,11 +1040,11 @@ msgstr ""
 msgid "Page"
 msgstr ""
 
-#: system/src/Image/StoreEditorImageUseCase.php:154
+#: system/src/Image/StoreEditorImageUseCase.php:161
 msgid "Only images are allowed"
 msgstr ""
 
-#: system/src/Image/StoreEditorImageUseCase.php:203
+#: system/src/Image/StoreEditorImageUseCase.php:210
 #, php-format
 msgid "The file is larger than %d KB"
 msgstr ""

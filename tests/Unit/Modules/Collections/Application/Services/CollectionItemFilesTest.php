@@ -49,6 +49,7 @@ final class CollectionItemFilesTest extends TestCase
     use RunsMigrations;
 
     private CollectionItemFiles $files;
+    private \Johncms\Modules\Collections\Application\Services\CollectionFieldUpload $fieldUploads;
     private \Johncms\Modules\Collections\Application\Services\CollectionFileValues $fileValues;
     private CollectionFileRepository $links;
     private FileStore $store;
@@ -86,7 +87,13 @@ final class CollectionItemFilesTest extends TestCase
         );
         $this->fileValues = new \Johncms\Modules\Collections\Application\Services\CollectionFileValues(
             $this->links, new ContentCollectionFieldRepository(), new \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemValueRepository(),
-            new CollectionTransaction(), $this->files, $this->store, $this->system
+            new CollectionTransaction(), $this->files, $this->store, new \Johncms\Modules\Collections\Application\Services\CollectionFilePolicy($this->store), $this->system
+        );
+        $this->fieldUploads = new \Johncms\Modules\Collections\Application\Services\CollectionFieldUpload(
+            $this->files, $this->links, new ContentCollectionFieldRepository(), new ContentCollectionRepository(), new CollectionTransaction(),
+            new \Johncms\Modules\Collections\Application\Services\CollectionFilePolicy($this->store), $this->store,
+            new StoreEditorImageUseCase($this->store, $this->createStub(ImageProcessorInterface::class), new EditorImageSettings()),
+            new EnsureCollectionContentAccessUseCase($access, new ContentCollectionRepository()), $user
         );
         $this->changes = new CollectionChangeDispatcher([$this->files, $this->fileValues], transaction: new CollectionTransaction());
     }
@@ -94,6 +101,74 @@ final class CollectionItemFilesTest extends TestCase
     protected function tearDown(): void
     {
         $this->shutdownDatabase();
+    }
+
+    public function testFieldUploadUsesVerifiedExtensionAndDoesNotBecomeATextAttachment(): void
+    {
+        $field = $this->field(['allowed_mime_types' => ['text/plain'], 'max_file_bytes' => 64]);
+        $token = $this->files->createContext($this->collection, $this->item);
+        $file = $this->uploadField($token, 'plain content', 'dangerous.php', 'image/png');
+        self::assertSame('dangerous.txt', $file->name);
+        self::assertStringEndsWith('.txt', (new EloquentFileRepository())->findById($file->id)->path);
+        self::assertSame($field, Capsule::table('collection_file_links')->where('file_id', $file->id)->value('field_id'));
+        $form = new \Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO($this->collection, null, 'item', 'Item', true, null, null, 100, null, null, ['file' => (string) $file->id], $token);
+        $this->writer()->execute($this->item, $form, 42);
+        self::assertSame(0, Capsule::table('collection_file_links')->where('item_id', $this->item)->count());
+        self::assertNotNull($this->store->find($file->id));
+        $this->writer()->execute($this->item, $this->fileForm(''));
+        self::assertNull($this->store->find($file->id));
+    }
+
+    public function testUnusedFieldUploadsAreRemovedOnlyAfterCommitAndSurviveRollback(): void
+    {
+        $this->field();
+        $token = $this->files->createContext($this->collection, $this->item);
+        $file = $this->uploadField($token, 'unused content', 'unused.txt');
+        $form = new \Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO($this->collection, null, 'item', 'Item', true, null, null, 100, null, null, [], $token);
+        Capsule::connection()->beginTransaction();
+        $this->writer()->execute($this->item, $form, 42);
+        self::assertNotNull($this->store->find($file->id));
+        Capsule::connection()->rollBack();
+        self::assertNotNull($this->links->context($token));
+        self::assertNotNull($this->store->find($file->id));
+        $this->writer()->execute($this->item, $form, 42);
+        self::assertNull($this->store->find($file->id));
+        self::assertNull($this->links->context($token));
+    }
+
+    public function testUploadChecksActualSizeAndMimeAndSchemaCannotInvalidateStoredFiles(): void
+    {
+        $field = $this->field(['allowed_mime_types' => ['text/plain'], 'max_file_bytes' => 32]);
+        $token = $this->files->createContext($this->collection, $this->item);
+        foreach ([str_repeat('x', 33), '<?php echo "unsafe";'] as $contents) {
+            try {
+                $this->uploadField($token, $contents, 'forged.txt', 'text/plain');
+                self::fail('The content must satisfy the field policy.');
+            } catch (CollectionItemFormException) {
+                self::assertSame(0, Capsule::table('files')->count());
+            }
+        }
+        $file = $this->uploadField($token, 'valid content', 'good.txt');
+        $form = new \Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO($this->collection, null, 'item', 'Item', true, null, null, 100, null, null, ['file' => (string) $file->id], $token);
+        $this->writer()->execute($this->item, $form, 42);
+        try {
+            $this->field(['max_file_bytes' => 1], $field);
+            self::fail('Existing file values must remain valid when limits change.');
+        } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException) {
+            self::assertSame(32, (new ContentCollectionFieldRepository())->findById($field)->settings['max_file_bytes']);
+        }
+        self::assertNotNull($this->store->find($file->id));
+    }
+
+    private function uploadField(string $token, string $contents, string $name, string $mime = 'application/octet-stream'): \Johncms\Files\StoredFileDTO
+    {
+        $path = tempnam(sys_get_temp_dir(), 'collection-field-');
+        file_put_contents($path, $contents);
+        try {
+            return $this->fieldUploads->upload($this->collection, 'file', $token, new \Johncms\Http\UploadedFileDTO($name, $mime, 0, $path, UPLOAD_ERR_OK));
+        } finally {
+            unlink($path);
+        }
     }
 
     public function testFileValuesKeepSharedBytesUntilTheLastReferenceAndRollbackRestoresThem(): void

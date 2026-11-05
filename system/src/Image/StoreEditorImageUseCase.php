@@ -50,12 +50,19 @@ final readonly class StoreEditorImageUseCase
      * @throws EditorImageUploadException when the visitor may not store this file.
      * @throws FileStoreException when the file could not be stored.
      */
-    public function execute(UploadedFileDTO $upload, string $directory): StoredFileDTO
+    public function execute(UploadedFileDTO $upload, string $directory, ?EditorImageFormat $format = null): StoredFileDTO
     {
         $this->ensureUploadSucceeded($upload);
         $this->ensureWithinSizeLimit($upload);
 
         $picture = $this->readPicture($upload);
+        $upload = new UploadedFileDTO(
+            $this->targetName($upload, EditorImageFormat::Original->extension($picture->type)),
+            $upload->mimeType,
+            $upload->size,
+            $upload->tmpPath,
+            $upload->error
+        );
 
         // An animated GIF is stored as it came: scaling it down would leave a single frame, and
         // a still picture in place of the animation is not what the visitor uploaded.
@@ -63,7 +70,7 @@ final readonly class StoreEditorImageUseCase
             return $this->files->storeUpload($upload, $directory);
         }
 
-        $format = $this->settings->format();
+        $format ??= $this->settings->format();
         $extension = $format->extension($picture->type);
         $scaleDown = $this->exceedsBounds($picture);
 

@@ -53,6 +53,18 @@ final readonly class CollectionFieldSettingsValidator
         if ($type === FieldType::File && ! in_array($settings['file_storage'] ?? 'legacy', ['registry', 'legacy'], true)) {
             throw new CollectionSchemaException(d__('collections', 'Choose registry or legacy storage for a file field.'));
         }
+        if ($type === FieldType::File && ($settings['file_storage'] ?? 'legacy') === 'registry') {
+            $bytes = $settings['max_file_bytes'] ?? CollectionFilePolicy::DEFAULT_MAX_BYTES;
+            $mimes = $settings['allowed_mime_types'] ?? array_keys(CollectionFilePolicy::TYPES);
+            if (! is_int($bytes) || $bytes < 1 || $bytes > 1073741824 || ! is_array($mimes) || ! array_is_list($mimes) || $mimes === [] || count($mimes) > count(CollectionFilePolicy::TYPES)) {
+                throw new CollectionSchemaException(d__('collections', 'Choose a file size limit from 1 byte to 1 GiB and at least one supported content type.'));
+            }
+            foreach ($mimes as $mime) {
+                if (! is_string($mime) || ! isset(CollectionFilePolicy::TYPES[$mime])) {
+                    throw new CollectionSchemaException(d__('collections', 'Choose supported file content types.'));
+                }
+            }
+        }
         if ($type === FieldType::Relation && (! is_int($settings['target_collection_id'] ?? null) || $settings['target_collection_id'] < 1)) {
             throw new CollectionSchemaException(d__('collections', 'Choose a target collection for this relation field.'));
         }

@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 final readonly class CollectionUploadController
 {
-    public function __construct(private CollectionItemFiles $files, private UploadedFileMapper $mapper, private UploadLimits $limits)
+    public function __construct(private CollectionItemFiles $files, private UploadedFileMapper $mapper, private UploadLimits $limits, private \Johncms\Modules\Collections\Application\Services\CollectionFieldUpload $fieldUploads)
     {
     }
 
@@ -36,7 +36,9 @@ final readonly class CollectionUploadController
             return new JsonResponse(['error' => ['message' => $this->limits->postMaxSizeExceeded($request) ? d__('system', 'The file is too large for the server to accept') : d__('system', 'Wrong data')]]);
         }
         try {
-            $file = $this->files->upload($collection_id, $request->query->getString('context'), $this->mapper->fromUploadedFile($upload));
+            $file = $request->query->getString('field') !== ''
+                ? $this->fieldUploads->upload($collection_id, $request->query->getString('field'), $request->query->getString('context'), $this->mapper->fromUploadedFile($upload))
+                : $this->files->upload($collection_id, $request->query->getString('context'), $this->mapper->fromUploadedFile($upload));
             return new JsonResponse(['id' => $file->id, 'name' => $file->name, 'url' => $file->url, 'uploaded' => 1]);
         } catch (CollectionItemFormException $exception) {
             return $this->formError($exception);

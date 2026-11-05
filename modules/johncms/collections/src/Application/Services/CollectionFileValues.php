@@ -27,6 +27,7 @@ final readonly class CollectionFileValues implements CollectionChangeHandlerInte
         private CollectionTransactionInterface $transaction,
         private CollectionItemFiles $attachments,
         private FileStore $files,
+        private CollectionFilePolicy $policy,
         private SystemOperationContext $system,
     ) {
     }
@@ -81,8 +82,8 @@ final readonly class CollectionFileValues implements CollectionChangeHandlerInte
                     $old = $this->links->replaceValueLinks($field->id, $itemId, $references);
                     $this->transaction->afterCommit(fn () => $this->attachments->removeUnreferenced($old));
                 }
-            } catch (CollectionItemFormException) {
-                throw new \Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException(d__('collections', 'Choose a registered file of this collection or upload it in your current form.'));
+            } catch (CollectionItemFormException $exception) {
+                throw new \Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException(implode(" ", array_merge(...array_values($exception->errors))), 0, $exception);
             }
             $removed = $this->links->replaceValueLinks($field->id, null, $ids);
         }
@@ -118,6 +119,7 @@ final readonly class CollectionFileValues implements CollectionChangeHandlerInte
             if (! $this->files->isRegistered($id)) {
                 throw $this->invalid($field);
             }
+            $this->policy->assertStored($id, $field->code, $field->settings ?? []);
         }
         return $ids;
     }

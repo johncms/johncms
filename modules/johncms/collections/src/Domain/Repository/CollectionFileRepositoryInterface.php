@@ -36,7 +36,7 @@ interface CollectionFileRepositoryInterface
     /** @return list<int> */
     public function itemFiles(int $itemId, bool $current = false): array;
 
-    public function linkContext(string $token, int $fileId): void;
+    public function linkContext(string $token, int $fileId, ?int $fieldId = null): void;
 
     /** @return list<int> */
     public function contextFiles(string $token, bool $current = false): array;

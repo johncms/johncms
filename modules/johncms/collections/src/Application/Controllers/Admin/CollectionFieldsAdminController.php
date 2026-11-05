@@ -238,6 +238,7 @@ final readonly class CollectionFieldsAdminController
 
         return new ViewResponse('@collections/admin/field-form.twig', $this->menu($title, $collection->name) + [
             'form_action'  => $this->baseUrl($collection->id),
+            'file_types' => \Johncms\Modules\Collections\Application\Services\CollectionFilePolicy::TYPES,
             'back_url'     => $this->baseUrl($collection->id),
             'id'           => $id,
             'fields'       => $fields,
@@ -269,6 +270,10 @@ final readonly class CollectionFieldsAdminController
             'target_collection_id' => $request->body('target_collection_id'),
             'relation_on_delete' => $request->body('relation_on_delete', 'restrict'),
             'file_storage' => $request->body('file_storage', 'registry'),
+            'max_file_bytes' => $request->body('max_file_bytes'),
+            'file_constraints_present' => $request->hasBody('file_constraints_present'),
+            'file_storage_present' => $request->hasBody('file_storage'),
+            'allowed_mime_types' => array_values(array_filter($request->bodyList('allowed_mime_types'), is_string(...))),
             'hint' => $request->body('hint'), 'use_default' => $request->hasBody('use_default'),
             'default_value' => $request->body('default_value'), 'default_values' => array_values(array_filter($request->bodyList('default_values'), is_string(...))),
             'min_length' => $request->body('min_length'), 'max_length' => $request->body('max_length'),
@@ -343,6 +348,8 @@ final readonly class CollectionFieldsAdminController
             'target_collection_id' => $settings['target_collection_id'] ?? '',
             'relation_on_delete' => $settings['on_delete'] ?? 'restrict',
             'file_storage' => $settings['file_storage'] ?? 'legacy',
+            'max_file_bytes' => $settings['max_file_bytes'] ?? \Johncms\Modules\Collections\Application\Services\CollectionFilePolicy::DEFAULT_MAX_BYTES,
+            'allowed_mime_types' => $settings['allowed_mime_types'] ?? array_keys(\Johncms\Modules\Collections\Application\Services\CollectionFilePolicy::TYPES),
             'option_rows' => array_map(static fn (array $option): array => $option + ['active' => true], $settings['options'] ?? []), 'use_default' => $default !== null,
             'default_value' => is_string($default) ? $default : '', 'default_values' => is_array($default) ? $default : [],
             'min_length' => $settings['min_length'] ?? '', 'max_length' => $settings['max_length'] ?? '',
@@ -365,7 +372,14 @@ final readonly class CollectionFieldsAdminController
             $settings[$key] = $raw === '' ? null : ($integer !== false ? $integer : (in_array($key, ['min_value', 'max_value'], true) && is_numeric($raw) ? (float) $raw : $raw));
         }
         if ($fields['type'] === 'file') {
-            $settings['file_storage'] = $fields['file_storage'];
+            if ($fields['file_storage_present'] ?? true) {
+                $settings['file_storage'] = $fields['file_storage'];
+            }
+            if ($fields['file_constraints_present'] ?? true) {
+                $bytes = filter_var($fields['max_file_bytes'], FILTER_VALIDATE_INT);
+                $settings['max_file_bytes'] = $fields['max_file_bytes'] === '' ? null : ($bytes !== false ? $bytes : $fields['max_file_bytes']);
+                $settings['allowed_mime_types'] = $fields['allowed_mime_types'];
+            }
         }
         if ($fields['type'] === 'relation') {
             $target = filter_var($fields['target_collection_id'], FILTER_VALIDATE_INT);

@@ -31,6 +31,72 @@ final class CollectionUploadsTest extends FunctionalTestCase
         parent::tearDown();
     }
 
+    public function testFieldUploadUsesItsContentPolicyAndRetainsOnlyTheSelectedFieldReference(): void
+    {
+        $schema = $this->container()->get(\Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface::class);
+        $field = $schema->saveField(null, new \Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO(
+            $this->collection, 'attachment', 'Attachment', \Johncms\Modules\Collections\Domain\Enums\FieldType::File, false, false, 100,
+            settings: ['allowed_mime_types' => ['text/plain'], 'max_file_bytes' => 32]
+        ));
+        $user = FunctionalUserFactory::createWithPermissions(['news.manage']);
+        $base = '/admin/collections/' . $this->collection;
+        $token = $this->context($base, $user);
+        $path = tempnam(sys_get_temp_dir(), 'field-upload-');
+        file_put_contents($path, 'Verified contents');
+        try {
+            $response = $this->handleRequest($base . '/uploads?field=attachment&context=' . $token, 'POST', $this->withCsrfToken(), cookies: $this->actingAs($user), files: [
+                'upload' => new UploadedFile($path, 'spoof.php', 'image/png', null, true),
+            ]);
+        } finally {
+            unlink($path);
+        }
+        self::assertSame(200, $response->getStatusCode());
+        $file = json_decode((string) $response->getContent(), true);
+        $this->files[] = $file['id'];
+        self::assertSame('spoof.txt', $file['name']);
+        self::assertStringEndsWith('.txt', $file['url']);
+        self::assertSame($field, Capsule::table('collection_file_links')->where('file_id', $file['id'])->value('field_id'));
+        self::assertSame(302, $this->postForm($base . '/items', ['name' => 'Field item', 'sort' => '100', 'upload_context' => $token, 'field_attachment' => (string) $file['id']], $user)->getStatusCode());
+        self::assertSame(0, Capsule::table('collection_file_links')->where('file_id', $file['id'])->count());
+        self::assertSame(1, Capsule::table('collection_file_value_links')->where('file_id', $file['id'])->count());
+        $path = tempnam(sys_get_temp_dir(), 'field-upload-');
+        file_put_contents($path, str_repeat('x', 33));
+        try {
+            $token = $this->context($base, $user);
+            $response = $this->handleRequest($base . '/uploads?field=attachment&context=' . $token, 'POST', $this->withCsrfToken(), cookies: $this->actingAs($user), files: [
+                'upload' => new UploadedFile($path, 'too-large.txt', 'text/plain', null, true),
+            ]);
+            self::assertSame(422, $response->getStatusCode());
+        } finally {
+            unlink($path);
+        }
+    }
+
+    public function testFieldImageKeepsItsAllowedFormatWhenTheEditorConvertsToWebp(): void
+    {
+        $this->container()->get(\Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface::class)->saveField(null, new \Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO(
+            $this->collection, 'cover', 'Cover', \Johncms\Modules\Collections\Domain\Enums\FieldType::File, false, false, 100,
+            settings: ['allowed_mime_types' => ['image/png']]
+        ));
+        $user = FunctionalUserFactory::createWithPermissions(['news.manage']);
+        $base = '/admin/collections/' . $this->collection;
+        $token = $this->context($base, $user);
+        $path = $this->picture();
+        try {
+            $response = $this->withConfig(['johncms' => ['editor_images' => ['convert' => 'webp']]], fn () => $this->handleRequest(
+                $base . '/uploads?field=cover&context=' . $token, 'POST', $this->withCsrfToken(), cookies: $this->actingAs($user),
+                files: ['upload' => new UploadedFile($path, 'cover.php', 'text/plain', null, true)]
+            ));
+        } finally {
+            unlink($path);
+        }
+        self::assertSame(200, $response->getStatusCode());
+        $file = json_decode((string) $response->getContent(), true);
+        $this->files[] = $file['id'];
+        self::assertSame('cover.png', $file['name']);
+        self::assertStringEndsWith('.png', $file['url']);
+    }
+
     public function testNewItemClaimsUploadsAndValidationFailureKeepsTheContext(): void
     {
         $user = FunctionalUserFactory::createWithPermissions(['news.manage']);

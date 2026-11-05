@@ -89,9 +89,9 @@ final class CollectionFileRepository implements CollectionFileRepositoryInterfac
         return array_values(array_unique([...$attachments->pluck('file_id')->all(), ...$values->pluck('file_id')->all()]));
     }
 
-    public function linkContext(string $token, int $fileId): void
+    public function linkContext(string $token, int $fileId, ?int $fieldId = null): void
     {
-        CollectionFileLink::query()->firstOrCreate(['context_token' => $token, 'file_id' => $fileId], ['item_id' => null]);
+        CollectionFileLink::query()->firstOrCreate(['context_token' => $token, 'file_id' => $fileId], ['item_id' => null, 'field_id' => $fieldId]);
     }
 
     public function contextFiles(string $token, bool $current = false): array
@@ -105,7 +105,8 @@ final class CollectionFileRepository implements CollectionFileRepositoryInterfac
 
     public function claim(string $token, int $itemId): void
     {
-        foreach ($this->contextFiles($token) as $fileId) {
+        $attachments = CollectionFileLink::query()->where('context_token', $token)->whereNull('field_id')->orderBy('file_id')->lockForUpdate()->pluck('file_id')->all();
+        foreach ($attachments as $fileId) {
             $this->lockAsset($fileId);
             $this->linkItem($itemId, $fileId);
         }

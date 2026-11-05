@@ -1160,3 +1160,36 @@ msgstr "Прежние пути к файлам"
 
 msgid "Existing paths require explicit conversion before switching to registered file IDs."
 msgstr "Перед переходом на ID зарегистрированных файлов необходимо явно преобразовать прежние пути."
+
+msgid "The file exceeds this field size limit or its content type is not allowed."
+msgstr "Файл превышает допустимый размер для этого поля или его тип содержимого не разрешён."
+
+msgid "The registered file is unavailable. Restore it or upload another file."
+msgstr "Зарегистрированный файл недоступен. Восстановите его или загрузите другой файл."
+
+msgid "Choose a file that was uploaded successfully."
+msgstr "Выберите файл, который был успешно загружен."
+
+msgid "This file content type is not supported."
+msgstr "Этот тип содержимого файла не поддерживается."
+
+msgid "The field changed during upload. Reopen the form and try again."
+msgstr "Поле изменилось во время загрузки. Откройте форму заново и повторите попытку."
+
+msgid "Choose a registered file field of this collection."
+msgstr "Выберите поле зарегистрированных файлов этой коллекции."
+
+msgid "Choose a file size limit from 1 byte to 1 GiB and at least one supported content type."
+msgstr "Укажите ограничение размера файла от 1 байта до 1 ГиБ и хотя бы один поддерживаемый тип содержимого."
+
+msgid "Choose supported file content types."
+msgstr "Выберите поддерживаемые типы содержимого файлов."
+
+msgid "Maximum file size in bytes"
+msgstr "Максимальный размер файла в байтах"
+
+msgid "Allowed file types"
+msgstr "Допустимые типы файлов"
+
+msgid "The actual file content is checked. Server upload and image limits also apply."
+msgstr "Проверяется фактическое содержимое файла. Также действуют серверные ограничения загрузки и изображений."

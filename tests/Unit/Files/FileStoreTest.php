@@ -53,6 +53,21 @@ final class FileStoreTest extends TestCase
         rmdir($this->directory);
     }
 
+    public function testLegacyMissingSizeIsReadFromTheDiskWithoutChangingTheRegistry(): void
+    {
+        $file = $this->store->storeContents('legacy contents', 'legacy.txt', 'legacy');
+        $this->files->findById($file->id)->setAttribute('size', null);
+        self::assertSame(15, $this->store->find($file->id)->size);
+        $stream = $this->store->openStream($file->id);
+        try {
+            self::assertSame(15, $stream->size);
+            self::assertSame('legacy contents', stream_get_contents($stream->stream));
+        } finally {
+            fclose($stream->stream);
+        }
+        self::assertNull($this->files->findById($file->id)->getAttribute('size'));
+    }
+
     public function testDeletingOneRegistryEntryPreservesBytesSharedByAnother(): void
     {
         $first = $this->store->storeContents('shared image', 'photo.png', 'collections');

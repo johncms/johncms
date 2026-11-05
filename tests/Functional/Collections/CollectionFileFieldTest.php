@@ -16,12 +16,24 @@ use Tests\Support\FunctionalUserFactory;
 
 final class CollectionFileFieldTest extends FunctionalTestCase
 {
+    /** @var list<int> */
+    private array $files = [];
+
+    protected function tearDown(): void
+    {
+        $this->container()->get(\Johncms\Files\FileStore::class)->deleteMany($this->files);
+        parent::tearDown();
+    }
+
     public function testAdminAndPatchAcceptOnlyAvailableRegisteredFiles(): void
     {
         $collection = Fixture::insert('collections', ['code' => 'file-fields', 'name' => 'Files']);
         $source = Fixture::insert('collection_items', ['collection_id' => $collection, 'code' => 'source', 'name' => 'Source']);
-        $available = Fixture::insert('files', ['name' => 'available.txt', 'storage' => 'local', 'path' => 'collections/available.txt', 'size' => 4]);
-        $foreign = Fixture::insert('files', ['name' => 'foreign.txt', 'storage' => 'local', 'path' => 'private/foreign.txt', 'size' => 4]);
+        $store = $this->container()->get(\Johncms\Files\FileStore::class);
+        $directory = 'collection-field-tests/' . bin2hex(random_bytes(8));
+        $available = $store->storeContents('Available content', 'available.txt', $directory)->id;
+        $foreign = $store->storeContents('Foreign content', 'foreign.txt', $directory)->id;
+        $this->files = [$available, $foreign];
         Fixture::insert('collection_file_assets', ['file_id' => $available, 'managed' => false]);
         Fixture::insert('collection_file_links', ['file_id' => $available, 'item_id' => $source]);
         $schema = $this->container()->get(CollectionSchemaApiInterface::class);

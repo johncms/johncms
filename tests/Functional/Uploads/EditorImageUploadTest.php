@@ -34,6 +34,24 @@ final class EditorImageUploadTest extends FunctionalTestCase
         parent::tearDown();
     }
 
+    public function testOriginalPngAndGifUseTheDetectedExtensionInsteadOfTheSubmittedOne(): void
+    {
+        $png = $this->withSetting('convert', 'original', fn () => $this->upload($this->picture(2, 2), 'photo.php', 'application/x-httpd-php'));
+        $stored = $this->decode($png);
+        $this->storedFiles[] = $stored['id'];
+        $file = $this->container()->get(FileStore::class)->find($stored['id']);
+        self::assertSame('photo.png', $file->name);
+        self::assertStringEndsWith('.png', $file->url);
+        $path = $this->temporaryFile('gif');
+        file_put_contents($path, base64_decode('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', true));
+        $gif = $this->withSetting('convert', 'webp', fn () => $this->upload($path, 'animation.php', 'text/plain'));
+        $stored = $this->decode($gif);
+        $this->storedFiles[] = $stored['id'];
+        $file = $this->container()->get(FileStore::class)->find($stored['id']);
+        self::assertSame('animation.gif', $file->name);
+        self::assertStringEndsWith('.gif', $file->url);
+    }
+
     public function testAFileThatIsNotAPictureIsRefused(): void
     {
         $path = $this->temporaryFile('txt');
@@ -100,7 +118,7 @@ final class EditorImageUploadTest extends FunctionalTestCase
      * @param callable(): T $test
      * @return T
      */
-    private function withSetting(string $key, int $value, callable $test): mixed
+    private function withSetting(string $key, int|string $value, callable $test): mixed
     {
         return $this->withConfig(['johncms' => ['editor_images' => [$key => $value]]], $test);
     }

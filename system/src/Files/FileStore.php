@@ -180,11 +180,13 @@ final readonly class FileStore
         try {
             $disk = $this->storages->disk($file->storage);
 
+            $size = $this->size($file, $disk);
+            $mime = $disk->mimeType($file->path);
             return new StoredFileStream(
                 stream: $disk->readStream($file->path),
                 name: $file->name,
-                mimeType: $disk->mimeType($file->path),
-                size: $file->size,
+                mimeType: $mime,
+                size: $size,
             );
         } catch (StorageException $exception) {
             throw new FileStoreException($exception->getMessage(), 0, $exception);
@@ -396,6 +398,23 @@ final readonly class FileStore
         return (string) preg_replace('/[^a-z0-9]/', '', mb_substr($extension, 0, 10));
     }
 
+    private function size(StoredFile $file, StorageInterface $storage): int
+    {
+        $raw = $file->getAttribute('size');
+        if ($raw === null) {
+            try {
+                return $storage->size($file->path);
+            } catch (StorageException $exception) {
+                throw new FileStoreException($exception->getMessage(), 0, $exception);
+            }
+        }
+        $size = filter_var($raw, FILTER_VALIDATE_INT, ['options' => ['min_range' => 0]]);
+        if ($size === false) {
+            throw new FileStoreException('The registered file has an invalid size. Restore its metadata before using it.');
+        }
+        return $size;
+    }
+
     private function toDTO(StoredFile $file, ?StorageInterface $storage = null): StoredFileDTO
     {
         $storage ??= $this->storages->disk($file->storage);
@@ -403,7 +422,7 @@ final readonly class FileStore
         return new StoredFileDTO(
             id: $file->id,
             name: $file->name,
-            size: $file->size,
+            size: $this->size($file, $storage),
             url: $this->url($file, $storage),
         );
     }

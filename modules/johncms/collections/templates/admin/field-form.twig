@@ -70,12 +70,20 @@
                 <div class="card-header"><h2 class="h6 mb-0">{{ __('Input settings') }}</h2></div>
                 <div class="card-body row g-3">
                     <div class="col-12" data-field-types="file">
+                        <input type="hidden" name="file_constraints_present" value="1">
                         <label class="form-label" for="file-storage">{{ __('File storage') }}</label>
                         <select class="form-select" id="file-storage" name="file_storage">
                             <option value="registry"{% if fields.file_storage == 'registry' %} selected{% endif %}>{{ __('Registered files') }}</option>
                             <option value="legacy"{% if fields.file_storage == 'legacy' %} selected{% endif %}>{{ __('Legacy file paths') }}</option>
                         </select>
                         <div class="form-text">{{ __('Existing paths require explicit conversion before switching to registered file IDs.') }}</div>
+                        <label class="form-label mt-2" for="max-file-bytes">{{ __('Maximum file size in bytes') }}</label>
+                        <input class="form-control" type="number" min="1" max="1073741824" step="1" name="max_file_bytes" id="max-file-bytes" value="{{ fields.max_file_bytes }}">
+                        <label class="form-label mt-2" for="file-types">{{ __('Allowed file types') }}</label>
+                        <select class="form-select" multiple size="5" name="allowed_mime_types[]" id="file-types">
+                            {% for mime, extension in file_types %}<option value="{{ mime }}"{% if mime in fields.allowed_mime_types %} selected{% endif %}>{{ extension|upper }}</option>{% endfor %}
+                        </select>
+                        <div class="form-text">{{ __('The actual file content is checked. Server upload and image limits also apply.') }}</div>
                     </div>
                     <div class="col-12" data-field-types="relation">
                         <label class="form-label" for="relation-target">{{ __('Target collection ID') }}</label>

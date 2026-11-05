@@ -95,7 +95,9 @@ final readonly class CollectionItemFiles implements CollectionChangeHandlerInter
         if ($context['item_id'] !== null && $context['item_id'] !== $itemId) {
             throw $this->invalidContext();
         }
+        $ids = $this->links->contextFiles($token, true);
         $this->links->claim($token, $itemId);
+        $this->transaction->afterCommit(fn () => $this->removeUnreferenced($ids));
     }
 
     /**
