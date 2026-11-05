@@ -25,6 +25,11 @@ use Symfony\Component\Validator\Validation;
 
 final class CollectionItemWriterFactory
 {
+    public static function itemRepository(): ContentCollectionItemRepository
+    {
+        return new ContentCollectionItemRepository(new ContentCollectionFieldRepository(), new ContentCollectionItemQueryCompiler());
+    }
+
     public static function create(?ContentCollectionItemValueRepositoryInterface $values = null, ?\Johncms\Updates\SystemOperationContext $context = null, ?\Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher $changes = null): SaveCollectionItemUseCase
     {
         $validator = self::validator();

@@ -1061,3 +1061,30 @@ msgstr "Выбранные варианты сохраняются по одно
 
 msgid "The form was truncated. Nothing was saved. Reduce the number of values or ask the administrator to raise the form input limit."
 msgstr "Форма передана не полностью. Изменения не сохранены. Уменьшите количество значений или попросите администратора увеличить лимит полей формы."
+
+msgid "Choose a target collection for this relation field."
+msgstr "Выберите целевую коллекцию для этого поля связи."
+
+msgid "Choose an existing target collection."
+msgstr "Выберите существующую целевую коллекцию."
+
+msgid "Convert existing relations explicitly before changing their target collection."
+msgstr "Перед изменением целевой коллекции выполните явное преобразование существующих связей."
+
+msgid "Relation defaults must reference existing items of the target collection."
+msgstr "Значения связи по умолчанию должны ссылаться на существующие записи целевой коллекции."
+
+msgid "Choose an existing item of the target collection."
+msgstr "Выберите существующую запись целевой коллекции."
+
+msgid "Other items reference this item. Remove these relations before deleting it."
+msgstr "Другие записи ссылаются на эту запись. Перед удалением уберите эти связи."
+
+msgid "Other collections have relation fields targeting this collection. Remove or retarget those fields before deleting it."
+msgstr "В других коллекциях есть поля связи с этой коллекцией. Перед удалением удалите эти поля или измените их цель."
+
+msgid "Target collection ID"
+msgstr "ID целевой коллекции"
+
+msgid "Referenced items cannot be deleted until their relations are removed."
+msgstr "Записи нельзя удалить, пока на них ссылаются другие записи."

@@ -9,6 +9,14 @@ use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemValueRepo
 
 final class ContentCollectionItemValueRepository implements ContentCollectionItemValueRepositoryInterface
 {
+    public function hasIncomingRelationsForUpdate(array $targetIds, array $deletedItemIds): bool
+    {
+        return ContentCollectionItemValue::query()->join('collection_fields', 'collection_fields.id', '=', 'collection_item_values.field_id')
+            ->whereIn('collection_item_values.value_int', $targetIds)->whereNotIn('collection_item_values.item_id', $deletedItemIds)
+            ->where('collection_fields.type', \Johncms\Modules\Collections\Domain\Enums\FieldType::Relation->value)
+            ->orderBy('collection_item_values.id')->lockForUpdate()->first(['collection_item_values.id']) !== null;
+    }
+
     public function deleteByItem(int $itemId): void
     {
         ContentCollectionItemValue::query()->where('item_id', $itemId)->delete();

@@ -97,6 +97,7 @@ final readonly class SaveCollectionItemUseCase
             $existingValues = $id !== null && $definitions->contains('type', FieldType::Select)
                 ? ($this->itemRepository->findWithValuesForUpdate($id)?->getValuesMap() ?? []) : [];
             $dto = $this->validator->validate($dto, $definitions->values(), applyDefaults: $id === null && $history === null, existingValues: $existingValues, allowInactiveOptions: $history !== null);
+            $this->validateRelations($dto, $definitions->values(), $valueFields);
             $attributes = [
                 'collection_id' => $dto->collectionId, 'section_id' => $dto->sectionId,
                 'code' => $this->resolveCode($id, $dto), 'name' => $dto->name,
@@ -132,6 +133,34 @@ final readonly class SaveCollectionItemUseCase
             ));
             return $itemId;
         });
+    }
+
+    /** @param \Illuminate\Database\Eloquent\Collection<int, ContentCollectionField> $fields
+     * @param list<string>|null $valueFields
+     */
+    private function validateRelations(CollectionItemFormDTO $dto, \Illuminate\Database\Eloquent\Collection $fields, ?array $valueFields): void
+    {
+        $references = [];
+        foreach ($fields as $field) {
+            if ($field->type !== FieldType::Relation || ($valueFields !== null && ! in_array($field->code, $valueFields, true))) {
+                continue;
+            }
+            $raw = $dto->values[$field->code] ?? [];
+            foreach (is_array($raw) ? $raw : [$raw] as $value) {
+                if ($value !== '') {
+                    $references[(int) $value][] = $field;
+                }
+            }
+        }
+        ksort($references, SORT_NUMERIC);
+        foreach ($references as $id => $definitions) {
+            $target = $this->itemRepository->findForUpdate($id);
+            foreach ($definitions as $field) {
+                if ($target === null || $target->collection_id !== ($field->settings['target_collection_id'] ?? null)) {
+                    throw new CollectionItemFormException(['values.' . $field->code => [d__('collections', 'Choose an existing item of the target collection.')]]);
+                }
+            }
+        }
     }
 
     /**

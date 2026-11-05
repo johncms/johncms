@@ -111,6 +111,50 @@ final class ConcurrentCollectionItemSaveTest extends TestCase
         self::assertSame(0, Capsule::table('collection_items')->count());
     }
 
+    public function testRelationCannotReferenceATargetDeletedAfterTheSnapshot(): void
+    {
+        $id = CollectionItemWriterFactory::create()->execute(null, $this->form());
+        Capsule::table('collection_fields')->insert(['collection_id' => $this->collection, 'code' => 'related', 'name' => 'Related', 'type' => 'relation', 'settings' => json_encode(['target_collection_id' => $this->collection])]);
+        Capsule::connection()->beginTransaction();
+        Capsule::table('collection_items')->count();
+        [$process, $output] = $this->start('', $id, 'delete-item');
+        self::assertSame(0, $this->finish($process, $output));
+        try {
+            CollectionItemWriterFactory::create()->execute(null, new CollectionItemFormDTO($this->collection, null, 'source', 'Source', true, null, null, 100, null, null, ['related' => (string) $id]));
+            self::fail('A deleted target must not be visible through an old snapshot.');
+        } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException $exception) {
+            self::assertArrayHasKey('values.related', $exception->errors);
+        } catch (CollectionWriteConflictException) {
+            self::assertTrue($this->snapshotIsolation());
+        } finally {
+            Capsule::connection()->rollBack();
+        }
+        self::assertSame(0, Capsule::table('collection_items')->count());
+        self::assertSame(0, Capsule::table('collection_item_values')->count());
+    }
+
+    public function testDeletionSeesANewRelationAndFieldAfterTheSnapshot(): void
+    {
+        $id = CollectionItemWriterFactory::create()->execute(null, $this->form());
+        Capsule::connection()->beginTransaction();
+        Capsule::table('collection_fields')->count();
+        Capsule::table('collection_item_values')->count();
+        [$process, $output] = $this->start((string) $id, $id, 'relation-new-field');
+        self::assertSame(0, $this->finish($process, $output));
+        try {
+            CollectionItemWriterFactory::api()->deleteItem($id);
+            self::fail('Current reads must detect the newly committed relation.');
+        } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException $exception) {
+            self::assertArrayHasKey('relations', $exception->errors);
+        } catch (CollectionWriteConflictException) {
+            self::assertTrue($this->snapshotIsolation());
+        } finally {
+            Capsule::connection()->rollBack();
+        }
+        self::assertSame(2, Capsule::table('collection_items')->count());
+        self::assertSame(1, Capsule::table('collection_item_values')->count());
+    }
+
     public function testNativeOuterTransactionCanRollbackTheSave(): void
     {
         $connection = new \Johncms\Database\PdoConnection(Capsule::connection()->getPdo());

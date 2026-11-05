@@ -11,6 +11,12 @@ interface ContentCollectionItemValueRepositoryInterface
      */
     public function deleteByItem(int $itemId): void;
 
+    /** @param list<int> $targetIds
+     * @param list<int> $deletedItemIds
+     * Current locking read; references inside the same deletion are ignored.
+     */
+    public function hasIncomingRelationsForUpdate(array $targetIds, array $deletedItemIds): bool;
+
     /** @param list<int> $fieldIds */
     public function deleteFields(int $itemId, array $fieldIds): void;
 

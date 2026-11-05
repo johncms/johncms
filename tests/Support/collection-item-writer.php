@@ -14,11 +14,19 @@ echo \Illuminate\Database\Capsule\Manager::connection()->selectOne('SELECT CONNE
 flush();
 $mode = $argv[4] ?? 'save';
 try {
-    if ($mode === 'retire-select') {
+    if ($mode === 'delete-item') {
+        CollectionItemWriterFactory::api()->deleteItem((int) $argv[3]);
+    } elseif ($mode === 'relation' || $mode === 'relation-new-field') {
+        if ($mode === 'relation-new-field') {
+            \Illuminate\Database\Capsule\Manager::table('collection_fields')->insert(['collection_id' => (int) $argv[1], 'code' => 'related', 'name' => 'Related', 'type' => 'relation', 'settings' => json_encode(['target_collection_id' => (int) $argv[1]])]);
+        }
+        CollectionItemWriterFactory::create()->execute(null, new CollectionItemFormDTO((int) $argv[1], null, 'linked', 'Linked', true, null, null, 100, null, null, ['related' => $argv[2]]));
+    } elseif ($mode === 'retire-select') {
         (new \Johncms\Modules\Collections\Application\UseCases\SaveCollectionFieldUseCase(
             new \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionFieldRepository(),
             new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction(),
-            new \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionRepository()
+            new \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionRepository(),
+            CollectionItemWriterFactory::itemRepository()
         ))->execute((int) $argv[3], new \Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO(
             (int) $argv[1], $argv[2], 'Choice', \Johncms\Modules\Collections\Domain\Enums\FieldType::Select, false, false, 100,
             settings: ['options' => [['code' => 'a', 'label' => 'A', 'active' => false], ['code' => 'b', 'label' => 'B', 'active' => true]]]

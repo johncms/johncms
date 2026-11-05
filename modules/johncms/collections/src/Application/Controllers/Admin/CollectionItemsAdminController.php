@@ -220,6 +220,8 @@ final readonly class CollectionItemsAdminController
         if ($this->findOwnedItem($collection_id, $id) !== null) {
             try {
                 $this->deleteItem->execute($id, $collection_id);
+            } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException $exception) {
+                return $this->wrongData($collection_id, implode(" ", array_merge(...array_values($exception->errors))));
             } catch (CollectionItemFormException) {
                 return $this->wrongData($collection_id);
             } catch (CollectionWriteConflictException) {

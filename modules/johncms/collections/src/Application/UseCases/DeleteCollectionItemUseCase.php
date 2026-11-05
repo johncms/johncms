@@ -24,14 +24,18 @@ final readonly class DeleteCollectionItemUseCase
     ) {
     }
 
-    public function execute(int $id, ?int $collectionId = null): void
+    /** @param list<int> $deletedItemIds Items in the same atomic branch or collection deletion. */
+    public function execute(int $id, ?int $collectionId = null, array $deletedItemIds = []): void
     {
         $collectionId ??= $this->repository->findById($id)?->collection_id;
-        $this->transaction->run(function () use ($id, $collectionId): void {
+        $this->transaction->run(function () use ($id, $collectionId, $deletedItemIds): void {
             $collection = $collectionId !== null ? $this->collections->findForUpdate($collectionId) : null;
             $item = $this->repository->findForUpdate($id);
             if ($collection === null || $item === null || $item->collection_id !== $collectionId) {
                 throw new CollectionItemFormException(['id' => [d__('collections', 'The item does not belong to this collection or no longer exists.')]]);
+            }
+            if ($this->values->hasIncomingRelationsForUpdate([$id], [...$deletedItemIds, $id])) {
+                throw new \Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException(['relations' => [d__('collections', 'Other items reference this item. Remove these relations before deleting it.')]]);
             }
             $this->changes->ensureOwnerLoaded($collection->owner_module);
             $this->changes->dispatch(new CollectionChangeDTO(

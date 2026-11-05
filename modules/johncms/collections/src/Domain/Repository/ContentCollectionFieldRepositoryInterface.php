@@ -28,6 +28,8 @@ interface ContentCollectionFieldRepositoryInterface
     /** Current locking read under the collection lock. */
     public function hasValues(int $id): bool;
 
+    public function hasExternalRelationsToCollectionForUpdate(int $collectionId): bool;
+
     /** @param list<string> $codes Current locking read under the collection lock. */
     public function hasSelectValuesOutside(int $id, array $codes): bool;
 

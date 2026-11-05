@@ -43,7 +43,7 @@ final class SaveCollectionFieldUseCaseTest extends TestCase
             ->willReturn($created);
         $repository->expects(self::never())->method('update');
 
-        self::assertSame(1, (new SaveCollectionFieldUseCase($repository, \Tests\Support\CollectionItemWriterFactory::immediateTransaction(), $this->collections()))->execute(null, $this->dto()));
+        self::assertSame(1, (new SaveCollectionFieldUseCase($repository, \Tests\Support\CollectionItemWriterFactory::immediateTransaction(), $this->collections(), \Tests\Support\CollectionItemWriterFactory::itemRepository()))->execute(null, $this->dto()));
     }
 
     public function testUpdatesExistingField(): void
@@ -57,7 +57,7 @@ final class SaveCollectionFieldUseCaseTest extends TestCase
         $repository->expects(self::once())->method('update')->with(7, self::anything());
         $repository->expects(self::never())->method('create');
 
-        self::assertSame(7, (new SaveCollectionFieldUseCase($repository, \Tests\Support\CollectionItemWriterFactory::immediateTransaction(), $this->collections()))->execute(7, $this->dto()));
+        self::assertSame(7, (new SaveCollectionFieldUseCase($repository, \Tests\Support\CollectionItemWriterFactory::immediateTransaction(), $this->collections(), \Tests\Support\CollectionItemWriterFactory::itemRepository()))->execute(7, $this->dto()));
     }
 
     public function testThrowsWhenCodeBelongsToAnotherFieldOfCollection(): void
@@ -72,7 +72,7 @@ final class SaveCollectionFieldUseCaseTest extends TestCase
 
         $this->expectException(CollectionFieldCodeAlreadyExistsException::class);
 
-        (new SaveCollectionFieldUseCase($repository, \Tests\Support\CollectionItemWriterFactory::immediateTransaction(), $this->collections()))->execute(null, $this->dto());
+        (new SaveCollectionFieldUseCase($repository, \Tests\Support\CollectionItemWriterFactory::immediateTransaction(), $this->collections(), \Tests\Support\CollectionItemWriterFactory::itemRepository()))->execute(null, $this->dto());
     }
     private function collections(): \Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface
     {

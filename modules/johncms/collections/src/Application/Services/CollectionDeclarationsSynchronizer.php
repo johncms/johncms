@@ -90,6 +90,12 @@ final readonly class CollectionDeclarationsSynchronizer implements DeclarationSy
                         if ($field->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::Select && $this->fields->hasSelectValuesOutside($field->id, array_column($fieldAttributes['settings']['options'] ?? [], 'code'))) {
                             $fieldAttributes['settings']['options'] = $field->settings['options'] ?? [];
                         }
+                        if (
+                            $field->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::Relation
+                            && ($fieldAttributes['settings']['target_collection_id'] ?? null) !== ($field->settings['target_collection_id'] ?? null) && $this->fields->hasValues($field->id)
+                        ) {
+                            $fieldAttributes['settings']['target_collection_id'] = $field->settings['target_collection_id'] ?? null;
+                        }
                         $this->fields->update($field->id, $fieldAttributes);
                     }
                     $byCode[$declared->code] = $field;

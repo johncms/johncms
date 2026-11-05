@@ -60,7 +60,7 @@ final readonly class DeleteCollectionSectionUseCase
                     throw new CollectionDeletionException(['target' => [d__('collections', 'A destination is only allowed when moving items.')]]);
                 }
                 foreach ($plan->itemIds as $itemId) {
-                    $this->deleteItem->execute($itemId, $collectionId);
+                    $this->deleteItem->execute($itemId, $collectionId, $plan->itemIds);
                 }
             }
             foreach (array_reverse($plan->sectionIds) as $sectionId) {

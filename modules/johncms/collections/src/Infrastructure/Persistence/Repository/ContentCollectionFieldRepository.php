@@ -51,6 +51,13 @@ final class ContentCollectionFieldRepository implements ContentCollectionFieldRe
         return ContentCollectionField::query()->find($id);
     }
 
+    public function hasExternalRelationsToCollectionForUpdate(int $collectionId): bool
+    {
+        return ContentCollectionField::query()->where('collection_id', '!=', $collectionId)
+            ->where('type', \Johncms\Modules\Collections\Domain\Enums\FieldType::Relation->value)
+            ->where('settings->target_collection_id', $collectionId)->orderBy('id')->lockForUpdate()->first(['id']) !== null;
+    }
+
     public function hasValues(int $id): bool
     {
         return \Johncms\Modules\Collections\Domain\Models\ContentCollectionItemValue::query()->where('field_id', $id)->lockForUpdate()->first(['id']) !== null;

@@ -33,9 +33,14 @@ final readonly class DeleteCollectionUseCase
         $this->transaction->run(function () use ($id, $expectedRevision): void {
             $plan = $this->planner->plan($id, forUpdate: true);
             $this->planner->ensureRevision($plan->preview, $expectedRevision);
+            if ($this->fields->hasExternalRelationsToCollectionForUpdate($id)) {
+                throw new \Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException([
+                    'relations' => [d__('collections', 'Other collections have relation fields targeting this collection. Remove or retarget those fields before deleting it.')],
+                ]);
+            }
             $this->changes->ensureOwnerLoaded($plan->preview->ownerModule);
             foreach ($plan->itemIds as $itemId) {
-                $this->deleteItem->execute($itemId, $id);
+                $this->deleteItem->execute($itemId, $id, $plan->itemIds);
             }
             foreach (array_reverse($plan->sectionIds) as $sectionId) {
                 $this->changes->dispatch(new CollectionChangeDTO('section', 'deleted', $id, $sectionId, $plan->sectionStates[$sectionId], null));

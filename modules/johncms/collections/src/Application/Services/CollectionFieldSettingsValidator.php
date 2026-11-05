@@ -50,6 +50,9 @@ final readonly class CollectionFieldSettingsValidator
         if ((isset($settings['min_length'], $settings['max_length']) && $settings['min_length'] > $settings['max_length']) || (isset($settings['min_value'], $settings['max_value']) && $settings['min_value'] > $settings['max_value'])) {
             throw new CollectionSchemaException(d__('collections', 'The minimum limit must not exceed the maximum.'));
         }
+        if ($type === FieldType::Relation && (! is_int($settings['target_collection_id'] ?? null) || $settings['target_collection_id'] < 1)) {
+            throw new CollectionSchemaException(d__('collections', 'Choose a target collection for this relation field.'));
+        }
         if ($type === FieldType::Select) {
             $this->options($settings['options'] ?? []);
         }

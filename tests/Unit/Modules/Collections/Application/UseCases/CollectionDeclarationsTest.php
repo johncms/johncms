@@ -73,7 +73,7 @@ final class CollectionDeclarationsTest extends TestCase
     {
         $fields = new ContentCollectionFieldRepository();
         return new CollectionSchemaApi($fields,
-            new SaveCollectionFieldUseCase($fields, new CollectionTransaction(), new ContentCollectionRepository(), context: $this->context),
+            new SaveCollectionFieldUseCase($fields, new CollectionTransaction(), new ContentCollectionRepository(), \Tests\Support\CollectionItemWriterFactory::itemRepository(), context: $this->context),
             new DeleteCollectionFieldUseCase($fields, new CollectionTransaction(), new ContentCollectionRepository(), context: $this->context)
         );
     }

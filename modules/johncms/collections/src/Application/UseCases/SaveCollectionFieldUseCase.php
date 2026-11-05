@@ -21,6 +21,7 @@ final readonly class SaveCollectionFieldUseCase
         private ContentCollectionFieldRepositoryInterface $repository,
         private CollectionTransactionInterface $transaction,
         private ContentCollectionRepositoryInterface $collections,
+        private \Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface $items,
         private CollectionChangeDispatcher $changes = new CollectionChangeDispatcher(),
         private SystemOperationContext $context = new SystemOperationContext(),
         private \Johncms\Modules\Collections\Application\Services\CollectionFieldSettingsValidator $settingsValidator = new \Johncms\Modules\Collections\Application\Services\CollectionFieldSettingsValidator(),
@@ -73,6 +74,21 @@ final readonly class SaveCollectionFieldUseCase
             }
             $settings = array_replace($current->settings ?? [], $dto->settings);
             $this->settingsValidator->validate($dto->type, $dto->multiple, $settings);
+            if ($dto->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::Relation) {
+                $target = $settings['target_collection_id'];
+                if ($this->collections->findForUpdate($target) === null) {
+                    throw new CollectionSchemaException(d__('collections', 'Choose an existing target collection.'));
+                }
+                if ($current !== null && $current->type === $dto->type && ($current->settings['target_collection_id'] ?? null) !== $target && $this->repository->hasValues($current->id) && ! $this->context->isActive()) {
+                    throw new CollectionSchemaException(d__('collections', 'Convert existing relations explicitly before changing their target collection.'));
+                }
+                $defaults = $settings['default'] ?? [];
+                foreach (is_array($defaults) ? $defaults : [$defaults] as $value) {
+                    if ($value !== '' && $this->items->findForUpdate((int) $value)?->collection_id !== $target) {
+                        throw new CollectionSchemaException(d__('collections', 'Relation defaults must reference existing items of the target collection.'));
+                    }
+                }
+            }
             if (
                 $current !== null && $current->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::Select && $dto->type === $current->type && ! $this->context->isActive()
                 && ($settings['options'] ?? []) !== ($current->settings['options'] ?? []) && $this->repository->hasSelectValuesOutside($current->id, array_column($settings['options'] ?? [], 'code'))

@@ -69,6 +69,11 @@
             <fieldset class="card mt-3"{% if managed %} disabled{% endif %}>
                 <div class="card-header"><h2 class="h6 mb-0">{{ __('Input settings') }}</h2></div>
                 <div class="card-body row g-3">
+                    <div class="col-12" data-field-types="relation">
+                        <label class="form-label" for="relation-target">{{ __('Target collection ID') }}</label>
+                        <input class="form-control" type="number" min="1" step="1" name="target_collection_id" id="relation-target" value="{{ fields.target_collection_id }}">
+                        <div class="form-text">{{ __('Referenced items cannot be deleted until their relations are removed.') }}</div>
+                    </div>
                     <div class="col-12" data-field-types="select">
                         {% include '@collections/admin/components/option-settings.twig' with {options: option_rows} only %}
                     </div>
