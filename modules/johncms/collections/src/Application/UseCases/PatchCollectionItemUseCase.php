@@ -54,7 +54,7 @@ final readonly class PatchCollectionItemUseCase
             foreach ($current->getValuesMap() as $code => $value) {
                 $values[$code] = is_array($value) ? array_map($this->stringValue(...), $value) : $this->stringValue($value);
             }
-            $definitions = $this->fields->getByCollection($current->collection_id)->keyBy('code');
+            $definitions = $this->fields->getForUpdate($current->collection_id)->keyBy('code');
             foreach ($patch->values as $code => $value) {
                 $values[$code] = $value ?? (($definitions->get($code)->multiple ?? false) ? [] : '');
             }

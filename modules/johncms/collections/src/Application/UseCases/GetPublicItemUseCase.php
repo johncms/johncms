@@ -48,6 +48,9 @@ final readonly class GetPublicItemUseCase
                 $metadata[$field->role] = $this->contentFormatter->plain($list[0] ?? null);
                 continue;
             }
+            if ($field->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::Select) {
+                $list = array_map(static fn ($value): string => \Johncms\Modules\Collections\Application\Services\CollectionSelectOptions::label($field->settings ?? [], (string) $value), $list);
+            }
             if ($field->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::Html) {
                 $list = array_values(array_filter(array_map($this->contentFormatter->format(...), $list), static fn ($value): bool => $value !== null));
             }

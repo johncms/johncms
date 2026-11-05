@@ -117,6 +117,7 @@ final readonly class ItemListRowMapper
         }
 
         return match ($field->type) {
+            FieldType::Select => ['kind' => 'text', 'value' => $this->shorten(CollectionSelectOptions::label($field->settings ?? [], (string) $value))],
             FieldType::Boolean                  => ['kind' => 'yes_no', 'value' => (bool) $value],
             FieldType::Integer, FieldType::Double => ['kind' => 'number', 'value' => $this->number($value)],
             FieldType::Date, FieldType::Datetime => ['kind' => 'date', 'value' => $this->timestamp($value), 'with_time' => $field->type === FieldType::Datetime],

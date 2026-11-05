@@ -50,6 +50,9 @@ final readonly class CollectionFieldSettingsValidator
         if ((isset($settings['min_length'], $settings['max_length']) && $settings['min_length'] > $settings['max_length']) || (isset($settings['min_value'], $settings['max_value']) && $settings['min_value'] > $settings['max_value'])) {
             throw new CollectionSchemaException(d__('collections', 'The minimum limit must not exceed the maximum.'));
         }
+        if ($type === FieldType::Select) {
+            $this->options($settings['options'] ?? []);
+        }
         if (! isset($settings['default'])) {
             return;
         }
@@ -65,6 +68,28 @@ final readonly class CollectionFieldSettingsValidator
             if (! is_string($value) || ($value !== '' && $this->values->error($type, trim($value), $settings) !== null)) {
                 throw new CollectionSchemaException(d__('collections', 'The default does not meet this field type and its limits.'));
             }
+        }
+    }
+
+    private function options(mixed $options): void
+    {
+        if (! is_array($options) || ! array_is_list($options) || count($options) > 500) {
+            throw new CollectionSchemaException(d__('collections', 'Use a list of at most 500 options with code, label and availability.'));
+        }
+        $codes = [];
+        foreach ($options as $option) {
+            if (
+                ! is_array($option) || ! is_string($option['code'] ?? null) || ! preg_match('/^[A-Za-z0-9_.+-]{1,255}$/D', $option['code'])
+                || ! is_string($option['label'] ?? null) || trim($option['label']) === '' || mb_strlen($option['label']) > 255
+                || (array_key_exists('active', $option) && ! is_bool($option['active'])) || array_diff(array_keys($option), ['code', 'label', 'active']) !== []
+            ) {
+                throw new CollectionSchemaException(d__('collections', 'Each option needs a stable code, a label of at most 255 characters and boolean availability.'));
+            }
+            $key = strtolower($option['code']);
+            if (isset($codes[$key])) {
+                throw new CollectionSchemaException(d__('collections', 'Option codes must be unique regardless of letter case.'));
+            }
+            $codes[$key] = true;
         }
     }
 

@@ -90,6 +90,27 @@ final class ConcurrentCollectionItemSaveTest extends TestCase
         self::assertSame('Hello', Capsule::table('collection_items')->where('id', $id)->value('name'));
     }
 
+    public function testSelectAvailabilityUsesCurrentSchemaInsideAnOldSnapshot(): void
+    {
+        $field = Capsule::table('collection_fields')->insertGetId(['collection_id' => $this->collection, 'code' => 'choice', 'name' => 'Choice', 'type' => 'select',
+            'settings' => json_encode(['options' => [['code' => 'a', 'label' => 'A', 'active' => true], ['code' => 'b', 'label' => 'B', 'active' => true]]])]);
+        Capsule::connection()->beginTransaction();
+        Capsule::table('collection_fields')->count();
+        [$process, $output] = $this->start('choice', $field, 'retire-select');
+        self::assertSame(0, $this->finish($process, $output));
+        try {
+            CollectionItemWriterFactory::create()->execute(null, new CollectionItemFormDTO($this->collection, null, 'entry', 'Entry', true, null, null, 100, null, null, ['choice' => 'a']));
+            self::fail('A committed option retirement must be visible to a stale writer.');
+        } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException $exception) {
+            self::assertArrayHasKey('values.choice', $exception->errors);
+        } catch (CollectionWriteConflictException) {
+            self::assertTrue($this->snapshotIsolation());
+        } finally {
+            Capsule::connection()->rollBack();
+        }
+        self::assertSame(0, Capsule::table('collection_items')->count());
+    }
+
     public function testNativeOuterTransactionCanRollbackTheSave(): void
     {
         $connection = new \Johncms\Database\PdoConnection(Capsule::connection()->getPdo());

@@ -5,6 +5,10 @@
         {% include '@admin/components/ui/editor.twig' with {name: input_name ~ '[]', id: input_id, value: value, label: label, allow_upload: allow_upload, upload_url: upload_url} only %}
     {% elseif type == 'text' or (type == 'string' and value matches '/[\r\n]/') %}
         <textarea name="{{ input_name }}[]" class="form-control" id="{{ input_id }}" rows="3">{{ value }}</textarea>
+    {% elseif type == 'select' %}
+        <select name="{{ input_name }}[]" class="form-select" id="{{ input_id }}">
+            {% include '@collections/admin/components/select-options.twig' with {options: options|default([]), current: value} only %}
+        </select>
     {% elseif type == 'boolean' %}
         <select name="{{ input_name }}[]" class="form-select" id="{{ input_id }}">
             <option value=""{% if value == '' %} selected{% endif %}>{{ __('No value') }}</option>

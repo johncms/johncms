@@ -1007,3 +1007,57 @@ msgstr "Добавить значение"
 
 msgid "Default values"
 msgstr "Значения по умолчанию"
+
+msgid "Use a list of at most 500 options with code, label and availability."
+msgstr "Укажите не более 500 вариантов с кодом, подписью и доступностью."
+
+msgid "Each option needs a stable code, a label of at most 255 characters and boolean availability."
+msgstr "Укажите постоянный код, подпись до 255 символов и доступность каждого варианта."
+
+msgid "Option codes must be unique regardless of letter case."
+msgstr "Коды вариантов должны быть уникальны без учёта регистра."
+
+msgid "Choose an available option for this field."
+msgstr "Выберите доступный вариант для этого поля."
+
+msgid "A used option cannot be removed. Disable it instead."
+msgstr "Используемый вариант нельзя удалить. Отключите его."
+
+msgid "Field %s in %s needs option migration in the owner update hook."
+msgstr "Для вариантов поля %s в %s требуется перенос данных в хуке обновления владельца."
+
+msgid "Unavailable option"
+msgstr "Недоступен для нового выбора"
+
+msgid "Legacy option"
+msgstr "Прежний вариант"
+
+msgid "Option"
+msgstr "Вариант"
+
+msgid "Option code"
+msgstr "Код варианта"
+
+msgid "Option label"
+msgstr "Подпись варианта"
+
+msgid "Available for new selection"
+msgstr "Доступен для нового выбора"
+
+msgid "Remove option"
+msgstr "Удалить вариант"
+
+msgid "Add option"
+msgstr "Добавить вариант"
+
+msgid "Select options"
+msgstr "Варианты выбора"
+
+msgid "Keep codes stable when changing labels. Disable a used option instead of removing it."
+msgstr "Меняйте подписи, сохраняя коды. Используемый вариант следует отключить, а не удалять."
+
+msgid "Selected options are stored once, in their first order."
+msgstr "Выбранные варианты сохраняются по одному разу, в порядке первого выбора."
+
+msgid "The form was truncated. Nothing was saved. Reduce the number of values or ask the administrator to raise the form input limit."
+msgstr "Форма передана не полностью. Изменения не сохранены. Уменьшите количество значений или попросите администратора увеличить лимит полей формы."

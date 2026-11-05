@@ -136,6 +136,31 @@ final class CollectionDeclarationsTest extends TestCase
         self::assertSame(['headline' => 'Original'], CollectionItemWriterFactory::api()->getItem($item)->values);
     }
 
+    public function testDeclarationDoesNotRemoveAUsedOptionBeforeItsOwnerConvertsTheValues(): void
+    {
+        $label = new CollectionLabelDTO('example', 'Title');
+        $old = [['code' => 'a', 'label' => 'A', 'active' => true]];
+        $new = [['code' => 'b', 'label' => 'B', 'active' => true]];
+        $this->provider->declarations = [$this->declaration([new CollectionFieldDeclarationDTO('title', $label, FieldType::Select, settings: ['options' => $old])])];
+        $this->sync->synchronize();
+        $item = $this->item('a');
+        $id = $this->collection();
+        $field = $this->schema()->getFields($id)[0];
+        $this->provider->declarations = [$this->declaration([new CollectionFieldDeclarationDTO('title', $label, FieldType::Select, settings: ['options' => $new])])];
+        $this->sync->synchronize();
+        self::assertNotEmpty($this->sync->problems());
+        self::assertSame($old, $this->schema()->getFields($id)[0]->settings['options']);
+        self::assertSame('a', CollectionItemWriterFactory::api()->getItem($item)->values['title']);
+        $this->context->runTrusted(function () use ($id, $item, $field, $new): void {
+            (new PdoConnection(Capsule::connection()->getPdo()))->transaction(function () use ($id, $item, $field, $new): void {
+                $this->schema()->saveField($field->id, new CollectionFieldFormDTO($id, 'title', 'Title', FieldType::Select, false, false, 100, settings: ['options' => $new]));
+                CollectionItemWriterFactory::api()->patchItem($item, new CollectionItemPatchDTO(values: ['title' => 'b']));
+            });
+        });
+        $this->sync->validate();
+        self::assertSame('b', CollectionItemWriterFactory::api()->getItem($item)->values['title']);
+    }
+
     public function testIncompatibleTypeWaitsForTrustedHookAndPreservesData(): void
     {
         $this->sync->synchronize();

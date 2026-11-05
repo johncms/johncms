@@ -83,7 +83,7 @@ final readonly class SaveCollectionItemUseCase
             if ($actorId !== null && $actorId < 1) {
                 throw new CollectionItemFormException(['actor_id' => [d__('collections', 'Choose a valid author or use a system operation.')]]);
             }
-            $definitions = $this->fieldRepository->getByCollection($dto->collectionId)->keyBy('code');
+            $definitions = $this->fieldRepository->getForUpdate($dto->collectionId)->keyBy('code');
             foreach ([...($valueFields ?? []), ...$clearFields] as $code) {
                 if (! isset($definitions[$code])) {
                     throw new CollectionItemFormException(['values.' . $code => [d__('collections', 'Unknown collection field.')]]);
@@ -94,7 +94,9 @@ final readonly class SaveCollectionItemUseCase
                     throw new CollectionItemFormException(['values.' . $code => [d__('collections', 'This field cannot be cleared.')]]);
                 }
             }
-            $dto = $this->validator->validate($dto, $definitions->values(), applyDefaults: $id === null && $history === null);
+            $existingValues = $id !== null && $definitions->contains('type', FieldType::Select)
+                ? ($this->itemRepository->findWithValuesForUpdate($id)?->getValuesMap() ?? []) : [];
+            $dto = $this->validator->validate($dto, $definitions->values(), applyDefaults: $id === null && $history === null, existingValues: $existingValues, allowInactiveOptions: $history !== null);
             $attributes = [
                 'collection_id' => $dto->collectionId, 'section_id' => $dto->sectionId,
                 'code' => $this->resolveCode($id, $dto), 'name' => $dto->name,
@@ -112,7 +114,7 @@ final readonly class SaveCollectionItemUseCase
                 }
                 $itemId = $this->itemRepository->create($attributes)->id;
             }
-            $this->rebuildValues($itemId, $dto, $valueFields, $clearFields);
+            $this->rebuildValues($itemId, $dto, $valueFields, $clearFields, $definitions->values());
             if ($dto->uploadContext !== null) {
                 if ($this->files === null) {
                     throw new \LogicException('Collection upload tracking is not configured.');
@@ -169,10 +171,10 @@ final readonly class SaveCollectionItemUseCase
 
     /** @param list<string>|null $valueFields
      * @param list<string> $clearFields
+     * @param \Illuminate\Database\Eloquent\Collection<int, ContentCollectionField> $fields
      */
-    private function rebuildValues(int $itemId, CollectionItemFormDTO $dto, ?array $valueFields, array $clearFields): void
+    private function rebuildValues(int $itemId, CollectionItemFormDTO $dto, ?array $valueFields, array $clearFields, \Illuminate\Database\Eloquent\Collection $fields): void
     {
-        $fields = $this->fieldRepository->getByCollection($dto->collectionId);
         if ($valueFields === null) {
             $this->valueRepository->deleteByItem($itemId);
         } else {

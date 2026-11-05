@@ -87,6 +87,9 @@ final readonly class CollectionDeclarationsSynchronizer implements DeclarationSy
                             unset($fieldAttributes['type'], $fieldAttributes['multiple']);
                         }
                         $fieldAttributes['settings'] = array_replace($field->settings ?? [], $declared->settings);
+                        if ($field->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::Select && $this->fields->hasSelectValuesOutside($field->id, array_column($fieldAttributes['settings']['options'] ?? [], 'code'))) {
+                            $fieldAttributes['settings']['options'] = $field->settings['options'] ?? [];
+                        }
                         $this->fields->update($field->id, $fieldAttributes);
                     }
                     $byCode[$declared->code] = $field;
@@ -129,6 +132,8 @@ final readonly class CollectionDeclarationsSynchronizer implements DeclarationSy
                     $problems[] = sprintf(d__('collections', 'Field %s in %s belongs to the administrator. Rename this custom field before updating.'), $declared->code, $identity);
                 } elseif ($field->type !== $declared->type || $field->multiple !== $declared->multiple) {
                     $problems[] = sprintf(d__('collections', 'Field %s in %s needs type or multiplicity conversion in the owner update hook.'), $declared->code, $identity);
+                } elseif ($field->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::Select && $this->fields->hasSelectValuesOutside($field->id, array_column($declared->settings['options'] ?? [], 'code'))) {
+                    $problems[] = sprintf(d__('collections', 'Field %s in %s needs option migration in the owner update hook.'), $declared->code, $identity);
                 } elseif (! $this->matches($field, $declared)) {
                     $problems[] = sprintf(d__('collections', 'Field %s in %s differs from its declaration. Run system:update.'), $declared->code, $identity);
                 }

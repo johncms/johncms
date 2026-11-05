@@ -85,7 +85,7 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
     {
         $query = ContentCollectionItem::query()->with([
             'values' => static fn ($values) => $values->lockForUpdate()->orderBy('sort')->orderBy('id'),
-            'values.field',
+            'values.field' => static fn ($fields) => $fields->lockForUpdate(),
         ]);
         $query->lockForUpdate();
         return $query->find($id);

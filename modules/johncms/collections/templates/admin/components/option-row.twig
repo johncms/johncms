@@ -1,0 +1,25 @@
+<div class="border rounded p-3 mb-2" data-repeat-row>
+    <div class="small text-muted mb-2">{{ __('Option') }} <span data-repeat-number>{{ index + 1 }}</span></div>
+    <div class="row g-2">
+        <div class="col-md-5">
+            <label class="form-label" for="{{ input_id }}-code">{{ __('Option code') }}</label>
+            <input class="form-control font-monospace" name="option_code[]" id="{{ input_id }}-code" value="{{ option.code }}" maxlength="255" pattern="[A-Za-z0-9_.+-]+">
+        </div>
+        <div class="col-md-7">
+            <label class="form-label" for="{{ input_id }}-label">{{ __('Option label') }}</label>
+            <input class="form-control" name="option_label[]" id="{{ input_id }}-label" value="{{ option.label }}" maxlength="255">
+        </div>
+        <div class="col-md-5">
+            <label class="form-label" for="{{ input_id }}-active">{{ __('Available for new selection') }}</label>
+            <select class="form-select" name="option_active[]" id="{{ input_id }}-active">
+                <option value="1"{% if option.active %} selected{% endif %}>{{ __('Yes') }}</option>
+                <option value="0"{% if not option.active %} selected{% endif %}>{{ __('No') }}</option>
+            </select>
+        </div>
+    </div>
+    <div class="d-flex flex-wrap gap-2 mt-2">
+        <button type="submit" name="repeat_action" value="options:up:{{ index }}" data-repeat-op="up" class="btn btn-outline-secondary btn-sm" formnovalidate{% if index == 0 %} disabled{% endif %}>{{ __('Move up') }}</button>
+        <button type="submit" name="repeat_action" value="options:down:{{ index }}" data-repeat-op="down" class="btn btn-outline-secondary btn-sm" formnovalidate{% if last %} disabled{% endif %}>{{ __('Move down') }}</button>
+        <button type="submit" name="repeat_action" value="options:remove:{{ index }}" data-repeat-op="remove" class="btn btn-outline-danger btn-sm" formnovalidate>{{ __('Remove option') }}</button>
+    </div>
+</div>

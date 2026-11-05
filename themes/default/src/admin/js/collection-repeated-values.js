@@ -82,11 +82,14 @@ document.querySelectorAll('[data-collection-repeat]').forEach(root => {
 /** Both default inputs remain available without scripts; the server chooses their declared shape. */
 document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   const multiple = form.querySelector('input[name="multiple"]');
+  const type = form.querySelector('select[name="type"]');
   const update = () => {
     form.querySelector('[data-default-single]').hidden = multiple.checked;
     form.querySelector('[data-default-multiple]').hidden = !multiple.checked;
+    form.querySelectorAll('[data-field-types]').forEach(group => { group.hidden = !group.dataset.fieldTypes.split(' ').includes(type.value); });
   };
   multiple.addEventListener('change', update);
+  type.addEventListener('change', update);
   form.addEventListener('reset', () => queueMicrotask(update));
   update();
 });

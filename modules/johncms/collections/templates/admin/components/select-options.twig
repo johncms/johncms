@@ -1,0 +1,9 @@
+<option value=""{% if current is same as('') %} selected{% endif %}>{{ __('No value') }}</option>
+{% set known = current is same as('') %}
+{% for option in options %}
+    {% set selected = current is same as(option.code) %}
+    {% set active = option.active is defined ? option.active : true %}
+    {% if selected %}{% set known = true %}{% endif %}
+    <option value="{{ option.code }}"{% if selected %} selected{% endif %}{% if not active and not selected %} disabled{% endif %}>{{ option.label }}{% if not active %} — {{ __('Unavailable option') }}{% endif %}</option>
+{% endfor %}
+{% if not known %}<option value="{{ current }}" selected>{{ current }} — {{ __('Legacy option') }}</option>{% endif %}

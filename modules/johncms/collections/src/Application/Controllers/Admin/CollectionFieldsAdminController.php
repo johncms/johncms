@@ -89,6 +89,10 @@ final readonly class CollectionFieldsAdminController
             return $this->collectionNotFound();
         }
 
+        if ($request->hasBody('collection_form_started') && $request->body('collection_form_complete') !== '1') {
+            return $this->wrongData($collection_id, d__('collections', 'The form was truncated. Nothing was saved. Reduce the number of values or ask the administrator to raise the form input limit.'));
+        }
+
         $id = $request->bodyInt('id') ?: null;
         if ($id !== null && $this->findOwnedField($collection_id, $id) === null) {
             return $this->wrongData($collection_id);
@@ -98,10 +102,16 @@ final readonly class CollectionFieldsAdminController
         if ($request->hasBody('repeat_action')) {
             try {
                 [$key, $operation, $index] = $this->repeated->action($request->body('repeat_action'));
-                if ($key !== 'default') {
+                if (! in_array($key, ['default', 'options'], true)) {
                     throw new \InvalidArgumentException(d__('collections', 'Choose an existing value and a valid action.'));
                 }
-                $fields['default_values'] = $this->repeated->apply($fields['default_values'], $operation, $index);
+                if ($key === 'options') {
+                    $keys = array_map(strval(...), array_keys($fields['option_rows']));
+                    $ordered = $this->repeated->apply($keys, $operation, $index, 500);
+                    $fields['option_rows'] = array_map(static fn (string $key): array => $key === '' ? ['code' => '', 'label' => '', 'active' => true] : $fields['option_rows'][(int) $key], $ordered);
+                } else {
+                    $fields['default_values'] = $this->repeated->apply($fields['default_values'], $operation, $index);
+                }
                 $fields['repeat_message'] = d__('collections', 'Values changed. Save the form to apply them.');
                 return $this->renderForm($collection, $id, $fields);
             } catch (\InvalidArgumentException $exception) {
@@ -236,6 +246,7 @@ final readonly class CollectionFieldsAdminController
             'errors'       => $errors,
             'default_entries' => ! empty($fields['repeat_exact']) ? $fields['default_values'] : [...$fields['default_values'], ''],
             'repeat_message' => $fields['repeat_message'] ?? '',
+            'option_rows' => ! empty($fields['repeat_exact']) || count($fields['option_rows']) >= 500 ? $fields['option_rows'] : [...$fields['option_rows'], ['code' => '', 'label' => '', 'active' => true]],
         ]);
     }
 
@@ -254,6 +265,7 @@ final readonly class CollectionFieldsAdminController
             'in_list'  => $request->hasBody('in_list') ? 1 : 0,
             'sort'     => $request->bodyInt('sort', 100),
             'repeat_exact' => true,
+            'option_rows' => $this->optionsFromRequest($request),
             'hint' => $request->body('hint'), 'use_default' => $request->hasBody('use_default'),
             'default_value' => $request->body('default_value'), 'default_values' => array_values(array_filter($request->bodyList('default_values'), is_string(...))),
             'min_length' => $request->body('min_length'), 'max_length' => $request->body('max_length'),
@@ -323,7 +335,8 @@ final readonly class CollectionFieldsAdminController
     {
         $default = $settings['default'] ?? null;
         return [
-            'hint' => $settings['hint'] ?? '', 'use_default' => $default !== null,
+            'hint' => $settings['hint'] ?? '',
+            'option_rows' => array_map(static fn (array $option): array => $option + ['active' => true], $settings['options'] ?? []), 'use_default' => $default !== null,
             'default_value' => is_string($default) ? $default : '', 'default_values' => is_array($default) ? $default : [],
             'min_length' => $settings['min_length'] ?? '', 'max_length' => $settings['max_length'] ?? '',
             'min_value' => $settings['min_value'] ?? '', 'max_value' => $settings['max_value'] ?? '', 'max_values' => $settings['max_values'] ?? '',
@@ -344,7 +357,23 @@ final readonly class CollectionFieldsAdminController
             $integer = filter_var($raw, FILTER_VALIDATE_INT);
             $settings[$key] = $raw === '' ? null : ($integer !== false ? $integer : (in_array($key, ['min_value', 'max_value'], true) && is_numeric($raw) ? (float) $raw : $raw));
         }
+        if ($fields['type'] === 'select') {
+            $settings['options'] = array_values(array_filter($fields['option_rows'], static fn (array $option): bool => $option['code'] !== '' || $option['label'] !== ''));
+        }
         return $settings;
+    }
+
+    /** @return list<array{code: string, label: string, active: bool}> */
+    private function optionsFromRequest(Request $request): array
+    {
+        $codes = array_values($request->bodyList('option_code'));
+        $labels = array_values($request->bodyList('option_label'));
+        $active = array_values($request->bodyList('option_active'));
+        $rows = [];
+        foreach ($codes as $index => $code) {
+            $rows[] = ['code' => is_string($code) ? trim($code) : '', 'label' => is_string($labels[$index] ?? null) ? trim($labels[$index]) : '', 'active' => ($active[$index] ?? '0') === '1'];
+        }
+        return $rows;
     }
 
     /**

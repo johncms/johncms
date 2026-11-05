@@ -29,6 +29,7 @@
 
     <form action="{{ form_action }}" method="post" id="item-form" class="row g-3 align-items-start">
         <input type="hidden" name="upload_context" value="{{ fields.upload_context }}">
+        <input type="hidden" name="collection_form_started" value="1">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         {% if id is not null %}
             <input type="hidden" name="id" value="{{ id }}">
@@ -91,8 +92,12 @@
                                             {% include '@collections/admin/components/repeated-values.twig' with {
                                                 entries: def.entries, input_name: def.input_name, action_key: def.input_name,
                                                 id_prefix: input_id, type: def.type, label: def.name, limit: def.limit, required: def.required, errors: def.errors,
-                                                allow_upload: true, upload_url: upload_url
+                                                allow_upload: true, upload_url: upload_url, options: def.options
                                             } only %}
+                                        {% elseif def.type == 'select' %}
+                                            <select name="{{ def.input_name }}" class="form-select{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}">
+                                                {% include '@collections/admin/components/select-options.twig' with {options: def.options, current: def.value} only %}
+                                            </select>
                                         {% elseif def.type == 'html' %}
                                             {% include '@admin/components/ui/editor.twig' with {name: def.input_name, id: input_id, value: def.value, allow_upload: true, upload_url: upload_url, errors: def.errors|join(' ')} only %}
                                         {% elseif def.type == 'text' or (def.type == 'string' and def.value matches '/[\r\n]/') %}
@@ -164,6 +169,7 @@
                 </div>
             </section>
         </div>
+        <input type="hidden" name="collection_form_complete" value="1">
     </form>
 
     {% include '@admin/components/ui/form-footer.twig' with {form: 'item-form', cancel_url: back_url, sticky: true} only %}

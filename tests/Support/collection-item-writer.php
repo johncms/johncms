@@ -14,7 +14,16 @@ echo \Illuminate\Database\Capsule\Manager::connection()->selectOne('SELECT CONNE
 flush();
 $mode = $argv[4] ?? 'save';
 try {
-    if ($mode === 'delete-section') {
+    if ($mode === 'retire-select') {
+        (new \Johncms\Modules\Collections\Application\UseCases\SaveCollectionFieldUseCase(
+            new \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionFieldRepository(),
+            new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction(),
+            new \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionRepository()
+        ))->execute((int) $argv[3], new \Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO(
+            (int) $argv[1], $argv[2], 'Choice', \Johncms\Modules\Collections\Domain\Enums\FieldType::Select, false, false, 100,
+            settings: ['options' => [['code' => 'a', 'label' => 'A', 'active' => false], ['code' => 'b', 'label' => 'B', 'active' => true]]]
+        ));
+    } elseif ($mode === 'delete-section') {
         CollectionItemWriterFactory::sectionsApi()->deleteSection((int) $argv[1], (int) $argv[3], \Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode::DeleteItems);
     } elseif ($mode === 'section-item') {
         CollectionItemWriterFactory::create()->execute(null, new CollectionItemFormDTO((int) $argv[1], (int) $argv[3], $argv[2], 'Writer', true, null, null, 100, null, null, []));

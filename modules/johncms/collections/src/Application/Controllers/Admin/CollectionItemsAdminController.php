@@ -137,6 +137,10 @@ final readonly class CollectionItemsAdminController
             return $this->collectionNotFound();
         }
 
+        if ($request->hasBody('collection_form_started') && $request->body('collection_form_complete') !== '1') {
+            return $this->wrongData($collection_id, d__('collections', 'The form was truncated. Nothing was saved. Reduce the number of values or ask the administrator to raise the form input limit.'));
+        }
+
         $id = $request->bodyInt('id') ?: null;
         if ($id !== null && $this->findOwnedItem($collection_id, $id) === null) {
             return $this->wrongData($collection_id);
@@ -325,6 +329,7 @@ final readonly class CollectionItemsAdminController
                 'input_name' => 'field_' . $field->code,
                 'name'       => $field->name,
                 'hint' => $field->settings['hint'] ?? '',
+                'options' => $field->settings['options'] ?? [],
                 'min_length' => $field->settings['min_length'] ?? null, 'max_length' => $field->settings['max_length'] ?? null,
                 'min_value' => $field->settings['min_value'] ?? null, 'max_value' => $field->settings['max_value'] ?? null,
                 'type'       => $field->type->value,

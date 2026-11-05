@@ -1,0 +1,17 @@
+<fieldset class="border-0 p-0 m-0" data-collection-repeat data-key="options" data-limit="500"
+          data-limit-message="{{ __('Use a list of at most 500 options with code, label and availability.') }}"
+          data-error-message="{{ __('Could not change the value. Try again.') }}"
+          data-changed-message="{{ __('Values changed. Save the form to apply them.') }}">
+    <legend class="form-label fs-6">{{ __('Select options') }}</legend>
+    <div class="form-text mb-3">{{ __('Keep codes stable when changing labels. Disable a used option instead of removing it.') }}</div>
+    <div data-repeat-rows>
+        {% for option in options %}
+            {% include '@collections/admin/components/option-row.twig' with {option: option, index: loop.index0, last: loop.last, input_id: 'select-option-' ~ loop.index0} only %}
+        {% endfor %}
+    </div>
+    <button type="submit" name="repeat_action" value="options:add:0" data-repeat-op="add" class="btn btn-outline-secondary btn-sm" formnovalidate{% if options|length >= 500 %} disabled{% endif %}>{{ __('Add option') }}</button>
+    <p class="form-text mb-0" data-repeat-status role="status"></p>
+    <template data-repeat-template>
+        {% include '@collections/admin/components/option-row.twig' with {option: {code: '', label: '', active: true}, index: 0, last: true, input_id: 'select-option-__INDEX__'} only %}
+    </template>
+</fieldset>

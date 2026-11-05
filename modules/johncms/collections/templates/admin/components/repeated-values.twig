@@ -9,10 +9,11 @@
             {% include '@collections/admin/components/repeated-row.twig' with {
                 input_name: input_name, input_id: id_prefix ~ '_' ~ loop.index0, type: type, value: entry,
                 label: label, index: loop.index0, last: loop.last, action_key: action_key,
-                allow_upload: allow_upload, upload_url: upload_url
+                allow_upload: allow_upload, upload_url: upload_url, options: options|default([])
             } only %}
         {% endfor %}
     </div>
+    {% if type == 'select' %}<div class="form-text mb-2">{{ __('Selected options are stored once, in their first order.') }}</div>{% endif %}
     <button type="submit" name="repeat_action" value="{{ action_key }}:add:0" data-repeat-op="add" class="btn btn-outline-secondary btn-sm" formnovalidate{% if entries|length >= limit %} disabled{% endif %}>{{ __('Add value') }}</button>
     <p class="form-text mb-0" data-repeat-status role="status">{{ status|default('') }}</p>
     {% if errors|default([]) %}
@@ -21,7 +22,7 @@
     <template data-repeat-template>
         {% include '@collections/admin/components/repeated-row.twig' with {
             input_name: input_name, input_id: id_prefix ~ '___INDEX__', type: type, value: '',
-            label: label, index: 0, last: true, action_key: action_key, allow_upload: allow_upload, upload_url: upload_url
+            label: label, index: 0, last: true, action_key: action_key, allow_upload: allow_upload, upload_url: upload_url, options: options|default([])
         } only %}
     </template>
 </fieldset>

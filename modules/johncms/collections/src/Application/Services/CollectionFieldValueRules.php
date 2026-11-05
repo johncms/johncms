@@ -10,8 +10,10 @@ use Johncms\Modules\Collections\Domain\Enums\FieldType;
 /** Scalar rules shared by item input and schema defaults. */
 final readonly class CollectionFieldValueRules
 {
-    /** @param array<string, mixed> $settings */
-    public function error(FieldType $type, string $value, array $settings = []): ?string
+    /** @param array<string, mixed> $settings
+     * @param list<string> $retainedOptions
+     */
+    public function error(FieldType $type, string $value, array $settings = [], array $retainedOptions = [], bool $allowInactiveOptions = false): ?string
     {
         $valid = match ($type) {
             FieldType::Integer => filter_var($value, FILTER_VALIDATE_INT) !== false,
@@ -37,6 +39,14 @@ final readonly class CollectionFieldValueRules
             if ((isset($settings['min_value']) && $number < $settings['min_value']) || (isset($settings['max_value']) && $number > $settings['max_value'])) {
                 return d__('collections', 'The value is outside the configured numeric range.');
             }
+        }
+        if ($type === FieldType::Select && ! in_array($value, $retainedOptions, true)) {
+            foreach ($settings['options'] ?? [] as $option) {
+                if ($option['code'] === $value && (($option['active'] ?? true) || $allowInactiveOptions)) {
+                    return null;
+                }
+            }
+            return d__('collections', 'Choose an available option for this field.');
         }
         return null;
     }

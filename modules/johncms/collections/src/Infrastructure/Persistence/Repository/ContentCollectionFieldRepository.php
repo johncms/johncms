@@ -56,6 +56,13 @@ final class ContentCollectionFieldRepository implements ContentCollectionFieldRe
         return \Johncms\Modules\Collections\Domain\Models\ContentCollectionItemValue::query()->where('field_id', $id)->lockForUpdate()->first(['id']) !== null;
     }
 
+    public function hasSelectValuesOutside(int $id, array $codes): bool
+    {
+        $used = \Johncms\Modules\Collections\Domain\Models\ContentCollectionItemValue::query()->where('field_id', $id)->whereNotNull('value_string')
+            ->lockForUpdate()->pluck('value_string')->all();
+        return array_diff($used, $codes) !== [];
+    }
+
     public function create(array $attributes): ContentCollectionField
     {
         return ContentCollectionField::query()->create($attributes);

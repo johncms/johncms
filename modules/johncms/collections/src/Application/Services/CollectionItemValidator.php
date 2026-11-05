@@ -19,8 +19,10 @@ final readonly class CollectionItemValidator
     {
     }
 
-    /** @param Collection<int, ContentCollectionField> $definitions */
-    public function validate(CollectionItemFormDTO $form, Collection $definitions, bool $applyDefaults = false): CollectionItemFormDTO
+    /** @param Collection<int, ContentCollectionField> $definitions
+     * @param array<string, mixed> $existingValues
+     */
+    public function validate(CollectionItemFormDTO $form, Collection $definitions, bool $applyDefaults = false, array $existingValues = [], bool $allowInactiveOptions = false): CollectionItemFormDTO
     {
         $name = trim($form->name);
         $code = trim($form->code);
@@ -64,6 +66,8 @@ final readonly class CollectionItemValidator
             }
             $list = is_array($raw) ? $raw : [$raw];
             $prepared = [];
+            $old = $existingValues[$field->code] ?? [];
+            $retained = array_values(array_filter(is_array($old) ? $old : [$old], is_string(...)));
             foreach ($list as $value) {
                 if (! is_string($value)) {
                     $result = $result->withError($key, d__('collections', 'Submit a single value or a list as defined by the field.'));
@@ -73,7 +77,7 @@ final readonly class CollectionItemValidator
                 if ($value === '' && ($field->type !== FieldType::Boolean || $field->multiple)) {
                     continue;
                 }
-                $error = $this->fieldValues->error($field->type, $value, $field->settings ?? []);
+                $error = $this->fieldValues->error($field->type, $value, $field->settings ?? [], $retained, $allowInactiveOptions);
                 if ($error !== null) {
                     $result = $result->withError($key, $error);
                     continue;
@@ -88,14 +92,14 @@ final readonly class CollectionItemValidator
                     default => $value,
                 };
             }
+            if ($field->role === 'tags' || $field->type === FieldType::Select) {
+                $prepared = array_values(array_unique($prepared));
+            }
             if (count($prepared) > ($field->settings['max_values'] ?? 1000)) {
                 $result = $result->withError($key, d__('collections', 'The field has too many values.'));
             }
             if ($field->required && ($field->type !== FieldType::Boolean || $field->multiple) && $prepared === [] && ! $result->hasError($key)) {
                 $result = $result->withError($key, d__('collections', 'Fill in the field "%s"', $field->name));
-            }
-            if ($field->role === 'tags') {
-                $prepared = array_values(array_unique($prepared));
             }
             $values[$field->code] = $field->multiple ? $prepared : ($prepared[0] ?? '');
         }

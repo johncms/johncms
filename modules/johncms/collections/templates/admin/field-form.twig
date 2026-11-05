@@ -18,6 +18,7 @@
 
     <form action="{{ form_action }}" method="post" id="field-form" data-collection-field-settings class="row g-3 align-items-start">
 
+        <input type="hidden" name="collection_form_started" value="1">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         {% if id is not null %}
             <input type="hidden" name="id" value="{{ id }}">
@@ -68,6 +69,9 @@
             <fieldset class="card mt-3"{% if managed %} disabled{% endif %}>
                 <div class="card-header"><h2 class="h6 mb-0">{{ __('Input settings') }}</h2></div>
                 <div class="card-body row g-3">
+                    <div class="col-12" data-field-types="select">
+                        {% include '@collections/admin/components/option-settings.twig' with {options: option_rows} only %}
+                    </div>
                     <div class="col-12">
                         <label class="form-label" for="field-hint">{{ __('Hint') }}</label>
                         <textarea class="form-control" id="field-hint" name="hint" rows="2" maxlength="2000">{{ fields.hint }}</textarea>
@@ -139,6 +143,7 @@
                 </div>
             </section>
         </div>
+        <input type="hidden" name="collection_form_complete" value="1">
     </form>
 
     {% if managed %}

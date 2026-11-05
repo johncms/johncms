@@ -73,6 +73,12 @@ final readonly class SaveCollectionFieldUseCase
             }
             $settings = array_replace($current->settings ?? [], $dto->settings);
             $this->settingsValidator->validate($dto->type, $dto->multiple, $settings);
+            if (
+                $current !== null && $current->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::Select && $dto->type === $current->type && ! $this->context->isActive()
+                && ($settings['options'] ?? []) !== ($current->settings['options'] ?? []) && $this->repository->hasSelectValuesOutside($current->id, array_column($settings['options'] ?? [], 'code'))
+            ) {
+                throw new CollectionSchemaException(d__('collections', 'A used option cannot be removed. Disable it instead.'));
+            }
             $attributes = [
                 'collection_id' => $dto->collectionId, 'code' => $dto->code, 'name' => $current?->owner_module !== null ? $current->getRawOriginal('name') : $dto->name,
                 'type' => $dto->type->value, 'required' => $dto->required, 'multiple' => $dto->multiple,

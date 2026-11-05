@@ -42,6 +42,7 @@ interface CollectionsApiInterface
 
     /**
      * Load an item with typed custom values, without exposing ORM models.
+     * @phpstan-impure
      */
     public function getItem(int $id): ?CollectionItemDTO;
 
