@@ -455,6 +455,13 @@
       'Current date and time' => 'Текущие дата и время',
       'Specified date' => 'Указанная дата',
       'Filled when opening a new item form, using site time. You can edit the displayed value before saving.' => 'Подставляется при открытии формы новой записи по времени сайта. Показанное значение можно изменить перед сохранением.',
+      'Search records by name' => 'Поиск записи по названию',
+      'Select the target collection first.' => 'Сначала выберите целевую коллекцию.',
+      'Search in collection: %s' => 'Поиск в коллекции: %s',
+      'The selected record is unavailable in this collection. Clear it or select another record.' => 'Выбранная запись недоступна в этой коллекции. Очистите выбор или выберите другую запись.',
+      'Unavailable record' => 'Недоступная запись',
+      'Clear' => 'Очистить',
+      'Search results' => 'Результаты поиска',
     ),
   ),
 );

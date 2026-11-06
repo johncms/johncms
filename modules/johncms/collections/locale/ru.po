@@ -1544,3 +1544,24 @@ msgstr "Указанная дата"
 
 msgid "Filled when opening a new item form, using site time. You can edit the displayed value before saving."
 msgstr "Подставляется при открытии формы новой записи по времени сайта. Показанное значение можно изменить перед сохранением."
+
+msgid "Search records by name"
+msgstr "Поиск записи по названию"
+
+msgid "Select the target collection first."
+msgstr "Сначала выберите целевую коллекцию."
+
+msgid "Search in collection: %s"
+msgstr "Поиск в коллекции: %s"
+
+msgid "The selected record is unavailable in this collection. Clear it or select another record."
+msgstr "Выбранная запись недоступна в этой коллекции. Очистите выбор или выберите другую запись."
+
+msgid "Unavailable record"
+msgstr "Недоступная запись"
+
+msgid "Clear"
+msgstr "Очистить"
+
+msgid "Search results"
+msgstr "Результаты поиска"

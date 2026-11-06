@@ -1,3 +1,4 @@
+import { createRelationDefaultPicker } from './relation-default-picker';
 import { initializeAdminEditors, labelAdminEditors, removeAdminEditors, focusAdminEditor, setAdminEditorValue } from './editor';
 
 /** Ordinary POST buttons remain the fallback when this enhancement is unavailable. */
@@ -31,6 +32,7 @@ document.querySelectorAll('[data-collection-repeat]').forEach(root => {
     root.dispatchEvent(new CustomEvent('collection:values-changed', {bubbles: true}));
   };
   refresh();
+  root.addEventListener('collection:refresh', refresh);
 
   root.addEventListener('click', async event => {
     const button = event.target.closest('[data-repeat-op]');
@@ -159,6 +161,7 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
       source.hidden = false;
       const label = form.querySelector(`label[for="${source.id}"], label[for="${source.id}-control"]`);
       if (label) label.htmlFor = source.id;
+      if (type.value === 'relation') { source.hidden = true; return; }
       const inputType = {string: 'text', integer: 'number', double: 'number', date: 'date', datetime: 'datetime-local'}[type.value];
       if (!inputType && !['boolean', 'select'].includes(type.value) && !usesLookup()) return;
       if (type.value === 'string' && /[\r\n]/.test(source.value)) return;
@@ -222,6 +225,7 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
       source.before(control);
       source.hidden = true;
     });
+    relationPicker.refresh();
     const rawInputVisible = [...defaults.querySelectorAll('textarea')].some(source => !source.hidden && !source.matches(':disabled'));
     defaults.querySelectorAll('[data-default-raw-help]').forEach(hint => {
       hint.hidden = hint.dataset.defaultHelpTypes !== type.value || !rawInputVisible;
@@ -234,7 +238,8 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   const update = () => {
     const date = isDate();
     toggle(dateSettings, date);
-    form.querySelector('[data-default-toggle]').hidden = date;
+    form.querySelector('[data-default-toggle]').hidden = date || type.value === 'relation';
+    if (type.value === 'relation') useDefault.checked = (multiple.checked ? repeatedSources() : [single]).some(source => source.value.trim() !== '');
     if (date) useDefault.checked = dateMode.value !== 'none';
     const current = dateMode.querySelector('[value="current"]');
     current.textContent = type.value === 'date' ? current.dataset.currentDateLabel : current.dataset.currentDatetimeLabel;
@@ -245,9 +250,13 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
     const required = form.elements.required.checked && type.value === 'relation';
     deletion.querySelector('[value="clear"]').disabled = required;
     deletion.setCustomValidity(required && deletion.value === 'clear' ? deletion.dataset.requiredError : '');
-    toggle(lookup, useDefault.checked && usesLookup());
+    toggle(lookup, type.value === 'relation' || (useDefault.checked && usesLookup()));
     toggle(form.querySelector('[data-default-single]'), fixedDefault && !multiple.checked);
     toggle(form.querySelector('[data-default-multiple]'), fixedDefault && multiple.checked);
+    if (type.value === 'relation') {
+      form.querySelector('[data-default-single]').hidden = true;
+      form.querySelector('[data-default-multiple]').hidden = true;
+    }
     form.querySelectorAll('[data-field-types]').forEach(group => toggle(group, group.dataset.fieldTypes.split(' ').includes(type.value)));
     form.querySelectorAll('[data-field-multiple]').forEach(group => toggle(group, multiple.checked));
     form.querySelectorAll('[data-file-storage]').forEach(group => toggle(group, type.value === 'file' && group.dataset.fileStorage === fileStorage.value));
@@ -261,31 +270,68 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   const choiceSelect = choice.querySelector('select');
   const single = form.querySelector('[name="default_value"]');
   const repeatedSources = () => [...defaults.querySelectorAll('[data-default-multiple] [data-repeat-row] textarea')];
-  lookup.querySelector('[name="lookup_defaults"]').addEventListener('click', async event => {
-    event.preventDefault();
+  const relationPicker = createRelationDefaultPicker({
+    form, lookup, isActive: () => type.value === 'relation', isMultiple: () => multiple.checked,
+    getOptions: () => lookupOptions, search: term => loadLookup(term),
+    getValues: () => (multiple.checked ? repeatedSources().map(source => source.value) : [single.value]).filter(value => value.trim() !== ''),
+    setValues: async values => {
+      const target = form.querySelector('#relation-target').value;
+      const shape = multiple.checked;
+      await htmlQueue;
+      if (type.value !== 'relation' || target !== form.querySelector('#relation-target').value || shape !== multiple.checked) return false;
+      if (multiple.checked) {
+        const root = defaults.querySelector('[data-collection-repeat]');
+        const limit = Number(root.dataset.limit);
+        if (values.length > limit) { lookupStatus.textContent = defaults.dataset.limitError; return false; }
+        toggle(form.querySelector('[data-default-multiple]'), true);
+        const rows = () => [...root.querySelector('[data-repeat-rows]').children];
+        const count = Math.max(1, values.length);
+        for (const row of rows().slice(count)) {
+          if (!await removeAdminEditors(row)) return false;
+          row.remove();
+        }
+        while (rows().length < count) {
+          const before = rows().length;
+          root.querySelector('[data-repeat-op="add"]').click();
+          if (rows().length === before) return false;
+        }
+        repeatedSources().forEach((source, index) => { source.value = values[index] ?? ''; });
+        root.dispatchEvent(new Event('collection:refresh'));
+      } else single.value = values[0] ?? '';
+      useDefault.checked = values.length > 0;
+      update();
+      return true;
+    },
+  });
+  const loadLookup = async term => {
     lookupRequest?.abort();
     const request = new AbortController();
     lookupRequest = request;
     lookup.setAttribute('aria-busy', 'true');
     try {
+      const body = new FormData(form);
+      if (term !== undefined) body.set('default_query', term);
       const response = await fetch(lookup.dataset.url, {
         method: 'POST', credentials: 'same-origin', headers: {'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest'},
-        body: new FormData(form), signal: request.signal,
+        body, signal: request.signal,
       });
       const data = await response.json();
       if (!response.ok) throw new Error(typeof data.error === 'string' ? data.error : lookup.dataset.error);
       if (!Array.isArray(data.options) || !data.options.every(option => typeof option.code === 'string' && typeof option.label === 'string')) throw new Error(lookup.dataset.error);
-      if (lookupRequest !== request) return;
+      if (lookupRequest !== request) return null;
       lookupOptions = data.options;
       lookupResult.replaceChildren(new Option(defaults.dataset.empty, ''), ...lookupOptions.map(option => new Option(option.label, option.code)));
-      lookupStatus.textContent = lookupOptions.length ? lookup.dataset.loaded : lookup.dataset.empty;
+      lookupStatus.textContent = type.value === 'relation' ? '' : (lookupOptions.length ? lookup.dataset.loaded : lookup.dataset.empty);
       enhanceDefaults();
+      return lookupOptions;
     } catch (error) {
-      if (lookupRequest === request && error.name !== 'AbortError') lookupStatus.textContent = error.message || lookup.dataset.error;
+      if (lookupRequest === request && error.name !== 'AbortError') lookupStatus.textContent = error instanceof TypeError ? lookup.dataset.error : (error.message || lookup.dataset.error);
+      return null;
     } finally {
       if (lookupRequest === request) lookup.removeAttribute('aria-busy');
     }
-  });
+  };
+  lookup.querySelector('[name="lookup_defaults"]').addEventListener('click', event => { event.preventDefault(); loadLookup(); });
   lookup.querySelector('[data-default-lookup-apply]').addEventListener('click', event => {
     event.preventDefault();
     if (!lookupResult.value) return;
@@ -330,7 +376,7 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
       const values = repeatedSources().map(source => source.value).filter(value => value.trim() !== '');
       if (values.length > 1) {
         multiple.checked = true;
-        choiceSelect.replaceChildren(...values.map((value, index) => new Option(`${index + 1}. ${value}`, value)));
+        choiceSelect.replaceChildren(...values.map((value, index) => new Option(`${index + 1}. ${type.value === 'relation' ? relationPicker.label(value) : value}`, value)));
         toggle(choice, true);
         choiceSelect.focus();
         return;

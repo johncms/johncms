@@ -110,6 +110,17 @@ final readonly class CollectionFieldsAdminController
         $fields['legacy_length_limits'] = $current !== null && $current->type->value === $fields['type']
             && in_array($fields['type'], ['select', 'file'], true)
             && (isset($current->settings['min_length']) || isset($current->settings['max_length']));
+        if ($request->hasBody('clear_relation_default') && $fields['type'] === 'relation') {
+            if ($fields['multiple']) {
+                $index = $request->bodyInt('clear_relation_default', -1);
+                if (array_key_exists($index, $fields['default_values'])) {
+                    array_splice($fields['default_values'], $index, 1);
+                }
+            } else {
+                $fields['default_value'] = '';
+            }
+            return $this->renderForm($collection, $id, $fields);
+        }
         if ($request->hasBody('choose_default')) {
             $value = $request->body('default_choice');
             if (! in_array($value, $fields['default_values'], true)) {
@@ -170,7 +181,9 @@ final readonly class CollectionFieldsAdminController
                 }
                 $fields['use_default'] = true;
                 if ($fields['multiple']) {
-                    $fields['default_values'][] = $value;
+                    if ($fields['type'] !== 'relation' || ! in_array($value, $fields['default_values'], true)) {
+                        $fields['default_values'][] = $value;
+                    }
                 } else {
                     $fields['default_value'] = $value;
                 }
@@ -322,6 +335,7 @@ final readonly class CollectionFieldsAdminController
      */
     private function renderForm(ContentCollection $collection, ?int $id, array $fields, array $errors = [], array $fieldErrors = []): ViewResponse
     {
+        $fields = $this->normalizeRelationFields($fields);
         $field = $id !== null ? $this->fieldRepository->findById($id) : null;
         $locked = $field !== null && $this->fieldRepository->hasValues($field->id);
         $this->breadcrumbs($collection);
@@ -337,11 +351,24 @@ final readonly class CollectionFieldsAdminController
                 $lookupError = $exception->getMessage();
             }
         }
+        $relationSelected = [];
+        $labels = array_column($defaultOptions, 'label', 'code');
+        $selectedValues = $fields['multiple'] ? $fields['default_values'] : [$fields['default_value']];
+        foreach ($selectedValues as $index => $value) {
+            if (trim($value) !== '') {
+                $relationSelected[] = [
+                    'code' => $value,
+                    'label' => $labels[$value] ?? d__('collections', 'Unavailable record') . ' (#' . $value . ')',
+                    'index' => $index,
+                ];
+            }
+        }
         return new ViewResponse('@collections/admin/field-form.twig', $this->menu($title, $collection->name) + [
             'form_action'  => $this->baseUrl($collection->id),
             'file_types' => CollectionFilePolicy::TYPES,
             'collection_options' => $this->choices->collections(),
             'default_options' => $defaultOptions,
+            'relation_selected' => $relationSelected,
             'default_query' => $fields['default_query'] ?? '',
             'file_size_unit' => $fields['file_size_unit'] ?? '1',
             'default_lookup_error' => $lookupError,
@@ -357,6 +384,7 @@ final readonly class CollectionFieldsAdminController
             'errors'       => $errors,
             'field_errors' => $fieldErrors,
             'default_choice_values' => $fields['default_choice_values'] ?? [],
+            'default_choice_labels' => $labels,
             'default_entries' => ! empty($fields['repeat_exact']) ? $fields['default_values'] : [...$fields['default_values'], ''],
             'repeat_message' => $fields['repeat_message'] ?? '',
             'option_rows' => ! empty($fields['repeat_exact']) || count($fields['option_rows']) >= 500 ? $fields['option_rows'] : [...$fields['option_rows'], ['code' => '', 'label' => '', 'active' => true]],
@@ -368,7 +396,7 @@ final readonly class CollectionFieldsAdminController
      */
     private function fieldsFromRequest(Request $request): array
     {
-        return [
+        $fields = [
             'code'     => trim($request->body('code', '')),
             'role'     => $request->body('role', '') ?: null,
             'name'     => trim($request->body('name', '')),
@@ -397,6 +425,7 @@ final readonly class CollectionFieldsAdminController
             'min_length' => $request->body('min_length'), 'max_length' => $request->body('max_length'),
             'min_value' => $request->body('min_value'), 'max_value' => $request->body('max_value'), 'max_values' => $request->body('max_values'),
         ];
+        return $this->normalizeRelationFields($fields);
     }
 
     /**
@@ -417,6 +446,20 @@ final readonly class CollectionFieldsAdminController
             'legacy_length_limits' => in_array($field->type, [FieldType::Select, FieldType::File], true)
                 && (isset($field->settings['min_length']) || isset($field->settings['max_length'])),
         ];
+    }
+
+    /** @param array<string, mixed> $fields
+     * @return array<string, mixed>
+     */
+    private function normalizeRelationFields(array $fields): array
+    {
+        if ($fields['type'] === 'relation') {
+            $fields['default_value'] = trim($fields['default_value']);
+            $fields['default_values'] = array_values(array_unique(array_filter(array_map(trim(...), $fields['default_values']), static fn (string $value): bool => $value !== '')));
+            $fields['repeat_exact'] = true;
+            $fields['use_default'] = $fields['multiple'] ? $fields['default_values'] !== [] : $fields['default_value'] !== '';
+        }
+        return $fields;
     }
 
     /**
@@ -487,7 +530,11 @@ final readonly class CollectionFieldsAdminController
         $default = $fields['multiple']
             ? array_values(array_filter($fields['default_values'], static fn (string $value): bool => trim($value) !== ''))
             : $fields['default_value'];
-        $settings = ['hint' => $fields['hint'], 'default' => $fields['use_default'] ? $default : null];
+        if ($fields['type'] === 'relation' && $fields['multiple']) {
+            $default = array_values(array_unique($default));
+        }
+        $useDefault = $fields['type'] === 'relation' ? ($fields['multiple'] ? $default !== [] : trim($default) !== '') : $fields['use_default'];
+        $settings = ['hint' => $fields['hint'], 'default' => $useDefault ? $default : null];
         $settings['date_preset'] = null;
         if (in_array($fields['type'], ['date', 'datetime'], true) && ($fields['date_default_mode_present'] ?? true)) {
             $mode = $fields['date_default_mode'];
