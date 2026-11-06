@@ -20,7 +20,7 @@ final readonly class ListPublicItemsUseCase
 
     public function count(int $collectionId, ?int $sectionId, ?\DateTimeImmutable $at = null): int
     {
-        return $this->repository->countItems($this->query($collectionId, $sectionId, at: $at));
+        return $this->repository->countItems($this->query(collectionId: $collectionId, sectionId: $sectionId, at: $at));
     }
 
     /**

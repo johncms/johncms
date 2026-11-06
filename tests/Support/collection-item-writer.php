@@ -28,7 +28,7 @@ try {
             new \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionRepository(),
             CollectionItemWriterFactory::itemRepository()
         ))->execute((int) $argv[3], new \Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO(
-            (int) $argv[1], $argv[2], 'Choice', \Johncms\Modules\Collections\Domain\Enums\FieldType::Select, false, false, 100,
+            collectionId: (int) $argv[1], code: $argv[2], name: 'Choice', type: \Johncms\Modules\Collections\Domain\Enums\FieldType::Select, required: false, multiple: false, sort: 100,
             settings: ['options' => [['code' => 'a', 'label' => 'A', 'active' => false], ['code' => 'b', 'label' => 'B', 'active' => true]]]
         ));
     } elseif ($mode === 'delete-section') {

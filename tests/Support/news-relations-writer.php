@@ -27,7 +27,7 @@ $mode = $argv[3];
 $relations = new CollectionItemRelationsApi(new CollectionTransaction(), new ContentCollectionRepository(), new ContentCollectionItemRepository(new ContentCollectionFieldRepository(), new ContentCollectionItemQueryCompiler()));
 $discussion = new EloquentNewsDiscussionRepository();
 try {
-    $relations->withItemLock($collection, $item, static function () use ($mode, $item, $collection, $discussion): void {
+    $relations->withItemLock(collectionId: $collection, itemId: $item, operation: static function () use ($mode, $item, $collection, $discussion): void {
         match ($mode) {
             'comment' => $discussion->addComment($item, 11, 'Comment', [], [321]),
             'vote' => $discussion->vote($item, 11, 1),

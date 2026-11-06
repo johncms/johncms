@@ -37,7 +37,7 @@ final readonly class CollectionRelationChoices
         $ids = array_values(array_filter($selected, static fn (string $value): bool => filter_var($value, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) !== false));
         if ($ids !== []) {
             $items = $items->merge($this->items->findItems(new ContentCollectionItemQuery(
-                $target,
+                collectionId: $target,
                 onlyActive: false,
                 limit: 1000,
                 fields: [],

@@ -187,15 +187,15 @@ final class CollectionsApiTest extends TestCase
         }
         Capsule::connection()->enableQueryLog();
         try {
-            $this->api->getItems(new ContentCollectionItemQuery($this->collectionId, limit: 1));
+            $this->api->getItems(new ContentCollectionItemQuery(collectionId: $this->collectionId, limit: 1));
             $singleQueries = count(Capsule::connection()->getQueryLog());
             Capsule::connection()->flushQueryLog();
-            $items = $this->api->getItems(new ContentCollectionItemQuery($this->collectionId, fields: ['author']));
+            $items = $this->api->getItems(new ContentCollectionItemQuery(collectionId: $this->collectionId, fields: ['author']));
             foreach ($items as $item) {
                 self::assertSame('Alice', $item->values['author']);
             }
             self::assertSame($singleQueries, count(Capsule::connection()->getQueryLog()));
-            $page = $this->api->getPage(new ContentCollectionItemQuery($this->collectionId, limit: 2, offset: 2, fields: []));
+            $page = $this->api->getPage(new ContentCollectionItemQuery(collectionId: $this->collectionId, limit: 2, offset: 2, fields: []));
             self::assertSame(12, $page->total);
             self::assertCount(2, $page->items);
             self::assertSame([], $page->items[0]->values);
@@ -209,7 +209,7 @@ final class CollectionsApiTest extends TestCase
     {
         (new ContentCollectionFieldRepository())->create(['collection_id' => $this->collectionId, 'code' => 'name', 'name' => 'Name', 'type' => 'string']);
         $id = $this->api->addItem($this->dto('hello', ['name' => 'Custom']));
-        $query = new ContentCollectionItemQuery($this->collectionId, filters: [
+        $query = new ContentCollectionItemQuery(collectionId: $this->collectionId, filters: [
             new \Johncms\Modules\Collections\Domain\Query\FieldFilterDTO('item.name', \Johncms\Modules\Collections\Domain\Enums\FilterOperator::Eq, 'Hello hello'),
             new \Johncms\Modules\Collections\Domain\Query\FieldFilterDTO('field.name', \Johncms\Modules\Collections\Domain\Enums\FilterOperator::Eq, 'Custom'),
         ]);
@@ -235,7 +235,7 @@ final class CollectionsApiTest extends TestCase
     public function testInvalidQueryNeverSilentlyBroadensSelection(string $field, mixed $value, \Johncms\Modules\Collections\Domain\Enums\FilterOperator $operator): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->api->getItems(new ContentCollectionItemQuery($this->collectionId, filters: [
+        $this->api->getItems(new ContentCollectionItemQuery(collectionId: $this->collectionId, filters: [
             new \Johncms\Modules\Collections\Domain\Query\FieldFilterDTO($field, $operator, $value),
         ]));
     }
@@ -251,11 +251,11 @@ final class CollectionsApiTest extends TestCase
     public function testUnknownOrderingAndSelectionFailExplicitly(): void
     {
         try {
-            $this->api->countItems(new ContentCollectionItemQuery($this->collectionId, orderBy: [new \Johncms\Modules\Collections\Domain\Query\OrderByDTO('item.missing')]));
+            $this->api->countItems(new ContentCollectionItemQuery(collectionId: $this->collectionId, orderBy: [new \Johncms\Modules\Collections\Domain\Query\OrderByDTO('item.missing')]));
             self::fail('Unknown ordering must fail even when counting.');
         } catch (\InvalidArgumentException) {
             $this->expectException(\InvalidArgumentException::class);
-            $this->api->getItems(new ContentCollectionItemQuery($this->collectionId, fields: ['missing']));
+            $this->api->getItems(new ContentCollectionItemQuery(collectionId: $this->collectionId, fields: ['missing']));
         }
     }
 
@@ -277,7 +277,7 @@ final class CollectionsApiTest extends TestCase
         }
         $actual = [];
         for ($offset = 0; $offset < 3; ++$offset) {
-            $page = $this->api->getPage(new ContentCollectionItemQuery($this->collectionId,
+            $page = $this->api->getPage(new ContentCollectionItemQuery(collectionId: $this->collectionId,
                 orderBy: [new \Johncms\Modules\Collections\Domain\Query\OrderByDTO('item.name')], limit: 1, offset: $offset));
             $actual[] = $page->items[0]->id;
         }
@@ -294,7 +294,7 @@ final class CollectionsApiTest extends TestCase
         } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException) {
             self::assertSame(0, $this->api->getItem($id)->viewCount);
         }
-        $query = new ContentCollectionItemQuery($this->collectionId, onlyActive: false, filters: [
+        $query = new ContentCollectionItemQuery(collectionId: $this->collectionId, onlyActive: false, filters: [
             new \Johncms\Modules\Collections\Domain\Query\FieldFilterDTO('item.active_from', \Johncms\Modules\Collections\Domain\Enums\FilterOperator::Gte, new \DateTimeImmutable('2999-01-01 00:00:00Z')),
         ]);
         self::assertSame($id, $this->api->getItems($query)[0]->id);

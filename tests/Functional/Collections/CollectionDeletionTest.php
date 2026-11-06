@@ -75,7 +75,7 @@ final class CollectionDeletionTest extends FunctionalTestCase
     {
         $kept = $this->item('outside', null);
         $preview = $this->sections->previewDeletion($this->collection, $this->root);
-        $this->sections->deleteSection($this->collection, $this->root, SectionDeletionMode::DeleteItems, expectedRevision: $preview->revision);
+        $this->sections->deleteSection(collectionId: $this->collection, id: $this->root, mode: SectionDeletionMode::DeleteItems, expectedRevision: $preview->revision);
         self::assertNull($this->api->getItem($this->first));
         self::assertNull($this->api->getItem($this->second));
         self::assertNotNull($this->api->getItem($kept));

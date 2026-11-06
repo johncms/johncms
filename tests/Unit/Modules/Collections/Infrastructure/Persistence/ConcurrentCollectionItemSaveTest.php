@@ -254,7 +254,7 @@ final class ConcurrentCollectionItemSaveTest extends TestCase
         [$process, $output] = $this->start('new', $section, 'section-item');
         self::assertSame(0, $this->finish($process, $output));
         try {
-            $sections->deleteSection($this->collection, $section, \Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode::DeleteItems, expectedRevision: $preview->revision);
+            $sections->deleteSection(collectionId: $this->collection, id: $section, mode: \Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode::DeleteItems, expectedRevision: $preview->revision);
             self::fail('A new item was not part of the confirmed deletion.');
         } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException $exception) {
             self::assertArrayHasKey('revision', $exception->errors);

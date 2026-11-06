@@ -47,7 +47,7 @@ final class CollectionSearchIndexerTest extends TestCase
             new ContentCollectionItemRepository(new ContentCollectionFieldRepository(), new ContentCollectionItemQueryCompiler()),
             new ItemContentFormatter($renderer)
         );
-        $this->changes = new CollectionChangeDispatcher([$this->index], transaction: new CollectionTransaction());
+        $this->changes = new CollectionChangeDispatcher(handlers: [$this->index], transaction: new CollectionTransaction());
     }
 
     protected function tearDown(): void
@@ -67,7 +67,7 @@ final class CollectionSearchIndexerTest extends TestCase
         $id = $api->addItem($this->form('committed'));
         self::assertSame(0, $this->documentCount());
         Capsule::connection()->commit();
-        $query = new ContentCollectionItemQuery($this->collection, search: new CollectionTextSearchDTO('needle'));
+        $query = new ContentCollectionItemQuery(collectionId: $this->collection, search: new CollectionTextSearchDTO('needle'));
         self::assertSame([$id], array_map(static fn ($item) => $item->id, $api->getItems($query)));
         Capsule::connection()->beginTransaction();
         $api->deleteItem($id);
@@ -83,7 +83,7 @@ final class CollectionSearchIndexerTest extends TestCase
         $context = new SystemOperationContext();
         $writer = CollectionItemWriterFactory::create(context: $context, changes: $this->changes);
         $date = new \DateTimeImmutable('2001-01-01 00:00:00 UTC');
-        $context->runTrusted(fn () => $writer->execute(null, $this->form('imported'), history: new CollectionItemHistoryDTO($date, $date)));
+        $context->runTrusted(fn () => $writer->execute(id: null, dto: $this->form('imported'), history: new CollectionItemHistoryDTO($date, $date)));
         self::assertSame(0, $this->documentCount());
         Capsule::connection()->beginTransaction();
         $this->index->rebuildCollection($this->collection);

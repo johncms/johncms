@@ -20,9 +20,9 @@ final readonly class NewsMenuItemProvider implements MenuItemProviderInterface
     public function menuItems(): iterable
     {
         yield new MenuItem(
-            MenuArea::Main,
-            d__('news', 'News archive'),
-            '/news/',
+            area: MenuArea::Main,
+            title: d__('news', 'News archive'),
+            url: '/news/',
             icon: 'book',
             weight: 10,
             counter: function (): int {
@@ -35,7 +35,7 @@ final readonly class NewsMenuItemProvider implements MenuItemProviderInterface
             return;
         }
         $workspace = '/admin/collections/' . $collection->id . '/items';
-        yield new MenuItem(MenuArea::Admin, d__('news', 'News'), $workspace, icon: 'newspaper', permission: NewsPermissions::MANAGE, weight: 10);
-        yield new MenuItem(MenuArea::AdminActions, d__('news', 'Write the news'), $workspace . '/new', icon: 'pencil', permission: NewsPermissions::MANAGE, weight: 30);
+        yield new MenuItem(area: MenuArea::Admin, title: d__('news', 'News'), url: $workspace, icon: 'newspaper', permission: NewsPermissions::MANAGE, weight: 10);
+        yield new MenuItem(area: MenuArea::AdminActions, title: d__('news', 'Write the news'), url: $workspace . '/new', icon: 'pencil', permission: NewsPermissions::MANAGE, weight: 30);
     }
 }

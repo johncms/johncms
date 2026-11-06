@@ -31,7 +31,7 @@ final readonly class DeleteCollectionUseCase
     public function execute(int $id, ?string $expectedRevision = null): void
     {
         $this->transaction->run(function () use ($id, $expectedRevision): void {
-            $plan = $this->planner->plan($id, forUpdate: true);
+            $plan = $this->planner->plan(collectionId: $id, forUpdate: true);
             $this->planner->ensureRevision($plan->preview, $expectedRevision);
             if ($this->fields->hasExternalRelationsToCollectionForUpdate($id)) {
                 throw new \Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException([
@@ -40,7 +40,7 @@ final readonly class DeleteCollectionUseCase
             }
             $this->changes->ensureOwnerLoaded($plan->preview->ownerModule);
             foreach ($plan->itemIds as $itemId) {
-                $this->deleteItem->execute($itemId, $id, $plan->itemIds, deletedCollectionId: $id);
+                $this->deleteItem->execute(id: $itemId, collectionId: $id, deletedItemIds: $plan->itemIds, deletedCollectionId: $id);
             }
             foreach (array_reverse($plan->sectionIds) as $sectionId) {
                 $this->changes->dispatch(new CollectionChangeDTO('section', 'deleted', $id, $sectionId, $plan->sectionStates[$sectionId], null));

@@ -113,6 +113,6 @@ final readonly class CollectionsApi implements CollectionsApiInterface
 
     public function deleteItem(int $id, ?string $expectedRelations = null): void
     {
-        $this->deleteItem->execute($id, expectedRelations: $expectedRelations);
+        $this->deleteItem->execute(id: $id, expectedRelations: $expectedRelations);
     }
 }

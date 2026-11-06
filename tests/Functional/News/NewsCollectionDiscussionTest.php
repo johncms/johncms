@@ -43,7 +43,7 @@ final class NewsCollectionDiscussionTest extends FunctionalTestCase
     {
         $user = FunctionalUserFactory::createWithPermissions(['news.comments.post', 'news.vote']);
         $this->asUser($user);
-        $comment = $this->discussion->addComment($this->item, '<p>Hello</p><script>bad()</script>', metadata: ['ip' => '127.0.0.1']);
+        $comment = $this->discussion->addComment(itemId: $this->item, text: '<p>Hello</p><script>bad()</script>', metadata: ['ip' => '127.0.0.1']);
         self::assertNull(Capsule::table('news_comments')->where('id', $comment)->value('article_id'));
         self::assertSame($this->item, Capsule::table('news_comments')->where('id', $comment)->value('item_id'));
         self::assertSame($user->id, Capsule::table('news_comments')->where('id', $comment)->value('user_id'));
@@ -116,7 +116,7 @@ final class NewsCollectionDiscussionTest extends FunctionalTestCase
     {
         $author = FunctionalUserFactory::createWithPermissions(['news.comments.post']);
         $this->asUser($author);
-        $id = $this->discussion->addComment($this->item, '<p>Comment</p>', metadata: ['ip' => '127.0.0.1']);
+        $id = $this->discussion->addComment(itemId: $this->item, text: '<p>Comment</p>', metadata: ['ip' => '127.0.0.1']);
         $other = FunctionalUserFactory::createWithPermissions(['news.comments.post']);
         $this->asUser($other);
         self::assertSame([], $this->discussion->latestFeed(10));

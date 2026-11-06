@@ -20,6 +20,6 @@ final readonly class LatestNewsBlockProvider implements HomepageBlockProviderInt
         if (! $this->availability->ready() || empty(config('news')['homepage_show'])) {
             return;
         }
-        yield new HomepageBlock('@news/homepage/latest.twig', ['news' => array_map(static fn ($article): array => $article->toTemplate(), $this->news->homepage())], weight: 10);
+        yield new HomepageBlock(template: '@news/homepage/latest.twig', data: ['news' => array_map(static fn ($article): array => $article->toTemplate(), $this->news->homepage())], weight: 10);
     }
 }

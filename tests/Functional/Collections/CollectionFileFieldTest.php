@@ -37,7 +37,7 @@ final class CollectionFileFieldTest extends FunctionalTestCase
         Fixture::insert('collection_file_assets', ['file_id' => $available, 'managed' => false]);
         Fixture::insert('collection_file_links', ['file_id' => $available, 'item_id' => $source]);
         $schema = $this->container()->get(CollectionSchemaApiInterface::class);
-        $schema->saveField(null, new CollectionFieldFormDTO($collection, 'attachment', 'Attachment', FieldType::File, false, false, 100, inList: true));
+        $schema->saveField(null, new CollectionFieldFormDTO(collectionId: $collection, code: 'attachment', name: 'Attachment', type: FieldType::File, required: false, multiple: false, sort: 100, inList: true));
         self::assertSame('registry', $schema->getFields($collection)[0]->settings['file_storage']);
         $user = FunctionalUserFactory::createSupervisor();
         $url = '/admin/collections/' . $collection . '/items';

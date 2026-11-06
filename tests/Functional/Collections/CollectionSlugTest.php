@@ -22,13 +22,13 @@ final class CollectionSlugTest extends FunctionalTestCase
             $response = $this->postForm('/admin/collections/' . $collection . '/slug', ['name' => $name], $user);
             self::assertSame(200, $response->getStatusCode());
             self::assertStringContainsString('no-store', $response->headers->get('Cache-Control'));
-            $data = json_decode((string) $response->getContent(), true, flags: JSON_THROW_ON_ERROR);
+            $data = json_decode(json: (string) $response->getContent(), associative: true, flags: JSON_THROW_ON_ERROR);
             self::assertMatchesRegularExpression('/^[a-z0-9]+(?:-[a-z0-9]+)*$/D', $data['slug']);
             $id = $api->addItem(new CollectionItemFormDTO($collection, null, '', $name, false, null, null, 100, null, null, []));
             self::assertSame($api->getItem($id)->code, $data['slug']);
         }
         $response = $this->postForm('/admin/collections/slug', ['name' => str_repeat('А', 400)], $user);
-        $data = json_decode((string) $response->getContent(), true, flags: JSON_THROW_ON_ERROR);
+        $data = json_decode(json: (string) $response->getContent(), associative: true, flags: JSON_THROW_ON_ERROR);
         self::assertSame(240, strlen($data['slug']));
     }
 

@@ -106,7 +106,7 @@ final class CollectionActionPermissionsTest extends FunctionalTestCase
         self::assertSame(200, $this->postForm('/admin/collections', $form + ['action_permissions' => ['unknown' => Permissions::EDIT]], $supervisor)->getStatusCode());
         self::assertSame($before, Capsule::table('collections')->where('id', $this->collection)->value('settings'));
         self::assertSame(302, $this->postForm('/admin/collections', $form, $supervisor)->getStatusCode());
-        $settings = json_decode(Capsule::table('collections')->where('id', $this->collection)->value('settings'), true, flags: JSON_THROW_ON_ERROR);
+        $settings = json_decode(json: Capsule::table('collections')->where('id', $this->collection)->value('settings'), associative: true, flags: JSON_THROW_ON_ERROR);
         self::assertSame(Permissions::PUBLISH, $settings['content_actions']['publish']);
     }
 

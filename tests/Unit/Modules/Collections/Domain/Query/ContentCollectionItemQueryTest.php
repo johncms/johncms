@@ -66,7 +66,7 @@ final class ContentCollectionItemQueryTest extends TestCase
     public function testPaginationIsBounded(int $limit, int $offset): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        new ContentCollectionItemQuery(1, limit: $limit, offset: $offset);
+        new ContentCollectionItemQuery(collectionId: 1, limit: $limit, offset: $offset);
     }
 
     public static function invalidPagination(): array
@@ -78,7 +78,7 @@ final class ContentCollectionItemQueryTest extends TestCase
     public function testConflictingScopesAreRejected(?int $section, bool $subsections, bool $withoutSection): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        new ContentCollectionItemQuery(1, sectionId: $section, includeSubsections: $subsections, withoutSection: $withoutSection);
+        new ContentCollectionItemQuery(collectionId: 1, sectionId: $section, includeSubsections: $subsections, withoutSection: $withoutSection);
     }
 
     public static function conflictingScopes(): iterable

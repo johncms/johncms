@@ -178,7 +178,7 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
     {
         /** @var Builder<ContentCollectionItem> $query */
         $query = ContentCollectionItem::query()->where('id', $id)->lockForUpdate();
-        $this->publication->apply($query, $collectionId, new DateTimeImmutable('now', new DateTimeZone('UTC')), current: true);
+        $this->publication->apply(builder: $query, collectionId: $collectionId, at: new DateTimeImmutable('now', new DateTimeZone('UTC')), current: true);
         return $query->first();
     }
 

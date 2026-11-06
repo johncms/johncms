@@ -44,7 +44,7 @@ final class CollectionChangeLifecycleTest extends TestCase
         CollectionItemWriterFactory::validator();
         $this->collection = Fixture::insert('collections', ['code' => 'blog', 'name' => 'Blog']);
         $this->handler = new RecordingCollectionChangeHandler();
-        $this->changes = new CollectionChangeDispatcher([$this->handler], transaction: new CollectionTransaction());
+        $this->changes = new CollectionChangeDispatcher(handlers: [$this->handler], transaction: new CollectionTransaction());
     }
 
     protected function tearDown(): void
@@ -104,7 +104,7 @@ final class CollectionChangeLifecycleTest extends TestCase
             }
         };
         $this->handler->failWithin = true;
-        $changes = new CollectionChangeDispatcher([$related, $this->handler], transaction: new CollectionTransaction());
+        $changes = new CollectionChangeDispatcher(handlers: [$related, $this->handler], transaction: new CollectionTransaction());
         try {
             CollectionItemWriterFactory::itemDeleter($changes)->execute($id);
             self::fail('The required handler failure must abort deletion.');
@@ -123,7 +123,7 @@ final class CollectionChangeLifecycleTest extends TestCase
     public function testImportSuppressesDerivedHandlersButKeepsTransactionalHandlers(): void
     {
         $context = new SystemOperationContext();
-        $context->runTrusted(fn () => CollectionItemWriterFactory::create(context: $context, changes: $this->changes)->execute(null, $this->form(), history: new CollectionItemHistoryDTO(
+        $context->runTrusted(fn () => CollectionItemWriterFactory::create(context: $context, changes: $this->changes)->execute(id: null, dto: $this->form(), history: new CollectionItemHistoryDTO(
             new \DateTimeImmutable('2001-01-01Z'), new \DateTimeImmutable('2002-01-01Z')
         )));
         $context->runTrusted(fn () => CollectionItemWriterFactory::sectionWriter($context, $this->changes)->execute(null,
@@ -184,7 +184,7 @@ final class CollectionChangeLifecycleTest extends TestCase
         $cache = InMemoryCache::create();
         $codes = new CollectionCodeCache($cache, new ContentCollectionRepository());
         $invalidator = new CollectionCacheInvalidator($cache, $codes);
-        $changes = new CollectionChangeDispatcher([$invalidator], transaction: new CollectionTransaction());
+        $changes = new CollectionChangeDispatcher(handlers: [$invalidator], transaction: new CollectionTransaction());
         $cache->rememberForever('affected', static fn () => 'old', [CollectionCacheInvalidator::tag($this->collection)]);
         $cache->rememberForever('other', static fn () => 'unrelated', [CollectionCacheInvalidator::tag($this->collection + 1)]);
         Capsule::connection()->beginTransaction();

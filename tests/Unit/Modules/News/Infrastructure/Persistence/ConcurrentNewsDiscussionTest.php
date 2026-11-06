@@ -66,7 +66,7 @@ final class ConcurrentNewsDiscussionTest extends TestCase
         [$process, $output] = $this->start($mode);
         self::assertSame(0, $this->finish($process, $output));
         try {
-            $this->relations->withItemLock($this->collection, $this->item, fn () => $this->discussion->addComment($this->item, 11, 'Forbidden', [], []), publishedOnly: true);
+            $this->relations->withItemLock(collectionId: $this->collection, itemId: $this->item, operation: fn () => $this->discussion->addComment($this->item, 11, 'Forbidden', [], []), publishedOnly: true);
             self::fail('An old snapshot must not admit a comment after publication was revoked.');
         } catch (CollectionItemFormException | CollectionWriteConflictException) {
             self::assertSame(0, Capsule::table('news_comments')->count());
@@ -100,9 +100,9 @@ final class ConcurrentNewsDiscussionTest extends TestCase
         [$process, $output] = $this->start('vote');
         self::assertSame(0, $this->finish($process, $output));
         try {
-            $rating = $this->relations->withItemLock($this->collection, $this->item, function (): int {
+            $rating = $this->relations->withItemLock(collectionId: $this->collection, itemId: $this->item, operation: function (): int {
                 $this->discussion->vote($this->item, 11, -1);
-                return $this->discussion->stats([$this->item], 11, current: true)[$this->item]->rating;
+                return $this->discussion->stats(ids: [$this->item], userId: 11, current: true)[$this->item]->rating;
             }, publishedOnly: true);
             self::assertSame(-1, $rating);
             Capsule::connection()->commit();

@@ -68,7 +68,7 @@ final class EloquentNewsDiscussionRepository implements NewsDiscussionRepository
 
     public function deleteComment(int $id): array
     {
-        $comment = $this->findComment($id, current: true);
+        $comment = $this->findComment(id: $id, current: true);
         if ($comment === null) {
             return [];
         }

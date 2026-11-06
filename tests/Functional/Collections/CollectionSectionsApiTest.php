@@ -58,11 +58,11 @@ final class CollectionSectionsApiTest extends FunctionalTestCase
         }
         foreach ([
             [new ContentCollectionItemQuery($this->collection), 5],
-            [new ContentCollectionItemQuery($this->collection, withoutSection: true), 1],
-            [new ContentCollectionItemQuery($this->collection, sectionId: $root), 1],
-            [new ContentCollectionItemQuery($this->collection, sectionId: $root, includeSubsections: true), 3],
-            [new ContentCollectionItemQuery($this->collection, sectionId: $child, includeSubsections: true), 2],
-            [new ContentCollectionItemQuery($this->collection, sectionId: 99999, includeSubsections: true), 0],
+            [new ContentCollectionItemQuery(collectionId: $this->collection, withoutSection: true), 1],
+            [new ContentCollectionItemQuery(collectionId: $this->collection, sectionId: $root), 1],
+            [new ContentCollectionItemQuery(collectionId: $this->collection, sectionId: $root, includeSubsections: true), 3],
+            [new ContentCollectionItemQuery(collectionId: $this->collection, sectionId: $child, includeSubsections: true), 2],
+            [new ContentCollectionItemQuery(collectionId: $this->collection, sectionId: 99999, includeSubsections: true), 0],
         ] as [$query, $expected]) {
             self::assertSame($expected, $this->items->countItems($query));
             self::assertCount($expected, $this->items->getItems($query));
@@ -77,7 +77,7 @@ final class CollectionSectionsApiTest extends FunctionalTestCase
     {
         $other = Fixture::insert('collections', ['code' => 'other', 'name' => 'Other']);
         $foreign = $this->sections->addSection(new CollectionSectionFormDTO($other, null, 'foreign', 'Foreign', null, true, 100));
-        self::assertSame(0, $this->items->countItems(new ContentCollectionItemQuery($this->collection, sectionId: $foreign, includeSubsections: true)));
+        self::assertSame(0, $this->items->countItems(new ContentCollectionItemQuery(collectionId: $this->collection, sectionId: $foreign, includeSubsections: true)));
     }
 
     public function testMovingSubtreeChangesPathAndCountsTogether(): void
@@ -89,8 +89,8 @@ final class CollectionSectionsApiTest extends FunctionalTestCase
         $this->sections->updateSection($child, $this->form('child', $second));
         self::assertNull($this->sections->resolvePath($this->collection, ['first', 'child']));
         self::assertSame($child, $this->sections->resolvePath($this->collection, ['second', 'child'])->id);
-        self::assertSame(0, $this->items->countItems(new ContentCollectionItemQuery($this->collection, sectionId: $first, includeSubsections: true)));
-        self::assertSame(1, $this->items->countItems(new ContentCollectionItemQuery($this->collection, sectionId: $second, includeSubsections: true)));
+        self::assertSame(0, $this->items->countItems(new ContentCollectionItemQuery(collectionId: $this->collection, sectionId: $first, includeSubsections: true)));
+        self::assertSame(1, $this->items->countItems(new ContentCollectionItemQuery(collectionId: $this->collection, sectionId: $second, includeSubsections: true)));
     }
 
     public function testImportUsesSameWriterAndPreservesMetadataAndDates(): void

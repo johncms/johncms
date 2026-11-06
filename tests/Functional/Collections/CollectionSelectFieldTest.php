@@ -42,7 +42,7 @@ final class CollectionSelectFieldTest extends FunctionalTestCase
         $id = $this->api->addItem($this->form('existing', 'a'));
         $options = $this->options();
         $options[0]['active'] = false;
-        $this->field($options, id: $field);
+        $this->field(options: $options, id: $field);
         $this->api->updateItem($id, $this->form('existing', 'a'));
         $this->api->patchItem($id, new CollectionItemPatchDTO(attributes: ['name' => 'Edited']));
         self::assertSame('a', $this->api->getItem($id)->values['choice']);
@@ -65,13 +65,13 @@ final class CollectionSelectFieldTest extends FunctionalTestCase
         $id = $this->api->addItem($this->form('entry', 'a'));
         foreach ([[['code' => 'b', 'label' => 'B']], [['code' => 'A', 'label' => 'Changed case']]] as $options) {
             try {
-                $this->field($options, id: $field);
+                $this->field(options: $options, id: $field);
                 self::fail('Referenced codes must stay stable, including their letter case.');
             } catch (CollectionSchemaException) {
                 self::assertSame('a', $this->api->getItem($id)->values['choice']);
             }
         }
-        $this->field([['code' => 'a', 'label' => '<b>New label</b>']], id: $field);
+        $this->field(options: [['code' => 'a', 'label' => '<b>New label</b>']], id: $field);
         self::assertSame('a', $this->api->getItem($id)->values['choice']);
         $view = $this->container()->get(GetPublicItemUseCase::class)->format($this->api->getItem($id));
         self::assertSame(['<b>New label</b>'], $view->values[0]['values']);
@@ -105,7 +105,7 @@ final class CollectionSelectFieldTest extends FunctionalTestCase
             }
         }
         $this->expectException(CollectionSchemaException::class);
-        $this->schema->saveField(null, new CollectionFieldFormDTO($this->collection, 'choice', 'Choice', FieldType::Select, false, false, 100, settings: ['options' => [['code' => 'a', 'label' => 'A', 'active' => false]], 'default' => 'a']));
+        $this->schema->saveField(null, new CollectionFieldFormDTO(collectionId: $this->collection, code: 'choice', name: 'Choice', type: FieldType::Select, required: false, multiple: false, sort: 100, settings: ['options' => [['code' => 'a', 'label' => 'A', 'active' => false]], 'default' => 'a']));
     }
 
     public function testAdminOptionEditingAndItemSelectionUseLabelsAndAvailability(): void
@@ -158,7 +158,7 @@ final class CollectionSelectFieldTest extends FunctionalTestCase
     /** @param list<array<string, mixed>> $options */
     private function field(array $options, bool $multiple = false, ?int $id = null): int
     {
-        return $this->schema->saveField($id, new CollectionFieldFormDTO($this->collection, 'choice', 'Choice', FieldType::Select, false, $multiple, 100, inList: true, settings: ['options' => $options]));
+        return $this->schema->saveField($id, new CollectionFieldFormDTO(collectionId: $this->collection, code: 'choice', name: 'Choice', type: FieldType::Select, required: false, multiple: $multiple, sort: 100, inList: true, settings: ['options' => $options]));
     }
 
     /** @return list<array{code: string, label: string, active: bool}> */

@@ -49,7 +49,7 @@ final class SystemUpdater
             $step = 'migrations';
             try {
                 $this->completion->begin($module);
-                $this->migrator->run($module === null ? null : $modules[$module]->alias, reporter: new ConsoleMigrationReporter($io));
+                $this->migrator->run(source: $module === null ? null : $modules[$module]->alias, reporter: new ConsoleMigrationReporter($io));
                 $this->pending->forget();
                 $owners = ['system', ...($module === null ? (new ModuleDependencyGraph($modules))->ordered() : [$module])];
                 $synchronizers = is_array($this->synchronizers) ? $this->synchronizers : iterator_to_array($this->synchronizers);
@@ -91,7 +91,7 @@ final class SystemUpdater
                     throw new RuntimeException('Cache clearing failed.');
                 }
             } catch (Throwable $exception) {
-                throw new RuntimeException($step . ': ' . $exception->getMessage(), previous: $exception);
+                throw new RuntimeException(message: $step . ': ' . $exception->getMessage(), previous: $exception);
             }
             $this->completion->complete($module);
         });

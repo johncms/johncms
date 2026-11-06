@@ -26,7 +26,7 @@ final class SystemUpdateCommand extends Command
 
     protected function configure(): void
     {
-        $this->addOption('module', mode: InputOption::VALUE_REQUIRED, description: 'Complete the update of one loaded module');
+        $this->addOption(name: 'module', mode: InputOption::VALUE_REQUIRED, description: 'Complete the update of one loaded module');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

@@ -32,7 +32,7 @@ final readonly class CollectionsPublicApi implements CollectionsPublicApiInterfa
 
     public function suggestTags(int $collectionId, string $fieldCode, string $prefix = '', int $limit = 10): array
     {
-        return $this->tags->suggest($collectionId, $fieldCode, $prefix, $limit, published: true);
+        return $this->tags->suggest(collectionId: $collectionId, fieldCode: $fieldCode, prefix: $prefix, limit: $limit, published: true);
     }
 
     public function getPage(ContentCollectionItemQuery $query): CollectionItemPageDTO

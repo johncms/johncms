@@ -19,7 +19,7 @@ final readonly class CollectionDeclarationsCheck implements SystemCheckInterface
 
     public static function definition(): CheckDefinitionDTO
     {
-        return new CheckDefinitionDTO('collections.declarations', d__('collections', 'Collection declarations'), d__('collections', 'Collections'), 'list-tree', order: 80);
+        return new CheckDefinitionDTO(id: 'collections.declarations', name: d__('collections', 'Collection declarations'), group: d__('collections', 'Collections'), icon: 'list-tree', order: 80);
     }
 
     public function run(): array

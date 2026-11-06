@@ -78,7 +78,7 @@ final class NewsCollectionDeclarationTest extends FunctionalTestCase
         $other = 'Left empty, they are made of the template in the settings of the news.';
         $schema = $this->container()->get(\Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface::class);
         $schema->saveField(null, new \Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO(
-            $collection->id, 'custom', 'Custom', FieldType::String_, false, false, 500, settings: ['hint' => $title]
+            collectionId: $collection->id, code: 'custom', name: 'Custom', type: FieldType::String_, required: false, multiple: false, sort: 500, settings: ['hint' => $title]
         ));
         $sync->synchronize();
         $hints = ['page_title' => $title, 'description' => $other, 'keywords' => $other];

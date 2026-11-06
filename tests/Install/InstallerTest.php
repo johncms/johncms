@@ -142,7 +142,7 @@ final class InstallerTest extends TestCase
         ]));
         self::assertFileExists(CONFIG_PATH . 'autoload/system.local.php');
         self::assertFileExists(DATA_PATH . 'system-update.json');
-        $completion = json_decode((string) file_get_contents(DATA_PATH . 'system-update.json'), true, flags: JSON_THROW_ON_ERROR);
+        $completion = json_decode(json: (string) file_get_contents(DATA_PATH . 'system-update.json'), associative: true, flags: JSON_THROW_ON_ERROR);
         self::assertSame(CMS_VERSION, $completion['cms']);
         self::assertFalse($completion['running']);
         self::assertSame(200, $this->get('/install/?step=5')->getStatusCode(), 'The last step did not open.');

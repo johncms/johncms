@@ -102,7 +102,7 @@ final class CollectionRepeatedInputTest extends FunctionalTestCase
     /** @param array<string, mixed> $settings */
     private function field(FieldType $type, array $settings = []): int
     {
-        return $this->container()->get(CollectionSchemaApiInterface::class)->saveField(null, new CollectionFieldFormDTO($this->collection, 'notes', 'Notes', $type, false, true, 100, settings: $settings));
+        return $this->container()->get(CollectionSchemaApiInterface::class)->saveField(null, new CollectionFieldFormDTO(collectionId: $this->collection, code: 'notes', name: 'Notes', type: $type, required: false, multiple: true, sort: 100, settings: $settings));
     }
 
     private function itemsUrl(): string

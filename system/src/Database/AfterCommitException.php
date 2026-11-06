@@ -10,7 +10,7 @@ final class AfterCommitException extends \RuntimeException
     /** @param list<\Throwable> $failures */
     public function __construct(public readonly array $failures)
     {
-        parent::__construct('Data was committed, but post-commit actions failed: ' . implode('; ', array_map(
+        parent::__construct(message: 'Data was committed, but post-commit actions failed: ' . implode('; ', array_map(
             static fn (\Throwable $failure): string => $failure::class . ': ' . $failure->getMessage(),
             $failures
         )), previous: $failures[0] ?? null);

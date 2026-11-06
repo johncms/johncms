@@ -53,13 +53,13 @@ final class CollectionSearchTest extends FunctionalTestCase
         $this->item('IDE', 'Body', ['labels' => ['phpstorm']]);
         $api = $this->container()->get(CollectionsApiInterface::class);
         self::assertSame(['php', 'cms tools'], $api->getItem($php)->values['labels']);
-        $query = new ContentCollectionItemQuery($this->collection, filters: [new FieldFilterDTO('field.labels', FilterOperator::Eq, ' PHP ')]);
+        $query = new ContentCollectionItemQuery(collectionId: $this->collection, filters: [new FieldFilterDTO('field.labels', FilterOperator::Eq, ' PHP ')]);
         $public = $this->container()->get(CollectionsPublicApiInterface::class);
         self::assertSame([$php], array_map(static fn ($item) => $item->id, $public->getItems($query)));
         self::assertSame(1, $public->countItems($query));
         self::assertSame(['php', 'phpstorm'], $public->suggestTags($this->collection, 'labels', ' PH '));
         $this->expectException(\InvalidArgumentException::class);
-        $public->getItems(new ContentCollectionItemQuery($this->collection, filters: [new FieldFilterDTO('field.labels', FilterOperator::Like, '%php%')]));
+        $public->getItems(new ContentCollectionItemQuery(collectionId: $this->collection, filters: [new FieldFilterDTO('field.labels', FilterOperator::Like, '%php%')]));
     }
 
     public function testHiddenItemsCannotLeakThroughSearchCountsOrTagSuggestions(): void
@@ -87,7 +87,7 @@ final class CollectionSearchTest extends FunctionalTestCase
 
     public function testAdminSuggestionsAreScopedByPermissionAndTextareaRemainsAFallback(): void
     {
-        $this->item('Draft', 'Body', ['labels' => ['draft-tag']], active: false);
+        $this->item(name: 'Draft', text: 'Body', values: ['labels' => ['draft-tag']], active: false);
         $user = FunctionalUserFactory::createWithPermissions(['news.manage']);
         $base = '/admin/collections/' . $this->collection;
         $response = $this->handleRequest($base . '/tags/labels?q=dra', cookies: $this->actingAs($user));
@@ -114,7 +114,7 @@ final class CollectionSearchTest extends FunctionalTestCase
 
     private function query(string $term, array $fields = []): ContentCollectionItemQuery
     {
-        return new ContentCollectionItemQuery($this->collection, onlyActive: false, search: new CollectionTextSearchDTO($term, $fields));
+        return new ContentCollectionItemQuery(collectionId: $this->collection, onlyActive: false, search: new CollectionTextSearchDTO($term, $fields));
     }
 
     private function item(string $name, string $text, array $values = [], bool $active = true): int

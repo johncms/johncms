@@ -27,7 +27,7 @@ final class CollectionsApiIntegrationTest extends FunctionalTestCase
         $api = $this->container()->get(CollectionsApiInterface::class);
         $id = $api->addItem(new CollectionItemFormDTO($collection, null, 'entry', 'Entry', true, null, null, 100, null, null, ['name' => 'Custom']));
         $api->patchItem($id, new CollectionItemPatchDTO(attributes: ['detailText' => 'Changed']));
-        $page = $api->getPage(new ContentCollectionItemQuery($collection, fields: ['name'], filters: [new FieldFilterDTO('field.name', FilterOperator::Eq, 'Custom')]));
+        $page = $api->getPage(new ContentCollectionItemQuery(collectionId: $collection, fields: ['name'], filters: [new FieldFilterDTO('field.name', FilterOperator::Eq, 'Custom')]));
         self::assertSame(1, $page->total);
         self::assertSame('Entry', $page->items[0]->name);
         self::assertSame('Changed', $page->items[0]->detailText);

@@ -29,7 +29,7 @@ final readonly class CollectionItemPreviewController
         if ($item === null) {
             pageNotFound();
         }
-        return new Response($this->renderer->render('@collections/admin/item-preview.twig', [
+        return new Response(content: $this->renderer->render('@collections/admin/item-preview.twig', [
             'title' => $item->name, 'page_title' => $item->name,
             'module_menu' => ['collections' => true],
             'item' => $this->detail->format($item),

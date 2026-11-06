@@ -261,6 +261,6 @@ final class CollectionWorkspaceTest extends FunctionalTestCase
     /** @param array<string, mixed>|null $workspace */
     private function form(string $code, ?array $workspace = null): CollectionFormDTO
     {
-        return new CollectionFormDTO($code, 'Collection', null, true, false, 100, true, 20, workspace: $workspace);
+        return new CollectionFormDTO(code: $code, name: 'Collection', description: null, active: true, public: false, sort: 100, hasSections: true, perPage: 20, workspace: $workspace);
     }
 }

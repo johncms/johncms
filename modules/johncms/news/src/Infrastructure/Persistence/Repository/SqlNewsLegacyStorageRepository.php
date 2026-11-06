@@ -51,7 +51,7 @@ final readonly class SqlNewsLegacyStorageRepository implements NewsLegacyStorage
             $files = [];
             foreach ($this->db->select('SELECT attached_files FROM news_comments WHERE item_id IS NULL') as $row) {
                 $json = $row['attached_files'];
-                $ids = json_decode($json === null || $json === '' ? '[]' : (string) $json, true, flags: JSON_THROW_ON_ERROR);
+                $ids = json_decode(json: $json === null || $json === '' ? '[]' : (string) $json, associative: true, flags: JSON_THROW_ON_ERROR);
                 if (! is_array($ids) || ! array_is_list($ids)) {
                     throw new NewsLegacyImportException('Repair malformed attachments in orphan news comments before retrying system:update.');
                 }

@@ -57,7 +57,7 @@ final class CollectionOwnedSchemaTest extends FunctionalTestCase
         $schema = $this->container()->get(CollectionSchemaApiInterface::class);
         $context = $this->container()->get(SystemOperationContext::class);
         $context->runTrusted(fn () => $schema->saveField($this->field, new CollectionFieldFormDTO(
-            $this->collection, 'meta_title', 'Meta title', FieldType::Integer, false, false, 100, role: 'meta_title'
+            collectionId: $this->collection, code: 'meta_title', name: 'Meta title', type: FieldType::Integer, required: false, multiple: false, sort: 100, role: 'meta_title'
         )));
         self::assertSame(FieldType::Integer, $schema->getFields($this->collection)[0]->type);
     }

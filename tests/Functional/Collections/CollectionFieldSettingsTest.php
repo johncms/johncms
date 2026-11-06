@@ -87,7 +87,7 @@ final class CollectionFieldSettingsTest extends FunctionalTestCase
         $this->field('text', FieldType::String_, ['default' => 'keep']);
         $field = $this->schema->getFields($this->collection)[0];
         try {
-            $this->schema->saveField($field->id, new CollectionFieldFormDTO($this->collection, 'text', 'Text', FieldType::String_, false, false, 100, settings: ['max_length' => 1]));
+            $this->schema->saveField($field->id, new CollectionFieldFormDTO(collectionId: $this->collection, code: 'text', name: 'Text', type: FieldType::String_, required: false, multiple: false, sort: 100, settings: ['max_length' => 1]));
             self::fail('An existing default must remain valid when limits change.');
         } catch (CollectionSchemaException) {
             self::assertSame('keep', $this->schema->getFields($this->collection)[0]->settings['default']);
@@ -148,7 +148,7 @@ final class CollectionFieldSettingsTest extends FunctionalTestCase
     /** @param array<string, mixed> $settings */
     private function field(string $code, FieldType $type, array $settings = [], bool $multiple = false): int
     {
-        return $this->schema->saveField(null, new CollectionFieldFormDTO($this->collection, $code, ucfirst($code), $type, false, $multiple, 100, settings: $settings));
+        return $this->schema->saveField(null, new CollectionFieldFormDTO(collectionId: $this->collection, code: $code, name: ucfirst($code), type: $type, required: false, multiple: $multiple, sort: 100, settings: $settings));
     }
 
     /** @param array<string, string|list<string>> $values */

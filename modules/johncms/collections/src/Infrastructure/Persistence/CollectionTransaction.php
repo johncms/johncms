@@ -27,7 +27,7 @@ final class CollectionTransaction implements CollectionTransactionInterface
             return $connection->transaction($operation);
         } catch (QueryException | DeadlockException $exception) {
             if ((new ConcurrencyErrorDetector())->causedByConcurrencyError($exception)) {
-                throw new CollectionWriteConflictException('The data changed during saving. Retry the entire operation.', previous: $exception);
+                throw new CollectionWriteConflictException(message: 'The data changed during saving. Retry the entire operation.', previous: $exception);
             }
             throw $exception;
         }

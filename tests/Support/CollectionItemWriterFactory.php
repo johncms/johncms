@@ -35,9 +35,9 @@ final class CollectionItemWriterFactory
         $validator = self::validator();
         $fields = new ContentCollectionFieldRepository();
         return new SaveCollectionItemUseCase(
-            new ContentCollectionItemRepository($fields, new ContentCollectionItemQueryCompiler()), $fields,
-            $values ?? new ContentCollectionItemValueRepository(), new ContentCollectionRepository(),
-            new ContentCollectionSectionRepository(), new CollectionTransaction(), new CollectionItemValidator($validator), $context ?? new \Johncms\Updates\SystemOperationContext(), $changes ?? new \Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher(), files: $files, fileValues: $fileValues
+            itemRepository: new ContentCollectionItemRepository($fields, new ContentCollectionItemQueryCompiler()), fieldRepository: $fields,
+            valueRepository: $values ?? new ContentCollectionItemValueRepository(), collections: new ContentCollectionRepository(),
+            sections: new ContentCollectionSectionRepository(), transaction: new CollectionTransaction(), validator: new CollectionItemValidator($validator), systemContext: $context ?? new \Johncms\Updates\SystemOperationContext(), changes: $changes ?? new \Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher(), files: $files, fileValues: $fileValues
         );
     }    public static function validator(): \Johncms\Validator\ValidatorInterface
     {

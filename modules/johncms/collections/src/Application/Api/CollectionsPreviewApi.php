@@ -20,7 +20,7 @@ final readonly class CollectionsPreviewApi implements CollectionsPreviewApiInter
         try {
             $this->guard->execute($collectionId);
         } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionAccessDeniedException $exception) {
-            throw new CollectionPreviewAccessDeniedException($exception->getMessage(), previous: $exception);
+            throw new CollectionPreviewAccessDeniedException(message: $exception->getMessage(), previous: $exception);
         }
         $item = $this->api->getItem($id);
         return $item !== null && $item->collectionId === $collectionId ? $item : null;

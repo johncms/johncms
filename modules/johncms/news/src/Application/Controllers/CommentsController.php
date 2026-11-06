@@ -98,7 +98,7 @@ final readonly class CommentsController
     private function decode(Request $request): array
     {
         try {
-            $data = json_decode($request->getContent(), true, flags: JSON_THROW_ON_ERROR);
+            $data = json_decode(json: $request->getContent(), associative: true, flags: JSON_THROW_ON_ERROR);
         } catch (\JsonException) {
             throw new NewsDiscussionValidationException(d__('news', 'Bad Request'));
         }
