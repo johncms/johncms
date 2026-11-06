@@ -148,8 +148,12 @@ final readonly class NewsLegacyImporter
                             100,
                             $this->text($row['preview_text']),
                             $this->text($row['text']),
-                            ['page_title' => $this->text($row['page_title']) ?? '', 'description' => $this->text($row['description']) ?? '', 'keywords' => $this->text($row['keywords']) ?? '',
-                                'tags' => $row['tags'] === null || $row['tags'] === '' ? [] : array_map(static fn (?string $tag): string => $tag ?? '', str_getcsv((string) $row['tags'], ',', '"', ''))]
+                            [
+                                'page_title'  => $this->text($row['page_title']) ?? '',
+                                'description' => $this->text($row['description']) ?? '',
+                                'keywords'    => $this->text($row['keywords']) ?? '',
+                                'tags'        => $row['tags'] === null || $row['tags'] === '' ? [] : explode(',', $row['tags']),
+                            ]
                         ), new CollectionItemHistoryDTO(
                             $createdAt,
                             $updatedAt,

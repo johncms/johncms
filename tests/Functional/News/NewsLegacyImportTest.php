@@ -63,7 +63,7 @@ final class NewsLegacyImportTest extends FunctionalTestCase
         self::assertSame('2001-02-03 04:05:06', $item->createdAt?->format('Y-m-d H:i:s'));
         self::assertNull($item->updatedAt);
         self::assertSame('Raw <b>body</b> & text', $item->detailText);
-        self::assertSame(['php', 'two, words'], $item->values['tags']);
+        self::assertSame(['php', '"two', 'words"'], $item->values['tags']);
         self::assertSame(str_repeat('seo,', 100), $item->values['keywords']);
         $section = Capsule::table('collection_sections')->where('id', $report->sections[$blank])->first();
         self::assertNull($section->created_at);
