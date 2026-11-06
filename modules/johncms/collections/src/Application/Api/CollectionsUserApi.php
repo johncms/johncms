@@ -37,7 +37,7 @@ final readonly class CollectionsUserApi implements CollectionsUserApiInterface
     public function suggestTags(int $collectionId, string $fieldCode, string $prefix = '', int $limit = 10): array
     {
         $this->guard->execute($collectionId);
-        return $this->tags->suggest($collectionId, $fieldCode, $prefix, $limit, published: false);
+        return $this->tags->suggest(collectionId: $collectionId, fieldCode: $fieldCode, prefix: $prefix, limit: $limit, published: false);
     }
 
     public function getPage(ContentCollectionItemQuery $query): CollectionItemPageDTO
@@ -68,7 +68,7 @@ final readonly class CollectionsUserApi implements CollectionsUserApiInterface
         $this->write($item->collectionId, $item->values, false, function () use ($id, $item): void {
             $this->writes->execute($item->collectionId, $id, $this->publication($item));
             $this->items->updateItem($id, $item, $this->user->id());
-        });
+        }, $id);
     }
 
     public function patchItem(int $collectionId, int $id, CollectionItemPatchDTO $patch): void
@@ -77,7 +77,7 @@ final readonly class CollectionsUserApi implements CollectionsUserApiInterface
         $this->write($collectionId, $patch->values, false, function () use ($collectionId, $id, $patch): void {
             $this->writes->execute($collectionId, $id, $patch->attributes);
             $this->items->patchItem($id, $patch, $this->user->id());
-        });
+        }, $id);
     }
 
     public function previewItemDeletion(int $collectionId, int $id): \Johncms\Modules\Collections\Application\DTO\CollectionRelationImpactDTO
@@ -178,11 +178,11 @@ final readonly class CollectionsUserApi implements CollectionsUserApiInterface
      * @param callable(): T $operation
      * @return T
      */
-    private function write(int $collectionId, array $values, bool $applyDefaults, callable $operation): mixed
+    private function write(int $collectionId, array $values, bool $applyDefaults, callable $operation, ?int $itemId = null): mixed
     {
-        return $this->transaction->run(function () use ($collectionId, $values, $applyDefaults, $operation): mixed {
+        return $this->transaction->run(function () use ($collectionId, $values, $applyDefaults, $operation, $itemId): mixed {
             $this->collections->findForUpdate($collectionId);
-            $this->relations->execute($collectionId, $values, $applyDefaults);
+            $this->relations->execute($collectionId, $values, $applyDefaults, $itemId);
             return $operation();
         });
     }

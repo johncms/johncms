@@ -54,6 +54,28 @@ final class CollectionBulkActionsTest extends FunctionalTestCase
         $this->bulk = $this->container()->get(CollectionBulkApiInterface::class);
     }
 
+    public function testAPartialWriteAnswersOnlyForWhatItChanges(): void
+    {
+        $this->container()->get(CollectionSchemaApiInterface::class)->saveField(null, new CollectionFieldFormDTO($this->collection, 'extra', 'Extra', FieldType::String_, true, false, 100));
+        Capsule::table('collection_items')->where('id', $this->first)->update(['active_from' => '2001-01-01 00:00:00', 'active_to' => '2000-01-01 00:00:00']);
+        $this->items->patchItem($this->first, new CollectionItemPatchDTO(['active' => true]));
+        self::assertTrue($this->items->getItem($this->first)->active);
+        $preview = $this->bulk->preview($this->collection, [$this->first], 'hide');
+        self::assertSame(1, $this->bulk->execute($this->collection, [$this->first], 'hide', $preview->revision));
+        self::assertFalse($this->items->getItem($this->first)->active);
+        foreach ([
+            new CollectionItemPatchDTO(['activeTo' => '1999-01-01 00:00:00']),
+            new CollectionItemPatchDTO(values: ['extra' => '']),
+        ] as $patch) {
+            try {
+                $this->items->patchItem($this->first, $patch);
+                self::fail('What a patch changes is still validated.');
+            } catch (CollectionItemFormException $exception) {
+                self::assertNotSame([], $exception->errors);
+            }
+        }
+    }
+
     public function testNativeConfirmationPublishesSelectionAndPreservesTheFilteredReturn(): void
     {
         $user = FunctionalUserFactory::createSupervisor();
@@ -137,11 +159,11 @@ final class CollectionBulkActionsTest extends FunctionalTestCase
     public function testDeletionIgnoresInternalCyclesAndClearsOnlyExternalOptionalRelations(): void
     {
         $schema = $this->container()->get(CollectionSchemaApiInterface::class);
-        $schema->saveField(null, new CollectionFieldFormDTO($this->collection, 'cycle', 'Cycle', FieldType::Relation, false, false, 100, settings: ['target_collection_id' => $this->collection]));
+        $schema->saveField(null, new CollectionFieldFormDTO(collectionId: $this->collection, code: 'cycle', name: 'Cycle', type: FieldType::Relation, required: false, multiple: false, sort: 100, settings: ['target_collection_id' => $this->collection]));
         $this->items->patchItem($this->first, new CollectionItemPatchDTO(values: ['cycle' => (string) $this->second]));
         $this->items->patchItem($this->second, new CollectionItemPatchDTO(values: ['cycle' => (string) $this->first]));
         $outside = Fixture::insert('collections', ['code' => 'outside', 'name' => 'Outside']);
-        $schema->saveField(null, new CollectionFieldFormDTO($outside, 'links', 'Links', FieldType::Relation, false, true, 100, settings: ['target_collection_id' => $this->collection, 'on_delete' => 'clear']));
+        $schema->saveField(null, new CollectionFieldFormDTO(collectionId: $outside, code: 'links', name: 'Links', type: FieldType::Relation, required: false, multiple: true, sort: 100, settings: ['target_collection_id' => $this->collection, 'on_delete' => 'clear']));
         $source = $this->items->addItem(new CollectionItemFormDTO($outside, null, 'source', 'Source', false, null, null, 100, null, null, ['links' => [(string) $this->first, (string) $this->second]]));
         $preview = $this->bulk->preview($this->collection, [$this->first, $this->second], 'delete');
         self::assertTrue($preview->canExecute());
@@ -156,7 +178,7 @@ final class CollectionBulkActionsTest extends FunctionalTestCase
     public function testRestrictionAndForeignItemsRejectTheWholeBatch(): void
     {
         $outside = Fixture::insert('collections', ['code' => 'outside', 'name' => 'Outside']);
-        $this->container()->get(CollectionSchemaApiInterface::class)->saveField(null, new CollectionFieldFormDTO($outside, 'link', 'Link', FieldType::Relation, false, false, 100, settings: ['target_collection_id' => $this->collection]));
+        $this->container()->get(CollectionSchemaApiInterface::class)->saveField(null, new CollectionFieldFormDTO(collectionId: $outside, code: 'link', name: 'Link', type: FieldType::Relation, required: false, multiple: false, sort: 100, settings: ['target_collection_id' => $this->collection]));
         $source = $this->items->addItem(new CollectionItemFormDTO($outside, null, 'source', 'Source', false, null, null, 100, null, null, ['link' => (string) $this->second]));
         $preview = $this->bulk->preview($this->collection, [$this->first, $this->second], 'delete');
         self::assertFalse($preview->canExecute());
@@ -193,7 +215,7 @@ final class CollectionBulkActionsTest extends FunctionalTestCase
         $collections = $container->get(ContentCollectionRepositoryInterface::class);
         $items = $container->get(ContentCollectionItemRepositoryInterface::class);
         $relations = $container->get(CollectionRelationDeletion::class);
-        $delete = new DeleteCollectionItemUseCase($items, $container->get(ContentCollectionItemValueRepositoryInterface::class), $collections, $transaction, $relations, new CollectionChangeDispatcher([$handler], transaction: $transaction));
+        $delete = new DeleteCollectionItemUseCase($items, $container->get(ContentCollectionItemValueRepositoryInterface::class), $collections, $transaction, $relations, new CollectionChangeDispatcher(handlers: [$handler], transaction: $transaction));
         $bulk = new CollectionBulkApi($transaction, $collections, $items, $container->get(ContentCollectionSectionRepositoryInterface::class), $container->get(ContentCollectionFieldRepositoryInterface::class), $container->get(EnsureCollectionContentAccessUseCase::class), $container->get(EnsureCollectionItemWriteAccessUseCase::class), $container->get(CollectionsUserApiInterface::class), $delete, $relations);
         $preview = $bulk->preview($this->collection, [$this->first, $this->second], 'delete');
         try {

@@ -87,7 +87,8 @@ final class CollectionContentAccessTest extends FunctionalTestCase
             $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionTagSuggestions::class),
             new \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionRelationAccessUseCase(
                 $this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface::class),
-                new EnsureCollectionContentAccessUseCase($access, $this->container()->get(ContentCollectionRepositoryInterface::class))
+                new EnsureCollectionContentAccessUseCase($access, $this->container()->get(ContentCollectionRepositoryInterface::class)),
+                $this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface::class)
             ),
             $this->container()->get(ContentCollectionRepositoryInterface::class),
             new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction(),

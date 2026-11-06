@@ -11,6 +11,7 @@ use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
 use Johncms\Validator\Rules\Pattern;
 use Johncms\Validator\Rules\StringLength;
+use Johncms\Validator\ValidationResult;
 use Johncms\Validator\ValidatorInterface;
 
 final readonly class CollectionItemValidator
@@ -21,15 +22,16 @@ final readonly class CollectionItemValidator
 
     /** @param Collection<int, ContentCollectionField> $definitions
      * @param array<string, mixed> $existingValues
+     * @param list<string>|null $scope Error keys a partial write answers for; null validates everything.
      */
-    public function validate(CollectionItemFormDTO $form, Collection $definitions, bool $applyDefaults = false, array $existingValues = [], bool $allowInactiveOptions = false): CollectionItemFormDTO
+    public function validate(CollectionItemFormDTO $form, Collection $definitions, bool $applyDefaults = false, array $existingValues = [], bool $allowInactiveOptions = false, ?array $scope = null): CollectionItemFormDTO
     {
         $name = trim($form->name);
         $code = trim($form->code);
         $result = $this->validator->validate(['name' => $name, 'code' => $code], [
             'name' => [new StringLength(max: 255)],
             'code' => [new StringLength(max: 255, allowEmpty: true), new Pattern(
-                '/^[\w.+-]+$/D',
+                pattern: '/^[\w.+-]+$/D',
                 allowEmpty: true,
                 message: d__('collections', 'Use letters, digits, dot, plus, hyphen or underscore in the code.')
             )],
@@ -59,6 +61,10 @@ final readonly class CollectionItemValidator
         }
         foreach ($definitions as $field) {
             $key = 'values.' . $field->code;
+            if ($scope !== null && ! in_array($key, $scope, true)) {
+                $values[$field->code] = $form->values[$field->code] ?? ($field->multiple ? [] : '');
+                continue;
+            }
             $raw = array_key_exists($field->code, $form->values) ? $form->values[$field->code] : ($applyDefaults ? ($field->settings['default'] ?? ($field->multiple ? [] : '')) : ($field->multiple ? [] : ''));
             if (($field->multiple && (! is_array($raw) || ! array_is_list($raw))) || (! $field->multiple && ! is_string($raw))) {
                 $result = $result->withError($key, d__('collections', 'Submit a single value or a list as defined by the field.'));
@@ -102,6 +108,9 @@ final readonly class CollectionItemValidator
                 $result = $result->withError($key, d__('collections', 'Fill in the field "%s"', $field->name));
             }
             $values[$field->code] = $field->multiple ? $prepared : ($prepared[0] ?? '');
+        }
+        if ($scope !== null) {
+            $result = new ValidationResult(array_intersect_key($result->getErrors(), array_flip($scope)));
         }
         $result->throwIfInvalid(static fn (array $errors): CollectionItemFormException => new CollectionItemFormException($errors));
         return new CollectionItemFormDTO(

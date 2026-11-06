@@ -46,9 +46,10 @@ final readonly class SaveCollectionItemUseCase
      *
      * @param list<string>|null $valueFields Null replaces all values; a list changes only those fields.
      * @param list<string> $clearFields
+     * @param list<string> $changedAttributes Error keys of the base attributes a partial write changes.
      * @throws CollectionItemCodeAlreadyExistsException when an explicit code belongs to another item in the same section
      */
-    public function execute(?int $id, CollectionItemFormDTO $dto, ?int $actorId = null, ?CollectionItemHistoryDTO $history = null, ?array $valueFields = null, array $clearFields = []): int
+    public function execute(?int $id, CollectionItemFormDTO $dto, ?int $actorId = null, ?CollectionItemHistoryDTO $history = null, ?array $valueFields = null, array $clearFields = [], array $changedAttributes = []): int
     {
         if ($id === null && $valueFields !== null) {
             throw new \InvalidArgumentException('Partial value writes require an existing item.');
@@ -59,7 +60,7 @@ final readonly class SaveCollectionItemUseCase
                 throw new \InvalidArgumentException('Historical import creates new records only.');
             }
         }
-        return $this->transaction->run(function () use ($id, $dto, $actorId, $history, $valueFields, $clearFields): int {
+        return $this->transaction->run(function () use ($id, $dto, $actorId, $history, $valueFields, $clearFields, $changedAttributes): int {
             // Serialize writes, including root codes which a nullable unique index cannot protect.
             $collection = $this->collections->findForUpdate($dto->collectionId);
             if ($collection === null) {
@@ -97,13 +98,15 @@ final readonly class SaveCollectionItemUseCase
             }
             $existingValues = $id !== null && $definitions->contains('type', FieldType::Select)
                 ? ($this->itemRepository->findWithValuesForUpdate($id)?->getValuesMap() ?? []) : [];
-            $dto = $this->validator->validate($dto, $definitions->values(), applyDefaults: $id === null && $history === null, existingValues: $existingValues, allowInactiveOptions: $history !== null);
+            $scope = $valueFields === null ? null : [...array_map(static fn (string $code): string => 'values.' . $code, $valueFields), ...$changedAttributes];
+            $dto = $this->validator->validate(form: $dto, definitions: $definitions->values(), applyDefaults: $id === null && $history === null, existingValues: $existingValues, allowInactiveOptions: $history !== null, scope: $scope);
             $this->validateRelations($dto, $definitions->values(), $valueFields);
-            $registeredFiles = $definitions->contains(static fn ($field): bool => $field->type === FieldType::File && ($field->settings['file_storage'] ?? 'legacy') === 'registry');
+            $written = $valueFields === null ? $definitions->values() : $definitions->filter(static fn (ContentCollectionField $field): bool => in_array($field->code, $valueFields, true))->values();
+            $registeredFiles = $written->contains(static fn ($field): bool => $field->type === FieldType::File && ($field->settings['file_storage'] ?? 'legacy') === 'registry');
             if ($registeredFiles && $this->fileValues === null) {
                 throw new \LogicException('Collection file values are not configured.');
             }
-            $fileReferences = $registeredFiles ? $this->fileValues->prepare($dto, $definitions->values(), $id, $actorId) : [];
+            $fileReferences = $registeredFiles ? $this->fileValues->prepare($dto, $written, $id, $actorId) : [];
             $attributes = [
                 'collection_id' => $dto->collectionId, 'section_id' => $dto->sectionId,
                 'code' => $this->resolveCode($id, $dto), 'name' => $dto->name,

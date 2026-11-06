@@ -52,7 +52,7 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
                 self::assertSame($target, $this->api->getItem($item)->values['related']);
             }
         }
-        $this->schema->saveField(null, new CollectionFieldFormDTO($this->source, 'many', 'Many', FieldType::Relation, false, true, 100, settings: ['target_collection_id' => $this->target]));
+        $this->schema->saveField(null, new CollectionFieldFormDTO(collectionId: $this->source, code: 'many', name: 'Many', type: FieldType::Relation, required: false, multiple: true, sort: 100, settings: ['target_collection_id' => $this->target]));
         $this->api->patchItem($item, new CollectionItemPatchDTO(values: ['many' => [(string) $target]]));
         self::assertSame([$target], $this->api->getItem($item)->values['many']);
         $this->expectException(CollectionItemFormException::class);
@@ -83,14 +83,14 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
     {
         foreach ([[], ['target_collection_id' => '1'], ['target_collection_id' => PHP_INT_MAX]] as $settings) {
             try {
-                $this->schema->saveField(null, new CollectionFieldFormDTO($this->source, 'related', 'Related', FieldType::Relation, false, false, 100, settings: $settings));
+                $this->schema->saveField(null, new CollectionFieldFormDTO(collectionId: $this->source, code: 'related', name: 'Related', type: FieldType::Relation, required: false, multiple: false, sort: 100, settings: $settings));
                 self::fail('A relation requires an existing target collection.');
             } catch (CollectionSchemaException) {
                 self::assertSame([], $this->schema->getFields($this->source));
             }
         }
         $target = $this->api->addItem($this->form($this->target, 'target'));
-        $field = $this->field($this->target, settings: ['default' => (string) $target]);
+        $field = $this->field(target: $this->target, settings: ['default' => (string) $target]);
         $source = $this->api->addItem(new CollectionItemFormDTO($this->source, null, 'default', 'Default', true, null, null, 100, null, null, []));
         self::assertSame($target, $this->api->getItem($source)->values['related']);
         try {
@@ -125,7 +125,7 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
         $sections = $this->container()->get(CollectionSectionsApiInterface::class);
         $section = $sections->addSection(new CollectionSectionFormDTO($this->source, null, 'branch', 'Branch', null, true, 100));
         $this->field($this->source);
-        $first = $this->api->addItem($this->form($this->source, 'first', section: $section));
+        $first = $this->api->addItem($this->form(collection: $this->source, code: 'first', section: $section));
         $second = $this->api->addItem($this->form($this->source, 'second', (string) $first, $section));
         $this->api->patchItem($first, new CollectionItemPatchDTO(values: ['related' => (string) $second]));
         $sections->deleteSection($this->source, $section, SectionDeletionMode::DeleteItems);
@@ -136,7 +136,7 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
     public function testPickerSearchPreservesNativeFormAndIncludesSelectedItemsOutsideTheResultPage(): void
     {
         $this->field($this->target);
-        $this->schema->saveField(null, new CollectionFieldFormDTO($this->source, 'many', 'Many related items', FieldType::Relation, false, true, 100, settings: ['target_collection_id' => $this->target]));
+        $this->schema->saveField(null, new CollectionFieldFormDTO(collectionId: $this->source, code: 'many', name: 'Many related items', type: FieldType::Relation, required: false, multiple: true, sort: 100, settings: ['target_collection_id' => $this->target]));
         for ($index = 0; $index < 31; ++$index) {
             $this->api->addItem($this->form($this->target, 'ordinary-' . $index));
         }
@@ -182,10 +182,27 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
         self::assertSame(302, $this->postForm($base . '/items', ['name' => 'Authorized', 'sort' => '100', 'field_related' => (string) $target], $permitted)->getStatusCode());
     }
 
+    public function testEditorSavesARecordWhoseRelationTheyCannotOpenButCannotPointItElsewhere(): void
+    {
+        \Illuminate\Database\Capsule\Manager::table('collections')->where('id', $this->source)->update(['settings' => json_encode(['_content_permission' => 'news.manage'])]);
+        \Illuminate\Database\Capsule\Manager::table('collections')->where('id', $this->target)->update(['settings' => json_encode(['_content_permission' => 'forum.manage'])]);
+        $this->field($this->target);
+        $linked = $this->api->addItem($this->form($this->target, 'linked'));
+        $other = $this->api->addItem($this->form($this->target, 'other'));
+        $source = $this->api->addItem($this->form($this->source, 'source', (string) $linked));
+        $editor = FunctionalUserFactory::createWithPermissions(['news.manage']);
+        $form = ['id' => (string) $source, 'name' => 'Renamed', 'code' => 'source', 'sort' => '100', 'active' => '1'];
+        self::assertSame(302, $this->postForm('/admin/collections/' . $this->source . '/items', $form + ['field_related' => (string) $linked], $editor)->getStatusCode());
+        self::assertSame('Renamed', $this->api->getItem($source)->name);
+        self::assertSame($linked, $this->api->getItem($source)->values['related']);
+        self::assertSame(403, $this->postForm('/admin/collections/' . $this->source . '/items', $form + ['field_related' => (string) $other], $editor)->getStatusCode());
+        self::assertSame($linked, $this->api->getItem($source)->values['related']);
+    }
+
     public function testUserApiChecksRelationDefaultsAndPartialWritesWithoutBlockingExplicitClears(): void
     {
         $target = $this->api->addItem($this->form($this->target, 'target'));
-        $this->field($this->target, settings: ['default' => (string) $target]);
+        $this->field(target: $this->target, settings: ['default' => (string) $target]);
         $source = $this->api->addItem($this->form($this->source, 'source', (string) $target));
         $access = $this->createStub(\Johncms\Auth\Authorization\AccessCheckerInterface::class);
         // A source-specific permission is enough for editing the source, but not its target.
@@ -196,38 +213,42 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
         $api = new \Johncms\Modules\Collections\Application\Api\CollectionsUserApi(
             $guard, $this->api, $this->container()->get(CollectionSectionsApiInterface::class), $this->container()->get(\Johncms\Auth\CurrentUser::class),
             $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionTagSuggestions::class),
-            new \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionRelationAccessUseCase($this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface::class), $guard),
+            new \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionRelationAccessUseCase($this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface::class), $guard, $this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface::class)),
             $this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface::class),
             new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction(),
             new \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionItemWriteAccessUseCase($guard, $this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface::class)),
             $this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface::class)
         );
+        $other = $this->api->addItem($this->form($this->target, 'other'));
         foreach ([
             fn () => $api->addItem(new CollectionItemFormDTO($this->source, null, 'default', 'Default', true, null, null, 100, null, null, [])),
-            fn () => $api->updateItem($source, $this->form($this->source, 'source', (string) $target)),
-            fn () => $api->patchItem($this->source, $source, new CollectionItemPatchDTO(values: ['related' => (string) $target])),
+            fn () => $api->updateItem($source, $this->form($this->source, 'source', (string) $other)),
+            fn () => $api->patchItem($this->source, $source, new CollectionItemPatchDTO(values: ['related' => (string) $other])),
         ] as $write) {
             try {
                 $write();
-                self::fail('The user facade must check the target even for defaults and retained values.');
+                self::fail('The user facade must check the target of every new reference, defaults included.');
             } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionAccessDeniedException) {
                 self::assertSame($target, $this->api->getItem($source)->values['related']);
             }
         }
+        $api->updateItem($source, $this->form($this->source, 'source', (string) $target));
+        $api->patchItem($this->source, $source, new CollectionItemPatchDTO(values: ['related' => (string) $target]));
+        self::assertSame($target, $this->api->getItem($source)->values['related']);
         $api->patchItem($this->source, $source, new CollectionItemPatchDTO(values: ['related' => null]));
         self::assertArrayNotHasKey('related', $this->api->getItem($source)->values);
     }
 
     public function testClearRemovesOnlyDeletedTargetsAndDispatchesSourceChangesAtomically(): void
     {
-        $this->schema->saveField(null, new CollectionFieldFormDTO($this->source, 'many', 'Many', FieldType::Relation, false, true, 100, settings: ['target_collection_id' => $this->target, 'on_delete' => 'clear']));
+        $this->schema->saveField(null, new CollectionFieldFormDTO(collectionId: $this->source, code: 'many', name: 'Many', type: FieldType::Relation, required: false, multiple: true, sort: 100, settings: ['target_collection_id' => $this->target, 'on_delete' => 'clear']));
         $first = $this->api->addItem($this->form($this->target, 'first'));
         $second = $this->api->addItem($this->form($this->target, 'second'));
         $source = $this->api->addItem(new CollectionItemFormDTO($this->source, null, 'source', 'Source', true, null, null, 100, null, null, []));
         $this->api->patchItem($source, new CollectionItemPatchDTO(values: ['many' => [(string) $second, (string) $first, (string) $second]]));
         \Illuminate\Database\Capsule\Manager::table('collection_items')->where('id', $source)->update(['updated_at' => '2000-01-01 00:00:00']);
         $handler = new \Tests\Support\RecordingCollectionChangeHandler();
-        $changes = new \Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher([$handler], transaction: new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction());
+        $changes = new \Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher(handlers: [$handler], transaction: new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction());
         $deleter = \Tests\Support\CollectionItemWriterFactory::itemDeleter($changes);
         $handler->failWithin = true;
         try {
@@ -250,7 +271,7 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
 
     public function testClearNeedsFreshHttpConfirmationAndCountsContainNoPrivateNames(): void
     {
-        $this->field($this->target, settings: ['on_delete' => 'clear']);
+        $this->field(target: $this->target, settings: ['on_delete' => 'clear']);
         $target = $this->api->addItem($this->form($this->target, 'target'));
         $source = $this->api->addItem($this->form($this->source, 'private-source', (string) $target));
         $impact = $this->api->previewItemDeletion($target);
@@ -277,14 +298,14 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
     {
         foreach ([['on_delete' => 'cascade'], ['on_delete' => 'clear']] as $settings) {
             try {
-                $this->schema->saveField(null, new CollectionFieldFormDTO($this->source, 'related', 'Related', FieldType::Relation, true, false, 100, settings: ['target_collection_id' => $this->target] + $settings));
+                $this->schema->saveField(null, new CollectionFieldFormDTO(collectionId: $this->source, code: 'related', name: 'Related', type: FieldType::Relation, required: true, multiple: false, sort: 100, settings: ['target_collection_id' => $this->target] + $settings));
                 self::fail('Required relations must not be silently cleared.');
             } catch (CollectionSchemaException) {
                 self::assertSame([], $this->schema->getFields($this->source));
             }
         }
         $target = $this->api->addItem($this->form($this->target, 'default-target'));
-        $this->field($this->target, settings: ['on_delete' => 'clear', 'default' => (string) $target]);
+        $this->field(target: $this->target, settings: ['on_delete' => 'clear', 'default' => (string) $target]);
         self::assertSame(1, $this->api->previewItemDeletion($target)->defaultFields);
         $this->expectException(CollectionDeletionException::class);
         $this->api->deleteItem($target);
@@ -294,19 +315,19 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
     {
         $sections = $this->container()->get(CollectionSectionsApiInterface::class);
         $section = $sections->addSection(new CollectionSectionFormDTO($this->target, null, 'branch', 'Branch', null, true, 100));
-        $target = $this->api->addItem($this->form($this->target, 'target', section: $section));
-        $field = $this->field($this->target, settings: ['on_delete' => 'clear']);
+        $target = $this->api->addItem($this->form(collection: $this->target, code: 'target', section: $section));
+        $field = $this->field(target: $this->target, settings: ['on_delete' => 'clear']);
         $before = $sections->previewDeletion($this->target, $section);
         $source = $this->api->addItem($this->form($this->source, 'external', (string) $target));
         try {
-            $sections->deleteSection($this->target, $section, SectionDeletionMode::DeleteItems, expectedRevision: $before->revision);
+            $sections->deleteSection(collectionId: $this->target, id: $section, mode: SectionDeletionMode::DeleteItems, expectedRevision: $before->revision);
             self::fail('New incoming relations require a fresh confirmation.');
         } catch (CollectionDeletionException $exception) {
             self::assertArrayHasKey('revision', $exception->errors);
         }
         $current = $sections->previewDeletion($this->target, $section);
         self::assertSame(1, $current->relations->clearValues);
-        $sections->deleteSection($this->target, $section, SectionDeletionMode::DeleteItems, expectedRevision: $current->revision);
+        $sections->deleteSection(collectionId: $this->target, id: $section, mode: SectionDeletionMode::DeleteItems, expectedRevision: $current->revision);
         self::assertArrayNotHasKey('related', $this->api->getItem($source)->values);
         self::assertNull($this->api->getItem($target));
         self::assertSame($field, $this->schema->getFields($this->source)[0]->id);
@@ -314,7 +335,7 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
 
     public function testClearCannotModifyContentOfAnUnavailableOwner(): void
     {
-        $this->field($this->target, settings: ['on_delete' => 'clear']);
+        $this->field(target: $this->target, settings: ['on_delete' => 'clear']);
         $target = $this->api->addItem($this->form($this->target, 'target'));
         $source = $this->api->addItem($this->form($this->source, 'source', (string) $target));
         \Illuminate\Database\Capsule\Manager::table('collections')->where('id', $this->source)->update(['owner_module' => 'missing/module']);
@@ -331,7 +352,7 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
     /** @param array<string, mixed> $settings */
     private function field(int $target, ?int $id = null, array $settings = []): int
     {
-        return $this->schema->saveField($id, new CollectionFieldFormDTO($this->source, 'related', 'Related', FieldType::Relation, false, false, 100, settings: ['target_collection_id' => $target] + $settings));
+        return $this->schema->saveField($id, new CollectionFieldFormDTO(collectionId: $this->source, code: 'related', name: 'Related', type: FieldType::Relation, required: false, multiple: false, sort: 100, settings: ['target_collection_id' => $target] + $settings));
     }
 
     private function form(int $collection, string $code, string $related = '', ?int $section = null): CollectionItemFormDTO

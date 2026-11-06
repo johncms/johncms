@@ -14,6 +14,16 @@ use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInt
 
 final readonly class PatchCollectionItemUseCase
 {
+    /** The validation errors a changed attribute answers for. */
+    private const array ERROR_KEYS = [
+        'name'        => ['name'],
+        'code'        => ['code'],
+        'sort'        => ['sort'],
+        'previewText' => ['preview_text'],
+        'activeFrom'  => ['active_from', 'active_to'],
+        'activeTo'    => ['active_from', 'active_to'],
+    ];
+
     public function __construct(
         private ContentCollectionItemRepositoryInterface $items,
         private ContentCollectionRepositoryInterface $collections,
@@ -60,11 +70,12 @@ final readonly class PatchCollectionItemUseCase
             }
             $attributes['values'] = $values;
             $this->save->execute(
-                $id,
-                new CollectionItemFormDTO(...$attributes),
-                $actorId,
+                id: $id,
+                dto: new CollectionItemFormDTO(...$attributes),
+                actorId: $actorId,
                 valueFields: array_keys($patch->values),
-                clearFields: array_keys(array_filter($patch->values, static fn ($value): bool => $value === null))
+                clearFields: array_keys(array_filter($patch->values, static fn ($value): bool => $value === null)),
+                changedAttributes: array_merge(...array_values(array_intersect_key(self::ERROR_KEYS, $patch->attributes)))
             );
         });
     }
