@@ -1463,3 +1463,9 @@ msgstr "Выберите от 1 до 100 записей на этой стран
 
 msgid "List options"
 msgstr "Параметры списка"
+
+msgid "Choose the default value to keep. Other values remain in the draft until you save."
+msgstr "Выберите значение по умолчанию, которое нужно оставить. Остальные значения останутся в черновике до сохранения."
+
+msgid "Use this value"
+msgstr "Использовать это значение"

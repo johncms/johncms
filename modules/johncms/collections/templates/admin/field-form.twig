@@ -126,11 +126,17 @@
                         <input type="number" class="form-control" min="1" max="1000" id="max-values" name="max_values" value="{{ fields.max_values }}">
                         <div class="form-text">{{ __('For multiple fields. Leave limits empty to use the storage limits.') }}</div>
                     </fieldset>
-                    <div class="col-12" data-default-settings data-yes="{{ __('Yes') }}" data-no="{{ __('No') }}" data-empty="{{ __('No value') }}">
+                    <div class="col-12" data-default-settings data-yes="{{ __('Yes') }}" data-no="{{ __('No') }}" data-empty="{{ __('No value') }}" data-invalid="{{ __('Choose an available option for this field.') }}">
                         <div class="form-check mb-2">
                             <input class="form-check-input" type="checkbox" name="use_default" id="use-default" value="1"{% if fields.use_default %} checked{% endif %}>
                             <label class="form-check-label" for="use-default">{{ __('Use a default value') }}</label>
                         </div>
+                        <fieldset class="border rounded p-3 mb-3" data-default-choice hidden disabled>
+                            <label class="form-label" for="default-choice">{{ __('Choose the default value to keep. Other values remain in the draft until you save.') }}</label>
+                            <select class="form-select mb-2" id="default-choice"></select>
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-default-choose>{{ __('Use this value') }}</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" data-default-cancel>{{ __('Cancel') }}</button>
+                        </fieldset>
                         <fieldset class="mb-0" data-default-single>
                             <label class="form-label" for="field-default">{{ __('Default value') }}</label>
                             <textarea class="form-control" id="field-default" name="default_value" rows="2">{{ fields.default_value }}</textarea>

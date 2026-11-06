@@ -106,12 +106,25 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
       const label = form.querySelector(`label[for="${source.id}"], label[for="${source.id}-control"]`);
       if (label) label.htmlFor = source.id;
       const inputType = {string: 'text', integer: 'number', double: 'number', date: 'date', datetime: 'datetime-local'}[type.value];
-      if (!inputType && type.value !== 'boolean') return;
+      if (!inputType && !['boolean', 'select'].includes(type.value)) return;
       if (type.value === 'string' && /[\r\n]/.test(source.value)) return;
-      const control = document.createElement(type.value === 'boolean' ? 'select' : 'input');
+      const control = document.createElement(['boolean', 'select'].includes(type.value) ? 'select' : 'input');
       control.setAttribute('data-default-control', '');
-      control.className = type.value === 'boolean' ? 'form-select' : 'form-control';
-      if (type.value === 'boolean') {
+      control.className = ['boolean', 'select'].includes(type.value) ? 'form-select' : 'form-control';
+      if (type.value === 'select') {
+        control.add(new Option(defaults.dataset.empty, ''));
+        form.querySelectorAll('[data-key="options"] [data-repeat-row]').forEach(row => {
+          const code = row.querySelector('[name="option_code[]"]').value;
+          const label = row.querySelector('[name="option_label[]"]').value;
+          const active = row.querySelector('[name="option_active[]"]').value === '1';
+          if (code && active) control.add(new Option(label || code, code));
+        });
+        if (source.value && ![...control.options].some(option => option.value === source.value)) {
+          control.add(new Option(source.value, source.value));
+          control.setCustomValidity(defaults.dataset.invalid);
+          control.setAttribute('aria-invalid', 'true');
+        }
+      } else if (type.value === 'boolean') {
         for (const [value, label] of [['', defaults.dataset.empty], ['1', defaults.dataset.yes], ['0', defaults.dataset.no]]) {
           control.add(new Option(label, value));
         }
@@ -127,7 +140,11 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
       if (value !== '' && control.value === '') return;
       control.id = `${source.id}-control`;
       if (label) label.htmlFor = control.id;
-      control.addEventListener('input', () => { source.value = control.value; });
+      control.addEventListener('input', () => {
+        source.value = control.value;
+        control.setCustomValidity('');
+        control.removeAttribute('aria-invalid');
+      });
       source.before(control);
       source.hidden = true;
     });
@@ -147,13 +164,54 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
     });
     enhanceDefaults();
   };
-  multiple.addEventListener('change', update);
+  const choice = form.querySelector('[data-default-choice]');
+  const choiceSelect = choice.querySelector('select');
+  const single = form.querySelector('[name="default_value"]');
+  const repeatedSources = () => [...defaults.querySelectorAll('[data-default-multiple] [data-repeat-row] textarea')];
+  multiple.addEventListener('change', () => {
+    if (multiple.checked) {
+      if (single.value !== '' && repeatedSources().every(source => source.value === '')) {
+        if (!repeatedSources().length) defaults.querySelector('[data-repeat-op="add"]').click();
+        const first = repeatedSources()[0];
+        if (first) first.value = single.value;
+      }
+    } else {
+      const values = repeatedSources().map(source => source.value).filter(value => value.trim() !== '');
+      if (values.length > 1) {
+        multiple.checked = true;
+        choiceSelect.replaceChildren(...values.map((value, index) => new Option(`${index + 1}. ${value}`, value)));
+        toggle(choice, true);
+        choiceSelect.focus();
+        return;
+      }
+      single.value = values[0] ?? single.value;
+    }
+    toggle(choice, false);
+    update();
+  });
+  choice.querySelector('[data-default-choose]').addEventListener('click', () => {
+    single.value = choiceSelect.value;
+    multiple.checked = false;
+    toggle(choice, false);
+    update();
+    single.previousElementSibling?.matches('[data-default-control]') ? single.previousElementSibling.focus() : single.focus();
+  });
+  choice.querySelector('[data-default-cancel]').addEventListener('click', () => {
+    toggle(choice, false);
+    multiple.focus();
+  });
   type.addEventListener('change', update);
   fileStorage.addEventListener('change', update);
   useDefault.addEventListener('change', update);
   form.addEventListener('collection:values-changed', event => {
-    if (defaults.contains(event.target)) enhanceDefaults();
+    if (defaults.contains(event.target) || event.target.matches('[data-key="options"]')) enhanceDefaults();
   });
-  form.addEventListener('reset', () => queueMicrotask(update));
+  form.addEventListener('input', event => {
+    if (event.target.closest('[data-key="options"]')) enhanceDefaults();
+  });
+  form.addEventListener('change', event => {
+    if (event.target.closest('[data-key="options"]')) enhanceDefaults();
+  });
+  form.addEventListener('reset', () => queueMicrotask(() => { toggle(choice, false); update(); }));
   update();
 });

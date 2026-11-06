@@ -428,6 +428,8 @@
       'Continue' => 'Продолжить',
       'Select between 1 and 100 records on this page, then continue to confirmation.' => 'Выберите от 1 до 100 записей на этой странице и перейдите к подтверждению.',
       'List options' => 'Параметры списка',
+      'Choose the default value to keep. Other values remain in the draft until you save.' => 'Выберите значение по умолчанию, которое нужно оставить. Остальные значения останутся в черновике до сохранения.',
+      'Use this value' => 'Использовать это значение',
     ),
   ),
 );
