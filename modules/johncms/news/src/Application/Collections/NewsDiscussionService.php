@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Collections;
 
+use DateTimeImmutable;
+use DateTimeZone;
+use InvalidArgumentException;
 use Johncms\Auth\CurrentUser;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Content\ContentRendererInterface;
 use Johncms\Content\ContentContext;
 use Johncms\Files\FileStore;
+use Johncms\Modules\Collections\Application\Api\CollectionFileReferencesApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionItemRelationsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionLookupApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
@@ -42,7 +46,7 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
         private NewsDiscussionRepositoryInterface $discussion,
         private NewsDiscussionFiles $cleanup,
         private FileStore $files,
-        private \Johncms\Modules\Collections\Application\Api\CollectionFileReferencesApiInterface $collectionFiles,
+        private CollectionFileReferencesApiInterface $collectionFiles,
         private CurrentUser $user,
         private AccessCheckerInterface $access,
         private UserRepositoryInterface $users,
@@ -57,7 +61,7 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
     {
         $this->guard->read($itemId);
         if ($limit < 1 || $limit > 1000 || $offset < 0 || $offset > 1000000) {
-            throw new \InvalidArgumentException('Use a valid comment limit and offset.');
+            throw new InvalidArgumentException('Use a valid comment limit and offset.');
         }
         $rows = $this->discussion->comments($itemId, $limit, $offset);
         $users = $this->users->findMany(array_values(array_unique(array_map(static fn ($row): int => $row->user_id, $rows))));
@@ -72,7 +76,7 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
                 $itemId,
                 $row->user_id,
                 $this->content->render($row->text, new ContentContext(adminSmilies: $this->staff->isStaff($row->user_id))),
-                $this->dates->format((new \DateTimeImmutable($row->getRawOriginal('created_at'), new \DateTimeZone('UTC')))->getTimestamp()),
+                $this->dates->format((new DateTimeImmutable($row->getRawOriginal('created_at'), new DateTimeZone('UTC')))->getTimestamp()),
                 $author !== null ? new NewsAuthorDTO($author->id, $author->name, $author->status, $author->is_online, $author->rights_name) : null,
                 $this->user->isValid() && ($moderates || $this->user->id() === $row->user_id),
                 $canReply,
@@ -118,18 +122,23 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
         }
         $this->guard->delete($comment->user_id);
         $collection = $this->collection();
-        $this->withItem($collection->id, $comment->item_id, function () use ($comment, $collection): void {
-            $current = $this->discussion->findComment(id: $comment->id, current: true);
-            if ($current === null) {
-                return;
-            }
-            if ($current->item_id !== $comment->item_id) {
-                throw new NewsItemNotFoundException(d__('news', 'The comment is not available.'));
-            }
-            $this->guard->delete($current->user_id);
-            $files = $this->discussion->deleteComment($current->id);
-            $this->relations->afterCommit(fn () => $this->cleanup->cleanup($files, $collection->id));
-        });
+        $this->withItem(
+            collectionId:  $collection->id,
+            itemId:        $comment->item_id,
+            operation:     function () use ($comment, $collection): void {
+                $current = $this->discussion->findComment(id: $comment->id, current: true);
+                if ($current === null) {
+                    return;
+                }
+                if ($current->item_id !== $comment->item_id) {
+                    throw new NewsItemNotFoundException(d__('news', 'The comment is not available.'));
+                }
+                $this->guard->delete($current->user_id);
+                $files = $this->discussion->deleteComment($current->id);
+                $this->relations->afterCommit(fn () => $this->cleanup->cleanup($files, $collection->id));
+            },
+            publishedOnly: ! $this->access->allows(NewsPermissions::COMMENTS_MODERATE),
+        );
     }
 
     public function vote(int $itemId, int $vote): NewsDiscussionStats
@@ -151,7 +160,7 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
             return [];
         }
         if ($limit < 1 || $limit > 1000) {
-            throw new \InvalidArgumentException('Use a comment feed limit between 1 and 1000.');
+            throw new InvalidArgumentException('Use a comment feed limit between 1 and 1000.');
         }
         $collection = $this->collection();
         $rows = $this->discussion->latestComments($limit);
@@ -186,7 +195,7 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
                 $users[$row->user_id]->id ?? 0,
                 $users[$row->user_id]->name ?? '',
                 (string) $this->content->render($row->text),
-                (new \DateTimeImmutable($row->getRawOriginal('created_at'), new \DateTimeZone('UTC')))->getTimestamp()
+                (new DateTimeImmutable($row->getRawOriginal('created_at'), new DateTimeZone('UTC')))->getTimestamp()
             );
         }
         return $result;
@@ -203,14 +212,15 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
             ?? throw new NewsCollectionUnavailableException(d__('news', 'The news collection is missing. Run system:update.'));
     }
 
-    /** @template T
+    /**
+     * @template T
      * @param callable(): T $operation
      * @return T
      */
-    private function withItem(int $collectionId, int $itemId, callable $operation): mixed
+    private function withItem(int $collectionId, int $itemId, callable $operation, bool $publishedOnly = true): mixed
     {
         try {
-            return $this->relations->withItemLock(collectionId: $collectionId, itemId: $itemId, operation: $operation, publishedOnly: true);
+            return $this->relations->withItemLock(collectionId: $collectionId, itemId: $itemId, operation: $operation, publishedOnly: $publishedOnly);
         } catch (CollectionItemFormException $exception) {
             throw new NewsItemNotFoundException(message: d__('news', 'The requested article or section is not available.'), previous: $exception);
         }

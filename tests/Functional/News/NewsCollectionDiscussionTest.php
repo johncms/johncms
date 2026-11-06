@@ -136,6 +136,25 @@ final class NewsCollectionDiscussionTest extends FunctionalTestCase
         self::assertNotNull(Capsule::table('news_comments')->where('id', $id)->value('deleted_at'));
     }
 
+    public function testModeratorCanDeleteCommentsOfHiddenArticlesWhileAuthorsCannot(): void
+    {
+        $author = FunctionalUserFactory::createWithPermissions(['news.comments.post']);
+        $this->asUser($author);
+        $comment = $this->discussion->addComment($this->item, 'Hidden article comment');
+        Capsule::table('collection_items')->where('id', $this->item)->update(['active' => false]);
+        try {
+            $this->discussion->deleteComment($comment);
+            self::fail('Authors cannot bypass article visibility when deleting comments.');
+        } catch (NewsItemNotFoundException) {
+            self::assertNull(Capsule::table('news_comments')->where('id', $comment)->value('deleted_at'));
+        }
+        $this->asUser(FunctionalUserFactory::createWithPermissions(['news.comments.moderate']));
+        self::assertCount(1, $this->discussion->latestFeed(10));
+        $this->discussion->deleteComment($comment);
+        self::assertNotNull(Capsule::table('news_comments')->where('id', $comment)->value('deleted_at'));
+        self::assertSame(0, $this->discussion->countFeed());
+    }
+
     public function testItemAndSubtreeDeletionRemoveDiscussionAndRollbackRestoresIt(): void
     {
         $this->asUser(FunctionalUserFactory::createWithPermissions(['news.comments.post', 'news.vote']));
