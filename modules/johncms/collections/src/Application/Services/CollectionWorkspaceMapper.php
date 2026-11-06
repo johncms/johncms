@@ -31,6 +31,15 @@ final readonly class CollectionWorkspaceMapper
         return '/admin/collections/' . $collectionId . '/' . $tab;
     }
 
+    public static function returnUrl(int $collectionId, string $back): string
+    {
+        $list = self::url($collectionId);
+        if (preg_match('/[\x00-\x20\\\\]/', $back)) {
+            return $list;
+        }
+        return $back === $list || str_starts_with($back, $list . '?') ? $back : $list;
+    }
+
     /**
      * @param ContentCollection $collection Loaded with the counts of the repository (findWithCounts).
      * @return array<string, mixed>

@@ -42,11 +42,15 @@
     white-space: nowrap;
   }
 
-  td:first-child {
+  td.admin-collection-items__identity {
     width: 100%;
     min-width: 9rem;
     white-space: normal;
   }
+}
+
+.admin-collection-items__selection {
+  width: 1%;
 }
 
 .admin-collection-items__name {

@@ -78,11 +78,22 @@ final readonly class CollectionItemsAdminController
         $hasSections = $this->hasSections($collection);
         $items = $this->listItems->getPage($collection_id, $filter, $tree, $pagination->getPerPage(), $pagination->getOffset());
 
+        $bulkActions = [];
+        foreach (\Johncms\Modules\Collections\Application\Api\CollectionBulkApi::actions() as $action => $label) {
+            $allowed = $action === 'delete' ? $this->access->allowsAction($collection, 'delete') : $this->access->allowsAction($collection, 'edit');
+            if (in_array($action, ['publish', 'hide'], true)) {
+                $allowed = $allowed && $this->access->allowsAction($collection, 'publish');
+            }
+            if ($allowed && ($action !== 'move' || $hasSections)) {
+                $bulkActions[$action] = $label;
+            }
+        }
         $metaColumns = [];
         foreach ($this->listing->settings($collection)['columns'] as $column) {
             $metaColumns[$column] = $this->listing->columns()[$column];
         }
         $data = [
+            'bulk' => $bulkActions !== [] ? ['action' => $this->baseUrl($collection_id) . '/bulk', 'back' => $listUrl, 'actions' => $bulkActions, 'sections' => $hasSections ? $this->sectionOptions($collection_id) : []] : [],
             'list_controls' => $this->listing->controls($collection, $filter),
             'meta_columns' => $metaColumns,
             'controls'     => $this->controlsMapper->map($this->baseUrl($collection_id), $filter, $tree, $hasSections),
@@ -313,12 +324,7 @@ final readonly class CollectionItemsAdminController
      */
     private function returnUrl(int $collectionId, string $back): string
     {
-        $list = $this->baseUrl($collectionId);
-
-        if (preg_match('/[\x00-\x20\\\\]/', $back)) {
-            return $list;
-        }
-        return $back === $list || str_starts_with($back, $list . '?') ? $back : $list;
+        return CollectionWorkspaceMapper::returnUrl($collectionId, $back);
     }
 
     private function findOwnedItem(int $collectionId, int $id): ?ContentCollectionItem

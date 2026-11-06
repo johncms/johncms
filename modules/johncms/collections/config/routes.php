@@ -98,6 +98,10 @@ return static function (RouteCollection $router): void {
             ->name('collections.admin.files')
             ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
 
+        $router->post('/admin/collections/{collection_id:number}/items/bulk', \Johncms\Modules\Collections\Application\Controllers\Admin\CollectionBulkAdminController::class)
+            ->name('collections.admin.items.bulk')
+            ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
+
         // Items of a collection (with custom EAV fields).
         $router->get('/admin/collections/{collection_id:number}/items', [CollectionItemsAdminController::class, 'index'])
             ->name('collections.admin.items')

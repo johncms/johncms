@@ -9,6 +9,7 @@
 <table class="table table-hover align-middle admin-collection-items">
     <thead>
         <tr>
+            {% if bulk %}<th scope="col" class="admin-collection-items__selection"><span class="visually-hidden">{{ __('Select records') }}</span></th>{% endif %}
             <th scope="col">{{ __('Item') }}</th>
             {% for title in meta_columns %}
                 <th scope="col" class="d-none d-md-table-cell">{{ title }}</th>
@@ -23,7 +24,8 @@
     <tbody>
         {% for row in rows %}
             <tr>
-                <td>
+                {% if bulk %}<td class="admin-collection-items__selection"><input class="form-check-input" type="checkbox" name="ids[]" value="{{ row.id }}" form="collection-bulk-form" aria-label="{{ __('Select record: %s')|format(row.name) }}"></td>{% endif %}
+                <td class="admin-collection-items__identity">
                     {% if row.can_edit %}<a class="admin-collection-items__name" href="{{ row.edit_url }}">{{ row.name }}</a>{% else %}<span class="admin-collection-items__name">{{ row.name }}</span>{% endif %}
                     <div class="admin-collection-items__code">{{ row.code }}</div>
                 </td>

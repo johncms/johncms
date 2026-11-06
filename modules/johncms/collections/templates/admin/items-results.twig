@@ -28,9 +28,21 @@
                 </div>
             {% endif %}
         {% else %}
+            {% if bulk %}
+                <form method="post" action="{{ bulk.action }}" id="collection-bulk-form" class="card-header d-flex flex-wrap gap-2 align-items-end">
+                    <input type="hidden" name="bulk_started" value="1">
+                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                    <input type="hidden" name="back" value="{{ bulk.back }}">
+                    <div><label class="form-label" for="bulk-action">{{ __('Bulk actions') }}</label><select class="form-select" name="bulk_action" id="bulk-action">{% for key, title in bulk.actions %}<option value="{{ key }}">{{ title }}</option>{% endfor %}</select></div>
+                    {% if 'move' in bulk.actions|keys %}<div><label class="form-label" for="bulk-section">{{ __('Destination section for moving') }}</label><select class="form-select" name="target_section" id="bulk-section"><option value="0">{{ __('Without a section') }}</option>{% for id, title in bulk.sections %}<option value="{{ id }}">{{ title }}</option>{% endfor %}</select></div>{% endif %}
+                    <button class="btn btn-outline-primary" type="submit">{{ __('Continue') }}</button>
+                    <div class="form-text w-100">{{ __('Select between 1 and 100 records on this page, then continue to confirmation.') }}</div>
+                </form>
+            {% endif %}
             <div class="table-responsive">
-                {% include '@collections/admin/components/items-table.twig' with {rows: rows, columns: columns, meta_columns: meta_columns, has_sections: has_sections} only %}
+                {% include '@collections/admin/components/items-table.twig' with {rows: rows, columns: columns, bulk: bulk, meta_columns: meta_columns, has_sections: has_sections} only %}
             </div>
+            {% if bulk %}<input type="hidden" name="bulk_complete" value="1" form="collection-bulk-form">{% endif %}
             <div class="card-footer admin-list-footer">
                 <span class="admin-list-footer__total">{{ __('Found: %s')|format(total|format_number) }}</span>
                 <div class="pagination-no-padding">{{ pagination }}</div>

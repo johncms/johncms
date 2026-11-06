@@ -45,6 +45,7 @@ return static function (ContainerConfigurator $container): void {
         ->autowire()
         ->autoconfigure();
 
+    $services->set(\Johncms\Modules\Collections\Application\Api\CollectionBulkApiInterface::class, \Johncms\Modules\Collections\Application\Api\CollectionBulkApi::class)->autowire()->public();
     $services->set(ContentCollectionRepositoryInterface::class, ContentCollectionRepository::class)->public();
     $services->set(ContentCollectionFieldRepositoryInterface::class, ContentCollectionFieldRepository::class)->public();
     $services->set(ContentCollectionSectionRepositoryInterface::class, ContentCollectionSectionRepository::class)->public();

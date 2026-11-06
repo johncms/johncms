@@ -218,7 +218,7 @@ final class CollectionWorkspaceTest extends FunctionalTestCase
         $base = '/admin/collections/' . $collection . '/items';
         $html = (string) $this->handleRequest($base, cookies: $this->actingAs($user))->getContent();
         $document = HTMLDocument::createFromString($html, LIBXML_NOERROR);
-        self::assertSame('Many visits', trim($document->querySelector('tbody tr:first-child td:first-child a')->textContent));
+        self::assertSame('Many visits', trim($document->querySelector('.admin-collection-items tbody tr:first-child .admin-collection-items__name')->textContent));
         self::assertStringContainsString($other->name, $document->querySelector('tbody')->textContent);
         self::assertNotNull($document->querySelector('input[name="created_from"]'));
         $query = '?author=' . $user->id . '&created_from=2026-01-02&created_to=2026-01-02&min_views=1';

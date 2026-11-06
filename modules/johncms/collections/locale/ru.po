@@ -1382,3 +1382,84 @@ msgstr "Наследовать доступ к содержимому"
 
 msgid "Publication settings require a separate permission."
 msgstr "Для изменения публикации требуется отдельное право."
+
+msgid "Publish now"
+msgstr "Опубликовать сейчас"
+
+msgid "Hide items"
+msgstr "Скрыть записи"
+
+msgid "Move items"
+msgstr "Переместить записи"
+
+msgid "The selection changed after confirmation. Nothing was changed. Open a new confirmation."
+msgstr "Выборка изменилась после подтверждения. Ничего не изменено. Откройте новое подтверждение."
+
+msgid "Every selected item must still belong to this collection. Nothing was changed."
+msgstr "Все выбранные записи должны по-прежнему принадлежать этой коллекции. Ничего не изменено."
+
+msgid "Choose an available bulk action and between 1 and 100 distinct records."
+msgstr "Выберите доступное массовое действие и от 1 до 100 разных записей."
+
+msgid "Processed records: %d."
+msgstr "Обработано записей: %d."
+
+msgid "The destination contains conflicting record codes. Nothing was changed. Resolve the duplicates before moving."
+msgstr "В целевом разделе совпадают коды записей. Ничего не изменено. Устраните совпадения перед переносом."
+
+msgid "The selection changed during processing. Nothing was changed. Open a new confirmation."
+msgstr "Выборка изменилась во время обработки. Ничего не изменено. Откройте новое подтверждение."
+
+msgid "Confirm bulk action"
+msgstr "Подтверждение массового действия"
+
+msgid "Bulk actions"
+msgstr "Массовые действия"
+
+msgid "Selected records: %d."
+msgstr "Выбрано записей: %d."
+
+msgid "Destination section: %s"
+msgstr "Целевой раздел: %s"
+
+msgid "The records will be enabled immediately and their publication dates will be cleared."
+msgstr "Записи станут активными сразу, даты начала и окончания публикации будут очищены."
+
+msgid "The records will be disabled. Their publication dates will be preserved."
+msgstr "Записи станут неактивными. Даты публикации сохранятся."
+
+msgid "Selected records and their associated data will be deleted permanently."
+msgstr "Выбранные записи и связанные с ними данные будут удалены безвозвратно."
+
+msgid "Relation values to clear: %d."
+msgstr "Значений связей для очистки: %d."
+
+msgid "Blocking relation values: %d."
+msgstr "Блокирующих значений связей: %d."
+
+msgid "Field defaults preventing deletion: %d."
+msgstr "Значений полей по умолчанию, блокирующих удаление: %d."
+
+msgid "The whole selection is processed together. A validation or permission failure leaves all selected records unchanged."
+msgstr "Вся выборка обрабатывается вместе. При ошибке проверки данных или прав все выбранные записи останутся без изменений."
+
+msgid "Confirm action"
+msgstr "Подтвердить действие"
+
+msgid "Select records"
+msgstr "Выбрать записи"
+
+msgid "Select record: %s"
+msgstr "Выбрать запись: %s"
+
+msgid "Destination section for moving"
+msgstr "Раздел для перемещения"
+
+msgid "Continue"
+msgstr "Продолжить"
+
+msgid "Select between 1 and 100 records on this page, then continue to confirmation."
+msgstr "Выберите от 1 до 100 записей на этой странице и перейдите к подтверждению."
+
+msgid "List options"
+msgstr "Параметры списка"

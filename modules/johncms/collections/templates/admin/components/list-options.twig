@@ -1,4 +1,6 @@
-<form method="get" action="{{ controls.action }}" class="card card-body mb-3" data-live-list-region="options">
+<details class="card mb-3" data-live-list-region="options"{% if options.author is not null or options.created_from is not null or options.created_to is not null or options.min_views is not null %} open{% endif %}>
+    <summary class="card-header">{{ __('List options') }} <span class="text-body-secondary ms-2">{{ options.sorts[options.sort] }} · {{ options.direction == 'asc' ? __('Ascending') : __('Descending') }}</span></summary>
+    <form method="get" action="{{ controls.action }}" class="card-body">
     {% for name, value in controls.state %}
         {% if name not in ['order', 'direction', 'author', 'created_from', 'created_to', 'min_views'] %}<input type="hidden" name="{{ name }}" value="{{ value }}">{% endif %}
     {% endfor %}
@@ -20,4 +22,5 @@
         {% if 'views' in options.enabled %}<div class="col-md-2"><label class="form-label" for="list-views">{{ __('Minimum views') }}</label><input class="form-control" type="number" min="0" max="2147483647" id="list-views" name="min_views" value="{{ options.min_views }}"></div>{% endif %}
         <div class="col-auto"><button type="submit" class="btn btn-outline-primary">{{ __('Apply') }}</button></div>
     </div>
-</form>
+    </form>
+</details>
