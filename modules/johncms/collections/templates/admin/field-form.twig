@@ -82,18 +82,31 @@
                         <div class="form-text">{{ __('Existing paths require explicit conversion before switching to registered file IDs.') }}</div>
                         <fieldset class="mb-0" data-file-storage="registry">
                             <input type="hidden" name="file_constraints_present" value="1">
-                            <label class="form-label mt-2" for="max-file-bytes">{{ __('Maximum file size in bytes') }}</label>
-                            <input class="form-control" type="number" min="1" max="1073741824" step="1" name="max_file_bytes" id="max-file-bytes" value="{{ fields.max_file_bytes }}">
+                            <label class="form-label mt-2" for="max-file-bytes">{{ __('Maximum file size') }}</label>
+                            <div class="input-group">
+                                <input class="form-control" type="number" min="0" step="any" name="max_file_bytes" id="max-file-bytes" value="{{ fields.max_file_bytes }}">
+                                <select class="form-select" name="file_size_unit" aria-label="{{ __('File size unit') }}">
+                                    {% for unit, label in {'1': __('Bytes'), '1024': 'KiB', '1048576': 'MiB'} %}<option value="{{ unit }}"{% if file_size_unit == unit ~ '' %} selected{% endif %}>{{ label }}</option>{% endfor %}
+                                </select>
+                            </div>
                             <label class="form-label mt-2" for="file-types">{{ __('Allowed file types') }}</label>
-                            <select class="form-select" multiple size="5" name="allowed_mime_types[]" id="file-types">
-                                {% for mime, extension in file_types %}<option value="{{ mime }}"{% if mime in fields.allowed_mime_types %} selected{% endif %}>{{ extension|upper }}</option>{% endfor %}
-                            </select>
+                            <div class="d-flex flex-wrap gap-3" id="file-types">
+                                {% for mime, extension in file_types %}
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" name="allowed_mime_types[]" id="file-type-{{ loop.index }}" value="{{ mime }}"{% if mime in fields.allowed_mime_types %} checked{% endif %}>
+                                        <label class="form-check-label" for="file-type-{{ loop.index }}">{{ extension|upper }} <span class="text-muted small">{{ mime }}</span></label>
+                                    </div>
+                                {% endfor %}
+                            </div>
                             <div class="form-text">{{ __('The actual file content is checked. Server upload and image limits also apply.') }}</div>
                         </fieldset>
                     </fieldset>
                     <fieldset class="col-12 mb-0" data-field-types="relation">
-                        <label class="form-label" for="relation-target">{{ __('Target collection ID') }}</label>
-                        <input class="form-control" type="number" min="1" step="1" name="target_collection_id" id="relation-target" value="{{ fields.target_collection_id }}"{% if structure_locked %} readonly{% endif %}>
+                        <label class="form-label" for="relation-target">{{ __('Target collection') }}</label>
+                        <select class="form-select" name="target_collection_id" id="relation-target"{% if structure_locked %} disabled{% endif %}>
+                            {% include '@collections/admin/components/select-options.twig' with {options: collection_options, current: fields.target_collection_id ~ ''} only %}
+                        </select>
+                        {% if structure_locked %}<input type="hidden" name="target_collection_id" value="{{ fields.target_collection_id }}">{% endif %}
                         <label class="form-label mt-2" for="relation-on-delete">{{ __('When a related item is deleted') }}</label>
                         <select class="form-select" id="relation-on-delete" name="relation_on_delete">
                             <option value="restrict"{% if fields.relation_on_delete == 'restrict' %} selected{% endif %}>{{ __('Prevent deletion while referenced') }}</option>
@@ -134,6 +147,19 @@
                             <input class="form-check-input" type="checkbox" name="use_default" id="use-default" value="1"{% if fields.use_default %} checked{% endif %}>
                             <label class="form-check-label" for="use-default">{{ __('Use a default value') }}</label>
                         </div>
+                        <fieldset class="mb-3" data-default-lookup data-url="{{ form_action }}/choices"
+                                  data-options="{{ default_options|json_encode }}" data-error="{{ __('Could not load default choices. Try again.') }}">
+                            <label class="form-label" for="default-query">{{ __('Search default values') }}</label>
+                            <div class="input-group">
+                                <input type="search" class="form-control" id="default-query" name="default_query" maxlength="255" value="{{ default_query }}">
+                                <button type="submit" class="btn btn-outline-secondary" name="lookup_defaults" value="1" formnovalidate>{{ __('Search') }}</button>
+                            </div>
+                            <p class="form-text mb-0" role="status" data-default-lookup-status>{{ default_lookup_error }}</p>
+                            <select name="lookup_value" class="form-select mt-2" data-default-lookup-result aria-label="{{ __('Default value') }}">
+                                {% include '@collections/admin/components/select-options.twig' with {options: default_options, current: ''} only %}
+                            </select>
+                            <button type="submit" name="apply_default" value="1" formnovalidate class="btn btn-outline-secondary btn-sm mt-2" data-default-lookup-apply>{{ __('Use this value') }}</button>
+                        </fieldset>
                         <fieldset class="border rounded p-3 mb-3" data-default-choice hidden disabled>
                             <label class="form-label" for="default-choice">{{ __('Choose the default value to keep. Other values remain in the draft until you save.') }}</label>
                             <select class="form-select mb-2" id="default-choice"></select>

@@ -1469,3 +1469,24 @@ msgstr "Выберите значение по умолчанию, которо�
 
 msgid "Use this value"
 msgstr "Использовать это значение"
+
+msgid "Use a search term of at most 255 characters."
+msgstr "Введите поисковый запрос длиной не более 255 символов."
+
+msgid "Target collection"
+msgstr "Целевая коллекция"
+
+msgid "Maximum file size"
+msgstr "Максимальный размер файла"
+
+msgid "File size unit"
+msgstr "Единица размера файла"
+
+msgid "Bytes"
+msgstr "Байты"
+
+msgid "Could not load default choices. Try again."
+msgstr "Не удалось загрузить варианты значений по умолчанию. Попробуйте ещё раз."
+
+msgid "Search default values"
+msgstr "Поиск значений по умолчанию"

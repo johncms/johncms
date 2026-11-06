@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Functional\Collections;
 
 use Dom\HTMLDocument;
+use Johncms\Files\FileStore;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
@@ -286,6 +287,66 @@ final class CollectionFieldSettingsTest extends FunctionalTestCase
         ], $editor);
         self::assertSame(302, $response->getStatusCode());
         self::assertSame('Changed hint', $this->schema->getFields($this->collection)[0]->settings['hint']);
+    }
+
+    public function testUnsavedRelationChoicesAreScopedAndPostFallbackDoesNotSaveSchema(): void
+    {
+        $target = Fixture::insert('collections', ['code' => 'target', 'name' => 'Target']);
+        $selected = Fixture::insert('collection_items', ['collection_id' => $target, 'name' => 'Selected']);
+        Fixture::insert('collection_items', ['collection_id' => $this->collection, 'name' => 'Foreign']);
+        $editor = FunctionalUserFactory::createSupervisor();
+        $data = ['type' => 'relation', 'target_collection_id' => (string) $target, 'default_query' => 'no matches', 'default_value' => (string) $selected];
+        $response = $this->postForm('/admin/collections/' . $this->collection . '/fields/choices', $data, $editor);
+        self::assertSame(200, $response->getStatusCode());
+        $options = json_decode((string) $response->getContent(), true, 512, JSON_THROW_ON_ERROR)['options'];
+        self::assertSame([(string) $selected], array_column($options, 'code'));
+        self::assertStringContainsString('Selected', $options[0]['label']);
+        $response = $this->postForm('/admin/collections/' . $this->collection . '/fields', $data + ['apply_default' => '1', 'lookup_value' => (string) $selected], $editor);
+        self::assertSame(200, $response->getStatusCode());
+        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
+        self::assertSame((string) $selected, $document->querySelector('[name="default_value"]')->textContent);
+        self::assertSame(0, Capsule::table('collection_fields')->where('collection_id', $this->collection)->count());
+        $member = FunctionalUserFactory::createWithPermissions([]);
+        self::assertSame(403, $this->postForm('/admin/collections/' . $this->collection . '/fields/choices', $data, $member)->getStatusCode());
+    }
+
+    public function testUnsavedFileChoicesExcludeForeignAndIncompatibleFiles(): void
+    {
+        $store = $this->container()->get(FileStore::class);
+        $file = $store->storeContents('Available text', 'available.txt', 'field-default-tests');
+        $foreign = $store->storeContents('Foreign text', 'foreign.txt', 'field-default-tests');
+        try {
+            $item = Fixture::insert('collection_items', ['collection_id' => $this->collection, 'name' => 'Source']);
+            Fixture::insert('collection_file_assets', ['file_id' => $file->id, 'managed' => false]);
+            Fixture::insert('collection_file_links', ['file_id' => $file->id, 'item_id' => $item]);
+            $editor = FunctionalUserFactory::createSupervisor();
+            $url = '/admin/collections/' . $this->collection . '/fields/choices';
+            $data = ['type' => 'file', 'file_storage' => 'registry', 'file_constraints_present' => '1', 'max_file_bytes' => '1024', 'allowed_mime_types' => ['text/plain']];
+            $response = $this->postForm($url, $data, $editor);
+            self::assertSame(200, $response->getStatusCode());
+            $options = json_decode((string) $response->getContent(), true, 512, JSON_THROW_ON_ERROR)['options'];
+            self::assertSame([(string) $file->id], array_column($options, 'code'));
+            self::assertStringContainsString('available.txt', $options[0]['label']);
+            $data['max_file_bytes'] = '1';
+            $response = $this->postForm($url, $data, $editor);
+            self::assertSame([], json_decode((string) $response->getContent(), true, 512, JSON_THROW_ON_ERROR)['options']);
+        } finally {
+            $store->deleteMany([$file->id, $foreign->id]);
+        }
+    }
+
+    public function testFileSizeUnitsAreExactAndInvalidFractionsAreRejected(): void
+    {
+        $editor = FunctionalUserFactory::createSupervisor();
+        $data = ['code' => 'file', 'name' => 'File', 'type' => 'file', 'file_storage' => 'registry', 'file_constraints_present' => '1', 'max_file_bytes' => '1.5', 'file_size_unit' => '1048576', 'allowed_mime_types' => ['text/plain']];
+        $response = $this->postForm('/admin/collections/' . $this->collection . '/fields', $data, $editor);
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame(1572864, $this->schema->getFields($this->collection)[0]->settings['max_file_bytes']);
+        $data['code'] = 'invalid';
+        $data['max_file_bytes'] = '0.1';
+        $data['file_size_unit'] = '1024';
+        self::assertSame(200, $this->postForm('/admin/collections/' . $this->collection . '/fields', $data, $editor)->getStatusCode());
+        self::assertCount(1, $this->schema->getFields($this->collection));
     }
 
     /** @param array<string, mixed> $settings */

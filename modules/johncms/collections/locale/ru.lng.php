@@ -430,6 +430,13 @@
       'List options' => 'Параметры списка',
       'Choose the default value to keep. Other values remain in the draft until you save.' => 'Выберите значение по умолчанию, которое нужно оставить. Остальные значения останутся в черновике до сохранения.',
       'Use this value' => 'Использовать это значение',
+      'Use a search term of at most 255 characters.' => 'Введите поисковый запрос длиной не более 255 символов.',
+      'Target collection' => 'Целевая коллекция',
+      'Maximum file size' => 'Максимальный размер файла',
+      'File size unit' => 'Единица размера файла',
+      'Bytes' => 'Байты',
+      'Could not load default choices. Try again.' => 'Не удалось загрузить варианты значений по умолчанию. Попробуйте ещё раз.',
+      'Search default values' => 'Поиск значений по умолчанию',
     ),
   ),
 );

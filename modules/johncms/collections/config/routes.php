@@ -51,6 +51,9 @@ return static function (RouteCollection $router): void {
         $router->get('/admin/collections/{collection_id:number}/fields', [CollectionFieldsAdminController::class, 'index'])
             ->name('collections.admin.fields')
             ->permission(CollectionsPermissions::MANAGE);
+        $router->post('/admin/collections/{collection_id:number}/fields/choices', [CollectionFieldsAdminController::class, 'defaultChoices'])
+            ->name('collections.admin.fields.choices')
+            ->permission(CollectionsPermissions::MANAGE);
         $router->get('/admin/collections/{collection_id:number}/fields/new', [CollectionFieldsAdminController::class, 'newForm'])
             ->name('collections.admin.fields.new')
             ->permission(CollectionsPermissions::MANAGE);

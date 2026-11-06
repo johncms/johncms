@@ -38,6 +38,19 @@ final readonly class CollectionFileChoices
         if ($field === null || $field->type !== FieldType::File || ($field->settings['file_storage'] ?? 'legacy') !== 'registry' || mb_strlen($term) > 255 || count($selected) > 1000) {
             throw new InvalidArgumentException('Choose a registered file field, a search term up to 255 characters and at most 1000 selected values.');
         }
+        return $this->searchSettings($collectionId, $code, $field->settings ?? [], $term, $selected, $context);
+    }
+
+    /** @param array<string, mixed> $settings
+     * @param list<string> $selected
+     * @return list<CollectionFileChoiceDTO>
+     */
+    public function searchSettings(int $collectionId, string $code, array $settings, string $term = '', array $selected = [], ?string $context = null): array
+    {
+        $this->access->execute($collectionId);
+        if (mb_strlen($term) > 255 || count($selected) > 1000) {
+            throw new InvalidArgumentException('Use a search term up to 255 characters and at most 1000 selected values.');
+        }
         $term = trim($term);
         $ids = $this->links->availableForCollection($collectionId, false);
         if ($context !== null) {
@@ -64,7 +77,7 @@ final readonly class CollectionFileChoices
                 if ($file === null || (! $matched && ! $keep)) {
                     continue;
                 }
-                $mime = $this->policy->assertStored($id, $code, $field->settings ?? []);
+                $mime = $this->policy->assertStored($id, $code, $settings);
             } catch (FileStoreException | CollectionItemFormException) {
                 // Unavailable or incompatible entries cannot be selected; retained IDs get a placeholder in the form.
                 continue;

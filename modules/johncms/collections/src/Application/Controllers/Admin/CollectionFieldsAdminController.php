@@ -13,6 +13,8 @@ use Johncms\Modules\Collections\Application\DTO\CollectionFieldListItemDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionFieldCodeAlreadyExistsException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
 use Johncms\Modules\Collections\Application\Services\CollectionFilePolicy;
+use Johncms\Modules\Collections\Application\Services\CollectionFieldFormChoices;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Johncms\Modules\Collections\Application\Services\CollectionRepeatedValues;
 use Johncms\Modules\Collections\Application\Services\CollectionWorkspaceMapper;
 use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionFieldUseCase;
@@ -36,6 +38,7 @@ final readonly class CollectionFieldsAdminController
         private SaveCollectionFieldUseCase $saveField,
         private DeleteCollectionFieldUseCase $deleteField,
         private Session $session,
+        private CollectionFieldFormChoices $choices,
         private CollectionRepeatedValues $repeated = new CollectionRepeatedValues(),
     ) {
     }
@@ -125,6 +128,26 @@ final readonly class CollectionFieldsAdminController
                 return $this->renderForm($collection, $id, $fields, [$exception->getMessage()]);
             }
         }
+        if ($request->hasBody('apply_default')) {
+            try {
+                $value = $request->body('lookup_value');
+                if ($value === '' || ! in_array($value, array_column($this->defaultOptions($collection_id, $fields), 'code'), true)) {
+                    throw new InvalidArgumentException(d__('collections', 'Choose an available option for this field.'));
+                }
+                $fields['use_default'] = true;
+                if ($fields['multiple']) {
+                    $fields['default_values'][] = $value;
+                } else {
+                    $fields['default_value'] = $value;
+                }
+                return $this->renderForm($collection, $id, $fields);
+            } catch (CollectionSchemaException | InvalidArgumentException $exception) {
+                return $this->renderForm($collection, $id, $fields, [$exception->getMessage()]);
+            }
+        }
+        if ($request->hasBody('lookup_defaults')) {
+            return $this->renderForm($collection, $id, $fields);
+        }
         $errors = $this->validate($fields);
 
         if ($errors !== []) {
@@ -141,6 +164,31 @@ final readonly class CollectionFieldsAdminController
 
         $this->session->flash('success_message', $id !== null ? __('Changes saved') : __('Created successfully'));
         redirect($this->baseUrl($collection_id));
+    }
+
+    public function defaultChoices(Request $request, int $collection_id): JsonResponse
+    {
+        if ($this->collectionRepository->findById($collection_id) === null) {
+            return new JsonResponse(['error' => d__('collections', 'Collection not found.')], 404);
+        }
+        try {
+            $fields = $this->fieldsFromRequest($request);
+            return new JsonResponse(['options' => $this->defaultOptions($collection_id, $fields)], 200, ['Cache-Control' => 'no-store']);
+        } catch (CollectionSchemaException | InvalidArgumentException $exception) {
+            return new JsonResponse(['error' => $exception->getMessage()], 422);
+        }
+    }
+
+    /** @param array<string, mixed> $fields
+     * @return list<array{code: string, label: string}>
+     */
+    private function defaultOptions(int $collectionId, array $fields): array
+    {
+        $type = FieldType::tryFrom($fields['type']);
+        if (! in_array($type, [FieldType::Relation, FieldType::File], true) || ($type === FieldType::File && $fields['file_storage'] !== 'registry')) {
+            return [];
+        }
+        return $this->choices->values($collectionId, $type, $this->settingsFromFields($fields), $fields['default_query'] ?? '', array_values(array_unique([$fields['default_value'], ...$fields['default_values']])));
     }
 
     public function deleteConfirm(Request $request, int $collection_id, int $id): ViewResponse
@@ -245,9 +293,23 @@ final readonly class CollectionFieldsAdminController
         $title = $id !== null ? __('Edit field') : __('New field');
         $this->navChain->add($title);
 
+        $defaultOptions = [];
+        $lookupError = '';
+        if (in_array($fields['type'], ['file', 'relation'], true)) {
+            try {
+                $defaultOptions = $this->defaultOptions($collection->id, $fields);
+            } catch (CollectionSchemaException | InvalidArgumentException $exception) {
+                $lookupError = $exception->getMessage();
+            }
+        }
         return new ViewResponse('@collections/admin/field-form.twig', $this->menu($title, $collection->name) + [
             'form_action'  => $this->baseUrl($collection->id),
             'file_types' => CollectionFilePolicy::TYPES,
+            'collection_options' => $this->choices->collections(),
+            'default_options' => $defaultOptions,
+            'default_query' => $fields['default_query'] ?? '',
+            'file_size_unit' => $fields['file_size_unit'] ?? '1',
+            'default_lookup_error' => $lookupError,
             'structure_locked' => $locked,
             'legacy_file' => $field?->type === FieldType::File && ($field->settings['file_storage'] ?? 'legacy') === 'legacy',
             'owner_module' => $field->owner_module ?? '',
@@ -278,11 +340,13 @@ final readonly class CollectionFieldsAdminController
             'in_list'  => $request->hasBody('in_list') ? 1 : 0,
             'sort'     => $request->bodyInt('sort', 100),
             'repeat_exact' => true,
+            'default_query' => $request->body('default_query'),
             'option_rows' => $this->optionsFromRequest($request),
             'target_collection_id' => $request->body('target_collection_id'),
             'relation_on_delete' => $request->body('relation_on_delete', 'restrict'),
             'file_storage' => $request->body('file_storage', 'registry'),
             'max_file_bytes' => $request->body('max_file_bytes'),
+            'file_size_unit' => $request->body('file_size_unit', '1'),
             'file_constraints_present' => $request->hasBody('file_constraints_present'),
             'file_storage_present' => $request->hasBody('file_storage'),
             'allowed_mime_types' => array_values(array_filter($request->bodyList('allowed_mime_types'), is_string(...))),
@@ -407,7 +471,13 @@ final readonly class CollectionFieldsAdminController
                 $settings['allowed_mime_types'] = null;
             } elseif ($fields['file_constraints_present'] ?? true) {
                 $bytes = filter_var($fields['max_file_bytes'], FILTER_VALIDATE_INT);
-                $settings['max_file_bytes'] = $fields['max_file_bytes'] === '' ? null : ($bytes !== false ? $bytes : $fields['max_file_bytes']);
+                $size = $fields['max_file_bytes'];
+                $unit = $fields['file_size_unit'] ?? '1';
+                if ($unit !== '1') {
+                    $scaled = is_numeric($size) && in_array($unit, ['1024', '1048576'], true) ? (float) $size * (int) $unit : -1;
+                    $bytes = is_finite($scaled) && $scaled >= 1 && $scaled <= 1073741824 && floor($scaled) === $scaled ? (int) $scaled : false;
+                }
+                $settings['max_file_bytes'] = $size === '' ? null : ($bytes !== false ? $bytes : ($unit !== '1' ? 'invalid file size' : $size));
                 $settings['allowed_mime_types'] = $fields['allowed_mime_types'];
             }
         }

@@ -98,6 +98,12 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   const fileStorage = form.querySelector('select[name="file_storage"]');
   const useDefault = form.querySelector('input[name="use_default"]');
   const defaults = form.querySelector('[data-default-settings]');
+  const lookup = form.querySelector('[data-default-lookup]');
+  const lookupStatus = lookup.querySelector('[data-default-lookup-status]');
+  const lookupResult = lookup.querySelector('[data-default-lookup-result]');
+  let lookupOptions = JSON.parse(lookup.dataset.options);
+  let lookupRequest;
+  const usesLookup = () => type.value === 'relation' || (type.value === 'file' && fileStorage.value === 'registry');
   let htmlQueue = Promise.resolve();
   const syncHtml = () => {
     htmlQueue = htmlQueue.then(async () => {
@@ -129,14 +135,15 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
       const label = form.querySelector(`label[for="${source.id}"], label[for="${source.id}-control"]`);
       if (label) label.htmlFor = source.id;
       const inputType = {string: 'text', integer: 'number', double: 'number', date: 'date', datetime: 'datetime-local'}[type.value];
-      if (!inputType && !['boolean', 'select'].includes(type.value)) return;
+      if (!inputType && !['boolean', 'select'].includes(type.value) && !usesLookup()) return;
       if (type.value === 'string' && /[\r\n]/.test(source.value)) return;
-      const control = document.createElement(['boolean', 'select'].includes(type.value) ? 'select' : 'input');
+      const control = document.createElement(['boolean', 'select'].includes(type.value) || usesLookup() ? 'select' : 'input');
       control.setAttribute('data-default-control', '');
-      control.className = ['boolean', 'select'].includes(type.value) ? 'form-select' : 'form-control';
-      if (type.value === 'select') {
+      control.className = ['boolean', 'select'].includes(type.value) || usesLookup() ? 'form-select' : 'form-control';
+      if (type.value === 'select' || usesLookup()) {
         control.add(new Option(defaults.dataset.empty, ''));
-        form.querySelectorAll('[data-key="options"] [data-repeat-row]').forEach(row => {
+        if (usesLookup()) lookupOptions.forEach(option => control.add(new Option(option.label, option.code)));
+        else form.querySelectorAll('[data-key="options"] [data-repeat-row]').forEach(row => {
           const code = row.querySelector('[name="option_code[]"]').value;
           const label = row.querySelector('[name="option_label[]"]').value;
           const active = row.querySelector('[name="option_active[]"]').value === '1';
@@ -177,6 +184,7 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
     group.disabled = !visible;
   };
   const update = () => {
+    toggle(lookup, useDefault.checked && usesLookup());
     toggle(form.querySelector('[data-default-single]'), useDefault.checked && !multiple.checked);
     toggle(form.querySelector('[data-default-multiple]'), useDefault.checked && multiple.checked);
     form.querySelectorAll('[data-field-types]').forEach(group => toggle(group, group.dataset.fieldTypes.split(' ').includes(type.value)));
@@ -192,6 +200,59 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   const choiceSelect = choice.querySelector('select');
   const single = form.querySelector('[name="default_value"]');
   const repeatedSources = () => [...defaults.querySelectorAll('[data-default-multiple] [data-repeat-row] textarea')];
+  lookup.querySelector('[name="lookup_defaults"]').addEventListener('click', async event => {
+    event.preventDefault();
+    lookupRequest?.abort();
+    const request = new AbortController();
+    lookupRequest = request;
+    lookup.setAttribute('aria-busy', 'true');
+    try {
+      const response = await fetch(lookup.dataset.url, {
+        method: 'POST', credentials: 'same-origin', headers: {'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest'},
+        body: new FormData(form), signal: request.signal,
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(typeof data.error === 'string' ? data.error : lookup.dataset.error);
+      if (!Array.isArray(data.options) || !data.options.every(option => typeof option.code === 'string' && typeof option.label === 'string')) throw new Error(lookup.dataset.error);
+      if (lookupRequest !== request) return;
+      lookupOptions = data.options;
+      lookupResult.replaceChildren(new Option(defaults.dataset.empty, ''), ...lookupOptions.map(option => new Option(option.label, option.code)));
+      lookupStatus.textContent = `${lookupOptions.length}`;
+      enhanceDefaults();
+    } catch (error) {
+      if (error.name !== 'AbortError') lookupStatus.textContent = error.message || lookup.dataset.error;
+    } finally {
+      if (lookupRequest === request) lookup.removeAttribute('aria-busy');
+    }
+  });
+  lookup.querySelector('[data-default-lookup-apply]').addEventListener('click', event => {
+    event.preventDefault();
+    if (!lookupResult.value) return;
+    useDefault.checked = true;
+    if (multiple.checked) {
+      let target = repeatedSources().find(source => source.value === '');
+      if (!target) {
+        defaults.querySelector('[data-default-multiple] [data-repeat-op="add"]').click();
+        target = repeatedSources().at(-1);
+      }
+      if (target) target.value = lookupResult.value;
+    } else single.value = lookupResult.value;
+    update();
+  });
+  const invalidateLookup = () => {
+    lookupRequest?.abort();
+    lookupRequest = null;
+    lookup.removeAttribute('aria-busy');
+    lookupOptions = [];
+    lookupResult.replaceChildren(new Option(defaults.dataset.empty, ''));
+    lookupStatus.textContent = '';
+    enhanceDefaults();
+  };
+  for (const input of form.querySelectorAll('[name="target_collection_id"], [name="max_file_bytes"], [name="file_size_unit"], [name="allowed_mime_types[]"]')) {
+    input.addEventListener('change', invalidateLookup);
+  }
+  type.addEventListener('change', invalidateLookup);
+  fileStorage.addEventListener('change', invalidateLookup);
   multiple.addEventListener('change', () => {
     if (multiple.checked) {
       if (single.value !== '' && repeatedSources().every(source => source.value === '')) {
@@ -241,6 +302,6 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   form.addEventListener('change', event => {
     if (event.target.closest('[data-key="options"]')) enhanceDefaults();
   });
-  form.addEventListener('reset', () => queueMicrotask(() => { toggle(choice, false); update(); }));
+  form.addEventListener('reset', () => queueMicrotask(() => { toggle(choice, false); lookupOptions = JSON.parse(lookup.dataset.options); update(); }));
   update();
 });
