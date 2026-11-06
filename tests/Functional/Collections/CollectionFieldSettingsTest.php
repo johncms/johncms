@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Functional\Collections;
 
 use Dom\HTMLDocument;
+use DateTimeImmutable;
 use Johncms\Files\FileStore;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface;
@@ -398,6 +399,63 @@ final class CollectionFieldSettingsTest extends FunctionalTestCase
         $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
         self::assertSame("One\nparagraph", $document->querySelector('[name="default_values[]"]')->textContent);
         self::assertCount(0, $this->schema->getFields($this->collection));
+    }
+
+    public function testCurrentDatePresetsAreResolvedOnOpeningAndPostedValuesStayFixed(): void
+    {
+        $this->field('day', FieldType::Date, ['date_preset' => 'current']);
+        $this->field('moment', FieldType::Datetime, ['date_preset' => 'current'], true);
+        $editor = FunctionalUserFactory::createSupervisor();
+        $offset = sprintf('%+d hours', (int) (config('johncms')['timeshift'] ?? 0));
+        $before = (new DateTimeImmutable())->modify($offset);
+        $response = $this->handleRequest('/admin/collections/' . $this->collection . '/items/new', cookies: $this->actingAs($editor));
+        $after = (new DateTimeImmutable())->modify($offset);
+        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
+        $day = $document->querySelector('[name="field_day"]')->getAttribute('value');
+        $moment = $document->querySelector('[name="field_moment[]"]')->getAttribute('value');
+        self::assertContains($day, [$before->format('Y-m-d'), $after->format('Y-m-d')]);
+        $shown = DateTimeImmutable::createFromFormat('!Y-m-d\TH:i:s', $moment);
+        self::assertNotFalse($shown);
+        self::assertGreaterThanOrEqual($before->getTimestamp(), $shown->getTimestamp());
+        self::assertLessThanOrEqual($after->getTimestamp(), $shown->getTimestamp());
+        self::assertSame('1', $document->querySelector('[name="field_moment[]"]')->getAttribute('step'));
+        $url = '/admin/collections/' . $this->collection . '/items';
+        $data = ['name' => '', 'code' => 'frozen', 'sort' => '100', 'field_day' => '2001-02-03', 'field_moment' => ['2001-02-03T04:05:06']];
+        $response = $this->postForm($url, $data, $editor);
+        self::assertSame(200, $response->getStatusCode());
+        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
+        self::assertSame('2001-02-03', $document->querySelector('[name="field_day"]')->getAttribute('value'));
+        self::assertSame('2001-02-03T04:05:06', $document->querySelector('[name="field_moment[]"]')->getAttribute('value'));
+        $data['name'] = 'Frozen';
+        self::assertSame(302, $this->postForm($url, $data, $editor)->getStatusCode());
+        $item = $this->items->getItemByCode($this->collection, null, 'frozen');
+        self::assertSame('2001-02-03', $item->values['day']->format('Y-m-d'));
+        self::assertSame('2001-02-03 04:05:06', $item->values['moment'][0]->format('Y-m-d H:i:s'));
+        $response = $this->handleRequest($url . '/' . $item->id . '/edit', cookies: $this->actingAs($editor));
+        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
+        self::assertSame('2001-02-03', $document->querySelector('[name="field_day"]')->getAttribute('value'));
+        self::assertSame('2001-02-03T04:05:06', $document->querySelector('[name="field_moment[]"]')->getAttribute('value'));
+    }
+
+    public function testAdminSwitchesDatePresetModesWithoutRetainingConflictingDefaults(): void
+    {
+        $editor = FunctionalUserFactory::createSupervisor();
+        $url = '/admin/collections/' . $this->collection . '/fields';
+        $data = ['code' => 'day', 'name' => 'Day', 'type' => 'date', 'date_default_mode' => 'current', 'default_value' => '2001-02-03'];
+        self::assertSame(302, $this->postForm($url, $data, $editor)->getStatusCode());
+        $field = $this->schema->getFields($this->collection)[0];
+        self::assertSame('current', $field->settings['date_preset']);
+        self::assertNull($field->settings['default']);
+        $data['id'] = (string) $field->id;
+        $data['date_default_mode'] = 'fixed';
+        self::assertSame(302, $this->postForm($url, $data, $editor)->getStatusCode());
+        self::assertNull($this->schema->getFields($this->collection)[0]->settings['date_preset']);
+        self::assertSame('2001-02-03', $this->schema->getFields($this->collection)[0]->settings['default']);
+        $data['date_default_mode'] = 'none';
+        self::assertSame(302, $this->postForm($url, $data, $editor)->getStatusCode());
+        self::assertNull($this->schema->getFields($this->collection)[0]->settings['default']);
+        $this->expectException(CollectionSchemaException::class);
+        $this->field('invalid', FieldType::String_, ['date_preset' => 'current']);
     }
 
     /** @param array<string, mixed> $settings */

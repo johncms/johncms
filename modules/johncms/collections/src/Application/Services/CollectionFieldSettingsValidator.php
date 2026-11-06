@@ -77,6 +77,13 @@ final readonly class CollectionFieldSettingsValidator
         if ($type === FieldType::Select) {
             $this->options($settings['options'] ?? []);
         }
+        if (
+            isset($settings['date_preset']) && (
+            $settings['date_preset'] !== 'current' || ! in_array($type, [FieldType::Date, FieldType::Datetime], true) || isset($settings['default'])
+            )
+        ) {
+            $this->fail(d__('collections', 'Use the current date preset only on date fields without a fixed default.'), ['date_default_mode']);
+        }
         if (! isset($settings['default'])) {
             return;
         }

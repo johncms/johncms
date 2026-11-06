@@ -1523,3 +1523,24 @@ msgstr "Введите дату в формате ГГГГ-ММ-ДД, напри
 
 msgid "Enter date and time as YYYY-MM-DD HH:MM:SS, for example 2026-11-06 12:30:00."
 msgstr "Введите дату и время в формате ГГГГ-ММ-ДД ЧЧ:ММ:СС, например 2026-11-06 12:30:00."
+
+msgid "Choose a valid initial date value."
+msgstr "Выберите допустимое начальное значение даты."
+
+msgid "Use the current date preset only on date fields without a fixed default."
+msgstr "Текущую дату можно предустановить только для полей даты без фиксированного значения по умолчанию."
+
+msgid "Initial value"
+msgstr "Начальное значение"
+
+msgid "Today"
+msgstr "Сегодня"
+
+msgid "Current date and time"
+msgstr "Текущие дата и время"
+
+msgid "Specified date"
+msgstr "Указанная дата"
+
+msgid "Filled when opening a new item form, using site time. You can edit the displayed value before saving."
+msgstr "Подставляется при открытии формы новой записи по времени сайта. Показанное значение можно изменить перед сохранением."

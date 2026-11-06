@@ -22,7 +22,7 @@
         </select>
     {% else %}
         <input type="{{ type in ['integer', 'double'] ? 'number' : (type == 'date' ? 'date' : (type == 'datetime' ? 'datetime-local' : 'text')) }}"
-               {% if type == 'double' %}step="any"{% endif %} name="{{ input_name }}[]" class="form-control" id="{{ input_id }}"{% if error|default('') %} aria-invalid="true" aria-describedby="error-default_values-{{ index }}"{% endif %} value="{{ value }}">
+               {% if type == 'double' %}step="any"{% elseif type == 'datetime' %}step="1"{% endif %} name="{{ input_name }}[]" class="form-control" id="{{ input_id }}"{% if error|default('') %} aria-invalid="true" aria-describedby="error-default_values-{{ index }}"{% endif %} value="{{ value }}">
     {% endif %}
     {% if error|default('') %}<div class="invalid-feedback d-block" id="error-default_values-{{ index }}">{{ error }}</div>{% endif %}
     <div class="d-flex flex-wrap gap-2 mt-2">

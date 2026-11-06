@@ -177,10 +177,20 @@
                     <p class="col-12 form-text mb-0" data-field-types="html"{% if fields.type != 'html' %} hidden{% endif %}>{{ __('HTML length includes markup. Limits apply to each value.') }}</p>
                     <p class="col-12 form-text mb-0" data-field-types="string"{% if fields.type != 'string' %} hidden{% endif %}>{{ __('Strings are stored with a maximum of 255 characters. Limits apply to each value.') }}</p>
                     <div class="col-12" data-default-settings data-limit-error="{{ __('The default exceeds the configured number of values.') }}" data-yes="{{ __('Yes') }}" data-no="{{ __('No') }}" data-empty="{{ __('No value') }}" data-invalid="{{ __('Choose an available option for this field.') }}">
-                        <div class="form-check mb-2">
+                        <div class="form-check mb-2" data-default-toggle{% if fields.type in ['date', 'datetime'] %} hidden{% endif %}>
                             <input class="form-check-input" type="checkbox" name="use_default" id="use-default" value="1"{% if fields.use_default %} checked{% endif %}>
                             <label class="form-check-label" for="use-default">{{ __('Use a default value') }}</label>
                         </div>
+                        <fieldset class="mb-3" data-date-default-settings{% if fields.type not in ['date', 'datetime'] %} hidden disabled{% endif %}>
+                            <label class="form-label" for="date-default-mode">{{ __('Initial value') }}</label>
+                            <select class="form-select" id="date-default-mode" name="date_default_mode">
+                                <option value="none"{% if fields.date_default_mode == 'none' %} selected{% endif %}>{{ __('No value') }}</option>
+                                <option value="current" data-current-date-label="{{ __('Today') }}" data-current-datetime-label="{{ __('Current date and time') }}"{% if fields.date_default_mode == 'current' %} selected{% endif %}>{{ fields.type == 'date' ? __('Today') : __('Current date and time') }}</option>
+                                <option value="fixed"{% if fields.date_default_mode == 'fixed' %} selected{% endif %}>{{ __('Specified date') }}</option>
+                            </select>
+                            {{ _self.error(field_errors, 'date_default_mode') }}
+                            <div class="form-text" data-date-current-help{% if fields.date_default_mode != 'current' %} hidden{% endif %}>{{ __('Filled when opening a new item form, using site time. You can edit the displayed value before saving.') }}</div>
+                        </fieldset>
                         <fieldset class="mb-3" data-default-lookup data-url="{{ form_action }}/choices"
                                   data-options="{{ default_options|json_encode }}"{% if fields.type != 'relation' and not (fields.type == 'file' and fields.file_storage == 'registry') %} hidden disabled{% endif %} data-error="{{ __('Could not load default choices. Try again.') }}" data-loaded="{{ __('Choose a value and apply it to the default.') }}" data-empty="{{ __('No matching values were found. Refine your search.') }}">
                             <label class="form-label" for="default-query">{{ __('Search default values') }}</label>
@@ -201,12 +211,12 @@
                             <button type="submit" name="cancel_default_choice" value="1" formnovalidate class="btn btn-outline-secondary btn-sm" data-default-cancel>{{ __('Cancel') }}</button>
                         </fieldset>
                         {{ _self.error(field_errors, 'default') }}
-                        <fieldset class="mb-0" data-default-single{% if fields.multiple %} hidden disabled{% endif %}>
+                        <fieldset class="mb-0" data-default-single{% if fields.multiple or (fields.type in ['date', 'datetime'] and fields.date_default_mode != 'fixed') %} hidden disabled{% endif %}>
                             <label class="form-label" for="field-default">{{ __('Default value') }}</label>
                             <textarea class="form-control" id="field-default" name="default_value" rows="2"{% if field_errors['default_value']|default('') %} aria-invalid="true" aria-describedby="error-default_value"{% endif %}>{{ fields.default_value }}</textarea>
                             {{ _self.error(field_errors, 'default_value') }}
                         </fieldset>
-                        <fieldset data-default-multiple class="mt-2 mb-0"{% if not fields.multiple %} hidden disabled{% endif %}>
+                        <fieldset data-default-multiple class="mt-2 mb-0"{% if not fields.multiple or (fields.type in ['date', 'datetime'] and fields.date_default_mode != 'fixed') %} hidden disabled{% endif %}>
                             {% include '@collections/admin/components/repeated-values.twig' with {
                                 entries: default_entries, input_name: 'default_values', action_key: 'default', id_prefix: 'field-default',
                                 type: 'text', label: __('Default values'), limit: 1000, row_errors: field_errors, allow_upload: false, upload_url: ''

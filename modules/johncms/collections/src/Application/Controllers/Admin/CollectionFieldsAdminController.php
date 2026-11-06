@@ -123,7 +123,10 @@ final readonly class CollectionFieldsAdminController
             $fields['multiple'] = 1;
             return $this->renderForm($collection, $id, $fields);
         }
-        if ($request->hasBody('default_shape') && $request->body('default_shape') !== (string) $fields['multiple']) {
+        if (
+            $request->hasBody('default_shape') && $request->body('default_shape') !== (string) $fields['multiple']
+            && (! in_array($fields['type'], ['date', 'datetime'], true) || $fields['date_default_mode'] === 'fixed')
+        ) {
             $values = array_values(array_filter($fields['default_values'], static fn (string $value): bool => trim($value) !== ''));
             if ($fields['multiple']) {
                 if ($values === [] && $fields['default_value'] !== '') {
@@ -385,6 +388,8 @@ final readonly class CollectionFieldsAdminController
             'file_constraints_present' => $request->hasBody('file_constraints_present'),
             'file_storage_present' => $request->hasBody('file_storage'),
             'allowed_mime_types' => array_values(array_filter($request->bodyList('allowed_mime_types'), is_string(...))),
+            'date_default_mode' => $request->body('date_default_mode', $request->hasBody('use_default') ? 'fixed' : 'none'),
+            'date_default_mode_present' => $request->hasBody('date_default_mode'),
             'slug_linked' => $request->hasBody('slug_linked'),
             'hint' => $request->body('hint'), 'use_default' => $request->hasBody('use_default'),
             'default_value' => $request->body($request->hasBody('default_value') ? 'default_value' : 'draft_default_value'),
@@ -459,13 +464,14 @@ final readonly class CollectionFieldsAdminController
     {
         $default = $settings['default'] ?? null;
         return [
+            'date_default_mode' => ($settings['date_preset'] ?? null) === 'current' ? 'current' : ($default !== null ? 'fixed' : 'none'),
             'hint' => $settings['hint'] ?? '',
             'target_collection_id' => $settings['target_collection_id'] ?? '',
             'relation_on_delete' => $settings['on_delete'] ?? 'restrict',
             'file_storage' => $settings['file_storage'] ?? 'legacy',
             'max_file_bytes' => $settings['max_file_bytes'] ?? CollectionFilePolicy::DEFAULT_MAX_BYTES,
             'allowed_mime_types' => $settings['allowed_mime_types'] ?? array_keys(CollectionFilePolicy::TYPES),
-            'option_rows' => array_map(static fn (array $option): array => $option + ['active' => true], $settings['options'] ?? []), 'use_default' => $default !== null,
+            'option_rows' => array_map(static fn (array $option): array => $option + ['active' => true], $settings['options'] ?? []), 'use_default' => $default !== null || ($settings['date_preset'] ?? null) === 'current',
             'default_value' => is_string($default) ? $default : '', 'default_values' => is_array($default) ? $default : [],
             'legacy_length_limits' => isset($settings['min_length']) || isset($settings['max_length']),
             'min_length' => $settings['min_length'] ?? '', 'max_length' => $settings['max_length'] ?? '',
@@ -482,6 +488,16 @@ final readonly class CollectionFieldsAdminController
             ? array_values(array_filter($fields['default_values'], static fn (string $value): bool => trim($value) !== ''))
             : $fields['default_value'];
         $settings = ['hint' => $fields['hint'], 'default' => $fields['use_default'] ? $default : null];
+        $settings['date_preset'] = null;
+        if (in_array($fields['type'], ['date', 'datetime'], true) && ($fields['date_default_mode_present'] ?? true)) {
+            $mode = $fields['date_default_mode'];
+            if (! in_array($mode, ['none', 'fixed', 'current'], true)) {
+                throw new CollectionSchemaException(message: d__('collections', 'Choose a valid initial date value.'), errors: ['date_default_mode' => d__('collections', 'Choose a valid initial date value.')]);
+            }
+            $settings['date_preset'] = $mode === 'current' ? 'current' : null;
+            $settings['default'] = $mode === 'fixed' ? $default : null;
+        }
+
         $lengthLimits = in_array($fields['type'], ['string', 'text', 'html'], true)
             || (in_array($fields['type'], ['select', 'file'], true) && ($fields['legacy_length_limits'] ?? false));
         $numericLimits = in_array($fields['type'], ['integer', 'double'], true);

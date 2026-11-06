@@ -98,6 +98,9 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   const fileStorage = form.querySelector('select[name="file_storage"]');
   const useDefault = form.querySelector('input[name="use_default"]');
   const defaults = form.querySelector('[data-default-settings]');
+  const dateSettings = form.querySelector('[data-date-default-settings]');
+  const dateMode = form.elements.date_default_mode;
+  const isDate = () => ['date', 'datetime'].includes(type.value);
   form.querySelector('[data-refresh-field-settings]')?.setAttribute('hidden', '');
   const lookup = form.querySelector('[data-default-lookup]');
   const lookupStatus = lookup.querySelector('[data-default-lookup-status]');
@@ -145,7 +148,7 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
     root.dataset.limit = String(limit);
     const sources = [...root.querySelectorAll('[data-repeat-row] textarea')];
     root.querySelector('[data-repeat-op="add"]').disabled = sources.length >= limit;
-    input.setCustomValidity(useDefault.checked && multiple.checked && sources.filter(source => source.value.trim() !== '').length > limit ? defaults.dataset.limitError : '');
+    input.setCustomValidity(useDefault.checked && (!isDate() || dateMode.value === 'fixed') && multiple.checked && sources.filter(source => source.value.trim() !== '').length > limit ? defaults.dataset.limitError : '');
   };
   const enhanceDefaults = () => {
     updateLimit();
@@ -229,13 +232,22 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
     group.disabled = !visible;
   };
   const update = () => {
+    const date = isDate();
+    toggle(dateSettings, date);
+    form.querySelector('[data-default-toggle]').hidden = date;
+    if (date) useDefault.checked = dateMode.value !== 'none';
+    const current = dateMode.querySelector('[value="current"]');
+    current.textContent = type.value === 'date' ? current.dataset.currentDateLabel : current.dataset.currentDatetimeLabel;
+    form.querySelector('[data-date-current-help]').hidden = !date || dateMode.value !== 'current';
+    const fixedDefault = useDefault.checked && (!date || dateMode.value === 'fixed');
+    if (date && !fixedDefault) toggle(choice, false);
     const deletion = form.elements.relation_on_delete;
     const required = form.elements.required.checked && type.value === 'relation';
     deletion.querySelector('[value="clear"]').disabled = required;
     deletion.setCustomValidity(required && deletion.value === 'clear' ? deletion.dataset.requiredError : '');
     toggle(lookup, useDefault.checked && usesLookup());
-    toggle(form.querySelector('[data-default-single]'), useDefault.checked && !multiple.checked);
-    toggle(form.querySelector('[data-default-multiple]'), useDefault.checked && multiple.checked);
+    toggle(form.querySelector('[data-default-single]'), fixedDefault && !multiple.checked);
+    toggle(form.querySelector('[data-default-multiple]'), fixedDefault && multiple.checked);
     form.querySelectorAll('[data-field-types]').forEach(group => toggle(group, group.dataset.fieldTypes.split(' ').includes(type.value)));
     form.querySelectorAll('[data-field-multiple]').forEach(group => toggle(group, multiple.checked));
     form.querySelectorAll('[data-file-storage]').forEach(group => toggle(group, type.value === 'file' && group.dataset.fileStorage === fileStorage.value));
@@ -303,6 +315,7 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   type.addEventListener('change', invalidateLookup);
   fileStorage.addEventListener('change', invalidateLookup);
   multiple.addEventListener('change', () => {
+    if (isDate() && dateMode.value !== 'fixed') { toggle(choice, false); update(); return; }
     if (multiple.checked) {
       toggle(form.querySelector('[data-default-multiple]'), true);
       if (single.value !== '' && repeatedSources().every(source => source.value === '')) {
@@ -347,6 +360,7 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   form.elements.relation_on_delete.addEventListener('change', update);
   fileStorage.addEventListener('change', update);
   useDefault.addEventListener('change', update);
+  dateMode.addEventListener('change', update);
   form.elements.max_values.addEventListener('input', updateLimit);
   defaults.addEventListener('input', updateLimit);
   for (const input of form.querySelectorAll('[name="min_length"], [name="max_length"], [name="min_value"], [name="max_value"]')) input.addEventListener('change', enhanceDefaults);

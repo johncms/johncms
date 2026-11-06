@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Controllers\Admin;
 
+use DateTimeImmutable;
 use Illuminate\Database\Eloquent\Collection;
 use InvalidArgumentException;
 use Johncms\Files\FileStoreException;
@@ -152,8 +153,14 @@ final readonly class CollectionItemsAdminController
         }
 
         $defaults = [];
+        // Resolve date presets once on GET; subsequent requests carry the displayed values.
+        $config = config('johncms');
+        $openedAt = (new DateTimeImmutable())->modify(sprintf('%+d hours', (int) ($config['timeshift'] ?? 0)));
         foreach ($this->fieldRepository->getByCollection($collection_id) as $field) {
-            if (isset($field->settings['default'])) {
+            if (($field->settings['date_preset'] ?? null) === 'current' && in_array($field->type, [FieldType::Date, FieldType::Datetime], true)) {
+                $value = $openedAt->format($field->type === FieldType::Date ? 'Y-m-d' : 'Y-m-d H:i:s');
+                $defaults[$field->code] = $field->multiple ? [$value] : $value;
+            } elseif (isset($field->settings['default'])) {
                 $defaults[$field->code] = $field->settings['default'];
             }
         }
@@ -445,7 +452,7 @@ final readonly class CollectionItemsAdminController
                 if ($value !== '' && $field->type === FieldType::Date) {
                     $value = substr($value, 0, 10);
                 } elseif ($value !== '' && $field->type === FieldType::Datetime) {
-                    $value = str_replace(' ', 'T', substr($value, 0, 16));
+                    $value = str_replace(' ', 'T', substr($value, 0, 19));
                 }
             }
 
@@ -523,7 +530,7 @@ final readonly class CollectionItemsAdminController
         $value = (string) $value;
         return match ($type) {
             FieldType::Date => substr($value, 0, 10),
-            FieldType::Datetime => str_replace(' ', 'T', substr($value, 0, 16)),
+            FieldType::Datetime => str_replace(' ', 'T', substr($value, 0, 19)),
             default => $value,
         };
     }

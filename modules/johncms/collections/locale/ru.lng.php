@@ -448,6 +448,13 @@
       'Use 1 for Yes and 0 for No.' => 'Введите 1 для «Да» или 0 для «Нет».',
       'Enter a date as YYYY-MM-DD, for example 2026-11-06.' => 'Введите дату в формате ГГГГ-ММ-ДД, например 2026-11-06.',
       'Enter date and time as YYYY-MM-DD HH:MM:SS, for example 2026-11-06 12:30:00.' => 'Введите дату и время в формате ГГГГ-ММ-ДД ЧЧ:ММ:СС, например 2026-11-06 12:30:00.',
+      'Choose a valid initial date value.' => 'Выберите допустимое начальное значение даты.',
+      'Use the current date preset only on date fields without a fixed default.' => 'Текущую дату можно предустановить только для полей даты без фиксированного значения по умолчанию.',
+      'Initial value' => 'Начальное значение',
+      'Today' => 'Сегодня',
+      'Current date and time' => 'Текущие дата и время',
+      'Specified date' => 'Указанная дата',
+      'Filled when opening a new item form, using site time. You can edit the displayed value before saving.' => 'Подставляется при открытии формы новой записи по времени сайта. Показанное значение можно изменить перед сохранением.',
     ),
   ),
 );

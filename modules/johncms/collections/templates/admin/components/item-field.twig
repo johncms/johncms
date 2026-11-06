@@ -67,7 +67,7 @@
         {% elseif def.type == 'date' %}
             <input type="date" name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" value="{{ def.value }}">
         {% elseif def.type == 'datetime' %}
-            <input type="datetime-local" name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" value="{{ def.value }}">
+            <input type="datetime-local" step="1" name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" value="{{ def.value }}">
         {% else %}
             <input type="text" name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" value="{{ def.value }}">
         {% endif %}
