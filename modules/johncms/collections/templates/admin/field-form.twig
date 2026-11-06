@@ -41,14 +41,14 @@
                 </div>
                 <div class="card-body">
                     <div class="row g-3">
-                        <div class="col-md-6">
+                        <div class="col-md-6 admin-slug-name-column">
                             <label class="form-label" for="name">{{ __('Name') }}</label>
                             <input type="text" name="name" maxlength="255" class="form-control" id="name" value="{{ fields.name }}" required{% if managed %} disabled{% endif %}{% if field_errors['name']|default('') %} aria-invalid="true" aria-describedby="error-name"{% endif %}>
                             {{ _self.error(field_errors, 'name') }}
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 admin-slug-code-column">
                             {% if managed %}
-                                <label class="form-label" for="code">{{ __('Code') }}</label>
+                                <label class="form-label d-block" for="code">{{ __('Code') }}</label>
                                 <input type="text" class="form-control" name="code" id="code" value="{{ fields.code }}" disabled>
                             {% else %}
                                 {% include '@admin/components/ui/slug-field.twig' with {
