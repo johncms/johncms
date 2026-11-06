@@ -47,8 +47,24 @@ final readonly class ItemListControlsMapper
             }
         }
 
+        foreach (
+            [
+            'author' => [d__('collections', 'Author ID'), $filter->author],
+            'created_from' => [d__('collections', 'Created from'), $filter->createdFrom],
+            'created_to' => [d__('collections', 'Created to'), $filter->createdTo],
+            'min_views' => [d__('collections', 'Minimum views'), $filter->minViews],
+            ] as $key => [$label, $value]
+        ) {
+            if ($value !== null) {
+                $query = $this->filterMapper->toQuery($filter);
+                unset($query[$key]);
+                $chips[] = ['label' => $label, 'value' => (string) $value, 'url' => $path . ($query !== [] ? '?' . http_build_query($query) : '')];
+            }
+        }
+
         return [
             'action'    => $path,
+            'search' => $filter->search,
             'filters'   => $filters,
             'chips'     => $chips,
             'clear_url' => $chips === [] ? '' : $path,

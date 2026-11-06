@@ -10,14 +10,13 @@
     <thead>
         <tr>
             <th scope="col">{{ __('Item') }}</th>
-            {% if has_sections %}
-                <th scope="col" class="d-none d-md-table-cell">{{ __('Section') }}</th>
-            {% endif %}
+            {% for title in meta_columns %}
+                <th scope="col" class="d-none d-md-table-cell">{{ title }}</th>
+            {% endfor %}
             {% for column in columns %}
                 <th scope="col" class="d-none d-lg-table-cell">{{ column }}</th>
             {% endfor %}
             <th scope="col">{{ __('Status') }}</th>
-            <th scope="col" class="d-none d-md-table-cell">{{ __('Updated') }}</th>
             <th scope="col"><span class="visually-hidden">{{ __('Actions') }}</span></th>
         </tr>
     </thead>
@@ -28,9 +27,13 @@
                     <a class="admin-collection-items__name" href="{{ row.edit_url }}">{{ row.name }}</a>
                     <div class="admin-collection-items__code">{{ row.code }}</div>
                 </td>
-                {% if has_sections %}
-                    <td class="admin-collection-items__section d-none d-md-table-cell">{{ row.section ?: '—' }}</td>
-                {% endif %}
+                {% for key, title in meta_columns %}
+                    <td class="d-none d-md-table-cell">
+                        {% if key in ['created_at', 'updated_at'] %}{{ row.meta[key] ? row.meta[key]|display_date : '—' }}
+                        {% elseif key == 'views' %}{{ row.meta[key]|format_number }}
+                        {% else %}{{ row.meta[key] ?: '—' }}{% endif %}
+                    </td>
+                {% endfor %}
                 {% for value in row.values %}
                     <td class="d-none d-lg-table-cell{{ value.kind == 'number' ? ' text-end admin-collection-items__number' }}">
                         {% if value.kind == 'empty' %}
@@ -55,7 +58,6 @@
                         <span class="badge rounded-pill text-bg-light badge-dot">{{ row.status_title }}</span>
                     {% endif %}
                 </td>
-                <td class="admin-collection-items__date d-none d-md-table-cell">{{ row.updated ? row.updated|display_date : '—' }}</td>
                 <td class="text-end">
                     {% include '@admin/components/ui/row-actions.twig' with {actions: row.actions, label: __('Actions')} only %}
                 </td>

@@ -1,0 +1,23 @@
+<form method="get" action="{{ controls.action }}" class="card card-body mb-3" data-live-list-region="options">
+    {% for name, value in controls.state %}
+        {% if name not in ['order', 'direction', 'author', 'created_from', 'created_to', 'min_views'] %}<input type="hidden" name="{{ name }}" value="{{ value }}">{% endif %}
+    {% endfor %}
+    <input type="hidden" name="q" value="{{ controls.search|default('') }}">
+    <div class="row g-2 align-items-end">
+        <div class="col-md-3">
+            <label class="form-label" for="list-order">{{ __('Sort by') }}</label>
+            <select class="form-select" id="list-order" name="order">{% for key, title in options.sorts %}<option value="{{ key }}"{% if key == options.sort %} selected{% endif %}>{{ title }}</option>{% endfor %}</select>
+        </div>
+        <div class="col-md-2">
+            <label class="form-label" for="list-direction">{{ __('Direction') }}</label>
+            <select class="form-select" id="list-direction" name="direction"><option value="asc"{% if options.direction == 'asc' %} selected{% endif %}>{{ __('Ascending') }}</option><option value="desc"{% if options.direction == 'desc' %} selected{% endif %}>{{ __('Descending') }}</option></select>
+        </div>
+        {% if 'author' in options.enabled %}<div class="col-md-2"><label class="form-label" for="list-author">{{ __('Author ID') }}</label><input class="form-control" type="number" min="1" max="2147483647" id="list-author" name="author" value="{{ options.author }}"></div>{% endif %}
+        {% if 'created_at' in options.enabled %}
+            <div class="col-md-2"><label class="form-label" for="list-from">{{ __('Created from') }}</label><input class="form-control" type="date" id="list-from" name="created_from" value="{{ options.created_from }}"></div>
+            <div class="col-md-2"><label class="form-label" for="list-to">{{ __('Created to') }}</label><input class="form-control" type="date" id="list-to" name="created_to" value="{{ options.created_to }}"></div>
+        {% endif %}
+        {% if 'views' in options.enabled %}<div class="col-md-2"><label class="form-label" for="list-views">{{ __('Minimum views') }}</label><input class="form-control" type="number" min="0" max="2147483647" id="list-views" name="min_views" value="{{ options.min_views }}"></div>{% endif %}
+        <div class="col-auto"><button type="submit" class="btn btn-outline-primary">{{ __('Apply') }}</button></div>
+    </div>
+</form>

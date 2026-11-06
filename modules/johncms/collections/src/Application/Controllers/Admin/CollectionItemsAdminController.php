@@ -52,6 +52,7 @@ final readonly class CollectionItemsAdminController
         private \Johncms\Modules\Collections\Application\Services\CollectionFieldUpload $fieldUploads,
         private \Johncms\Http\UploadedFileMapper $uploadMapper,
         private \Johncms\Http\UploadLimits $uploadLimits,
+        private \Johncms\Modules\Collections\Application\Services\CollectionListSettings $listing = new \Johncms\Modules\Collections\Application\Services\CollectionListSettings(),
         private \Johncms\Modules\Collections\Application\Services\CollectionFormLayout $layout = new \Johncms\Modules\Collections\Application\Services\CollectionFormLayout(),
         private \Johncms\Modules\Collections\Application\Services\CollectionRepeatedValues $repeated = new \Johncms\Modules\Collections\Application\Services\CollectionRepeatedValues(),
     ) {
@@ -64,7 +65,7 @@ final readonly class CollectionItemsAdminController
             return $this->collectionNotFound();
         }
 
-        $filter = $this->filterMapper->fromQuery($request->query->all());
+        $filter = $this->filterMapper->fromQuery($request->query->all(), $this->listing->settings($collection));
         $tree = $this->listItems->sectionTree($collection_id);
         $pagination = $this->paginationFactory->create($this->listItems->count($collection_id, $filter, $tree));
 
@@ -78,7 +79,13 @@ final readonly class CollectionItemsAdminController
         $hasSections = $this->hasSections($collection);
         $items = $this->listItems->getPage($collection_id, $filter, $tree, $pagination->getPerPage(), $pagination->getOffset());
 
+        $metaColumns = [];
+        foreach ($this->listing->settings($collection)['columns'] as $column) {
+            $metaColumns[$column] = $this->listing->columns()[$column];
+        }
         $data = [
+            'list_controls' => $this->listing->controls($collection, $filter),
+            'meta_columns' => $metaColumns,
             'controls'     => $this->controlsMapper->map($this->baseUrl($collection_id), $filter, $tree, $hasSections),
             'columns'      => array_map(static fn ($field): string => $field->name, $fields),
             'has_sections' => $hasSections,

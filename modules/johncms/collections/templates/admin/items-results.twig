@@ -29,7 +29,7 @@
             {% endif %}
         {% else %}
             <div class="table-responsive">
-                {% include '@collections/admin/components/items-table.twig' with {rows: rows, columns: columns, has_sections: has_sections} only %}
+                {% include '@collections/admin/components/items-table.twig' with {rows: rows, columns: columns, meta_columns: meta_columns, has_sections: has_sections} only %}
             </div>
             <div class="card-footer admin-list-footer">
                 <span class="admin-list-footer__total">{{ __('Found: %s')|format(total|format_number) }}</span>

@@ -1301,3 +1301,54 @@ msgstr "Укажите допустимые группы полей, число�
 
 msgid "Choose existing fields for the form layout."
 msgstr "Выберите существующие поля для расположения в форме."
+
+msgid "Created"
+msgstr "Создано"
+
+msgid "Views"
+msgstr "Просмотры"
+
+msgid "Author ID"
+msgstr "ID автора"
+
+msgid "Creation date"
+msgstr "Дата создания"
+
+msgid "Minimum views"
+msgstr "Минимум просмотров"
+
+msgid "Choose available list columns, filters and a valid sort direction."
+msgstr "Выберите доступные колонки, фильтры и допустимое направление сортировки."
+
+msgid "Created from"
+msgstr "Создано с"
+
+msgid "Created to"
+msgstr "Создано по"
+
+msgid "Record list"
+msgstr "Список записей"
+
+msgid "Columns"
+msgstr "Колонки"
+
+msgid "Additional filters"
+msgstr "Дополнительные фильтры"
+
+msgid "Default sort"
+msgstr "Сортировка по умолчанию"
+
+msgid "Direction"
+msgstr "Направление"
+
+msgid "Ascending"
+msgstr "По возрастанию"
+
+msgid "Descending"
+msgstr "По убыванию"
+
+msgid "Sort by"
+msgstr "Сортировать по"
+
+msgid "Apply"
+msgstr "Применить"

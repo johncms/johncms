@@ -12,9 +12,10 @@
 #}
 {% include '@admin/components/list-state.twig' with {controls: controls} only %}
 {% include '@admin/components/list-filters.twig' with {controls: controls} only %}
+{% include '@collections/admin/components/list-options.twig' with {controls: controls, options: list_controls} only %}
 {% include '@collections/admin/items-results.twig' with {
     controls: controls,
-    columns: columns,
+    columns: columns, meta_columns: meta_columns,
     has_sections: has_sections,
     rows: rows,
     total: total,

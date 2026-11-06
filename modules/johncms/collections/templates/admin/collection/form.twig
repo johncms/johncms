@@ -108,6 +108,26 @@
                 </fieldset>
             </div>
         </section>
+        <section class="card mt-3">
+            <div class="card-header"><h2 class="h6 mb-0">{{ __('Record list') }}</h2></div>
+            <div class="card-body">
+                <input type="hidden" name="listing_present" value="1">
+                <div class="row g-3">
+                    <fieldset class="col-md-6"><legend class="h6">{{ __('Columns') }}</legend>
+                        {% for key, title in fields.listing_columns %}
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="list-column-{{ key }}" name="list_columns[]" value="{{ key }}"{% if key in fields.listing_values.columns %} checked{% endif %}><label class="form-check-label" for="list-column-{{ key }}">{{ title }}</label></div>
+                        {% endfor %}
+                    </fieldset>
+                    <fieldset class="col-md-6"><legend class="h6">{{ __('Additional filters') }}</legend>
+                        {% for key, title in fields.listing_filters %}
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="list-filter-{{ key }}" name="list_filters[]" value="{{ key }}"{% if key in fields.listing_values.filters %} checked{% endif %}><label class="form-check-label" for="list-filter-{{ key }}">{{ title }}</label></div>
+                        {% endfor %}
+                    </fieldset>
+                    <div class="col-md-6"><label class="form-label" for="default-order">{{ __('Default sort') }}</label><select class="form-select" id="default-order" name="list_order">{% for key, title in fields.listing_sorts %}<option value="{{ key }}"{% if key == fields.listing_values.sort.field %} selected{% endif %}>{{ title }}</option>{% endfor %}</select></div>
+                    <div class="col-md-6"><label class="form-label" for="default-direction">{{ __('Direction') }}</label><select class="form-select" id="default-direction" name="list_direction"><option value="asc"{% if fields.listing_values.sort.direction == 'asc' %} selected{% endif %}>{{ __('Ascending') }}</option><option value="desc"{% if fields.listing_values.sort.direction == 'desc' %} selected{% endif %}>{{ __('Descending') }}</option></select></div>
+                </div>
+            </div>
+        </section>
     </div>
 
     <div class="col-lg-4 d-flex flex-column gap-3">

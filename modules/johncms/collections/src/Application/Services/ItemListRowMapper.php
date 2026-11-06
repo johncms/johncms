@@ -28,6 +28,7 @@ final readonly class ItemListRowMapper
         private CollectionApiMapper $apiMapper = new CollectionApiMapper(),
         private ?\Johncms\Files\FileStore $files = null,
         private CollectionWorkspaceSettings $workspace = new CollectionWorkspaceSettings(),
+        private ?\Johncms\Users\Repository\UserRepositoryInterface $users = null,
     ) {
     }
 
@@ -46,6 +47,7 @@ final readonly class ItemListRowMapper
         $collectionDto = $this->apiMapper->collection($collection);
         $visibleSections = array_fill_keys($tree->visibleIds(), true);
         $rows = [];
+        $authors = $this->users?->findMany(array_values(array_unique(array_filter($items->pluck('created_by')->all())))) ?? [];
 
         foreach ($items as $item) {
             $status = ItemStatus::of($item->active, $item->active_from, $item->active_to, $now);
@@ -95,6 +97,13 @@ final readonly class ItemListRowMapper
                 'status'       => $status->value,
                 'status_title' => ItemListControlsMapper::statusTitle($status),
                 'values'       => array_map(fn (ContentCollectionField $field): array => $this->value($field, $values[$field->code] ?? null), $fields),
+                'meta' => [
+                    'author' => $item->created_by !== null ? ($authors[$item->created_by]->name ?? '') : '',
+                    'created_at' => $this->timestamp($item->getRawOriginal('created_at')),
+                    'updated_at' => $this->timestamp($item->getRawOriginal('updated_at')),
+                    'views' => $item->view_count ?? 0,
+                    'section' => $section !== null ? implode(' › ', $tree->pathOf($section)) : '',
+                ],
                 'updated'      => $this->timestamp($item->getRawOriginal('updated_at')),
                 'actions'      => $actions,
             ];

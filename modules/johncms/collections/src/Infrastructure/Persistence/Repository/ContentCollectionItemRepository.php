@@ -198,8 +198,8 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
     {
         return $this->panelQuery($collectionId, $filter, $sectionIds, $now)
             ->with(['values.field', 'section'])
-            ->orderBy('sort')
-            ->orderBy('id')
+            ->orderBy($filter->sortBy, $filter->direction)
+            ->orderBy('id', $filter->direction)
             ->offset($offset)
             ->limit($limit)
             ->get();
@@ -240,6 +240,19 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
                     $query->orWhereNull('section_id');
                 }
             });
+        }
+
+        if ($filter->author !== null) {
+            $builder->where('created_by', $filter->author);
+        }
+        if ($filter->minViews !== null && $filter->minViews > 0) {
+            $builder->where('view_count', '>=', $filter->minViews);
+        }
+        if ($filter->createdFrom !== null) {
+            $builder->where('created_at', '>=', $filter->createdFrom . ' 00:00:00');
+        }
+        if ($filter->createdTo !== null) {
+            $builder->where('created_at', '<=', $filter->createdTo . ' 23:59:59');
         }
 
         match ($filter->status) {

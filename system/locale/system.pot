@@ -798,10 +798,10 @@ msgstr ""
 #: system/src/Comments.php:372
 #: system/src/Http/EditorImageUploadResponder.php:60
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFilesController.php:23
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:188
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:196
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:425
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:437
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:195
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:203
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:432
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:444
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionRelationsController.php:22
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionTagsController.php:22
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:36
@@ -992,7 +992,7 @@ msgid "Style guide"
 msgstr ""
 
 #: system/src/Http/EditorImageUploadResponder.php:59
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:146
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:153
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:36
 msgid "The file is too large for the server to accept"
 msgstr ""
@@ -1001,7 +1001,7 @@ msgstr ""
 #: system/src/Image/StoreEditorImageUseCase.php:118
 #: system/src/Image/StoreEditorImageUseCase.php:139
 #: system/src/Image/StoreEditorImageUseCase.php:191
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:186
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:193
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:49
 msgid "Error uploading file"
 msgstr ""

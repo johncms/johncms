@@ -236,6 +236,7 @@ final readonly class CollectionsAdminController
         $fields['permission_options'] = $this->permissionOptions($fields['content_permission']);
         $fields['workspace_label_titles'] = $this->workspaceSettings->labelTitles();
         $fields['workspace_defaults'] = $this->workspaceSettings->defaults();
+        $fields = $this->listingFields($fields, null);
         $fields['layout_rows'] = [];
         $fields['layout_blocks'] = (new \Johncms\Modules\Collections\Application\Services\CollectionFormLayout())->blocks();
         $fields['search_options'] = [];
@@ -259,6 +260,7 @@ final readonly class CollectionsAdminController
      */
     private function renderSettings(ContentCollection $collection, array $fields, array $errors = []): ViewResponse
     {
+        $fields = $this->listingFields($fields, $collection);
         $fields['managed'] = $collection->owner_module !== null;
         $fields['workspace_defaults'] = $this->workspaceSettings->defaults($collection);
         $layout = new \Johncms\Modules\Collections\Application\Services\CollectionFormLayout();
@@ -315,6 +317,23 @@ final readonly class CollectionsAdminController
             : $this->renderForm(null, $fields, $errors);
     }
 
+    /** @param array<string, mixed> $fields
+     * @return array<string, mixed>
+     */
+    private function listingFields(array $fields, ?ContentCollection $collection): array
+    {
+        $listing = new \Johncms\Modules\Collections\Application\Services\CollectionListSettings();
+        $fields['listing_columns'] = $listing->columns();
+        $fields['listing_filters'] = $listing->filters();
+        $fields['listing_sorts'] = $listing->sorts();
+        $model = $collection !== null ? clone $collection : new ContentCollection();
+        $settings = $model->settings ?? [];
+        $settings['workspace']['listing'] = $fields['workspace_listing'];
+        $model->settings = $settings;
+        $fields['listing_values'] = $listing->settings($model);
+        return $fields;
+    }
+
     /**
      * @return array<string, mixed>
      */
@@ -333,6 +352,13 @@ final readonly class CollectionsAdminController
     {
         $existing = $request->bodyInt('id') ? $this->repository->findById($request->bodyInt('id')) : null;
         $layout = $existing?->settings['workspace']['layout'] ?? [];
+        $listing = $existing?->settings['workspace']['listing'] ?? [];
+        if ($request->hasBody('listing_present')) {
+            $listing = [
+                'columns' => $request->bodyList('list_columns'), 'filters' => $request->bodyList('list_filters'),
+                'sort' => ['field' => $request->body('list_order'), 'direction' => $request->body('list_direction')],
+            ];
+        }
         if ($request->hasBody('layout_present')) {
             $layout = ['fields' => [], 'hidden_blocks' => $request->bodyList('hidden_blocks')];
             foreach ($request->bodyList('layout_fields') as $code => $config) {
@@ -361,6 +387,7 @@ final readonly class CollectionsAdminController
             'search_fields' => $request->hasBody('search_fields') ? $request->bodyList('search_fields') : [],
             'workspace_present' => $request->hasBody('workspace_present') || $request->hasBody('workspace_labels'),
             'workspace_layout' => $layout,
+            'workspace_listing' => $listing,
             'workspace_labels' => array_filter($request->bodyList('workspace_labels'), static fn ($value): bool => ! is_string($value) || trim($value) !== ''),
         ];
     }
@@ -386,6 +413,7 @@ final readonly class CollectionsAdminController
             'workspace_present' => true,
             'workspace_labels' => $settings['workspace']['labels'] ?? [],
             'workspace_layout' => $settings['workspace']['layout'] ?? [],
+            'workspace_listing' => $settings['workspace']['listing'] ?? [],
         ];
     }
 
@@ -408,6 +436,7 @@ final readonly class CollectionsAdminController
             'workspace_present' => true,
             'workspace_labels' => [],
             'workspace_layout' => [],
+            'workspace_listing' => [],
         ];
     }
 
@@ -427,7 +456,7 @@ final readonly class CollectionsAdminController
             perPage: (int) $fields['per_page'],
             contentPermission: $fields['content_permission'],
             searchFields: $fields['search_fields'],
-            workspace: $fields['workspace_present'] ? ['labels' => $fields['workspace_labels'], 'layout' => $fields['workspace_layout']] : null,
+            workspace: $fields['workspace_present'] ? ['labels' => $fields['workspace_labels'], 'layout' => $fields['workspace_layout'], 'listing' => $fields['workspace_listing']] : null,
         );
     }
 

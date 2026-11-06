@@ -46,7 +46,7 @@ final class NewsCollectionDeclaration implements CollectionDeclarationProviderIn
                 'page_title' => ['group' => CollectionLabelDTO::translatableLabel('news', 'SEO')->toArray(), 'sort' => 200],
                 'description' => ['group' => CollectionLabelDTO::translatableLabel('news', 'SEO')->toArray(), 'sort' => 300],
                 'keywords' => ['group' => CollectionLabelDTO::translatableLabel('news', 'SEO')->toArray(), 'sort' => 400],
-            ]]]]
+            ]], 'listing' => ['columns' => ['author', 'created_at', 'views', 'section'], 'filters' => ['author', 'created_at', 'views'], 'sort' => ['field' => 'id', 'direction' => 'desc']]]]
         )];
     }
 }

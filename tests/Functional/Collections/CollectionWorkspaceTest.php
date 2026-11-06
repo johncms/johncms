@@ -200,6 +200,55 @@ final class CollectionWorkspaceTest extends FunctionalTestCase
         }
     }
 
+    public function testConfiguredListColumnsSortingAndFiltersUseTheSamePageQuery(): void
+    {
+        $collection = Fixture::insert('collections', ['code' => 'listing', 'name' => 'Listing']);
+        $user = FunctionalUserFactory::createSupervisor();
+        $other = FunctionalUserFactory::create();
+        $writer = $this->container()->get(SaveCollectionUseCase::class);
+        $writer->execute($collection, $this->form('listing', ['listing' => [
+            'columns' => ['author', 'created_at', 'views'], 'filters' => ['author', 'created_at', 'views'],
+            'sort' => ['field' => 'view_count', 'direction' => 'desc'],
+        ]]));
+        Fixture::insert('collection_items', ['collection_id' => $collection, 'name' => 'Few visits', 'code' => 'few', 'created_by' => $user->id, 'view_count' => 2, 'created_at' => '2026-01-02 12:00:00']);
+        Fixture::insert('collection_items', ['collection_id' => $collection, 'name' => 'Many visits', 'code' => 'many', 'created_by' => $other->id, 'view_count' => 20, 'created_at' => '2026-01-03 12:00:00']);
+        $base = '/admin/collections/' . $collection . '/items';
+        $html = (string) $this->handleRequest($base, cookies: $this->actingAs($user))->getContent();
+        $document = HTMLDocument::createFromString($html, LIBXML_NOERROR);
+        self::assertSame('Many visits', trim($document->querySelector('tbody tr:first-child td:first-child a')->textContent));
+        self::assertStringContainsString($other->name, $document->querySelector('tbody')->textContent);
+        self::assertNotNull($document->querySelector('input[name="created_from"]'));
+        $query = '?author=' . $user->id . '&created_from=2026-01-02&created_to=2026-01-02&min_views=1';
+        $html = (string) $this->handleRequest($base . $query, cookies: $this->actingAs($user), catch: false)->getContent();
+        $document = HTMLDocument::createFromString($html, LIBXML_NOERROR);
+        self::assertSame(1, $document->querySelectorAll('.admin-collection-items tbody tr')->length);
+        self::assertSame('Few visits', trim($document->querySelector('tbody tr td a')->textContent));
+        self::assertStringContainsString('author=', rawurldecode($document->querySelector('a[href*="/edit?"]')->getAttribute('href')));
+        self::assertStringContainsString(d__('collections', 'Created from'), $html);
+    }
+
+    public function testListConfigurationAndQueryCannotInjectSortColumns(): void
+    {
+        $collection = Fixture::insert('collections', ['code' => 'safe-list', 'name' => 'Safe list']);
+        foreach ([['sort' => ['field' => 'name desc; DROP TABLE users', 'direction' => 'asc']], ['sort' => ['field' => 'id', 'direction' => 'anything']], ['columns' => ['password']], ['filters' => ['password']], ['columns' => null]] as $listing) {
+            try {
+                $this->container()->get(SaveCollectionUseCase::class)->execute($collection, $this->form('safe-list', ['listing' => $listing]));
+                self::fail('Only supported list controls may be saved.');
+            } catch (CollectionSchemaException) {
+                self::assertArrayNotHasKey('workspace', $this->settings($collection));
+            }
+        }
+        $mapper = $this->container()->get(\Johncms\Modules\Collections\Application\Services\ItemListFilterMapper::class);
+        $filter = $mapper->fromQuery(['order' => 'invalid', 'direction' => 'invalid', 'author' => '1', 'created_from' => '2026-02-30'], ['filters' => ['created_at'], 'sort' => ['field' => 'id', 'direction' => 'desc']]);
+        self::assertSame('id', $filter->sortBy);
+        self::assertSame('desc', $filter->direction);
+        self::assertNull($filter->author);
+        self::assertNull($filter->createdFrom);
+        $filter = $mapper->fromQuery(['order' => 'sort', 'direction' => 'asc'], ['sort' => ['field' => 'id', 'direction' => 'desc']]);
+        self::assertSame('sort', $mapper->toQuery($filter)['order']);
+        self::assertSame('sort', $mapper->fromQuery($mapper->toQuery($filter), ['sort' => ['field' => 'id', 'direction' => 'desc']])->sortBy);
+    }
+
     /** @return array<string, mixed> */
     private function settings(int $id): array
     {
