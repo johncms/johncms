@@ -6,7 +6,8 @@ namespace Johncms\Modules\Collections\Application\DTO;
 
 final readonly class CollectionDeclarationDTO
 {
-    /** @param list<CollectionFieldDeclarationDTO> $fields
+    /**
+     * @param list<CollectionFieldDeclarationDTO> $fields
      * @param array<string, mixed> $settings Defaults; existing administrator choices are retained.
      */
     public function __construct(

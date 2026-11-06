@@ -479,7 +479,7 @@ final readonly class CollectionItemsAdminController
                 'entries' => $entries, 'limit' => $limit,
                 'input_name' => 'field_' . $field->code,
                 'name'       => $field->name,
-                'hint' => $field->settings['hint'] ?? '',
+                'hint' => $field->hint,
                 'options' => $options,
                 'min_length' => $field->settings['min_length'] ?? null, 'max_length' => $field->settings['max_length'] ?? null,
                 'min_value' => $field->settings['min_value'] ?? null, 'max_value' => $field->settings['max_value'] ?? null,

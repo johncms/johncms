@@ -11,7 +11,7 @@ msgid "News is unavailable until system:update completes."
 msgstr ""
 
 #: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:29
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:39
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:54
 #: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:185
 #: modules/johncms/news/src/Application/Collections/NewsViewMapper.php:94
 #: modules/johncms/news/src/Application/Controllers/Admin/NewsSettingsController.php:77
@@ -24,46 +24,55 @@ msgstr ""
 msgid "News"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:32
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:33
 msgid "Page title"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:33
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:36
+msgid "Left empty, the title is made of the template in the settings of the news."
+msgstr ""
+
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:39
 msgid "Meta description"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:34
-msgid "Meta keywords"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:35
-msgid "Tags"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:38
-msgid "News item"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:40
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:41
-msgid "Add news"
-msgstr ""
-
 #: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:42
-msgid "Edit news"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:43
-msgid "Delete news"
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:48
+msgid "Left empty, they are made of the template in the settings of the news."
 msgstr ""
 
 #: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:45
+msgid "Meta keywords"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:50
+msgid "Tags"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:53
+msgid "News item"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:55
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:56
+msgid "Add news"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:57
+msgid "Edit news"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:58
+msgid "Delete news"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:60
 msgid "Content"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:46
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:47
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:48
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:61
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:62
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:63
 msgid "SEO"
 msgstr ""
 

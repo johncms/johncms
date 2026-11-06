@@ -83,10 +83,15 @@ Tech stack:
 * Always include `declare(strict_types=1);`
 * Namespace must follow PSR-4 and match the directory structure.
 * Use 4-space indentation.
+* Format nested configuration and declaration arrays by logical levels: put each entry of an expanded associative array on its own line, and align closing brackets with their opening level. Do not pack nested configuration into a single line merely because it fits the line-length limit. Short scalar lists and small, flat maps may stay on one line when readable.
+* If a function or constructor call uses any named argument, name **every** argument in that call, including required arguments. Do not mix positional and named arguments. Calls using only positional arguments may remain positional.
+* Prefer fully named arguments for configuration-heavy DTO constructors. In expanded calls, put one argument on each line and use a trailing comma. Preserve the local vertical alignment of array arrows and named argument values; do not align positional arguments as though they had omitted names.
+* Apply these readability rules to new or changed code; do not reformat unrelated files or collapse existing readable formatting.
 * Prefer one class per file.
 * Use typed properties, arguments, and return types.
 * Avoid redundant scalar casts (`(int)`, `(string)`, `(bool)`) when the type is already guaranteed by signatures or framework/API contracts.
 * Use PHPDoc only when types cannot be expressed with native PHP types.
+* Keep short, single-line PHPDoc on one line, for example `/** @var string $code */`. For multiline PHPDoc, put `/**` and `*/` on separate lines and each description or tag on its own line prefixed with ` * `; do not put text or tags on the opening line of a multiline block.
 * Write all code comments, PHPDoc, and inline notes in English. This is a multilingual project reviewed by contributors from different countries, so English keeps comments accessible to everyone.
 * Use constructor injection with property promotion.
 * Prefer immutable design.

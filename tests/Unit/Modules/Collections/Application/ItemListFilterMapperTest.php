@@ -4,12 +4,19 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Modules\Collections\Application;
 
+use Gettext\Translator;
+use Gettext\TranslatorFunctions;
 use Johncms\Modules\Collections\Application\Services\ItemListFilterMapper;
 use Johncms\Modules\Collections\Domain\Enums\ItemStatus;
 use PHPUnit\Framework\TestCase;
 
 final class ItemListFilterMapperTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        TranslatorFunctions::register(new Translator());
+    }
+
     public function testTheAddressCarriesTheFilterBothWays(): void
     {
         $mapper = new ItemListFilterMapper();

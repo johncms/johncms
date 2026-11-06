@@ -69,6 +69,39 @@ final class NewsCollectionDeclarationTest extends FunctionalTestCase
         self::assertSame(200, $this->handleRequest($urls->preview($collection, $api->getItem($rootId)), cookies: $this->actingAs($user))->getStatusCode());
     }
 
+    public function testSeoHintsKeepSourceMessagesAndFollowTheEditorLanguage(): void
+    {
+        $sync = $this->container()->get(CollectionDeclarationsSynchronizer::class);
+        $sync->synchronize();
+        $collection = $this->container()->get(CollectionsApiInterface::class)->findDeclaredCollection(NewsCollectionDeclaration::OWNER, NewsCollectionDeclaration::KEY);
+        $title = 'Left empty, the title is made of the template in the settings of the news.';
+        $other = 'Left empty, they are made of the template in the settings of the news.';
+        $schema = $this->container()->get(\Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface::class);
+        $schema->saveField(null, new \Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO(
+            $collection->id, 'custom', 'Custom', FieldType::String_, false, false, 500, settings: ['hint' => $title]
+        ));
+        $sync->synchronize();
+        $hints = ['page_title' => $title, 'description' => $other, 'keywords' => $other];
+        $user = FunctionalUserFactory::createSupervisor();
+        foreach (['ru', 'en'] as $locale) {
+            $response = $this->handleRequest('/admin/collections/' . $collection->id . '/items/new?setlng=' . $locale, cookies: $this->actingAs($user));
+            self::assertSame(200, $response->getStatusCode());
+            $document = \Dom\HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
+            foreach ($hints as $code => $message) {
+                $expected = $locale === 'en' ? $message : ($code === 'page_title'
+                    ? 'Если оставить пустым, заголовок составится по шаблону из настроек новостей.'
+                    : 'Если оставить пустыми, они составятся по шаблону из настроек новостей.');
+                self::assertStringContainsString($expected, $document->querySelector('#f_field_' . $code)->parentElement->textContent);
+            }
+            self::assertStringContainsString($title, $document->querySelector('#f_field_custom')->parentElement->textContent);
+        }
+        foreach ($schema->getFields($collection->id) as $field) {
+            if (isset($hints[$field->code])) {
+                self::assertSame($hints[$field->code], $field->settings['hint']);
+            }
+        }
+    }
+
     public function testTheModuleGraphProtectsTheCollectionsDependency(): void
     {
         $modules = $this->container()->get(ModuleRegistry::class)->enabled();

@@ -173,7 +173,7 @@
     </form>
 
     {% if managed %}
-        <a href="{{ back_url }}" class="btn btn-outline-secondary">{{ __('Back') }}</a>
+        <a href="{{ back_url }}" class="btn btn-outline-secondary mt-3">{{ __('Back') }}</a>
     {% else %}
         {% include '@admin/components/ui/form-footer.twig' with {form: 'field-form', cancel_url: back_url} only %}
     {% endif %}

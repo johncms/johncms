@@ -22,6 +22,7 @@ use Johncms\Modules\Collections\Domain\Enums\FieldType;
  * @property string|null $label_domain
  * @property string|null $role
  * @property string $name
+ * @property-read string $hint
  * @property FieldType $type
  * @property bool $required
  * @property bool $multiple
@@ -74,6 +75,13 @@ final class ContentCollectionField extends Model
     {
         $domain = $this->attributes['label_domain'] ?? null;
         return $value !== null && $value !== '' && is_string($domain) && $domain !== '' ? \Gettext\TranslatorFunctions::getTranslator()->dgettext($domain, $value) : ($value ?? '');
+    }
+
+    public function getHintAttribute(): string
+    {
+        $hint = $this->settings['hint'] ?? '';
+        $domain = $this->attributes['label_domain'] ?? null;
+        return $hint !== '' && is_string($domain) && $domain !== '' ? \Gettext\TranslatorFunctions::getTranslator()->dgettext($domain, $hint) : $hint;
     }
 
     public function collection(): BelongsTo
