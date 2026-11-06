@@ -1,13 +1,15 @@
 <div class="border rounded p-3 mb-2" data-repeat-row>
     <div class="small text-muted mb-2">{{ __('Option') }} <span data-repeat-number>{{ index + 1 }}</span></div>
     <div class="row g-2">
-        <div class="col-md-5">
-            <label class="form-label" for="{{ input_id }}-code">{{ __('Option code') }}</label>
-            <input class="form-control font-monospace" name="option_code[]" id="{{ input_id }}-code" value="{{ option.code }}" maxlength="255" pattern="[A-Za-z0-9_.+-]+">
-        </div>
         <div class="col-md-7">
             <label class="form-label" for="{{ input_id }}-label">{{ __('Option label') }}</label>
-            <input class="form-control" name="option_label[]" id="{{ input_id }}-label" value="{{ option.label }}" maxlength="255">
+            <input class="form-control" name="option_label[]" id="{{ input_id }}-label"{% if field_errors['option_label.' ~ index]|default('') %} aria-invalid="true" aria-describedby="error-option_label-{{ index }}"{% endif %} value="{{ option.label }}" maxlength="255">
+            {% if field_errors['option_label.' ~ index]|default('') %}<div class="invalid-feedback d-block" id="error-option_label-{{ index }}">{{ field_errors['option_label.' ~ index] }}</div>{% endif %}
+        </div>
+        <div class="col-md-5">
+            <label class="form-label" for="{{ input_id }}-code">{{ __('Option code') }}</label>
+            <input class="form-control font-monospace" name="option_code[]" id="{{ input_id }}-code"{% if field_errors['option_code.' ~ index]|default('') %} aria-invalid="true" aria-describedby="error-option_code-{{ index }}"{% endif %} value="{{ option.code }}" maxlength="255" pattern="[A-Za-z0-9_.+\-]+">
+            {% if field_errors['option_code.' ~ index]|default('') %}<div class="invalid-feedback d-block" id="error-option_code-{{ index }}">{{ field_errors['option_code.' ~ index] }}</div>{% endif %}
         </div>
         <div class="col-md-5">
             <label class="form-label" for="{{ input_id }}-active">{{ __('Available for new selection') }}</label>

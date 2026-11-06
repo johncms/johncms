@@ -6,7 +6,7 @@
     <div class="form-text mb-3">{{ __('Keep codes stable when changing labels. Disable a used option instead of removing it.') }}</div>
     <div data-repeat-rows>
         {% for option in options %}
-            {% include '@collections/admin/components/option-row.twig' with {option: option, index: loop.index0, last: loop.last, input_id: 'select-option-' ~ loop.index0} only %}
+            {% include '@collections/admin/components/option-row.twig' with {option: option, index: loop.index0, last: loop.last, input_id: 'select-option-' ~ loop.index0, field_errors: field_errors|default([])} only %}
         {% endfor %}
     </div>
     <button type="submit" name="repeat_action" value="options:add:0" data-repeat-op="add" class="btn btn-outline-secondary btn-sm" formnovalidate{% if options|length >= 500 %} disabled{% endif %}>{{ __('Add option') }}</button>

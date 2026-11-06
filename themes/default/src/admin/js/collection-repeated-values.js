@@ -6,7 +6,7 @@ document.querySelectorAll('[data-collection-repeat]').forEach(root => {
   const template = root.querySelector('[data-repeat-template]');
   const status = root.querySelector('[data-repeat-status]');
   const add = root.querySelector('[data-repeat-op="add"]');
-  const limit = Number(root.dataset.limit);
+  const limit = () => Number(root.dataset.limit);
   let serial = 0;
   let busy = false;
   const rows = () => [...list.children].filter(row => row.matches('[data-repeat-row]'));
@@ -27,7 +27,7 @@ document.querySelectorAll('[data-collection-repeat]').forEach(root => {
         button.disabled = (operation === 'up' && index === 0) || (operation === 'down' && index === entries.length - 1);
       });
     });
-    add.disabled = entries.length >= limit;
+    add.disabled = entries.length >= limit();
     root.dispatchEvent(new CustomEvent('collection:values-changed', {bubbles: true}));
   };
   refresh();
@@ -42,7 +42,7 @@ document.querySelectorAll('[data-collection-repeat]').forEach(root => {
     const row = button.closest('[data-repeat-row]');
     try {
       if (operation === 'add') {
-        if (rows().length >= limit) {
+        if (rows().length >= limit()) {
           status.textContent = root.dataset.limitMessage;
           return;
         }
@@ -98,12 +98,23 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   const fileStorage = form.querySelector('select[name="file_storage"]');
   const useDefault = form.querySelector('input[name="use_default"]');
   const defaults = form.querySelector('[data-default-settings]');
+  form.querySelector('[data-refresh-field-settings]')?.setAttribute('hidden', '');
   const lookup = form.querySelector('[data-default-lookup]');
   const lookupStatus = lookup.querySelector('[data-default-lookup-status]');
   const lookupResult = lookup.querySelector('[data-default-lookup-result]');
   let lookupOptions = JSON.parse(lookup.dataset.options);
   let lookupRequest;
   const usesLookup = () => type.value === 'relation' || (type.value === 'file' && fileStorage.value === 'registry');
+  const fieldErrors = JSON.parse(form.dataset.fieldErrors);
+  for (const [key, message] of Object.entries(fieldErrors)) {
+    const [name, index] = key.split('.');
+    const inputs = [...form.querySelectorAll('[name]')].filter(input => input.type !== 'hidden' && input.name === (index === undefined ? name : `${name}[]`));
+    for (const input of index === undefined ? inputs : inputs.slice(Number(index), Number(index) + 1)) {
+      input.setAttribute('aria-invalid', 'true');
+      input.setAttribute('aria-describedby', [input.getAttribute('aria-describedby'), `error-${key.replaceAll('.', '-')}`].filter(Boolean).join(' '));
+      input.classList.add('is-invalid');
+    }
+  }
   let htmlQueue = Promise.resolve();
   const syncHtml = () => {
     htmlQueue = htmlQueue.then(async () => {
@@ -114,6 +125,7 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
           const editor = form.parentElement.querySelector('[data-default-editor-template]').content.firstElementChild.cloneNode(true);
           editor.setAttribute('data-default-html', '');
           editor.querySelector('label')?.remove();
+          source.setAttribute('aria-label', form.querySelector(`label[for="${source.id}"]`)?.textContent.trim() || editor.querySelector('textarea').getAttribute('aria-label'));
           source.before(editor);
           editor.querySelector('textarea').replaceWith(source);
           editor.querySelector('textarea').hidden = false;
@@ -126,7 +138,17 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
       enhanceDefaults();
     }).catch(error => { console.error('Could not update default editors.', error); });
   };
+  const updateLimit = () => {
+    const root = defaults.querySelector('[data-collection-repeat]');
+    const input = form.elements.max_values;
+    const limit = /^\d+$/.test(input.value) && Number(input.value) >= 1 && Number(input.value) <= 1000 ? Number(input.value) : 1000;
+    root.dataset.limit = String(limit);
+    const sources = [...root.querySelectorAll('[data-repeat-row] textarea')];
+    root.querySelector('[data-repeat-op="add"]').disabled = sources.length >= limit;
+    input.setCustomValidity(useDefault.checked && multiple.checked && sources.filter(source => source.value.trim() !== '').length > limit ? defaults.dataset.limitError : '');
+  };
   const enhanceDefaults = () => {
+    updateLimit();
     defaults.querySelectorAll('textarea').forEach(source => {
       if (source.closest('[data-default-html]')) return;
       const existing = source.previousElementSibling;
@@ -150,7 +172,9 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
           if (code && active) control.add(new Option(label || code, code));
         });
         if (source.value && ![...control.options].some(option => option.value === source.value)) {
-          control.add(new Option(source.value, source.value));
+          const unavailable = new Option(source.value, source.value);
+          unavailable.disabled = true;
+          control.add(unavailable);
           control.setCustomValidity(defaults.dataset.invalid);
           control.setAttribute('aria-invalid', 'true');
         }
@@ -164,11 +188,28 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
         if (inputType === 'number') control.step = type.value === 'integer' ? '1' : 'any';
         if (inputType === 'datetime-local') control.step = '1';
       }
-      const value = type.value === 'datetime' ? source.value.replace(' ', 'T') : source.value;
+      const value = type.value === 'datetime' ? source.value.replace(' ', 'T')
+        : type.value === 'date' && /^\d{4}-\d{2}-\d{2} 00:00:00$/.test(source.value) ? source.value.slice(0, 10) : source.value;
       control.value = value;
       // Native controls may sanitize invalid input. Keep the original editable in that case.
       if (value !== '' && control.value === '') return;
       control.id = `${source.id}-control`;
+      for (const attribute of ['aria-invalid', 'aria-describedby']) {
+        if (source.hasAttribute(attribute)) control.setAttribute(attribute, source.getAttribute(attribute));
+      }
+      if (source.classList.contains('is-invalid')) control.classList.add('is-invalid');
+      if (inputType === 'number') {
+        for (const bound of ['min', 'max']) {
+          const value = form.elements.namedItem(`${bound}_value`).value;
+          if (value !== '') control.setAttribute(bound, value);
+        }
+      }
+      if (inputType === 'text' || type.value === 'text') {
+        for (const bound of ['min', 'max']) {
+          const value = form.elements.namedItem(`${bound}_length`).value;
+          if (/^\d+$/.test(value)) control.setAttribute(`${bound}length`, value);
+        }
+      }
       if (label) label.htmlFor = control.id;
       control.addEventListener('input', () => {
         source.value = control.value;
@@ -184,7 +225,12 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
     group.disabled = !visible;
   };
   const update = () => {
+    const deletion = form.elements.relation_on_delete;
+    const required = form.elements.required.checked && type.value === 'relation';
+    deletion.querySelector('[value="clear"]').disabled = required;
+    deletion.setCustomValidity(required && deletion.value === 'clear' ? deletion.dataset.requiredError : '');
     toggle(lookup, useDefault.checked && usesLookup());
+    defaults.querySelector('[data-default-raw-help]').hidden = ['boolean', 'date', 'datetime'].includes(type.value);
     toggle(form.querySelector('[data-default-single]'), useDefault.checked && !multiple.checked);
     toggle(form.querySelector('[data-default-multiple]'), useDefault.checked && multiple.checked);
     form.querySelectorAll('[data-field-types]').forEach(group => toggle(group, group.dataset.fieldTypes.split(' ').includes(type.value)));
@@ -217,10 +263,10 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
       if (lookupRequest !== request) return;
       lookupOptions = data.options;
       lookupResult.replaceChildren(new Option(defaults.dataset.empty, ''), ...lookupOptions.map(option => new Option(option.label, option.code)));
-      lookupStatus.textContent = `${lookupOptions.length}`;
+      lookupStatus.textContent = lookupOptions.length ? lookup.dataset.loaded : lookup.dataset.empty;
       enhanceDefaults();
     } catch (error) {
-      if (error.name !== 'AbortError') lookupStatus.textContent = error.message || lookup.dataset.error;
+      if (lookupRequest === request && error.name !== 'AbortError') lookupStatus.textContent = error.message || lookup.dataset.error;
     } finally {
       if (lookupRequest === request) lookup.removeAttribute('aria-busy');
     }
@@ -255,6 +301,7 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   fileStorage.addEventListener('change', invalidateLookup);
   multiple.addEventListener('change', () => {
     if (multiple.checked) {
+      toggle(form.querySelector('[data-default-multiple]'), true);
       if (single.value !== '' && repeatedSources().every(source => source.value === '')) {
         if (!repeatedSources().length) defaults.querySelector('[data-repeat-op="add"]').click();
         const first = repeatedSources()[0];
@@ -278,7 +325,8 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
     toggle(choice, false);
     update();
   });
-  choice.querySelector('[data-default-choose]').addEventListener('click', () => {
+  choice.querySelector('[data-default-choose]').addEventListener('click', event => {
+    event.preventDefault();
     single.value = choiceSelect.value;
     if (single.closest('[data-default-html]')) setAdminEditorValue(single.closest('[data-default-html]'), single.value);
     multiple.checked = false;
@@ -286,13 +334,19 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
     update();
     single.previousElementSibling?.matches('[data-default-control]') ? single.previousElementSibling.focus() : single.focus();
   });
-  choice.querySelector('[data-default-cancel]').addEventListener('click', () => {
+  choice.querySelector('[data-default-cancel]').addEventListener('click', event => {
+    event.preventDefault();
     toggle(choice, false);
     multiple.focus();
   });
   type.addEventListener('change', update);
+  form.elements.required.addEventListener('change', update);
+  form.elements.relation_on_delete.addEventListener('change', update);
   fileStorage.addEventListener('change', update);
   useDefault.addEventListener('change', update);
+  form.elements.max_values.addEventListener('input', updateLimit);
+  defaults.addEventListener('input', updateLimit);
+  for (const input of form.querySelectorAll('[name="min_length"], [name="max_length"], [name="min_value"], [name="max_value"]')) input.addEventListener('change', enhanceDefaults);
   form.addEventListener('collection:values-changed', event => {
     if (defaults.contains(event.target) || event.target.matches('[data-key="options"]')) { enhanceDefaults(); syncHtml(); }
   });
@@ -302,6 +356,23 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   form.addEventListener('change', event => {
     if (event.target.closest('[data-key="options"]')) enhanceDefaults();
   });
-  form.addEventListener('reset', () => queueMicrotask(() => { toggle(choice, false); lookupOptions = JSON.parse(lookup.dataset.options); update(); }));
+  form.addEventListener('reset', () => queueMicrotask(() => { lookupRequest?.abort(); lookupRequest = null; lookup.removeAttribute('aria-busy'); toggle(choice, false); lookupOptions = JSON.parse(lookup.dataset.options); update(); }));
+  form.addEventListener('submit', () => {
+    form.elements.default_shape.value = multiple.checked ? '1' : '0';
+    const drafts = form.querySelector('[data-default-drafts]');
+    drafts.replaceChildren();
+    const values = [
+      ...(single.matches(':disabled') ? [['draft_default_value', single.value]] : []),
+      ...repeatedSources().filter(source => source.matches(':disabled')).map(source => ['draft_default_values[]', source.value]),
+    ];
+    for (const [name, value] of values) {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = name;
+      input.value = value;
+      drafts.append(input);
+    }
+  });
   update();
+  form.parentElement.querySelector('[data-field-error-summary]')?.focus();
 });

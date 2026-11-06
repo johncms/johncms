@@ -11,14 +11,23 @@
 #}
 {% extends '@admin/layouts/default.twig' %}
 
+{% macro error(errors, key) %}
+    {% if errors[key]|default('') %}<div class="invalid-feedback d-block" id="error-{{ key|replace({'.': '-'}) }}">{{ errors[key] }}</div>{% endif %}
+{% endmacro %}
+
 {% block content %}
     {% if repeat_message|default('') %}<div class="alert alert-info" role="status">{{ repeat_message }}</div>{% endif %}
     {% if managed %}<div class="alert alert-info">{{ __('This field is managed by its module. Change its declaration in code.') }} <strong>{{ owner_module }}</strong></div>{% endif %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
+    {% if errors %}<div tabindex="-1" data-field-error-summary>{% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}</div>{% endif %}
 
-    <form action="{{ form_action }}" method="post" id="field-form" data-collection-field-settings class="row g-3 align-items-start">
+    <form action="{{ form_action }}" method="post" id="field-form" data-collection-field-settings data-field-errors="{{ field_errors|json_encode }}" class="row g-3 align-items-start">
 
         <input type="hidden" name="collection_form_started" value="1">
+        <input type="hidden" name="default_shape" value="{{ fields.multiple }}">
+        <div data-default-drafts hidden>
+            {% if fields.multiple %}<input type="hidden" name="draft_default_value" value="{{ fields.default_value }}">
+            {% else %}{% for value in fields.default_values %}<input type="hidden" name="draft_default_values[]" value="{{ value }}">{% endfor %}{% endif %}
+        </div>
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         {% if id is not null %}
             <input type="hidden" name="id" value="{{ id }}">
@@ -34,25 +43,36 @@
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label" for="name">{{ __('Name') }}</label>
-                            <input type="text" name="name" class="form-control" id="name" value="{{ fields.name }}" required{% if managed %} disabled{% endif %}>
+                            <input type="text" name="name" maxlength="255" class="form-control" id="name" value="{{ fields.name }}" required{% if managed %} disabled{% endif %}{% if field_errors['name']|default('') %} aria-invalid="true" aria-describedby="error-name"{% endif %}>
+                            {{ _self.error(field_errors, 'name') }}
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label" for="code">{{ __('Code') }}</label>
-                            <input type="text" name="code" class="form-control font-monospace" id="code" value="{{ fields.code }}" required pattern="[a-z0-9_-]+"{% if managed %} disabled{% endif %}>
-                            <div class="form-text">{{ __('The name of the value in the API and the templates: lowercase latin letters, digits, hyphen and underscore.') }}</div>
+                            {% if managed %}
+                                <label class="form-label" for="code">{{ __('Code') }}</label>
+                                <input type="text" class="form-control" name="code" id="code" value="{{ fields.code }}" disabled>
+                            {% else %}
+                                {% include '@admin/components/ui/slug-field.twig' with {
+                                    label: __('Code'), value: fields.code, linked: slug_linked, slug_url: '/admin/collections/slug',
+                                    required: true, pattern: '[a-z0-9_\\-]+',
+                                    hint: __('The name of the value in the API and the templates: lowercase latin letters, digits, hyphen and underscore.')
+                                } only %}
+                            {% endif %}
+                            {{ _self.error(field_errors, 'code') }}
                         </div>
                         <div class="col-md-6">
                             <label class="form-label" for="type">{{ __('Type') }}</label>
-                            <select name="type" class="form-select" id="type"{% if managed or structure_locked %} disabled{% endif %}>
+                            <select name="type" class="form-select" id="type"{% if managed or structure_locked %} disabled{% endif %}{% if field_errors['type']|default('') %} aria-invalid="true" aria-describedby="error-type"{% endif %}>
                                 {% for value, label in type_options %}
                                     <option value="{{ value }}"{% if fields.type == value %} selected{% endif %}>{{ label }}</option>
                                 {% endfor %}
                             </select>
+                            {{ _self.error(field_errors, 'type') }}
                             {% if structure_locked %}
-                                <input type="hidden" name="type" value="{{ fields.type }}">
+                                <input type="hidden" name="type" value="{{ fields.type }}"{% if field_errors['type']|default('') %} aria-invalid="true" aria-describedby="error-type"{% endif %}>
                                 <div class="form-text">{{ __('Convert existing values explicitly before changing their type or multiplicity.') }}</div>
                             {% endif %}
                         </div>
+                        {% if not managed %}<div class="col-12"><button type="submit" name="refresh_settings" value="1" formnovalidate class="btn btn-outline-secondary btn-sm" data-refresh-field-settings>{{ __('Update field settings') }}</button></div>{% endif %}
                         <div class="col-12 d-flex flex-column gap-3">
                             <div class="form-check form-switch">
                                 <input type="checkbox" class="form-check-input" role="switch" name="required" value="1" id="required"{% if fields.required %} checked{% endif %}{% if managed %} disabled{% endif %}>
@@ -72,19 +92,21 @@
             <fieldset class="card mt-3"{% if managed %} disabled{% endif %}>
                 <div class="card-header"><h2 class="h6 mb-0">{{ __('Input settings') }}</h2></div>
                 <div class="card-body row g-3">
-                    <fieldset class="col-12 mb-0" data-field-types="file">
+                    <fieldset class="col-12 mb-0" data-field-types="file"{% if fields.type != 'file' %} hidden disabled{% endif %}>
                         <label class="form-label" for="file-storage">{{ __('File storage') }}</label>
                         <select class="form-select" id="file-storage" name="file_storage"{% if structure_locked %} disabled{% endif %}>
                             <option value="registry"{% if fields.file_storage == 'registry' %} selected{% endif %}>{{ __('Registered files') }}</option>
                             {% if legacy_file %}<option value="legacy"{% if fields.file_storage == 'legacy' %} selected{% endif %}>{{ __('Legacy file paths') }}</option>{% endif %}
                         </select>
+                        {{ _self.error(field_errors, 'file_storage') }}
                         {% if structure_locked %}<input type="hidden" name="file_storage" value="{{ fields.file_storage }}">{% endif %}
                         <div class="form-text">{{ __('Existing paths require explicit conversion before switching to registered file IDs.') }}</div>
-                        <fieldset class="mb-0" data-file-storage="registry">
+                        <fieldset class="mb-0" data-file-storage="registry"{% if fields.file_storage != 'registry' %} hidden disabled{% endif %}>
                             <input type="hidden" name="file_constraints_present" value="1">
                             <label class="form-label mt-2" for="max-file-bytes">{{ __('Maximum file size') }}</label>
                             <div class="input-group">
-                                <input class="form-control" type="number" min="0" step="any" name="max_file_bytes" id="max-file-bytes" value="{{ fields.max_file_bytes }}">
+                                <input class="form-control" type="number" min="0" step="any" name="max_file_bytes" id="max-file-bytes" value="{{ fields.max_file_bytes }}"{% if field_errors['max_file_bytes']|default('') %} aria-invalid="true" aria-describedby="error-max_file_bytes"{% endif %}>
+                                {{ _self.error(field_errors, 'max_file_bytes') }}
                                 <select class="form-select" name="file_size_unit" aria-label="{{ __('File size unit') }}">
                                     {% for unit, label in {'1': __('Bytes'), '1024': 'KiB', '1048576': 'MiB'} %}<option value="{{ unit }}"{% if file_size_unit == unit ~ '' %} selected{% endif %}>{{ label }}</option>{% endfor %}
                                 </select>
@@ -98,57 +120,69 @@
                                     </div>
                                 {% endfor %}
                             </div>
+                            {{ _self.error(field_errors, 'allowed_mime_types') }}
                             <div class="form-text">{{ __('The actual file content is checked. Server upload and image limits also apply.') }}</div>
                         </fieldset>
                     </fieldset>
-                    <fieldset class="col-12 mb-0" data-field-types="relation">
+                    <fieldset class="col-12 mb-0" data-field-types="relation"{% if fields.type != 'relation' %} hidden disabled{% endif %}>
                         <label class="form-label" for="relation-target">{{ __('Target collection') }}</label>
-                        <select class="form-select" name="target_collection_id" id="relation-target"{% if structure_locked %} disabled{% endif %}>
+                        <select class="form-select" name="target_collection_id" id="relation-target"{% if structure_locked %} disabled{% endif %}{% if field_errors['target_collection_id']|default('') %} aria-invalid="true" aria-describedby="error-target_collection_id"{% endif %}>
                             {% include '@collections/admin/components/select-options.twig' with {options: collection_options, current: fields.target_collection_id ~ ''} only %}
                         </select>
-                        {% if structure_locked %}<input type="hidden" name="target_collection_id" value="{{ fields.target_collection_id }}">{% endif %}
+                        {{ _self.error(field_errors, 'target_collection_id') }}
+                        {% if structure_locked %}<input type="hidden" name="target_collection_id" value="{{ fields.target_collection_id }}"{% if field_errors['target_collection_id']|default('') %} aria-invalid="true" aria-describedby="error-target_collection_id"{% endif %}>{% endif %}
                         <label class="form-label mt-2" for="relation-on-delete">{{ __('When a related item is deleted') }}</label>
-                        <select class="form-select" id="relation-on-delete" name="relation_on_delete">
+                        <select class="form-select" id="relation-on-delete" name="relation_on_delete"{% if field_errors['relation_on_delete']|default('') %} aria-invalid="true" aria-describedby="error-relation_on_delete"{% endif %}>
                             <option value="restrict"{% if fields.relation_on_delete == 'restrict' %} selected{% endif %}>{{ __('Prevent deletion while referenced') }}</option>
                             <option value="clear"{% if fields.relation_on_delete == 'clear' %} selected{% endif %}>{{ __('Clear optional relations') }}</option>
                         </select>
+                        {{ _self.error(field_errors, 'relation_on_delete') }}
                         <div class="form-text">{{ __('Required relations and field defaults must be resolved before deleting their targets.') }}</div>
                     </fieldset>
-                    <fieldset class="col-12 mb-0" data-field-types="select">
-                        {% include '@collections/admin/components/option-settings.twig' with {options: option_rows} only %}
+                    <fieldset class="col-12 mb-0" data-field-types="select"{% if fields.type != 'select' %} hidden disabled{% endif %}>
+                        {% include '@collections/admin/components/option-settings.twig' with {options: option_rows, field_errors: field_errors} only %}
+                        {{ _self.error(field_errors, 'options') }}
                     </fieldset>
                     <div class="col-12">
                         <label class="form-label" for="field-hint">{{ __('Hint') }}</label>
-                        <textarea class="form-control" id="field-hint" name="hint" rows="2" maxlength="2000">{{ fields.hint }}</textarea>
+                        <textarea class="form-control" id="field-hint" name="hint" rows="2" maxlength="2000"{% if field_errors['hint']|default('') %} aria-invalid="true" aria-describedby="error-hint"{% endif %}>{{ fields.hint }}</textarea>
+                        {{ _self.error(field_errors, 'hint') }}
                     </div>
-                    <fieldset class="col-md-6 mb-0" data-field-types="string text html{{ fields.legacy_length_limits|default(false) ? ' select file' : '' }}">
+                    <fieldset class="col-md-6 mb-0" data-field-types="string text html{{ fields.legacy_length_limits|default(false) ? ' select file' : '' }}"{% if fields.type not in ['string', 'text', 'html'] and not (fields.legacy_length_limits and fields.type in ['select', 'file']) %} hidden disabled{% endif %}>
                         <label class="form-label" for="min-length">{{ __('Minimum text length') }}</label>
-                        <input type="number" class="form-control" min="0" id="min-length" name="min_length" value="{{ fields.min_length }}">
+                        <input type="number" class="form-control" min="0" id="min-length" name="min_length" value="{{ fields.min_length }}"{% if field_errors['min_length']|default('') %} aria-invalid="true" aria-describedby="error-min_length"{% endif %}>
+                        {{ _self.error(field_errors, 'min_length') }}
                     </fieldset>
-                    <fieldset class="col-md-6 mb-0" data-field-types="string text html{{ fields.legacy_length_limits|default(false) ? ' select file' : '' }}">
+                    <fieldset class="col-md-6 mb-0" data-field-types="string text html{{ fields.legacy_length_limits|default(false) ? ' select file' : '' }}"{% if fields.type not in ['string', 'text', 'html'] and not (fields.legacy_length_limits and fields.type in ['select', 'file']) %} hidden disabled{% endif %}>
                         <label class="form-label" for="max-length">{{ __('Maximum text length') }}</label>
-                        <input type="number" class="form-control" min="0" id="max-length" name="max_length" value="{{ fields.max_length }}">
+                        <input type="number" class="form-control" min="0" id="max-length" name="max_length" value="{{ fields.max_length }}"{% if field_errors['max_length']|default('') %} aria-invalid="true" aria-describedby="error-max_length"{% endif %}>
+                        {{ _self.error(field_errors, 'max_length') }}
                     </fieldset>
-                    <fieldset class="col-md-6 mb-0" data-field-types="integer double">
+                    <fieldset class="col-md-6 mb-0" data-field-types="integer double"{% if fields.type not in ['integer', 'double'] %} hidden disabled{% endif %}>
                         <label class="form-label" for="min-value">{{ __('Minimum numeric value') }}</label>
-                        <input type="number" step="any" class="form-control" id="min-value" name="min_value" value="{{ fields.min_value }}">
+                        <input type="number" step="any" class="form-control" id="min-value" name="min_value" value="{{ fields.min_value }}"{% if field_errors['min_value']|default('') %} aria-invalid="true" aria-describedby="error-min_value"{% endif %}>
+                        {{ _self.error(field_errors, 'min_value') }}
                     </fieldset>
-                    <fieldset class="col-md-6 mb-0" data-field-types="integer double">
+                    <fieldset class="col-md-6 mb-0" data-field-types="integer double"{% if fields.type not in ['integer', 'double'] %} hidden disabled{% endif %}>
                         <label class="form-label" for="max-value">{{ __('Maximum numeric value') }}</label>
-                        <input type="number" step="any" class="form-control" id="max-value" name="max_value" value="{{ fields.max_value }}">
+                        <input type="number" step="any" class="form-control" id="max-value" name="max_value" value="{{ fields.max_value }}"{% if field_errors['max_value']|default('') %} aria-invalid="true" aria-describedby="error-max_value"{% endif %}>
+                        {{ _self.error(field_errors, 'max_value') }}
                     </fieldset>
-                    <fieldset class="col-md-6 mb-0" data-field-multiple>
+                    <fieldset class="col-md-6 mb-0" data-field-multiple{% if not fields.multiple %} hidden disabled{% endif %}>
                         <label class="form-label" for="max-values">{{ __('Maximum number of values') }}</label>
-                        <input type="number" class="form-control" min="1" max="1000" id="max-values" name="max_values" value="{{ fields.max_values }}">
+                        <input type="number" class="form-control" min="1" max="1000" id="max-values" name="max_values" value="{{ fields.max_values }}"{% if field_errors['max_values']|default('') %} aria-invalid="true" aria-describedby="error-max_values"{% endif %}>
+                        {{ _self.error(field_errors, 'max_values') }}
                         <div class="form-text">{{ __('For multiple fields. Leave limits empty to use the storage limits.') }}</div>
                     </fieldset>
-                    <div class="col-12" data-default-settings data-yes="{{ __('Yes') }}" data-no="{{ __('No') }}" data-empty="{{ __('No value') }}" data-invalid="{{ __('Choose an available option for this field.') }}">
+                    <p class="col-12 form-text mb-0" data-field-types="html"{% if fields.type != 'html' %} hidden{% endif %}>{{ __('HTML length includes markup. Limits apply to each value.') }}</p>
+                    <p class="col-12 form-text mb-0" data-field-types="string"{% if fields.type != 'string' %} hidden{% endif %}>{{ __('Strings are stored with a maximum of 255 characters. Limits apply to each value.') }}</p>
+                    <div class="col-12" data-default-settings data-limit-error="{{ __('The default exceeds the configured number of values.') }}" data-yes="{{ __('Yes') }}" data-no="{{ __('No') }}" data-empty="{{ __('No value') }}" data-invalid="{{ __('Choose an available option for this field.') }}">
                         <div class="form-check mb-2">
                             <input class="form-check-input" type="checkbox" name="use_default" id="use-default" value="1"{% if fields.use_default %} checked{% endif %}>
                             <label class="form-check-label" for="use-default">{{ __('Use a default value') }}</label>
                         </div>
                         <fieldset class="mb-3" data-default-lookup data-url="{{ form_action }}/choices"
-                                  data-options="{{ default_options|json_encode }}" data-error="{{ __('Could not load default choices. Try again.') }}">
+                                  data-options="{{ default_options|json_encode }}"{% if fields.type != 'relation' and not (fields.type == 'file' and fields.file_storage == 'registry') %} hidden disabled{% endif %} data-error="{{ __('Could not load default choices. Try again.') }}" data-loaded="{{ __('Choose a value and apply it to the default.') }}" data-empty="{{ __('No matching values were found. Refine your search.') }}">
                             <label class="form-label" for="default-query">{{ __('Search default values') }}</label>
                             <div class="input-group">
                                 <input type="search" class="form-control" id="default-query" name="default_query" maxlength="255" value="{{ default_query }}">
@@ -160,23 +194,26 @@
                             </select>
                             <button type="submit" name="apply_default" value="1" formnovalidate class="btn btn-outline-secondary btn-sm mt-2" data-default-lookup-apply>{{ __('Use this value') }}</button>
                         </fieldset>
-                        <fieldset class="border rounded p-3 mb-3" data-default-choice hidden disabled>
+                        <fieldset class="border rounded p-3 mb-3" data-default-choice{% if not default_choice_values %} hidden disabled{% endif %}>
                             <label class="form-label" for="default-choice">{{ __('Choose the default value to keep. Other values remain in the draft until you save.') }}</label>
-                            <select class="form-select mb-2" id="default-choice"></select>
-                            <button type="button" class="btn btn-outline-primary btn-sm" data-default-choose>{{ __('Use this value') }}</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" data-default-cancel>{{ __('Cancel') }}</button>
+                            <select class="form-select mb-2" id="default-choice" name="default_choice">{% for value in default_choice_values %}<option value="{{ value }}">{{ value }}</option>{% endfor %}</select>
+                            <button type="submit" name="choose_default" value="1" formnovalidate class="btn btn-outline-primary btn-sm" data-default-choose>{{ __('Use this value') }}</button>
+                            <button type="submit" name="cancel_default_choice" value="1" formnovalidate class="btn btn-outline-secondary btn-sm" data-default-cancel>{{ __('Cancel') }}</button>
                         </fieldset>
-                        <fieldset class="mb-0" data-default-single>
+                        {{ _self.error(field_errors, 'default') }}
+                        <fieldset class="mb-0" data-default-single{% if fields.multiple %} hidden disabled{% endif %}>
                             <label class="form-label" for="field-default">{{ __('Default value') }}</label>
-                            <textarea class="form-control" id="field-default" name="default_value" rows="2">{{ fields.default_value }}</textarea>
+                            <textarea class="form-control" id="field-default" name="default_value" rows="2"{% if field_errors['default_value']|default('') %} aria-invalid="true" aria-describedby="error-default_value"{% endif %}>{{ fields.default_value }}</textarea>
+                            {{ _self.error(field_errors, 'default_value') }}
                         </fieldset>
-                        <fieldset data-default-multiple class="mt-2 mb-0">
+                        <fieldset data-default-multiple class="mt-2 mb-0"{% if not fields.multiple %} hidden disabled{% endif %}>
                             {% include '@collections/admin/components/repeated-values.twig' with {
                                 entries: default_entries, input_name: 'default_values', action_key: 'default', id_prefix: 'field-default',
-                                type: 'text', label: __('Default values'), limit: 1000, allow_upload: false, upload_url: ''
+                                type: 'text', label: __('Default values'), limit: 1000, row_errors: field_errors, allow_upload: false, upload_url: ''
                             } only %}
                         </fieldset>
-                        <div class="form-text">{{ __('Defaults apply only when creating an item without an explicit value. Dates use ISO format; booleans use 0 or 1.') }}</div>
+                        <div class="form-text" data-default-format-help>{{ __('Defaults apply only when creating an item without an explicit value.') }}
+                            <span data-default-raw-help>{{ __('Dates use ISO format; booleans use 0 or 1.') }}</span></div>
                     </div>
                 </div>
             </fieldset>
@@ -191,12 +228,18 @@
                 <div class="card-body d-flex flex-column gap-3">
                     <div class="col-12">
                         <label class="form-label" for="field-role">{{ __('Field role') }}</label>
-                        <input type="text" name="role" class="form-control font-monospace" id="field-role" value="{{ fields.role ?? '' }}" pattern="[a-z0-9_]+"{% if managed %} disabled{% endif %}>
+                        <input type="text" name="role" maxlength="255" class="form-control font-monospace" id="field-role" list="field-roles" value="{{ fields.role ?? '' }}" pattern="[a-z0-9_]+"{% if managed %} disabled{% endif %}{% if field_errors['role']|default('') %} aria-invalid="true" aria-describedby="error-role"{% endif %}>
+                        {{ _self.error(field_errors, 'role') }}
                         <div class="form-text">{{ __('Use meta_title, meta_description or meta_keywords for SEO fields. Leave empty for ordinary content.') }}</div>
+                        <datalist id="field-roles">
+                            <option value="meta_title"></option><option value="meta_description"></option><option value="meta_keywords"></option><option value="tags"></option>
+                        </datalist>
+                        <div class="form-text">{{ __('The tags role requires a multiple string field.') }}</div>
                     </div>
                     <div class="col-12">
                         <label class="form-label" for="sort">{{ __('Sorting') }}</label>
-                        <input type="number" name="sort" class="form-control" id="sort" value="{{ fields.sort }}"{% if managed %} disabled{% endif %}>
+                        <input type="number" name="sort" min="-2147483648" max="2147483647" class="form-control" id="sort" value="{{ fields.sort }}"{% if managed %} disabled{% endif %}{% if field_errors['sort']|default('') %} aria-invalid="true" aria-describedby="error-sort"{% endif %}>
+                        {{ _self.error(field_errors, 'sort') }}
                         <div class="form-text">{{ __('The order of the fields in the form of an item and of the columns of the list.') }}</div>
                     </div>
                     <div class="form-check form-switch">

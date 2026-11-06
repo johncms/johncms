@@ -59,7 +59,10 @@ final readonly class SaveCollectionFieldUseCase
                 throw new CollectionSchemaException(d__('collections', 'Use a valid field code, label and role.'));
             }
             if ($dto->role === 'tags' && ($dto->type !== FieldType::String_ || ! $dto->multiple)) {
-                throw new CollectionSchemaException(d__('collections', 'The tags role requires a multiple string field.'));
+                throw new CollectionSchemaException(
+                    message: d__('collections', 'The tags role requires a multiple string field.'),
+                    errors: ['role' => d__('collections', 'The tags role requires a multiple string field.')],
+                );
             }
             if ($dto->sort < -2147483648 || $dto->sort > 2147483647) {
                 throw new CollectionSchemaException(d__('collections', 'Enter an integer between -2147483648 and 2147483647.'));

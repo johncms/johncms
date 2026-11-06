@@ -437,6 +437,13 @@
       'Bytes' => 'Байты',
       'Could not load default choices. Try again.' => 'Не удалось загрузить варианты значений по умолчанию. Попробуйте ещё раз.',
       'Search default values' => 'Поиск значений по умолчанию',
+      'HTML length includes markup. Limits apply to each value.' => 'Длина HTML включает разметку. Ограничения применяются к каждому значению.',
+      'Strings are stored with a maximum of 255 characters. Limits apply to each value.' => 'Строки хранятся длиной не более 255 символов. Ограничения применяются к каждому значению.',
+      'Update field settings' => 'Обновить настройки поля',
+      'Choose a value and apply it to the default.' => 'Выберите значение и примените его как значение по умолчанию.',
+      'No matching values were found. Refine your search.' => 'Подходящих значений не найдено. Уточните поиск.',
+      'Defaults apply only when creating an item without an explicit value.' => 'Значения по умолчанию применяются только при создании записи без явно заданного значения.',
+      'Dates use ISO format; booleans use 0 or 1.' => 'Для дат используйте формат ISO, для логических значений — 0 или 1.',
     ),
   ),
 );

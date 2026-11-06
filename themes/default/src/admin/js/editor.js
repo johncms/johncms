@@ -13,7 +13,7 @@ export function initializeAdminEditors(root = document) {
 function initialize(field) {
   if (records.has(field)) return records.get(field).ready;
   const textarea = field.querySelector('textarea');
-  const initialValue = textarea.value;
+  const initialValue = textarea.defaultValue;
   const form = textarea.form;
   const status = field.querySelector('[data-admin-editor-status]');
   const record = { loading: true, editor: null, removed: false, ready: null };

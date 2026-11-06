@@ -10,7 +10,7 @@
         <span data-slug-manual-icon hidden>{% include '@admin/components/ui/icon.twig' with {name: 'unlink', size: 16} only %}</span>
     </button>
     <div class="admin-slug-input position-relative">
-        <input type="text" name="code" class="form-control font-monospace pe-5{{ errors|default([]) ? ' is-invalid' : '' }}" id="code" value="{{ value }}" maxlength="255" pattern="[\w.+\-]*"{% if required|default(false) %} required{% endif %} data-slug-input aria-describedby="code-help code-status">
+        <input type="text" name="code" class="form-control font-monospace pe-5{{ errors|default([]) ? ' is-invalid' : '' }}" id="code" value="{{ value }}" maxlength="255" pattern="{{ pattern|default('[\\w.+\\-]*') }}"{% if required|default(false) %} required{% endif %} data-slug-input aria-describedby="code-help code-status">
         <button class="btn admin-slug-action admin-slug-refresh" type="button" data-slug-refresh data-slug-control hidden
                 title="{{ d__('system', 'Generate code from name') }}" aria-label="{{ d__('system', 'Generate code from name') }}">
             {% include '@admin/components/ui/icon.twig' with {name: 'refresh-cw', size: 16} only %}

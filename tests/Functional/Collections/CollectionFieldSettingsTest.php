@@ -349,6 +349,57 @@ final class CollectionFieldSettingsTest extends FunctionalTestCase
         self::assertCount(1, $this->schema->getFields($this->collection));
     }
 
+    public function testFieldErrorsIdentifyDefaultRowsAndDuplicateOptionCodes(): void
+    {
+        $editor = FunctionalUserFactory::createSupervisor();
+        $url = '/admin/collections/' . $this->collection . '/fields';
+        $response = $this->postForm($url, [
+            'code' => 'text', 'name' => 'Text', 'type' => 'text', 'multiple' => '1',
+            'min_length' => '3', 'use_default' => '1', 'default_values' => ['valid', 'no'],
+        ], $editor);
+        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
+        self::assertNotNull($document->querySelector('#error-default_values-1'));
+        self::assertStringContainsString('>no</textarea>', (string) $response->getContent());
+        $response = $this->postForm($url, [
+            'code' => 'choice', 'name' => 'Choice', 'type' => 'select',
+            'option_code' => ['same', 'SAME'], 'option_label' => ['First', 'Second'], 'option_active' => ['1', '1'],
+        ], $editor);
+        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
+        self::assertNotNull($document->querySelector('#error-option_code-1'));
+        self::assertNotNull($document->querySelector('[data-field-error-summary]'));
+        self::assertCount(0, $this->schema->getFields($this->collection));
+    }
+
+    public function testWithoutScriptsMultiplicityRequiresExplicitChoiceAndPreservesDraft(): void
+    {
+        $editor = FunctionalUserFactory::createSupervisor();
+        $url = '/admin/collections/' . $this->collection . '/fields';
+        $data = ['code' => 'value', 'name' => 'Value', 'type' => 'text', 'use_default' => '1', 'default_shape' => '1', 'default_values' => ["First\nparagraph", '0']];
+        $response = $this->postForm($url, $data, $editor);
+        self::assertSame(200, $response->getStatusCode());
+        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
+        self::assertCount(0, $this->schema->getFields($this->collection));
+        self::assertFalse($document->querySelector('[data-default-choice]')->hasAttribute('hidden'));
+        self::assertSame(2, $document->querySelectorAll('#default-choice option')->length);
+        $response = $this->postForm($url, $data + ['choose_default' => '1', 'default_choice' => '0'], $editor);
+        self::assertSame(200, $response->getStatusCode());
+        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
+        self::assertSame('0', $document->querySelector('[name="default_value"]')->textContent);
+        self::assertSame(2, $document->querySelectorAll('[name="default_values[]"]')->length);
+        $response = $this->postForm($url, [
+            'code' => 'value', 'name' => 'Value', 'type' => 'text', 'default_shape' => '0', 'multiple' => '1',
+            'default_value' => '0', 'draft_default_values' => ["First\nparagraph", '0'], 'refresh_settings' => '1',
+        ], $editor);
+        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
+        self::assertSame("First\nparagraph", $document->querySelector('[name="default_values[]"]')->textContent);
+        self::assertSame('0', $document->querySelector('[name="draft_default_value"]')->getAttribute('value'));
+
+        $response = $this->postForm($url, ['code' => 'other', 'name' => 'Other', 'type' => 'text', 'default_shape' => '0', 'multiple' => '1', 'default_value' => "One\nparagraph", 'refresh_settings' => '1'], $editor);
+        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
+        self::assertSame("One\nparagraph", $document->querySelector('[name="default_values[]"]')->textContent);
+        self::assertCount(0, $this->schema->getFields($this->collection));
+    }
+
     /** @param array<string, mixed> $settings */
     private function field(string $code, FieldType $type, array $settings = [], bool $multiple = false): int
     {

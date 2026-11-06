@@ -11,6 +11,7 @@ use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldListItemDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionFieldCodeAlreadyExistsException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionAccessDeniedException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
 use Johncms\Modules\Collections\Application\Services\CollectionFilePolicy;
 use Johncms\Modules\Collections\Application\Services\CollectionFieldFormChoices;
@@ -109,6 +110,36 @@ final readonly class CollectionFieldsAdminController
         $fields['legacy_length_limits'] = $current !== null && $current->type->value === $fields['type']
             && in_array($fields['type'], ['select', 'file'], true)
             && (isset($current->settings['min_length']) || isset($current->settings['max_length']));
+        if ($request->hasBody('choose_default')) {
+            $value = $request->body('default_choice');
+            if (! in_array($value, $fields['default_values'], true)) {
+                return $this->renderForm($collection, $id, $fields, [d__('collections', 'Choose an available option for this field.')]);
+            }
+            $fields['default_value'] = $value;
+            $fields['multiple'] = 0;
+            return $this->renderForm($collection, $id, $fields);
+        }
+        if ($request->hasBody('cancel_default_choice')) {
+            $fields['multiple'] = 1;
+            return $this->renderForm($collection, $id, $fields);
+        }
+        if ($request->hasBody('default_shape') && $request->body('default_shape') !== (string) $fields['multiple']) {
+            $values = array_values(array_filter($fields['default_values'], static fn (string $value): bool => trim($value) !== ''));
+            if ($fields['multiple']) {
+                if ($values === [] && $fields['default_value'] !== '') {
+                    $fields['default_values'] = [$fields['default_value']];
+                }
+            } elseif (count($values) > 1) {
+                $fields['multiple'] = 1;
+                $fields['default_choice_values'] = $values;
+                return $this->renderForm($collection, $id, $fields, [d__('collections', 'Choose the default value to keep. Other values remain in the draft until you save.')]);
+            } elseif ($values !== []) {
+                $fields['default_value'] = $values[0];
+            }
+        }
+        if ($request->hasBody('refresh_settings')) {
+            return $this->renderForm($collection, $id, $fields);
+        }
         if ($request->hasBody('repeat_action')) {
             try {
                 [$key, $operation, $index] = $this->repeated->action($request->body('repeat_action'));
@@ -151,15 +182,15 @@ final readonly class CollectionFieldsAdminController
         $errors = $this->validate($fields);
 
         if ($errors !== []) {
-            return $this->renderForm($collection, $id, $fields, $errors);
+            return $this->renderForm($collection, $id, $fields, array_values($errors), $errors);
         }
 
         try {
             $this->saveField->execute($id, $this->dtoFromFields($collection_id, $fields));
         } catch (CollectionSchemaException $exception) {
-            return $this->renderForm($collection, $id, $fields, [$exception->getMessage()]);
+            return $this->renderForm($collection, $id, $fields, [$exception->getMessage()], $exception->errors);
         } catch (CollectionFieldCodeAlreadyExistsException) {
-            return $this->renderForm($collection, $id, $fields, [__('A field with this code already exists')]);
+            return $this->renderForm($collection, $id, $fields, [__('A field with this code already exists')], ['code' => __('A field with this code already exists')]);
         }
 
         $this->session->flash('success_message', $id !== null ? __('Changes saved') : __('Created successfully'));
@@ -284,8 +315,9 @@ final readonly class CollectionFieldsAdminController
     /**
      * @param array<string, mixed> $fields
      * @param list<string> $errors
+     * @param array<string, string> $fieldErrors
      */
-    private function renderForm(ContentCollection $collection, ?int $id, array $fields, array $errors = []): ViewResponse
+    private function renderForm(ContentCollection $collection, ?int $id, array $fields, array $errors = [], array $fieldErrors = []): ViewResponse
     {
         $field = $id !== null ? $this->fieldRepository->findById($id) : null;
         $locked = $field !== null && $this->fieldRepository->hasValues($field->id);
@@ -298,7 +330,7 @@ final readonly class CollectionFieldsAdminController
         if (in_array($fields['type'], ['file', 'relation'], true)) {
             try {
                 $defaultOptions = $this->defaultOptions($collection->id, $fields);
-            } catch (CollectionSchemaException | InvalidArgumentException $exception) {
+            } catch (CollectionSchemaException | InvalidArgumentException | CollectionAccessDeniedException $exception) {
                 $lookupError = $exception->getMessage();
             }
         }
@@ -318,7 +350,10 @@ final readonly class CollectionFieldsAdminController
             'fields'       => $fields,
             'managed'      => $id !== null && $this->fieldRepository->findById($id)?->owner_module !== null,
             'type_options' => $this->typeOptions(),
+            'slug_linked' => $fields['slug_linked'] ?? ($id === null && $fields['code'] === ''),
             'errors'       => $errors,
+            'field_errors' => $fieldErrors,
+            'default_choice_values' => $fields['default_choice_values'] ?? [],
             'default_entries' => ! empty($fields['repeat_exact']) ? $fields['default_values'] : [...$fields['default_values'], ''],
             'repeat_message' => $fields['repeat_message'] ?? '',
             'option_rows' => ! empty($fields['repeat_exact']) || count($fields['option_rows']) >= 500 ? $fields['option_rows'] : [...$fields['option_rows'], ['code' => '', 'label' => '', 'active' => true]],
@@ -350,8 +385,10 @@ final readonly class CollectionFieldsAdminController
             'file_constraints_present' => $request->hasBody('file_constraints_present'),
             'file_storage_present' => $request->hasBody('file_storage'),
             'allowed_mime_types' => array_values(array_filter($request->bodyList('allowed_mime_types'), is_string(...))),
+            'slug_linked' => $request->hasBody('slug_linked'),
             'hint' => $request->body('hint'), 'use_default' => $request->hasBody('use_default'),
-            'default_value' => $request->body('default_value'), 'default_values' => array_values(array_filter($request->bodyList('default_values'), is_string(...))),
+            'default_value' => $request->body($request->hasBody('default_value') ? 'default_value' : 'draft_default_value'),
+            'default_values' => array_values(array_filter($request->bodyList($request->hasBody('default_values') ? 'default_values' : 'draft_default_values'), is_string(...))),
             'min_length' => $request->body('min_length'), 'max_length' => $request->body('max_length'),
             'min_value' => $request->body('min_value'), 'max_value' => $request->body('max_value'), 'max_values' => $request->body('max_values'),
         ];
@@ -507,21 +544,23 @@ final readonly class CollectionFieldsAdminController
 
     /**
      * @param array<string, mixed> $fields
-     * @return list<string>
+     * @return array<string, string>
      */
     private function validate(array $fields): array
     {
         $errors = [];
-        if ($fields['code'] === '' || $fields['name'] === '') {
-            $errors[] = __('The required fields are not filled');
+        foreach (['code', 'name'] as $key) {
+            if ($fields[$key] === '') {
+                $errors[$key] = __('The required fields are not filled');
+            }
         }
 
         if ($fields['code'] !== '' && ! preg_match('/^[a-z0-9_-]+$/', (string) $fields['code'])) {
-            $errors[] = __('The code may contain only lowercase latin letters, digits, hyphen and underscore');
+            $errors['code'] = __('The code may contain only lowercase latin letters, digits, hyphen and underscore');
         }
 
         if (FieldType::tryFrom((string) $fields['type']) === null) {
-            $errors[] = __('Unknown field type');
+            $errors['type'] = __('Unknown field type');
         }
 
         return $errors;
