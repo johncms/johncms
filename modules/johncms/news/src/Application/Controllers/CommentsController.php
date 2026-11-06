@@ -15,6 +15,7 @@ use Johncms\Modules\News\Application\Exceptions\NewsDiscussionValidationExceptio
 use Johncms\Modules\News\Application\Exceptions\NewsItemNotFoundException;
 use Johncms\Users\ProfileLinksInterface;
 use Johncms\View\Twig\Runtime\AssetRuntime;
+use JsonException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 final readonly class CommentsController
@@ -99,7 +100,7 @@ final readonly class CommentsController
     {
         try {
             $data = json_decode(json: $request->getContent(), associative: true, flags: JSON_THROW_ON_ERROR);
-        } catch (\JsonException) {
+        } catch (JsonException) {
             throw new NewsDiscussionValidationException(d__('news', 'Bad Request'));
         }
         if (! is_array($data)) {

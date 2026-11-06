@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Sitemap;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Services\SectionTree;
 use Johncms\Sitemap\SitemapUrlEntry;
 use Johncms\Sitemap\SitemapUrlProviderInterface;
 
@@ -34,7 +37,7 @@ final class CollectionsUrlsProvider implements SitemapUrlProviderInterface
      */
     public function getEntries(string $homeUrl): iterable
     {
-        $at = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+        $at = new DateTimeImmutable('now', new DateTimeZone('UTC'));
         foreach ($this->collectionRepository->getPublicCodeMap() as $code => $collectionId) {
             $base = $homeUrl . '/' . $code;
             yield new SitemapUrlEntry($base);
@@ -64,7 +67,7 @@ final class CollectionsUrlsProvider implements SitemapUrlProviderInterface
      */
     private function buildSectionPaths(int $collectionId): array
     {
-        $tree = \Johncms\Modules\Collections\Domain\Services\SectionTree::of($this->sectionRepository->getAllByCollection($collectionId));
+        $tree = SectionTree::of($this->sectionRepository->getAllByCollection($collectionId));
         $paths = [];
         foreach ($tree->visibleIds() as $id) {
             $paths[$id] = implode('/', $tree->codePathOf($id));
@@ -79,6 +82,6 @@ final class CollectionsUrlsProvider implements SitemapUrlProviderInterface
             return null;
         }
 
-        return (new \DateTimeImmutable($raw, new \DateTimeZone('UTC')))->format(DATE_ATOM);
+        return (new DateTimeImmutable($raw, new DateTimeZone('UTC')))->format(DATE_ATOM);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Services;
 
+use InvalidArgumentException;
 use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Modules\Collections\Domain\Enums\FilterOperator;
@@ -30,7 +31,7 @@ final readonly class CollectionRelationChoices
         $field = $this->fields->findByCode($collectionId, $code);
         $target = $field?->settings['target_collection_id'] ?? null;
         if ($field?->type !== FieldType::Relation || ! is_int($target) || $target < 1 || count($selected) > 1000 || mb_strlen($term) > 255) {
-            throw new \InvalidArgumentException('Choose a configured relation field and at most 1000 selected values.');
+            throw new InvalidArgumentException('Choose a configured relation field and at most 1000 selected values.');
         }
         $this->access->execute($target);
         $items = $this->items->getNameMatches($target, trim($term), 30);

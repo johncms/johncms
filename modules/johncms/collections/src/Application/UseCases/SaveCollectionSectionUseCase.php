@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\UseCases;
 
-use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
+use DateTimeImmutable;
+use InvalidArgumentException;
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeStateDTO;
-use DateTimeImmutable;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemHistoryDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSectionCodeAlreadyExistsException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSectionFormException;
+use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
 use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
@@ -20,6 +21,7 @@ use Johncms\Updates\SystemOperationContext;
 use Johncms\Validator\Rules\Pattern;
 use Johncms\Validator\Rules\StringLength;
 use Johncms\Validator\ValidatorInterface;
+use JsonException;
 
 final readonly class SaveCollectionSectionUseCase
 {
@@ -39,7 +41,7 @@ final readonly class SaveCollectionSectionUseCase
         if ($imported || $createdAt !== null || $updatedAt !== null) {
             $this->context->requireActive();
             if ($id !== null) {
-                throw new \InvalidArgumentException('Historical section import creates new records only.');
+                throw new InvalidArgumentException('Historical section import creates new records only.');
             }
             $imported = true;
         }
@@ -80,9 +82,9 @@ final readonly class SaveCollectionSectionUseCase
             try {
                 $json = json_encode($dto->metadata, JSON_THROW_ON_ERROR, 32);
                 if (strlen($json) > 1048576 || ($dto->metadata !== [] && array_is_list($dto->metadata)) || ! $this->isJsonData($dto->metadata)) {
-                    throw new \JsonException();
+                    throw new JsonException();
                 }
-            } catch (\JsonException) {
+            } catch (JsonException) {
                 $result = $result->withError('metadata', d__('collections', 'Use a JSON object of at most 1 MiB for section metadata.'));
             }
             $result->throwIfInvalid(static fn (array $errors): CollectionSectionFormException => new CollectionSectionFormException($errors));

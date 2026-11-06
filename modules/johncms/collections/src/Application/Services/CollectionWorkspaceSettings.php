@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Services;
 
+use Gettext\TranslatorFunctions;
+use InvalidArgumentException;
 use Johncms\Modules\Collections\Application\DTO\CollectionLabelDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
-use Gettext\TranslatorFunctions;
+use JsonException;
 
 final readonly class CollectionWorkspaceSettings
 {
@@ -38,7 +40,7 @@ final readonly class CollectionWorkspaceSettings
             if ($registered && is_array($label) && count($label) === 2 && array_diff(array_keys($label), ['domain', 'message']) === [] && is_string($label['domain']) && is_string($label['message'])) {
                 try {
                     new CollectionLabelDTO($label['domain'], $label['message']);
-                } catch (\InvalidArgumentException) {
+                } catch (InvalidArgumentException) {
                     throw $this->invalid();
                 }
             } elseif (! is_string($label) || trim($label) === '' || mb_strlen($label) > 120 || preg_match('/[\x00-\x1f\x7f]/', $label)) {
@@ -49,7 +51,7 @@ final readonly class CollectionWorkspaceSettings
             if (strlen(json_encode($settings, JSON_THROW_ON_ERROR, 16)) > 16384) {
                 throw $this->invalid();
             }
-        } catch (\JsonException) {
+        } catch (JsonException) {
             throw $this->invalid();
         }
     }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Johncms\Casts\FormattedDate;
 
 /**
@@ -22,8 +23,8 @@ use Johncms\Casts\FormattedDate;
  * @property string $name
  * @property string $code
  * @property bool $active
- * @property \Illuminate\Support\Carbon|null $active_from
- * @property \Illuminate\Support\Carbon|null $active_to
+ * @property Carbon|null $active_from
+ * @property Carbon|null $active_to
  * @property int $sort
  * @property string|null $preview_text
  * @property string|null $detail_text

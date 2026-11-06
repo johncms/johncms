@@ -6,8 +6,12 @@ namespace Tests\Functional\Collections;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Files\FileStore;
+use Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
+use Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
+use Johncms\Modules\Collections\Domain\Enums\FieldType;
+use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Tests\Functional\FunctionalTestCase;
 use Tests\Support\Fixture;
@@ -33,9 +37,9 @@ final class CollectionUploadsTest extends FunctionalTestCase
 
     public function testFieldUploadUsesItsContentPolicyAndRetainsOnlyTheSelectedFieldReference(): void
     {
-        $schema = $this->container()->get(\Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface::class);
-        $field = $schema->saveField(null, new \Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO(
-            collectionId: $this->collection, code: 'attachment', name: 'Attachment', type: \Johncms\Modules\Collections\Domain\Enums\FieldType::File, required: false, multiple: false, sort: 100,
+        $schema = $this->container()->get(CollectionSchemaApiInterface::class);
+        $field = $schema->saveField(null, new CollectionFieldFormDTO(
+            collectionId: $this->collection, code: 'attachment', name: 'Attachment', type: FieldType::File, required: false, multiple: false, sort: 100,
             settings: ['allowed_mime_types' => ['text/plain'], 'max_file_bytes' => 32]
         ));
         $user = FunctionalUserFactory::createWithPermissions(['news.manage']);
@@ -74,8 +78,8 @@ final class CollectionUploadsTest extends FunctionalTestCase
 
     public function testFieldImageKeepsItsAllowedFormatWhenTheEditorConvertsToWebp(): void
     {
-        $this->container()->get(\Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface::class)->saveField(null, new \Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO(
-            collectionId: $this->collection, code: 'cover', name: 'Cover', type: \Johncms\Modules\Collections\Domain\Enums\FieldType::File, required: false, multiple: false, sort: 100,
+        $this->container()->get(CollectionSchemaApiInterface::class)->saveField(null, new CollectionFieldFormDTO(
+            collectionId: $this->collection, code: 'cover', name: 'Cover', type: FieldType::File, required: false, multiple: false, sort: 100,
             settings: ['allowed_mime_types' => ['image/png']]
         ));
         $user = FunctionalUserFactory::createWithPermissions(['news.manage']);
@@ -215,7 +219,7 @@ final class CollectionUploadsTest extends FunctionalTestCase
         }
     }
 
-    private function context(string $base, \Johncms\Users\User $user, ?int $itemId = null): string
+    private function context(string $base, User $user, ?int $itemId = null): string
     {
         $response = $this->postForm($base . '/uploads/context', ['item_id' => $itemId], $user);
         self::assertSame(200, $response->getStatusCode());
@@ -223,7 +227,7 @@ final class CollectionUploadsTest extends FunctionalTestCase
     }
 
     /** @return array{id: int, url: string} */
-    private function upload(string $base, string $token, \Johncms\Users\User $user): array
+    private function upload(string $base, string $token, User $user): array
     {
         $path = $this->picture();
         try {

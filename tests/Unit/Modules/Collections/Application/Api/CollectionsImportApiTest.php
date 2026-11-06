@@ -6,12 +6,17 @@ namespace Tests\Unit\Modules\Collections\Application\Api;
 
 use DateTimeImmutable;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Johncms\Content\ContentRendererInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsImportApi;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemHistoryDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionSectionFormException;
+use Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer;
+use Johncms\Modules\Collections\Application\Services\ItemContentFormatter;
 use Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction;
+use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\CollectionSearchRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionSectionRepository;
 use Johncms\Updates\SystemOperationContext;
@@ -37,12 +42,12 @@ final class CollectionsImportApiTest extends TestCase
         $this->context = new SystemOperationContext();
         $this->api = new CollectionsImportApi(
             $this->context, CollectionItemWriterFactory::create(context: $this->context), CollectionItemWriterFactory::sectionWriter($this->context),
-            new \Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer(
-                new \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\CollectionSearchRepository(),
-                new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction(),
-                new \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionRepository(),
+            new CollectionSearchIndexer(
+                new CollectionSearchRepository(),
+                new CollectionTransaction(),
+                new ContentCollectionRepository(),
                 CollectionItemWriterFactory::itemRepository(),
-                new \Johncms\Modules\Collections\Application\Services\ItemContentFormatter($this->createStub(\Johncms\Content\ContentRendererInterface::class))
+                new ItemContentFormatter($this->createStub(ContentRendererInterface::class))
             )
         );
         $this->collection = Capsule::table('collections')->insertGetId(['code' => 'history', 'name' => 'History']);
@@ -56,7 +61,7 @@ final class CollectionsImportApiTest extends TestCase
     public function testSearchRebuildRequiresTrustedContext(): void
     {
         $this->context->runTrusted(fn () => $this->api->rebuildSearch($this->collection));
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
         $this->api->rebuildSearch($this->collection);
     }
 
@@ -135,7 +140,7 @@ final class CollectionsImportApiTest extends TestCase
 
     public function testSectionImportRejectsAnInvalidParent(): void
     {
-        $this->expectException(\Johncms\Modules\Collections\Application\Exceptions\CollectionSectionFormException::class);
+        $this->expectException(CollectionSectionFormException::class);
         $this->context->runTrusted(fn (): int => $this->api->importSection(
             new CollectionSectionFormDTO($this->collection, 999, 'section', 'Section', null, true, 100),
             $this->history()->createdAt, $this->history()->updatedAt

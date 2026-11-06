@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Collections\Application\Services;
 
 use Gettext\TranslatorFunctions;
+use InvalidArgumentException;
 use Johncms\Modules\Collections\Application\DTO\CollectionLabelDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
@@ -52,7 +53,7 @@ final readonly class CollectionFormLayout
                 if ($registered && is_array($group) && count($group) === 2 && isset($group['domain'], $group['message']) && is_string($group['domain']) && is_string($group['message'])) {
                     try {
                         new CollectionLabelDTO($group['domain'], $group['message']);
-                    } catch (\InvalidArgumentException) {
+                    } catch (InvalidArgumentException) {
                         throw $this->invalid();
                     }
                 } elseif (! is_string($group) || mb_strlen($group) > 120 || preg_match('/[\x00-\x1f\x7f]/', $group)) {

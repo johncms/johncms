@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Services;
 
+use Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionDeclarationDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldDeclarationDTO;
+use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
 use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface;
-use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Updates\DeclarationSynchronizerInterface;
+use LogicException;
+use RuntimeException;
 
 /** Safe structural additions precede owner hooks; validation follows them. */
 final readonly class CollectionDeclarationsSynchronizer implements DeclarationSynchronizerInterface
@@ -51,7 +55,7 @@ final readonly class CollectionDeclarationsSynchronizer implements DeclarationSy
                 }
                 $collection = $this->collections->findForUpdate($collection->id);
                 if ($collection === null) {
-                    throw new \RuntimeException('The collection changed during synchronization. Rerun system:update.');
+                    throw new RuntimeException('The collection changed during synchronization. Rerun system:update.');
                 }
                 $attributes = [
                     'name' => $declaration->label->message, 'label_domain' => $declaration->label->domain,
@@ -89,17 +93,17 @@ final readonly class CollectionDeclarationsSynchronizer implements DeclarationSy
                             unset($fieldAttributes['type'], $fieldAttributes['multiple']);
                         }
                         $fieldAttributes['settings'] = array_replace($field->settings ?? [], $declared->settings);
-                        if ($field->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::Select && $this->fields->hasSelectValuesOutside($field->id, array_column($fieldAttributes['settings']['options'] ?? [], 'code'))) {
+                        if ($field->type === FieldType::Select && $this->fields->hasSelectValuesOutside($field->id, array_column($fieldAttributes['settings']['options'] ?? [], 'code'))) {
                             $fieldAttributes['settings']['options'] = $field->settings['options'] ?? [];
                         }
                         if (
-                            $field->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::Relation
+                            $field->type === FieldType::Relation
                             && ($fieldAttributes['settings']['target_collection_id'] ?? null) !== ($field->settings['target_collection_id'] ?? null) && $this->fields->hasValues($field->id)
                         ) {
                             $fieldAttributes['settings']['target_collection_id'] = $field->settings['target_collection_id'] ?? null;
                         }
                         if (
-                            $field->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::File
+                            $field->type === FieldType::File
                             && ($fieldAttributes['settings']['file_storage'] ?? 'legacy') !== ($field->settings['file_storage'] ?? 'legacy') && $this->fields->hasValues($field->id)
                         ) {
                             $fieldAttributes['settings']['file_storage'] = $field->settings['file_storage'] ?? 'legacy';
@@ -107,11 +111,11 @@ final readonly class CollectionDeclarationsSynchronizer implements DeclarationSy
                         $this->fields->update($field->id, $fieldAttributes);
                     }
                     $byCode[$declared->code] = $field;
-                    if ($declared->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::File && ($this->fields->findForUpdate($field->id)?->settings['file_storage'] ?? 'legacy') === 'registry') {
+                    if ($declared->type === FieldType::File && ($this->fields->findForUpdate($field->id)?->settings['file_storage'] ?? 'legacy') === 'registry') {
                         if ($this->fileValues === null) {
-                            throw new \LogicException('Collection file values are not configured.');
+                            throw new LogicException('Collection file values are not configured.');
                         }
-                        $this->fileValues->withinTransaction(new \Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO('field', 'saved', $collection->id, $field->id, null, null));
+                        $this->fileValues->withinTransaction(new CollectionChangeDTO('field', 'saved', $collection->id, $field->id, null, null));
                     }
                 }
             });
@@ -122,7 +126,7 @@ final readonly class CollectionDeclarationsSynchronizer implements DeclarationSy
     {
         $problems = $this->problems();
         if ($problems !== []) {
-            throw new \RuntimeException(implode("\n", $problems));
+            throw new RuntimeException(implode("\n", $problems));
         }
     }
 
@@ -153,7 +157,7 @@ final readonly class CollectionDeclarationsSynchronizer implements DeclarationSy
                     $problems[] = sprintf(d__('collections', 'Field %s in %s belongs to the administrator. Rename this custom field before updating.'), $declared->code, $identity);
                 } elseif ($field->type !== $declared->type || $field->multiple !== $declared->multiple) {
                     $problems[] = sprintf(d__('collections', 'Field %s in %s needs type or multiplicity conversion in the owner update hook.'), $declared->code, $identity);
-                } elseif ($field->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::Select && $this->fields->hasSelectValuesOutside($field->id, array_column($declared->settings['options'] ?? [], 'code'))) {
+                } elseif ($field->type === FieldType::Select && $this->fields->hasSelectValuesOutside($field->id, array_column($declared->settings['options'] ?? [], 'code'))) {
                     $problems[] = sprintf(d__('collections', 'Field %s in %s needs option migration in the owner update hook.'), $declared->code, $identity);
                 } elseif (! $this->matches($field, $declared)) {
                     $problems[] = sprintf(d__('collections', 'Field %s in %s differs from its declaration. Run system:update.'), $declared->code, $identity);

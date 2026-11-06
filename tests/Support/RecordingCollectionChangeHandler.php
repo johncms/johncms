@@ -6,6 +6,7 @@ namespace Tests\Support;
 
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO;
 use Johncms\Modules\Collections\Application\Extension\CollectionChangeHandlerInterface;
+use RuntimeException;
 
 final class RecordingCollectionChangeHandler implements CollectionChangeHandlerInterface
 {
@@ -20,7 +21,7 @@ final class RecordingCollectionChangeHandler implements CollectionChangeHandlerI
     {
         $this->within[] = $change;
         if ($this->failWithin) {
-            throw new \RuntimeException('Required collection handler failed.');
+            throw new RuntimeException('Required collection handler failed.');
         }
     }
 
@@ -28,7 +29,7 @@ final class RecordingCollectionChangeHandler implements CollectionChangeHandlerI
     {
         $this->committed[] = $change;
         if ($this->failAfter) {
-            throw new \RuntimeException('Derived collection handler failed.');
+            throw new RuntimeException('Derived collection handler failed.');
         }
     }
 }

@@ -7,15 +7,22 @@ namespace Tests\Functional\Collections;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
+use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsPreviewApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsUserApi;
-use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemPatchDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionAccessDeniedException;
+use Johncms\Modules\Collections\Application\Services\CollectionTagSuggestions;
 use Johncms\Modules\Collections\Application\Services\CollectionWorkspaceMapper;
 use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase;
+use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionItemWriteAccessUseCase;
+use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionRelationAccessUseCase;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
+use Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction;
 use Tests\Functional\FunctionalTestCase;
 use Tests\Support\Fixture;
 use Tests\Support\FunctionalUserFactory;
@@ -84,19 +91,19 @@ final class CollectionContentAccessTest extends FunctionalTestCase
             $this->container()->get(CollectionsApiInterface::class),
             $this->container()->get(CollectionSectionsApiInterface::class),
             $this->container()->get(CurrentUser::class),
-            $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionTagSuggestions::class),
-            new \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionRelationAccessUseCase(
-                $this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface::class),
+            $this->container()->get(CollectionTagSuggestions::class),
+            new EnsureCollectionRelationAccessUseCase(
+                $this->container()->get(ContentCollectionFieldRepositoryInterface::class),
                 new EnsureCollectionContentAccessUseCase($access, $this->container()->get(ContentCollectionRepositoryInterface::class)),
-                $this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface::class)
+                $this->container()->get(ContentCollectionItemRepositoryInterface::class)
             ),
             $this->container()->get(ContentCollectionRepositoryInterface::class),
-            new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction(),
-            new \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionItemWriteAccessUseCase(
+            new CollectionTransaction(),
+            new EnsureCollectionItemWriteAccessUseCase(
                 new EnsureCollectionContentAccessUseCase($access, $this->container()->get(ContentCollectionRepositoryInterface::class)),
-                $this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface::class)
+                $this->container()->get(ContentCollectionItemRepositoryInterface::class)
             ),
-            $this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface::class)
+            $this->container()->get(ContentCollectionSectionRepositoryInterface::class)
         );
         self::assertNotNull($api->getItem($this->collection, $this->item));
         self::assertNull($api->getItem($this->collection, $this->foreignItem));

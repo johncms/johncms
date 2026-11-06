@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Controllers\Admin;
 
+use InvalidArgumentException;
 use Johncms\Http\Request;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
 use Johncms\Modules\Collections\Application\Services\CollectionFileChoices;
@@ -19,7 +20,7 @@ final readonly class CollectionFilesController
     {
         try {
             return new JsonResponse(['files' => $this->choices->search($collection_id, $code, $request->queryParam('context') ?: null, $request->queryParam('q'))]);
-        } catch (\InvalidArgumentException) {
+        } catch (InvalidArgumentException) {
             return new JsonResponse(['error' => ['message' => d__('system', 'Wrong data')]], 400);
         } catch (CollectionItemFormException $exception) {
             return new JsonResponse(['error' => ['message' => implode(' ', array_merge(...array_values($exception->errors)))]], 422);

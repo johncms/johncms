@@ -4,17 +4,52 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Johncms\Modules\Collections\Application\Api\CollectionBulkApi;
+use Johncms\Modules\Collections\Application\Api\CollectionBulkApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionFileReferencesApi;
+use Johncms\Modules\Collections\Application\Api\CollectionFileReferencesApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionItemRelationsApi;
+use Johncms\Modules\Collections\Application\Api\CollectionItemRelationsApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionLookupApi;
+use Johncms\Modules\Collections\Application\Api\CollectionLookupApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionSchemaApi;
+use Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionSectionsApi;
+use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsApi;
 use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionsImportApi;
+use Johncms\Modules\Collections\Application\Api\CollectionsImportApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionsPreviewApi;
+use Johncms\Modules\Collections\Application\Api\CollectionsPreviewApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionsPublicApi;
+use Johncms\Modules\Collections\Application\Api\CollectionsPublicApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionsUserApi;
+use Johncms\Modules\Collections\Application\Api\CollectionsUserApiInterface;
+use Johncms\Modules\Collections\Application\Services\CollectionCacheInvalidator;
+use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
 use Johncms\Modules\Collections\Application\Services\CollectionCodeCache;
 use Johncms\Modules\Collections\Application\Services\CollectionCodeCacheInterface;
+use Johncms\Modules\Collections\Application\Services\CollectionDeclarationRegistry;
+use Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer;
+use Johncms\Modules\Collections\Application\Services\CollectionFileValues;
+use Johncms\Modules\Collections\Application\Services\CollectionItemFiles;
+use Johncms\Modules\Collections\Application\Services\CollectionOwnerUrls;
+use Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer;
 use Johncms\Modules\Collections\Application\Services\ReservedCodeChecker;
 use Johncms\Modules\Collections\Application\Services\ReservedCodeCheckerInterface;
+use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase;
+use Johncms\Modules\Collections\Domain\Repository\CollectionFileRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\CollectionSearchRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemValueRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
+use Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction;
+use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\CollectionFileRepository;
+use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\CollectionSearchRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionFieldRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemValueRepository;
@@ -45,79 +80,79 @@ return static function (ContainerConfigurator $container): void {
         ->autowire()
         ->autoconfigure();
 
-    $services->set(\Johncms\Modules\Collections\Application\Api\CollectionBulkApiInterface::class, \Johncms\Modules\Collections\Application\Api\CollectionBulkApi::class)->autowire()->public();
+    $services->set(CollectionBulkApiInterface::class, CollectionBulkApi::class)->autowire()->public();
     $services->set(ContentCollectionRepositoryInterface::class, ContentCollectionRepository::class)->public();
     $services->set(ContentCollectionFieldRepositoryInterface::class, ContentCollectionFieldRepository::class)->public();
     $services->set(ContentCollectionSectionRepositoryInterface::class, ContentCollectionSectionRepository::class)->public();
     $services->set(ContentCollectionItemRepositoryInterface::class, ContentCollectionItemRepository::class)->autowire()->public();
     $services->set(ContentCollectionItemValueRepositoryInterface::class, ContentCollectionItemValueRepository::class)->public();
-    $services->set(\Johncms\Modules\Collections\Application\Services\CollectionOwnerUrls::class)
+    $services->set(CollectionOwnerUrls::class)
         ->autowire()->public()->arg('$providers', tagged_iterator('johncms.collections.owner_urls'));
-    $services->set(\Johncms\Modules\Collections\Application\Services\CollectionDeclarationRegistry::class)
+    $services->set(CollectionDeclarationRegistry::class)
         ->autowire()->public()->arg('$providers', tagged_iterator('johncms.collections.declaration_provider'));
-    $services->set(\Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer::class)
+    $services->set(CollectionDeclarationsSynchronizer::class)
         ->autowire()->public()->tag('johncms.declaration_synchronizer');
-    $services->set(\Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher::class)
+    $services->set(CollectionChangeDispatcher::class)
         ->autowire()->public()->arg('$handlers', tagged_iterator('johncms.collections.change_handler'));
-    $services->set(\Johncms\Modules\Collections\Application\Services\CollectionCacheInvalidator::class)
+    $services->set(CollectionCacheInvalidator::class)
         ->autowire()->tag('johncms.collections.change_handler');
     $services->set(
-        \Johncms\Modules\Collections\Domain\Repository\CollectionFileRepositoryInterface::class,
-        \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\CollectionFileRepository::class
+        CollectionFileRepositoryInterface::class,
+        CollectionFileRepository::class
     )->autowire()->public();
-    $services->set(\Johncms\Modules\Collections\Application\Services\CollectionFileValues::class)
+    $services->set(CollectionFileValues::class)
         ->autowire()->public()->tag('johncms.collections.change_handler');
-    $services->set(\Johncms\Modules\Collections\Application\Services\CollectionItemFiles::class)
+    $services->set(CollectionItemFiles::class)
         ->autowire()->public()->tag('johncms.collections.change_handler');
     $services->set(
-        \Johncms\Modules\Collections\Domain\Repository\CollectionSearchRepositoryInterface::class,
-        \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\CollectionSearchRepository::class
+        CollectionSearchRepositoryInterface::class,
+        CollectionSearchRepository::class
     )->autowire()->public();
-    $services->set(\Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer::class)
+    $services->set(CollectionSearchIndexer::class)
         ->autowire()->public()->tag('johncms.collections.change_handler');
     $services->set(CollectionCodeCacheInterface::class, CollectionCodeCache::class)->autowire()->public();
     $services->set(ReservedCodeCheckerInterface::class, ReservedCodeChecker::class)->autowire()->public();
     $services->set(
-        \Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface::class,
-        \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction::class
+        CollectionTransactionInterface::class,
+        CollectionTransaction::class
     )->autowire();
     $services->set(
-        \Johncms\Modules\Collections\Application\Api\CollectionsImportApiInterface::class,
-        \Johncms\Modules\Collections\Application\Api\CollectionsImportApi::class
+        CollectionsImportApiInterface::class,
+        CollectionsImportApi::class
     )->autowire()->public();
     $services->set(
-        \Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface::class,
-        \Johncms\Modules\Collections\Application\Api\CollectionSectionsApi::class
+        CollectionSectionsApiInterface::class,
+        CollectionSectionsApi::class
     )->autowire()->public();
     $services->set(
-        \Johncms\Modules\Collections\Application\Api\CollectionsPublicApiInterface::class,
-        \Johncms\Modules\Collections\Application\Api\CollectionsPublicApi::class
+        CollectionsPublicApiInterface::class,
+        CollectionsPublicApi::class
     )->autowire()->public();
     $services->set(
-        \Johncms\Modules\Collections\Application\Api\CollectionsPreviewApiInterface::class,
-        \Johncms\Modules\Collections\Application\Api\CollectionsPreviewApi::class
+        CollectionsPreviewApiInterface::class,
+        CollectionsPreviewApi::class
     )->autowire()->public();
     $services->set(
-        \Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface::class,
-        \Johncms\Modules\Collections\Application\Api\CollectionSchemaApi::class
+        CollectionSchemaApiInterface::class,
+        CollectionSchemaApi::class
     )->autowire()->public();
     $services->set(
-        \Johncms\Modules\Collections\Application\Api\CollectionsUserApiInterface::class,
-        \Johncms\Modules\Collections\Application\Api\CollectionsUserApi::class
+        CollectionsUserApiInterface::class,
+        CollectionsUserApi::class
     )->autowire()->public();
     $services->set(
-        \Johncms\Modules\Collections\Application\Api\CollectionLookupApiInterface::class,
-        \Johncms\Modules\Collections\Application\Api\CollectionLookupApi::class
+        CollectionLookupApiInterface::class,
+        CollectionLookupApi::class
     )->autowire()->public();
     $services->set(
-        \Johncms\Modules\Collections\Application\Api\CollectionItemRelationsApiInterface::class,
-        \Johncms\Modules\Collections\Application\Api\CollectionItemRelationsApi::class
+        CollectionItemRelationsApiInterface::class,
+        CollectionItemRelationsApi::class
     )->autowire()->public();
     $services->set(
-        \Johncms\Modules\Collections\Application\Api\CollectionFileReferencesApiInterface::class,
-        \Johncms\Modules\Collections\Application\Api\CollectionFileReferencesApi::class
+        CollectionFileReferencesApiInterface::class,
+        CollectionFileReferencesApi::class
     )->autowire()->public();
     $services->set(CollectionsApiInterface::class, CollectionsApi::class)->autowire()->public();
-    $services->set(\Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase::class)
+    $services->set(EnsureCollectionContentAccessUseCase::class)
         ->autowire()->public()->arg('$owners', tagged_iterator('johncms.collections.content_access'));
 };

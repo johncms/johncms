@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace Johncms\Modules\Collections\Application\Services;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Johncms\Modules\Collections\Application\DTO\CollectionChangeStateDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionDeletionPlanDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionDeletionPreviewDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
-use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
-use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Services\SectionTree;
 
 final readonly class CollectionDeletionPlanner
@@ -64,9 +66,9 @@ final readonly class CollectionDeletionPlanner
             $sectionIds,
             $items->pluck('id')->all(),
             $fields->pluck('id')->all(),
-            $affectedSections->keyBy('id')->map(static fn ($section) => new \Johncms\Modules\Collections\Application\DTO\CollectionChangeStateDTO($section->parent, $section->active, $section->code))->all(),
-            $fields->keyBy('id')->map(static fn ($field) => new \Johncms\Modules\Collections\Application\DTO\CollectionChangeStateDTO(null, null, $field->code))->all(),
-            new \Johncms\Modules\Collections\Application\DTO\CollectionChangeStateDTO(null, $collection->active, $collection->code)
+            $affectedSections->keyBy('id')->map(static fn ($section) => new CollectionChangeStateDTO($section->parent, $section->active, $section->code))->all(),
+            $fields->keyBy('id')->map(static fn ($field) => new CollectionChangeStateDTO(null, null, $field->code))->all(),
+            new CollectionChangeStateDTO(null, $collection->active, $collection->code)
         );
     }
 
@@ -77,7 +79,7 @@ final readonly class CollectionDeletionPlanner
         }
     }
 
-    /** @template T of \Illuminate\Database\Eloquent\Model
+    /** @template T of Model
      * @param Collection<int, T> $models
      * @return list<array<string, mixed>>
      */

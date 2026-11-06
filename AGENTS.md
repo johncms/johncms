@@ -82,6 +82,7 @@ Tech stack:
 
 * Always include `declare(strict_types=1);`
 * Namespace must follow PSR-4 and match the directory structure.
+* Import classes, interfaces, traits, enums, and attributes with `use` and reference their short names in PHP code and PHPDoc, including built-in classes such as `DateTimeImmutable` and `RuntimeException`. Reuse existing imports; resolve short-name collisions with descriptive aliases (`use Johncms\Modules\Installer as ModuleInstaller;`). Do not add redundant imports for names in the current namespace or global classes in files without a namespace. Keep fully qualified names in literal strings and template type annotations when their format requires them.
 * Use 4-space indentation.
 * Format nested configuration and declaration arrays by logical levels: put each entry of an expanded associative array on its own line, and align closing brackets with their opening level. Do not pack nested configuration into a single line merely because it fits the line-length limit. Short scalar lists and small, flat maps may stay on one line when readable.
 * If a function or constructor call uses any named argument, name **every** argument in that call, including required arguments. Do not mix positional and named arguments. Calls using only positional arguments may remain positional.

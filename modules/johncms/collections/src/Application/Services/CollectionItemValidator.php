@@ -9,6 +9,7 @@ use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
+use Johncms\Modules\Collections\Domain\Services\CollectionTextNormalizer;
 use Johncms\Validator\Rules\Pattern;
 use Johncms\Validator\Rules\StringLength;
 use Johncms\Validator\ValidationResult;
@@ -79,7 +80,7 @@ final readonly class CollectionItemValidator
                     $result = $result->withError($key, d__('collections', 'Submit a single value or a list as defined by the field.'));
                     continue;
                 }
-                $value = $field->role === 'tags' ? \Johncms\Modules\Collections\Domain\Services\CollectionTextNormalizer::normalize($value) : trim($value);
+                $value = $field->role === 'tags' ? CollectionTextNormalizer::normalize($value) : trim($value);
                 if ($value === '' && ($field->type !== FieldType::Boolean || $field->multiple)) {
                     continue;
                 }

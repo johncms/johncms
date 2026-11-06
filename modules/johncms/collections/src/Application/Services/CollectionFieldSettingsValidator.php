@@ -6,6 +6,7 @@ namespace Johncms\Modules\Collections\Application\Services;
 
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
+use JsonException;
 
 final readonly class CollectionFieldSettingsValidator
 {
@@ -18,9 +19,9 @@ final readonly class CollectionFieldSettingsValidator
     {
         try {
             if (strlen(json_encode($settings, JSON_THROW_ON_ERROR, 32)) > 65535 || ! $this->jsonData($settings) || ($settings !== [] && array_is_list($settings))) {
-                throw new \JsonException();
+                throw new JsonException();
             }
-        } catch (\JsonException) {
+        } catch (JsonException) {
             throw new CollectionSchemaException(d__('collections', 'Field settings must be a JSON object of at most 65535 bytes.'));
         }
         if (isset($settings['hint']) && (! is_string($settings['hint']) || mb_strlen($settings['hint']) > 2000)) {

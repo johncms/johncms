@@ -4,16 +4,20 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\UseCases;
 
-use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeStateDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionCodeAlreadyExistsException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionCodeReservedException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
+use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
 use Johncms\Modules\Collections\Application\Services\CollectionCodeCacheInterface;
+use Johncms\Modules\Collections\Application\Services\CollectionWorkspaceSettings;
 use Johncms\Modules\Collections\Application\Services\ReservedCodeCheckerInterface;
-use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
+use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 
 final readonly class SaveCollectionUseCase
 {
@@ -21,10 +25,10 @@ final readonly class SaveCollectionUseCase
         private ContentCollectionRepositoryInterface $repository,
         private CollectionCodeCacheInterface $codeCache,
         private ReservedCodeCheckerInterface $reservedCodeChecker,
-        private \Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface $transaction,
+        private CollectionTransactionInterface $transaction,
         private CollectionChangeDispatcher $changes = new CollectionChangeDispatcher(),
-        private ?\Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface $fields = null,
-        private \Johncms\Modules\Collections\Application\Services\CollectionWorkspaceSettings $workspace = new \Johncms\Modules\Collections\Application\Services\CollectionWorkspaceSettings(),
+        private ?ContentCollectionFieldRepositoryInterface $fields = null,
+        private CollectionWorkspaceSettings $workspace = new CollectionWorkspaceSettings(),
     ) {
     }
 
@@ -40,13 +44,13 @@ final readonly class SaveCollectionUseCase
         return $this->transaction->run(function () use ($id, $dto): int {
             $current = $id !== null ? $this->repository->findForUpdate($id) : null;
             if ($current?->owner_module !== null && $current->code !== $dto->code) {
-                throw new \Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException(d__('collections', 'The identity of a module-owned collection cannot be changed here.'));
+                throw new CollectionSchemaException(d__('collections', 'The identity of a module-owned collection cannot be changed here.'));
             }
             if ($current?->owner_module === null && $this->reservedCodeChecker->isReserved($dto->code)) {
                 throw new CollectionCodeReservedException();
             }
             if (! preg_match('/^[a-z0-9_.-]+$/D', $dto->contentPermission)) {
-                throw new \Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException(d__('collections', 'Choose a valid content permission.'));
+                throw new CollectionSchemaException(d__('collections', 'Choose a valid content permission.'));
             }
             $existing = $this->repository->findByCode($dto->code);
             if ($existing !== null && $existing->id !== $id) {
@@ -54,13 +58,13 @@ final readonly class SaveCollectionUseCase
             }
             $selected = $dto->searchFields ?? ($current->settings['search_fields'] ?? []);
             if (! array_is_list($selected)) {
-                throw new \Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException(d__('collections', 'Choose existing text fields for search.'));
+                throw new CollectionSchemaException(d__('collections', 'Choose existing text fields for search.'));
             }
             if ($selected !== []) {
                 $definitions = $this->fields?->getByCollection($id ?? 0)->keyBy('code')->all() ?? [];
                 foreach ($selected as $code) {
                     if (! is_string($code) || ! isset($definitions[$code]) || ! in_array($definitions[$code]->type, [FieldType::String_, FieldType::Text, FieldType::Html], true)) {
-                        throw new \Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException(d__('collections', 'Choose existing text fields for search.'));
+                        throw new CollectionSchemaException(d__('collections', 'Choose existing text fields for search.'));
                     }
                 }
             }
@@ -70,13 +74,13 @@ final readonly class SaveCollectionUseCase
             $availableFields = $layoutFields !== [] ? $this->fields?->getByCollection($id ?? 0)->keyBy('code')->all() ?? [] : [];
             foreach ($layoutFields as $code) {
                 if (! isset($availableFields[$code])) {
-                    throw new \Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException(d__('collections', 'Choose existing fields for the form layout.'));
+                    throw new CollectionSchemaException(d__('collections', 'Choose existing fields for the form layout.'));
                 }
             }
             $permissions = $dto->actionPermissions ?? ($current->settings['content_actions'] ?? []);
             foreach ($permissions as $action => $permission) {
                 if (! array_key_exists($action, EnsureCollectionContentAccessUseCase::actions()) || ! is_string($permission) || ! preg_match('/^[a-z0-9_.-]+$/D', $permission)) {
-                    throw new \Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException(d__('collections', 'Choose valid permissions for known content actions.'));
+                    throw new CollectionSchemaException(d__('collections', 'Choose valid permissions for known content actions.'));
                 }
             }
             $settings = $current->settings ?? [];

@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Tests\Unit\Modules\Collections\Application\UseCases;
 
 use Illuminate\Database\Eloquent\Collection;
+use Johncms\Content\ContentRendererInterface;
 use Johncms\Modules\Collections\Application\DTO\PublicItemDTO;
 use Johncms\Modules\Collections\Application\Services\ItemContentFormatter;
 use Johncms\Modules\Collections\Application\UseCases\ListPublicItemsUseCase;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
-use Johncms\Content\ContentRendererInterface;
 use PHPUnit\Framework\TestCase;
+use Twig\Markup;
 
 final class ListPublicItemsUseCaseTest extends TestCase
 {
@@ -20,7 +21,7 @@ final class ListPublicItemsUseCaseTest extends TestCase
     {
         // Passthrough renderer: these tests assert mapping, not sanitization.
         $sanitizer = $this->createMock(ContentRendererInterface::class);
-        $sanitizer->method('renderOrNull')->willReturnCallback(static fn (string $html): ?\Twig\Markup => $html !== '' ? new \Twig\Markup($html, 'UTF-8') : null);
+        $sanitizer->method('renderOrNull')->willReturnCallback(static fn (string $html): ?Markup => $html !== '' ? new Markup($html, 'UTF-8') : null);
         $sanitizer->method('toPlainText')->willReturnCallback(static fn (string $html): string => trim(strip_tags($html)));
 
         return new ListPublicItemsUseCase($repository, new ItemContentFormatter($sanitizer));

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Functional\Collections;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use InvalidArgumentException;
 use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsPublicApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemPatchDTO;
@@ -58,7 +59,7 @@ final class CollectionSearchTest extends FunctionalTestCase
         self::assertSame([$php], array_map(static fn ($item) => $item->id, $public->getItems($query)));
         self::assertSame(1, $public->countItems($query));
         self::assertSame(['php', 'phpstorm'], $public->suggestTags($this->collection, 'labels', ' PH '));
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $public->getItems(new ContentCollectionItemQuery(collectionId: $this->collection, filters: [new FieldFilterDTO('field.labels', FilterOperator::Like, '%php%')]));
     }
 
@@ -108,7 +109,7 @@ final class CollectionSearchTest extends FunctionalTestCase
         $count = Capsule::table('collection_search_documents')->count();
         $index->rebuildCollection($this->collection);
         self::assertSame($count, Capsule::table('collection_search_documents')->count());
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->container()->get(CollectionsPublicApiInterface::class)->getPage($this->query('needle', ['missing']));
     }
 

@@ -4,26 +4,35 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Controllers\Admin;
 
-use Johncms\Modules\Collections\Domain\Exceptions\CollectionWriteConflictException;
-use Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner;
-use Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException;
+use Gettext\TranslatorFunctions;
+use Johncms\Auth\Authorization\PermissionRegistry;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Collections\Application\DTO\CollectionFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionListItemDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionCodeAlreadyExistsException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionCodeReservedException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
+use Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner;
+use Johncms\Modules\Collections\Application\Services\CollectionFormLayout;
+use Johncms\Modules\Collections\Application\Services\CollectionListSettings;
 use Johncms\Modules\Collections\Application\Services\CollectionWorkspaceMapper;
+use Johncms\Modules\Collections\Application\Services\CollectionWorkspaceSettings;
 use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionUseCase;
+use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase;
 use Johncms\Modules\Collections\Application\UseCases\ListCollectionsUseCase;
 use Johncms\Modules\Collections\Application\UseCases\SaveCollectionUseCase;
+use Johncms\Modules\Collections\Domain\Enums\FieldType;
+use Johncms\Modules\Collections\Domain\Exceptions\CollectionWriteConflictException;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\NavChain;
-use Johncms\Http\Request;
-use Johncms\Http\View\ViewResponse;
-use Johncms\Http\Session;
 
 final readonly class CollectionsAdminController
 {
@@ -40,9 +49,9 @@ final readonly class CollectionsAdminController
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
         private Session $session,
-        private \Johncms\Auth\Authorization\PermissionRegistry $permissions,
-        private \Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface $fieldRepository,
-        private \Johncms\Modules\Collections\Application\Services\CollectionWorkspaceSettings $workspaceSettings,
+        private PermissionRegistry $permissions,
+        private ContentCollectionFieldRepositoryInterface $fieldRepository,
+        private CollectionWorkspaceSettings $workspaceSettings,
     ) {
     }
 
@@ -106,7 +115,7 @@ final readonly class CollectionsAdminController
 
         try {
             $savedId = $this->saveCollection->execute($id, $this->dtoFromFields($fields));
-        } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException $exception) {
+        } catch (CollectionSchemaException $exception) {
             return $this->renderAgain($id, $fields, [$exception->getMessage()]);
         } catch (CollectionCodeAlreadyExistsException) {
             return $this->renderAgain($id, $fields, [__('A collection with this code already exists')]);
@@ -234,7 +243,7 @@ final readonly class CollectionsAdminController
     {
         $fields['workspace_labels'] = array_filter($fields['workspace_labels'], is_string(...));
         $fields['permission_options'] = $this->permissionOptions($fields['content_permission']);
-        $fields['action_titles'] = \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase::actions();
+        $fields['action_titles'] = EnsureCollectionContentAccessUseCase::actions();
         $fields['action_permissions'] = array_filter($fields['action_permissions'], is_string(...));
         foreach ($fields['action_permissions'] as $permission) {
             $fields['permission_options'][$permission] ??= $permission;
@@ -243,7 +252,7 @@ final readonly class CollectionsAdminController
         $fields['workspace_defaults'] = $this->workspaceSettings->defaults();
         $fields = $this->listingFields($fields, null);
         $fields['layout_rows'] = [];
-        $fields['layout_blocks'] = (new \Johncms\Modules\Collections\Application\Services\CollectionFormLayout())->blocks();
+        $fields['layout_blocks'] = (new CollectionFormLayout())->blocks();
         $fields['search_options'] = [];
         $title = __('New collection');
         $this->navChain->add(__('Collections'), self::URL);
@@ -268,7 +277,7 @@ final readonly class CollectionsAdminController
         $fields = $this->listingFields($fields, $collection);
         $fields['managed'] = $collection->owner_module !== null;
         $fields['workspace_defaults'] = $this->workspaceSettings->defaults($collection);
-        $layout = new \Johncms\Modules\Collections\Application\Services\CollectionFormLayout();
+        $layout = new CollectionFormLayout();
         $fields['layout_blocks'] = $layout->blocks();
         $fields['workspace_layout']['hidden_blocks'] ??= $layout->hidden($collection);
         $fields['layout_rows'] = [];
@@ -281,16 +290,16 @@ final readonly class CollectionsAdminController
                 'code' => $field->code, 'name' => $field->name,
                 'group' => is_string($config['group'] ?? '') ? ($config['group'] ?? '') : '',
                 'sort' => is_int($config['sort'] ?? '') ? $config['sort'] : '',
-                'default_group' => is_array($group) ? \Gettext\TranslatorFunctions::getTranslator()->dgettext($group['domain'], $group['message']) : $group,
+                'default_group' => is_array($group) ? TranslatorFunctions::getTranslator()->dgettext($group['domain'], $group['message']) : $group,
                 'default_sort' => $default['sort'] ?? $field->sort,
             ];
-            if (in_array($field->type, [\Johncms\Modules\Collections\Domain\Enums\FieldType::String_, \Johncms\Modules\Collections\Domain\Enums\FieldType::Text, \Johncms\Modules\Collections\Domain\Enums\FieldType::Html], true)) {
+            if (in_array($field->type, [FieldType::String_, FieldType::Text, FieldType::Html], true)) {
                 $fields['search_options'][$field->code] = $field->name;
             }
         }
         $fields['workspace_labels'] = array_filter($fields['workspace_labels'], is_string(...));
         $fields['permission_options'] = $this->permissionOptions($fields['content_permission']);
-        $fields['action_titles'] = \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase::actions();
+        $fields['action_titles'] = EnsureCollectionContentAccessUseCase::actions();
         $fields['action_permissions'] = array_filter($fields['action_permissions'], is_string(...));
         foreach ($fields['action_permissions'] as $permission) {
             $fields['permission_options'][$permission] ??= $permission;
@@ -332,7 +341,7 @@ final readonly class CollectionsAdminController
      */
     private function listingFields(array $fields, ?ContentCollection $collection): array
     {
-        $listing = new \Johncms\Modules\Collections\Application\Services\CollectionListSettings();
+        $listing = new CollectionListSettings();
         $fields['listing_columns'] = $listing->columns();
         $fields['listing_filters'] = $listing->filters();
         $fields['listing_sorts'] = $listing->sorts();

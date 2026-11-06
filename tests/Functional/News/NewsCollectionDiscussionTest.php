@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace Tests\Functional\News;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Johncms\Auth\Authorization\RolePermission;
 use Johncms\Auth\CurrentUser;
-use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer;
 use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
-use Johncms\Modules\News\Application\Collections\NewsReadServiceInterface;
 use Johncms\Modules\News\Application\Collections\NewsDiscussionServiceInterface;
+use Johncms\Modules\News\Application\Collections\NewsReadServiceInterface;
 use Johncms\Modules\News\Application\Exceptions\NewsDiscussionAccessDeniedException;
 use Johncms\Modules\News\Application\Exceptions\NewsDiscussionValidationException;
 use Johncms\Modules\News\Application\Exceptions\NewsItemNotFoundException;
@@ -85,7 +86,7 @@ final class NewsCollectionDiscussionTest extends FunctionalTestCase
 
     public function testCommentAndVotePermissionsAreIndependentAndGuestsCanOnlyRead(): void
     {
-        \Johncms\Auth\Authorization\RolePermission::query()->whereIn('permission', ['news.comments.post', 'news.vote'])->delete();
+        RolePermission::query()->whereIn('permission', ['news.comments.post', 'news.vote'])->delete();
         $user = FunctionalUserFactory::createWithPermissions(['news.vote']);
         $this->asUser($user);
         self::assertSame(1, $this->discussion->vote($this->item, 1)->rating);

@@ -4,24 +4,29 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\UseCases;
 
-use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeStateDTO;
-use Illuminate\Support\Str;
-use Johncms\Modules\Collections\Application\DTO\CollectionItemHistoryDTO;
-use Johncms\Updates\SystemOperationContext;
-use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
-use Johncms\Modules\Collections\Application\Services\CollectionItemValidator;
-use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface;
-use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
-use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionItemHistoryDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemCodeAlreadyExistsException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
+use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
+use Johncms\Modules\Collections\Application\Services\CollectionFileValues;
+use Johncms\Modules\Collections\Application\Services\CollectionItemFiles;
+use Johncms\Modules\Collections\Application\Services\CollectionItemValidator;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
+use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemValueRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
+use Johncms\Updates\SystemOperationContext;
+use LogicException;
 
 final readonly class SaveCollectionItemUseCase
 {
@@ -35,8 +40,8 @@ final readonly class SaveCollectionItemUseCase
         private CollectionItemValidator $validator,
         private SystemOperationContext $systemContext = new SystemOperationContext(),
         private CollectionChangeDispatcher $changes = new CollectionChangeDispatcher(),
-        private ?\Johncms\Modules\Collections\Application\Services\CollectionItemFiles $files = null,
-        private ?\Johncms\Modules\Collections\Application\Services\CollectionFileValues $fileValues = null,
+        private ?CollectionItemFiles $files = null,
+        private ?CollectionFileValues $fileValues = null,
     ) {
     }
 
@@ -52,12 +57,12 @@ final readonly class SaveCollectionItemUseCase
     public function execute(?int $id, CollectionItemFormDTO $dto, ?int $actorId = null, ?CollectionItemHistoryDTO $history = null, ?array $valueFields = null, array $clearFields = [], array $changedAttributes = []): int
     {
         if ($id === null && $valueFields !== null) {
-            throw new \InvalidArgumentException('Partial value writes require an existing item.');
+            throw new InvalidArgumentException('Partial value writes require an existing item.');
         }
         if ($history !== null) {
             $this->systemContext->requireActive();
             if ($id !== null) {
-                throw new \InvalidArgumentException('Historical import creates new records only.');
+                throw new InvalidArgumentException('Historical import creates new records only.');
             }
         }
         return $this->transaction->run(function () use ($id, $dto, $actorId, $history, $valueFields, $clearFields, $changedAttributes): int {
@@ -104,7 +109,7 @@ final readonly class SaveCollectionItemUseCase
             $written = $valueFields === null ? $definitions->values() : $definitions->filter(static fn (ContentCollectionField $field): bool => in_array($field->code, $valueFields, true))->values();
             $registeredFiles = $written->contains(static fn ($field): bool => $field->type === FieldType::File && ($field->settings['file_storage'] ?? 'legacy') === 'registry');
             if ($registeredFiles && $this->fileValues === null) {
-                throw new \LogicException('Collection file values are not configured.');
+                throw new LogicException('Collection file values are not configured.');
             }
             $fileReferences = $registeredFiles ? $this->fileValues->prepare($dto, $written, $id, $actorId) : [];
             $attributes = [
@@ -128,7 +133,7 @@ final readonly class SaveCollectionItemUseCase
             $this->fileValues?->synchronize($itemId, $fileReferences);
             if ($dto->uploadContext !== null) {
                 if ($this->files === null) {
-                    throw new \LogicException('Collection upload tracking is not configured.');
+                    throw new LogicException('Collection upload tracking is not configured.');
                 }
                 $this->files->claim($dto->uploadContext, $dto->collectionId, $itemId, $actorId);
             }
@@ -145,10 +150,10 @@ final readonly class SaveCollectionItemUseCase
         });
     }
 
-    /** @param \Illuminate\Database\Eloquent\Collection<int, ContentCollectionField> $fields
+    /** @param Collection<int, ContentCollectionField> $fields
      * @param list<string>|null $valueFields
      */
-    private function validateRelations(CollectionItemFormDTO $dto, \Illuminate\Database\Eloquent\Collection $fields, ?array $valueFields): void
+    private function validateRelations(CollectionItemFormDTO $dto, Collection $fields, ?array $valueFields): void
     {
         $references = [];
         foreach ($fields as $field) {
@@ -210,9 +215,9 @@ final readonly class SaveCollectionItemUseCase
 
     /** @param list<string>|null $valueFields
      * @param list<string> $clearFields
-     * @param \Illuminate\Database\Eloquent\Collection<int, ContentCollectionField> $fields
+     * @param Collection<int, ContentCollectionField> $fields
      */
-    private function rebuildValues(int $itemId, CollectionItemFormDTO $dto, ?array $valueFields, array $clearFields, \Illuminate\Database\Eloquent\Collection $fields): void
+    private function rebuildValues(int $itemId, CollectionItemFormDTO $dto, ?array $valueFields, array $clearFields, Collection $fields): void
     {
         if ($valueFields === null) {
             $this->valueRepository->deleteByItem($itemId);

@@ -7,6 +7,7 @@ namespace Johncms\Modules\News\Application\Collections;
 use DateTimeImmutable;
 use DateTimeZone;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Johncms\Files\FileStore;
 use Johncms\Modules\Collections\Application\Api\CollectionFileReferencesApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionItemRelationsApiInterface;
@@ -24,6 +25,8 @@ use Johncms\Modules\News\Application\Exceptions\NewsLegacyImportException;
 use Johncms\Modules\News\Domain\Repository\NewsDiscussionRepositoryInterface;
 use Johncms\Modules\News\Domain\Repository\NewsLegacyRepositoryInterface;
 use Johncms\Updates\SystemOperationContext;
+use JsonException;
+use Throwable;
 
 /** Data phase only. The caller removes legacy rows in the same outer transaction after verification. */
 final readonly class NewsLegacyImporter
@@ -256,12 +259,12 @@ final readonly class NewsLegacyImporter
                 $details[] = $field . ': ' . implode(' ', $messages);
             }
             throw $this->unimportable($record, implode(' ', $details), $exception);
-        } catch (\InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException $exception) {
             throw $this->unimportable($record, $exception->getMessage(), $exception);
         }
     }
 
-    private function unimportable(string $record, string $reason, \Throwable $previous): NewsLegacyImportException
+    private function unimportable(string $record, string $reason, Throwable $previous): NewsLegacyImportException
     {
         return new NewsLegacyImportException(
             message: sprintf('Legacy %s cannot be imported. %s Repair it and retry system:update.', $record, $reason),
@@ -307,7 +310,7 @@ final readonly class NewsLegacyImporter
         }
         try {
             $ids = json_decode((string) $value, true, 512, JSON_THROW_ON_ERROR);
-        } catch (\JsonException $exception) {
+        } catch (JsonException $exception) {
             throw new NewsLegacyImportException(message: 'Invalid JSON in legacy article attachments.', previous: $exception);
         }
         if (! is_array($ids) || ! array_is_list($ids)) {

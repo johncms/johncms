@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Services;
 
+use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
+use Johncms\Modules\ModuleRegistry;
 
 /**
  * The head shared by the pages of one collection: its name, where it is on the site, and a tab
@@ -20,8 +22,8 @@ final readonly class CollectionWorkspaceMapper
     public function __construct(
         private ?CollectionOwnerUrls $ownerUrls = null,
         private CollectionApiMapper $apiMapper = new CollectionApiMapper(),
-        private ?\Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase $access = null,
-        private ?\Johncms\Modules\ModuleRegistry $modules = null,
+        private ?EnsureCollectionContentAccessUseCase $access = null,
+        private ?ModuleRegistry $modules = null,
         private CollectionWorkspaceSettings $configuration = new CollectionWorkspaceSettings(),
     ) {
     }

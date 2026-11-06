@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Domain\ValueObjects;
 
+use InvalidArgumentException;
 use Johncms\Modules\Collections\Domain\Enums\ItemStatus;
 
 /**
@@ -28,15 +29,15 @@ final readonly class ItemListFilter
         public bool $explicitOrder = false,
     ) {
         if (! in_array($sortBy, ['sort', 'id', 'name', 'created_at', 'updated_at', 'view_count', 'active_from'], true) || ! in_array($direction, ['asc', 'desc'], true)) {
-            throw new \InvalidArgumentException('Unsupported panel sorting.');
+            throw new InvalidArgumentException('Unsupported panel sorting.');
         }
         foreach ([$createdFrom, $createdTo] as $date) {
             if ($date !== null && (! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/D', $date) || ! checkdate((int) substr($date, 5, 2), (int) substr($date, 8, 2), (int) substr($date, 0, 4)))) {
-                throw new \InvalidArgumentException('Use an ISO calendar date.');
+                throw new InvalidArgumentException('Use an ISO calendar date.');
             }
         }
         if (($author !== null && $author < 1) || ($minViews !== null && $minViews < 0)) {
-            throw new \InvalidArgumentException('Use a positive author ID and nonnegative views.');
+            throw new InvalidArgumentException('Use a positive author ID and nonnegative views.');
         }
     }
 

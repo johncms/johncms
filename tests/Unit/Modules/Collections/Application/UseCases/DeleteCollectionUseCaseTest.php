@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace Tests\Unit\Modules\Collections\Application\UseCases;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Johncms\Modules\Collections\Application\Services\CollectionCodeCache;
+use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionRepository;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
 use Tests\Support\CollectionItemWriterFactory;
 use Tests\Support\Fixture;
+use Tests\Support\InMemoryCache;
 use Tests\Support\RunsMigrations;
 
 final class DeleteCollectionUseCaseTest extends TestCase
@@ -35,7 +38,7 @@ final class DeleteCollectionUseCaseTest extends TestCase
         $item = Fixture::insert('collection_items', ['collection_id' => $collection, 'section_id' => $section, 'code' => 'item', 'name' => 'Item']);
         $field = Fixture::insert('collection_fields', ['collection_id' => $collection, 'code' => 'text', 'name' => 'Text', 'type' => 'string']);
         Fixture::insert('collection_item_values', ['item_id' => $item, 'field_id' => $field, 'value_string' => 'Value']);
-        $cache = new \Johncms\Modules\Collections\Application\Services\CollectionCodeCache(\Tests\Support\InMemoryCache::create(), new \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionRepository());
+        $cache = new CollectionCodeCache(InMemoryCache::create(), new ContentCollectionRepository());
         self::assertSame(['blog' => $collection], $cache->map());
         Capsule::connection()->getPdo()->exec('PRAGMA foreign_keys = OFF');
         CollectionItemWriterFactory::collectionDeleter($cache)->execute($collection);

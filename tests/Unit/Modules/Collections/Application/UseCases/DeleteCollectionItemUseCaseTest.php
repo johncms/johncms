@@ -5,7 +5,14 @@ declare(strict_types=1);
 namespace Tests\Unit\Modules\Collections\Application\UseCases;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionItemUseCase;
+use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
+use Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction;
+use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemValueRepository;
+use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionRepository;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Tests\Support\BootsInMemoryDatabase;
 use Tests\Support\CollectionItemWriterFactory;
 use Tests\Support\Fixture;
@@ -47,18 +54,18 @@ final class DeleteCollectionItemUseCaseTest extends TestCase
         $id = Fixture::insert('collection_items', ['collection_id' => $collection, 'code' => 'item', 'name' => 'Item']);
         $field = Fixture::insert('collection_fields', ['collection_id' => $collection, 'code' => 'text', 'name' => 'Text', 'type' => 'string']);
         Fixture::insert('collection_item_values', ['item_id' => $id, 'field_id' => $field, 'value_string' => 'Value']);
-        $items = $this->createMock(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface::class);
-        $items->method('findForUpdate')->willReturn(\Johncms\Modules\Collections\Domain\Models\ContentCollectionItem::query()->find($id));
-        $items->method('delete')->willThrowException(new \RuntimeException('Simulated deletion failure'));
-        $delete = new \Johncms\Modules\Collections\Application\UseCases\DeleteCollectionItemUseCase(
-            $items, new \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemValueRepository(),
-            new \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionRepository(),
-            new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction(), CollectionItemWriterFactory::relationDeletion()
+        $items = $this->createMock(ContentCollectionItemRepositoryInterface::class);
+        $items->method('findForUpdate')->willReturn(ContentCollectionItem::query()->find($id));
+        $items->method('delete')->willThrowException(new RuntimeException('Simulated deletion failure'));
+        $delete = new DeleteCollectionItemUseCase(
+            $items, new ContentCollectionItemValueRepository(),
+            new ContentCollectionRepository(),
+            new CollectionTransaction(), CollectionItemWriterFactory::relationDeletion()
         );
         try {
             $delete->execute($id, $collection);
             self::fail('The deletion failure must propagate.');
-        } catch (\RuntimeException $exception) {
+        } catch (RuntimeException $exception) {
             self::assertSame('Simulated deletion failure', $exception->getMessage());
         }
         self::assertSame(1, Capsule::table('collection_items')->count());

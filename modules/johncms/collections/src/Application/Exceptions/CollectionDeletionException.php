@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Exceptions;
 
-final class CollectionDeletionException extends \RuntimeException
+use RuntimeException;
+
+final class CollectionDeletionException extends RuntimeException
 {
     /** @param array<string, list<string>> $errors */
     public function __construct(public readonly array $errors)

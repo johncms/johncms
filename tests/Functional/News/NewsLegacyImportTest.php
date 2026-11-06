@@ -5,13 +5,18 @@ declare(strict_types=1);
 namespace Tests\Functional\News;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Johncms\Files\FileStore;
 use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer;
 use Johncms\Modules\Collections\Application\Services\CollectionItemFiles;
+use Johncms\Modules\News\Application\Collections\NewsDiscussionFiles;
 use Johncms\Modules\News\Application\Collections\NewsLegacyImporter;
 use Johncms\Modules\News\Application\Collections\NewsReadServiceInterface;
+use Johncms\Modules\News\Application\DTO\NewsLegacyImportReportDTO;
 use Johncms\Modules\News\Application\Exceptions\NewsLegacyImportException;
 use Johncms\Updates\SystemOperationContext;
+use LogicException;
+use RuntimeException;
 use Tests\Functional\FunctionalTestCase;
 use Tests\Support\Fixture;
 
@@ -130,12 +135,12 @@ final class NewsLegacyImportTest extends FunctionalTestCase
     public function testFilesOfExcludedArticlesSurviveInTheTextOfKeptOnes(): void
     {
         $file = $this->file('news');
-        $url = $this->container()->get(\Johncms\Files\FileStore::class)->find($file)->url;
+        $url = $this->container()->get(FileStore::class)->find($file)->url;
         $this->article(code: 'Deleted', attributes: ['deleted_at' => '2020-01-01 00:00:00', 'attached_files' => json_encode([$file])]);
         $this->article(code: 'Kept', attributes: ['text' => '<img src="' . $url . '">']);
         $report = $this->runImport();
         self::assertSame([$file], array_map(intval(...), Capsule::table('news_legacy_cleanup_files')->pluck('file_id')->all()));
-        $this->container()->get(\Johncms\Modules\News\Application\Collections\NewsDiscussionFiles::class)->cleanup([$file], $this->container()->get(NewsReadServiceInterface::class)->collection()->id);
+        $this->container()->get(NewsDiscussionFiles::class)->cleanup([$file], $this->container()->get(NewsReadServiceInterface::class)->collection()->id);
         self::assertSame(1, Capsule::table('files')->where('id', $file)->count());
         self::assertSame(array_values($report->articles), array_map(intval(...), Capsule::table('collection_file_links')->where('file_id', $file)->pluck('item_id')->all()));
     }
@@ -158,9 +163,9 @@ final class NewsLegacyImportTest extends FunctionalTestCase
         try {
             Capsule::connection()->transaction(function (): void {
                 $this->runImport();
-                throw new \RuntimeException('Rollback');
+                throw new RuntimeException('Rollback');
             });
-        } catch (\RuntimeException $error) {
+        } catch (RuntimeException $error) {
             self::assertSame('Rollback', $error->getMessage());
         }
         self::assertSame(0, Capsule::table('collection_items')->count());
@@ -192,7 +197,7 @@ final class NewsLegacyImportTest extends FunctionalTestCase
         self::assertSame(0, (int) Capsule::table('collection_file_assets')->where('file_id', $file)->value('managed'));
         Capsule::table('news_comments')->where('id', $comment)->delete();
         $collection = $this->container()->get(CollectionsApiInterface::class)->getItem($report->articles[$article])->collectionId;
-        $this->container()->get(\Johncms\Modules\News\Application\Collections\NewsDiscussionFiles::class)->cleanup([$file], $collection);
+        $this->container()->get(NewsDiscussionFiles::class)->cleanup([$file], $collection);
         self::assertSame(1, (int) Capsule::table('collection_file_assets')->where('file_id', $file)->value('managed'));
         self::assertSame(1, Capsule::table('files')->where('id', $file)->count());
     }
@@ -234,11 +239,11 @@ final class NewsLegacyImportTest extends FunctionalTestCase
 
     public function testImportRequiresTrustedSystemContext(): void
     {
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
         $this->container()->get(NewsLegacyImporter::class)->import();
     }
 
-    private function runImport(): \Johncms\Modules\News\Application\DTO\NewsLegacyImportReportDTO
+    private function runImport(): NewsLegacyImportReportDTO
     {
         return $this->container()->get(SystemOperationContext::class)->runTrusted(fn () => $this->container()->get(NewsLegacyImporter::class)->import());
     }

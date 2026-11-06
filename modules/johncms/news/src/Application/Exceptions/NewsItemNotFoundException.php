@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Exceptions;
 
-final class NewsItemNotFoundException extends \RuntimeException
+use RuntimeException;
+
+final class NewsItemNotFoundException extends RuntimeException
 {
 }

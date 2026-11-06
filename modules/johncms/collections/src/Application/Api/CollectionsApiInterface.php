@@ -6,10 +6,11 @@ namespace Johncms\Modules\Collections\Application\Api;
 
 use Johncms\Modules\Collections\Application\DTO\CollectionDeletionPreviewDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemDTO;
-use Johncms\Modules\Collections\Application\DTO\CollectionRecordDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemPageDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemPatchDTO;
-use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionRecordDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionRelationImpactDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemCodeAlreadyExistsException;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 
@@ -71,7 +72,7 @@ interface CollectionsApiInterface
     /**
      * Delete an item (its EAV values cascade via FK).
      */
-    public function previewItemDeletion(int $id): \Johncms\Modules\Collections\Application\DTO\CollectionRelationImpactDTO;
+    public function previewItemDeletion(int $id): CollectionRelationImpactDTO;
 
     public function deleteItem(int $id, ?string $expectedRelations = null): void;
 

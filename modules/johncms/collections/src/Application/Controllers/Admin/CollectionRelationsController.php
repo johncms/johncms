@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Controllers\Admin;
 
+use InvalidArgumentException;
 use Johncms\Http\Request;
 use Johncms\Modules\Collections\Application\Services\CollectionRelationChoices;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,7 +19,7 @@ final readonly class CollectionRelationsController
     {
         try {
             return new JsonResponse(['options' => $this->choices->search($collection_id, $code, $request->queryParam('q'))]);
-        } catch (\InvalidArgumentException) {
+        } catch (InvalidArgumentException) {
             return new JsonResponse(['error' => ['message' => d__('system', 'Wrong data')]], 400);
         }
     }

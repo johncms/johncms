@@ -4,10 +4,17 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Controllers\Admin;
 
+use InvalidArgumentException;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO;
-use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldListItemDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionFieldCodeAlreadyExistsException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
+use Johncms\Modules\Collections\Application\Services\CollectionFilePolicy;
+use Johncms\Modules\Collections\Application\Services\CollectionRepeatedValues;
+use Johncms\Modules\Collections\Application\Services\CollectionWorkspaceMapper;
 use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionFieldUseCase;
 use Johncms\Modules\Collections\Application\UseCases\ListCollectionFieldsUseCase;
 use Johncms\Modules\Collections\Application\UseCases\SaveCollectionFieldUseCase;
@@ -16,11 +23,7 @@ use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
-use Johncms\Modules\Collections\Application\Services\CollectionWorkspaceMapper;
 use Johncms\NavChain;
-use Johncms\Http\Request;
-use Johncms\Http\View\ViewResponse;
-use Johncms\Http\Session;
 
 final readonly class CollectionFieldsAdminController
 {
@@ -33,7 +36,7 @@ final readonly class CollectionFieldsAdminController
         private SaveCollectionFieldUseCase $saveField,
         private DeleteCollectionFieldUseCase $deleteField,
         private Session $session,
-        private \Johncms\Modules\Collections\Application\Services\CollectionRepeatedValues $repeated = new \Johncms\Modules\Collections\Application\Services\CollectionRepeatedValues(),
+        private CollectionRepeatedValues $repeated = new CollectionRepeatedValues(),
     ) {
     }
 
@@ -103,7 +106,7 @@ final readonly class CollectionFieldsAdminController
             try {
                 [$key, $operation, $index] = $this->repeated->action($request->body('repeat_action'));
                 if (! in_array($key, ['default', 'options'], true)) {
-                    throw new \InvalidArgumentException(d__('collections', 'Choose an existing value and a valid action.'));
+                    throw new InvalidArgumentException(d__('collections', 'Choose an existing value and a valid action.'));
                 }
                 if ($key === 'options') {
                     $keys = array_map(strval(...), array_keys($fields['option_rows']));
@@ -114,7 +117,7 @@ final readonly class CollectionFieldsAdminController
                 }
                 $fields['repeat_message'] = d__('collections', 'Values changed. Save the form to apply them.');
                 return $this->renderForm($collection, $id, $fields);
-            } catch (\InvalidArgumentException $exception) {
+            } catch (InvalidArgumentException $exception) {
                 return $this->renderForm($collection, $id, $fields, [$exception->getMessage()]);
             }
         }
@@ -238,7 +241,7 @@ final readonly class CollectionFieldsAdminController
 
         return new ViewResponse('@collections/admin/field-form.twig', $this->menu($title, $collection->name) + [
             'form_action'  => $this->baseUrl($collection->id),
-            'file_types' => \Johncms\Modules\Collections\Application\Services\CollectionFilePolicy::TYPES,
+            'file_types' => CollectionFilePolicy::TYPES,
             'back_url'     => $this->baseUrl($collection->id),
             'id'           => $id,
             'fields'       => $fields,
@@ -348,8 +351,8 @@ final readonly class CollectionFieldsAdminController
             'target_collection_id' => $settings['target_collection_id'] ?? '',
             'relation_on_delete' => $settings['on_delete'] ?? 'restrict',
             'file_storage' => $settings['file_storage'] ?? 'legacy',
-            'max_file_bytes' => $settings['max_file_bytes'] ?? \Johncms\Modules\Collections\Application\Services\CollectionFilePolicy::DEFAULT_MAX_BYTES,
-            'allowed_mime_types' => $settings['allowed_mime_types'] ?? array_keys(\Johncms\Modules\Collections\Application\Services\CollectionFilePolicy::TYPES),
+            'max_file_bytes' => $settings['max_file_bytes'] ?? CollectionFilePolicy::DEFAULT_MAX_BYTES,
+            'allowed_mime_types' => $settings['allowed_mime_types'] ?? array_keys(CollectionFilePolicy::TYPES),
             'option_rows' => array_map(static fn (array $option): array => $option + ['active' => true], $settings['options'] ?? []), 'use_default' => $default !== null,
             'default_value' => is_string($default) ? $default : '', 'default_values' => is_array($default) ? $default : [],
             'min_length' => $settings['min_length'] ?? '', 'max_length' => $settings['max_length'] ?? '',

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Exceptions;
 
-final class NewsCollectionUnavailableException extends \RuntimeException
+use RuntimeException;
+
+final class NewsCollectionUnavailableException extends RuntimeException
 {
 }

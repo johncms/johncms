@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Controllers\Admin;
 
-use Johncms\Http\Request;
-use Johncms\Http\UploadedFileMapper;
-use Johncms\Http\UploadLimits;
-use Johncms\Image\EditorImageUploadException;
 use Johncms\Files\FileStoreException;
+use Johncms\Http\Request;
+use Johncms\Http\UploadLimits;
+use Johncms\Http\UploadedFileMapper;
+use Johncms\Image\EditorImageUploadException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
+use Johncms\Modules\Collections\Application\Services\CollectionFieldUpload;
 use Johncms\Modules\Collections\Application\Services\CollectionItemFiles;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 final readonly class CollectionUploadController
 {
-    public function __construct(private CollectionItemFiles $files, private UploadedFileMapper $mapper, private UploadLimits $limits, private \Johncms\Modules\Collections\Application\Services\CollectionFieldUpload $fieldUploads)
+    public function __construct(private CollectionItemFiles $files, private UploadedFileMapper $mapper, private UploadLimits $limits, private CollectionFieldUpload $fieldUploads)
     {
     }
 

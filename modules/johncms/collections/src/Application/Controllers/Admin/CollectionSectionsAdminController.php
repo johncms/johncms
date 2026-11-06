@@ -4,25 +4,29 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Controllers\Admin;
 
-use Johncms\Modules\Collections\Domain\Exceptions\CollectionWriteConflictException;
-use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
-use Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner;
-use Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
+use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\Collections\Application\Api\CollectionsUserApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Application\DTO\SectionTreeItemDTO;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSectionCodeAlreadyExistsException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSectionFormException;
+use Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner;
+use Johncms\Modules\Collections\Application\Services\CollectionWorkspaceMapper;
+use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase;
 use Johncms\Modules\Collections\Application\UseCases\ListCollectionSectionsUseCase;
+use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
+use Johncms\Modules\Collections\Domain\Exceptions\CollectionWriteConflictException;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Services\SectionTree;
-use Johncms\Modules\Collections\Application\Services\CollectionWorkspaceMapper;
 use Johncms\NavChain;
-use Johncms\Http\Request;
-use Johncms\Http\View\ViewResponse;
-use Johncms\Http\Session;
+use JsonException;
+use stdClass;
 
 final readonly class CollectionSectionsAdminController
 {
@@ -32,8 +36,8 @@ final readonly class CollectionSectionsAdminController
         private ContentCollectionRepositoryInterface $collectionRepository,
         private ContentCollectionSectionRepositoryInterface $sectionRepository,
         private ListCollectionSectionsUseCase $listSections,
-        private \Johncms\Modules\Collections\Application\Api\CollectionsUserApiInterface $userApi,
-        private \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase $access,
+        private CollectionsUserApiInterface $userApi,
+        private EnsureCollectionContentAccessUseCase $access,
         private Session $session,
         private CollectionDeletionPlanner $deletions,
     ) {
@@ -117,7 +121,7 @@ final readonly class CollectionSectionsAdminController
             }
         } catch (CollectionSectionFormException $exception) {
             return $this->renderForm($collection, $id, $fields, array_merge(...array_values($exception->errors)));
-        } catch (\JsonException) {
+        } catch (JsonException) {
             return $this->renderForm($collection, $id, $fields, [d__('collections', 'Use a JSON object of at most 1 MiB for section metadata.')]);
         } catch (CollectionSectionCodeAlreadyExistsException) {
             return $this->renderForm($collection, $id, $fields, [__('A section with this code already exists')]);
@@ -322,7 +326,7 @@ final readonly class CollectionSectionsAdminController
             'active'      => $section->active ? 1 : 0,
             'sort'        => $section->sort,
             'seo' => array_filter($section->metadata ?? [], static fn ($value): bool => is_string($value)),
-            'metadata'    => json_encode($section->metadata ?: new \stdClass(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR),
+            'metadata'    => json_encode($section->metadata ?: new stdClass(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR),
         ];
     }
 
@@ -364,7 +368,7 @@ final readonly class CollectionSectionsAdminController
     private function metadataFromJson(string $json): array
     {
         if (! str_starts_with(ltrim($json), '{')) {
-            throw new \JsonException('Section metadata must be an object.');
+            throw new JsonException('Section metadata must be an object.');
         }
         return json_decode($json, true, 32, JSON_THROW_ON_ERROR);
     }

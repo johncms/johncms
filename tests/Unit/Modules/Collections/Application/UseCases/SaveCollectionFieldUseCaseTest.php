@@ -8,9 +8,12 @@ use Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionFieldCodeAlreadyExistsException;
 use Johncms\Modules\Collections\Application\UseCases\SaveCollectionFieldUseCase;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
+use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use PHPUnit\Framework\TestCase;
+use Tests\Support\CollectionItemWriterFactory;
 
 final class SaveCollectionFieldUseCaseTest extends TestCase
 {
@@ -43,7 +46,7 @@ final class SaveCollectionFieldUseCaseTest extends TestCase
             ->willReturn($created);
         $repository->expects(self::never())->method('update');
 
-        self::assertSame(1, (new SaveCollectionFieldUseCase($repository, \Tests\Support\CollectionItemWriterFactory::immediateTransaction(), $this->collections(), \Tests\Support\CollectionItemWriterFactory::itemRepository()))->execute(null, $this->dto()));
+        self::assertSame(1, (new SaveCollectionFieldUseCase($repository, CollectionItemWriterFactory::immediateTransaction(), $this->collections(), CollectionItemWriterFactory::itemRepository()))->execute(null, $this->dto()));
     }
 
     public function testUpdatesExistingField(): void
@@ -57,7 +60,7 @@ final class SaveCollectionFieldUseCaseTest extends TestCase
         $repository->expects(self::once())->method('update')->with(7, self::anything());
         $repository->expects(self::never())->method('create');
 
-        self::assertSame(7, (new SaveCollectionFieldUseCase($repository, \Tests\Support\CollectionItemWriterFactory::immediateTransaction(), $this->collections(), \Tests\Support\CollectionItemWriterFactory::itemRepository()))->execute(7, $this->dto()));
+        self::assertSame(7, (new SaveCollectionFieldUseCase($repository, CollectionItemWriterFactory::immediateTransaction(), $this->collections(), CollectionItemWriterFactory::itemRepository()))->execute(7, $this->dto()));
     }
 
     public function testThrowsWhenCodeBelongsToAnotherFieldOfCollection(): void
@@ -72,12 +75,12 @@ final class SaveCollectionFieldUseCaseTest extends TestCase
 
         $this->expectException(CollectionFieldCodeAlreadyExistsException::class);
 
-        (new SaveCollectionFieldUseCase($repository, \Tests\Support\CollectionItemWriterFactory::immediateTransaction(), $this->collections(), \Tests\Support\CollectionItemWriterFactory::itemRepository()))->execute(null, $this->dto());
+        (new SaveCollectionFieldUseCase($repository, CollectionItemWriterFactory::immediateTransaction(), $this->collections(), CollectionItemWriterFactory::itemRepository()))->execute(null, $this->dto());
     }
-    private function collections(): \Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface
+    private function collections(): ContentCollectionRepositoryInterface
     {
-        $repository = $this->createMock(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface::class);
-        $repository->method('findForUpdate')->willReturn(new \Johncms\Modules\Collections\Domain\Models\ContentCollection(['code' => 'schema', 'name' => 'Schema']));
+        $repository = $this->createMock(ContentCollectionRepositoryInterface::class);
+        $repository->method('findForUpdate')->willReturn(new ContentCollection(['code' => 'schema', 'name' => 'Schema']));
         return $repository;
     }
 

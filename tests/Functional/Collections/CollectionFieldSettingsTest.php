@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Collections;
 
+use Dom\HTMLDocument;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsImportApiInterface;
-use Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemHistoryDTO;
-use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Updates\SystemOperationContext;
 use Tests\Functional\FunctionalTestCase;
@@ -136,7 +137,7 @@ final class CollectionFieldSettingsTest extends FunctionalTestCase
         $this->field('paragraphs', FieldType::Text, ['default' => $defaults], true);
         $editor = FunctionalUserFactory::createSupervisor();
         $html = (string) $this->handleRequest('/admin/collections/' . $this->collection . '/items/new', cookies: $this->actingAs($editor))->getContent();
-        self::assertSame(3, \Dom\HTMLDocument::createFromString($html, LIBXML_NOERROR)->querySelectorAll('[data-key="field_paragraphs"] [data-repeat-rows] textarea')->length);
+        self::assertSame(3, HTMLDocument::createFromString($html, LIBXML_NOERROR)->querySelectorAll('[data-key="field_paragraphs"] [data-repeat-rows] textarea')->length);
         self::assertStringContainsString("First\nsecond line</textarea>", $html);
         $response = $this->postForm('/admin/collections/' . $this->collection . '/items', [
             'name' => 'Paragraphs', 'sort' => '100', 'active' => '1', 'field_paragraphs' => [...$defaults, ''],

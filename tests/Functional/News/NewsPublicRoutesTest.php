@@ -7,14 +7,17 @@ namespace Tests\Functional\News;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Http\Kernel;
 use Johncms\Http\Request;
-use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionAccessDeniedException;
 use Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer;
+use Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer;
 use Johncms\Modules\News\Application\Collections\NewsReadServiceInterface;
 use Johncms\Security\Csrf;
 use Johncms\Updates\SystemUpdateStateInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\Functional\FunctionalTestCase;
 use Tests\Support\FunctionalUserFactory;
 
@@ -48,7 +51,7 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         $tags = (string) $this->handleRequest('/news/search_tags?tag=PHP')->getContent();
         self::assertStringContainsString('/news/a/same.html', $tags);
         self::assertStringNotContainsString('/news/b/same.html', $tags);
-        $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer::class)->rebuildCollection($this->collection);
+        $this->container()->get(CollectionSearchIndexer::class)->rebuildCollection($this->collection);
         $search = (string) $this->handleRequest('/news/search?query=First%20body')->getContent();
         self::assertStringContainsString('/news/a/same.html', $search);
         $this->handleRequest('/news/a/same.html');
@@ -111,7 +114,7 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         $sections = $this->container()->get(CollectionSectionsApiInterface::class);
         $sections->addSection(new CollectionSectionFormDTO($this->collection, null, 'a', 'A', null, true, 100));
         $this->item(body: 'Matching body', code: 'matching');
-        $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer::class)->rebuildCollection($this->collection);
+        $this->container()->get(CollectionSearchIndexer::class)->rebuildCollection($this->collection);
         self::assertSame(404, $this->handleRequest('/news/a//b/')->getStatusCode());
         self::assertSame(404, $this->handleRequest('/news/a//b/entry.html')->getStatusCode());
         self::assertSame(404, $this->handleRequest('/news/a/../entry.html')->getStatusCode());
@@ -140,7 +143,7 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
             try {
                 $this->api->deleteItem($id);
                 self::fail('Trusted PHP writers must also respect an unfinished news update outside its system context.');
-            } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionAccessDeniedException) {
+            } catch (CollectionAccessDeniedException) {
                 self::assertNotNull($this->api->getItem($id));
             }
         } finally {
@@ -159,7 +162,7 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
     /** @param array<string, mixed> $body
      * @param array<string, string> $cookies
      */
-    private function json(string $url, array $body, array $cookies): \Symfony\Component\HttpFoundation\Response
+    private function json(string $url, array $body, array $cookies): Response
     {
         $request = Request::create($url, 'POST', [], $cookies, [], ['CONTENT_TYPE' => 'application/json', 'HTTP_ACCEPT' => 'application/json', 'HTTP_X_CSRF_TOKEN' => $this->container()->get(Csrf::class)->getToken()], json_encode($body, JSON_THROW_ON_ERROR));
         return $this->container()->get(Kernel::class)->handle($request);

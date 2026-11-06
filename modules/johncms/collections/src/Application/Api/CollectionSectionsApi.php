@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Api;
 
-use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
-use Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner;
+use InvalidArgumentException;
 use Johncms\Modules\Collections\Application\DTO\CollectionDeletionPreviewDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionTreeNodeDTO;
 use Johncms\Modules\Collections\Application\Services\CollectionApiMapper;
+use Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner;
 use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionSectionUseCase;
 use Johncms\Modules\Collections\Application\UseCases\ListCollectionSectionsUseCase;
 use Johncms\Modules\Collections\Application\UseCases\SaveCollectionSectionUseCase;
+use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Services\SectionTree;
 
@@ -68,13 +69,13 @@ final readonly class CollectionSectionsApi implements CollectionSectionsApiInter
     public function resolvePath(int $collectionId, array $codes): ?CollectionSectionDTO
     {
         if (! array_is_list($codes)) {
-            throw new \InvalidArgumentException('Section codes must be a list.');
+            throw new InvalidArgumentException('Section codes must be a list.');
         }
         $section = null;
         $parent = null;
         foreach ($codes as $code) {
             if (! is_string($code) || $code === '' || ! preg_match('/^(?!\.{1,2}$)[\w.+-]+$/D', $code)) {
-                throw new \InvalidArgumentException('Invalid section path segment.');
+                throw new InvalidArgumentException('Invalid section path segment.');
             }
             $section = $this->sections->findByCode($collectionId, $parent, $code);
             if ($section === null) {

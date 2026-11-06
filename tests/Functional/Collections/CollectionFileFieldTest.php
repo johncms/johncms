@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Collections;
 
+use Dom\HTMLDocument;
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
+use Johncms\Files\FileStore;
+use Johncms\Http\UploadLimits;
 use Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemPatchDTO;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Tests\Functional\FunctionalTestCase;
 use Tests\Support\Fixture;
 use Tests\Support\FunctionalUserFactory;
@@ -21,7 +25,7 @@ final class CollectionFileFieldTest extends FunctionalTestCase
 
     protected function tearDown(): void
     {
-        $this->container()->get(\Johncms\Files\FileStore::class)->deleteMany($this->files);
+        $this->container()->get(FileStore::class)->deleteMany($this->files);
         parent::tearDown();
     }
 
@@ -29,7 +33,7 @@ final class CollectionFileFieldTest extends FunctionalTestCase
     {
         $collection = Fixture::insert('collections', ['code' => 'file-fields', 'name' => 'Files', 'active' => true, 'public' => true]);
         $source = Fixture::insert('collection_items', ['collection_id' => $collection, 'code' => 'source', 'name' => 'Source']);
-        $store = $this->container()->get(\Johncms\Files\FileStore::class);
+        $store = $this->container()->get(FileStore::class);
         $directory = 'collection-field-tests/' . bin2hex(random_bytes(8));
         $available = $store->storeContents('Available content', 'available.txt', $directory)->id;
         $foreign = $store->storeContents('Foreign content', 'foreign.txt', $directory)->id;
@@ -49,11 +53,11 @@ final class CollectionFileFieldTest extends FunctionalTestCase
         self::assertSame((string) $available, $item->values['attachment']);
         self::assertSame(1, Capsule::table('collection_file_value_links')->where('item_id', $item->id)->count());
         $panel = $this->handleRequest($url, cookies: $this->actingAs($user));
-        $table = \Dom\HTMLDocument::createFromString((string) $panel->getContent(), LIBXML_NOERROR)->querySelector('.admin-collection-items tbody');
+        $table = HTMLDocument::createFromString((string) $panel->getContent(), LIBXML_NOERROR)->querySelector('.admin-collection-items tbody');
         self::assertStringContainsString('available.txt', $table->textContent);
         $public = $this->handleRequest('/file-fields/assigned.html');
         self::assertSame(200, $public->getStatusCode());
-        $document = \Dom\HTMLDocument::createFromString((string) $public->getContent(), LIBXML_NOERROR);
+        $document = HTMLDocument::createFromString((string) $public->getContent(), LIBXML_NOERROR);
         self::assertSame('available.txt', $document->querySelector('dd a')->textContent);
 
         $api->patchItem($item->id, new CollectionItemPatchDTO(values: ['attachment' => null]));
@@ -105,8 +109,8 @@ final class CollectionFileFieldTest extends FunctionalTestCase
         try {
             $response = $this->handleRequest($base . '/items', 'POST', $this->withCsrfToken($form), cookies: $this->actingAs($user), files: [
                 'file_uploads' => ['attachment' => [
-                    new \Symfony\Component\HttpFoundation\File\UploadedFile($first, 'first.php', 'image/png', null, true),
-                    new \Symfony\Component\HttpFoundation\File\UploadedFile($second, 'second.php', 'text/plain', null, true),
+                    new UploadedFile($first, 'first.php', 'image/png', null, true),
+                    new UploadedFile($second, 'second.php', 'text/plain', null, true),
                 ]],
             ]);
         } finally {
@@ -115,7 +119,7 @@ final class CollectionFileFieldTest extends FunctionalTestCase
         }
         self::assertSame(200, $response->getStatusCode());
         $html = (string) $response->getContent();
-        $document = \Dom\HTMLDocument::createFromString($html, LIBXML_NOERROR);
+        $document = HTMLDocument::createFromString($html, LIBXML_NOERROR);
         $chosen = [];
         foreach ($document->querySelectorAll('select[name="field_attachment[]"] option[selected]') as $option) {
             $chosen[] = $option->getAttribute('value');
@@ -147,7 +151,7 @@ final class CollectionFileFieldTest extends FunctionalTestCase
         file_put_contents($path, 'Native saved contents');
         try {
             $response = $this->handleRequest($base . '/items', 'POST', $this->withCsrfToken(['name' => 'Saved', 'code' => 'saved', 'sort' => '100', 'upload_context' => $token, 'field_attachment' => '']), cookies: $this->actingAs($user), files: [
-                'file_uploads' => ['attachment' => [new \Symfony\Component\HttpFoundation\File\UploadedFile($path, 'saved.txt', 'text/plain', null, true)]],
+                'file_uploads' => ['attachment' => [new UploadedFile($path, 'saved.txt', 'text/plain', null, true)]],
             ]);
         } finally {
             unlink($path);
@@ -158,7 +162,7 @@ final class CollectionFileFieldTest extends FunctionalTestCase
         $this->files[] = (int) $item->values['attachment'];
         $response = $this->postForm($base . '/items', ['id' => $item->id, 'name' => 'Unsaved rename', 'sort' => '100', 'field_attachment' => $item->values['attachment'], 'file_clear' => 'attachment:0'], $user);
         self::assertSame(200, $response->getStatusCode());
-        $document = \Dom\HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
+        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
         self::assertSame('', $document->querySelector('[data-file-select] option[selected]')->getAttribute('value'));
         self::assertSame('Saved', $api->getItem($item->id)->name);
         self::assertSame($item->values['attachment'], $api->getItem($item->id)->values['attachment']);
@@ -179,8 +183,8 @@ final class CollectionFileFieldTest extends FunctionalTestCase
         try {
             $response = $this->handleRequest($base . '/items', 'POST', $this->withCsrfToken(['name' => 'Unsaved', 'sort' => '100', 'upload_context' => $token, 'field_attachment' => ['', '']]), cookies: $this->actingAs($user), files: [
                 'file_uploads' => ['attachment' => [
-                    new \Symfony\Component\HttpFoundation\File\UploadedFile($first, 'good.txt', 'text/plain', null, true),
-                    new \Symfony\Component\HttpFoundation\File\UploadedFile($second, 'bad.txt', 'text/plain', null, true),
+                    new UploadedFile($first, 'good.txt', 'text/plain', null, true),
+                    new UploadedFile($second, 'bad.txt', 'text/plain', null, true),
                 ]],
             ]);
         } finally {
@@ -188,7 +192,7 @@ final class CollectionFileFieldTest extends FunctionalTestCase
             unlink($second);
         }
         self::assertSame(200, $response->getStatusCode());
-        $document = \Dom\HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
+        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
         $chosen = [];
         foreach ($document->querySelectorAll('[data-file-select] option[selected]') as $option) {
             $chosen[] = $option->getAttribute('value');
@@ -203,7 +207,7 @@ final class CollectionFileFieldTest extends FunctionalTestCase
 
     public function testNativeFileCountAtTheServerBoundaryCannotPartiallySaveSelections(): void
     {
-        $limit = $this->container()->get(\Johncms\Http\UploadLimits::class)->maxFilesPerRequest();
+        $limit = $this->container()->get(UploadLimits::class)->maxFilesPerRequest();
         if ($limit < 1 || $limit > 1000) {
             self::markTestSkipped('This completeness scenario needs a finite PHP upload-count limit.');
         }
@@ -216,7 +220,7 @@ final class CollectionFileFieldTest extends FunctionalTestCase
         $path = tempnam(sys_get_temp_dir(), 'batch-file-');
         file_put_contents($path, 'Batch contents');
         try {
-            $upload = new \Symfony\Component\HttpFoundation\File\UploadedFile($path, 'batch.txt', 'text/plain', null, true);
+            $upload = new UploadedFile($path, 'batch.txt', 'text/plain', null, true);
             $response = $this->handleRequest($base . '/items', 'POST', $this->withCsrfToken(['name' => 'Batch', 'sort' => '100', 'upload_context' => $token, 'field_attachment' => array_fill(0, $limit, '')]), cookies: $this->actingAs($user), files: [
                 'file_uploads' => ['attachment' => array_fill(0, $limit, $upload)],
             ]);
@@ -230,7 +234,7 @@ final class CollectionFileFieldTest extends FunctionalTestCase
 
     private function storedFile(string $contents, string $name): int
     {
-        $file = $this->container()->get(\Johncms\Files\FileStore::class)->storeContents($contents, $name, 'file-widget-tests/' . bin2hex(random_bytes(8)));
+        $file = $this->container()->get(FileStore::class)->storeContents($contents, $name, 'file-widget-tests/' . bin2hex(random_bytes(8)));
         $this->files[] = $file->id;
         return $file->id;
     }
@@ -244,7 +248,7 @@ final class CollectionFileFieldTest extends FunctionalTestCase
         $user = FunctionalUserFactory::createSupervisor();
         $url = '/admin/collections/' . $collection . '/fields';
         $html = (string) $this->handleRequest($url . '/' . $field . '/edit', cookies: $this->actingAs($user))->getContent();
-        self::assertSame('legacy', \Dom\HTMLDocument::createFromString($html, LIBXML_NOERROR)->querySelector('select[name="file_storage"] option[selected]')->getAttribute('value'));
+        self::assertSame('legacy', HTMLDocument::createFromString($html, LIBXML_NOERROR)->querySelector('select[name="file_storage"] option[selected]')->getAttribute('value'));
         self::assertSame(200, $this->postForm($url, ['id' => $field, 'code' => 'attachment', 'name' => 'Attachment', 'type' => 'file', 'sort' => '100', 'file_storage' => 'registry'], $user)->getStatusCode());
         self::assertSame('/legacy/photo.jpg', Capsule::table('collection_item_values')->where('field_id', $field)->value('value_string'));
         self::assertSame(302, $this->postForm($url, ['id' => $field, 'code' => 'attachment', 'name' => 'Attachment renamed', 'type' => 'file', 'sort' => '100', 'file_storage' => 'legacy'], $user)->getStatusCode());

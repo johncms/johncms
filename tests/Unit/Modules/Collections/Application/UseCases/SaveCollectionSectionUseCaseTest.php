@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Modules\Collections\Application\UseCases;
 
+use DateTimeImmutable;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSectionCodeAlreadyExistsException;
@@ -13,6 +14,7 @@ use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
 use Tests\Support\CollectionItemWriterFactory;
 use Tests\Support\RunsMigrations;
+use stdClass;
 
 final class SaveCollectionSectionUseCaseTest extends TestCase
 {
@@ -48,7 +50,7 @@ final class SaveCollectionSectionUseCaseTest extends TestCase
         self::assertSame($root, $section->parent);
         self::assertSame('Raw <b>description</b>', $section->description);
         self::assertSame(['seo' => ['title' => 'A & B']], $section->metadata);
-        self::assertInstanceOf(\DateTimeImmutable::class, $section->createdAt);
+        self::assertInstanceOf(DateTimeImmutable::class, $section->createdAt);
     }
 
     public function testDuplicateSiblingCodeIsRejected(): void
@@ -138,7 +140,7 @@ final class SaveCollectionSectionUseCaseTest extends TestCase
         yield 'bad sort' => ['tech', 'Tech', 'abc', []];
         yield 'sort overflow' => ['tech', 'Tech', '2147483648', []];
         yield 'list metadata' => ['tech', 'Tech', 100, ['value']];
-        yield 'object metadata' => ['tech', 'Tech', 100, ['value' => new \stdClass()]];
+        yield 'object metadata' => ['tech', 'Tech', 100, ['value' => new stdClass()]];
         yield 'large metadata' => ['tech', 'Tech', 100, ['value' => str_repeat('x', 1048577)]];
     }
 }

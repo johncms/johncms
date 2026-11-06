@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Domain\Models;
 
+use Gettext\TranslatorFunctions;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -62,7 +63,7 @@ final class ContentCollection extends Model
     public function getNameAttribute(?string $value): string
     {
         $domain = $this->attributes['label_domain'] ?? null;
-        return $value !== null && $value !== '' && is_string($domain) && $domain !== '' ? \Gettext\TranslatorFunctions::getTranslator()->dgettext($domain, $value) : ($value ?? '');
+        return $value !== null && $value !== '' && is_string($domain) && $domain !== '' ? TranslatorFunctions::getTranslator()->dgettext($domain, $value) : ($value ?? '');
     }
 
     /**

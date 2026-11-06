@@ -4,18 +4,21 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Controllers;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use Johncms\Database\Migrations\PendingMigrations;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Collections\Application\DTO\PublicItemDTO;
 use Johncms\Modules\Collections\Application\Services\CollectionCodeCacheInterface;
+use Johncms\Modules\Collections\Application\Services\ItemContentFormatter;
 use Johncms\Modules\Collections\Application\UseCases\GetPublicItemUseCase;
 use Johncms\Modules\Collections\Application\UseCases\ListPublicItemsUseCase;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
-use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 
 /**
@@ -34,7 +37,7 @@ final readonly class CollectionRouterController
         private GetPublicItemUseCase $getItem,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
-        private \Johncms\Modules\Collections\Application\Services\ItemContentFormatter $content,
+        private ItemContentFormatter $content,
         private PendingMigrations $migrations,
     ) {
     }
@@ -119,7 +122,7 @@ final readonly class CollectionRouterController
 
     private function renderListing(ContentCollection $collection, ?int $sectionId, string $basePath): ViewResponse
     {
-        $at = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+        $at = new DateTimeImmutable('now', new DateTimeZone('UTC'));
         $perPage = isset($collection->settings['per_page']) ? (int) $collection->settings['per_page'] : null;
         $pagination = $this->paginationFactory->create($this->listItems->count($collection->id, $sectionId, $at), $perPage);
 

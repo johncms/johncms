@@ -8,6 +8,7 @@ use Johncms\Modules\News\Application\Controllers\CommentsController;
 use Johncms\Modules\News\Application\Controllers\SearchController;
 use Johncms\Modules\News\Application\Controllers\SectionController;
 use Johncms\Modules\News\Application\Controllers\VoteController;
+use Johncms\Modules\News\Application\Middleware\NewsAvailabilityMiddleware;
 use Johncms\Modules\News\Application\Services\NewsPermissions;
 use Johncms\Router\RouteCollection;
 
@@ -36,7 +37,7 @@ return static function (RouteCollection $router): void {
             ->name('news.section')
             ->defaults(['category' => null]);
     });
-    $public->addMiddleware(\Johncms\Modules\News\Application\Middleware\NewsAvailabilityMiddleware::class);
+    $public->addMiddleware(NewsAvailabilityMiddleware::class);
 
     $admin = $router->group('', function (RouteCollection $router): void {
         $router->get('/admin/news/settings', [NewsSettingsController::class, 'form'])->name('news.admin.settings');

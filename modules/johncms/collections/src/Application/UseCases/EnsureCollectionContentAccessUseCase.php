@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\UseCases;
 
+use InvalidArgumentException;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionAccessDeniedException;
+use Johncms\Modules\Collections\Application\Extension\CollectionContentAccessProviderInterface;
 use Johncms\Modules\Collections\Application\Services\CollectionsPermissions;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 
 final readonly class EnsureCollectionContentAccessUseCase
 {
-    /** @param iterable<\Johncms\Modules\Collections\Application\Extension\CollectionContentAccessProviderInterface> $owners */
+    /** @param iterable<CollectionContentAccessProviderInterface> $owners */
     public function __construct(private AccessCheckerInterface $access, private ContentCollectionRepositoryInterface $collections, private iterable $owners = [])
     {
     }
@@ -44,7 +46,7 @@ final readonly class EnsureCollectionContentAccessUseCase
     public function allowsAction(ContentCollection $collection, string $action): bool
     {
         if (! array_key_exists($action, self::actions())) {
-            throw new \InvalidArgumentException('Unknown collection action.');
+            throw new InvalidArgumentException('Unknown collection action.');
         }
         if ($this->canManageSchema()) {
             return true;

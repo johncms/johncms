@@ -9,6 +9,7 @@ use Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionExcepti
 use Johncms\Modules\Collections\Application\Extension\CollectionChangeHandlerInterface;
 use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface;
 use Johncms\Modules\ModuleRegistry;
+use LogicException;
 
 final readonly class CollectionChangeDispatcher
 {
@@ -39,7 +40,7 @@ final readonly class CollectionChangeDispatcher
         if (! $change->imported) {
             foreach ($this->handlers as $handler) {
                 if ($this->transaction === null) {
-                    throw new \LogicException('Collection handlers require a transaction coordinator.');
+                    throw new LogicException('Collection handlers require a transaction coordinator.');
                 }
                 $this->transaction->afterCommit(static fn () => $handler->afterCommit($change));
             }

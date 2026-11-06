@@ -7,6 +7,7 @@ namespace Johncms\Modules\Collections\Domain\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * An EAV value row: the value of a single custom field for a single item.
@@ -20,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $value_string
  * @property int|null $value_int
  * @property float|null $value_double
- * @property \Illuminate\Support\Carbon|null $value_date
+ * @property Carbon|null $value_date
  * @property string|null $value_text
  * @property int $sort
  *

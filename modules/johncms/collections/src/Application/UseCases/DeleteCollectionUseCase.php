@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\UseCases;
 
-use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeStateDTO;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException;
+use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
 use Johncms\Modules\Collections\Application\Services\CollectionCodeCacheInterface;
 use Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner;
 use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
-use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 
 final readonly class DeleteCollectionUseCase
 {
@@ -34,7 +35,7 @@ final readonly class DeleteCollectionUseCase
             $plan = $this->planner->plan(collectionId: $id, forUpdate: true);
             $this->planner->ensureRevision($plan->preview, $expectedRevision);
             if ($this->fields->hasExternalRelationsToCollectionForUpdate($id)) {
-                throw new \Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException([
+                throw new CollectionDeletionException([
                     'relations' => [d__('collections', 'Other collections have relation fields targeting this collection. Remove or retarget those fields before deleting it.')],
                 ]);
             }

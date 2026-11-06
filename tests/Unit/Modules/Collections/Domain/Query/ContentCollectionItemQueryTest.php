@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Modules\Collections\Domain\Query;
 
+use InvalidArgumentException;
 use Johncms\Modules\Collections\Domain\Enums\FilterOperator;
 use Johncms\Modules\Collections\Domain\Enums\SortDirection;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\Collections\Domain\Query\FieldFilterDTO;
 use Johncms\Modules\Collections\Domain\Query\OrderByDTO;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class ContentCollectionItemQueryTest extends TestCase
@@ -62,10 +64,10 @@ final class ContentCollectionItemQueryTest extends TestCase
 
         self::assertSame(SortDirection::Asc, $order->direction);
     }
-    #[\PHPUnit\Framework\Attributes\DataProvider('invalidPagination')]
+    #[DataProvider('invalidPagination')]
     public function testPaginationIsBounded(int $limit, int $offset): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         new ContentCollectionItemQuery(collectionId: 1, limit: $limit, offset: $offset);
     }
 
@@ -74,10 +76,10 @@ final class ContentCollectionItemQueryTest extends TestCase
         return [[0, 0], [-1, 0], [1001, 0], [1, -1], [1, 1000001]];
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('conflictingScopes')]
+    #[DataProvider('conflictingScopes')]
     public function testConflictingScopesAreRejected(?int $section, bool $subsections, bool $withoutSection): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         new ContentCollectionItemQuery(collectionId: 1, sectionId: $section, includeSubsections: $subsections, withoutSection: $withoutSection);
     }
 

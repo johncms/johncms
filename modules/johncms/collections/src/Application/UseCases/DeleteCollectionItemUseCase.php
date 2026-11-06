@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\UseCases;
 
-use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeStateDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionRelationImpactDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
+use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
+use Johncms\Modules\Collections\Application\Services\CollectionRelationDeletion;
+use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemValueRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
-use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface;
 
 final readonly class DeleteCollectionItemUseCase
 {
@@ -20,12 +22,12 @@ final readonly class DeleteCollectionItemUseCase
         private ContentCollectionItemValueRepositoryInterface $values,
         private ContentCollectionRepositoryInterface $collections,
         private CollectionTransactionInterface $transaction,
-        private \Johncms\Modules\Collections\Application\Services\CollectionRelationDeletion $relations,
+        private CollectionRelationDeletion $relations,
         private CollectionChangeDispatcher $changes = new CollectionChangeDispatcher(),
     ) {
     }
 
-    public function preview(int $id): \Johncms\Modules\Collections\Application\DTO\CollectionRelationImpactDTO
+    public function preview(int $id): CollectionRelationImpactDTO
     {
         $item = $this->repository->findById($id) ?? throw new CollectionItemFormException(['id' => [d__('collections', 'Item not found.')]]);
         return $this->relations->impact($item->collection_id, [$id], [$id]);

@@ -7,6 +7,7 @@ namespace Tests\Unit\Modules\Collections\Application\UseCases;
 use Gettext\Translator;
 use Gettext\TranslatorFunctions;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use InvalidArgumentException;
 use Johncms\Database\PdoConnection;
 use Johncms\Modules\Collections\Application\Api\CollectionSchemaApi;
 use Johncms\Modules\Collections\Application\DTO\CollectionDeclarationDTO;
@@ -16,16 +17,16 @@ use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemPatchDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionLabelDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
+use Johncms\Modules\Collections\Application\Extension\CollectionOwnerUrlProviderInterface;
 use Johncms\Modules\Collections\Application\Services\CollectionDeclarationRegistry;
 use Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer;
 use Johncms\Modules\Collections\Application\Services\CollectionOwnerUrls;
-use Johncms\Modules\Collections\Application\UseCases\SaveCollectionFieldUseCase;
 use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionFieldUseCase;
-use Johncms\Modules\Collections\Application\Extension\CollectionOwnerUrlProviderInterface;
+use Johncms\Modules\Collections\Application\UseCases\SaveCollectionFieldUseCase;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction;
-use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionFieldRepository;
+use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionRepository;
 use Johncms\Updates\SystemOperationContext;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
@@ -73,7 +74,7 @@ final class CollectionDeclarationsTest extends TestCase
     {
         $fields = new ContentCollectionFieldRepository();
         return new CollectionSchemaApi($fields,
-            new SaveCollectionFieldUseCase(repository: $fields, transaction: new CollectionTransaction(), collections: new ContentCollectionRepository(), items: \Tests\Support\CollectionItemWriterFactory::itemRepository(), context: $this->context),
+            new SaveCollectionFieldUseCase(repository: $fields, transaction: new CollectionTransaction(), collections: new ContentCollectionRepository(), items: CollectionItemWriterFactory::itemRepository(), context: $this->context),
             new DeleteCollectionFieldUseCase(repository: $fields, transaction: new CollectionTransaction(), collections: new ContentCollectionRepository(), context: $this->context),
             $this->sync
         );
@@ -287,7 +288,7 @@ final class CollectionDeclarationsTest extends TestCase
         $provider = $this->createMock(CollectionOwnerUrlProviderInterface::class);
         $provider->method('owner')->willReturn('example/blog');
         $provider->method('itemUrl')->willReturn('javascript:alert(1)');
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         (new CollectionOwnerUrls([$provider]))->item($api->findDeclaredCollection('example/blog', 'articles'), $api->getItem($this->item()));
     }
 }

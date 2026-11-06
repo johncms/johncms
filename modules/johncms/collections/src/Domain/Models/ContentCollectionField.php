@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Domain\Models;
 
+use Gettext\TranslatorFunctions;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -74,14 +75,14 @@ final class ContentCollectionField extends Model
     public function getNameAttribute(?string $value): string
     {
         $domain = $this->attributes['label_domain'] ?? null;
-        return $value !== null && $value !== '' && is_string($domain) && $domain !== '' ? \Gettext\TranslatorFunctions::getTranslator()->dgettext($domain, $value) : ($value ?? '');
+        return $value !== null && $value !== '' && is_string($domain) && $domain !== '' ? TranslatorFunctions::getTranslator()->dgettext($domain, $value) : ($value ?? '');
     }
 
     public function getHintAttribute(): string
     {
         $hint = $this->settings['hint'] ?? '';
         $domain = $this->attributes['label_domain'] ?? null;
-        return $hint !== '' && is_string($domain) && $domain !== '' ? \Gettext\TranslatorFunctions::getTranslator()->dgettext($domain, $hint) : $hint;
+        return $hint !== '' && is_string($domain) && $domain !== '' ? TranslatorFunctions::getTranslator()->dgettext($domain, $hint) : $hint;
     }
 
     public function collection(): BelongsTo

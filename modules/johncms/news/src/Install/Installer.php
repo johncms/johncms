@@ -6,18 +6,21 @@ namespace Johncms\Modules\News\Install;
 
 use Gettext\TranslatorFunctions;
 use Illuminate\Support\Str;
-use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
+use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
+use Johncms\Modules\Installer as ModuleInstaller;
 use Johncms\Modules\News\Application\Collections\NewsCollectionDeclaration;
 use Johncms\Modules\News\Application\Collections\NewsStorageUpdater;
 use Johncms\Modules\News\Domain\Repository\NewsDiscussionRepositoryInterface;
 use Johncms\System\i18n\Translator;
 use Johncms\Updates\SystemOperationContext;
+use LogicException;
 
-class Installer extends \Johncms\Modules\Installer
+class Installer extends ModuleInstaller
 {
     public function update(string $from, string $to): void
     {
@@ -34,8 +37,8 @@ class Installer extends \Johncms\Modules\Installer
             di(CollectionSchemaApiInterface::class)->synchronizeDeclarations();
             $api = di(CollectionsApiInterface::class);
             $collection = $api->findDeclaredCollection(NewsCollectionDeclaration::OWNER, NewsCollectionDeclaration::KEY)
-                ?? throw new \LogicException('The news declaration must be synchronized before installing demo data.');
-            if ($api->countItems(new \Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery(collectionId: $collection->id, onlyActive: false)) > 0) {
+                ?? throw new LogicException('The news declaration must be synchronized before installing demo data.');
+            if ($api->countItems(new ContentCollectionItemQuery(collectionId: $collection->id, onlyActive: false)) > 0) {
                 return;
             }
             $apiSections = di(CollectionSectionsApiInterface::class);

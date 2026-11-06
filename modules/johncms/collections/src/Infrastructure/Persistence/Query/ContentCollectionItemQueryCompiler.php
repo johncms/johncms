@@ -4,14 +4,20 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Infrastructure\Persistence\Query;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Query\Expression;
 use Johncms\Modules\Collections\Domain\Enums\FilterOperator;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
+use Johncms\Modules\Collections\Domain\Query\CollectionTextSearchDTO;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\Collections\Domain\Query\FieldFilterDTO;
+use Johncms\Modules\Collections\Domain\Query\ItemQueryValidator;
 use Johncms\Modules\Collections\Domain\Query\OrderByDTO;
+use Johncms\Modules\Collections\Domain\Services\CollectionTextNormalizer;
 
 /**
  * Applies the filter and ordering clauses of a ContentCollectionItemQuery to an
@@ -30,7 +36,7 @@ final class ContentCollectionItemQueryCompiler
     /** @param array<string, ContentCollectionField> $fields */
     public function validate(ContentCollectionItemQuery $query, array $fields): void
     {
-        (new \Johncms\Modules\Collections\Domain\Query\ItemQueryValidator())->validate($query, $fields);
+        (new ItemQueryValidator())->validate($query, $fields);
     }
 
     /**
@@ -75,7 +81,7 @@ final class ContentCollectionItemQueryCompiler
     }
 
     /** @param Builder<ContentCollectionItem> $builder */
-    public function applySearch(Builder $builder, \Johncms\Modules\Collections\Domain\Query\CollectionTextSearchDTO $search): void
+    public function applySearch(Builder $builder, CollectionTextSearchDTO $search): void
     {
         $like = '%' . str_replace(['!', '%', '_'], ['!!', '!%', '!_'], $search->term) . '%';
         $builder->whereExists(static function (QueryBuilder $query) use ($like, $search): void {
@@ -116,7 +122,7 @@ final class ContentCollectionItemQueryCompiler
         }
         $value = $this->sqlValue($filter->value);
         if ($field->role === 'tags') {
-            $normalize = \Johncms\Modules\Collections\Domain\Services\CollectionTextNormalizer::normalize(...);
+            $normalize = CollectionTextNormalizer::normalize(...);
             $value = is_array($value) ? array_map($normalize, $value) : $normalize($value);
         }
         $builder->whereExists(static function (QueryBuilder $query) use ($field, $valueColumn, $filter, $value): void {
@@ -157,17 +163,17 @@ final class ContentCollectionItemQueryCompiler
         );
     }
 
-    private function baseColumn(string $reference): string|\Illuminate\Database\Query\Expression
+    private function baseColumn(string $reference): string|Expression
     {
         return $reference === 'item.published_at'
-            ? new \Illuminate\Database\Query\Expression('COALESCE(collection_items.active_from, collection_items.created_at)')
+            ? new Expression('COALESCE(collection_items.active_from, collection_items.created_at)')
             : substr($reference, 5);
     }
 
     private function sqlValue(mixed $value): mixed
     {
-        if ($value instanceof \DateTimeImmutable) {
-            return $value->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d H:i:s');
+        if ($value instanceof DateTimeImmutable) {
+            return $value->setTimezone(new DateTimeZone('UTC'))->format('Y-m-d H:i:s');
         }
         return is_array($value) ? array_map($this->sqlValue(...), $value) : $value;
     }

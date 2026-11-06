@@ -7,12 +7,17 @@ namespace Johncms\Modules\Collections\Application\Services;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Collection;
+use Johncms\Files\FileStore;
+use Johncms\Files\FileStoreException;
+use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Modules\Collections\Domain\Enums\ItemStatus;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
 use Johncms\Modules\Collections\Domain\Services\SectionTree;
+use Johncms\Users\Repository\UserRepositoryInterface;
+use LogicException;
 
 /**
  * The rows of the list of the items of a collection, as collections::admin/items-table draws
@@ -26,10 +31,10 @@ final readonly class ItemListRowMapper
     public function __construct(
         private ?CollectionOwnerUrls $ownerUrls = null,
         private CollectionApiMapper $apiMapper = new CollectionApiMapper(),
-        private ?\Johncms\Files\FileStore $files = null,
+        private ?FileStore $files = null,
         private CollectionWorkspaceSettings $workspace = new CollectionWorkspaceSettings(),
-        private ?\Johncms\Users\Repository\UserRepositoryInterface $users = null,
-        private ?\Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase $access = null,
+        private ?UserRepositoryInterface $users = null,
+        private ?EnsureCollectionContentAccessUseCase $access = null,
     ) {
     }
 
@@ -150,7 +155,7 @@ final readonly class ItemListRowMapper
             return $this->shorten($value);
         }
         if ($this->files === null) {
-            throw new \LogicException('Collection file rendering is not configured.');
+            throw new LogicException('Collection file rendering is not configured.');
         }
         $id = filter_var($value, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
         if ($id === false) {
@@ -159,7 +164,7 @@ final readonly class ItemListRowMapper
         try {
             $file = $this->files->find($id);
             return $this->shorten($file !== null ? $file->name : d__('collections', 'Unavailable file'));
-        } catch (\Johncms\Files\FileStoreException) {
+        } catch (FileStoreException) {
             return d__('collections', 'Unavailable file');
         }
     }

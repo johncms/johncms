@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Domain\Repository;
 
+use Illuminate\Database\Eloquent\Collection;
+use Johncms\Modules\Collections\Domain\Models\ContentCollectionItemValue;
+
 interface ContentCollectionItemValueRepositoryInterface
 {
     /**
@@ -11,8 +14,8 @@ interface ContentCollectionItemValueRepositoryInterface
      */
     public function deleteByItem(int $itemId): void;
 
-    /** @return \Illuminate\Database\Eloquent\Collection<int, \Johncms\Modules\Collections\Domain\Models\ContentCollectionItemValue> */
-    public function getFieldValuesForUpdate(int $fieldId): \Illuminate\Database\Eloquent\Collection;
+    /** @return Collection<int, ContentCollectionItemValue> */
+    public function getFieldValuesForUpdate(int $fieldId): Collection;
 
     /** @param list<int> $targetIds
      * @param list<int> $deletedItemIds
@@ -22,9 +25,9 @@ interface ContentCollectionItemValueRepositoryInterface
 
     /** @param list<int> $targetIds
      * @param list<int> $deletedItemIds
-     * @return \Illuminate\Database\Eloquent\Collection<int, \Johncms\Modules\Collections\Domain\Models\ContentCollectionItemValue>
+     * @return Collection<int, ContentCollectionItemValue>
      */
-    public function getIncomingRelations(array $targetIds, array $deletedItemIds, bool $forUpdate = false): \Illuminate\Database\Eloquent\Collection;
+    public function getIncomingRelations(array $targetIds, array $deletedItemIds, bool $forUpdate = false): Collection;
 
     /** @param list<int> $ids */
     public function deleteRelationValues(array $ids): void;

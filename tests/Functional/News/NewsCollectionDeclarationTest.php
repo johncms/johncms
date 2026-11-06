@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Functional\News;
 
+use Dom\HTMLDocument;
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
+use Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer;
@@ -36,7 +39,7 @@ final class NewsCollectionDeclarationTest extends FunctionalTestCase
         self::assertSame($collection->id, $api->findDeclaredCollection(NewsCollectionDeclaration::OWNER, NewsCollectionDeclaration::KEY)->id);
         self::assertSame(4, Capsule::table('collection_fields')->where('collection_id', $collection->id)->count());
         self::assertSame(0, Capsule::table('collection_items')->where('collection_id', $collection->id)->count());
-        $fields = $this->container()->get(\Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface::class)->getFields($collection->id);
+        $fields = $this->container()->get(CollectionSchemaApiInterface::class)->getFields($collection->id);
         self::assertSame(['meta_title', 'meta_description', 'meta_keywords', 'tags'], array_map(static fn ($field) => $field->role, $fields));
         self::assertSame(FieldType::Text, $fields[2]->type);
         self::assertTrue($fields[3]->multiple);
@@ -76,8 +79,8 @@ final class NewsCollectionDeclarationTest extends FunctionalTestCase
         $collection = $this->container()->get(CollectionsApiInterface::class)->findDeclaredCollection(NewsCollectionDeclaration::OWNER, NewsCollectionDeclaration::KEY);
         $title = 'Left empty, the title is made of the template in the settings of the news.';
         $other = 'Left empty, they are made of the template in the settings of the news.';
-        $schema = $this->container()->get(\Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface::class);
-        $schema->saveField(null, new \Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO(
+        $schema = $this->container()->get(CollectionSchemaApiInterface::class);
+        $schema->saveField(null, new CollectionFieldFormDTO(
             collectionId: $collection->id, code: 'custom', name: 'Custom', type: FieldType::String_, required: false, multiple: false, sort: 500, settings: ['hint' => $title]
         ));
         $sync->synchronize();
@@ -86,7 +89,7 @@ final class NewsCollectionDeclarationTest extends FunctionalTestCase
         foreach (['ru', 'en'] as $locale) {
             $response = $this->handleRequest('/admin/collections/' . $collection->id . '/items/new?setlng=' . $locale, cookies: $this->actingAs($user));
             self::assertSame(200, $response->getStatusCode());
-            $document = \Dom\HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
+            $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
             foreach ($hints as $code => $message) {
                 $expected = $locale === 'en' ? $message : ($code === 'page_title'
                     ? 'Если оставить пустым, заголовок составится по шаблону из настроек новостей.'

@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Collections;
 
+use DateTimeImmutable;
 use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsImportApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException;
+use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Updates\SystemOperationContext;
 use Tests\Functional\FunctionalTestCase;
@@ -97,7 +99,7 @@ final class CollectionSectionsApiTest extends FunctionalTestCase
     {
         $id = $this->container()->get(SystemOperationContext::class)->runTrusted(fn () => $this->container()->get(CollectionsImportApiInterface::class)->importSection(
             new CollectionSectionFormDTO($this->collection, null, 'archive', 'Archive', 'Original', true, 100, ['title' => 'Archive']),
-            new \DateTimeImmutable('2001-01-01T12:00:00+03:00'), new \DateTimeImmutable('2002-01-01T00:00:00Z')
+            new DateTimeImmutable('2001-01-01T12:00:00+03:00'), new DateTimeImmutable('2002-01-01T00:00:00Z')
         ));
         $section = $this->sections->findSection($this->collection, $id);
         self::assertSame('2001-01-01 09:00:00', $section->createdAt->format('Y-m-d H:i:s'));
@@ -110,12 +112,12 @@ final class CollectionSectionsApiTest extends FunctionalTestCase
         $child = $this->section('child', $root);
         $other = $this->section('other');
         try {
-            $this->sections->deleteSection($this->collection + 100, $root, \Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode::DeleteItems);
+            $this->sections->deleteSection($this->collection + 100, $root, SectionDeletionMode::DeleteItems);
             self::fail('A foreign delete was accepted.');
         } catch (CollectionDeletionException) {
             self::assertNotNull($this->sections->findSection($this->collection, $root));
         }
-        $this->sections->deleteSection($this->collection, $root, \Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode::DeleteItems);
+        $this->sections->deleteSection($this->collection, $root, SectionDeletionMode::DeleteItems);
         self::assertNull($this->sections->findSection($this->collection, $child));
         self::assertNotNull($this->sections->findSection($this->collection, $other));
     }

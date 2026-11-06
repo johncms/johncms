@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Api;
 
-use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionUseCase;
-use Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner;
 use Johncms\Modules\Collections\Application\DTO\CollectionDeletionPreviewDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemDTO;
-use Johncms\Modules\Collections\Application\DTO\CollectionRecordDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemPageDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemPatchDTO;
-use Johncms\Modules\Collections\Application\Services\CollectionApiMapper;
-use Johncms\Modules\Collections\Application\UseCases\PatchCollectionItemUseCase;
+use Johncms\Modules\Collections\Application\DTO\CollectionRecordDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionRelationImpactDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
-use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
+use Johncms\Modules\Collections\Application\Services\CollectionApiMapper;
+use Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner;
 use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionItemUseCase;
+use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionUseCase;
+use Johncms\Modules\Collections\Application\UseCases\PatchCollectionItemUseCase;
 use Johncms\Modules\Collections\Application\UseCases\SaveCollectionItemUseCase;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
@@ -106,7 +107,7 @@ final readonly class CollectionsApi implements CollectionsApiInterface
         $this->deleteCollection->execute($collectionId, $expectedRevision);
     }
 
-    public function previewItemDeletion(int $id): \Johncms\Modules\Collections\Application\DTO\CollectionRelationImpactDTO
+    public function previewItemDeletion(int $id): CollectionRelationImpactDTO
     {
         return $this->deleteItem->preview($id);
     }

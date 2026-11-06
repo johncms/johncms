@@ -8,6 +8,7 @@ use Johncms\Auth\CurrentUser;
 use Johncms\Files\FileStore;
 use Johncms\Files\StoredFileDTO;
 use Johncms\Http\UploadedFileDTO;
+use Johncms\Image\EditorImageFormat;
 use Johncms\Image\StoreEditorImageUseCase;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
 use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase;
@@ -18,6 +19,7 @@ use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Throwable;
+use finfo;
 
 final readonly class CollectionFieldUpload
 {
@@ -45,7 +47,7 @@ final readonly class CollectionFieldUpload
             throw new CollectionItemFormException(['values.' . $code => [d__('collections', 'Choose a file that was uploaded successfully.')]]);
         }
         $size = filesize($upload->tmpPath);
-        $mime = (new \finfo(FILEINFO_MIME_TYPE))->file($upload->tmpPath);
+        $mime = (new finfo(FILEINFO_MIME_TYPE))->file($upload->tmpPath);
         if ($size === false || $mime === false || ! isset(CollectionFilePolicy::TYPES[$mime])) {
             throw new CollectionItemFormException(['values.' . $code => [d__('collections', 'This file content type is not supported.')]]);
         }
@@ -53,7 +55,7 @@ final readonly class CollectionFieldUpload
         $name = pathinfo($upload->clientName ?? 'file', PATHINFO_FILENAME) . '.' . CollectionFilePolicy::TYPES[$mime];
         $safe = new UploadedFileDTO($name, $mime, $size, $upload->tmpPath, $upload->error);
         $directory = 'collections/' . $collectionId;
-        $file = str_starts_with($mime, 'image/') ? $this->images->execute($safe, $directory, \Johncms\Image\EditorImageFormat::Original) : $this->files->storeUpload($safe, $directory);
+        $file = str_starts_with($mime, 'image/') ? $this->images->execute($safe, $directory, EditorImageFormat::Original) : $this->files->storeUpload($safe, $directory);
         try {
             $this->transaction->run(function () use ($collectionId, $code, $token, $field, $file): void {
                 $this->collections->findForUpdate($collectionId) ?? throw new CollectionItemFormException(['collection_id' => [d__('collections', 'Collection not found.')]]);

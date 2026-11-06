@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Tests\Functional\News;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionPreviewAccessDeniedException;
 use Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer;
 use Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer;
-use Johncms\Modules\Collections\Application\Exceptions\CollectionPreviewAccessDeniedException;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\News\Application\Collections\NewsReadServiceInterface;
 use Johncms\Modules\News\Application\DTO\NewsQueryDTO;
@@ -31,7 +32,7 @@ final class NewsCollectionReadTest extends FunctionalTestCase
     {
         parent::setUp();
         // Direct reader calls have no HTTP request and must start with a fresh guest identity.
-        $this->container()->get(\Johncms\Auth\CurrentUser::class)->reset();
+        $this->container()->get(CurrentUser::class)->reset();
         $this->container()->get(CollectionDeclarationsSynchronizer::class)->synchronize();
         $this->api = $this->container()->get(CollectionsApiInterface::class);
         $this->news = $this->container()->get(NewsReadServiceInterface::class);

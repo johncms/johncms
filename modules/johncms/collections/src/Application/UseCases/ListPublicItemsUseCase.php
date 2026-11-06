@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\UseCases;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use Johncms\Modules\Collections\Application\DTO\PublicItemDTO;
 use Johncms\Modules\Collections\Application\Services\ItemContentFormatter;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
@@ -18,7 +20,7 @@ final readonly class ListPublicItemsUseCase
     ) {
     }
 
-    public function count(int $collectionId, ?int $sectionId, ?\DateTimeImmutable $at = null): int
+    public function count(int $collectionId, ?int $sectionId, ?DateTimeImmutable $at = null): int
     {
         return $this->repository->countItems($this->query(collectionId: $collectionId, sectionId: $sectionId, at: $at));
     }
@@ -26,7 +28,7 @@ final readonly class ListPublicItemsUseCase
     /**
      * @return list<PublicItemDTO>
      */
-    public function getPage(int $collectionId, ?int $sectionId, int $limit, int $offset, ?\DateTimeImmutable $at = null): array
+    public function getPage(int $collectionId, ?int $sectionId, int $limit, int $offset, ?DateTimeImmutable $at = null): array
     {
         return $this->repository->findItems($this->query($collectionId, $sectionId, $limit, $offset, $at))
             ->map(fn (ContentCollectionItem $item): PublicItemDTO => new PublicItemDTO(
@@ -38,7 +40,7 @@ final readonly class ListPublicItemsUseCase
             ->all();
     }
 
-    private function query(int $collectionId, ?int $sectionId, ?int $limit = null, int $offset = 0, ?\DateTimeImmutable $at = null): ContentCollectionItemQuery
+    private function query(int $collectionId, ?int $sectionId, ?int $limit = null, int $offset = 0, ?DateTimeImmutable $at = null): ContentCollectionItemQuery
     {
         // Public listing: only published items (active + publish window).
         return (new ContentCollectionItemQuery(
@@ -48,7 +50,7 @@ final readonly class ListPublicItemsUseCase
             limit: $limit ?? 100,
             offset: $offset,
             fields: [],
-            at: $at ?? new \DateTimeImmutable('now', new \DateTimeZone('UTC')),
+            at: $at ?? new DateTimeImmutable('now', new DateTimeZone('UTC')),
         ))->forPublication();
     }
 }

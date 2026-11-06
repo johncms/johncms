@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Controllers\Admin;
 
+use InvalidArgumentException;
 use Johncms\Http\Request;
 use Johncms\Modules\Collections\Application\Api\CollectionsUserApiInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,7 +19,7 @@ final readonly class CollectionTagsController
     {
         try {
             return new JsonResponse(['tags' => $this->api->suggestTags($collection_id, $code, $request->queryParam('q'))]);
-        } catch (\InvalidArgumentException) {
+        } catch (InvalidArgumentException) {
             return new JsonResponse(['error' => ['message' => d__('system', 'Wrong data')]], 400);
         }
     }

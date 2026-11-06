@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Collections;
 
+use Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
 use Symfony\Component\HttpFoundation\Response;
@@ -68,7 +69,7 @@ final class CollectionItemsAdminListTest extends FunctionalTestCase
         $this->item('Vite move', 'vite');
         $this->item('Hidden draft', 'draft', active: false);
 
-        $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer::class)->rebuildCollection($this->collection);
+        $this->container()->get(CollectionSearchIndexer::class)->rebuildCollection($this->collection);
         $found = $this->page('?q=queue');
         $hidden = $this->page('?status=hidden');
 

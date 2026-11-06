@@ -7,6 +7,7 @@ namespace Johncms\Modules\Collections\Application\Api;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemPageDTO;
 use Johncms\Modules\Collections\Application\Services\CollectionApiMapper;
+use Johncms\Modules\Collections\Application\Services\CollectionTagSuggestions;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
 
@@ -16,7 +17,7 @@ final readonly class CollectionsPublicApi implements CollectionsPublicApiInterfa
         private CollectionsApiInterface $api,
         private ContentCollectionItemRepositoryInterface $items,
         private CollectionApiMapper $mapper,
-        private \Johncms\Modules\Collections\Application\Services\CollectionTagSuggestions $tags,
+        private CollectionTagSuggestions $tags,
     ) {
     }
 

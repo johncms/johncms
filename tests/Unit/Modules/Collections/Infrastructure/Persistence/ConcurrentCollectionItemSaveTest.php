@@ -5,12 +5,18 @@ declare(strict_types=1);
 namespace Tests\Unit\Modules\Collections\Infrastructure\Persistence;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Johncms\Database\PdoConnection;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemCodeAlreadyExistsException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
+use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
 use Johncms\Modules\Collections\Domain\Exceptions\CollectionWriteConflictException;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Tests\Support\CollectionItemWriterFactory;
 use Tests\Support\CollectionWriterDatabase;
 use Tests\Support\FunctionalDatabase;
@@ -101,7 +107,7 @@ final class ConcurrentCollectionItemSaveTest extends TestCase
         try {
             CollectionItemWriterFactory::create()->execute(null, new CollectionItemFormDTO($this->collection, null, 'entry', 'Entry', true, null, null, 100, null, null, ['choice' => 'a']));
             self::fail('A committed option retirement must be visible to a stale writer.');
-        } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException $exception) {
+        } catch (CollectionItemFormException $exception) {
             self::assertArrayHasKey('values.choice', $exception->errors);
         } catch (CollectionWriteConflictException) {
             self::assertTrue($this->snapshotIsolation());
@@ -122,7 +128,7 @@ final class ConcurrentCollectionItemSaveTest extends TestCase
         try {
             CollectionItemWriterFactory::create()->execute(null, new CollectionItemFormDTO($this->collection, null, 'source', 'Source', true, null, null, 100, null, null, ['related' => (string) $id]));
             self::fail('A deleted target must not be visible through an old snapshot.');
-        } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException $exception) {
+        } catch (CollectionItemFormException $exception) {
             self::assertArrayHasKey('values.related', $exception->errors);
         } catch (CollectionWriteConflictException) {
             self::assertTrue($this->snapshotIsolation());
@@ -144,7 +150,7 @@ final class ConcurrentCollectionItemSaveTest extends TestCase
         try {
             CollectionItemWriterFactory::api()->deleteItem($id);
             self::fail('Current reads must detect the newly committed relation.');
-        } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException $exception) {
+        } catch (CollectionDeletionException $exception) {
             self::assertArrayHasKey('relations', $exception->errors);
         } catch (CollectionWriteConflictException) {
             self::assertTrue($this->snapshotIsolation());
@@ -157,13 +163,13 @@ final class ConcurrentCollectionItemSaveTest extends TestCase
 
     public function testNativeOuterTransactionCanRollbackTheSave(): void
     {
-        $connection = new \Johncms\Database\PdoConnection(Capsule::connection()->getPdo());
+        $connection = new PdoConnection(Capsule::connection()->getPdo());
         try {
             $connection->transaction(function (): void {
                 CollectionItemWriterFactory::create()->execute(null, $this->form());
-                throw new \RuntimeException('Rollback native transaction');
+                throw new RuntimeException('Rollback native transaction');
             });
-        } catch (\RuntimeException $exception) {
+        } catch (RuntimeException $exception) {
             self::assertSame('Rollback native transaction', $exception->getMessage());
         }
         self::assertSame(0, Capsule::table('collection_items')->count());
@@ -226,8 +232,8 @@ final class ConcurrentCollectionItemSaveTest extends TestCase
     public function testConcurrentOppositeMovesCannotCreateACycle(): void
     {
         $writer = CollectionItemWriterFactory::sectionWriter();
-        $firstId = $writer->execute(null, new \Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO($this->collection, null, 'first', 'First', null, true, 100));
-        $secondId = $writer->execute(null, new \Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO($this->collection, null, 'second', 'Second', null, true, 100));
+        $firstId = $writer->execute(null, new CollectionSectionFormDTO($this->collection, null, 'first', 'First', null, true, 100));
+        $secondId = $writer->execute(null, new CollectionSectionFormDTO($this->collection, null, 'second', 'Second', null, true, 100));
         Capsule::connection()->beginTransaction();
         Capsule::table('collections')->where('id', $this->collection)->lockForUpdate()->first();
         try {
@@ -247,16 +253,16 @@ final class ConcurrentCollectionItemSaveTest extends TestCase
     public function testSectionDeletionUsesCurrentContentsInsideAnExistingSnapshot(): void
     {
         $sections = CollectionItemWriterFactory::sectionsApi();
-        $section = $sections->addSection(new \Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO($this->collection, null, 'section', 'Section', null, true, 100));
+        $section = $sections->addSection(new CollectionSectionFormDTO($this->collection, null, 'section', 'Section', null, true, 100));
         $preview = $sections->previewDeletion($this->collection, $section);
         Capsule::connection()->beginTransaction();
         Capsule::table('collection_items')->count();
         [$process, $output] = $this->start('new', $section, 'section-item');
         self::assertSame(0, $this->finish($process, $output));
         try {
-            $sections->deleteSection(collectionId: $this->collection, id: $section, mode: \Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode::DeleteItems, expectedRevision: $preview->revision);
+            $sections->deleteSection(collectionId: $this->collection, id: $section, mode: SectionDeletionMode::DeleteItems, expectedRevision: $preview->revision);
             self::fail('A new item was not part of the confirmed deletion.');
-        } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException $exception) {
+        } catch (CollectionDeletionException $exception) {
             self::assertArrayHasKey('revision', $exception->errors);
         } catch (CollectionWriteConflictException) {
             self::assertTrue($this->snapshotIsolation());
@@ -270,7 +276,7 @@ final class ConcurrentCollectionItemSaveTest extends TestCase
     public function testConcurrentSectionDeleteAndItemSaveCannotCreateRootOrphans(): void
     {
         $sections = CollectionItemWriterFactory::sectionsApi();
-        $section = $sections->addSection(new \Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO($this->collection, null, 'section', 'Section', null, true, 100));
+        $section = $sections->addSection(new CollectionSectionFormDTO($this->collection, null, 'section', 'Section', null, true, 100));
         Capsule::connection()->beginTransaction();
         Capsule::table('collections')->where('id', $this->collection)->lockForUpdate()->first();
         try {

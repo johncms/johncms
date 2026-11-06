@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\UseCases;
 
-use Johncms\Auth\CurrentUser;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Collections\Application\Api\CollectionLookupApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsPublicApiInterface;
+use Johncms\Modules\News\Application\Collections\NewsCollectionAvailability;
 use Johncms\Modules\News\Application\Collections\NewsCollectionDeclaration;
 use Johncms\Modules\News\Application\Exceptions\NewsCollectionUnavailableException;
-use Johncms\Modules\News\Application\Exceptions\NewsItemNotFoundException;
 use Johncms\Modules\News\Application\Exceptions\NewsDiscussionAccessDeniedException;
+use Johncms\Modules\News\Application\Exceptions\NewsItemNotFoundException;
 use Johncms\Modules\News\Application\Services\NewsPermissions;
 
 final readonly class EnsureNewsDiscussionAccessUseCase
@@ -21,7 +22,7 @@ final readonly class EnsureNewsDiscussionAccessUseCase
         private CollectionsPublicApiInterface $items,
         private CurrentUser $user,
         private AccessCheckerInterface $access,
-        private \Johncms\Modules\News\Application\Collections\NewsCollectionAvailability $availability,
+        private NewsCollectionAvailability $availability,
     ) {
     }
 

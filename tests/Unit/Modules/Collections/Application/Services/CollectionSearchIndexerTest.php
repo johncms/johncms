@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Modules\Collections\Application\Services;
 
+use DateTimeImmutable;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Content\ContentRendererInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
@@ -82,7 +83,7 @@ final class CollectionSearchIndexerTest extends TestCase
     {
         $context = new SystemOperationContext();
         $writer = CollectionItemWriterFactory::create(context: $context, changes: $this->changes);
-        $date = new \DateTimeImmutable('2001-01-01 00:00:00 UTC');
+        $date = new DateTimeImmutable('2001-01-01 00:00:00 UTC');
         $context->runTrusted(fn () => $writer->execute(id: null, dto: $this->form('imported'), history: new CollectionItemHistoryDTO($date, $date)));
         self::assertSame(0, $this->documentCount());
         Capsule::connection()->beginTransaction();

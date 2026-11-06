@@ -11,19 +11,31 @@ use Johncms\Auth\Authorization\PermissionResolver;
 use Johncms\Auth\CurrentUser;
 use Johncms\Files\FileStore;
 use Johncms\Files\Infrastructure\Persistence\Repository\EloquentFileRepository;
+use Johncms\Files\StoredFileDTO;
 use Johncms\Http\Request;
+use Johncms\Http\UploadedFileDTO;
 use Johncms\Image\EditorImageSettings;
 use Johncms\Image\ImageProcessorInterface;
 use Johncms\Image\StoreEditorImageUseCase;
+use Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
 use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
+use Johncms\Modules\Collections\Application\Services\CollectionFieldUpload;
+use Johncms\Modules\Collections\Application\Services\CollectionFilePolicy;
+use Johncms\Modules\Collections\Application\Services\CollectionFileValues;
 use Johncms\Modules\Collections\Application\Services\CollectionItemFiles;
 use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase;
+use Johncms\Modules\Collections\Application\UseCases\SaveCollectionFieldUseCase;
+use Johncms\Modules\Collections\Application\UseCases\SaveCollectionItemUseCase;
+use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Query\ContentCollectionItemQueryCompiler;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\CollectionFileRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionFieldRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemRepository;
+use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemValueRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionRepository;
 use Johncms\Storage\FlysystemStorage;
 use Johncms\Storage\StorageInterface;
@@ -31,6 +43,7 @@ use Johncms\Storage\StorageRegistryInterface;
 use Johncms\Updates\SystemOperationContext;
 use League\Flysystem\Filesystem;
 use League\Flysystem\InMemory\InMemoryFilesystemAdapter;
+use LogicException;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -49,8 +62,8 @@ final class CollectionItemFilesTest extends TestCase
     use RunsMigrations;
 
     private CollectionItemFiles $files;
-    private \Johncms\Modules\Collections\Application\Services\CollectionFieldUpload $fieldUploads;
-    private \Johncms\Modules\Collections\Application\Services\CollectionFileValues $fileValues;
+    private CollectionFieldUpload $fieldUploads;
+    private CollectionFileValues $fileValues;
     private CollectionFileRepository $links;
     private FileStore $store;
     private StorageInterface $disk;
@@ -85,13 +98,13 @@ final class CollectionItemFilesTest extends TestCase
             $this->store, new StoreEditorImageUseCase($this->store, $this->createStub(ImageProcessorInterface::class), new EditorImageSettings()),
             new EnsureCollectionContentAccessUseCase($access, new ContentCollectionRepository()), $user, $this->system
         );
-        $this->fileValues = new \Johncms\Modules\Collections\Application\Services\CollectionFileValues(
-            $this->links, new ContentCollectionFieldRepository(), new \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemValueRepository(),
-            new CollectionTransaction(), $this->files, $this->store, new \Johncms\Modules\Collections\Application\Services\CollectionFilePolicy($this->store), $this->system
+        $this->fileValues = new CollectionFileValues(
+            $this->links, new ContentCollectionFieldRepository(), new ContentCollectionItemValueRepository(),
+            new CollectionTransaction(), $this->files, $this->store, new CollectionFilePolicy($this->store), $this->system
         );
-        $this->fieldUploads = new \Johncms\Modules\Collections\Application\Services\CollectionFieldUpload(
+        $this->fieldUploads = new CollectionFieldUpload(
             $this->files, $this->links, new ContentCollectionFieldRepository(), new ContentCollectionRepository(), new CollectionTransaction(),
-            new \Johncms\Modules\Collections\Application\Services\CollectionFilePolicy($this->store), $this->store,
+            new CollectionFilePolicy($this->store), $this->store,
             new StoreEditorImageUseCase($this->store, $this->createStub(ImageProcessorInterface::class), new EditorImageSettings()),
             new EnsureCollectionContentAccessUseCase($access, new ContentCollectionRepository()), $user
         );
@@ -111,7 +124,7 @@ final class CollectionItemFilesTest extends TestCase
         self::assertSame('dangerous.txt', $file->name);
         self::assertStringEndsWith('.txt', (new EloquentFileRepository())->findById($file->id)->path);
         self::assertSame($field, Capsule::table('collection_file_links')->where('file_id', $file->id)->value('field_id'));
-        $form = new \Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO($this->collection, null, 'item', 'Item', true, null, null, 100, null, null, ['file' => (string) $file->id], $token);
+        $form = new CollectionItemFormDTO($this->collection, null, 'item', 'Item', true, null, null, 100, null, null, ['file' => (string) $file->id], $token);
         $this->writer()->execute($this->item, $form, 42);
         self::assertSame(0, Capsule::table('collection_file_links')->where('item_id', $this->item)->count());
         self::assertNotNull($this->store->find($file->id));
@@ -124,7 +137,7 @@ final class CollectionItemFilesTest extends TestCase
         $this->field();
         $token = $this->files->createContext($this->collection, $this->item);
         $file = $this->uploadField($token, 'unused content', 'unused.txt');
-        $form = new \Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO($this->collection, null, 'item', 'Item', true, null, null, 100, null, null, [], $token);
+        $form = new CollectionItemFormDTO($this->collection, null, 'item', 'Item', true, null, null, 100, null, null, [], $token);
         Capsule::connection()->beginTransaction();
         $this->writer()->execute($this->item, $form, 42);
         self::assertNotNull($this->store->find($file->id));
@@ -149,23 +162,23 @@ final class CollectionItemFilesTest extends TestCase
             }
         }
         $file = $this->uploadField($token, 'valid content', 'good.txt');
-        $form = new \Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO($this->collection, null, 'item', 'Item', true, null, null, 100, null, null, ['file' => (string) $file->id], $token);
+        $form = new CollectionItemFormDTO($this->collection, null, 'item', 'Item', true, null, null, 100, null, null, ['file' => (string) $file->id], $token);
         $this->writer()->execute($this->item, $form, 42);
         try {
             $this->field(['max_file_bytes' => 1], $field);
             self::fail('Existing file values must remain valid when limits change.');
-        } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException) {
+        } catch (CollectionSchemaException) {
             self::assertSame(32, (new ContentCollectionFieldRepository())->findById($field)->settings['max_file_bytes']);
         }
         self::assertNotNull($this->store->find($file->id));
     }
 
-    private function uploadField(string $token, string $contents, string $name, string $mime = 'application/octet-stream'): \Johncms\Files\StoredFileDTO
+    private function uploadField(string $token, string $contents, string $name, string $mime = 'application/octet-stream'): StoredFileDTO
     {
         $path = tempnam(sys_get_temp_dir(), 'collection-field-');
         file_put_contents($path, $contents);
         try {
-            return $this->fieldUploads->upload($this->collection, 'file', $token, new \Johncms\Http\UploadedFileDTO($name, $mime, 0, $path, UPLOAD_ERR_OK));
+            return $this->fieldUploads->upload($this->collection, 'file', $token, new UploadedFileDTO($name, $mime, 0, $path, UPLOAD_ERR_OK));
         } finally {
             unlink($path);
         }
@@ -212,7 +225,7 @@ final class CollectionItemFilesTest extends TestCase
         try {
             $this->field(['default' => (string) $file->id]);
             self::fail('A schema default must not grant access to an unrelated registry entry.');
-        } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException) {
+        } catch (CollectionSchemaException) {
             self::assertSame(0, Capsule::table('collection_fields')->count());
         }
         $this->field();
@@ -227,7 +240,7 @@ final class CollectionItemFilesTest extends TestCase
         $file = $this->store->storeContents('context file', 'context.txt', 'collections');
         $this->links->register($file->id, true);
         $this->links->linkContext($token, $file->id);
-        $form = new \Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO($this->collection, null, 'item', 'Item', true, null, null, 100, null, null, ['file' => (string) $file->id], $token);
+        $form = new CollectionItemFormDTO($this->collection, null, 'item', 'Item', true, null, null, 100, null, null, ['file' => (string) $file->id], $token);
         try {
             $this->writer()->execute($this->item, $form, 43);
             self::fail('Another editor cannot claim the context.');
@@ -246,7 +259,7 @@ final class CollectionItemFilesTest extends TestCase
         try {
             $this->field(['file_storage' => 'registry'], $field);
             self::fail('Existing strings must not silently turn into registry IDs.');
-        } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException) {
+        } catch (CollectionSchemaException) {
             self::assertSame('/legacy/picture.jpg', Capsule::table('collection_item_values')->value('value_string'));
         }
         $file = $this->store->storeContents('external converted value', 'external.txt', 'elsewhere');
@@ -263,22 +276,22 @@ final class CollectionItemFilesTest extends TestCase
     /** @param array<string, mixed> $settings */
     private function field(array $settings = [], ?int $id = null): int
     {
-        return (new \Johncms\Modules\Collections\Application\UseCases\SaveCollectionFieldUseCase(
+        return (new SaveCollectionFieldUseCase(
             repository: new ContentCollectionFieldRepository(), transaction: new CollectionTransaction(), collections: new ContentCollectionRepository(), items: CollectionItemWriterFactory::itemRepository(),
             changes: $this->changes, context: $this->system
-        ))->execute($id, new \Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO(
-            collectionId: $this->collection, code: 'file', name: 'File', type: \Johncms\Modules\Collections\Domain\Enums\FieldType::File, required: false, multiple: false, sort: 100, settings: $settings
+        ))->execute($id, new CollectionFieldFormDTO(
+            collectionId: $this->collection, code: 'file', name: 'File', type: FieldType::File, required: false, multiple: false, sort: 100, settings: $settings
         ));
     }
 
-    private function writer(): \Johncms\Modules\Collections\Application\UseCases\SaveCollectionItemUseCase
+    private function writer(): SaveCollectionItemUseCase
     {
         return CollectionItemWriterFactory::create(context: $this->system, changes: $this->changes, fileValues: $this->fileValues, files: $this->files);
     }
 
-    private function fileForm(?string $value = null): \Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO
+    private function fileForm(?string $value = null): CollectionItemFormDTO
     {
-        return new \Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO($this->collection, null, 'item', 'Item', true, null, null, 100, null, null, $value !== null ? ['file' => $value] : []);
+        return new CollectionItemFormDTO($this->collection, null, 'item', 'Item', true, null, null, 100, null, null, $value !== null ? ['file' => $value] : []);
     }
 
     public function testAPartialWriteLeavesFileValuesItDoesNotChangeAlone(): void
@@ -419,7 +432,7 @@ final class CollectionItemFilesTest extends TestCase
 
     public function testFileRegistrationRequiresTrustedSystemContext(): void
     {
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
         $this->files->registerExisting($this->collection, $this->item, []);
     }
 }

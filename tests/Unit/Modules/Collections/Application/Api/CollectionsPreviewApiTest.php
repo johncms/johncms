@@ -9,6 +9,8 @@ use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsPreviewApi;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionPreviewAccessDeniedException;
 use Johncms\Modules\Collections\Application\Services\CollectionsPermissions;
+use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 
 final class CollectionsPreviewApiTest extends TestCase
@@ -20,9 +22,9 @@ final class CollectionsPreviewApiTest extends TestCase
         $api = $this->createMock(CollectionsApiInterface::class);
         $api->expects(self::never())->method('getItem');
         $this->expectException(CollectionPreviewAccessDeniedException::class);
-        $guard = new \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase(
+        $guard = new EnsureCollectionContentAccessUseCase(
             $access,
-            $this->createMock(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface::class)
+            $this->createMock(ContentCollectionRepositoryInterface::class)
         );
         (new CollectionsPreviewApi($api, $guard))->findItem(1, 2);
     }

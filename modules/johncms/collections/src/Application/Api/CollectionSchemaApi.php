@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Johncms\Modules\Collections\Application\Api;
 
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionFieldDeclarationDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO;
 use Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer;
-use Johncms\Modules\Collections\Application\UseCases\SaveCollectionFieldUseCase;
 use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionFieldUseCase;
+use Johncms\Modules\Collections\Application\UseCases\SaveCollectionFieldUseCase;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 
 final readonly class CollectionSchemaApi implements CollectionSchemaApiInterface
@@ -46,7 +47,7 @@ final readonly class CollectionSchemaApi implements CollectionSchemaApiInterface
         return $this->save->execute($id, $field);
     }
 
-    public function saveOwnedField(int $collectionId, ?int $id, \Johncms\Modules\Collections\Application\DTO\CollectionFieldDeclarationDTO $field): int
+    public function saveOwnedField(int $collectionId, ?int $id, CollectionFieldDeclarationDTO $field): int
     {
         return $this->save->execute($id, new CollectionFieldFormDTO(
             $collectionId,

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Modules\Collections\Application\UseCases;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
 use Tests\Support\CollectionItemWriterFactory;
@@ -38,7 +39,7 @@ final class DeleteCollectionSectionUseCaseTest extends TestCase
         $field = Fixture::insert('collection_fields', ['collection_id' => $collection, 'code' => 'text', 'name' => 'Text', 'type' => 'string']);
         Fixture::insert('collection_item_values', ['item_id' => $item, 'field_id' => $field, 'value_string' => 'Value']);
         Capsule::connection()->getPdo()->exec('PRAGMA foreign_keys = OFF');
-        CollectionItemWriterFactory::sectionsApi()->deleteSection($collection, $section, \Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode::DeleteItems);
+        CollectionItemWriterFactory::sectionsApi()->deleteSection($collection, $section, SectionDeletionMode::DeleteItems);
         self::assertSame(0, Capsule::table('collection_sections')->count());
         self::assertSame(0, Capsule::table('collection_item_values')->count());
         self::assertSame(['kept'], Capsule::table('collection_items')->pluck('code')->all());

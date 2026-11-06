@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Services;
 
-use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
-use Johncms\Modules\Collections\Application\DTO\CollectionSectionDTO;
 use DateTimeImmutable;
+use DateTimeInterface;
 use DateTimeZone;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionRecordDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionSectionDTO;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
+use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
 
 final class CollectionApiMapper
 {
@@ -89,9 +90,9 @@ final class CollectionApiMapper
         );
     }
 
-    private function date(string|\DateTimeInterface|null $value): ?DateTimeImmutable
+    private function date(string|DateTimeInterface|null $value): ?DateTimeImmutable
     {
-        if ($value instanceof \DateTimeInterface) {
+        if ($value instanceof DateTimeInterface) {
             return DateTimeImmutable::createFromInterface($value)->setTimezone(new DateTimeZone('UTC'));
         }
         return $value === null || $value === '' ? null : new DateTimeImmutable($value, new DateTimeZone('UTC'));

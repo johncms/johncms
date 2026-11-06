@@ -4,12 +4,18 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\UseCases;
 
+use DateTimeInterface;
+use Johncms\Files\FileStore;
+use Johncms\Files\FileStoreException;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemDTO;
-use Johncms\Modules\Collections\Application\Services\CollectionApiMapper;
 use Johncms\Modules\Collections\Application\DTO\PublicItemDetailDTO;
+use Johncms\Modules\Collections\Application\Services\CollectionApiMapper;
+use Johncms\Modules\Collections\Application\Services\CollectionSelectOptions;
 use Johncms\Modules\Collections\Application\Services\ItemContentFormatter;
+use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
+use LogicException;
 
 final readonly class GetPublicItemUseCase
 {
@@ -18,7 +24,7 @@ final readonly class GetPublicItemUseCase
         private ContentCollectionFieldRepositoryInterface $fieldRepository,
         private ItemContentFormatter $contentFormatter,
         private CollectionApiMapper $mapper = new CollectionApiMapper(),
-        private ?\Johncms\Files\FileStore $files = null,
+        private ?FileStore $files = null,
     ) {
     }
 
@@ -49,12 +55,12 @@ final readonly class GetPublicItemUseCase
                 $metadata[$field->role] = $this->contentFormatter->plain($list[0] ?? null);
                 continue;
             }
-            if ($field->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::File && ($field->settings['file_storage'] ?? 'legacy') === 'registry') {
+            if ($field->type === FieldType::File && ($field->settings['file_storage'] ?? 'legacy') === 'registry') {
                 if ($list === []) {
                     continue;
                 }
                 if ($this->files === null) {
-                    throw new \LogicException('Collection file rendering is not configured.');
+                    throw new LogicException('Collection file rendering is not configured.');
                 }
                 $files = [];
                 foreach ($list as $id) {
@@ -64,7 +70,7 @@ final readonly class GetPublicItemUseCase
                     }
                     try {
                         $file = $this->files->find($identifier);
-                    } catch (\Johncms\Files\FileStoreException) {
+                    } catch (FileStoreException) {
                         continue;
                     }
                     if ($file !== null) {
@@ -76,10 +82,10 @@ final readonly class GetPublicItemUseCase
                 }
                 continue;
             }
-            if ($field->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::Select) {
-                $list = array_map(static fn ($value): string => \Johncms\Modules\Collections\Application\Services\CollectionSelectOptions::label($field->settings ?? [], (string) $value), $list);
+            if ($field->type === FieldType::Select) {
+                $list = array_map(static fn ($value): string => CollectionSelectOptions::label($field->settings ?? [], (string) $value), $list);
             }
-            if ($field->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::Html) {
+            if ($field->type === FieldType::Html) {
                 $list = array_values(array_filter(array_map($this->contentFormatter->format(...), $list), static fn ($value): bool => $value !== null));
             }
             if ($list !== []) {
@@ -109,6 +115,6 @@ final readonly class GetPublicItemUseCase
 
         $list = is_array($raw) ? $raw : [$raw];
 
-        return array_values(array_map(static fn ($value): string => $value instanceof \DateTimeInterface ? $value->format('Y-m-d H:i:s') : (string) $value, $list));
+        return array_values(array_map(static fn ($value): string => $value instanceof DateTimeInterface ? $value->format('Y-m-d H:i:s') : (string) $value, $list));
     }
 }

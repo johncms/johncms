@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Services;
 
+use InvalidArgumentException;
 use Johncms\Auth\CurrentUser;
 use Johncms\Files\FileStore;
 use Johncms\Files\StoredFileDTO;
@@ -15,8 +16,8 @@ use Johncms\Modules\Collections\Application\Extension\CollectionChangeHandlerInt
 use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase;
 use Johncms\Modules\Collections\Domain\Repository\CollectionFileRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface;
-use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Updates\SystemOperationContext;
 use Throwable;
 
@@ -172,7 +173,7 @@ final readonly class CollectionItemFiles implements CollectionChangeHandlerInter
     public function cleanup(int $ttlHours = 24, int $limit = 500): int
     {
         if ($ttlHours < 1 || $limit < 1 || $limit > 10000) {
-            throw new \InvalidArgumentException('Use a positive TTL and a batch size of 1..10000.');
+            throw new InvalidArgumentException('Use a positive TTL and a batch size of 1..10000.');
         }
         $before = gmdate('Y-m-d H:i:s', time() - $ttlHours * 3600);
         $count = 0;

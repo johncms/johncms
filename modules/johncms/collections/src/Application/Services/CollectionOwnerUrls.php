@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Services;
 
-use Johncms\Modules\Collections\Application\DTO\CollectionRecordDTO;
+use InvalidArgumentException;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionRecordDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionDTO;
 use Johncms\Modules\Collections\Application\Extension\CollectionOwnerUrlProviderInterface;
 use Johncms\Modules\ModuleRegistry;
@@ -21,7 +22,7 @@ final readonly class CollectionOwnerUrls
         $byOwner = [];
         foreach ($providers as $provider) {
             if (isset($byOwner[$provider->owner()])) {
-                throw new \InvalidArgumentException('Duplicate collection URL owner: ' . $provider->owner());
+                throw new InvalidArgumentException('Duplicate collection URL owner: ' . $provider->owner());
             }
             $byOwner[$provider->owner()] = $provider;
         }
@@ -44,7 +45,7 @@ final readonly class CollectionOwnerUrls
     public function item(CollectionRecordDTO $collection, CollectionItemDTO $item): ?string
     {
         if ($item->collectionId !== $collection->id) {
-            throw new \InvalidArgumentException('The URL subject belongs to another collection.');
+            throw new InvalidArgumentException('The URL subject belongs to another collection.');
         }
         return $this->valid($this->provider($collection->ownerModule)?->itemUrl($collection, $item));
     }
@@ -56,7 +57,7 @@ final readonly class CollectionOwnerUrls
     {
         foreach ($items as $item) {
             if ($item->collectionId !== $collection->id) {
-                throw new \InvalidArgumentException('The URL subject belongs to another collection.');
+                throw new InvalidArgumentException('The URL subject belongs to another collection.');
             }
         }
         $urls = $this->provider($collection->ownerModule)?->itemUrls($collection, $items) ?? [];
@@ -66,7 +67,7 @@ final readonly class CollectionOwnerUrls
     public function section(CollectionRecordDTO $collection, CollectionSectionDTO $section): ?string
     {
         if ($section->collectionId !== $collection->id) {
-            throw new \InvalidArgumentException('The URL subject belongs to another collection.');
+            throw new InvalidArgumentException('The URL subject belongs to another collection.');
         }
         return $this->valid($this->provider($collection->ownerModule)?->sectionUrl($collection, $section));
     }
@@ -74,7 +75,7 @@ final readonly class CollectionOwnerUrls
     public function preview(CollectionRecordDTO $collection, CollectionItemDTO $item): ?string
     {
         if ($item->collectionId !== $collection->id) {
-            throw new \InvalidArgumentException('The URL subject belongs to another collection.');
+            throw new InvalidArgumentException('The URL subject belongs to another collection.');
         }
         return $this->valid($this->provider($collection->ownerModule)?->previewUrl($collection, $item));
     }
@@ -90,11 +91,11 @@ final readonly class CollectionOwnerUrls
             return null;
         }
         if (preg_match('/[\x00-\x20\\\\]/', $url)) {
-            throw new \InvalidArgumentException('Owner URLs cannot contain controls, spaces or backslashes.');
+            throw new InvalidArgumentException('Owner URLs cannot contain controls, spaces or backslashes.');
         }
         if ((str_starts_with($url, '/') && ! str_starts_with($url, '//')) || (filter_var($url, FILTER_VALIDATE_URL) !== false && in_array(parse_url($url, PHP_URL_SCHEME), ['http', 'https'], true))) {
             return $url;
         }
-        throw new \InvalidArgumentException('Owner URLs must be site-relative or HTTP(S).');
+        throw new InvalidArgumentException('Owner URLs must be site-relative or HTTP(S).');
     }
 }

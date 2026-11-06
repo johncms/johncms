@@ -8,9 +8,9 @@ use Dom\HTMLDocument;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Modules\Collections\Application\Api\CollectionBulkApi;
 use Johncms\Modules\Collections\Application\Api\CollectionBulkApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsUserApiInterface;
-use Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
@@ -31,6 +31,8 @@ use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositor
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemValueRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
+use Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction;
+use RuntimeException;
 use Tests\Functional\FunctionalTestCase;
 use Tests\Support\Fixture;
 use Tests\Support\FunctionalUserFactory;
@@ -202,7 +204,7 @@ final class CollectionBulkActionsTest extends FunctionalTestCase
             public function withinTransaction(CollectionChangeDTO $change): void
             {
                 if ($change->id === $this->failOn) {
-                    throw new \RuntimeException('Mandatory bulk handler failed.');
+                    throw new RuntimeException('Mandatory bulk handler failed.');
                 }
                 Capsule::table('collection_items')->where('id', $this->failOn)->update(['view_count' => 99]);
             }
@@ -211,7 +213,7 @@ final class CollectionBulkActionsTest extends FunctionalTestCase
             }
         };
         $container = $this->container();
-        $transaction = new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction();
+        $transaction = new CollectionTransaction();
         $collections = $container->get(ContentCollectionRepositoryInterface::class);
         $items = $container->get(ContentCollectionItemRepositoryInterface::class);
         $relations = $container->get(CollectionRelationDeletion::class);
@@ -221,7 +223,7 @@ final class CollectionBulkActionsTest extends FunctionalTestCase
         try {
             $bulk->execute($this->collection, $preview->ids, 'delete', $preview->revision);
             self::fail('Mandatory handler errors must abort the batch.');
-        } catch (\RuntimeException $exception) {
+        } catch (RuntimeException $exception) {
             self::assertSame('Mandatory bulk handler failed.', $exception->getMessage());
             self::assertNotNull($this->items->getItem($this->first));
             self::assertNotNull($this->items->getItem($this->second));

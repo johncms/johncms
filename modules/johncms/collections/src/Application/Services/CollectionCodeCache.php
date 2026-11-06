@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Collections\Application\Services;
 
 use Johncms\Cache\CacheInterface;
+use Johncms\Database\TransactionCallbacks;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 
 /**
@@ -31,7 +32,7 @@ final readonly class CollectionCodeCache implements CollectionCodeCacheInterface
      */
     public function map(): array
     {
-        if (\Johncms\Database\TransactionCallbacks::hasActiveTransaction()) {
+        if (TransactionCallbacks::hasActiveTransaction()) {
             return $this->repository->getPublicCodeMap();
         }
         return $this->cache->rememberForever(

@@ -5,15 +5,21 @@ declare(strict_types=1);
 namespace Tests\Unit\Modules\Collections\Application\UseCases;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Johncms\Database\PdoConnection;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemCodeAlreadyExistsException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
 use Johncms\Modules\Collections\Application\UseCases\SaveCollectionItemUseCase;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemValueRepositoryInterface;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Query\ContentCollectionItemQueryCompiler;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionFieldRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemValueRepository;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\CollectionItemWriterFactory;
 use Tests\Support\RunsMigrations;
 
 final class SaveCollectionItemUseCaseTest extends TestCase
@@ -32,7 +38,7 @@ final class SaveCollectionItemUseCaseTest extends TestCase
 
         $fieldRepository = new ContentCollectionFieldRepository();
         $this->itemRepository = new ContentCollectionItemRepository($fieldRepository, new ContentCollectionItemQueryCompiler());
-        $this->useCase = \Tests\Support\CollectionItemWriterFactory::create();
+        $this->useCase = CollectionItemWriterFactory::create();
 
         $now = date('Y-m-d H:i:s');
         $this->collectionId = Capsule::table('collections')->insertGetId([
@@ -157,7 +163,7 @@ final class SaveCollectionItemUseCaseTest extends TestCase
 
     public function testMissingUpdateCannotCreateANewRecord(): void
     {
-        $this->expectException(\Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException::class);
+        $this->expectException(CollectionItemFormException::class);
         $this->useCase->execute(999, $this->dto('hello', []));
     }
 
@@ -165,17 +171,17 @@ final class SaveCollectionItemUseCaseTest extends TestCase
     {
         $id = $this->useCase->execute(null, $this->dto('hello', []));
         $other = Capsule::table('collections')->insertGetId(['code' => 'other', 'name' => 'Other']);
-        $this->expectException(\Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException::class);
+        $this->expectException(CollectionItemFormException::class);
         $this->useCase->execute($id, $this->form(['collectionId' => $other]));
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('invalidForms')]
+    #[DataProvider('invalidForms')]
     public function testInvalidDataIsRejectedBeforeWriting(array $changes, string $key): void
     {
         try {
             $this->useCase->execute(null, $this->form($changes));
             self::fail('Invalid data was accepted.');
-        } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException $exception) {
+        } catch (CollectionItemFormException $exception) {
             self::assertArrayHasKey($key, $exception->errors);
             self::assertSame(0, Capsule::table('collection_items')->count());
         }
@@ -209,7 +215,7 @@ final class SaveCollectionItemUseCaseTest extends TestCase
     public function testRequiredValuesAreValidatedOutsideTheController(): void
     {
         Capsule::table('collection_fields')->where('code', 'tag')->update(['required' => true]);
-        $this->expectException(\Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException::class);
+        $this->expectException(CollectionItemFormException::class);
         $this->useCase->execute(null, $this->dto('hello', ['tag' => [' ', '']]));
     }
 
@@ -232,18 +238,18 @@ final class SaveCollectionItemUseCaseTest extends TestCase
     public function testValueWriteFailureRollsBackItemAndValuesOnlyToTheSavepoint(): void
     {
         $id = $this->useCase->execute(null, $this->dto('hello', ['author' => 'Alice']));
-        $values = $this->createMock(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemValueRepositoryInterface::class);
+        $values = $this->createMock(ContentCollectionItemValueRepositoryInterface::class);
         $values->method('deleteByItem')->willReturnCallback(static function (int $id): void {
             (new ContentCollectionItemValueRepository())->deleteByItem($id);
         });
-        $values->method('insertMany')->willThrowException(new \RuntimeException('Interrupted write'));
-        $writer = \Tests\Support\CollectionItemWriterFactory::create($values);
+        $values->method('insertMany')->willThrowException(new RuntimeException('Interrupted write'));
+        $writer = CollectionItemWriterFactory::create($values);
         Capsule::connection()->beginTransaction();
         $this->useCase->execute(null, $this->dto('kept', []));
         try {
             $writer->execute($id, $this->form(['name' => 'Changed', 'values' => ['author' => 'Bob']]));
             self::fail('The write should fail.');
-        } catch (\RuntimeException $exception) {
+        } catch (RuntimeException $exception) {
             self::assertSame('Interrupted write', $exception->getMessage());
             self::assertSame(1, Capsule::connection()->transactionLevel());
             self::assertSame('Hello', $this->itemRepository->findById($id)->name);
@@ -254,11 +260,11 @@ final class SaveCollectionItemUseCaseTest extends TestCase
         }
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('invalidTypedValues')]
+    #[DataProvider('invalidTypedValues')]
     public function testInvalidTypedValuesAreRejected(string $type, string $value): void
     {
         Capsule::table('collection_fields')->insert(['collection_id' => $this->collectionId, 'code' => 'typed', 'name' => 'Typed', 'type' => $type]);
-        $this->expectException(\Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException::class);
+        $this->expectException(CollectionItemFormException::class);
         $this->useCase->execute(null, $this->dto('hello', ['typed' => $value]));
     }
 
@@ -282,13 +288,13 @@ final class SaveCollectionItemUseCaseTest extends TestCase
 
     public function testNativeOuterTransactionAlsoOwnsTheSave(): void
     {
-        $connection = new \Johncms\Database\PdoConnection(Capsule::connection()->getPdo());
+        $connection = new PdoConnection(Capsule::connection()->getPdo());
         try {
             $connection->transaction(function (): void {
                 $this->useCase->execute(null, $this->dto('native', ['author' => 'Alice']));
-                throw new \RuntimeException('Rollback the outer operation');
+                throw new RuntimeException('Rollback the outer operation');
             });
-        } catch (\RuntimeException $exception) {
+        } catch (RuntimeException $exception) {
             self::assertSame('Rollback the outer operation', $exception->getMessage());
         }
         self::assertSame(0, Capsule::table('collection_items')->count());

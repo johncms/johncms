@@ -5,13 +5,24 @@ declare(strict_types=1);
 namespace Tests\Functional\News;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Johncms\Database\ConnectionInterface;
 use Johncms\Database\Schema\SchemaInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionLookupApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionsImportApiInterface;
 use Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer;
-use Johncms\Modules\News\Application\Collections\NewsStorageUpdater;
+use Johncms\Modules\News\Application\Collections\NewsDiscussionFiles;
+use Johncms\Modules\News\Application\Collections\NewsLegacyImporter;
 use Johncms\Modules\News\Application\Collections\NewsReadServiceInterface;
+use Johncms\Modules\News\Application\Collections\NewsStorageUpdater;
+use Johncms\Modules\News\Application\DTO\NewsQueryDTO;
+use Johncms\Modules\News\Application\Exceptions\NewsLegacyImportException;
+use Johncms\Modules\News\Domain\Repository\NewsLegacyStorageRepositoryInterface;
+use Johncms\Modules\News\Install\Installer;
 use Johncms\Updates\SystemOperationContext;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use Psr\Log\LoggerInterface;
+use RuntimeException;
 use Tests\Functional\FunctionalTestCase;
 use Tests\Support\Fixture;
 
@@ -27,7 +38,7 @@ final class NewsStorageUpdateTest extends FunctionalTestCase
             $parts = parse_url($database);
             $name = isset($parts['path']) ? trim($parts['path'], '/') : '';
             if (! str_ends_with($name, '_test')) {
-                throw new \RuntimeException('News update tests require a disposable database ending in _test.');
+                throw new RuntimeException('News update tests require a disposable database ending in _test.');
             }
             putenv('TEST_DATABASE_URL=' . substr($database, 0, strrpos($database, '/') + 1) . 'johncms_news_update_test');
         }
@@ -47,12 +58,12 @@ final class NewsStorageUpdateTest extends FunctionalTestCase
         $this->update();
         $this->assertLegacyRemoved();
         self::assertSame(0, Capsule::table('collection_items')->count());
-        (new \Johncms\Modules\News\Install\Installer('news'))->installDemoData();
+        (new Installer('news'))->installDemoData();
         self::assertSame(4, Capsule::table('collection_items')->count());
         self::assertSame(4, Capsule::table('news_comments')->whereNotNull('item_id')->count());
         self::assertSame(4, Capsule::table('news_votes')->whereNotNull('item_id')->count());
         $this->update();
-        (new \Johncms\Modules\News\Install\Installer('news'))->installDemoData();
+        (new Installer('news'))->installDemoData();
         self::assertSame(4, Capsule::table('collection_items')->count());
     }
 
@@ -76,7 +87,7 @@ final class NewsStorageUpdateTest extends FunctionalTestCase
         self::assertSame(1, Capsule::table('news_comments')->count());
         self::assertSame(1, Capsule::table('news_votes')->count());
         self::assertSame(1, $item->stats->rating);
-        self::assertSame(1, $news->count(new \Johncms\Modules\News\Application\DTO\NewsQueryDTO(search: 'Original body')));
+        self::assertSame(1, $news->count(new NewsQueryDTO(search: 'Original body')));
         self::assertSame(200, $this->handleRequest($item->url)->getStatusCode());
         $this->update();
         self::assertSame(1, Capsule::table('collection_items')->count());
@@ -91,7 +102,7 @@ final class NewsStorageUpdateTest extends FunctionalTestCase
         try {
             $this->update();
             self::fail('The complete data phase must be rolled back.');
-        } catch (\Johncms\Modules\News\Application\Exceptions\NewsLegacyImportException $error) {
+        } catch (NewsLegacyImportException $error) {
             self::assertStringContainsString('article ' . $bad, $error->getMessage());
             self::assertSame(2, Capsule::table('news_articles')->count());
             self::assertSame(1, Capsule::table('news_sections')->count());
@@ -111,10 +122,10 @@ final class NewsStorageUpdateTest extends FunctionalTestCase
         $article = $this->article('Keep', Fixture::insert('news_sections', ['code' => 'section', 'name' => 'Section']));
         $this->article('Exclude', 0, ['deleted_at' => '2001-01-01 00:00:00', 'attached_files' => '[999999]']);
         $comment = $this->comment($article);
-        $inner = $this->container()->get(\Johncms\Modules\News\Domain\Repository\NewsLegacyStorageRepositoryInterface::class);
-        $storage = new class ($inner) implements \Johncms\Modules\News\Domain\Repository\NewsLegacyStorageRepositoryInterface {
+        $inner = $this->container()->get(NewsLegacyStorageRepositoryInterface::class);
+        $storage = new class ($inner) implements NewsLegacyStorageRepositoryInterface {
             private bool $fail = true;
-            public function __construct(private \Johncms\Modules\News\Domain\Repository\NewsLegacyStorageRepositoryInterface $inner) {}
+            public function __construct(private NewsLegacyStorageRepositoryInterface $inner) {}
             public function prepare(): void { $this->inner->prepare(); }
             public function hasData(): bool { return $this->inner->hasData(); }
             public function clearLegacyRows(): void { $this->inner->clearLegacyRows(); }
@@ -122,7 +133,7 @@ final class NewsStorageUpdateTest extends FunctionalTestCase
             public function pendingFiles(): array {
                 if ($this->fail) {
                     $this->fail = false;
-                    throw new \RuntimeException('Interrupted cleanup');
+                    throw new RuntimeException('Interrupted cleanup');
                 }
                 return $this->inner->pendingFiles();
             }
@@ -131,17 +142,17 @@ final class NewsStorageUpdateTest extends FunctionalTestCase
             public function hasLegacySchema(): bool { return $this->inner->hasLegacySchema(); }
         };
         $updater = new NewsStorageUpdater(
-            $this->container()->get(\Johncms\Modules\News\Application\Collections\NewsLegacyImporter::class), $storage,
-            $this->container()->get(\Johncms\Database\ConnectionInterface::class),
-            $this->container()->get(\Johncms\Modules\News\Application\Collections\NewsDiscussionFiles::class),
-            $this->container()->get(\Johncms\Modules\Collections\Application\Api\CollectionLookupApiInterface::class),
-            $this->container()->get(\Johncms\Modules\Collections\Application\Api\CollectionsImportApiInterface::class),
-            $this->container()->get(SystemOperationContext::class), $this->container()->get(\Psr\Log\LoggerInterface::class)
+            $this->container()->get(NewsLegacyImporter::class), $storage,
+            $this->container()->get(ConnectionInterface::class),
+            $this->container()->get(NewsDiscussionFiles::class),
+            $this->container()->get(CollectionLookupApiInterface::class),
+            $this->container()->get(CollectionsImportApiInterface::class),
+            $this->container()->get(SystemOperationContext::class), $this->container()->get(LoggerInterface::class)
         );
         try {
             $this->container()->get(SystemOperationContext::class)->runTrusted($updater->update(...));
             self::fail('The injected cleanup failure must be visible.');
-        } catch (\RuntimeException $exception) {
+        } catch (RuntimeException $exception) {
             self::assertSame('Interrupted cleanup', $exception->getMessage());
         }
         self::assertSame(0, Capsule::table('news_articles')->count());

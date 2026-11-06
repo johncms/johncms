@@ -4,19 +4,26 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Api;
 
+use Johncms\Auth\CurrentUser;
+use Johncms\Modules\Collections\Application\DTO\CollectionDeletionPreviewDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
-use Johncms\Modules\Collections\Application\DTO\CollectionItemPatchDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemPageDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionItemPatchDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionRelationImpactDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionTreeNodeDTO;
-use Johncms\Modules\Collections\Application\DTO\CollectionDeletionPreviewDTO;
-use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
-use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
-use Johncms\Auth\CurrentUser;
-use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionAccessDeniedException;
+use Johncms\Modules\Collections\Application\Services\CollectionTagSuggestions;
+use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase;
+use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionItemWriteAccessUseCase;
+use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionRelationAccessUseCase;
+use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
+use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
+use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
 
 final readonly class CollectionsUserApi implements CollectionsUserApiInterface
 {
@@ -25,12 +32,12 @@ final readonly class CollectionsUserApi implements CollectionsUserApiInterface
         private CollectionsApiInterface $items,
         private CollectionSectionsApiInterface $sections,
         private CurrentUser $user,
-        private \Johncms\Modules\Collections\Application\Services\CollectionTagSuggestions $tags,
-        private \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionRelationAccessUseCase $relations,
-        private \Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface $collections,
-        private \Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface $transaction,
-        private \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionItemWriteAccessUseCase $writes,
-        private \Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface $sectionRepository,
+        private CollectionTagSuggestions $tags,
+        private EnsureCollectionRelationAccessUseCase $relations,
+        private ContentCollectionRepositoryInterface $collections,
+        private CollectionTransactionInterface $transaction,
+        private EnsureCollectionItemWriteAccessUseCase $writes,
+        private ContentCollectionSectionRepositoryInterface $sectionRepository,
     ) {
     }
 
@@ -80,7 +87,7 @@ final readonly class CollectionsUserApi implements CollectionsUserApiInterface
         }, $id);
     }
 
-    public function previewItemDeletion(int $collectionId, int $id): \Johncms\Modules\Collections\Application\DTO\CollectionRelationImpactDTO
+    public function previewItemDeletion(int $collectionId, int $id): CollectionRelationImpactDTO
     {
         $this->requireItem($collectionId, $id);
         $this->guard->executeAction($collectionId, 'delete');

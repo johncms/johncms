@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\DTO;
 
+use InvalidArgumentException;
+
 /** Entity is item/section/collection/field; action is saved/moved/deleted. */
 final readonly class CollectionChangeDTO
 {
@@ -17,7 +19,7 @@ final readonly class CollectionChangeDTO
         public bool $imported = false,
     ) {
         if (! in_array($entity, ['item', 'section', 'collection', 'field'], true) || ! in_array($action, ['saved', 'moved', 'deleted'], true)) {
-            throw new \InvalidArgumentException('Invalid collection change entity or action.');
+            throw new InvalidArgumentException('Invalid collection change entity or action.');
         }
     }
 }

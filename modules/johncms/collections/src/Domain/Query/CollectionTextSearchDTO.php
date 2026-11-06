@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Domain\Query;
 
+use InvalidArgumentException;
 use Johncms\Modules\Collections\Domain\Services\CollectionTextNormalizer;
 
 final readonly class CollectionTextSearchDTO
@@ -17,11 +18,11 @@ final readonly class CollectionTextSearchDTO
     {
         $this->term = CollectionTextNormalizer::normalize($term);
         if ($this->term === '' || mb_strlen($this->term) > self::MAX_LENGTH || ! array_is_list($fields)) {
-            throw new \InvalidArgumentException('Search requires a term of 1..255 characters and a list of custom fields.');
+            throw new InvalidArgumentException('Search requires a term of 1..255 characters and a list of custom fields.');
         }
         foreach ($fields as $code) {
             if (! is_string($code) || ! preg_match('/^[a-z0-9_-]{1,255}$/D', $code)) {
-                throw new \InvalidArgumentException('Search field codes must be valid collection field identifiers.');
+                throw new InvalidArgumentException('Search field codes must be valid collection field identifiers.');
             }
         }
     }

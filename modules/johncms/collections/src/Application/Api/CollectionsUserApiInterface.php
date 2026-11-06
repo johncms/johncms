@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Api;
 
+use Johncms\Modules\Collections\Application\DTO\CollectionDeletionPreviewDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
-use Johncms\Modules\Collections\Application\DTO\CollectionItemPatchDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemPageDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionItemPatchDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionRelationImpactDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionTreeNodeDTO;
-use Johncms\Modules\Collections\Application\DTO\CollectionDeletionPreviewDTO;
-use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
+use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 
 /** User operations. Trusted module hooks use the system APIs instead. */
 interface CollectionsUserApiInterface
@@ -31,7 +32,7 @@ interface CollectionsUserApiInterface
 
     public function patchItem(int $collectionId, int $id, CollectionItemPatchDTO $patch): void;
 
-    public function previewItemDeletion(int $collectionId, int $id): \Johncms\Modules\Collections\Application\DTO\CollectionRelationImpactDTO;
+    public function previewItemDeletion(int $collectionId, int $id): CollectionRelationImpactDTO;
 
     public function deleteItem(int $collectionId, int $id, ?string $expectedRelations = null): void;
 

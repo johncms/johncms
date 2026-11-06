@@ -10,6 +10,7 @@ use Johncms\Modules\Collections\Application\DTO\CollectionFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
 use Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer;
 use Johncms\Modules\Collections\Application\Services\CollectionWorkspaceSettings;
+use Johncms\Modules\Collections\Application\Services\ItemListFilterMapper;
 use Johncms\Modules\Collections\Application\UseCases\SaveCollectionUseCase;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Tests\Functional\FunctionalTestCase;
@@ -270,7 +271,7 @@ final class CollectionWorkspaceTest extends FunctionalTestCase
                 self::assertArrayNotHasKey('workspace', $this->settings($collection));
             }
         }
-        $mapper = $this->container()->get(\Johncms\Modules\Collections\Application\Services\ItemListFilterMapper::class);
+        $mapper = $this->container()->get(ItemListFilterMapper::class);
         $filter = $mapper->fromQuery(['order' => 'invalid', 'direction' => 'invalid', 'author' => '1', 'created_from' => '2026-02-30'], ['filters' => ['created_at'], 'sort' => ['field' => 'id', 'direction' => 'desc']]);
         self::assertSame('id', $filter->sortBy);
         self::assertSame('desc', $filter->direction);

@@ -48,7 +48,7 @@ final class ContentCollectionRepository implements ContentCollectionRepositoryIn
         return ContentCollection::query()->withCount(['items', 'sections', 'fields'])->find($id);
     }
 
-    public function getForContentMenu(): \Illuminate\Database\Eloquent\Collection
+    public function getForContentMenu(): Collection
     {
         return ContentCollection::query()->whereNull('owner_module')->orderBy('sort')->orderBy('id')->get();
     }

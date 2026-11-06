@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Collections\Application\Api;
 
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionFieldDeclarationDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO;
 
 /** Schema administration; owner-managed changes additionally require a trusted update scope. */
@@ -20,5 +21,5 @@ interface CollectionSchemaApiInterface
     /** Create what the loaded modules declare, for work that cannot wait for the next system:update. */
     public function synchronizeDeclarations(): void;
 
-    public function saveOwnedField(int $collectionId, ?int $id, \Johncms\Modules\Collections\Application\DTO\CollectionFieldDeclarationDTO $field): int;
+    public function saveOwnedField(int $collectionId, ?int $id, CollectionFieldDeclarationDTO $field): int;
 }

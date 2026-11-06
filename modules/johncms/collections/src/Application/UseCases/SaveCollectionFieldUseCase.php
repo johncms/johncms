@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\UseCases;
 
-use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeStateDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionFieldDeclarationDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionFieldCodeAlreadyExistsException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
-use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
-use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
+use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
+use Johncms\Modules\Collections\Application\Services\CollectionFieldSettingsValidator;
+use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Updates\SystemOperationContext;
 
 final readonly class SaveCollectionFieldUseCase
@@ -21,14 +25,14 @@ final readonly class SaveCollectionFieldUseCase
         private ContentCollectionFieldRepositoryInterface $repository,
         private CollectionTransactionInterface $transaction,
         private ContentCollectionRepositoryInterface $collections,
-        private \Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface $items,
+        private ContentCollectionItemRepositoryInterface $items,
         private CollectionChangeDispatcher $changes = new CollectionChangeDispatcher(),
         private SystemOperationContext $context = new SystemOperationContext(),
-        private \Johncms\Modules\Collections\Application\Services\CollectionFieldSettingsValidator $settingsValidator = new \Johncms\Modules\Collections\Application\Services\CollectionFieldSettingsValidator(),
+        private CollectionFieldSettingsValidator $settingsValidator = new CollectionFieldSettingsValidator(),
     ) {
     }
 
-    public function execute(?int $id, CollectionFieldFormDTO $dto, ?\Johncms\Modules\Collections\Application\DTO\CollectionFieldDeclarationDTO $owned = null): int
+    public function execute(?int $id, CollectionFieldFormDTO $dto, ?CollectionFieldDeclarationDTO $owned = null): int
     {
         return $this->transaction->run(function () use ($id, $dto, $owned): int {
             $collection = $this->collections->findForUpdate($dto->collectionId);
@@ -54,7 +58,7 @@ final readonly class SaveCollectionFieldUseCase
             ) {
                 throw new CollectionSchemaException(d__('collections', 'Use a valid field code, label and role.'));
             }
-            if ($dto->role === 'tags' && ($dto->type !== \Johncms\Modules\Collections\Domain\Enums\FieldType::String_ || ! $dto->multiple)) {
+            if ($dto->role === 'tags' && ($dto->type !== FieldType::String_ || ! $dto->multiple)) {
                 throw new CollectionSchemaException(d__('collections', 'The tags role requires a multiple string field.'));
             }
             if ($dto->sort < -2147483648 || $dto->sort > 2147483647) {
@@ -73,17 +77,17 @@ final readonly class SaveCollectionFieldUseCase
                 throw new CollectionSchemaException(d__('collections', 'Convert existing values explicitly before changing their type or multiplicity.'));
             }
             $settings = array_replace($current->settings ?? [], $dto->settings);
-            if ($dto->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::File) {
+            if ($dto->type === FieldType::File) {
                 $settings['file_storage'] ??= $current?->type === $dto->type ? 'legacy' : 'registry';
                 if ($current?->type === $dto->type && ($current->settings['file_storage'] ?? 'legacy') !== $settings['file_storage'] && $this->repository->hasValues($current->id) && ! $this->context->isActive()) {
                     throw new CollectionSchemaException(d__('collections', 'Convert existing file values explicitly before changing their storage mode.'));
                 }
-                if ($current?->type !== \Johncms\Modules\Collections\Domain\Enums\FieldType::File && $settings['file_storage'] === 'legacy' && ! $this->context->isActive()) {
+                if ($current?->type !== FieldType::File && $settings['file_storage'] === 'legacy' && ! $this->context->isActive()) {
                     throw new CollectionSchemaException(d__('collections', 'New file fields must use registered files.'));
                 }
             }
             $this->settingsValidator->validate($dto->type, $dto->multiple, $settings, $dto->required);
-            if ($dto->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::Relation) {
+            if ($dto->type === FieldType::Relation) {
                 $target = $settings['target_collection_id'];
                 if ($this->collections->findForUpdate($target) === null) {
                     throw new CollectionSchemaException(d__('collections', 'Choose an existing target collection.'));
@@ -99,7 +103,7 @@ final readonly class SaveCollectionFieldUseCase
                 }
             }
             if (
-                $current !== null && $current->type === \Johncms\Modules\Collections\Domain\Enums\FieldType::Select && $dto->type === $current->type && ! $this->context->isActive()
+                $current !== null && $current->type === FieldType::Select && $dto->type === $current->type && ! $this->context->isActive()
                 && ($settings['options'] ?? []) !== ($current->settings['options'] ?? []) && $this->repository->hasSelectValuesOutside($current->id, array_column($settings['options'] ?? [], 'code'))
             ) {
                 throw new CollectionSchemaException(d__('collections', 'A used option cannot be removed. Disable it instead.'));

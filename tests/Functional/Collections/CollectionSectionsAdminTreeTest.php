@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Collections;
 
+use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Functional\FunctionalTestCase;
@@ -63,7 +64,7 @@ final class CollectionSectionsAdminTreeTest extends FunctionalTestCase
         $response = $this->handleRequest(
             '/admin/collections/' . $this->collection . '/sections/' . $section . '/delete',
             'POST',
-            $this->withCsrfToken(['mode' => 'delete', 'revision' => $this->container()->get(\Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface::class)->previewDeletion($this->collection, $section)->revision]),
+            $this->withCsrfToken(['mode' => 'delete', 'revision' => $this->container()->get(CollectionSectionsApiInterface::class)->previewDeletion($this->collection, $section)->revision]),
             cookies: $this->actingAs(FunctionalUserFactory::createSupervisor())
         );
 

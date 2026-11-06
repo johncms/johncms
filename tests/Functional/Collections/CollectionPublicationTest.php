@@ -6,18 +6,21 @@ namespace Tests\Functional\Collections;
 
 use DateTimeImmutable;
 use DateTimeZone;
+use Illuminate\Database\Capsule\Manager;
+use Johncms\Database\Migrations\PendingMigrations;
 use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsPublicApiInterface;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
 use Johncms\Modules\Collections\Application\Services\CollectionCodeCacheInterface;
 use Johncms\Modules\Collections\Application\Services\CollectionsPermissions;
 use Johncms\Modules\Collections\Application\Sitemap\CollectionsUrlsProvider;
+use Johncms\Modules\Collections\Domain\Enums\FilterOperator;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\Collections\Domain\Query\FieldFilterDTO;
-use Johncms\Modules\Collections\Domain\Enums\FilterOperator;
+use LogicException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\Functional\FunctionalTestCase;
 use Tests\Support\Fixture;
@@ -58,7 +61,7 @@ final class CollectionPublicationTest extends FunctionalTestCase
             'expired' => ContentCollectionItem::query()->where('id', $id)->update(['active_to' => $now->modify('-1 day')->format('Y-m-d H:i:s')]),
             'foreign parent' => ContentCollectionSection::query()->where('id', $top)->update(['parent' => $this->foreignSection()]),
             'cycle' => ContentCollectionSection::query()->where('id', $top)->update(['parent' => $child]),
-            default => throw new \LogicException('Unknown publication test case.'),
+            default => throw new LogicException('Unknown publication test case.'),
         };
         $query = new ContentCollectionItemQuery(collectionId: $this->collection, onlyActive: false);
         self::assertSame([], $this->public->getItems($query));
@@ -104,10 +107,10 @@ final class CollectionPublicationTest extends FunctionalTestCase
 
     public function testPendingMigrationsAnswerNotFoundWithoutAskingTheSchema(): void
     {
-        $pending = $this->container()->get(\Johncms\Database\Migrations\PendingMigrations::class);
-        \Illuminate\Database\Capsule\Manager::table('migrations')->where('source', 'collections')->orderBy('id')->limit(1)->delete();
+        $pending = $this->container()->get(PendingMigrations::class);
+        Manager::table('migrations')->where('source', 'collections')->orderBy('id')->limit(1)->delete();
         $pending->forget();
-        $connection = \Illuminate\Database\Capsule\Manager::connection();
+        $connection = Manager::connection();
         $connection->flushQueryLog();
         $connection->enableQueryLog();
         try {

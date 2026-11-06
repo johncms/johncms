@@ -9,6 +9,7 @@ use Johncms\Modules\Collections\Application\Api\CollectionLookupApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsImportApiInterface;
 use Johncms\Modules\News\Domain\Repository\NewsLegacyStorageRepositoryInterface;
 use Johncms\Updates\SystemOperationContext;
+use LogicException;
 use Psr\Log\LoggerInterface;
 
 final readonly class NewsStorageUpdater
@@ -48,7 +49,7 @@ final readonly class NewsStorageUpdater
         }
         $this->legacy->removeOrphanDiscussions();
         $collection = $this->lookup->findDeclared(NewsCollectionDeclaration::OWNER, NewsCollectionDeclaration::KEY)
-            ?? throw new \LogicException('Synchronize the news declaration before updating storage.');
+            ?? throw new LogicException('Synchronize the news declaration before updating storage.');
         while (($ids = $this->legacy->pendingFiles()) !== []) {
             foreach ($ids as $id) {
                 $this->files->cleanup([$id], $collection->id);

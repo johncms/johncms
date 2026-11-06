@@ -4,21 +4,40 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Collections;
 
-use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
+use Dom\HTMLDocument;
+use Illuminate\Database\Capsule\Manager;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionsUserApi;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemPatchDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionAccessDeniedException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
+use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
+use Johncms\Modules\Collections\Application\Services\CollectionTagSuggestions;
+use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase;
+use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionItemWriteAccessUseCase;
+use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionRelationAccessUseCase;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
+use Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction;
+use RuntimeException;
 use Tests\Functional\FunctionalTestCase;
+use Tests\Support\CollectionItemWriterFactory;
 use Tests\Support\Fixture;
 use Tests\Support\FunctionalUserFactory;
+use Tests\Support\RecordingCollectionChangeHandler;
 
 final class CollectionRelationFieldTest extends FunctionalTestCase
 {
@@ -159,14 +178,14 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
         self::assertStringContainsString('Unsaved source', $html);
         self::assertStringContainsString('Unsaved body', $html);
         self::assertStringContainsString('Needle &lt;b&gt;target&lt;/b&gt;', $html);
-        self::assertSame((string) $target, \Dom\HTMLDocument::createFromString($html, LIBXML_NOERROR)->querySelector('select[name="field_related"] option[selected]')->getAttribute('value'));
-        self::assertSame(32, \Illuminate\Database\Capsule\Manager::table('collection_items')->count());
+        self::assertSame((string) $target, HTMLDocument::createFromString($html, LIBXML_NOERROR)->querySelector('select[name="field_related"] option[selected]')->getAttribute('value'));
+        self::assertSame(32, Manager::table('collection_items')->count());
     }
 
     public function testTargetPermissionsProtectSearchFormsAndForgedWrites(): void
     {
-        \Illuminate\Database\Capsule\Manager::table('collections')->where('id', $this->source)->update(['settings' => json_encode(['_content_permission' => 'news.manage'])]);
-        \Illuminate\Database\Capsule\Manager::table('collections')->where('id', $this->target)->update(['settings' => json_encode(['_content_permission' => 'forum.manage'])]);
+        Manager::table('collections')->where('id', $this->source)->update(['settings' => json_encode(['_content_permission' => 'news.manage'])]);
+        Manager::table('collections')->where('id', $this->target)->update(['settings' => json_encode(['_content_permission' => 'forum.manage'])]);
         $this->field($this->target);
         $target = $this->api->addItem(new CollectionItemFormDTO($this->target, null, 'secret', 'Secret target title', true, null, null, 100, null, null, []));
         $editor = FunctionalUserFactory::createWithPermissions(['news.manage']);
@@ -176,7 +195,7 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
         self::assertStringNotContainsString('Secret target title', (string) $response->getContent());
         self::assertSame(403, $this->handleRequest($base . '/relations/related', cookies: $this->actingAs($editor))->getStatusCode());
         self::assertSame(403, $this->postForm($base . '/items', ['name' => 'Forged', 'sort' => '100', 'field_related' => (string) $target], $editor)->getStatusCode());
-        self::assertSame(1, \Illuminate\Database\Capsule\Manager::table('collection_items')->count());
+        self::assertSame(1, Manager::table('collection_items')->count());
         $permitted = FunctionalUserFactory::createWithPermissions(['news.manage', 'forum.manage']);
         self::assertSame(200, $this->handleRequest($base . '/relations/related', cookies: $this->actingAs($permitted))->getStatusCode());
         self::assertSame(302, $this->postForm($base . '/items', ['name' => 'Authorized', 'sort' => '100', 'field_related' => (string) $target], $permitted)->getStatusCode());
@@ -184,8 +203,8 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
 
     public function testEditorSavesARecordWhoseRelationTheyCannotOpenButCannotPointItElsewhere(): void
     {
-        \Illuminate\Database\Capsule\Manager::table('collections')->where('id', $this->source)->update(['settings' => json_encode(['_content_permission' => 'news.manage'])]);
-        \Illuminate\Database\Capsule\Manager::table('collections')->where('id', $this->target)->update(['settings' => json_encode(['_content_permission' => 'forum.manage'])]);
+        Manager::table('collections')->where('id', $this->source)->update(['settings' => json_encode(['_content_permission' => 'news.manage'])]);
+        Manager::table('collections')->where('id', $this->target)->update(['settings' => json_encode(['_content_permission' => 'forum.manage'])]);
         $this->field($this->target);
         $linked = $this->api->addItem($this->form($this->target, 'linked'));
         $other = $this->api->addItem($this->form($this->target, 'other'));
@@ -204,20 +223,20 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
         $target = $this->api->addItem($this->form($this->target, 'target'));
         $this->field(target: $this->target, settings: ['default' => (string) $target]);
         $source = $this->api->addItem($this->form($this->source, 'source', (string) $target));
-        $access = $this->createStub(\Johncms\Auth\Authorization\AccessCheckerInterface::class);
+        $access = $this->createStub(AccessCheckerInterface::class);
         // A source-specific permission is enough for editing the source, but not its target.
-        \Illuminate\Database\Capsule\Manager::table('collections')->where('id', $this->source)->update(['settings' => json_encode(['_content_permission' => 'news.manage'])]);
+        Manager::table('collections')->where('id', $this->source)->update(['settings' => json_encode(['_content_permission' => 'news.manage'])]);
         $access->method('allows')->willReturnCallback(static fn (string $permission): bool => $permission === 'news.manage');
         $this->handleRequest('/admin/collections/' . $this->source . '/items', cookies: $this->actingAs(FunctionalUserFactory::createWithPermissions(['news.manage'])));
-        $guard = new \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase($access, $this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface::class));
-        $api = new \Johncms\Modules\Collections\Application\Api\CollectionsUserApi(
-            $guard, $this->api, $this->container()->get(CollectionSectionsApiInterface::class), $this->container()->get(\Johncms\Auth\CurrentUser::class),
-            $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionTagSuggestions::class),
-            new \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionRelationAccessUseCase($this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface::class), $guard, $this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface::class)),
-            $this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface::class),
-            new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction(),
-            new \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionItemWriteAccessUseCase($guard, $this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface::class)),
-            $this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface::class)
+        $guard = new EnsureCollectionContentAccessUseCase($access, $this->container()->get(ContentCollectionRepositoryInterface::class));
+        $api = new CollectionsUserApi(
+            $guard, $this->api, $this->container()->get(CollectionSectionsApiInterface::class), $this->container()->get(CurrentUser::class),
+            $this->container()->get(CollectionTagSuggestions::class),
+            new EnsureCollectionRelationAccessUseCase($this->container()->get(ContentCollectionFieldRepositoryInterface::class), $guard, $this->container()->get(ContentCollectionItemRepositoryInterface::class)),
+            $this->container()->get(ContentCollectionRepositoryInterface::class),
+            new CollectionTransaction(),
+            new EnsureCollectionItemWriteAccessUseCase($guard, $this->container()->get(ContentCollectionItemRepositoryInterface::class)),
+            $this->container()->get(ContentCollectionSectionRepositoryInterface::class)
         );
         $other = $this->api->addItem($this->form($this->target, 'other'));
         foreach ([
@@ -228,7 +247,7 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
             try {
                 $write();
                 self::fail('The user facade must check the target of every new reference, defaults included.');
-            } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionAccessDeniedException) {
+            } catch (CollectionAccessDeniedException) {
                 self::assertSame($target, $this->api->getItem($source)->values['related']);
             }
         }
@@ -246,27 +265,27 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
         $second = $this->api->addItem($this->form($this->target, 'second'));
         $source = $this->api->addItem(new CollectionItemFormDTO($this->source, null, 'source', 'Source', true, null, null, 100, null, null, []));
         $this->api->patchItem($source, new CollectionItemPatchDTO(values: ['many' => [(string) $second, (string) $first, (string) $second]]));
-        \Illuminate\Database\Capsule\Manager::table('collection_items')->where('id', $source)->update(['updated_at' => '2000-01-01 00:00:00']);
-        $handler = new \Tests\Support\RecordingCollectionChangeHandler();
-        $changes = new \Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher(handlers: [$handler], transaction: new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction());
-        $deleter = \Tests\Support\CollectionItemWriterFactory::itemDeleter($changes);
+        Manager::table('collection_items')->where('id', $source)->update(['updated_at' => '2000-01-01 00:00:00']);
+        $handler = new RecordingCollectionChangeHandler();
+        $changes = new CollectionChangeDispatcher(handlers: [$handler], transaction: new CollectionTransaction());
+        $deleter = CollectionItemWriterFactory::itemDeleter($changes);
         $handler->failWithin = true;
         try {
             $deleter->execute($first);
             self::fail('A source handler failure must roll back all relation cleanup.');
-        } catch (\RuntimeException $exception) {
+        } catch (RuntimeException $exception) {
             self::assertSame('Required collection handler failed.', $exception->getMessage());
         }
         self::assertNotNull($this->api->getItem($first));
         self::assertSame([$second, $first, $second], $this->api->getItem($source)->values['many']);
-        self::assertSame('2000-01-01 00:00:00', \Illuminate\Database\Capsule\Manager::table('collection_items')->where('id', $source)->value('updated_at'));
+        self::assertSame('2000-01-01 00:00:00', Manager::table('collection_items')->where('id', $source)->value('updated_at'));
         $handler->failWithin = false;
         $handler->within = [];
         $deleter->execute($first);
         self::assertSame([$second, $second], $this->api->getItem($source)->values['many']);
         self::assertNull($this->api->getItem($first));
         self::assertSame([['saved', $source], ['deleted', $first]], array_map(static fn ($change): array => [$change->action, $change->id], $handler->within));
-        self::assertNotSame('2000-01-01 00:00:00', \Illuminate\Database\Capsule\Manager::table('collection_items')->where('id', $source)->value('updated_at'));
+        self::assertNotSame('2000-01-01 00:00:00', Manager::table('collection_items')->where('id', $source)->value('updated_at'));
     }
 
     public function testClearNeedsFreshHttpConfirmationAndCountsContainNoPrivateNames(): void
@@ -281,7 +300,7 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
         $url = '/admin/collections/' . $this->target . '/items/' . $target . '/delete';
         $response = $this->handleRequest($url, cookies: $this->actingAs($user));
         $html = (string) $response->getContent();
-        $dialog = \Dom\HTMLDocument::createFromString($html, LIBXML_NOERROR)->querySelector('form[action="' . $url . '"]');
+        $dialog = HTMLDocument::createFromString($html, LIBXML_NOERROR)->querySelector('form[action="' . $url . '"]');
         self::assertStringNotContainsString('private-source', $dialog->textContent);
         self::assertStringContainsString($impact->revision, $html);
         self::assertSame(200, $this->postForm($url, [], $user)->getStatusCode());
@@ -362,7 +381,7 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
         $this->field(target: $this->target, settings: ['on_delete' => 'clear']);
         $target = $this->api->addItem($this->form($this->target, 'target'));
         $source = $this->api->addItem($this->form($this->source, 'source', (string) $target));
-        \Illuminate\Database\Capsule\Manager::table('collections')->where('id', $this->source)->update(['owner_module' => 'missing/module']);
+        Manager::table('collections')->where('id', $this->source)->update(['owner_module' => 'missing/module']);
         try {
             $this->api->deleteItem($target);
             self::fail('Unavailable owners must not lose their required lifecycle hooks.');

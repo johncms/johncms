@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\DTO;
 
+use InvalidArgumentException;
+
 final readonly class CollectionDeclarationDTO
 {
     /**
@@ -22,16 +24,16 @@ final readonly class CollectionDeclarationDTO
             ! preg_match('/^[a-z0-9_.-]{1,255}$/D', $key) || ! preg_match('/^(?!\.{1,2}$)[\w.+-]{1,255}$/D', $code)
             || ! preg_match('/^[a-z][a-z0-9_.-]+$/D', $contentPermission)
         ) {
-            throw new \InvalidArgumentException('Invalid collection identity or content permission.');
+            throw new InvalidArgumentException('Invalid collection identity or content permission.');
         }
         $codes = $roles = $sources = [];
         foreach ($fields as $field) {
             if (! $field instanceof CollectionFieldDeclarationDTO || isset($codes[$field->code]) || ($field->role !== null && isset($roles[$field->role]))) {
-                throw new \InvalidArgumentException('Collection declarations require unique field codes and roles.');
+                throw new InvalidArgumentException('Collection declarations require unique field codes and roles.');
             }
             if ($field->renamedFrom !== null) {
                 if ($field->renamedFrom === $field->code || isset($sources[$field->renamedFrom])) {
-                    throw new \InvalidArgumentException('Each renamed field requires a distinct old code.');
+                    throw new InvalidArgumentException('Each renamed field requires a distinct old code.');
                 }
                 $sources[$field->renamedFrom] = true;
             }

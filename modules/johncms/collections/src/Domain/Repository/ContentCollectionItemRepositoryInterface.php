@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Domain\Repository;
 
+use DateTimeImmutable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
@@ -56,7 +57,7 @@ interface ContentCollectionItemRepositoryInterface
      *
      * @return iterable<ContentCollectionItem>
      */
-    public function getVisibleForSitemap(int $collectionId, ?\DateTimeImmutable $at = null): iterable;
+    public function getVisibleForSitemap(int $collectionId, ?DateTimeImmutable $at = null): iterable;
 
     /**
      * @param array<string, mixed> $attributes

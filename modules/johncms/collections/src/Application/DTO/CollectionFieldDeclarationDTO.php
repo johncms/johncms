@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\DTO;
 
+use InvalidArgumentException;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
 
 final readonly class CollectionFieldDeclarationDTO
@@ -23,17 +24,17 @@ final readonly class CollectionFieldDeclarationDTO
     ) {
         foreach ([$code, ...($renamedFrom !== null ? [$renamedFrom] : [])] as $value) {
             if (! preg_match('/^[a-z0-9_-]{1,255}$/D', $value)) {
-                throw new \InvalidArgumentException('Invalid declared field code.');
+                throw new InvalidArgumentException('Invalid declared field code.');
             }
         }
         if ($role !== null && ! preg_match('/^[a-z0-9_]{1,255}$/D', $role)) {
-            throw new \InvalidArgumentException('Invalid field role.');
+            throw new InvalidArgumentException('Invalid field role.');
         }
         if ($sort < -2147483648 || $sort > 2147483647) {
-            throw new \InvalidArgumentException('Declared field sorting must fit a signed 32-bit integer.');
+            throw new InvalidArgumentException('Declared field sorting must fit a signed 32-bit integer.');
         }
         if ($role === 'tags' && ($type !== FieldType::String_ || ! $multiple)) {
-            throw new \InvalidArgumentException('The tags role requires a multiple string field.');
+            throw new InvalidArgumentException('The tags role requires a multiple string field.');
         }
         json_encode($settings, JSON_THROW_ON_ERROR);
     }

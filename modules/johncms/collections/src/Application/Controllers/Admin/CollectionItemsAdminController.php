@@ -5,28 +5,49 @@ declare(strict_types=1);
 namespace Johncms\Modules\Collections\Application\Controllers\Admin;
 
 use Illuminate\Database\Eloquent\Collection;
-use Johncms\Modules\Collections\Domain\Exceptions\CollectionWriteConflictException;
-use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
+use InvalidArgumentException;
+use Johncms\Files\FileStoreException;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
+use Johncms\Http\UploadLimits;
+use Johncms\Http\UploadedFileMapper;
+use Johncms\Http\View\ViewResponse;
+use Johncms\Image\EditorImageUploadException;
+use Johncms\Modules\Collections\Application\Api\CollectionBulkApi;
+use Johncms\Modules\Collections\Application\Api\CollectionsUserApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionAccessDeniedException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemCodeAlreadyExistsException;
-use Johncms\Modules\Collections\Application\UseCases\ListCollectionItemsUseCase;
-use Johncms\Modules\Collections\Domain\Enums\FieldType;
-use Johncms\Modules\Collections\Domain\Models\ContentCollection;
-use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
-use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
-use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
-use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
+use Johncms\Modules\Collections\Application\Services\CollectionFieldUpload;
+use Johncms\Modules\Collections\Application\Services\CollectionFileChoices;
+use Johncms\Modules\Collections\Application\Services\CollectionFilePolicy;
+use Johncms\Modules\Collections\Application\Services\CollectionFormLayout;
+use Johncms\Modules\Collections\Application\Services\CollectionItemFiles;
+use Johncms\Modules\Collections\Application\Services\CollectionListSettings;
+use Johncms\Modules\Collections\Application\Services\CollectionRelationChoices;
+use Johncms\Modules\Collections\Application\Services\CollectionRepeatedValues;
 use Johncms\Modules\Collections\Application\Services\CollectionWorkspaceMapper;
 use Johncms\Modules\Collections\Application\Services\ItemListControlsMapper;
 use Johncms\Modules\Collections\Application\Services\ItemListFilterMapper;
 use Johncms\Modules\Collections\Application\Services\ItemListRowMapper;
+use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase;
+use Johncms\Modules\Collections\Application\UseCases\ListCollectionItemsUseCase;
+use Johncms\Modules\Collections\Domain\Enums\FieldType;
+use Johncms\Modules\Collections\Domain\Exceptions\CollectionWriteConflictException;
+use Johncms\Modules\Collections\Domain\Models\ContentCollection;
+use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
+use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Services\CollectionTextNormalizer;
 use Johncms\NavChain;
-use Johncms\Http\Request;
-use Johncms\Http\View\ViewResponse;
-use Johncms\Http\Session;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final readonly class CollectionItemsAdminController
 {
@@ -37,23 +58,23 @@ final readonly class CollectionItemsAdminController
         private ContentCollectionFieldRepositoryInterface $fieldRepository,
         private ContentCollectionItemRepositoryInterface $itemRepository,
         private ListCollectionItemsUseCase $listItems,
-        private \Johncms\Modules\Collections\Application\Api\CollectionsUserApiInterface $userApi,
-        private \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase $access,
+        private CollectionsUserApiInterface $userApi,
+        private EnsureCollectionContentAccessUseCase $access,
         private Session $session,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
         private ItemListFilterMapper $filterMapper,
         private ItemListControlsMapper $controlsMapper,
         private ItemListRowMapper $rowMapper,
-        private \Johncms\Modules\Collections\Application\Services\CollectionItemFiles $files,
-        private \Johncms\Modules\Collections\Application\Services\CollectionRelationChoices $relationChoices,
-        private \Johncms\Modules\Collections\Application\Services\CollectionFileChoices $fileChoices,
-        private \Johncms\Modules\Collections\Application\Services\CollectionFieldUpload $fieldUploads,
-        private \Johncms\Http\UploadedFileMapper $uploadMapper,
-        private \Johncms\Http\UploadLimits $uploadLimits,
-        private \Johncms\Modules\Collections\Application\Services\CollectionListSettings $listing = new \Johncms\Modules\Collections\Application\Services\CollectionListSettings(),
-        private \Johncms\Modules\Collections\Application\Services\CollectionFormLayout $layout = new \Johncms\Modules\Collections\Application\Services\CollectionFormLayout(),
-        private \Johncms\Modules\Collections\Application\Services\CollectionRepeatedValues $repeated = new \Johncms\Modules\Collections\Application\Services\CollectionRepeatedValues(),
+        private CollectionItemFiles $files,
+        private CollectionRelationChoices $relationChoices,
+        private CollectionFileChoices $fileChoices,
+        private CollectionFieldUpload $fieldUploads,
+        private UploadedFileMapper $uploadMapper,
+        private UploadLimits $uploadLimits,
+        private CollectionListSettings $listing = new CollectionListSettings(),
+        private CollectionFormLayout $layout = new CollectionFormLayout(),
+        private CollectionRepeatedValues $repeated = new CollectionRepeatedValues(),
     ) {
     }
 
@@ -79,7 +100,7 @@ final readonly class CollectionItemsAdminController
         $items = $this->listItems->getPage($collection_id, $filter, $tree, $pagination->getPerPage(), $pagination->getOffset());
 
         $bulkActions = [];
-        foreach (\Johncms\Modules\Collections\Application\Api\CollectionBulkApi::actions() as $action => $label) {
+        foreach (CollectionBulkApi::actions() as $action => $label) {
             $allowed = $action === 'delete' ? $this->access->allowsAction($collection, 'delete') : $this->access->allowsAction($collection, 'edit');
             if (in_array($action, ['publish', 'hide'], true)) {
                 $allowed = $allowed && $this->access->allowsAction($collection, 'publish');
@@ -201,11 +222,11 @@ final readonly class CollectionItemsAdminController
             }
         } catch (CollectionItemFormException $exception) {
             return $this->renderFormWithFields($collection, $id, $fields, $exception->errors);
-        } catch (\Johncms\Image\EditorImageUploadException $exception) {
+        } catch (EditorImageUploadException $exception) {
             return $this->renderFormWithFields($collection, $id, $fields, ['_form' => [$exception->getMessage()]]);
-        } catch (\Johncms\Files\FileStoreException) {
+        } catch (FileStoreException) {
             return $this->renderFormWithFields($collection, $id, $fields, ['_form' => [d__('system', 'Error uploading file')]]);
-        } catch (\InvalidArgumentException) {
+        } catch (InvalidArgumentException) {
             return $this->renderFormWithFields($collection, $id, $fields, ['_form' => [d__('system', 'Wrong data')]]);
         }
         if ($request->hasBody('relation_search')) {
@@ -213,7 +234,7 @@ final readonly class CollectionItemsAdminController
             try {
                 $this->relationChoices->search($collection_id, $code, $fields['relation_queries'][$code] ?? '');
                 return $this->renderFormWithFields($collection, $id, $fields, []);
-            } catch (\InvalidArgumentException) {
+            } catch (InvalidArgumentException) {
                 return $this->renderFormWithFields($collection, $id, $fields, ['_form' => [d__('system', 'Wrong data')]]);
             }
         }
@@ -222,12 +243,12 @@ final readonly class CollectionItemsAdminController
                 [$key, $operation, $index] = $this->repeated->action($request->body('repeat_action'));
                 $field = $fieldDefs->first(static fn ($field): bool => 'field_' . $field->code === $key && $field->multiple && $field->role !== 'tags');
                 if ($field === null || ! is_array($fields['values'][$field->code])) {
-                    throw new \InvalidArgumentException(d__('collections', 'Choose an existing value and a valid action.'));
+                    throw new InvalidArgumentException(d__('collections', 'Choose an existing value and a valid action.'));
                 }
                 $fields['values'][$field->code] = $this->repeated->apply($fields['values'][$field->code], $operation, $index, $field->settings['max_values'] ?? 1000);
                 $fields['repeat_message'] = d__('collections', 'Values changed. Save the form to apply them.');
                 return $this->renderFormWithFields($collection, $id, $fields, []);
-            } catch (\InvalidArgumentException $exception) {
+            } catch (InvalidArgumentException $exception) {
                 return $this->renderFormWithFields($collection, $id, $fields, ['_form' => [$exception->getMessage()]]);
             }
         }
@@ -305,7 +326,7 @@ final readonly class CollectionItemsAdminController
         if ($this->findOwnedItem($collection_id, $id) !== null) {
             try {
                 $this->userApi->deleteItem($collection_id, $id, $request->body('relation_revision', ''));
-            } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException $exception) {
+            } catch (CollectionDeletionException $exception) {
                 return $this->renderDeleteConfirm($request, $collection_id, $id, array_merge(...array_values($exception->errors)));
             } catch (CollectionItemFormException) {
                 return $this->wrongData($collection_id);
@@ -399,7 +420,7 @@ final readonly class CollectionItemsAdminController
     }
 
     /**
-     * @param Collection<int, \Johncms\Modules\Collections\Domain\Models\ContentCollectionField> $fields
+     * @param Collection<int, ContentCollectionField> $fields
      * @param array<string, mixed> $valueMap
      * @param array<string, string> $fileQueries
      * @param array<string, string> $relationQueries
@@ -411,7 +432,7 @@ final readonly class CollectionItemsAdminController
         foreach ($fields as $field) {
             $current = $valueMap[$field->code] ?? null;
             if ($field->role === 'tags' && is_array($current)) {
-                $current = array_map(static fn (string $value): string => \Johncms\Modules\Collections\Domain\Services\CollectionTextNormalizer::normalize($value), $current);
+                $current = array_map(static fn (string $value): string => CollectionTextNormalizer::normalize($value), $current);
             }
 
             if ($field->multiple) {
@@ -439,10 +460,10 @@ final readonly class CollectionItemsAdminController
             if ($field->type === FieldType::Relation) {
                 try {
                     $options = $this->relationChoices->search($field->collection_id, $field->code, $relationQueries[$field->code] ?? '', $field->multiple ? $entries : [$value]);
-                } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionAccessDeniedException) {
+                } catch (CollectionAccessDeniedException) {
                     $options = [];
                     $relationAvailable = false;
-                } catch (\InvalidArgumentException) {
+                } catch (InvalidArgumentException) {
                     $options = [];
                     $relationError = d__('system', 'Wrong data');
                 }
@@ -455,7 +476,7 @@ final readonly class CollectionItemsAdminController
                     $fileChoices = $this->fileChoices->search($field->collection_id, $field->code, $context, $fileQueries[$field->code] ?? '', $field->multiple ? $entries : [$value]);
                 } catch (CollectionItemFormException $exception) {
                     $fileError = implode(' ', array_merge(...array_values($exception->errors)));
-                } catch (\InvalidArgumentException) {
+                } catch (InvalidArgumentException) {
                     $fileError = d__('system', 'Wrong data');
                 }
             }
@@ -467,8 +488,8 @@ final readonly class CollectionItemsAdminController
                 'file_error' => $fileError,
                 'file_url' => '/admin/collections/' . $field->collection_id . '/files/' . $field->code . '?context=' . rawurlencode($context ?? ''),
                 'file_upload_url' => '/admin/collections/' . $field->collection_id . '/uploads?field=' . $field->code . '&context=' . rawurlencode($context ?? ''),
-                'file_accept' => implode(',', $field->settings['allowed_mime_types'] ?? array_keys(\Johncms\Modules\Collections\Application\Services\CollectionFilePolicy::TYPES)),
-                'max_file_bytes' => $field->settings['max_file_bytes'] ?? \Johncms\Modules\Collections\Application\Services\CollectionFilePolicy::DEFAULT_MAX_BYTES,
+                'file_accept' => implode(',', $field->settings['allowed_mime_types'] ?? array_keys(CollectionFilePolicy::TYPES)),
+                'max_file_bytes' => $field->settings['max_file_bytes'] ?? CollectionFilePolicy::DEFAULT_MAX_BYTES,
                 'relation_url' => '/admin/collections/' . $field->collection_id . '/relations/' . $field->code,
                 'relation_available' => $relationAvailable,
                 'relation_error' => $relationError,
@@ -517,7 +538,7 @@ final readonly class CollectionItemsAdminController
     }
 
     /**
-     * @param Collection<int, \Johncms\Modules\Collections\Domain\Models\ContentCollectionField> $fieldDefs
+     * @param Collection<int, ContentCollectionField> $fieldDefs
      * @return array<string, mixed>
      */
     private function fieldsFromRequest(Request $request, ContentCollection $collection, Collection $fieldDefs): array
@@ -603,7 +624,7 @@ final readonly class CollectionItemsAdminController
     }
 
     /** @param array<string, mixed> $fields
-     * @param Collection<int, \Johncms\Modules\Collections\Domain\Models\ContentCollectionField> $definitions
+     * @param Collection<int, ContentCollectionField> $definitions
      */
     private function processFileUploads(Request $request, int $collectionId, array &$fields, Collection $definitions): void
     {
@@ -611,7 +632,7 @@ final readonly class CollectionItemsAdminController
         $count = 0;
         foreach ($uploads as $rows) {
             if (is_array($rows)) {
-                $count += count(array_filter($rows, static fn ($file): bool => $file instanceof \Symfony\Component\HttpFoundation\File\UploadedFile));
+                $count += count(array_filter($rows, static fn ($file): bool => $file instanceof UploadedFile));
             }
         }
         $limit = $this->uploadLimits->maxFilesPerRequest();
@@ -621,21 +642,21 @@ final readonly class CollectionItemsAdminController
         }
         if ($request->hasBody('file_upload')) {
             [$code, $index] = $this->filePosition($request->body('file_upload'), $definitions, $fields);
-            if (! ($uploads[$code][$index] ?? null) instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
+            if (! ($uploads[$code][$index] ?? null) instanceof UploadedFile) {
                 throw new CollectionItemFormException(['values.' . $code => [d__('collections', 'Choose a file that was uploaded successfully.')]]);
             }
         }
         foreach ($uploads as $code => $rows) {
             if (! is_array($rows)) {
-                throw new \InvalidArgumentException('Submit file uploads as field and row arrays.');
+                throw new InvalidArgumentException('Submit file uploads as field and row arrays.');
             }
             foreach ($rows as $index => $upload) {
                 if ($upload === null) {
                     continue;
                 }
                 [$fieldCode, $position] = $this->filePosition($code . ':' . $index, $definitions, $fields);
-                if (! $upload instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
-                    throw new \InvalidArgumentException('Submit an uploaded file.');
+                if (! $upload instanceof UploadedFile) {
+                    throw new InvalidArgumentException('Submit an uploaded file.');
                 }
                 $file = $this->fieldUploads->upload($collectionId, $fieldCode, $fields['upload_context'] ?? '', $this->uploadMapper->fromUploadedFile($upload));
                 if (is_array($fields['values'][$fieldCode])) {
@@ -647,14 +668,14 @@ final readonly class CollectionItemsAdminController
         }
     }
 
-    /** @param Collection<int, \Johncms\Modules\Collections\Domain\Models\ContentCollectionField> $definitions
+    /** @param Collection<int, ContentCollectionField> $definitions
      * @param array<string, mixed> $fields
      * @return array{string, int}
      */
     private function filePosition(string $action, Collection $definitions, array $fields): array
     {
         if (! preg_match('/^([a-z0-9_-]+):([0-9]{1,4})$/D', $action, $match)) {
-            throw new \InvalidArgumentException('Choose a valid file row.');
+            throw new InvalidArgumentException('Choose a valid file row.');
         }
         $field = $definitions->first(static fn ($field): bool => $field->code === $match[1]);
         $index = (int) $match[2];
@@ -663,7 +684,7 @@ final readonly class CollectionItemsAdminController
             $field === null || $field->type !== FieldType::File || ($field->settings['file_storage'] ?? 'legacy') !== 'registry'
             || ($field->multiple ? (! is_array($value) || ! array_key_exists($index, $value)) : ($index !== 0 || ! is_string($value)))
         ) {
-            throw new \InvalidArgumentException('Choose an existing registered file field and row.');
+            throw new InvalidArgumentException('Choose an existing registered file field and row.');
         }
         return [$match[1], $index];
     }
@@ -690,7 +711,7 @@ final readonly class CollectionItemsAdminController
     }
 
     /**
-     * @param Collection<int, \Johncms\Modules\Collections\Domain\Models\ContentCollectionField> $fieldDefs
+     * @param Collection<int, ContentCollectionField> $fieldDefs
      * @return array<string, string|list<string>>
      */
     private function submittedValues(Request $request, Collection $fieldDefs): array

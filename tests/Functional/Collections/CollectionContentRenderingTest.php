@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Collections;
 
+use Dom\HTMLDocument;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemPatchDTO;
@@ -104,7 +105,7 @@ final class CollectionContentRenderingTest extends FunctionalTestCase
         self::assertSame(302, $response->getStatusCode());
         self::assertSame($values, $this->container()->get(CollectionsApiInterface::class)->getItem($this->item)->values['rich']);
         $html = (string) $this->handleRequest($base . '/' . $this->item . '/edit', cookies: $this->actingAs($user))->getContent();
-        self::assertSame(3, \Dom\HTMLDocument::createFromString($html, LIBXML_NOERROR)->querySelectorAll('[data-key="field_rich"] [data-repeat-rows] textarea')->length);
+        self::assertSame(3, HTMLDocument::createFromString($html, LIBXML_NOERROR)->querySelectorAll('[data-key="field_rich"] [data-repeat-rows] textarea')->length);
         self::assertGreaterThanOrEqual(5, substr_count($html, 'data-admin-editor')); 
     }
 

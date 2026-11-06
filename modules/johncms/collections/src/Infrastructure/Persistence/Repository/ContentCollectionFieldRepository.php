@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Collections\Infrastructure\Persistence\Repository;
 
 use Illuminate\Database\Eloquent\Collection;
+use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
+use Johncms\Modules\Collections\Domain\Models\ContentCollectionItemValue;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 
 final class ContentCollectionFieldRepository implements ContentCollectionFieldRepositoryInterface
@@ -54,13 +56,13 @@ final class ContentCollectionFieldRepository implements ContentCollectionFieldRe
     public function hasExternalRelationsToCollectionForUpdate(int $collectionId): bool
     {
         return ContentCollectionField::query()->where('collection_id', '!=', $collectionId)
-            ->where('type', \Johncms\Modules\Collections\Domain\Enums\FieldType::Relation->value)
+            ->where('type', FieldType::Relation->value)
             ->where('settings->target_collection_id', $collectionId)->orderBy('id')->lockForUpdate()->first(['id']) !== null;
     }
 
     public function getRelationsToCollection(int $collectionId, bool $forUpdate = false): Collection
     {
-        $query = ContentCollectionField::query()->where('type', \Johncms\Modules\Collections\Domain\Enums\FieldType::Relation->value)
+        $query = ContentCollectionField::query()->where('type', FieldType::Relation->value)
             ->where('settings->target_collection_id', $collectionId)->orderBy('id');
         if ($forUpdate) {
             $query->lockForUpdate();
@@ -70,12 +72,12 @@ final class ContentCollectionFieldRepository implements ContentCollectionFieldRe
 
     public function hasValues(int $id): bool
     {
-        return \Johncms\Modules\Collections\Domain\Models\ContentCollectionItemValue::query()->where('field_id', $id)->lockForUpdate()->first(['id']) !== null;
+        return ContentCollectionItemValue::query()->where('field_id', $id)->lockForUpdate()->first(['id']) !== null;
     }
 
     public function hasSelectValuesOutside(int $id, array $codes): bool
     {
-        $used = \Johncms\Modules\Collections\Domain\Models\ContentCollectionItemValue::query()->where('field_id', $id)->whereNotNull('value_string')
+        $used = ContentCollectionItemValue::query()->where('field_id', $id)->whereNotNull('value_string')
             ->lockForUpdate()->pluck('value_string')->all();
         return array_diff($used, $codes) !== [];
     }

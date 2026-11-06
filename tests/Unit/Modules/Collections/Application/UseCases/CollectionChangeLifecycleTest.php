@@ -4,23 +4,28 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Modules\Collections\Application\UseCases;
 
+use DateTimeImmutable;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Database\AfterCommitException;
 use Johncms\Database\PdoConnection;
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemHistoryDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemPatchDTO;
-use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
-use Johncms\Modules\Collections\Application\UseCases\SaveCollectionUseCase;
-use Johncms\Modules\Collections\Application\Services\CollectionCacheInvalidator;
-use Johncms\Modules\Collections\Application\Services\CollectionCodeCache;
+use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Application\Extension\CollectionChangeHandlerInterface;
+use Johncms\Modules\Collections\Application\Services\CollectionCacheInvalidator;
+use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
+use Johncms\Modules\Collections\Application\Services\CollectionCodeCache;
+use Johncms\Modules\Collections\Application\Services\ReservedCodeCheckerInterface;
+use Johncms\Modules\Collections\Application\UseCases\SaveCollectionUseCase;
 use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
 use Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionRepository;
 use Johncms\Updates\SystemOperationContext;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Tests\Support\BootsInMemoryDatabase;
 use Tests\Support\CollectionItemWriterFactory;
 use Tests\Support\Fixture;
@@ -108,7 +113,7 @@ final class CollectionChangeLifecycleTest extends TestCase
         try {
             CollectionItemWriterFactory::itemDeleter($changes)->execute($id);
             self::fail('The required handler failure must abort deletion.');
-        } catch (\RuntimeException $exception) {
+        } catch (RuntimeException $exception) {
             self::assertSame('Required collection handler failed.', $exception->getMessage());
         }
         self::assertNotNull(CollectionItemWriterFactory::api()->getItem($id));
@@ -124,11 +129,11 @@ final class CollectionChangeLifecycleTest extends TestCase
     {
         $context = new SystemOperationContext();
         $context->runTrusted(fn () => CollectionItemWriterFactory::create(context: $context, changes: $this->changes)->execute(id: null, dto: $this->form(), history: new CollectionItemHistoryDTO(
-            new \DateTimeImmutable('2001-01-01Z'), new \DateTimeImmutable('2002-01-01Z')
+            new DateTimeImmutable('2001-01-01Z'), new DateTimeImmutable('2002-01-01Z')
         )));
         $context->runTrusted(fn () => CollectionItemWriterFactory::sectionWriter($context, $this->changes)->execute(null,
-            new \Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO($this->collection, null, 'section', 'Section', null, true, 100),
-            new \DateTimeImmutable('2001-01-01Z'), new \DateTimeImmutable('2002-01-01Z')
+            new CollectionSectionFormDTO($this->collection, null, 'section', 'Section', null, true, 100),
+            new DateTimeImmutable('2001-01-01Z'), new DateTimeImmutable('2002-01-01Z')
         ));
         self::assertCount(2, $this->handler->within);
         self::assertTrue($this->handler->within[0]->imported);
@@ -141,7 +146,7 @@ final class CollectionChangeLifecycleTest extends TestCase
         $cache = InMemoryCache::create();
         $codes = new CollectionCodeCache($cache, new ContentCollectionRepository());
         self::assertSame(['blog' => $this->collection], $codes->map());
-        $checker = new class implements \Johncms\Modules\Collections\Application\Services\ReservedCodeCheckerInterface {
+        $checker = new class implements ReservedCodeCheckerInterface {
             public function isReserved(string $code): bool
             {
                 return false;
@@ -149,7 +154,7 @@ final class CollectionChangeLifecycleTest extends TestCase
         };
         $save = new SaveCollectionUseCase(new ContentCollectionRepository(), $codes, $checker, new CollectionTransaction());
         Capsule::connection()->beginTransaction();
-        $save->execute($this->collection, new \Johncms\Modules\Collections\Application\DTO\CollectionFormDTO('changed', 'Blog', null, true, true, 100, true, 20));
+        $save->execute($this->collection, new CollectionFormDTO('changed', 'Blog', null, true, true, 100, true, 20));
         self::assertSame(['changed' => $this->collection], $codes->map());
         Capsule::connection()->rollBack();
         self::assertSame(['blog' => $this->collection], $codes->map());

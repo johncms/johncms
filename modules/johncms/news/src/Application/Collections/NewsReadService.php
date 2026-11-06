@@ -6,27 +6,30 @@ namespace Johncms\Modules\News\Application\Collections;
 
 use DateTimeImmutable;
 use DateTimeZone;
+use InvalidArgumentException;
 use Johncms\Http\Session;
 use Johncms\Modules\Collections\Application\Api\CollectionLookupApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
-use Johncms\Modules\Collections\Application\Api\CollectionsPublicApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsPreviewApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionsPublicApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionRecordDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionDTO;
-use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
-use Johncms\Modules\Collections\Domain\Query\CollectionTextSearchDTO;
-use Johncms\Modules\Collections\Domain\Query\FieldFilterDTO;
-use Johncms\Modules\Collections\Domain\Query\OrderByDTO;
 use Johncms\Modules\Collections\Domain\Enums\FilterOperator;
 use Johncms\Modules\Collections\Domain\Enums\SortDirection;
-use Johncms\Modules\News\Application\DTO\NewsQueryDTO;
-use Johncms\Modules\News\Application\DTO\NewsPageDTO;
+use Johncms\Modules\Collections\Domain\Query\CollectionTextSearchDTO;
+use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
+use Johncms\Modules\Collections\Domain\Query\FieldFilterDTO;
+use Johncms\Modules\Collections\Domain\Query\OrderByDTO;
 use Johncms\Modules\News\Application\DTO\NewsArticleViewDTO;
+use Johncms\Modules\News\Application\DTO\NewsPageDTO;
+use Johncms\Modules\News\Application\DTO\NewsQueryDTO;
 use Johncms\Modules\News\Application\DTO\NewsSectionViewDTO;
 use Johncms\Modules\News\Application\Exceptions\NewsCollectionUnavailableException;
 use Johncms\Modules\News\Application\Exceptions\NewsItemNotFoundException;
 use Johncms\Modules\News\Domain\Repository\NewsConfigRepositoryInterface;
 use Johncms\Sitemap\SitemapUrlEntry;
+use Throwable;
 
 final readonly class NewsReadService implements NewsReadServiceInterface
 {
@@ -39,7 +42,7 @@ final readonly class NewsReadService implements NewsReadServiceInterface
         private NewsCollectionOwnerUrls $urls,
         private NewsConfigRepositoryInterface $settings,
         private Session $session,
-        private \Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface $schema,
+        private CollectionSchemaApiInterface $schema,
     ) {
     }
 
@@ -109,7 +112,7 @@ final readonly class NewsReadService implements NewsReadServiceInterface
         $collection = $this->collection();
         try {
             $section = $this->sections->resolvePath($collection->id, explode('/', $category));
-        } catch (\InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException $exception) {
             throw $this->notFound($exception);
         }
         return $section !== null ? ($this->section($section->id) ?? throw $this->notFound()) : throw $this->notFound();
@@ -246,7 +249,7 @@ final readonly class NewsReadService implements NewsReadServiceInterface
         return (new DateTimeImmutable('now', new DateTimeZone('UTC')))->modify('-' . $days . ' days');
     }
 
-    private function notFound(?\Throwable $previous = null): NewsItemNotFoundException
+    private function notFound(?Throwable $previous = null): NewsItemNotFoundException
     {
         return new NewsItemNotFoundException(message: d__('news', 'The requested article or section is not available.'), previous: $previous);
     }

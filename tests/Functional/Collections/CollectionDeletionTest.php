@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Tests\Functional\Collections;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException;
 use Johncms\Modules\Collections\Application\Services\CollectionCodeCacheInterface;
 use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
+use LogicException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\Functional\FunctionalTestCase;
 use Tests\Support\Fixture;
@@ -109,7 +110,7 @@ final class CollectionDeletionTest extends FunctionalTestCase
             'self' => $this->root,
             'descendant' => $this->child,
             'foreign' => $this->foreignSection(),
-            default => throw new \LogicException('Unknown destination test case.'),
+            default => throw new LogicException('Unknown destination test case.'),
         };
         try {
             $this->sections->deleteSection($this->collection, $this->root, SectionDeletionMode::MoveItems, $target);

@@ -4,21 +4,26 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Infrastructure\Persistence\Repository;
 
-use DateTimeInterface;
 use DateTimeImmutable;
+use DateTimeInterface;
 use DateTimeZone;
-use Johncms\Modules\Collections\Infrastructure\Persistence\Query\CollectionPublicationQuery;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Query\Expression;
+use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Modules\Collections\Domain\Enums\ItemStatus;
-use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
-use Johncms\Modules\Collections\Domain\Services\SectionTree;
+use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
+use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
+use Johncms\Modules\Collections\Domain\Query\CollectionTextSearchDTO;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Services\CollectionTextNormalizer;
+use Johncms\Modules\Collections\Domain\Services\SectionTree;
 use Johncms\Modules\Collections\Domain\ValueObjects\ItemListFilter;
+use Johncms\Modules\Collections\Infrastructure\Persistence\Query\CollectionPublicationQuery;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Query\ContentCollectionItemQueryCompiler;
 
 final class ContentCollectionItemRepository implements ContentCollectionItemRepositoryInterface
@@ -106,7 +111,7 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
         }
         $query = ContentCollectionItem::query()->where('id', $id);
         $this->publication->apply($query, (int) $collectionId, new DateTimeImmutable('now', new DateTimeZone('UTC')));
-        return $query->toBase()->update(['view_count' => new \Illuminate\Database\Query\Expression('COALESCE(view_count, 0) + 1')]) === 1;
+        return $query->toBase()->update(['view_count' => new Expression('COALESCE(view_count, 0) + 1')]) === 1;
     }
 
     public function create(array $attributes): ContentCollectionItem
@@ -213,14 +218,14 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
     {
         $builder = ContentCollectionItem::query()->where('collection_id', $collectionId);
 
-        $search = mb_substr(\Johncms\Modules\Collections\Domain\Services\CollectionTextNormalizer::normalize($filter->search), 0, 255);
+        $search = mb_substr(CollectionTextNormalizer::normalize($filter->search), 0, 255);
         if ($search !== '') {
-            $settings = \Johncms\Modules\Collections\Domain\Models\ContentCollection::query()->find($collectionId)->settings ?? [];
+            $settings = ContentCollection::query()->find($collectionId)->settings ?? [];
             $codes = is_array($settings['search_fields'] ?? null) ? $settings['search_fields'] : [];
             $definitions = $this->fieldRepository->getByCollection($collectionId)->keyBy('code')->all();
-            $types = [\Johncms\Modules\Collections\Domain\Enums\FieldType::String_, \Johncms\Modules\Collections\Domain\Enums\FieldType::Text, \Johncms\Modules\Collections\Domain\Enums\FieldType::Html];
+            $types = [FieldType::String_, FieldType::Text, FieldType::Html];
             $codes = array_values(array_filter($codes, static fn ($code): bool => is_string($code) && isset($definitions[$code]) && in_array($definitions[$code]->type, $types, true)));
-            $textSearch = new \Johncms\Modules\Collections\Domain\Query\CollectionTextSearchDTO($search, $codes);
+            $textSearch = new CollectionTextSearchDTO($search, $codes);
             $builder->where(function (Builder $query) use ($search, $textSearch): void {
                 $query->where(function (Builder $indexed) use ($textSearch): void {
                     $this->compiler->applySearch($indexed, $textSearch);

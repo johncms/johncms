@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Infrastructure\Persistence\Repository;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\Eloquent\Builder;
+use InvalidArgumentException;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
+use Johncms\Modules\Collections\Domain\Models\CollectionSearchDocument;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
-use Johncms\Modules\Collections\Domain\Models\CollectionSearchDocument;
 use Johncms\Modules\Collections\Domain\Repository\CollectionSearchRepositoryInterface;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Query\CollectionPublicationQuery;
 
@@ -48,12 +52,12 @@ final readonly class CollectionSearchRepository implements CollectionSearchRepos
     {
         $field = ContentCollectionField::query()->where('collection_id', $collectionId)->where('code', $fieldCode)->first();
         if ($field === null || $field->type !== FieldType::String_ || ! $field->multiple || $field->role !== 'tags') {
-            throw new \InvalidArgumentException('Tag suggestions require a multiple string field with the tags role.');
+            throw new InvalidArgumentException('Tag suggestions require a multiple string field with the tags role.');
         }
-        /** @var \Illuminate\Database\Eloquent\Builder<ContentCollectionItem> $items */
+        /** @var Builder<ContentCollectionItem> $items */
         $items = ContentCollectionItem::query()->select('collection_items.id')->where('collection_id', $collectionId);
         if ($published) {
-            $this->publication->apply($items, $collectionId, new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
+            $this->publication->apply($items, $collectionId, new DateTimeImmutable('now', new DateTimeZone('UTC')));
         }
         $like = str_replace(['!', '%', '_'], ['!!', '!%', '!_'], $prefix) . '%';
         return Capsule::connection()->table('collection_item_values')->where('field_id', $field->id)

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\DTO;
 
+use Johncms\Files\StoredFileDTO;
 use Twig\Markup;
 
 /**
@@ -12,7 +13,7 @@ use Twig\Markup;
 final readonly class PublicItemDetailDTO
 {
     /**
-     * @param list<array{label: string, values: list<string|Markup>, files?: list<\Johncms\Files\StoredFileDTO>}> $values custom field values in field order
+     * @param list<array{label: string, values: list<string|Markup>, files?: list<StoredFileDTO>}> $values custom field values in field order
      */
     public function __construct(
         public string $name,

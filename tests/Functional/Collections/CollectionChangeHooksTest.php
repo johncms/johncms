@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Collections;
 
-use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemPatchDTO;
-use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException;
+use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
 use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
 use Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction;
 use Johncms\Modules\ModuleRegistry;
-use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Tests\Functional\FunctionalTestCase;
 use Tests\Support\Fixture;
 use Tests\Support\FunctionalUserFactory;
@@ -28,7 +29,7 @@ final class CollectionChangeHooksTest extends FunctionalTestCase
     {
         $handler = new RecordingCollectionChangeHandler();
         $container = $this->container();
-        self::assertInstanceOf(\Symfony\Component\DependencyInjection\ContainerBuilder::class, $container);
+        self::assertInstanceOf(ContainerBuilder::class, $container);
         $container->getDefinition(CollectionChangeDispatcher::class)->setSynthetic(true);
         $container->set(CollectionChangeDispatcher::class, new CollectionChangeDispatcher([$handler], $this->container()->get(ModuleRegistry::class), new CollectionTransaction()));
         $collection = Fixture::insert('collections', ['code' => 'hooks', 'name' => 'Hooks']);

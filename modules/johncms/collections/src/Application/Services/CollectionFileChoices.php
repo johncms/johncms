@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Services;
 
+use InvalidArgumentException;
 use Johncms\Auth\CurrentUser;
 use Johncms\Files\FileStore;
 use Johncms\Files\FileStoreException;
@@ -35,7 +36,7 @@ final readonly class CollectionFileChoices
         $this->access->execute($collectionId);
         $field = $this->fields->findByCode($collectionId, $code);
         if ($field === null || $field->type !== FieldType::File || ($field->settings['file_storage'] ?? 'legacy') !== 'registry' || mb_strlen($term) > 255 || count($selected) > 1000) {
-            throw new \InvalidArgumentException('Choose a registered file field, a search term up to 255 characters and at most 1000 selected values.');
+            throw new InvalidArgumentException('Choose a registered file field, a search term up to 255 characters and at most 1000 selected values.');
         }
         $term = trim($term);
         $ids = $this->links->availableForCollection($collectionId, false);

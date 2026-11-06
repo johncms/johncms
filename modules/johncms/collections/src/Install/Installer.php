@@ -7,18 +7,20 @@ namespace Johncms\Modules\Collections\Install;
 use Gettext\TranslatorFunctions;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Support\Str;
+use Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer;
+use Johncms\Modules\Installer as ModuleInstaller;
 use Johncms\System\i18n\Translator;
 
-class Installer extends \Johncms\Modules\Installer
+class Installer extends ModuleInstaller
 {
     public function install(): void
     {
-        di(\Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer::class)->rebuildAll();
+        di(CollectionSearchIndexer::class)->rebuildAll();
     }
 
     public function update(string $from, string $to): void
     {
-        di(\Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer::class)->rebuildAll();
+        di(CollectionSearchIndexer::class)->rebuildAll();
     }
 
     public function uninstall(): void

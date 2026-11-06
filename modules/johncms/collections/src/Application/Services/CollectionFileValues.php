@@ -9,12 +9,14 @@ use Johncms\Files\FileStore;
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
 use Johncms\Modules\Collections\Application\Extension\CollectionChangeHandlerInterface;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
 use Johncms\Modules\Collections\Domain\Repository\CollectionFileRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemValueRepositoryInterface;
 use Johncms\Updates\SystemOperationContext;
 
 /** File values and schema defaults have references separate from ordinary text attachments. */
@@ -23,7 +25,7 @@ final readonly class CollectionFileValues implements CollectionChangeHandlerInte
     public function __construct(
         private CollectionFileRepositoryInterface $links,
         private ContentCollectionFieldRepositoryInterface $fields,
-        private \Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemValueRepositoryInterface $values,
+        private ContentCollectionItemValueRepositoryInterface $values,
         private CollectionTransactionInterface $transaction,
         private CollectionItemFiles $attachments,
         private FileStore $files,
@@ -83,7 +85,7 @@ final readonly class CollectionFileValues implements CollectionChangeHandlerInte
                     $this->transaction->afterCommit(fn () => $this->attachments->removeUnreferenced($old));
                 }
             } catch (CollectionItemFormException $exception) {
-                throw new \Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException(implode(" ", array_merge(...array_values($exception->errors))), 0, $exception);
+                throw new CollectionSchemaException(implode(" ", array_merge(...array_values($exception->errors))), 0, $exception);
             }
             $removed = $this->links->replaceValueLinks($field->id, null, $ids);
         }
