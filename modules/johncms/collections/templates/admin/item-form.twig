@@ -110,12 +110,12 @@
                     </div>
                     <div>
                         <label class="form-label" for="active_from">{{ __('Active from') }}</label>
-                        <input type="datetime-local" name="active_from" class="form-control{{ field_errors.active_from|default([]) ? ' is-invalid' : '' }}" id="active_from" value="{{ fields.active_from }}">
+                        <input type="datetime-local" step="1" name="active_from" class="form-control{{ field_errors.active_from|default([]) ? ' is-invalid' : '' }}" id="active_from" value="{{ fields.active_from }}">
                             {% include '@theme/components/field-errors.twig' with {errors: field_errors.active_from|default([])} only %}
                     </div>
                     <div>
                         <label class="form-label" for="active_to">{{ __('Active to') }}</label>
-                        <input type="datetime-local" name="active_to" class="form-control{{ field_errors.active_to|default([]) ? ' is-invalid' : '' }}" id="active_to" value="{{ fields.active_to }}">
+                        <input type="datetime-local" step="1" name="active_to" class="form-control{{ field_errors.active_to|default([]) ? ' is-invalid' : '' }}" id="active_to" value="{{ fields.active_to }}">
                             {% include '@theme/components/field-errors.twig' with {errors: field_errors.active_to|default([])} only %}
                         <div class="form-text">{{ __('Leave the dates empty to show the item from the moment it is saved and without an end.') }}</div>
                     </div>

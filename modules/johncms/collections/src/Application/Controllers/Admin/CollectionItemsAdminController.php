@@ -576,8 +576,8 @@ final readonly class CollectionItemsAdminController
             'name'         => $item->name,
             'active'       => $item->active ? 1 : 0,
             // The format of an <input type="datetime-local">.
-            'active_from'  => $item->active_from?->format('Y-m-d\TH:i') ?? '',
-            'active_to'    => $item->active_to?->format('Y-m-d\TH:i') ?? '',
+            'active_from'  => $item->active_from?->format('Y-m-d\TH:i:s') ?? '',
+            'active_to'    => $item->active_to?->format('Y-m-d\TH:i:s') ?? '',
             'sort'         => $item->sort,
             'preview_text' => (string) $item->preview_text,
             'detail_text'  => (string) $item->detail_text,

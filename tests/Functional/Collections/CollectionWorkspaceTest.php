@@ -137,6 +137,35 @@ final class CollectionWorkspaceTest extends FunctionalTestCase
         self::assertSame($before, Capsule::table('collection_fields')->where('collection_id', $collection->id)->orderBy('id')->get()->toJson());
     }
 
+    public function testPublicationDatesKeepSecondsWhenTheVisibleFormIsSaved(): void
+    {
+        $collection = Fixture::insert('collections', ['code' => 'seconds', 'name' => 'Seconds']);
+        $item = Fixture::insert('collection_items', [
+            'collection_id' => $collection,
+            'name'          => 'Before',
+            'code'          => 'seconds',
+            'active'        => 1,
+            'active_from'   => '2026-01-01 12:34:56',
+            'active_to'     => '2027-01-01 12:34:57',
+        ]);
+        $user = FunctionalUserFactory::createSupervisor();
+        $base = '/admin/collections/' . $collection . '/items';
+        $html = (string) $this->handleRequest($base . '/' . $item . '/edit', cookies: $this->actingAs($user))->getContent();
+        $document = HTMLDocument::createFromString($html, LIBXML_NOERROR);
+        $form = ['id' => $item, 'name' => 'After', 'code' => 'seconds', 'sort' => '100', 'active' => '1'];
+        foreach (['active_from' => '2026-01-01T12:34:56', 'active_to' => '2027-01-01T12:34:57'] as $name => $value) {
+            $input = $document->querySelector('input[name="' . $name . '"]');
+            self::assertSame($value, $input->getAttribute('value'));
+            self::assertSame('1', $input->getAttribute('step'));
+            $form[$name] = $input->getAttribute('value');
+        }
+        self::assertSame(302, $this->postForm($base, $form, $user)->getStatusCode());
+        $row = Capsule::table('collection_items')->where('id', $item)->first();
+        self::assertSame('After', $row->name);
+        self::assertSame('2026-01-01 12:34:56', $row->active_from);
+        self::assertSame('2027-01-01 12:34:57', $row->active_to);
+    }
+
     public function testHiddenBlocksPreserveStoredValuesAndCannotHideTheRequiredName(): void
     {
         $collection = Fixture::insert('collections', ['code' => 'hidden', 'name' => 'Hidden']);
