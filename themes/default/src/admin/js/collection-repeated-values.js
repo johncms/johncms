@@ -96,23 +96,64 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   const multiple = form.querySelector('input[name="multiple"]');
   const type = form.querySelector('select[name="type"]');
   const fileStorage = form.querySelector('select[name="file_storage"]');
+  const useDefault = form.querySelector('input[name="use_default"]');
+  const defaults = form.querySelector('[data-default-settings]');
+  const enhanceDefaults = () => {
+    defaults.querySelectorAll('textarea').forEach(source => {
+      const existing = source.previousElementSibling;
+      if (existing?.hasAttribute('data-default-control')) existing.remove();
+      source.hidden = false;
+      const label = form.querySelector(`label[for="${source.id}"], label[for="${source.id}-control"]`);
+      if (label) label.htmlFor = source.id;
+      const inputType = {string: 'text', integer: 'number', double: 'number', date: 'date', datetime: 'datetime-local'}[type.value];
+      if (!inputType && type.value !== 'boolean') return;
+      if (type.value === 'string' && /[\r\n]/.test(source.value)) return;
+      const control = document.createElement(type.value === 'boolean' ? 'select' : 'input');
+      control.setAttribute('data-default-control', '');
+      control.className = type.value === 'boolean' ? 'form-select' : 'form-control';
+      if (type.value === 'boolean') {
+        for (const [value, label] of [['', defaults.dataset.empty], ['1', defaults.dataset.yes], ['0', defaults.dataset.no]]) {
+          control.add(new Option(label, value));
+        }
+        if (!['', '0', '1'].includes(source.value)) return;
+      } else {
+        control.type = inputType;
+        if (inputType === 'number') control.step = type.value === 'integer' ? '1' : 'any';
+        if (inputType === 'datetime-local') control.step = '1';
+      }
+      const value = type.value === 'datetime' ? source.value.replace(' ', 'T') : source.value;
+      control.value = value;
+      // Native controls may sanitize invalid input. Keep the original editable in that case.
+      if (value !== '' && control.value === '') return;
+      control.id = `${source.id}-control`;
+      if (label) label.htmlFor = control.id;
+      control.addEventListener('input', () => { source.value = control.value; });
+      source.before(control);
+      source.hidden = true;
+    });
+  };
   const toggle = (group, visible) => {
     group.hidden = !visible;
     group.disabled = !visible;
   };
   const update = () => {
-    form.querySelector('[data-default-single]').hidden = multiple.checked;
-    form.querySelector('[data-default-multiple]').hidden = !multiple.checked;
+    toggle(form.querySelector('[data-default-single]'), useDefault.checked && !multiple.checked);
+    toggle(form.querySelector('[data-default-multiple]'), useDefault.checked && multiple.checked);
     form.querySelectorAll('[data-field-types]').forEach(group => toggle(group, group.dataset.fieldTypes.split(' ').includes(type.value)));
     form.querySelectorAll('[data-field-multiple]').forEach(group => toggle(group, multiple.checked));
     form.querySelectorAll('[data-file-storage]').forEach(group => toggle(group, type.value === 'file' && group.dataset.fileStorage === fileStorage.value));
     form.querySelectorAll('input[name="min_value"], input[name="max_value"]').forEach(input => {
       input.step = type.value === 'integer' ? '1' : 'any';
     });
+    enhanceDefaults();
   };
   multiple.addEventListener('change', update);
   type.addEventListener('change', update);
   fileStorage.addEventListener('change', update);
+  useDefault.addEventListener('change', update);
+  form.addEventListener('collection:values-changed', event => {
+    if (defaults.contains(event.target)) enhanceDefaults();
+  });
   form.addEventListener('reset', () => queueMicrotask(update));
   update();
 });

@@ -52,15 +52,16 @@
                                 <div class="form-text">{{ __('Convert existing values explicitly before changing their type or multiplicity.') }}</div>
                             {% endif %}
                         </div>
-                        <div class="col-12">
-                            <label class="form-label" for="field-role">{{ __('Field role') }}</label>
-                            <input type="text" name="role" class="form-control font-monospace" id="field-role" value="{{ fields.role ?? '' }}" pattern="[a-z0-9_]+"{% if managed %} disabled{% endif %}>
-                            <div class="form-text">{{ __('Use meta_title, meta_description or meta_keywords for SEO fields. Leave empty for ordinary content.') }}</div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label" for="sort">{{ __('Sorting') }}</label>
-                            <input type="number" name="sort" class="form-control" id="sort" value="{{ fields.sort }}"{% if managed %} disabled{% endif %}>
-                            <div class="form-text">{{ __('The order of the fields in the form of an item and of the columns of the list.') }}</div>
+                        <div class="col-12 d-flex flex-column gap-3">
+                            <div class="form-check form-switch">
+                                <input type="checkbox" class="form-check-input" role="switch" name="required" value="1" id="required"{% if fields.required %} checked{% endif %}{% if managed %} disabled{% endif %}>
+                                <label class="form-check-label" for="required">{{ __('Required') }}</label>
+                                <div class="form-text mt-0">{{ __('An item is not saved without a value.') }}</div>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input type="checkbox" class="form-check-input" role="switch" name="multiple" value="1" id="multiple"{% if fields.multiple %} checked{% endif %}{% if managed %} disabled{% endif %}>
+                                <label class="form-check-label" for="multiple">{{ __('Allow multiple values') }}</label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -104,23 +105,6 @@
                         <label class="form-label" for="field-hint">{{ __('Hint') }}</label>
                         <textarea class="form-control" id="field-hint" name="hint" rows="2" maxlength="2000">{{ fields.hint }}</textarea>
                     </div>
-                    <div class="col-12">
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" name="use_default" id="use-default" value="1"{% if fields.use_default %} checked{% endif %}>
-                            <label class="form-check-label" for="use-default">{{ __('Use a default value') }}</label>
-                        </div>
-                        <div data-default-single>
-                            <label class="form-label" for="field-default">{{ __('Default value') }}</label>
-                            <textarea class="form-control" id="field-default" name="default_value" rows="2">{{ fields.default_value }}</textarea>
-                        </div>
-                        <div data-default-multiple class="mt-2">
-                            {% include '@collections/admin/components/repeated-values.twig' with {
-                                entries: default_entries, input_name: 'default_values', action_key: 'default', id_prefix: 'field-default',
-                                type: 'text', label: __('Default values'), limit: 1000, allow_upload: false, upload_url: ''
-                            } only %}
-                        </div>
-                        <div class="form-text">{{ __('Defaults apply only when creating an item without an explicit value. Dates use ISO format; booleans use 0 or 1.') }}</div>
-                    </div>
                     <fieldset class="col-md-6 mb-0" data-field-types="string text html{{ fields.legacy_length_limits|default(false) ? ' select file' : '' }}">
                         <label class="form-label" for="min-length">{{ __('Minimum text length') }}</label>
                         <input type="number" class="form-control" min="0" id="min-length" name="min_length" value="{{ fields.min_length }}">
@@ -142,6 +126,23 @@
                         <input type="number" class="form-control" min="1" max="1000" id="max-values" name="max_values" value="{{ fields.max_values }}">
                         <div class="form-text">{{ __('For multiple fields. Leave limits empty to use the storage limits.') }}</div>
                     </fieldset>
+                    <div class="col-12" data-default-settings data-yes="{{ __('Yes') }}" data-no="{{ __('No') }}" data-empty="{{ __('No value') }}">
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="use_default" id="use-default" value="1"{% if fields.use_default %} checked{% endif %}>
+                            <label class="form-check-label" for="use-default">{{ __('Use a default value') }}</label>
+                        </div>
+                        <fieldset class="mb-0" data-default-single>
+                            <label class="form-label" for="field-default">{{ __('Default value') }}</label>
+                            <textarea class="form-control" id="field-default" name="default_value" rows="2">{{ fields.default_value }}</textarea>
+                        </fieldset>
+                        <fieldset data-default-multiple class="mt-2 mb-0">
+                            {% include '@collections/admin/components/repeated-values.twig' with {
+                                entries: default_entries, input_name: 'default_values', action_key: 'default', id_prefix: 'field-default',
+                                type: 'text', label: __('Default values'), limit: 1000, allow_upload: false, upload_url: ''
+                            } only %}
+                        </fieldset>
+                        <div class="form-text">{{ __('Defaults apply only when creating an item without an explicit value. Dates use ISO format; booleans use 0 or 1.') }}</div>
+                    </div>
                 </div>
             </fieldset>
         </div>
@@ -153,15 +154,15 @@
                     <h2 class="h6 mb-0 ms-2">{{ __('Properties') }}</h2>
                 </div>
                 <div class="card-body d-flex flex-column gap-3">
-                    <div class="form-check form-switch">
-                        <input type="checkbox" class="form-check-input" role="switch" name="required" value="1" id="required"{% if fields.required %} checked{% endif %}{% if managed %} disabled{% endif %}>
-                        <label class="form-check-label" for="required">{{ __('Required') }}</label>
-                        <div class="form-text mt-0">{{ __('An item is not saved without a value.') }}</div>
+                    <div class="col-12">
+                        <label class="form-label" for="field-role">{{ __('Field role') }}</label>
+                        <input type="text" name="role" class="form-control font-monospace" id="field-role" value="{{ fields.role ?? '' }}" pattern="[a-z0-9_]+"{% if managed %} disabled{% endif %}>
+                        <div class="form-text">{{ __('Use meta_title, meta_description or meta_keywords for SEO fields. Leave empty for ordinary content.') }}</div>
                     </div>
-                    <div class="form-check form-switch">
-                        <input type="checkbox" class="form-check-input" role="switch" name="multiple" value="1" id="multiple"{% if fields.multiple %} checked{% endif %}{% if managed %} disabled{% endif %}>
-                        <label class="form-check-label" for="multiple">{{ __('Allow multiple values') }}</label>
-                        <div class="form-text mt-0">{{ __('The form takes one value per line.') }}</div>
+                    <div class="col-12">
+                        <label class="form-label" for="sort">{{ __('Sorting') }}</label>
+                        <input type="number" name="sort" class="form-control" id="sort" value="{{ fields.sort }}"{% if managed %} disabled{% endif %}>
+                        <div class="form-text">{{ __('The order of the fields in the form of an item and of the columns of the list.') }}</div>
                     </div>
                     <div class="form-check form-switch">
                         <input type="checkbox" class="form-check-input" role="switch" name="in_list" value="1" id="in_list"{% if fields.in_list %} checked{% endif %}{% if managed %} disabled{% endif %}>
