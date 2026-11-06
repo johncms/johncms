@@ -73,7 +73,16 @@ final readonly class SaveCollectionUseCase
                     throw new \Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException(d__('collections', 'Choose existing fields for the form layout.'));
                 }
             }
+            $permissions = $dto->actionPermissions ?? ($current->settings['content_actions'] ?? []);
+            foreach ($permissions as $action => $permission) {
+                if (! array_key_exists($action, EnsureCollectionContentAccessUseCase::actions()) || ! is_string($permission) || ! preg_match('/^[a-z0-9_.-]+$/D', $permission)) {
+                    throw new \Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException(d__('collections', 'Choose valid permissions for known content actions.'));
+                }
+            }
             $settings = $current->settings ?? [];
+            if ($dto->actionPermissions !== null || array_key_exists('content_actions', $settings)) {
+                $settings['content_actions'] = $permissions;
+            }
             if ($dto->workspace !== null || array_key_exists('workspace', $settings)) {
                 $settings['workspace'] = $workspace;
             }

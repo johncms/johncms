@@ -24,7 +24,7 @@
         {% for row in rows %}
             <tr>
                 <td>
-                    <a class="admin-collection-items__name" href="{{ row.edit_url }}">{{ row.name }}</a>
+                    {% if row.can_edit %}<a class="admin-collection-items__name" href="{{ row.edit_url }}">{{ row.name }}</a>{% else %}<span class="admin-collection-items__name">{{ row.name }}</span>{% endif %}
                     <div class="admin-collection-items__code">{{ row.code }}</div>
                 </td>
                 {% for key, title in meta_columns %}

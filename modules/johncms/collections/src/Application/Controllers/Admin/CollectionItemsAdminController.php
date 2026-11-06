@@ -12,7 +12,6 @@ use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemCodeAlreadyExistsException;
-use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionItemUseCase;
 use Johncms\Modules\Collections\Application\UseCases\ListCollectionItemsUseCase;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
@@ -39,7 +38,7 @@ final readonly class CollectionItemsAdminController
         private ContentCollectionItemRepositoryInterface $itemRepository,
         private ListCollectionItemsUseCase $listItems,
         private \Johncms\Modules\Collections\Application\Api\CollectionsUserApiInterface $userApi,
-        private DeleteCollectionItemUseCase $deleteItem,
+        private \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase $access,
         private Session $session,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
@@ -94,6 +93,7 @@ final readonly class CollectionItemsAdminController
             'total'        => $pagination->getTotal(),
             'pagination'   => $pagination->render(),
             'add_url' => $this->baseUrl($collection_id) . '/new?' . ($filter->section ? 'section=' . $filter->section . '&' : '') . 'back=' . rawurlencode($listUrl),
+            'can_create' => $this->access->allowsAction($collection, 'create'),
             'create_label' => $this->workspace->labels($collection)['create'],
         ];
 
@@ -113,6 +113,7 @@ final readonly class CollectionItemsAdminController
 
     public function newForm(Request $request, int $collection_id): ViewResponse
     {
+        $this->access->executeAction($collection_id, 'create');
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
             return $this->collectionNotFound();
@@ -129,6 +130,7 @@ final readonly class CollectionItemsAdminController
 
     public function editForm(Request $request, int $collection_id, int $id): ViewResponse
     {
+        $this->access->executeAction($collection_id, 'edit');
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
             return $this->collectionNotFound();
@@ -162,6 +164,7 @@ final readonly class CollectionItemsAdminController
             return $this->wrongData($collection_id);
         }
 
+        $this->access->executeAction($collection_id, $id === null ? 'create' : 'edit');
         $fieldDefs = $this->fieldRepository->getByCollection($collection_id);
         $fields = $this->fieldsFromRequest($request, $collection, $fieldDefs);
         try {
@@ -290,7 +293,7 @@ final readonly class CollectionItemsAdminController
 
         if ($this->findOwnedItem($collection_id, $id) !== null) {
             try {
-                $this->deleteItem->execute($id, $collection_id, expectedRelations: $request->body('relation_revision', ''));
+                $this->userApi->deleteItem($collection_id, $id, $request->body('relation_revision', ''));
             } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionDeletionException $exception) {
                 return $this->renderDeleteConfirm($request, $collection_id, $id, array_merge(...array_values($exception->errors)));
             } catch (CollectionItemFormException) {
@@ -337,6 +340,9 @@ final readonly class CollectionItemsAdminController
         $title = $id !== null ? $labels['edit'] : $labels['new'];
         $this->navChain->add($title);
 
+        if ($id === null && ! $this->access->allowsAction($collection, 'publish')) {
+            $fields['active'] = 0;
+        }
         $hasSections = $this->hasSections($collection);
         $back = $this->returnUrl($collection->id, $fields['back'] ?? '');
         $actions = [];
@@ -355,6 +361,8 @@ final readonly class CollectionItemsAdminController
             'fields'          => $fields,
             'has_sections'    => $hasSections,
             'section_options' => $hasSections ? $this->sectionOptions($collection->id) : [],
+            'can_publish' => $this->access->allowsAction($collection, 'publish'),
+            'can_move' => $this->access->allowsAction($collection, 'publish') || ! ($item !== null && $item->active),
             'hidden_blocks' => $this->layout->hidden($collection),
             'field_groups' => $this->layout->groups($collection, $this->buildFieldDefs(
                 $this->fieldRepository->getByCollection($collection->id),
@@ -527,6 +535,15 @@ final readonly class CollectionItemsAdminController
         $hidden = $this->layout->hidden($collection);
         $item = $request->bodyInt('id') ? $this->findOwnedItem($collection->id, $request->bodyInt('id')) : null;
         $stored = $item !== null ? $this->fieldsFromItem($item) : $this->defaultFields($this->querySection($request));
+        if ($item !== null) {
+            $stored['active_from'] = $item->getRawOriginal('active_from') ?? '';
+            $stored['active_to'] = $item->getRawOriginal('active_to') ?? '';
+        } elseif (! $this->access->allowsAction($collection, 'publish')) {
+            $stored['active'] = 0;
+        }
+        if (! $this->access->allowsAction($collection, 'publish') && ! $request->hasBody('active') && ! $request->hasBody('active_from') && ! $request->hasBody('active_to')) {
+            $hidden[] = 'publication';
+        }
         foreach ($hidden as $block) {
             $keys = match ($block) {
                 'publication' => ['active', 'active_from', 'active_to'],

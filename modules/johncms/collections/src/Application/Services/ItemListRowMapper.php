@@ -29,6 +29,7 @@ final readonly class ItemListRowMapper
         private ?\Johncms\Files\FileStore $files = null,
         private CollectionWorkspaceSettings $workspace = new CollectionWorkspaceSettings(),
         private ?\Johncms\Users\Repository\UserRepositoryInterface $users = null,
+        private ?\Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase $access = null,
     ) {
     }
 
@@ -105,7 +106,12 @@ final readonly class ItemListRowMapper
                     'section' => $section !== null ? implode(' › ', $tree->pathOf($section)) : '',
                 ],
                 'updated'      => $this->timestamp($item->getRawOriginal('updated_at')),
-                'actions'      => $actions,
+                'can_edit' => $this->access?->allowsAction($collection, 'edit') ?? true,
+                'actions' => array_values(array_filter($actions, fn (array $action): bool => match ($action['icon']) {
+                    'pencil' => $this->access?->allowsAction($collection, 'edit') ?? true,
+                    'trash-2' => $this->access?->allowsAction($collection, 'delete') ?? true,
+                    default => true,
+                })),
             ];
         }
 

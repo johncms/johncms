@@ -12,9 +12,7 @@ use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Application\DTO\SectionTreeItemDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSectionCodeAlreadyExistsException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSectionFormException;
-use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionSectionUseCase;
 use Johncms\Modules\Collections\Application\UseCases\ListCollectionSectionsUseCase;
-use Johncms\Modules\Collections\Application\UseCases\SaveCollectionSectionUseCase;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
@@ -34,8 +32,8 @@ final readonly class CollectionSectionsAdminController
         private ContentCollectionRepositoryInterface $collectionRepository,
         private ContentCollectionSectionRepositoryInterface $sectionRepository,
         private ListCollectionSectionsUseCase $listSections,
-        private SaveCollectionSectionUseCase $saveSection,
-        private DeleteCollectionSectionUseCase $deleteSection,
+        private \Johncms\Modules\Collections\Application\Api\CollectionsUserApiInterface $userApi,
+        private \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase $access,
         private Session $session,
         private CollectionDeletionPlanner $deletions,
     ) {
@@ -43,6 +41,7 @@ final readonly class CollectionSectionsAdminController
 
     public function index(int $collection_id): ViewResponse
     {
+        $this->access->executeAction($collection_id, 'sections');
         $collection = $this->collectionRepository->findWithCounts($collection_id);
         if ($collection === null) {
             return $this->collectionNotFound();
@@ -62,6 +61,7 @@ final readonly class CollectionSectionsAdminController
 
     public function newForm(Request $request, int $collection_id): ViewResponse
     {
+        $this->access->executeAction($collection_id, 'sections');
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
             return $this->collectionNotFound();
@@ -77,6 +77,7 @@ final readonly class CollectionSectionsAdminController
 
     public function editForm(int $collection_id, int $id): ViewResponse
     {
+        $this->access->executeAction($collection_id, 'sections');
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
             return $this->collectionNotFound();
@@ -92,6 +93,7 @@ final readonly class CollectionSectionsAdminController
 
     public function store(Request $request, int $collection_id): ViewResponse
     {
+        $this->access->executeAction($collection_id, 'sections');
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
             return $this->collectionNotFound();
@@ -103,8 +105,16 @@ final readonly class CollectionSectionsAdminController
             return $this->wrongData($collection_id);
         }
         $fields = $this->fieldsFromRequest($request, $this->postParent($request));
+        if (! $this->access->allowsAction($collection, 'publish') && ! $request->hasBody('active')) {
+            $fields['active'] = $id !== null ? $this->findOwnedSection($collection_id, $id)->active : false;
+        }
         try {
-            $this->saveSection->execute($id, $this->dtoFromFields($collection_id, $fields));
+            $dto = $this->dtoFromFields($collection_id, $fields);
+            if ($id === null) {
+                $this->userApi->addSection($dto);
+            } else {
+                $this->userApi->updateSection($id, $dto);
+            }
         } catch (CollectionSectionFormException $exception) {
             return $this->renderForm($collection, $id, $fields, array_merge(...array_values($exception->errors)));
         } catch (\JsonException) {
@@ -119,6 +129,7 @@ final readonly class CollectionSectionsAdminController
 
     public function deleteConfirm(Request $request, int $collection_id, int $id): ViewResponse
     {
+        $this->access->executeAction($collection_id, 'sections');
         return $this->renderDeleteConfirm($request, $collection_id, $id);
     }
 
@@ -171,6 +182,7 @@ final readonly class CollectionSectionsAdminController
 
     public function delete(Request $request, int $collection_id, int $id): ViewResponse
     {
+        $this->access->executeAction($collection_id, 'sections');
         if ($this->collectionRepository->findById($collection_id) === null) {
             return $this->collectionNotFound();
         }
@@ -186,7 +198,7 @@ final readonly class CollectionSectionsAdminController
             }
             $targetId = $mode === SectionDeletionMode::MoveItems
                 ? filter_var($targetInput, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) : false;
-            $this->deleteSection->execute($id, $collection_id, $mode, $targetId !== false ? $targetId : null, $request->body('revision', ''));
+            $this->userApi->deleteSection($collection_id, $id, $mode, $targetId !== false ? $targetId : null, $request->body('revision', ''));
         } catch (CollectionDeletionException $exception) {
             return $this->renderDeleteConfirm($request, $collection_id, $id, array_merge(...array_values($exception->errors)), $modeInput, $targetInput);
         } catch (CollectionWriteConflictException) {
@@ -255,6 +267,9 @@ final readonly class CollectionSectionsAdminController
      */
     private function renderForm(ContentCollection $collection, ?int $id, array $fields, array $errors = []): ViewResponse
     {
+        if ($id === null && ! $this->access->allowsAction($collection, 'publish')) {
+            $fields['active'] = 0;
+        }
         $this->breadcrumbs($collection);
         $title = $id !== null ? __('Edit section') : __('New section');
         $this->navChain->add($title);
@@ -262,6 +277,8 @@ final readonly class CollectionSectionsAdminController
         return new ViewResponse('@collections/admin/section-form.twig', $this->menu($title, $collection->name, $collection) + [
             'form_action' => $this->baseUrl($collection->id),
             'back_url'    => $this->baseUrl($collection->id),
+            'can_publish' => $this->access->allowsAction($collection, 'publish'),
+            'can_move' => $this->access->allowsAction($collection, 'publish') || ! $fields['active'],
             'id'          => $id,
             'fields'      => $fields,
             'section_options' => $this->sectionOptions($collection->id, $id),

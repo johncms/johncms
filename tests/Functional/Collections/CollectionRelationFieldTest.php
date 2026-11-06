@@ -198,7 +198,9 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
             $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionTagSuggestions::class),
             new \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionRelationAccessUseCase($this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface::class), $guard),
             $this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface::class),
-            new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction()
+            new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction(),
+            new \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionItemWriteAccessUseCase($guard, $this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface::class)),
+            $this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface::class)
         );
         foreach ([
             fn () => $api->addItem(new CollectionItemFormDTO($this->source, null, 'default', 'Default', true, null, null, 100, null, null, [])),

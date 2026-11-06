@@ -63,7 +63,8 @@
                 <div class="card-body d-flex flex-column gap-3">
                     <div>
                         <label class="form-label" for="parent">{{ __('Inside') }}</label>
-                        <select name="parent" id="parent" class="form-select">
+                        {% if not can_move %}<input type="hidden" name="parent" value="{{ fields.parent }}">{% endif %}
+                        <select{% if not can_move %} disabled{% endif %} name="parent" id="parent" class="form-select">
                             <option value="">{{ __('The top of the collection') }}</option>
                             {% for option in section_options %}
                                 <option value="{{ option.id }}"{% if fields.parent == option.id %} selected{% endif %}>{{ option.label }}</option>
@@ -75,11 +76,13 @@
                         <input type="number" name="sort" class="form-control" id="sort" value="{{ fields.sort }}">
                         <div class="form-text">{{ __('The smaller the number, the higher the section among its neighbours.') }}</div>
                     </div>
+                    {% if can_publish %}
                     <div class="form-check form-switch">
                         <input type="checkbox" class="form-check-input" role="switch" name="active" value="1" id="active"{% if fields.active %} checked{% endif %}>
                         <label class="form-check-label" for="active">{{ __('Active') }}</label>
                         <div class="form-text mt-0">{{ __('A turned off section and what stands in it are not shown on the site.') }}</div>
                     </div>
+                    {% endif %}
                 </div>
             </section>
         </div>

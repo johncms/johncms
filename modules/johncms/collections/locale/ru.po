@@ -1352,3 +1352,33 @@ msgstr "Сортировать по"
 
 msgid "Apply"
 msgstr "Применить"
+
+msgid "Create items"
+msgstr "Создание записей"
+
+msgid "Edit items"
+msgstr "Изменение записей"
+
+msgid "Publish items"
+msgstr "Публикация записей"
+
+msgid "Delete items"
+msgstr "Удаление записей"
+
+msgid "Manage sections"
+msgstr "Управление разделами"
+
+msgid "Choose valid permissions for known content actions."
+msgstr "Выберите допустимые права для известных действий с содержимым."
+
+msgid "Content action permissions"
+msgstr "Права на действия с содержимым"
+
+msgid "Each action also requires content access. Empty selections inherit the content permission; schema managers keep full access."
+msgstr "Для каждого действия также нужен доступ к содержимому. Пустой выбор наследует это право; администраторы структуры сохраняют полный доступ."
+
+msgid "Use content permission"
+msgstr "Наследовать доступ к содержимому"
+
+msgid "Publication settings require a separate permission."
+msgstr "Для изменения публикации требуется отдельное право."

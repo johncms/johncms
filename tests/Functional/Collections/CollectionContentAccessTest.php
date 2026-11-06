@@ -90,7 +90,12 @@ final class CollectionContentAccessTest extends FunctionalTestCase
                 new EnsureCollectionContentAccessUseCase($access, $this->container()->get(ContentCollectionRepositoryInterface::class))
             ),
             $this->container()->get(ContentCollectionRepositoryInterface::class),
-            new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction()
+            new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction(),
+            new \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionItemWriteAccessUseCase(
+                new EnsureCollectionContentAccessUseCase($access, $this->container()->get(ContentCollectionRepositoryInterface::class)),
+                $this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface::class)
+            ),
+            $this->container()->get(\Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface::class)
         );
         self::assertNotNull($api->getItem($this->collection, $this->item));
         self::assertNull($api->getItem($this->collection, $this->foreignItem));

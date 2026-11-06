@@ -10,6 +10,7 @@ namespace Johncms\Modules\Collections\Application\DTO;
 final readonly class CollectionFormDTO
 {
     /** @param list<string>|null $searchFields Null preserves the current selection.
+     * @param array<string, string>|null $actionPermissions Null preserves existing action permissions.
      * @param array<string, mixed>|null $workspace Null preserves current overrides.
      */
     public function __construct(
@@ -24,6 +25,7 @@ final readonly class CollectionFormDTO
         public string $contentPermission = 'collections.manage',
         public ?array $searchFields = null,
         public ?array $workspace = null,
+        public ?array $actionPermissions = null,
     ) {
     }
 }

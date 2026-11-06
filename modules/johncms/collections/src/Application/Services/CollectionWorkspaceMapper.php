@@ -48,6 +48,9 @@ final readonly class CollectionWorkspaceMapper
         if ($this->access !== null && ! $this->access->canManageSchema()) {
             $tabs = array_values(array_filter($tabs, static fn (array $tab): bool => ! in_array($tab[0], [self::FIELDS, self::SETTINGS], true)));
         }
+        if ($this->access !== null && ! $this->access->allowsAction($collection, 'sections')) {
+            $tabs = array_values(array_filter($tabs, static fn (array $tab): bool => $tab[0] !== self::SECTIONS));
+        }
         $ownerSettings = $this->ownerUrls?->settings($this->apiMapper->collection($collection));
         $mappedTabs = array_values(array_map(
             static fn (array $tab): array => [

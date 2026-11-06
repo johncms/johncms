@@ -43,6 +43,7 @@ final readonly class CollectionItemFiles implements CollectionChangeHandlerInter
         }
         return $this->transaction->run(function () use ($collectionId, $itemId): string {
             $this->collections->findForUpdate($collectionId) ?? throw $this->invalidContext();
+            $this->guard->executeAction($collectionId, $itemId === null ? 'create' : 'edit');
             if ($itemId !== null && $this->items->findById($itemId)?->collection_id !== $collectionId) {
                 throw $this->invalidContext();
             }
@@ -55,12 +56,14 @@ final readonly class CollectionItemFiles implements CollectionChangeHandlerInter
     public function upload(int $collectionId, string $token, UploadedFileDTO $upload): StoredFileDTO
     {
         $this->guard->execute($collectionId);
-        $this->requireContext($token, $collectionId, $this->user->id());
+        $context = $this->requireContext($token, $collectionId, $this->user->id());
+        $this->guard->executeAction($collectionId, $context['item_id'] === null ? 'create' : 'edit');
         $file = $this->images->execute($upload, 'collections/' . $collectionId);
         try {
             $this->transaction->run(function () use ($collectionId, $token, $file): void {
                 $this->collections->findForUpdate($collectionId) ?? throw $this->invalidContext();
-                $this->requireContext($token, $collectionId, $this->user->id(), true);
+                $context = $this->requireContext($token, $collectionId, $this->user->id(), true);
+                $this->guard->executeAction($collectionId, $context['item_id'] === null ? 'create' : 'edit');
                 $this->links->register($file->id, true);
                 $this->links->lockAsset($file->id);
                 $this->links->linkContext($token, $file->id);

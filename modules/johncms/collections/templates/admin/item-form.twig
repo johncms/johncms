@@ -97,7 +97,8 @@
                 </div>
             </section>
 
-            {% if 'publication' not in hidden_blocks %}
+            {% if not can_publish %}<div class="alert alert-info mb-0">{{ __('Publication settings require a separate permission.') }}</div>{% endif %}
+            {% if can_publish and 'publication' not in hidden_blocks %}
             <section class="card">
                 {{ ui.card_head('eye', __('Publication')) }}
                 <div class="card-body d-flex flex-column gap-3">
@@ -128,7 +129,8 @@
                     {% if has_sections %}
                         <div>
                             <label class="form-label" for="section_id">{{ __('Section') }}</label>
-                            <select name="section_id" class="form-select{{ field_errors.section_id|default([]) ? ' is-invalid' : '' }}" id="section_id">
+                            {% if not can_move %}<input type="hidden" name="section_id" value="{{ fields.section_id|default(0) }}">{% endif %}
+                            <select{% if not can_move %} disabled{% endif %} name="section_id" class="form-select{{ field_errors.section_id|default([]) ? ' is-invalid' : '' }}" id="section_id">
                                 <option value="0">{{ __('Without a section') }}</option>
                                 {% for section_id, title in section_options %}
                                     <option value="{{ section_id }}"{% if fields.section_id == section_id %} selected{% endif %}>{{ title }}</option>

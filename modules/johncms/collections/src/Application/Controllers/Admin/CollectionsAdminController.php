@@ -234,6 +234,11 @@ final readonly class CollectionsAdminController
     {
         $fields['workspace_labels'] = array_filter($fields['workspace_labels'], is_string(...));
         $fields['permission_options'] = $this->permissionOptions($fields['content_permission']);
+        $fields['action_titles'] = \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase::actions();
+        $fields['action_permissions'] = array_filter($fields['action_permissions'], is_string(...));
+        foreach ($fields['action_permissions'] as $permission) {
+            $fields['permission_options'][$permission] ??= $permission;
+        }
         $fields['workspace_label_titles'] = $this->workspaceSettings->labelTitles();
         $fields['workspace_defaults'] = $this->workspaceSettings->defaults();
         $fields = $this->listingFields($fields, null);
@@ -285,6 +290,11 @@ final readonly class CollectionsAdminController
         }
         $fields['workspace_labels'] = array_filter($fields['workspace_labels'], is_string(...));
         $fields['permission_options'] = $this->permissionOptions($fields['content_permission']);
+        $fields['action_titles'] = \Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase::actions();
+        $fields['action_permissions'] = array_filter($fields['action_permissions'], is_string(...));
+        foreach ($fields['action_permissions'] as $permission) {
+            $fields['permission_options'][$permission] ??= $permission;
+        }
         $fields['workspace_label_titles'] = $this->workspaceSettings->labelTitles();
         $this->navChain->add(__('Collections'), self::URL);
         $this->navChain->add($collection->name, CollectionWorkspaceMapper::url($collection->id));
@@ -385,6 +395,8 @@ final readonly class CollectionsAdminController
             'per_page'     => max(1, abs($request->bodyInt('per_page', 10))),
             'content_permission' => trim($request->body('content_permission', 'collections.manage')),
             'search_fields' => $request->hasBody('search_fields') ? $request->bodyList('search_fields') : [],
+            'action_permissions_present' => $request->hasBody('action_permissions_present') || $request->hasBody('action_permissions'),
+            'action_permissions' => array_filter($request->bodyList('action_permissions'), static fn ($value): bool => $value !== ''),
             'workspace_present' => $request->hasBody('workspace_present') || $request->hasBody('workspace_labels'),
             'workspace_layout' => $layout,
             'workspace_listing' => $listing,
@@ -410,6 +422,8 @@ final readonly class CollectionsAdminController
             'per_page'     => (int) ($settings['per_page'] ?? 10),
             'content_permission' => $settings['_content_permission'] ?? 'collections.manage',
             'search_fields' => $settings['search_fields'] ?? [],
+            'action_permissions_present' => true,
+            'action_permissions' => $settings['content_actions'] ?? [],
             'workspace_present' => true,
             'workspace_labels' => $settings['workspace']['labels'] ?? [],
             'workspace_layout' => $settings['workspace']['layout'] ?? [],
@@ -433,6 +447,8 @@ final readonly class CollectionsAdminController
             'per_page'     => 10,
             'content_permission' => 'collections.manage',
             'search_fields' => [],
+            'action_permissions_present' => true,
+            'action_permissions' => [],
             'workspace_present' => true,
             'workspace_labels' => [],
             'workspace_layout' => [],
@@ -456,6 +472,7 @@ final readonly class CollectionsAdminController
             perPage: (int) $fields['per_page'],
             contentPermission: $fields['content_permission'],
             searchFields: $fields['search_fields'],
+            actionPermissions: $fields['action_permissions_present'] ? $fields['action_permissions'] : null,
             workspace: $fields['workspace_present'] ? ['labels' => $fields['workspace_labels'], 'layout' => $fields['workspace_layout'], 'listing' => $fields['workspace_listing']] : null,
         );
     }

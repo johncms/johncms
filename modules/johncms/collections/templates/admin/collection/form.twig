@@ -132,6 +132,22 @@
 
     <div class="col-lg-4 d-flex flex-column gap-3">
         <section class="card">
+            <div class="card-header"><h2 class="h6 mb-0">{{ __('Content action permissions') }}</h2></div>
+            <div class="card-body d-flex flex-column gap-3">
+                <input type="hidden" name="action_permissions_present" value="1">
+                <p class="form-text">{{ __('Each action also requires content access. Empty selections inherit the content permission; schema managers keep full access.') }}</p>
+                {% for action, title in fields.action_titles %}
+                    <div>
+                        <label class="form-label" for="permission-{{ action }}">{{ title }}</label>
+                        <select class="form-select" id="permission-{{ action }}" name="action_permissions[{{ action }}]">
+                            <option value="">{{ __('Use content permission') }}</option>
+                            {% for key, label in fields.permission_options %}<option value="{{ key }}"{% if fields.action_permissions[action]|default('') == key %} selected{% endif %}>{{ label }} ({{ key }})</option>{% endfor %}
+                        </select>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        <section class="card">
             <div class="card-header">
                 {% include '@admin/components/ui/icon.twig' with {name: 'eye', size: 16} only %}
                 <h2 class="h6 mb-0 ms-2">{{ __('Visibility') }}</h2>

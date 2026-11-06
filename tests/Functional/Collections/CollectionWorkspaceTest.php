@@ -143,6 +143,7 @@ final class CollectionWorkspaceTest extends FunctionalTestCase
         $item = Fixture::insert('collection_items', [
             'collection_id' => $collection, 'name' => 'Before', 'code' => 'canonical', 'active' => 0,
             'preview_text' => '<p>Preview</p>', 'detail_text' => '<p>Detail</p>', 'sort' => 17,
+            'active_from' => '2026-01-01 12:34:56', 'active_to' => '2027-01-01 12:34:57',
         ]);
         $workspace = ['layout' => ['hidden_blocks' => ['code', 'preview_text', 'detail_text', 'publication', 'place']]];
         $writer = $this->container()->get(SaveCollectionUseCase::class);
@@ -163,6 +164,8 @@ final class CollectionWorkspaceTest extends FunctionalTestCase
         self::assertSame(17, $row->sort);
         self::assertSame('<p>Preview</p>', $row->preview_text);
         self::assertSame('<p>Detail</p>', $row->detail_text);
+        self::assertSame('2026-01-01 12:34:56', $row->active_from);
+        self::assertSame('2027-01-01 12:34:57', $row->active_to);
         $this->expectException(CollectionSchemaException::class);
         $writer->execute($collection, $this->form('hidden', ['layout' => ['hidden_blocks' => ['name']]]));
     }

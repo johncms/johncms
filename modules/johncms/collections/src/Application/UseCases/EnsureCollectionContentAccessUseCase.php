@@ -31,6 +31,37 @@ final readonly class EnsureCollectionContentAccessUseCase
         return is_string($permission) && $permission !== '' && $this->access->allows($permission, $collection->id);
     }
 
+    /** @return array<string, string> */
+    public static function actions(): array
+    {
+        return [
+            'create' => d__('collections', 'Create items'), 'edit' => d__('collections', 'Edit items'),
+            'publish' => d__('collections', 'Publish items'), 'delete' => d__('collections', 'Delete items'),
+            'sections' => d__('collections', 'Manage sections'),
+        ];
+    }
+
+    public function allowsAction(ContentCollection $collection, string $action): bool
+    {
+        if (! array_key_exists($action, self::actions())) {
+            throw new \InvalidArgumentException('Unknown collection action.');
+        }
+        if ($this->canManageSchema()) {
+            return true;
+        }
+        $permission = $collection->settings['content_actions'][$action] ?? null;
+        return $this->allows($collection) && ($permission === null || $this->access->allows($permission, $collection->id));
+    }
+
+    public function executeAction(int $collectionId, string $action): void
+    {
+        $this->execute($collectionId);
+        $collection = $this->collections->findForUpdate($collectionId);
+        if ($collection === null || ! $this->allowsAction($collection, $action)) {
+            throw new CollectionAccessDeniedException('This collection action is not permitted.');
+        }
+    }
+
     public function execute(int $collectionId): void
     {
         foreach ($this->owners as $owner) {
