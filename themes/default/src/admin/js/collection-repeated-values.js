@@ -1,4 +1,4 @@
-import { initializeAdminEditors, labelAdminEditors, removeAdminEditors, focusAdminEditor } from './editor';
+import { initializeAdminEditors, labelAdminEditors, removeAdminEditors, focusAdminEditor, setAdminEditorValue } from './editor';
 
 /** Ordinary POST buttons remain the fallback when this enhancement is unavailable. */
 document.querySelectorAll('[data-collection-repeat]').forEach(root => {
@@ -98,8 +98,31 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   const fileStorage = form.querySelector('select[name="file_storage"]');
   const useDefault = form.querySelector('input[name="use_default"]');
   const defaults = form.querySelector('[data-default-settings]');
+  let htmlQueue = Promise.resolve();
+  const syncHtml = () => {
+    htmlQueue = htmlQueue.then(async () => {
+      for (const source of defaults.querySelectorAll('textarea')) {
+        const wrapper = source.closest('[data-default-html]');
+        if (source.matches(':disabled') && !wrapper) continue;
+        if (type.value === 'html' && !wrapper) {
+          const editor = form.parentElement.querySelector('[data-default-editor-template]').content.firstElementChild.cloneNode(true);
+          editor.setAttribute('data-default-html', '');
+          editor.querySelector('label')?.remove();
+          source.before(editor);
+          editor.querySelector('textarea').replaceWith(source);
+          editor.querySelector('textarea').hidden = false;
+          await initializeAdminEditors(editor);
+        } else if (type.value !== 'html' && wrapper) {
+          if (!await removeAdminEditors(wrapper)) continue;
+          wrapper.replaceWith(source);
+        }
+      }
+      enhanceDefaults();
+    }).catch(error => { console.error('Could not update default editors.', error); });
+  };
   const enhanceDefaults = () => {
     defaults.querySelectorAll('textarea').forEach(source => {
+      if (source.closest('[data-default-html]')) return;
       const existing = source.previousElementSibling;
       if (existing?.hasAttribute('data-default-control')) existing.remove();
       source.hidden = false;
@@ -163,6 +186,7 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
       input.step = type.value === 'integer' ? '1' : 'any';
     });
     enhanceDefaults();
+    syncHtml();
   };
   const choice = form.querySelector('[data-default-choice]');
   const choiceSelect = choice.querySelector('select');
@@ -173,7 +197,10 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
       if (single.value !== '' && repeatedSources().every(source => source.value === '')) {
         if (!repeatedSources().length) defaults.querySelector('[data-repeat-op="add"]').click();
         const first = repeatedSources()[0];
-        if (first) first.value = single.value;
+        if (first) {
+          first.value = single.value;
+          if (first.closest('[data-default-html]')) setAdminEditorValue(first.closest('[data-default-html]'), single.value);
+        }
       }
     } else {
       const values = repeatedSources().map(source => source.value).filter(value => value.trim() !== '');
@@ -185,12 +212,14 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
         return;
       }
       single.value = values[0] ?? single.value;
+      if (single.closest('[data-default-html]')) setAdminEditorValue(single.closest('[data-default-html]'), single.value);
     }
     toggle(choice, false);
     update();
   });
   choice.querySelector('[data-default-choose]').addEventListener('click', () => {
     single.value = choiceSelect.value;
+    if (single.closest('[data-default-html]')) setAdminEditorValue(single.closest('[data-default-html]'), single.value);
     multiple.checked = false;
     toggle(choice, false);
     update();
@@ -204,7 +233,7 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   fileStorage.addEventListener('change', update);
   useDefault.addEventListener('change', update);
   form.addEventListener('collection:values-changed', event => {
-    if (defaults.contains(event.target) || event.target.matches('[data-key="options"]')) enhanceDefaults();
+    if (defaults.contains(event.target) || event.target.matches('[data-key="options"]')) { enhanceDefaults(); syncHtml(); }
   });
   form.addEventListener('input', event => {
     if (event.target.closest('[data-key="options"]')) enhanceDefaults();

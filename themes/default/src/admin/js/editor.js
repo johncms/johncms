@@ -120,6 +120,13 @@ export async function removeAdminEditors(root) {
   return true;
 }
 
+export function setAdminEditorValue(root, value) {
+  for (const field of editorFields(root)) {
+    field.querySelector('textarea').value = value;
+    records.get(field)?.editor?.setData(value);
+  }
+}
+
 export function focusAdminEditor(root) {
   const editor = editorFields(root).map(field => records.get(field)?.editor).find(Boolean);
   if (!editor) return false;

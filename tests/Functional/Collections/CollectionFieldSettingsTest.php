@@ -265,6 +265,29 @@ final class CollectionFieldSettingsTest extends FunctionalTestCase
         self::assertSame([], $fields[2]->settings['default']);
     }
 
+    public function testFilledFieldFormLocksStructureAndStillSavesOtherSettings(): void
+    {
+        $fieldId = $this->field('value', FieldType::String_, [], true);
+        $this->items->addItem($this->form('entry', ['value' => ['saved']]));
+        $editor = FunctionalUserFactory::createSupervisor();
+        $html = (string) $this->handleRequest('/admin/collections/' . $this->collection . '/fields/' . $fieldId . '/edit', cookies: $this->actingAs($editor))->getContent();
+        $document = HTMLDocument::createFromString($html, LIBXML_NOERROR);
+        self::assertTrue($document->querySelector('#type')->hasAttribute('disabled'));
+        self::assertTrue($document->querySelector('#multiple')->hasAttribute('disabled'));
+        self::assertSame('string', $document->querySelector('input[type="hidden"][name="type"]')->getAttribute('value'));
+        self::assertSame('1', $document->querySelector('input[type="hidden"][name="multiple"]')->getAttribute('value'));
+        $response = $this->postForm('/admin/collections/' . $this->collection . '/fields', [
+            'id' => (string) $fieldId,
+            'code' => 'value',
+            'name' => 'Renamed',
+            'type' => 'string',
+            'multiple' => '1',
+            'hint' => 'Changed hint',
+        ], $editor);
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('Changed hint', $this->schema->getFields($this->collection)[0]->settings['hint']);
+    }
+
     /** @param array<string, mixed> $settings */
     private function field(string $code, FieldType $type, array $settings = [], bool $multiple = false): int
     {

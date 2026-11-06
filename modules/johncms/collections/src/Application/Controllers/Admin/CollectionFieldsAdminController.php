@@ -239,6 +239,8 @@ final readonly class CollectionFieldsAdminController
      */
     private function renderForm(ContentCollection $collection, ?int $id, array $fields, array $errors = []): ViewResponse
     {
+        $field = $id !== null ? $this->fieldRepository->findById($id) : null;
+        $locked = $field !== null && $this->fieldRepository->hasValues($field->id);
         $this->breadcrumbs($collection);
         $title = $id !== null ? __('Edit field') : __('New field');
         $this->navChain->add($title);
@@ -246,6 +248,9 @@ final readonly class CollectionFieldsAdminController
         return new ViewResponse('@collections/admin/field-form.twig', $this->menu($title, $collection->name) + [
             'form_action'  => $this->baseUrl($collection->id),
             'file_types' => CollectionFilePolicy::TYPES,
+            'structure_locked' => $locked,
+            'legacy_file' => $field?->type === FieldType::File && ($field->settings['file_storage'] ?? 'legacy') === 'legacy',
+            'owner_module' => $field->owner_module ?? '',
             'back_url'     => $this->baseUrl($collection->id),
             'id'           => $id,
             'fields'       => $fields,

@@ -13,7 +13,7 @@
 
 {% block content %}
     {% if repeat_message|default('') %}<div class="alert alert-info" role="status">{{ repeat_message }}</div>{% endif %}
-    {% if managed %}<div class="alert alert-info">{{ __('This field is managed by its module. Change its declaration in code.') }}</div>{% endif %}
+    {% if managed %}<div class="alert alert-info">{{ __('This field is managed by its module. Change its declaration in code.') }} <strong>{{ owner_module }}</strong></div>{% endif %}
     {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
 
     <form action="{{ form_action }}" method="post" id="field-form" data-collection-field-settings class="row g-3 align-items-start">
@@ -43,12 +43,13 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label" for="type">{{ __('Type') }}</label>
-                            <select name="type" class="form-select" id="type"{% if managed %} disabled{% endif %}>
+                            <select name="type" class="form-select" id="type"{% if managed or structure_locked %} disabled{% endif %}>
                                 {% for value, label in type_options %}
                                     <option value="{{ value }}"{% if fields.type == value %} selected{% endif %}>{{ label }}</option>
                                 {% endfor %}
                             </select>
-                            {% if id is not null %}
+                            {% if structure_locked %}
+                                <input type="hidden" name="type" value="{{ fields.type }}">
                                 <div class="form-text">{{ __('Convert existing values explicitly before changing their type or multiplicity.') }}</div>
                             {% endif %}
                         </div>
@@ -59,7 +60,8 @@
                                 <div class="form-text mt-0">{{ __('An item is not saved without a value.') }}</div>
                             </div>
                             <div class="form-check form-switch">
-                                <input type="checkbox" class="form-check-input" role="switch" name="multiple" value="1" id="multiple"{% if fields.multiple %} checked{% endif %}{% if managed %} disabled{% endif %}>
+                                <input type="checkbox" class="form-check-input" role="switch" name="multiple" value="1" id="multiple"{% if fields.multiple %} checked{% endif %}{% if managed or structure_locked %} disabled{% endif %}>
+                                {% if structure_locked and fields.multiple %}<input type="hidden" name="multiple" value="1">{% endif %}
                                 <label class="form-check-label" for="multiple">{{ __('Allow multiple values') }}</label>
                             </div>
                         </div>
@@ -72,10 +74,11 @@
                 <div class="card-body row g-3">
                     <fieldset class="col-12 mb-0" data-field-types="file">
                         <label class="form-label" for="file-storage">{{ __('File storage') }}</label>
-                        <select class="form-select" id="file-storage" name="file_storage">
+                        <select class="form-select" id="file-storage" name="file_storage"{% if structure_locked %} disabled{% endif %}>
                             <option value="registry"{% if fields.file_storage == 'registry' %} selected{% endif %}>{{ __('Registered files') }}</option>
-                            <option value="legacy"{% if fields.file_storage == 'legacy' %} selected{% endif %}>{{ __('Legacy file paths') }}</option>
+                            {% if legacy_file %}<option value="legacy"{% if fields.file_storage == 'legacy' %} selected{% endif %}>{{ __('Legacy file paths') }}</option>{% endif %}
                         </select>
+                        {% if structure_locked %}<input type="hidden" name="file_storage" value="{{ fields.file_storage }}">{% endif %}
                         <div class="form-text">{{ __('Existing paths require explicit conversion before switching to registered file IDs.') }}</div>
                         <fieldset class="mb-0" data-file-storage="registry">
                             <input type="hidden" name="file_constraints_present" value="1">
@@ -90,7 +93,7 @@
                     </fieldset>
                     <fieldset class="col-12 mb-0" data-field-types="relation">
                         <label class="form-label" for="relation-target">{{ __('Target collection ID') }}</label>
-                        <input class="form-control" type="number" min="1" step="1" name="target_collection_id" id="relation-target" value="{{ fields.target_collection_id }}">
+                        <input class="form-control" type="number" min="1" step="1" name="target_collection_id" id="relation-target" value="{{ fields.target_collection_id }}"{% if structure_locked %} readonly{% endif %}>
                         <label class="form-label mt-2" for="relation-on-delete">{{ __('When a related item is deleted') }}</label>
                         <select class="form-select" id="relation-on-delete" name="relation_on_delete">
                             <option value="restrict"{% if fields.relation_on_delete == 'restrict' %} selected{% endif %}>{{ __('Prevent deletion while referenced') }}</option>
@@ -181,6 +184,9 @@
         <input type="hidden" name="collection_form_complete" value="1">
     </form>
 
+    <template data-default-editor-template>
+        {% include '@admin/components/ui/editor.twig' with {name: '', id: 'default-editor-template', value: '', label: __('Default value'), allow_upload: false} only %}
+    </template>
     {% if managed %}
         <a href="{{ back_url }}" class="btn btn-outline-secondary mt-3">{{ __('Back') }}</a>
     {% else %}
