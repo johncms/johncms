@@ -758,3 +758,9 @@ msgstr "Редактировать новость"
 
 msgid "Delete news"
 msgstr "Удалить новость"
+
+msgid "Content"
+msgstr "Содержимое"
+
+msgid "SEO"
+msgstr "SEO"

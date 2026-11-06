@@ -52,6 +52,7 @@ final readonly class CollectionItemsAdminController
         private \Johncms\Modules\Collections\Application\Services\CollectionFieldUpload $fieldUploads,
         private \Johncms\Http\UploadedFileMapper $uploadMapper,
         private \Johncms\Http\UploadLimits $uploadLimits,
+        private \Johncms\Modules\Collections\Application\Services\CollectionFormLayout $layout = new \Johncms\Modules\Collections\Application\Services\CollectionFormLayout(),
         private \Johncms\Modules\Collections\Application\Services\CollectionRepeatedValues $repeated = new \Johncms\Modules\Collections\Application\Services\CollectionRepeatedValues(),
     ) {
     }
@@ -347,7 +348,8 @@ final readonly class CollectionItemsAdminController
             'fields'          => $fields,
             'has_sections'    => $hasSections,
             'section_options' => $hasSections ? $this->sectionOptions($collection->id) : [],
-            'field_defs' => $this->buildFieldDefs(
+            'hidden_blocks' => $this->layout->hidden($collection),
+            'field_groups' => $this->layout->groups($collection, $this->buildFieldDefs(
                 $this->fieldRepository->getByCollection($collection->id),
                 $valueMap,
                 $errors,
@@ -355,7 +357,7 @@ final readonly class CollectionItemsAdminController
                 $fields['relation_queries'] ?? [],
                 $fields['file_queries'] ?? [],
                 $fields['upload_context']
-            ),
+            )),
             'repeat_message' => $fields['repeat_message'] ?? '',
             'errors'          => array_merge([], ...array_values($errors)),
             'field_errors'    => $errors,
@@ -436,6 +438,7 @@ final readonly class CollectionItemsAdminController
                 }
             }
             $defs[] = [
+                'sort' => $field->sort,
                 'registered_file' => $registeredFile,
                 'file_choices' => $fileChoices,
                 'file_query' => $fileQueries[$field->code] ?? '',
@@ -497,7 +500,7 @@ final readonly class CollectionItemsAdminController
      */
     private function fieldsFromRequest(Request $request, ContentCollection $collection, Collection $fieldDefs): array
     {
-        return [
+        $fields = [
             'back' => $this->returnUrl($collection->id, $request->body('back')),
             'repeat_exact' => true,
             'relation_queries' => array_filter($request->bodyList('relation_query'), is_string(...)),
@@ -514,6 +517,20 @@ final readonly class CollectionItemsAdminController
             'detail_text'  => trim($request->body('detail_text', '')),
             'values'       => $this->submittedValues($request, $fieldDefs),
         ];
+        $hidden = $this->layout->hidden($collection);
+        $item = $request->bodyInt('id') ? $this->findOwnedItem($collection->id, $request->bodyInt('id')) : null;
+        $stored = $item !== null ? $this->fieldsFromItem($item) : $this->defaultFields($this->querySection($request));
+        foreach ($hidden as $block) {
+            $keys = match ($block) {
+                'publication' => ['active', 'active_from', 'active_to'],
+                'place' => ['section_id', 'sort'],
+                default => [$block],
+            };
+            foreach ($keys as $key) {
+                $fields[$key] = $stored[$key];
+            }
+        }
+        return $fields;
     }
 
     /**

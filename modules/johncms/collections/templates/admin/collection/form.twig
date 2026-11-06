@@ -78,6 +78,36 @@
                 </div>
             </div>
         </section>
+        <section class="card mt-3">
+            <div class="card-header"><h2 class="h6 mb-0">{{ __('Record form layout') }}</h2></div>
+            <div class="card-body">
+                <input type="hidden" name="layout_present" value="1">
+                <p class="form-text">{{ __('Group and order fields without changing their schema. Empty values inherit the module defaults.') }}</p>
+                {% for row in fields.layout_rows %}
+                    <div class="row g-2 mb-3 align-items-end">
+                        <div class="col-md-4"><span class="form-label d-block">{{ row.name }}</span></div>
+                        <div class="col-md-5">
+                            <label class="form-label" for="layout-group-{{ row.code }}">{{ __('Group') }}</label>
+                            <input class="form-control" id="layout-group-{{ row.code }}" name="layout_fields[{{ row.code }}][group]" maxlength="120" value="{{ row.group }}" placeholder="{{ row.default_group }}">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label" for="layout-sort-{{ row.code }}">{{ __('Order') }}</label>
+                            <input class="form-control" type="number" id="layout-sort-{{ row.code }}" name="layout_fields[{{ row.code }}][sort]" min="-1000000" max="1000000" value="{{ row.sort }}" placeholder="{{ row.default_sort }}">
+                        </div>
+                    </div>
+                {% endfor %}
+                <fieldset>
+                    <legend class="h6">{{ __('Hidden blocks') }}</legend>
+                    <p class="form-text">{{ __('Hidden values are preserved when editing. The name is always visible and required.') }}</p>
+                    {% for key, title in fields.layout_blocks %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="hide-{{ key }}" name="hidden_blocks[]" value="{{ key }}"{% if key in fields.workspace_layout.hidden_blocks|default([]) %} checked{% endif %}>
+                            <label class="form-check-label" for="hide-{{ key }}">{{ title }}</label>
+                        </div>
+                    {% endfor %}
+                </fieldset>
+            </div>
+        </section>
     </div>
 
     <div class="col-lg-4 d-flex flex-column gap-3">

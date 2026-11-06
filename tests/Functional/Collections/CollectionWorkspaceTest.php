@@ -117,6 +117,89 @@ final class CollectionWorkspaceTest extends FunctionalTestCase
         self::assertSame([], $this->settings($collection)['workspace']['labels']);
     }
 
+    public function testLayoutGroupsOwnerFieldsWithoutChangingTheirSchema(): void
+    {
+        $this->container()->get(CollectionDeclarationsSynchronizer::class)->synchronize();
+        $collection = $this->container()->get(ContentCollectionRepositoryInterface::class)->findByDeclaration('johncms/news', 'articles');
+        $before = Capsule::table('collection_fields')->where('collection_id', $collection->id)->orderBy('id')->get()->toJson();
+        $writer = $this->container()->get(SaveCollectionUseCase::class);
+        $writer->execute($collection->id, $this->form('news', ['layout' => ['fields' => [
+            'keywords' => ['group' => 'First group', 'sort' => -100],
+            'tags' => ['group' => 'Last group', 'sort' => 900],
+        ]]]));
+        $user = FunctionalUserFactory::createSupervisor();
+        $html = (string) $this->handleRequest('/admin/collections/' . $collection->id . '/items/new', cookies: $this->actingAs($user))->getContent();
+        $document = HTMLDocument::createFromString($html, LIBXML_NOERROR);
+        $inputs = $document->querySelectorAll('[name^="field_"]');
+        self::assertSame('field_keywords', $inputs->item(0)->getAttribute('name'));
+        self::assertStringContainsString('First group', $html);
+        self::assertStringContainsString('Last group', $html);
+        self::assertSame($before, Capsule::table('collection_fields')->where('collection_id', $collection->id)->orderBy('id')->get()->toJson());
+    }
+
+    public function testHiddenBlocksPreserveStoredValuesAndCannotHideTheRequiredName(): void
+    {
+        $collection = Fixture::insert('collections', ['code' => 'hidden', 'name' => 'Hidden']);
+        $item = Fixture::insert('collection_items', [
+            'collection_id' => $collection, 'name' => 'Before', 'code' => 'canonical', 'active' => 0,
+            'preview_text' => '<p>Preview</p>', 'detail_text' => '<p>Detail</p>', 'sort' => 17,
+        ]);
+        $workspace = ['layout' => ['hidden_blocks' => ['code', 'preview_text', 'detail_text', 'publication', 'place']]];
+        $writer = $this->container()->get(SaveCollectionUseCase::class);
+        $writer->execute($collection, $this->form('hidden', $workspace));
+        $user = FunctionalUserFactory::createSupervisor();
+        $base = '/admin/collections/' . $collection . '/items';
+        $html = (string) $this->handleRequest($base . '/' . $item . '/edit', cookies: $this->actingAs($user))->getContent();
+        $document = HTMLDocument::createFromString($html, LIBXML_NOERROR);
+        self::assertNotNull($document->querySelector('input[name="name"][required]'));
+        foreach (['code', 'preview_text', 'detail_text', 'active', 'sort'] as $name) {
+            self::assertNull($document->querySelector('[name="' . $name . '"]'));
+        }
+        self::assertSame(302, $this->postForm($base, ['id' => $item, 'name' => 'After', 'code' => 'forged', 'active' => 1, 'sort' => '99', 'detail_text' => 'forged'], $user)->getStatusCode());
+        $row = Capsule::table('collection_items')->where('id', $item)->first();
+        self::assertSame('After', $row->name);
+        self::assertSame('canonical', $row->code);
+        self::assertSame(0, $row->active);
+        self::assertSame(17, $row->sort);
+        self::assertSame('<p>Preview</p>', $row->preview_text);
+        self::assertSame('<p>Detail</p>', $row->detail_text);
+        $this->expectException(CollectionSchemaException::class);
+        $writer->execute($collection, $this->form('hidden', ['layout' => ['hidden_blocks' => ['name']]]));
+    }
+
+    public function testNativeLayoutSettingsSaveGroupsAndPreserveThemOnOlderLabelOnlyPosts(): void
+    {
+        $collection = Fixture::insert('collections', ['code' => 'layout-form', 'name' => 'Layout form']);
+        Fixture::insert('collection_fields', ['collection_id' => $collection, 'code' => 'subtitle', 'name' => 'Subtitle', 'type' => 'string']);
+        $user = FunctionalUserFactory::createSupervisor();
+        $form = ['id' => $collection, 'code' => 'layout-form', 'name' => 'Layout form', 'sort' => '100', 'per_page' => '20',
+            'workspace_present' => '1', 'layout_present' => '1', 'layout_fields' => ['subtitle' => ['group' => 'Extra <fields>', 'sort' => '-20']],
+            'hidden_blocks' => ['preview_text'],
+        ];
+        self::assertSame(302, $this->postForm('/admin/collections', $form, $user)->getStatusCode());
+        $layout = $this->settings($collection)['workspace']['layout'];
+        self::assertSame(-20, $layout['fields']['subtitle']['sort']);
+        unset($form['layout_present'], $form['layout_fields'], $form['hidden_blocks']);
+        $form['workspace_labels'] = ['new' => 'New offer'];
+        self::assertSame(302, $this->postForm('/admin/collections', $form, $user)->getStatusCode());
+        self::assertSame($layout, $this->settings($collection)['workspace']['layout']);
+        $html = (string) $this->handleRequest('/admin/collections/' . $collection . '/items/new', cookies: $this->actingAs($user))->getContent();
+        self::assertStringContainsString('Extra &lt;fields&gt;', $html);
+    }
+
+    public function testLayoutRejectsInvalidFieldReferencesAndOrderingWithoutSaving(): void
+    {
+        $collection = Fixture::insert('collections', ['code' => 'invalid-layout', 'name' => 'Layout']);
+        foreach ([['fields' => ['missing' => ['sort' => 1]]], ['fields' => ['missing' => ['sort' => '1']]], ['fields' => null], ['hidden_blocks' => ['unknown']], ['hidden_blocks' => [null]], ['hidden_blocks' => null]] as $layout) {
+            try {
+                $this->container()->get(SaveCollectionUseCase::class)->execute($collection, $this->form('invalid-layout', ['layout' => $layout]));
+                self::fail('Invalid layouts must be rejected.');
+            } catch (CollectionSchemaException) {
+                self::assertArrayNotHasKey('workspace', $this->settings($collection));
+            }
+        }
+    }
+
     /** @return array<string, mixed> */
     private function settings(int $id): array
     {

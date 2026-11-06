@@ -1,0 +1,77 @@
+{% set input_id = 'f_' ~ def.input_name %}
+{% set wide = def.multiple or def.type in ['text', 'html'] %}
+<div class="{{ wide ? 'col-12' : 'col-md-6' }}"{% if def.type == 'relation' %} data-collection-relation data-source="{{ def.relation_url }}" data-error="{{ __('Could not load related items.') }}" data-loaded="{{ __('Related items loaded. Choose a value and save the form.') }}"{% endif %}
+     {% if def.registered_file %} data-file-field data-source="{{ def.file_url }}" data-upload-url="{{ def.file_upload_url }}"
+     data-loading="{{ __('Loading files...') }}" data-no-file="{{ __('Choose a file to upload.') }}" data-empty="{{ __('No matching files were found. Change your search or upload a new file.') }}"
+     data-error="{{ __('Could not load files. Try again.') }}" data-loaded="{{ __('Files loaded. Choose a value and save the form.') }}"
+     data-unavailable="{{ __('The selected file is unavailable or incompatible. Choose another file or clear the value.') }}"
+     data-uploading="{{ __('A file is still uploading. Wait before changing values or saving.') }}" data-upload-error="{{ __('Could not upload the file. Try again.') }}"
+     data-uploaded="{{ __('Files uploaded. Save the form to apply the selection.') }}" data-cleared="{{ __('File selection cleared. Save the form to apply the change.') }}"{% endif %}>
+    {% if def.registered_file %}
+        <label class="form-label" for="{{ input_id }}-file-query">{{ __('Search available files') }} — {{ def.name }}</label>
+        <div class="input-group mb-2">
+            <input class="form-control" type="search" id="{{ input_id }}-file-query" name="file_query[{{ def.code }}]" value="{{ def.file_query }}" maxlength="255" data-file-query>
+            <button class="btn btn-outline-secondary" type="submit" name="file_search" value="{{ def.code }}" data-file-search formnovalidate>{{ __('Search') }}</button>
+        </div>
+        <div class="form-text mb-2" role="status" data-file-search-status>{{ def.file_error ? def.file_error : (def.file_choices|filter(choice => choice.inResults)|length ? __('Up to 30 matching files. Refine your search to find another file.') : __('No matching files were found. Change your search or upload a new file.')) }}</div>
+        <div class="form-text mb-2">{{ __('Maximum file size: %s')|format(def.max_file_bytes|format_size) }}</div>
+    {% endif %}
+    {% if def.type == 'relation' %}
+        <label class="form-label" for="{{ input_id }}-query">{{ __('Search related items') }} — {{ def.name }}</label>
+        <div class="input-group mb-2">
+            <input class="form-control" type="search" id="{{ input_id }}-query" name="relation_query[{{ def.code }}]" value="{{ def.relation_query }}" maxlength="255" data-relation-query>
+            <button class="btn btn-outline-secondary" type="submit" name="relation_search" value="{{ def.code }}" formnovalidate data-relation-search>{{ __('Search') }}</button>
+        </div>
+        <div class="form-text mb-2" role="status" data-relation-status>{{ def.relation_error ? def.relation_error : (def.relation_available ? __('Up to 30 matching items. Refine your search to find another item.') : __('You need access to the target collection to choose related items.')) }}</div>
+    {% endif %}
+    {% if def.type == 'boolean' and not def.multiple %}
+        <div class="form-check form-switch mt-md-4">
+            <input type="checkbox" class="form-check-input{{ def.errors ? ' is-invalid' : '' }}" role="switch" name="{{ def.input_name }}" value="1" id="{{ input_id }}"{% if def.value == '1' %} checked{% endif %}>
+            <label class="form-check-label" for="{{ input_id }}">{{ def.name }}</label>
+        </div>
+    {% else %}
+        {% if not def.multiple or def.role == 'tags' %}
+            <label class="form-label" for="{{ input_id }}">
+                {{ def.name }}{% if def.required %} <span class="text-danger" title="{{ __('Required') }}">*</span>{% endif %}
+            </label>
+        {% endif %}
+        {% if def.role == 'tags' and def.multiple %}
+            <div data-collection-tags data-source="{{ def.tags_url }}"
+                 data-add-label="{{ __('Add tag') }}" data-remove-label="{{ __('Remove tag') }}"
+                 data-placeholder="{{ __('Enter a tag') }}" data-error="{{ __('Could not load tag suggestions.') }}">
+                <textarea name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" rows="3">{{ def.value }}</textarea>
+                <div class="form-text">{{ __('One value per line') }}</div>
+            </div>
+        {% elseif def.multiple %}
+            {% include '@collections/admin/components/repeated-values.twig' with {
+                entries: def.entries, input_name: def.input_name, action_key: def.input_name,
+                id_prefix: input_id, type: def.type, label: def.name, limit: def.limit, required: def.required, errors: def.errors,
+                allow_upload: true, upload_url: upload_url, options: def.options,
+                file_code: def.code, file_choices: def.file_choices, file_accept: def.file_accept
+            } only %}
+        {% elseif def.type == 'registered_file' %}
+            {% include '@collections/admin/components/file-value.twig' with {
+                code: def.code, index: 0, value: def.value, input_name: def.input_name, input_id: input_id,
+                choices: def.file_choices, accept: def.file_accept, errors: def.errors
+            } only %}
+        {% elseif def.type in ['select', 'relation'] %}
+            <select name="{{ def.input_name }}" class="form-select{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}"{% if def.type == 'relation' %} data-relation-select{% endif %}>
+                {% include '@collections/admin/components/select-options.twig' with {options: def.options, current: def.value} only %}
+            </select>
+        {% elseif def.type == 'html' %}
+            {% include '@admin/components/ui/editor.twig' with {name: def.input_name, id: input_id, value: def.value, allow_upload: true, upload_url: upload_url, errors: def.errors|join(' ')} only %}
+        {% elseif def.type == 'text' or (def.type == 'string' and def.value matches '/[\r\n]/') %}
+            <textarea name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" rows="4">{{ def.value }}</textarea>
+        {% elseif def.type in ['integer', 'double'] %}
+            <input type="number"{% if def.type == 'double' %} step="any"{% endif %}{% if def.min_value is not null %} min="{{ def.min_value }}"{% endif %}{% if def.max_value is not null %} max="{{ def.max_value }}"{% endif %} name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" value="{{ def.value }}">
+        {% elseif def.type == 'date' %}
+            <input type="date" name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" value="{{ def.value }}">
+        {% elseif def.type == 'datetime' %}
+            <input type="datetime-local" name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" value="{{ def.value }}">
+        {% else %}
+            <input type="text" name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" value="{{ def.value }}">
+        {% endif %}
+    {% endif %}
+    {% if def.hint %}<div class="form-text">{{ def.hint }}</div>{% endif %}
+    {% if not def.multiple or def.role == 'tags' %}{% include '@theme/components/field-errors.twig' with {errors: def.errors} only %}{% endif %}
+</div>

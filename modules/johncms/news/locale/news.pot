@@ -57,6 +57,16 @@ msgstr ""
 msgid "Delete news"
 msgstr ""
 
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:45
+msgid "Content"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:46
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:47
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:48
+msgid "SEO"
+msgstr ""
+
 #: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:92
 msgid "Enter the comment text"
 msgstr ""

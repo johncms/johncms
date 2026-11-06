@@ -66,6 +66,13 @@ final readonly class SaveCollectionUseCase
             }
             $workspace = $dto->workspace ?? ($current->settings['workspace'] ?? []);
             $this->workspace->validate($workspace);
+            $layoutFields = array_keys($dto->workspace['layout']['fields'] ?? []);
+            $availableFields = $layoutFields !== [] ? $this->fields?->getByCollection($id ?? 0)->keyBy('code')->all() ?? [] : [];
+            foreach ($layoutFields as $code) {
+                if (! isset($availableFields[$code])) {
+                    throw new \Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException(d__('collections', 'Choose existing fields for the form layout.'));
+                }
+            }
             $settings = $current->settings ?? [];
             if ($dto->workspace !== null || array_key_exists('workspace', $settings)) {
                 $settings['workspace'] = $workspace;

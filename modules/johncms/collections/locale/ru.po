@@ -1280,3 +1280,24 @@ msgstr "Сохранить и продолжить редактирование"
 
 msgid "Save changes before opening the preview or the published page."
 msgstr "Сохраните изменения перед открытием предпросмотра или опубликованной страницы."
+
+msgid "Record form layout"
+msgstr "Расположение полей записи"
+
+msgid "Group and order fields without changing their schema. Empty values inherit the module defaults."
+msgstr "Группируйте и упорядочивайте поля без изменения схемы. Пустые значения наследуют настройки модуля."
+
+msgid "Group"
+msgstr "Группа"
+
+msgid "Hidden blocks"
+msgstr "Скрытые блоки"
+
+msgid "Hidden values are preserved when editing. The name is always visible and required."
+msgstr "При редактировании скрытые значения сохраняются. Название всегда видно и обязательно."
+
+msgid "Choose valid field groups, numeric ordering and available blocks. The name is always visible."
+msgstr "Укажите допустимые группы полей, числовой порядок и доступные блоки. Название всегда видно."
+
+msgid "Choose existing fields for the form layout."
+msgstr "Выберите существующие поля для расположения в форме."

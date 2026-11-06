@@ -367,6 +367,13 @@
       'Use known workspace labels with nonempty text of at most 120 characters.' => 'Используйте допустимые подписи рабочего пространства с непустым текстом не длиннее 120 символов.',
       'Save and continue editing' => 'Сохранить и продолжить редактирование',
       'Save changes before opening the preview or the published page.' => 'Сохраните изменения перед открытием предпросмотра или опубликованной страницы.',
+      'Record form layout' => 'Расположение полей записи',
+      'Group and order fields without changing their schema. Empty values inherit the module defaults.' => 'Группируйте и упорядочивайте поля без изменения схемы. Пустые значения наследуют настройки модуля.',
+      'Group' => 'Группа',
+      'Hidden blocks' => 'Скрытые блоки',
+      'Hidden values are preserved when editing. The name is always visible and required.' => 'При редактировании скрытые значения сохраняются. Название всегда видно и обязательно.',
+      'Choose valid field groups, numeric ordering and available blocks. The name is always visible.' => 'Укажите допустимые группы полей, числовой порядок и доступные блоки. Название всегда видно.',
+      'Choose existing fields for the form layout.' => 'Выберите существующие поля для расположения в форме.',
     ),
   ),
 );

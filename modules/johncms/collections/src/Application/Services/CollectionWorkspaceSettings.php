@@ -16,8 +16,14 @@ final readonly class CollectionWorkspaceSettings
     /** @param array<string, mixed> $settings */
     public function validate(array $settings, bool $registered = false): void
     {
-        if (($settings !== [] && array_is_list($settings)) || array_diff(array_keys($settings), ['labels']) !== [] || (array_key_exists('labels', $settings) && ! is_array($settings['labels']))) {
+        if (($settings !== [] && array_is_list($settings)) || array_diff(array_keys($settings), ['labels', 'layout']) !== [] || (array_key_exists('labels', $settings) && ! is_array($settings['labels']))) {
             throw $this->invalid();
+        }
+        if (array_key_exists('layout', $settings)) {
+            if (! is_array($settings['layout'])) {
+                throw $this->invalid();
+            }
+            (new CollectionFormLayout())->validate($settings['layout'], $registered);
         }
         foreach ($settings['labels'] ?? [] as $key => $label) {
             if (! in_array($key, self::LABELS, true)) {

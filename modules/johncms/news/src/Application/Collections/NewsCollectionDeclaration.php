@@ -41,7 +41,12 @@ final class NewsCollectionDeclaration implements CollectionDeclarationProviderIn
                 'create' => CollectionLabelDTO::translatableLabel('news', 'Add news')->toArray(),
                 'edit' => CollectionLabelDTO::translatableLabel('news', 'Edit news')->toArray(),
                 'delete' => CollectionLabelDTO::translatableLabel('news', 'Delete news')->toArray(),
-            ]]]
+            ], 'layout' => ['fields' => [
+                'tags' => ['group' => CollectionLabelDTO::translatableLabel('news', 'Content')->toArray(), 'sort' => 100],
+                'page_title' => ['group' => CollectionLabelDTO::translatableLabel('news', 'SEO')->toArray(), 'sort' => 200],
+                'description' => ['group' => CollectionLabelDTO::translatableLabel('news', 'SEO')->toArray(), 'sort' => 300],
+                'keywords' => ['group' => CollectionLabelDTO::translatableLabel('news', 'SEO')->toArray(), 'sort' => 400],
+            ]]]]
         )];
     }
 }

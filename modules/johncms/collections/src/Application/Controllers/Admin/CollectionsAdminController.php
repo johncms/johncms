@@ -236,6 +236,8 @@ final readonly class CollectionsAdminController
         $fields['permission_options'] = $this->permissionOptions($fields['content_permission']);
         $fields['workspace_label_titles'] = $this->workspaceSettings->labelTitles();
         $fields['workspace_defaults'] = $this->workspaceSettings->defaults();
+        $fields['layout_rows'] = [];
+        $fields['layout_blocks'] = (new \Johncms\Modules\Collections\Application\Services\CollectionFormLayout())->blocks();
         $fields['search_options'] = [];
         $title = __('New collection');
         $this->navChain->add(__('Collections'), self::URL);
@@ -259,8 +261,22 @@ final readonly class CollectionsAdminController
     {
         $fields['managed'] = $collection->owner_module !== null;
         $fields['workspace_defaults'] = $this->workspaceSettings->defaults($collection);
+        $layout = new \Johncms\Modules\Collections\Application\Services\CollectionFormLayout();
+        $fields['layout_blocks'] = $layout->blocks();
+        $fields['workspace_layout']['hidden_blocks'] ??= $layout->hidden($collection);
+        $fields['layout_rows'] = [];
         $fields['search_options'] = [];
         foreach ($this->fieldRepository->getByCollection($collection->id) as $field) {
+            $config = $fields['workspace_layout']['fields'][$field->code] ?? [];
+            $default = $collection->settings['_workspace']['layout']['fields'][$field->code] ?? [];
+            $group = $default['group'] ?? '';
+            $fields['layout_rows'][] = [
+                'code' => $field->code, 'name' => $field->name,
+                'group' => is_string($config['group'] ?? '') ? ($config['group'] ?? '') : '',
+                'sort' => is_int($config['sort'] ?? '') ? $config['sort'] : '',
+                'default_group' => is_array($group) ? \Gettext\TranslatorFunctions::getTranslator()->dgettext($group['domain'], $group['message']) : $group,
+                'default_sort' => $default['sort'] ?? $field->sort,
+            ];
             if (in_array($field->type, [\Johncms\Modules\Collections\Domain\Enums\FieldType::String_, \Johncms\Modules\Collections\Domain\Enums\FieldType::Text, \Johncms\Modules\Collections\Domain\Enums\FieldType::Html], true)) {
                 $fields['search_options'][$field->code] = $field->name;
             }
@@ -315,6 +331,23 @@ final readonly class CollectionsAdminController
     /** @return array<string, mixed> */
     private function fieldsFromRequest(Request $request): array
     {
+        $existing = $request->bodyInt('id') ? $this->repository->findById($request->bodyInt('id')) : null;
+        $layout = $existing?->settings['workspace']['layout'] ?? [];
+        if ($request->hasBody('layout_present')) {
+            $layout = ['fields' => [], 'hidden_blocks' => $request->bodyList('hidden_blocks')];
+            foreach ($request->bodyList('layout_fields') as $code => $config) {
+                if (! is_array($config)) {
+                    $layout['fields'][$code] = $config;
+                    continue;
+                }
+                foreach ($config as $key => $value) {
+                    if (is_string($value) && trim($value) === '') {
+                        continue;
+                    }
+                    $layout['fields'][$code][$key] = $key === 'sort' && is_string($value) && preg_match('/^-?[0-9]{1,7}$/D', $value) ? (int) $value : $value;
+                }
+            }
+        }
         return [
             'code'         => trim($request->body('code', '')),
             'name'         => trim($request->body('name', '')),
@@ -327,6 +360,7 @@ final readonly class CollectionsAdminController
             'content_permission' => trim($request->body('content_permission', 'collections.manage')),
             'search_fields' => $request->hasBody('search_fields') ? $request->bodyList('search_fields') : [],
             'workspace_present' => $request->hasBody('workspace_present') || $request->hasBody('workspace_labels'),
+            'workspace_layout' => $layout,
             'workspace_labels' => array_filter($request->bodyList('workspace_labels'), static fn ($value): bool => ! is_string($value) || trim($value) !== ''),
         ];
     }
@@ -351,6 +385,7 @@ final readonly class CollectionsAdminController
             'search_fields' => $settings['search_fields'] ?? [],
             'workspace_present' => true,
             'workspace_labels' => $settings['workspace']['labels'] ?? [],
+            'workspace_layout' => $settings['workspace']['layout'] ?? [],
         ];
     }
 
@@ -372,6 +407,7 @@ final readonly class CollectionsAdminController
             'search_fields' => [],
             'workspace_present' => true,
             'workspace_labels' => [],
+            'workspace_layout' => [],
         ];
     }
 
@@ -391,7 +427,7 @@ final readonly class CollectionsAdminController
             perPage: (int) $fields['per_page'],
             contentPermission: $fields['content_permission'],
             searchFields: $fields['search_fields'],
-            workspace: $fields['workspace_present'] ? ['labels' => $fields['workspace_labels']] : null,
+            workspace: $fields['workspace_present'] ? ['labels' => $fields['workspace_labels'], 'layout' => $fields['workspace_layout']] : null,
         );
     }
 
