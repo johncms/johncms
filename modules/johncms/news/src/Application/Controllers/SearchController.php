@@ -8,6 +8,7 @@ use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\Collections\Domain\Query\CollectionTextSearchDTO;
 use Johncms\Modules\News\Application\Collections\NewsReadServiceInterface;
 use Johncms\Modules\News\Application\DTO\NewsQueryDTO;
 use Johncms\NavChain;
@@ -38,10 +39,11 @@ final readonly class SearchController
         $title = $tags ? d__('news', 'Search by tags') : d__('news', 'Search');
         $this->navChain->add($title);
         $query = trim($request->queryParam($tags ? 'tag' : 'query'));
+        $term = $tags ? $query : CollectionTextSearchDTO::normalizeTerm($query);
         $articles = [];
         $pagination = null;
-        if ($query !== '') {
-            $spec = new NewsQueryDTO(search: $tags ? '' : $query, tag: $tags ? $query : null);
+        if ($term !== '') {
+            $spec = new NewsQueryDTO(search: $tags ? '' : $term, tag: $tags ? $term : null);
             $pager = $this->paginationFactory->create($this->news->count($spec));
             $redirect = $this->paginationGuard->redirectUrl($pager);
             if ($redirect !== null) {

@@ -110,7 +110,11 @@ final readonly class NewsReadService implements NewsReadServiceInterface
             return null;
         }
         $collection = $this->collection();
-        $section = $this->sections->resolvePath($collection->id, explode('/', $category));
+        try {
+            $section = $this->sections->resolvePath($collection->id, explode('/', $category));
+        } catch (\InvalidArgumentException $exception) {
+            throw $this->notFound($exception);
+        }
         return $section !== null ? ($this->section($section->id) ?? throw $this->notFound()) : throw $this->notFound();
     }
 
@@ -244,8 +248,8 @@ final readonly class NewsReadService implements NewsReadServiceInterface
         return (new DateTimeImmutable('now', new DateTimeZone('UTC')))->modify('-' . $days . ' days');
     }
 
-    private function notFound(): NewsItemNotFoundException
+    private function notFound(?\Throwable $previous = null): NewsItemNotFoundException
     {
-        return new NewsItemNotFoundException(d__('news', 'The requested article or section is not available.'));
+        return new NewsItemNotFoundException(message: d__('news', 'The requested article or section is not available.'), previous: $previous);
     }
 }

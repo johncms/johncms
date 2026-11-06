@@ -82,6 +82,49 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         self::assertSame(404, $this->json('/news/add_vote/' . $id . '/1', [], $cookies)->getStatusCode());
     }
 
+    public function testVoteWidgetSendsTheRequestItsRouteAccepts(): void
+    {
+        $id = $this->item('Public body');
+        $cookies = $this->actingAs(FunctionalUserFactory::create());
+        self::assertStringContainsString('axios.post(this.set_vote_url + this.article_id', (string) file_get_contents(ROOT_PATH . 'themes/default/src/js/components/LikesComponent.vue'));
+        $vote = $this->json('/news/add_vote/' . $id . '/1/', [], $cookies);
+        self::assertSame(200, $vote->getStatusCode());
+        self::assertSame(1, json_decode((string) $vote->getContent(), true)['rating']);
+    }
+
+    public function testSectionCodesWithDotsOpenTheSectionAndItsArticles(): void
+    {
+        $sections = $this->container()->get(CollectionSectionsApiInterface::class);
+        $top = $sections->addSection(new CollectionSectionFormDTO($this->collection, null, 'v1.0', 'Version', null, true, 100));
+        $nested = $sections->addSection(new CollectionSectionFormDTO($this->collection, $top, 'rc.1', 'Candidate', null, true, 100));
+        $this->item('Nested body', $nested, 'notes.final');
+        $this->item('Root body', code: 'root.entry');
+        self::assertSame(200, $this->handleRequest('/news/v1.0/')->getStatusCode());
+        self::assertSame(200, $this->handleRequest('/news/v1.0/rc.1/')->getStatusCode());
+        self::assertStringContainsString('Nested body', (string) $this->handleRequest('/news/v1.0/rc.1/notes.final.html')->getContent());
+        self::assertStringContainsString('Root body', (string) $this->handleRequest('/news/root.entry.html')->getContent());
+        self::assertSame(404, $this->handleRequest('/news/missing.section/')->getStatusCode());
+    }
+
+    public function testMalformedAddressesAndSearchTermsAreNotServerErrors(): void
+    {
+        $sections = $this->container()->get(CollectionSectionsApiInterface::class);
+        $sections->addSection(new CollectionSectionFormDTO($this->collection, null, 'a', 'A', null, true, 100));
+        $this->item('Matching body', code: 'matching');
+        $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer::class)->rebuildCollection($this->collection);
+        self::assertSame(404, $this->handleRequest('/news/a//b/')->getStatusCode());
+        self::assertSame(404, $this->handleRequest('/news/a//b/entry.html')->getStatusCode());
+        self::assertSame(404, $this->handleRequest('/news/a/../entry.html')->getStatusCode());
+        foreach (['%C2%A0', '%FF'] as $empty) {
+            $response = $this->handleRequest('/news/search?query=' . $empty);
+            self::assertSame(200, $response->getStatusCode());
+            self::assertStringNotContainsString('/news/matching.html', (string) $response->getContent());
+        }
+        $long = $this->handleRequest('/news/search?query=' . str_repeat('a', 300));
+        self::assertSame(200, $long->getStatusCode());
+        self::assertStringContainsString('/news/matching.html', (string) $this->handleRequest('/news/search?query=matching')->getContent());
+    }
+
     public function testPendingUpdateBlocksPublicRoutesUploadsAndAllCollectionWrites(): void
     {
         $id = $this->item('Public body');

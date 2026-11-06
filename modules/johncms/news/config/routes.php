@@ -25,9 +25,16 @@ return static function (RouteCollection $router): void {
         ->name('news.comments_upload_file')
         ->permission(NewsPermissions::COMMENTS_POST);
 
-        $router->map(['GET', 'POST'], '/news/{category:path}', [SectionController::class, 'index'])->name('news.section')->defaults(['category' => null]);
-        $router->map(['GET', 'POST'], '/news/{category:path}/{article_code:slug}.html', [ArticleController::class, 'index'])->name('news.article');
+        // Section codes may contain dots, so the addresses of articles have to be tried first.
+        $sectionPath = ['category' => '[\w/.+-]+'];
+        $router->map(['GET', 'POST'], '/news/{category}/{article_code:slug}.html', [ArticleController::class, 'index'])
+            ->requirements($sectionPath)
+            ->name('news.article');
         $router->map(['GET', 'POST'], '/news/{article_code:slug}.html', [ArticleController::class, 'index'])->name('news.article_root');
+        $router->map(['GET', 'POST'], '/news/{category}', [SectionController::class, 'index'])
+            ->requirements($sectionPath)
+            ->name('news.section')
+            ->defaults(['category' => null]);
     });
     $public->addMiddleware(\Johncms\Modules\News\Application\Middleware\NewsAvailabilityMiddleware::class);
 
