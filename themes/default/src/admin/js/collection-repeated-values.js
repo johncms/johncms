@@ -95,13 +95,24 @@ document.querySelectorAll('[data-collection-repeat]').forEach(root => {
 document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   const multiple = form.querySelector('input[name="multiple"]');
   const type = form.querySelector('select[name="type"]');
+  const fileStorage = form.querySelector('select[name="file_storage"]');
+  const toggle = (group, visible) => {
+    group.hidden = !visible;
+    group.disabled = !visible;
+  };
   const update = () => {
     form.querySelector('[data-default-single]').hidden = multiple.checked;
     form.querySelector('[data-default-multiple]').hidden = !multiple.checked;
-    form.querySelectorAll('[data-field-types]').forEach(group => { group.hidden = !group.dataset.fieldTypes.split(' ').includes(type.value); });
+    form.querySelectorAll('[data-field-types]').forEach(group => toggle(group, group.dataset.fieldTypes.split(' ').includes(type.value)));
+    form.querySelectorAll('[data-field-multiple]').forEach(group => toggle(group, multiple.checked));
+    form.querySelectorAll('[data-file-storage]').forEach(group => toggle(group, type.value === 'file' && group.dataset.fileStorage === fileStorage.value));
+    form.querySelectorAll('input[name="min_value"], input[name="max_value"]').forEach(input => {
+      input.step = type.value === 'integer' ? '1' : 'any';
+    });
   };
   multiple.addEventListener('change', update);
   type.addEventListener('change', update);
+  fileStorage.addEventListener('change', update);
   form.addEventListener('reset', () => queueMicrotask(update));
   update();
 });

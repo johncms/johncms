@@ -102,6 +102,10 @@ final readonly class CollectionFieldsAdminController
         }
 
         $fields = $this->fieldsFromRequest($request);
+        $current = $id !== null ? $this->findOwnedField($collection_id, $id) : null;
+        $fields['legacy_length_limits'] = $current !== null && $current->type->value === $fields['type']
+            && in_array($fields['type'], ['select', 'file'], true)
+            && (isset($current->settings['min_length']) || isset($current->settings['max_length']));
         if ($request->hasBody('repeat_action')) {
             try {
                 [$key, $operation, $index] = $this->repeated->action($request->body('repeat_action'));
@@ -299,6 +303,8 @@ final readonly class CollectionFieldsAdminController
             'in_list'  => $field->in_list ? 1 : 0,
             'sort'     => $field->sort,
             ...$this->settingsToFields($field->settings ?? []),
+            'legacy_length_limits' => in_array($field->type, [FieldType::Select, FieldType::File], true)
+                && (isset($field->settings['min_length']) || isset($field->settings['max_length'])),
         ];
     }
 
@@ -355,6 +361,7 @@ final readonly class CollectionFieldsAdminController
             'allowed_mime_types' => $settings['allowed_mime_types'] ?? array_keys(CollectionFilePolicy::TYPES),
             'option_rows' => array_map(static fn (array $option): array => $option + ['active' => true], $settings['options'] ?? []), 'use_default' => $default !== null,
             'default_value' => is_string($default) ? $default : '', 'default_values' => is_array($default) ? $default : [],
+            'legacy_length_limits' => isset($settings['min_length']) || isset($settings['max_length']),
             'min_length' => $settings['min_length'] ?? '', 'max_length' => $settings['max_length'] ?? '',
             'min_value' => $settings['min_value'] ?? '', 'max_value' => $settings['max_value'] ?? '', 'max_values' => $settings['max_values'] ?? '',
         ];
@@ -369,7 +376,19 @@ final readonly class CollectionFieldsAdminController
             ? array_values(array_filter($fields['default_values'], static fn (string $value): bool => trim($value) !== ''))
             : $fields['default_value'];
         $settings = ['hint' => $fields['hint'], 'default' => $fields['use_default'] ? $default : null];
+        $lengthLimits = in_array($fields['type'], ['string', 'text', 'html'], true)
+            || (in_array($fields['type'], ['select', 'file'], true) && ($fields['legacy_length_limits'] ?? false));
+        $numericLimits = in_array($fields['type'], ['integer', 'double'], true);
         foreach (['min_length', 'max_length', 'min_value', 'max_value', 'max_values'] as $key) {
+            $applicable = match ($key) {
+                'min_length', 'max_length' => $lengthLimits,
+                'min_value', 'max_value' => $numericLimits,
+                'max_values' => (bool) $fields['multiple'],
+            };
+            if (! $applicable) {
+                $settings[$key] = null;
+                continue;
+            }
             $raw = trim((string) $fields[$key]);
             $integer = filter_var($raw, FILTER_VALIDATE_INT);
             $settings[$key] = $raw === '' ? null : ($integer !== false ? $integer : (in_array($key, ['min_value', 'max_value'], true) && is_numeric($raw) ? (float) $raw : $raw));
@@ -378,7 +397,10 @@ final readonly class CollectionFieldsAdminController
             if ($fields['file_storage_present'] ?? true) {
                 $settings['file_storage'] = $fields['file_storage'];
             }
-            if ($fields['file_constraints_present'] ?? true) {
+            if ($fields['file_storage'] === 'legacy') {
+                $settings['max_file_bytes'] = null;
+                $settings['allowed_mime_types'] = null;
+            } elseif ($fields['file_constraints_present'] ?? true) {
                 $bytes = filter_var($fields['max_file_bytes'], FILTER_VALIDATE_INT);
                 $settings['max_file_bytes'] = $fields['max_file_bytes'] === '' ? null : ($bytes !== false ? $bytes : $fields['max_file_bytes']);
                 $settings['allowed_mime_types'] = $fields['allowed_mime_types'];

@@ -146,6 +146,125 @@ final class CollectionFieldSettingsTest extends FunctionalTestCase
         self::assertSame($defaults, $this->items->getItemByCode($this->collection, null, 'paragraphs')->values['paragraphs']);
     }
 
+    public function testAdminSavesOnlyApplicableLimitsForEveryFieldType(): void
+    {
+        $editor = FunctionalUserFactory::createSupervisor();
+        foreach (FieldType::cases() as $type) {
+            $response = $this->postForm('/admin/collections/' . $this->collection . '/fields', [
+                'code' => $type->value,
+                'name' => $type->value,
+                'type' => $type->value,
+                'min_length' => '2',
+                'max_length' => '10',
+                'min_value' => '-3',
+                'max_value' => '3',
+                'max_values' => 'invalid hidden limit',
+                'target_collection_id' => (string) $this->collection,
+            ], $editor);
+            self::assertSame(302, $response->getStatusCode(), $type->value);
+            $fields = $this->schema->getFields($this->collection);
+            $field = $fields[array_key_last($fields)];
+            $text = in_array($type, [FieldType::String_, FieldType::Text, FieldType::Html], true);
+            $numeric = in_array($type, [FieldType::Integer, FieldType::Double], true);
+            self::assertSame($text ? 2 : null, $field->settings['min_length']);
+            self::assertSame($text ? 10 : null, $field->settings['max_length']);
+            self::assertSame($numeric ? -3 : null, $field->settings['min_value']);
+            self::assertSame($numeric ? 3 : null, $field->settings['max_value']);
+            self::assertNull($field->settings['max_values']);
+        }
+    }
+
+    public function testAdminClearsPreviousLimitsWhenTypeOrMultiplicityChanges(): void
+    {
+        $id = $this->field('value', FieldType::Integer, ['min_value' => 1, 'max_value' => 10, 'max_values' => 2], true);
+        $editor = FunctionalUserFactory::createSupervisor();
+        $response = $this->postForm('/admin/collections/' . $this->collection . '/fields', [
+            'id' => (string) $id,
+            'code' => 'value',
+            'name' => 'Value',
+            'type' => 'string',
+            'min_length' => '3',
+            'max_length' => '20',
+        ], $editor);
+        self::assertSame(302, $response->getStatusCode());
+        $field = $this->schema->getFields($this->collection)[0];
+        self::assertNull($field->settings['min_value']);
+        self::assertNull($field->settings['max_value']);
+        self::assertNull($field->settings['max_values']);
+        self::assertSame(3, $field->settings['min_length']);
+        self::assertSame(20, $field->settings['max_length']);
+        self::assertFalse($field->multiple);
+    }
+
+    public function testAdminKeepsFractionalLimitsAndMultipleValueLimit(): void
+    {
+        $editor = FunctionalUserFactory::createSupervisor();
+        $response = $this->postForm('/admin/collections/' . $this->collection . '/fields', [
+            'code' => 'value',
+            'name' => 'Value',
+            'type' => 'double',
+            'multiple' => '1',
+            'min_value' => '-1.5',
+            'max_value' => '2.5',
+            'max_values' => '2',
+            'min_length' => 'invalid hidden limit',
+        ], $editor);
+        self::assertSame(302, $response->getStatusCode());
+        $field = $this->schema->getFields($this->collection)[0];
+        self::assertSame(-1.5, $field->settings['min_value']);
+        self::assertSame(2.5, $field->settings['max_value']);
+        self::assertSame(2, $field->settings['max_values']);
+        self::assertNull($field->settings['min_length']);
+    }
+
+    public function testAdminPreservesExistingSelectLengthLimits(): void
+    {
+        $id = $this->field('choice', FieldType::Select, [
+            'min_length' => 2,
+            'max_length' => 10,
+            'options' => [['code' => 'yes', 'label' => 'Yes', 'active' => true]],
+            'default' => 'yes',
+        ]);
+        $editor = FunctionalUserFactory::createSupervisor();
+        $html = (string) $this->handleRequest('/admin/collections/' . $this->collection . '/fields/' . $id . '/edit', cookies: $this->actingAs($editor))->getContent();
+        self::assertStringContainsString('data-field-types="string text html select file"', $html);
+        $response = $this->postForm('/admin/collections/' . $this->collection . '/fields', [
+            'id' => (string) $id,
+            'code' => 'choice',
+            'name' => 'Choice',
+            'type' => 'select',
+            'min_length' => '2',
+            'max_length' => '10',
+            'option_code' => ['yes'],
+            'option_label' => ['Yes'],
+            'option_active' => ['1'],
+            'use_default' => '1',
+            'default_value' => 'yes',
+        ], $editor);
+        self::assertSame(302, $response->getStatusCode());
+        $settings = $this->schema->getFields($this->collection)[0]->settings;
+        self::assertSame(2, $settings['min_length']);
+        self::assertSame(10, $settings['max_length']);
+        self::assertSame('yes', $settings['default']);
+    }
+
+    public function testDefaultsPreserveZeroEmptyValuesAndDatetimeSeconds(): void
+    {
+        $this->field('zero', FieldType::Boolean, ['default' => '0']);
+        $this->field('empty', FieldType::String_, ['default' => '']);
+        $this->field('empty_list', FieldType::Text, ['default' => []], true);
+        $this->field('moment', FieldType::Datetime, ['default' => '2026-11-06 12:34:56']);
+        $id = $this->items->addItem($this->form('defaults'));
+        $values = $this->items->getItem($id)->values;
+        self::assertFalse($values['zero']);
+        self::assertArrayNotHasKey('empty', $values);
+        self::assertArrayNotHasKey('empty_list', $values);
+        self::assertSame('2026-11-06 12:34:56', $values['moment']->format('Y-m-d H:i:s'));
+        $fields = $this->schema->getFields($this->collection);
+        self::assertSame('', $fields[1]->settings['default']);
+        self::assertSame([], $fields[2]->settings['default']);
+    }
+
     /** @param array<string, mixed> $settings */
     private function field(string $code, FieldType $type, array $settings = [], bool $multiple = false): int
     {

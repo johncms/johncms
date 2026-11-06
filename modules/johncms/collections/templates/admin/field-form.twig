@@ -69,23 +69,25 @@
             <fieldset class="card mt-3"{% if managed %} disabled{% endif %}>
                 <div class="card-header"><h2 class="h6 mb-0">{{ __('Input settings') }}</h2></div>
                 <div class="card-body row g-3">
-                    <div class="col-12" data-field-types="file">
-                        <input type="hidden" name="file_constraints_present" value="1">
+                    <fieldset class="col-12 mb-0" data-field-types="file">
                         <label class="form-label" for="file-storage">{{ __('File storage') }}</label>
                         <select class="form-select" id="file-storage" name="file_storage">
                             <option value="registry"{% if fields.file_storage == 'registry' %} selected{% endif %}>{{ __('Registered files') }}</option>
                             <option value="legacy"{% if fields.file_storage == 'legacy' %} selected{% endif %}>{{ __('Legacy file paths') }}</option>
                         </select>
                         <div class="form-text">{{ __('Existing paths require explicit conversion before switching to registered file IDs.') }}</div>
-                        <label class="form-label mt-2" for="max-file-bytes">{{ __('Maximum file size in bytes') }}</label>
-                        <input class="form-control" type="number" min="1" max="1073741824" step="1" name="max_file_bytes" id="max-file-bytes" value="{{ fields.max_file_bytes }}">
-                        <label class="form-label mt-2" for="file-types">{{ __('Allowed file types') }}</label>
-                        <select class="form-select" multiple size="5" name="allowed_mime_types[]" id="file-types">
-                            {% for mime, extension in file_types %}<option value="{{ mime }}"{% if mime in fields.allowed_mime_types %} selected{% endif %}>{{ extension|upper }}</option>{% endfor %}
-                        </select>
-                        <div class="form-text">{{ __('The actual file content is checked. Server upload and image limits also apply.') }}</div>
-                    </div>
-                    <div class="col-12" data-field-types="relation">
+                        <fieldset class="mb-0" data-file-storage="registry">
+                            <input type="hidden" name="file_constraints_present" value="1">
+                            <label class="form-label mt-2" for="max-file-bytes">{{ __('Maximum file size in bytes') }}</label>
+                            <input class="form-control" type="number" min="1" max="1073741824" step="1" name="max_file_bytes" id="max-file-bytes" value="{{ fields.max_file_bytes }}">
+                            <label class="form-label mt-2" for="file-types">{{ __('Allowed file types') }}</label>
+                            <select class="form-select" multiple size="5" name="allowed_mime_types[]" id="file-types">
+                                {% for mime, extension in file_types %}<option value="{{ mime }}"{% if mime in fields.allowed_mime_types %} selected{% endif %}>{{ extension|upper }}</option>{% endfor %}
+                            </select>
+                            <div class="form-text">{{ __('The actual file content is checked. Server upload and image limits also apply.') }}</div>
+                        </fieldset>
+                    </fieldset>
+                    <fieldset class="col-12 mb-0" data-field-types="relation">
                         <label class="form-label" for="relation-target">{{ __('Target collection ID') }}</label>
                         <input class="form-control" type="number" min="1" step="1" name="target_collection_id" id="relation-target" value="{{ fields.target_collection_id }}">
                         <label class="form-label mt-2" for="relation-on-delete">{{ __('When a related item is deleted') }}</label>
@@ -94,10 +96,10 @@
                             <option value="clear"{% if fields.relation_on_delete == 'clear' %} selected{% endif %}>{{ __('Clear optional relations') }}</option>
                         </select>
                         <div class="form-text">{{ __('Required relations and field defaults must be resolved before deleting their targets.') }}</div>
-                    </div>
-                    <div class="col-12" data-field-types="select">
+                    </fieldset>
+                    <fieldset class="col-12 mb-0" data-field-types="select">
                         {% include '@collections/admin/components/option-settings.twig' with {options: option_rows} only %}
-                    </div>
+                    </fieldset>
                     <div class="col-12">
                         <label class="form-label" for="field-hint">{{ __('Hint') }}</label>
                         <textarea class="form-control" id="field-hint" name="hint" rows="2" maxlength="2000">{{ fields.hint }}</textarea>
@@ -119,27 +121,27 @@
                         </div>
                         <div class="form-text">{{ __('Defaults apply only when creating an item without an explicit value. Dates use ISO format; booleans use 0 or 1.') }}</div>
                     </div>
-                    <div class="col-md-6">
+                    <fieldset class="col-md-6 mb-0" data-field-types="string text html{{ fields.legacy_length_limits|default(false) ? ' select file' : '' }}">
                         <label class="form-label" for="min-length">{{ __('Minimum text length') }}</label>
                         <input type="number" class="form-control" min="0" id="min-length" name="min_length" value="{{ fields.min_length }}">
-                    </div>
-                    <div class="col-md-6">
+                    </fieldset>
+                    <fieldset class="col-md-6 mb-0" data-field-types="string text html{{ fields.legacy_length_limits|default(false) ? ' select file' : '' }}">
                         <label class="form-label" for="max-length">{{ __('Maximum text length') }}</label>
                         <input type="number" class="form-control" min="0" id="max-length" name="max_length" value="{{ fields.max_length }}">
-                    </div>
-                    <div class="col-md-6">
+                    </fieldset>
+                    <fieldset class="col-md-6 mb-0" data-field-types="integer double">
                         <label class="form-label" for="min-value">{{ __('Minimum numeric value') }}</label>
                         <input type="number" step="any" class="form-control" id="min-value" name="min_value" value="{{ fields.min_value }}">
-                    </div>
-                    <div class="col-md-6">
+                    </fieldset>
+                    <fieldset class="col-md-6 mb-0" data-field-types="integer double">
                         <label class="form-label" for="max-value">{{ __('Maximum numeric value') }}</label>
                         <input type="number" step="any" class="form-control" id="max-value" name="max_value" value="{{ fields.max_value }}">
-                    </div>
-                    <div class="col-md-6">
+                    </fieldset>
+                    <fieldset class="col-md-6 mb-0" data-field-multiple>
                         <label class="form-label" for="max-values">{{ __('Maximum number of values') }}</label>
                         <input type="number" class="form-control" min="1" max="1000" id="max-values" name="max_values" value="{{ fields.max_values }}">
                         <div class="form-text">{{ __('For multiple fields. Leave limits empty to use the storage limits.') }}</div>
-                    </div>
+                    </fieldset>
                 </div>
             </fieldset>
         </div>
