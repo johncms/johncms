@@ -275,6 +275,7 @@ final readonly class CollectionSectionsAdminController
         $this->navChain->add($title);
 
         return new ViewResponse('@collections/admin/section-form.twig', $this->menu($title, $collection->name, $collection) + [
+            'slug_url' => '/admin/collections/' . $collection->id . '/slug',
             'form_action' => $this->baseUrl($collection->id),
             'back_url'    => $this->baseUrl($collection->id),
             'can_publish' => $this->access->allowsAction($collection, 'publish'),
@@ -293,6 +294,7 @@ final readonly class CollectionSectionsAdminController
     {
         return [
             'parent'      => $parent,
+            'slug_linked' => ! $request->hasBody('slug_binding_present') || $request->hasBody('slug_linked'),
             'code'        => trim($request->body('code', '')),
             'name'        => trim($request->body('name', '')),
             'description' => trim($request->body('description', '')),

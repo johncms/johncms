@@ -41,17 +41,18 @@
                 {{ ui.card_head('file-text', workspace_labels.singular) }}
                 <div class="card-body">
                     <div class="row g-3">
-                        <div class="{{ 'code' in hidden_blocks ? 'col-12' : 'col-md-7' }}">
+                        <div class="{{ 'code' in hidden_blocks ? 'col-12' : 'col-md-7' }}" data-slug-name>
                             <label class="form-label" for="name">{{ __('Name') }}</label>
                             <input type="text" name="name" class="form-control{{ field_errors.name|default([]) ? ' is-invalid' : '' }}" id="name" value="{{ fields.name }}" required>
                             {% include '@theme/components/field-errors.twig' with {errors: field_errors.name|default([])} only %}
                         </div>
                         {% if 'code' not in hidden_blocks %}
-                        <div class="col-md-5">
-                            <label class="form-label" for="code">{{ __('Code') }}</label>
-                            <input type="text" name="code" class="form-control{{ field_errors.code|default([]) ? ' is-invalid' : '' }} font-monospace" id="code" value="{{ fields.code }}" pattern="[\w.+\-]*">
-                            {% include '@theme/components/field-errors.twig' with {errors: field_errors.code|default([])} only %}
-                            <div class="form-text">{{ __('The last part of the address. Leave it empty to make it from the name.') }}</div>
+                        <div class="col-md-5" data-slug-code>
+                            {% include '@admin/components/ui/slug-field.twig' with {
+                                label: __('Code'), value: fields.code, linked: fields.slug_linked ?? true, slug_url: slug_url,
+                                errors: field_errors.code|default([]),
+                                hint: __('The last part of the address. Leave it empty to make it from the name.'),
+                            } only %}
                         </div>
                         {% endif %}
                         {% if 'preview_text' not in hidden_blocks %}

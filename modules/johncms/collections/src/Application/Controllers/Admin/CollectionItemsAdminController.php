@@ -359,6 +359,7 @@ final readonly class CollectionItemsAdminController
         }
         return new ViewResponse('@collections/admin/item-form.twig', $this->menu($title, $collection->name, $collection) + [
             'upload_url'      => '/admin/collections/' . $collection->id . '/uploads?context=' . rawurlencode($fields['upload_context']),
+            'slug_url' => '/admin/collections/' . $collection->id . '/slug',
             'form_action'     => $this->baseUrl($collection->id),
             'back_url' => $back,
             'item_actions' => $actions,
@@ -528,6 +529,7 @@ final readonly class CollectionItemsAdminController
             'file_queries' => array_filter($request->bodyList('file_query'), is_string(...)),
             'upload_context' => $request->body('upload_context') ?: null,
             'section_id'   => $this->hasSections($collection) ? $this->postSection($request) : null,
+            'slug_linked' => ! $request->hasBody('slug_binding_present') || $request->hasBody('slug_linked'),
             'code'         => trim($request->body('code', '')),
             'name'         => trim($request->body('name', '')),
             'active'       => $request->hasBody('active') ? 1 : 0,

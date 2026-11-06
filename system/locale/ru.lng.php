@@ -440,6 +440,13 @@ The number is shown so that support for the old scheme is not removed while it i
       'Update the system' => 'Обновить систему',
       'Applies migrations, synchronizes declarations and completes module updates.' => 'Применяет миграции, синхронизирует настройки и завершает обновление модулей.',
       'The operation was committed, but follow-up actions failed. Check the logs and rebuild derived data; do not repeat the operation.' => 'Операция уже выполнена, но связанные действия завершились с ошибкой. Проверьте журнал и пересоберите производные данные. Не повторяйте исходную операцию.',
+      'Updating the code...' => 'Обновление кода…',
+      'Could not generate the code. Try again or turn off the link to the name to enter it manually.' => 'Не удалось сформировать код. Повторите попытку или отключите связь с названием для ручного ввода.',
+      'Generate from name' => 'Формировать из названия',
+      'Regenerate code' => 'Обновить код',
+      'Disconnect from name' => 'Отключить связь с названием',
+      'Link to name' => 'Связать с названием',
+      'Generate code from name' => 'Сформировать код из названия',
     ),
   ),
 );

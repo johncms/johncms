@@ -1,0 +1,26 @@
+{# Shared name/code binding; without JavaScript the ordinary code input stays editable. #}
+<div class="admin-slug-field" data-slug-field data-source="name" data-url="{{ slug_url }}"
+     data-error="{{ d__('system', 'Could not generate the code. Try again or turn off the link to the name to enter it manually.') }}">
+    <label class="form-label" for="code">{{ label }}</label>
+    <input type="hidden" name="slug_binding_present" value="1">
+    <input type="checkbox" name="slug_linked" value="1"{% if linked is not defined or linked %} checked{% endif %} data-slug-linked hidden>
+    <button class="btn admin-slug-action admin-slug-link" type="button" data-slug-toggle data-slug-control hidden aria-controls="code"
+            data-linked-title="{{ d__('system', 'Disconnect from name') }}" data-manual-title="{{ d__('system', 'Link to name') }}">
+        <span data-slug-linked-icon>{% include '@admin/components/ui/icon.twig' with {name: 'link', size: 16} only %}</span>
+        <span data-slug-manual-icon hidden>{% include '@admin/components/ui/icon.twig' with {name: 'unlink', size: 16} only %}</span>
+    </button>
+    <div class="admin-slug-input position-relative">
+        <input type="text" name="code" class="form-control font-monospace pe-5{{ errors|default([]) ? ' is-invalid' : '' }}" id="code" value="{{ value }}" maxlength="255" pattern="[\w.+\-]*"{% if required|default(false) %} required{% endif %} data-slug-input aria-describedby="code-help code-status">
+        <button class="btn admin-slug-action admin-slug-refresh" type="button" data-slug-refresh data-slug-control hidden
+                title="{{ d__('system', 'Generate code from name') }}" aria-label="{{ d__('system', 'Generate code from name') }}">
+            {% include '@admin/components/ui/icon.twig' with {name: 'refresh-cw', size: 16} only %}
+        </button>
+        <span class="admin-slug-action admin-slug-spinner pe-none" data-slug-spinner role="status" hidden>
+            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+            <span class="visually-hidden">{{ d__('system', 'Updating the code...') }}</span>
+        </span>
+    </div>
+    {% include '@theme/components/field-errors.twig' with {errors: errors|default([])} only %}
+    <div class="form-text" id="code-help">{{ hint }}</div>
+    <div class="form-text" id="code-status" role="status" data-slug-status hidden></div>
+</div>

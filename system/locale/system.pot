@@ -797,12 +797,12 @@ msgstr ""
 #: system/src/Comments.php:280
 #: system/src/Comments.php:372
 #: system/src/Http/EditorImageUploadResponder.php:60
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionBulkAdminController.php:43
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionBulkAdminController.php:42
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFilesController.php:23
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:209
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:217
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:446
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:458
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:447
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:459
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionRelationsController.php:22
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionTagsController.php:22
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:36
@@ -1244,6 +1244,26 @@ msgstr ""
 
 #: themes/default/templates/admin/components/ui/editor.twig:25
 msgid "Text"
+msgstr ""
+
+#: themes/default/templates/admin/components/ui/slug-field.twig:3
+msgid "Could not generate the code. Try again or turn off the link to the name to enter it manually."
+msgstr ""
+
+#: themes/default/templates/admin/components/ui/slug-field.twig:8
+msgid "Disconnect from name"
+msgstr ""
+
+#: themes/default/templates/admin/components/ui/slug-field.twig:8
+msgid "Link to name"
+msgstr ""
+
+#: themes/default/templates/admin/components/ui/slug-field.twig:15
+msgid "Generate code from name"
+msgstr ""
+
+#: themes/default/templates/admin/components/ui/slug-field.twig:20
+msgid "Updating the code..."
 msgstr ""
 
 #: themes/default/templates/components/captcha/image.twig:9

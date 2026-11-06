@@ -385,6 +385,7 @@ final readonly class CollectionsAdminController
             }
         }
         return [
+            'slug_linked' => ! $request->hasBody('slug_binding_present') || $request->hasBody('slug_linked'),
             'code'         => trim($request->body('code', '')),
             'name'         => trim($request->body('name', '')),
             'description'  => trim($request->body('description', '')),

@@ -32,6 +32,13 @@ return static function (RouteCollection $router): void {
             ->name('collections.admin.delete')
             ->permission(CollectionsPermissions::MANAGE);
 
+        $router->post('/admin/collections/slug', \Johncms\Modules\Collections\Application\Controllers\Admin\CollectionSlugController::class)
+            ->name('collections.admin.slug')
+            ->permission(CollectionsPermissions::MANAGE);
+        $router->post('/admin/collections/{collection_id:number}/slug', \Johncms\Modules\Collections\Application\Controllers\Admin\CollectionSlugController::class)
+            ->name('collections.admin.content_slug')
+            ->middleware(\Johncms\Modules\Collections\Application\Middleware\CollectionContentAccessMiddleware::class);
+
         // Fields of a collection.
         $router->get('/admin/collections/{collection_id:number}/fields', [CollectionFieldsAdminController::class, 'index'])
             ->name('collections.admin.fields')

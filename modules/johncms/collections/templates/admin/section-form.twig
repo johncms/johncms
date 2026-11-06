@@ -27,14 +27,15 @@
                 </div>
                 <div class="card-body">
                     <div class="row g-3">
-                        <div class="col-md-7">
+                        <div class="col-md-7" data-slug-name>
                             <label class="form-label" for="name">{{ __('Name') }}</label>
                             <input type="text" name="name" class="form-control" id="name" value="{{ fields.name }}" required>
                         </div>
-                        <div class="col-md-5">
-                            <label class="form-label" for="code">{{ __('Code') }}</label>
-                            <input type="text" name="code" class="form-control font-monospace" id="code" value="{{ fields.code }}" required pattern="[\w.+\-]+">
-                            <div class="form-text">{{ __('Its part of the address: letters, digits, dot, plus, hyphen or underscore.') }}</div>
+                        <div class="col-md-5" data-slug-code>
+                            {% include '@admin/components/ui/slug-field.twig' with {
+                                label: __('Code'), value: fields.code, linked: fields.slug_linked ?? true, slug_url: slug_url, required: true,
+                                hint: __('Its part of the address: letters, digits, dot, plus, hyphen or underscore.'),
+                            } only %}
                         </div>
                         <div class="col-12">
                             <label class="form-label" for="description">{{ __('Description') }}</label>

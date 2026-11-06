@@ -1593,3 +1593,24 @@ msgstr "Применяет миграции, синхронизирует нас
 
 msgid "The operation was committed, but follow-up actions failed. Check the logs and rebuild derived data; do not repeat the operation."
 msgstr "Операция уже выполнена, но связанные действия завершились с ошибкой. Проверьте журнал и пересоберите производные данные. Не повторяйте исходную операцию."
+
+msgid "Updating the code..."
+msgstr "Обновление кода…"
+
+msgid "Could not generate the code. Try again or turn off the link to the name to enter it manually."
+msgstr "Не удалось сформировать код. Повторите попытку или отключите связь с названием для ручного ввода."
+
+msgid "Generate from name"
+msgstr "Формировать из названия"
+
+msgid "Regenerate code"
+msgstr "Обновить код"
+
+msgid "Disconnect from name"
+msgstr "Отключить связь с названием"
+
+msgid "Link to name"
+msgstr "Связать с названием"
+
+msgid "Generate code from name"
+msgstr "Сформировать код из названия"

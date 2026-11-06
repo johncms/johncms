@@ -24,14 +24,20 @@
             </div>
             <div class="card-body">
                 <div class="row g-3">
-                    <div class="col-md-6">
+                    <div class="col-md-6" data-slug-name>
                         <label class="form-label" for="name">{{ __('Name') }}</label>
                         <input type="text" name="name" class="form-control" id="name" value="{{ fields.name }}" required{% if fields.managed|default(false) %} readonly{% endif %}>
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="code">{{ __('Code') }}</label>
-                        <input type="text" name="code" class="form-control font-monospace" id="code" value="{{ fields.code }}" required pattern="[\w.+\-]+"{% if fields.managed|default(false) %} readonly{% endif %}>
-                        <div class="form-text">{{ __('The address of the collection on the site and its name in the API: lowercase latin letters, digits, hyphen and underscore.') }}</div>
+                    <div class="col-md-6" data-slug-code>
+                        {% if fields.managed|default(false) %}
+                            <label class="form-label" for="code">{{ __('Code') }}</label>
+                            <input type="text" name="code" class="form-control font-monospace" id="code" value="{{ fields.code }}" readonly>
+                        {% else %}
+                            {% include '@admin/components/ui/slug-field.twig' with {
+                                label: __('Code'), value: fields.code, linked: fields.slug_linked ?? true, slug_url: '/admin/collections/slug', required: true,
+                                hint: __('The address of the collection on the site and its name in the API: lowercase latin letters, digits, hyphen and underscore.'),
+                            } only %}
+                        {% endif %}
                     </div>
                     <div class="col-12">
                         <label class="form-label" for="content_permission">{{ __('Content permission') }}</label>

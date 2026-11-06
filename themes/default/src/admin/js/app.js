@@ -32,6 +32,7 @@ import './main';
 import './editor';
 import './icon-gallery';
 
+import './slug-field';
 import './collection-tags';
 import './collection-repeated-values';
 import './collection-relations';

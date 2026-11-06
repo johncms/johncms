@@ -193,3 +193,99 @@ body.dark {
   color: var(--accent);
   border-color: var(--accent);
 }
+
+// Reserve the right side of a slug input for its generation indicator.
+[data-slug-input][aria-busy='true'] {
+  background-image: none;
+}
+
+.admin-slug-field {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  position: relative;
+
+  > * {
+    grid-column: 1 / -1;
+  }
+
+  > .form-label {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+  }
+
+  > .admin-slug-link {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    justify-self: start;
+    margin-inline-start: 0.25rem;
+    margin-bottom: $form-label-margin-bottom;
+  }
+
+  > .admin-slug-input {
+    grid-row: 2;
+  }
+
+  > .invalid-feedback {
+    display: block;
+  }
+}
+
+.admin-slug-action {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 0;
+  color: var(--fg-dim);
+
+  &[hidden] {
+    display: none;
+  }
+
+  &:not([hidden]) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &[aria-pressed='true'] {
+    color: var(--accent);
+  }
+}
+
+button.admin-slug-action:hover {
+  color: var(--accent);
+  background-color: var(--bg-elev-2);
+}
+
+.admin-slug-refresh,
+.admin-slug-spinner {
+  position: absolute;
+  inset-inline-end: 0.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@include media-breakpoint-up(md) {
+  .admin-slug-name-column > .form-label {
+    display: block;
+  }
+
+  .admin-slug-name-column {
+    padding-inline-end: 2rem;
+  }
+
+  .admin-slug-code-column {
+    padding-inline-start: 2rem;
+  }
+
+  .admin-slug-code-column .admin-slug-field > .admin-slug-link {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: start;
+    margin-bottom: 0;
+    margin-inline-start: -3rem;
+    z-index: 1;
+  }
+}
