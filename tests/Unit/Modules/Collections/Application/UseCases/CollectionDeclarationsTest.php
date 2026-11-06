@@ -66,15 +66,16 @@ final class CollectionDeclarationsTest extends TestCase
 
     private function field(string $code = 'title', FieldType $type = FieldType::String_, bool $multiple = false, ?string $renamedFrom = null): CollectionFieldDeclarationDTO
     {
-        return new CollectionFieldDeclarationDTO($code, new CollectionLabelDTO('example', 'Title'), $type, $multiple, role: 'meta_title', renamedFrom: $renamedFrom);
+        return new CollectionFieldDeclarationDTO(code: $code, label: new CollectionLabelDTO('example', 'Title'), type: $type, multiple: $multiple, role: 'meta_title', renamedFrom: $renamedFrom);
     }
 
     private function schema(): CollectionSchemaApi
     {
         $fields = new ContentCollectionFieldRepository();
         return new CollectionSchemaApi($fields,
-            new SaveCollectionFieldUseCase($fields, new CollectionTransaction(), new ContentCollectionRepository(), \Tests\Support\CollectionItemWriterFactory::itemRepository(), context: $this->context),
-            new DeleteCollectionFieldUseCase($fields, new CollectionTransaction(), new ContentCollectionRepository(), context: $this->context)
+            new SaveCollectionFieldUseCase(repository: $fields, transaction: new CollectionTransaction(), collections: new ContentCollectionRepository(), items: \Tests\Support\CollectionItemWriterFactory::itemRepository(), context: $this->context),
+            new DeleteCollectionFieldUseCase(repository: $fields, transaction: new CollectionTransaction(), collections: new ContentCollectionRepository(), context: $this->context),
+            $this->sync
         );
     }
 
@@ -129,7 +130,7 @@ final class CollectionDeclarationsTest extends TestCase
         $this->sync->synchronize();
         $field = $this->schema()->getFields($this->collection())[0];
         $item = $this->item();
-        $this->provider->declarations = [$this->declaration([$this->field('headline', renamedFrom: 'title')])];
+        $this->provider->declarations = [$this->declaration([$this->field(code: 'headline', renamedFrom: 'title')])];
         $this->sync->synchronize();
         $this->sync->validate();
         self::assertSame($field->id, $this->schema()->getFields($this->collection())[0]->id);
@@ -141,19 +142,19 @@ final class CollectionDeclarationsTest extends TestCase
         $label = new CollectionLabelDTO('example', 'Title');
         $old = [['code' => 'a', 'label' => 'A', 'active' => true]];
         $new = [['code' => 'b', 'label' => 'B', 'active' => true]];
-        $this->provider->declarations = [$this->declaration([new CollectionFieldDeclarationDTO('title', $label, FieldType::Select, settings: ['options' => $old])])];
+        $this->provider->declarations = [$this->declaration([new CollectionFieldDeclarationDTO(code: 'title', label: $label, type: FieldType::Select, settings: ['options' => $old])])];
         $this->sync->synchronize();
         $item = $this->item('a');
         $id = $this->collection();
         $field = $this->schema()->getFields($id)[0];
-        $this->provider->declarations = [$this->declaration([new CollectionFieldDeclarationDTO('title', $label, FieldType::Select, settings: ['options' => $new])])];
+        $this->provider->declarations = [$this->declaration([new CollectionFieldDeclarationDTO(code: 'title', label: $label, type: FieldType::Select, settings: ['options' => $new])])];
         $this->sync->synchronize();
         self::assertNotEmpty($this->sync->problems());
         self::assertSame($old, $this->schema()->getFields($id)[0]->settings['options']);
         self::assertSame('a', CollectionItemWriterFactory::api()->getItem($item)->values['title']);
         $this->context->runTrusted(function () use ($id, $item, $field, $new): void {
             (new PdoConnection(Capsule::connection()->getPdo()))->transaction(function () use ($id, $item, $field, $new): void {
-                $this->schema()->saveField($field->id, new CollectionFieldFormDTO($id, 'title', 'Title', FieldType::Select, false, false, 100, settings: ['options' => $new]));
+                $this->schema()->saveField($field->id, new CollectionFieldFormDTO(collectionId: $id, code: 'title', name: 'Title', type: FieldType::Select, required: false, multiple: false, sort: 100, settings: ['options' => $new]));
                 CollectionItemWriterFactory::api()->patchItem($item, new CollectionItemPatchDTO(values: ['title' => 'b']));
             });
         });
@@ -174,7 +175,7 @@ final class CollectionDeclarationsTest extends TestCase
         self::assertSame('12', CollectionItemWriterFactory::api()->getItem($item)->values['title']);
         $this->context->runTrusted(function () use ($id, $item, $field): void {
             (new PdoConnection(Capsule::connection()->getPdo()))->transaction(function () use ($id, $item, $field): void {
-                $this->schema()->saveField($field->id, new CollectionFieldFormDTO($id, 'title', $field->messageId, FieldType::Integer, false, true, 100, role: 'meta_title'));
+                $this->schema()->saveField($field->id, new CollectionFieldFormDTO(collectionId: $id, code: 'title', name: $field->messageId, type: FieldType::Integer, required: false, multiple: true, sort: 100, role: 'meta_title'));
                 CollectionItemWriterFactory::api()->patchItem($item, new CollectionItemPatchDTO(values: ['title' => ['12']]));
             });
         });

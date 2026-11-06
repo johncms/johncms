@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Illuminate\Support\Str;
 use Johncms\Files\FileStore;
+use Johncms\Modules\Collections\Application\Api\CollectionFileReferencesApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionItemRelationsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
@@ -17,7 +18,6 @@ use Johncms\Modules\Collections\Application\DTO\CollectionItemHistoryDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSectionFormException;
-use Johncms\Modules\Collections\Application\Services\CollectionItemFiles;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\News\Application\DTO\NewsLegacyImportReportDTO;
 use Johncms\Modules\News\Application\Exceptions\NewsLegacyImportException;
@@ -34,7 +34,7 @@ final readonly class NewsLegacyImporter
         private CollectionsImportApiInterface $import,
         private CollectionSectionsApiInterface $sections,
         private CollectionItemRelationsApiInterface $relations,
-        private CollectionItemFiles $itemFiles,
+        private CollectionFileReferencesApiInterface $itemFiles,
         private FileStore $files,
         private NewsDiscussionRepositoryInterface $discussion,
         private NewsCollectionOwnerUrls $urls,
@@ -120,7 +120,7 @@ final readonly class NewsLegacyImporter
             $expectedUrls = [];
             foreach ($groups as $oldSection => $rows) {
                 $sectionId = $oldSection === 0 ? null : $sectionMap[$oldSection];
-                $countBefore = $this->collections->countItems(new ContentCollectionItemQuery($collection->id, sectionId: $sectionId, onlyActive: false, withoutSection: $sectionId === null));
+                $countBefore = $this->collections->countItems(new ContentCollectionItemQuery(collectionId: $collection->id, sectionId: $sectionId, onlyActive: false, withoutSection: $sectionId === null));
                 $new = $this->importCodes(
                     $rows,
                     fn (string $code): ?int => $this->collections->getItemByCode($collection->id, $sectionId, $code)?->id,
@@ -182,7 +182,7 @@ final readonly class NewsLegacyImporter
                     $warnings,
                     'article'
                 );
-                if ($this->collections->countItems(new ContentCollectionItemQuery($collection->id, sectionId: $sectionId, onlyActive: false, withoutSection: $sectionId === null)) !== $countBefore + count($rows)) {
+                if ($this->collections->countItems(new ContentCollectionItemQuery(collectionId: $collection->id, sectionId: $sectionId, onlyActive: false, withoutSection: $sectionId === null)) !== $countBefore + count($rows)) {
                     throw new NewsLegacyImportException('Imported article count does not match in section ' . $oldSection);
                 }
                 $articleMap += $new;
@@ -304,7 +304,7 @@ final readonly class NewsLegacyImporter
         try {
             $ids = json_decode((string) $value, true, 512, JSON_THROW_ON_ERROR);
         } catch (\JsonException $exception) {
-            throw new NewsLegacyImportException('Invalid JSON in legacy article attachments.', previous: $exception);
+            throw new NewsLegacyImportException(message: 'Invalid JSON in legacy article attachments.', previous: $exception);
         }
         if (! is_array($ids) || ! array_is_list($ids)) {
             throw new NewsLegacyImportException('Legacy article attachments must be a list of file IDs.');

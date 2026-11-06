@@ -21,4 +21,10 @@ interface CollectionItemRelationsApiInterface
      * @return T
      */
     public function withItemLock(int $collectionId, int $itemId, callable $operation, bool $publishedOnly = false): mixed;
+
+    /**
+     * Run after the outermost commit of the operation in progress; a rollback cancels it.
+     * @param callable(): void $callback
+     */
+    public function afterCommit(callable $callback): void;
 }

@@ -7,10 +7,10 @@ namespace Johncms\Modules\News\Install;
 use Gettext\TranslatorFunctions;
 use Illuminate\Support\Str;
 use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
+use Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
-use Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer;
 use Johncms\Modules\News\Application\Collections\NewsCollectionDeclaration;
 use Johncms\Modules\News\Application\Collections\NewsStorageUpdater;
 use Johncms\Modules\News\Domain\Repository\NewsDiscussionRepositoryInterface;
@@ -31,11 +31,11 @@ class Installer extends \Johncms\Modules\Installer
             $translator->addTranslationDomain('news', MODULES_PATH . 'johncms/news/locale', false);
         }
         di(SystemOperationContext::class)->runTrusted(function (): void {
-            di(CollectionDeclarationsSynchronizer::class)->synchronize();
+            di(CollectionSchemaApiInterface::class)->synchronizeDeclarations();
             $api = di(CollectionsApiInterface::class);
             $collection = $api->findDeclaredCollection(NewsCollectionDeclaration::OWNER, NewsCollectionDeclaration::KEY)
                 ?? throw new \LogicException('The news declaration must be synchronized before installing demo data.');
-            if ($api->countItems(new \Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery($collection->id, onlyActive: false)) > 0) {
+            if ($api->countItems(new \Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery(collectionId: $collection->id, onlyActive: false)) > 0) {
                 return;
             }
             $apiSections = di(CollectionSectionsApiInterface::class);
@@ -75,7 +75,7 @@ class Installer extends \Johncms\Modules\Installer
             ],
             ];
             foreach ($articles as $article) {
-                $id = $api->addItem(new CollectionItemFormDTO(
+                $id = $api->addItem(item: new CollectionItemFormDTO(
                     $collection->id,
                     $sections[$article['section_id']],
                     Str::slug($article['name']),

@@ -6,6 +6,7 @@ namespace Johncms\Modules\Collections\Application\Api;
 
 use Johncms\Modules\Collections\Application\UseCases\SaveCollectionSectionUseCase;
 use DateTimeImmutable;
+use Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemHistoryDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
@@ -18,18 +19,25 @@ final readonly class CollectionsImportApi implements CollectionsImportApiInterfa
         private SystemOperationContext $context,
         private SaveCollectionItemUseCase $save,
         private SaveCollectionSectionUseCase $saveSection,
+        private CollectionSearchIndexer $search,
     ) {
     }
 
     public function importItem(CollectionItemFormDTO $form, CollectionItemHistoryDTO $history): int
     {
         $this->context->requireActive();
-        return $this->save->execute(null, $form, history: $history);
+        return $this->save->execute(id: null, dto: $form, history: $history);
     }
 
     public function importSection(CollectionSectionFormDTO $form, ?DateTimeImmutable $createdAt, ?DateTimeImmutable $updatedAt): int
     {
         $this->context->requireActive();
-        return $this->saveSection->execute(null, $form, $createdAt, $updatedAt, imported: true);
+        return $this->saveSection->execute(id: null, dto: $form, createdAt: $createdAt, updatedAt: $updatedAt, imported: true);
+    }
+
+    public function rebuildSearch(int $collectionId): void
+    {
+        $this->context->requireActive();
+        $this->search->rebuildCollection($collectionId);
     }
 }

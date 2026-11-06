@@ -17,5 +17,8 @@ interface CollectionSchemaApiInterface
 
     public function deleteField(int $id): void;
 
+    /** Create what the loaded modules declare, for work that cannot wait for the next system:update. */
+    public function synchronizeDeclarations(): void;
+
     public function saveOwnedField(int $collectionId, ?int $id, \Johncms\Modules\Collections\Application\DTO\CollectionFieldDeclarationDTO $field): int;
 }

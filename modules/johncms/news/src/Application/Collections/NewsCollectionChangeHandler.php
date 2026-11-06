@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Collections;
 
+use Johncms\Modules\Collections\Application\Api\CollectionItemRelationsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionLookupApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO;
 use Johncms\Modules\Collections\Application\Extension\CollectionChangeHandlerInterface;
-use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface;
 use Johncms\Modules\News\Domain\Repository\NewsDiscussionRepositoryInterface;
 
 final readonly class NewsCollectionChangeHandler implements CollectionChangeHandlerInterface
@@ -15,7 +15,7 @@ final readonly class NewsCollectionChangeHandler implements CollectionChangeHand
     public function __construct(
         private CollectionLookupApiInterface $lookup,
         private NewsDiscussionRepositoryInterface $discussion,
-        private CollectionTransactionInterface $transaction,
+        private CollectionItemRelationsApiInterface $relations,
         private NewsDiscussionFiles $files,
         private ?NewsCollectionAvailability $availability = null,
     ) {
@@ -32,7 +32,7 @@ final readonly class NewsCollectionChangeHandler implements CollectionChangeHand
             return;
         }
         $files = $this->discussion->deleteForItem($change->id);
-        $this->transaction->afterCommit(fn () => $this->files->cleanup($files, $change->collectionId));
+        $this->relations->afterCommit(fn () => $this->files->cleanup($files, $change->collectionId));
     }
 
     public function afterCommit(CollectionChangeDTO $change): void

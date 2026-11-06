@@ -152,3 +152,8 @@ Related owner writes use `CollectionItemRelationsApiInterface` to serialize with
 `publishedOnly: true` checks the publication policy using current reads inside the transaction.
 Owner cleanup checks shared file references inside its cleanup transaction, through
 `CollectionFileReferencesApiInterface`. See `docs/moduli/collections.md`.
+
+Another module reaches the collections only through what they publish: `Application\Api`, its
+DTOs and exceptions, `Application\Extension`, `Domain\Query` and `Domain\Enums`. Their services,
+use cases, repositories and models are internal; what a module misses goes into the API.
+`testCollectionsAreReachedThroughTheirPublishedContracts` holds this.

@@ -51,7 +51,7 @@ final class NewsDiscussionLifecycleTest extends TestCase
         $this->migrate('news');
         $this->collection = Fixture::insert('collections', ['name' => 'News', 'code' => 'news']);
         $this->item = CollectionItemWriterFactory::create()->execute(null, $this->form('entry'));
-        $disk = new FlysystemStorage(new Filesystem(new InMemoryFilesystemAdapter()), baseUrl: '/upload');
+        $disk = new FlysystemStorage(filesystem: new Filesystem(new InMemoryFilesystemAdapter()), baseUrl: '/upload');
         $registry = $this->createStub(StorageRegistryInterface::class);
         $registry->method('disk')->willReturn($disk);
         $registry->method('defaultName')->willReturn('local');
@@ -64,8 +64,8 @@ final class NewsDiscussionLifecycleTest extends TestCase
         $cleanup = new NewsDiscussionFiles($this->files, $this->discussion, $references, $relations);
         $lookup = $this->createStub(CollectionLookupApiInterface::class);
         $lookup->method('findDeclared')->willReturn(new CollectionRecordDTO($this->collection, 'news', 'News', null, true, false, 100, [], null, null, 'johncms/news', 'articles'));
-        $handler = new NewsCollectionChangeHandler($lookup, $this->discussion, $transaction, $cleanup);
-        $this->changes = new CollectionChangeDispatcher([$handler], transaction: $transaction);
+        $handler = new NewsCollectionChangeHandler($lookup, $this->discussion, $relations, $cleanup);
+        $this->changes = new CollectionChangeDispatcher(handlers: [$handler], transaction: $transaction);
     }
 
     protected function tearDown(): void

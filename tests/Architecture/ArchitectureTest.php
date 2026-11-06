@@ -118,6 +118,30 @@ final class ArchitectureTest
             ->because('A controller takes the Request as an argument of its action. See .agents/architecture.md, "How a class gets the current request".');
     }
 
+    /**
+     * Another module works with the collections through what they publish: the API, its DTOs and
+     * exceptions, the query objects and the extension points. Their services, repositories and
+     * models can change without a word to anybody.
+     */
+    public function testCollectionsAreReachedThroughTheirPublishedContracts(): Rule
+    {
+        $internal = 'Johncms\\Modules\\Collections\\';
+
+        return PHPat::rule()
+            ->classes(Selector::inNamespace('Johncms\\Modules'))
+            ->excluding(Selector::inNamespace('Johncms\\Modules\\Collections'))
+            ->shouldNot()
+            ->dependOn()
+            ->classes(
+                Selector::inNamespace($internal . 'Application\\Services'),
+                Selector::inNamespace($internal . 'Application\\UseCases'),
+                Selector::inNamespace($internal . 'Domain\\Models'),
+                Selector::inNamespace($internal . 'Domain\\Repository'),
+                Selector::inNamespace($internal . 'Infrastructure')
+            )
+            ->because('Use the Application\\Api of the collections, or add what is missing there. ' . self::GUIDE);
+    }
+
     public function testARepositoryContractIsDeclaredInTheDomain(): Rule
     {
         return PHPat::rule()

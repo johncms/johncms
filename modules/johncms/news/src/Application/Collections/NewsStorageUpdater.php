@@ -6,7 +6,7 @@ namespace Johncms\Modules\News\Application\Collections;
 
 use Johncms\Database\ConnectionInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionLookupApiInterface;
-use Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer;
+use Johncms\Modules\Collections\Application\Api\CollectionsImportApiInterface;
 use Johncms\Modules\News\Domain\Repository\NewsLegacyStorageRepositoryInterface;
 use Johncms\Updates\SystemOperationContext;
 use Psr\Log\LoggerInterface;
@@ -19,7 +19,7 @@ final readonly class NewsStorageUpdater
         private ConnectionInterface $db,
         private NewsDiscussionFiles $files,
         private CollectionLookupApiInterface $lookup,
-        private CollectionSearchIndexer $search,
+        private CollectionsImportApiInterface $import,
         private SystemOperationContext $context,
         private LoggerInterface $logger,
     ) {
@@ -55,7 +55,7 @@ final readonly class NewsStorageUpdater
                 $this->legacy->acknowledgeFile($id);
             }
         }
-        $this->search->rebuildCollection($collection->id);
+        $this->import->rebuildSearch($collection->id);
         $this->legacy->dropLegacySchema();
     }
 }

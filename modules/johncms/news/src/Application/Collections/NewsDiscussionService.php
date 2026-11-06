@@ -18,7 +18,6 @@ use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormExcepti
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\Collections\Domain\Query\FieldFilterDTO;
 use Johncms\Modules\Collections\Domain\Enums\FilterOperator;
-use Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface;
 use Johncms\Modules\News\Application\DTO\NewsAuthorDTO;
 use Johncms\Modules\News\Application\DTO\NewsCommentViewDTO;
 use Johncms\Modules\News\Application\DTO\NewsCommentPageDTO;
@@ -40,7 +39,6 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
         private CollectionLookupApiInterface $lookup,
         private CollectionItemRelationsApiInterface $relations,
         private CollectionsApiInterface $items,
-        private CollectionTransactionInterface $transaction,
         private NewsDiscussionRepositoryInterface $discussion,
         private NewsDiscussionFiles $cleanup,
         private FileStore $files,
@@ -121,7 +119,7 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
         $this->guard->delete($comment->user_id);
         $collection = $this->collection();
         $this->withItem($collection->id, $comment->item_id, function () use ($comment, $collection): void {
-            $current = $this->discussion->findComment($comment->id, current: true);
+            $current = $this->discussion->findComment(id: $comment->id, current: true);
             if ($current === null) {
                 return;
             }
@@ -130,7 +128,7 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
             }
             $this->guard->delete($current->user_id);
             $files = $this->discussion->deleteComment($current->id);
-            $this->transaction->afterCommit(fn () => $this->cleanup->cleanup($files, $collection->id));
+            $this->relations->afterCommit(fn () => $this->cleanup->cleanup($files, $collection->id));
         });
     }
 
@@ -143,7 +141,7 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
         return $this->withItem($this->collection()->id, $itemId, function () use ($itemId, $vote): NewsDiscussionStats {
             $this->guard->vote();
             $this->discussion->vote($itemId, $this->user->id(), $vote);
-            return $this->discussion->stats([$itemId], $this->user->id(), current: true)[$itemId];
+            return $this->discussion->stats(ids: [$itemId], userId: $this->user->id(), current: true)[$itemId];
         });
     }
 
@@ -162,7 +160,7 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
         }
         $ids = array_values(array_unique(array_map(static fn ($row): int => $row->item_id, $rows)));
         $items = $this->items->getItems(new ContentCollectionItemQuery(
-            $collection->id,
+            collectionId: $collection->id,
             filters: [new FieldFilterDTO('item.id', FilterOperator::In, $ids)],
             onlyActive: false,
             limit: 1000,
@@ -173,6 +171,7 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
         foreach ($items as $item) {
             $byId[$item->id] = $item;
         }
+        $urls = $this->urls->itemUrls($collection, $items);
         $users = $this->users->findMany(array_values(array_unique(array_map(static fn ($row): int => $row->user_id, $rows))));
         $result = [];
         foreach ($rows as $row) {
@@ -180,11 +179,10 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
             if ($item === null) {
                 continue;
             }
-            $url = $this->urls->itemUrl($collection, $item);
             $result[] = new FeedComment(
                 d__('news', 'News'),
                 $item->name,
-                ($url ?? '/news/') . '#article-comments',
+                ($urls[$item->id] ?? '/news/') . '#article-comments',
                 $users[$row->user_id]->id ?? 0,
                 $users[$row->user_id]->name ?? '',
                 (string) $this->content->render($row->text),
@@ -212,9 +210,9 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
     private function withItem(int $collectionId, int $itemId, callable $operation): mixed
     {
         try {
-            return $this->relations->withItemLock($collectionId, $itemId, $operation, publishedOnly: true);
+            return $this->relations->withItemLock(collectionId: $collectionId, itemId: $itemId, operation: $operation, publishedOnly: true);
         } catch (CollectionItemFormException $exception) {
-            throw new NewsItemNotFoundException(d__('news', 'The requested article or section is not available.'), previous: $exception);
+            throw new NewsItemNotFoundException(message: d__('news', 'The requested article or section is not available.'), previous: $exception);
         }
     }
 }

@@ -135,7 +135,7 @@ final class NewsStorageUpdateTest extends FunctionalTestCase
             $this->container()->get(\Johncms\Database\ConnectionInterface::class),
             $this->container()->get(\Johncms\Modules\News\Application\Collections\NewsDiscussionFiles::class),
             $this->container()->get(\Johncms\Modules\Collections\Application\Api\CollectionLookupApiInterface::class),
-            $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer::class),
+            $this->container()->get(\Johncms\Modules\Collections\Application\Api\CollectionsImportApiInterface::class),
             $this->container()->get(SystemOperationContext::class), $this->container()->get(\Psr\Log\LoggerInterface::class)
         );
         try {

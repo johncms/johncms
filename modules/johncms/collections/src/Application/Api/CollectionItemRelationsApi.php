@@ -23,6 +23,11 @@ final readonly class CollectionItemRelationsApi implements CollectionItemRelatio
         });
     }
 
+    public function afterCommit(callable $callback): void
+    {
+        $this->transaction->afterCommit($callback);
+    }
+
     public function withItemLock(int $collectionId, int $itemId, callable $operation, bool $publishedOnly = false): mixed
     {
         return $this->transaction->run(function () use ($collectionId, $itemId, $operation, $publishedOnly): mixed {

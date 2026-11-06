@@ -15,4 +15,7 @@ interface CollectionsImportApiInterface
     public function importItem(CollectionItemFormDTO $form, CollectionItemHistoryDTO $history): int;
 
     public function importSection(CollectionSectionFormDTO $form, ?DateTimeImmutable $createdAt, ?DateTimeImmutable $updatedAt): int;
+
+    /** Imports skip derived data: the caller rebuilds the search index once, at the end. */
+    public function rebuildSearch(int $collectionId): void;
 }

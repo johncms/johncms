@@ -6,6 +6,7 @@ namespace Johncms\Modules\Collections\Application\Api;
 
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO;
+use Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer;
 use Johncms\Modules\Collections\Application\UseCases\SaveCollectionFieldUseCase;
 use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionFieldUseCase;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
@@ -16,6 +17,7 @@ final readonly class CollectionSchemaApi implements CollectionSchemaApiInterface
         private ContentCollectionFieldRepositoryInterface $fields,
         private SaveCollectionFieldUseCase $save,
         private DeleteCollectionFieldUseCase $delete,
+        private CollectionDeclarationsSynchronizer $declarations,
     ) {
     }
 
@@ -63,5 +65,10 @@ final readonly class CollectionSchemaApi implements CollectionSchemaApiInterface
     public function deleteField(int $id): void
     {
         $this->delete->execute($id);
+    }
+
+    public function synchronizeDeclarations(): void
+    {
+        $this->declarations->synchronize();
     }
 }

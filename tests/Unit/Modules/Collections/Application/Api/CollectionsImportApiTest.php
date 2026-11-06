@@ -36,7 +36,14 @@ final class CollectionsImportApiTest extends TestCase
         $this->migrate('collections');
         $this->context = new SystemOperationContext();
         $this->api = new CollectionsImportApi(
-            $this->context, CollectionItemWriterFactory::create(context: $this->context), CollectionItemWriterFactory::sectionWriter($this->context)
+            $this->context, CollectionItemWriterFactory::create(context: $this->context), CollectionItemWriterFactory::sectionWriter($this->context),
+            new \Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer(
+                new \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\CollectionSearchRepository(),
+                new \Johncms\Modules\Collections\Infrastructure\Persistence\CollectionTransaction(),
+                new \Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionRepository(),
+                CollectionItemWriterFactory::itemRepository(),
+                new \Johncms\Modules\Collections\Application\Services\ItemContentFormatter($this->createStub(\Johncms\Content\ContentRendererInterface::class))
+            )
         );
         $this->collection = Capsule::table('collections')->insertGetId(['code' => 'history', 'name' => 'History']);
     }
@@ -44,6 +51,13 @@ final class CollectionsImportApiTest extends TestCase
     protected function tearDown(): void
     {
         $this->shutdownDatabase();
+    }
+
+    public function testSearchRebuildRequiresTrustedContext(): void
+    {
+        $this->context->runTrusted(fn () => $this->api->rebuildSearch($this->collection));
+        $this->expectException(\LogicException::class);
+        $this->api->rebuildSearch($this->collection);
     }
 
     public function testImportRequiresTrustedScopeAndCannotBeEnabledThroughItsInput(): void
@@ -109,7 +123,7 @@ final class CollectionsImportApiTest extends TestCase
     public function testCallingTheWriterDirectlyDoesNotBypassTrust(): void
     {
         $this->expectException(LogicException::class);
-        CollectionItemWriterFactory::create()->execute(null, $this->form(), history: $this->history());
+        CollectionItemWriterFactory::create()->execute(id: null, dto: $this->form(), history: $this->history());
     }
 
     public function testSectionImportAlsoRequiresTheTrustedScope(): void
