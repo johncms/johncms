@@ -212,8 +212,10 @@
                                 type: 'text', label: __('Default values'), limit: 1000, row_errors: field_errors, allow_upload: false, upload_url: ''
                             } only %}
                         </fieldset>
-                        <div class="form-text" data-default-format-help>{{ __('Defaults apply only when creating an item without an explicit value.') }}
-                            <span data-default-raw-help>{{ __('Dates use ISO format; booleans use 0 or 1.') }}</span></div>
+                        <div class="form-text" data-default-format-help>{{ __('Pre-filled for new items. Existing items are not changed.') }}
+                            <span data-default-raw-help data-default-help-types="boolean"{% if fields.type != 'boolean' %} hidden{% endif %}>{{ __('Use 1 for Yes and 0 for No.') }}</span>
+                            <span data-default-raw-help data-default-help-types="date"{% if fields.type != 'date' %} hidden{% endif %}>{{ __('Enter a date as YYYY-MM-DD, for example 2026-11-06.') }}</span>
+                            <span data-default-raw-help data-default-help-types="datetime"{% if fields.type != 'datetime' %} hidden{% endif %}>{{ __('Enter date and time as YYYY-MM-DD HH:MM:SS, for example 2026-11-06 12:30:00.') }}</span></div>
                     </div>
                 </div>
             </fieldset>

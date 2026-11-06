@@ -219,6 +219,10 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
       source.before(control);
       source.hidden = true;
     });
+    const rawInputVisible = [...defaults.querySelectorAll('textarea')].some(source => !source.hidden && !source.matches(':disabled'));
+    defaults.querySelectorAll('[data-default-raw-help]').forEach(hint => {
+      hint.hidden = hint.dataset.defaultHelpTypes !== type.value || !rawInputVisible;
+    });
   };
   const toggle = (group, visible) => {
     group.hidden = !visible;
@@ -230,7 +234,6 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
     deletion.querySelector('[value="clear"]').disabled = required;
     deletion.setCustomValidity(required && deletion.value === 'clear' ? deletion.dataset.requiredError : '');
     toggle(lookup, useDefault.checked && usesLookup());
-    defaults.querySelector('[data-default-raw-help]').hidden = ['boolean', 'date', 'datetime'].includes(type.value);
     toggle(form.querySelector('[data-default-single]'), useDefault.checked && !multiple.checked);
     toggle(form.querySelector('[data-default-multiple]'), useDefault.checked && multiple.checked);
     form.querySelectorAll('[data-field-types]').forEach(group => toggle(group, group.dataset.fieldTypes.split(' ').includes(type.value)));

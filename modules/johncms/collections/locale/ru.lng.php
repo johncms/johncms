@@ -444,6 +444,10 @@
       'No matching values were found. Refine your search.' => 'Подходящих значений не найдено. Уточните поиск.',
       'Defaults apply only when creating an item without an explicit value.' => 'Значения по умолчанию применяются только при создании записи без явно заданного значения.',
       'Dates use ISO format; booleans use 0 or 1.' => 'Для дат используйте формат ISO, для логических значений — 0 или 1.',
+      'Pre-filled for new items. Existing items are not changed.' => 'Подставляется при создании новой записи. Существующие записи не изменяются.',
+      'Use 1 for Yes and 0 for No.' => 'Введите 1 для «Да» или 0 для «Нет».',
+      'Enter a date as YYYY-MM-DD, for example 2026-11-06.' => 'Введите дату в формате ГГГГ-ММ-ДД, например 2026-11-06.',
+      'Enter date and time as YYYY-MM-DD HH:MM:SS, for example 2026-11-06 12:30:00.' => 'Введите дату и время в формате ГГГГ-ММ-ДД ЧЧ:ММ:СС, например 2026-11-06 12:30:00.',
     ),
   ),
 );
