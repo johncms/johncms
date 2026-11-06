@@ -19,6 +19,11 @@ interface NewsViewMapperInterface
 
     public function section(CollectionRecordDTO $collection, CollectionSectionDTO $section): NewsSectionViewDTO;
 
+    /** @param list<CollectionSectionDTO> $sections
+     * @return list<NewsSectionViewDTO>
+     */
+    public function sections(CollectionRecordDTO $collection, array $sections): array;
+
     /** @return array{title: string, page_title: string, description: string, keywords: string} */
     public function rootMetadata(): array;
 }

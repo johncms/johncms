@@ -38,7 +38,7 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         $b = $sections->addSection(new CollectionSectionFormDTO($this->collection, null, 'b', 'B', null, true, 100));
         $first = $this->item('First body', $a, 'same', ['php']);
         $this->item('Second body', $b, 'same', ['phpstorm']);
-        $this->item('Draft body', code: 'draft', active: false);
+        $this->item(body: 'Draft body', code: 'draft', active: false);
         self::assertStringContainsString('First body', (string) $this->handleRequest('/news/a/same.html')->getContent());
         $second = (string) $this->handleRequest('/news/b/same.html')->getContent();
         self::assertStringContainsString('Second body', $second);
@@ -98,7 +98,7 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         $top = $sections->addSection(new CollectionSectionFormDTO($this->collection, null, 'v1.0', 'Version', null, true, 100));
         $nested = $sections->addSection(new CollectionSectionFormDTO($this->collection, $top, 'rc.1', 'Candidate', null, true, 100));
         $this->item('Nested body', $nested, 'notes.final');
-        $this->item('Root body', code: 'root.entry');
+        $this->item(body: 'Root body', code: 'root.entry');
         self::assertSame(200, $this->handleRequest('/news/v1.0/')->getStatusCode());
         self::assertSame(200, $this->handleRequest('/news/v1.0/rc.1/')->getStatusCode());
         self::assertStringContainsString('Nested body', (string) $this->handleRequest('/news/v1.0/rc.1/notes.final.html')->getContent());
@@ -110,7 +110,7 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
     {
         $sections = $this->container()->get(CollectionSectionsApiInterface::class);
         $sections->addSection(new CollectionSectionFormDTO($this->collection, null, 'a', 'A', null, true, 100));
-        $this->item('Matching body', code: 'matching');
+        $this->item(body: 'Matching body', code: 'matching');
         $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer::class)->rebuildCollection($this->collection);
         self::assertSame(404, $this->handleRequest('/news/a//b/')->getStatusCode());
         self::assertSame(404, $this->handleRequest('/news/a//b/entry.html')->getStatusCode());
@@ -129,7 +129,9 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
     {
         $id = $this->item('Public body');
         $state = $this->container()->get(SystemUpdateStateInterface::class);
-        $state->begin();
+        $state->begin('johncms/forum');
+        self::assertSame(200, $this->handleRequest('/news/')->getStatusCode());
+        $state->begin('johncms/news');
         try {
             self::assertSame(503, $this->handleRequest('/news/')->getStatusCode());
             self::assertSame(503, $this->handleRequest('/news/entry.html')->getStatusCode());

@@ -49,6 +49,8 @@ final readonly class ItemListRowMapper
         $visibleSections = array_fill_keys($tree->visibleIds(), true);
         $rows = [];
         $authors = $this->users?->findMany(array_values(array_unique(array_filter($items->pluck('created_by')->all())))) ?? [];
+        $owned = $collection->owner_module !== null && $this->ownerUrls !== null;
+        $ownerItemUrls = $owned ? $this->ownerUrls->items($collectionDto, $items->values()->map($this->apiMapper->item(...))->all()) : [];
 
         foreach ($items as $item) {
             $status = ItemStatus::of($item->active, $item->active_from, $item->active_to, $now);
@@ -57,12 +59,8 @@ final readonly class ItemListRowMapper
             $section = $item->section_id;
 
             $actions = [['method' => 'get', 'url' => $editUrl, 'title' => $this->workspace->labels($collection)['edit'], 'icon' => 'pencil', 'danger' => false, 'dialog' => false, 'fields' => []]];
-            $ownerItemUrl = $ownerPreviewUrl = null;
-            if ($collection->owner_module !== null && $this->ownerUrls !== null) {
-                $itemDto = $this->apiMapper->item($item);
-                $ownerItemUrl = $this->ownerUrls->item($collectionDto, $itemDto);
-                $ownerPreviewUrl = $this->ownerUrls->preview($collectionDto, $itemDto);
-            }
+            $ownerItemUrl = $ownerItemUrls[$item->id] ?? null;
+            $ownerPreviewUrl = $owned ? $this->ownerUrls->preview($collectionDto, $this->apiMapper->item($item)) : null;
             $actions[] = [
                 'method' => 'get', 'url' => $ownerPreviewUrl ?? $base . '/' . $item->id . '/preview',
                 'title' => __('Preview'), 'icon' => 'eye', 'danger' => false, 'dialog' => false, 'fields' => [],

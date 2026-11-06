@@ -27,7 +27,7 @@ final readonly class PendingMigrations
 {
     public const string CACHE_TAG = 'migrations';
 
-    private const string CACHE_KEY = 'migrations_pending_count';
+    private const string CACHE_KEY = 'migrations_pending_by_source';
 
     private const int CACHE_TTL = 60;
 
@@ -40,12 +40,13 @@ final readonly class PendingMigrations
 
     public function count(): int
     {
-        return $this->cache->remember(
-            self::CACHE_KEY,
-            self::CACHE_TTL,
-            fn (): int => $this->countPending(),
-            [self::CACHE_TAG]
-        );
+        return array_sum($this->bySource());
+    }
+
+    /** What one source still waits for: another module's migrations say nothing about its schema. */
+    public function countFor(string $source): int
+    {
+        return $this->bySource()[$source] ?? 0;
     }
 
     /**
@@ -61,15 +62,24 @@ final readonly class PendingMigrations
      * version — makes this unanswerable. It is logged and counted as none: this is a notice on a
      * page, and taking down every page of the admin panel with it would hide the problem behind a
      * worse one. What the file is wrong about is said by migrate and migrate:status.
+     *
+     * @return array<string, int>
      */
-    private function countPending(): int
+    private function bySource(): array
     {
-        try {
-            return count($this->migrator->pending());
-        } catch (Throwable $exception) {
-            $this->logger->error('Could not tell how many migrations are pending.', ['exception' => $exception]);
+        return $this->cache->remember(
+            self::CACHE_KEY,
+            self::CACHE_TTL,
+            function (): array {
+                try {
+                    return array_count_values(array_map(static fn (MigrationFile $migration): string => $migration->source, $this->migrator->pending()));
+                } catch (Throwable $exception) {
+                    $this->logger->error('Could not tell how many migrations are pending.', ['exception' => $exception]);
 
-            return 0;
-        }
+                    return [];
+                }
+            },
+            [self::CACHE_TAG]
+        );
     }
 }

@@ -28,20 +28,46 @@ final readonly class NewsCollectionOwnerUrls implements CollectionOwnerUrlProvid
 
     public function itemUrl(CollectionRecordDTO $collection, CollectionItemDTO $item): ?string
     {
-        if (! $this->owns($collection) || $item->collectionId !== $collection->id) {
-            return null;
+        return $this->itemUrls($collection, [$item])[$item->id] ?? null;
+    }
+
+    public function itemUrls(CollectionRecordDTO $collection, array $items): array
+    {
+        if (! $this->owns($collection)) {
+            return [];
         }
-        $path = $item->sectionId !== null ? $this->sectionPath($collection->id, $item->sectionId) : '';
-        return $path === null ? null : '/news/' . ($path !== '' ? $path . '/' : '') . $item->code . '.html';
+        $paths = $this->sectionPaths($collection->id, array_map(static fn (CollectionItemDTO $item): ?int => $item->sectionId, $items));
+        $urls = [];
+        foreach ($items as $item) {
+            $path = $item->sectionId !== null ? ($paths[$item->sectionId] ?? null) : '';
+            if ($path !== null && $item->collectionId === $collection->id) {
+                $urls[$item->id] = '/news/' . ($path !== '' ? $path . '/' : '') . $item->code . '.html';
+            }
+        }
+        return $urls;
     }
 
     public function sectionUrl(CollectionRecordDTO $collection, CollectionSectionDTO $section): ?string
     {
-        if (! $this->owns($collection) || $section->collectionId !== $collection->id) {
-            return null;
+        return $this->sectionUrls($collection, [$section])[$section->id] ?? null;
+    }
+
+    /** @param list<CollectionSectionDTO> $sections
+     * @return array<int, string> Keyed by section id; sections without an address are left out.
+     */
+    public function sectionUrls(CollectionRecordDTO $collection, array $sections): array
+    {
+        if (! $this->owns($collection)) {
+            return [];
         }
-        $path = $this->sectionPath($collection->id, $section->id);
-        return $path === null ? null : '/news/' . $path . '/';
+        $paths = $this->sectionPaths($collection->id, array_map(static fn (CollectionSectionDTO $section): int => $section->id, $sections));
+        $urls = [];
+        foreach ($sections as $section) {
+            if (isset($paths[$section->id]) && $section->collectionId === $collection->id) {
+                $urls[$section->id] = '/news/' . $paths[$section->id] . '/';
+            }
+        }
+        return $urls;
     }
 
     public function previewUrl(CollectionRecordDTO $collection, CollectionItemDTO $item): ?string
@@ -60,9 +86,18 @@ final readonly class NewsCollectionOwnerUrls implements CollectionOwnerUrlProvid
         return $collection->ownerModule === $this->owner() && $collection->declarationKey === NewsCollectionDeclaration::KEY;
     }
 
-    private function sectionPath(int $collectionId, int $sectionId): ?string
+    /** @param list<int|null> $ids
+     * @return array<int, string> Code paths keyed by section id.
+     */
+    private function sectionPaths(int $collectionId, array $ids): array
     {
-        $path = $this->sections->getPath($collectionId, $sectionId);
-        return $path === [] ? null : implode('/', array_map(static fn (CollectionSectionDTO $section): string => $section->code, $path));
+        $ids = array_values(array_unique(array_filter($ids, static fn (?int $id): bool => $id !== null)));
+        if ($ids === []) {
+            return [];
+        }
+        return array_map(
+            static fn (array $path): string => implode('/', array_map(static fn (CollectionSectionDTO $section): string => $section->code, $path)),
+            $this->sections->getPaths($collectionId, $ids)
+        );
     }
 }

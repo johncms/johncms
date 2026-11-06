@@ -49,6 +49,20 @@ final readonly class CollectionOwnerUrls
         return $this->valid($this->provider($collection->ownerModule)?->itemUrl($collection, $item));
     }
 
+    /** @param list<CollectionItemDTO> $items
+     * @return array<int, string>
+     */
+    public function items(CollectionRecordDTO $collection, array $items): array
+    {
+        foreach ($items as $item) {
+            if ($item->collectionId !== $collection->id) {
+                throw new \InvalidArgumentException('The URL subject belongs to another collection.');
+            }
+        }
+        $urls = $this->provider($collection->ownerModule)?->itemUrls($collection, $items) ?? [];
+        return array_filter(array_map($this->valid(...), $urls), static fn (?string $url): bool => $url !== null);
+    }
+
     public function section(CollectionRecordDTO $collection, CollectionSectionDTO $section): ?string
     {
         if ($section->collectionId !== $collection->id) {

@@ -16,6 +16,13 @@ interface CollectionOwnerUrlProviderInterface
 
     public function itemUrl(CollectionRecordDTO $collection, CollectionItemDTO $item): ?string;
 
+    /**
+     * The addresses of a whole list: lists must not pay for the sections once per record.
+     * @param list<CollectionItemDTO> $items
+     * @return array<int, string> Keyed by item id; items without an address are left out.
+     */
+    public function itemUrls(CollectionRecordDTO $collection, array $items): array;
+
     public function sectionUrl(CollectionRecordDTO $collection, CollectionSectionDTO $section): ?string;
 
     public function previewUrl(CollectionRecordDTO $collection, CollectionItemDTO $item): ?string;

@@ -60,7 +60,7 @@ final class CollectionPublicationTest extends FunctionalTestCase
             'cycle' => ContentCollectionSection::query()->where('id', $top)->update(['parent' => $child]),
             default => throw new \LogicException('Unknown publication test case.'),
         };
-        $query = new ContentCollectionItemQuery($this->collection, onlyActive: false);
+        $query = new ContentCollectionItemQuery(collectionId: $this->collection, onlyActive: false);
         self::assertSame([], $this->public->getItems($query));
         self::assertSame(0, $this->public->countItems($query));
         self::assertSame(0, $this->public->getPage($query)->total);
@@ -105,7 +105,7 @@ final class CollectionPublicationTest extends FunctionalTestCase
     public function testPendingMigrationsAnswerNotFoundWithoutAskingTheSchema(): void
     {
         $pending = $this->container()->get(\Johncms\Database\Migrations\PendingMigrations::class);
-        \Illuminate\Database\Capsule\Manager::table('migrations')->orderBy('id')->limit(1)->delete();
+        \Illuminate\Database\Capsule\Manager::table('migrations')->where('source', 'collections')->orderBy('id')->limit(1)->delete();
         $pending->forget();
         $connection = \Illuminate\Database\Capsule\Manager::connection();
         $connection->flushQueryLog();
@@ -139,7 +139,7 @@ final class CollectionPublicationTest extends FunctionalTestCase
             'active_from' => $from === null ? null : $at->setTimezone(new DateTimeZone('UTC'))->modify(sprintf('%+d seconds', $from))->format('Y-m-d H:i:s'),
             'active_to' => $to === null ? null : $at->setTimezone(new DateTimeZone('UTC'))->modify(sprintf('%+d seconds', $to))->format('Y-m-d H:i:s'),
         ]);
-        $query = new ContentCollectionItemQuery($this->collection, at: $at);
+        $query = new ContentCollectionItemQuery(collectionId: $this->collection, at: $at);
         $page = $this->public->getPage($query);
         self::assertSame($visible ? 1 : 0, $page->total);
         self::assertCount($visible ? 1 : 0, $page->items);
@@ -162,7 +162,7 @@ final class CollectionPublicationTest extends FunctionalTestCase
         $items = $this->public->getItems(new ContentCollectionItemQuery($this->collection));
         self::assertSame([$second, $first], [$items[0]->id, $items[1]->id]);
         self::assertSame('2003-01-01 00:00:00', $items[1]->publishedAt->format('Y-m-d H:i:s'));
-        self::assertCount(2, $this->public->getItems(new ContentCollectionItemQuery($this->collection, filters: [
+        self::assertCount(2, $this->public->getItems(new ContentCollectionItemQuery(collectionId: $this->collection, filters: [
             new FieldFilterDTO('item.published_at', FilterOperator::Eq, new DateTimeImmutable('2003-01-01T00:00:00Z')),
         ])));
         $html = (string) $this->handleRequest('/publication')->getContent();
@@ -206,7 +206,7 @@ final class CollectionPublicationTest extends FunctionalTestCase
         $this->container()->get(CollectionCodeCacheInterface::class)->map();
         $this->item('timed', ['active_from' => '2030-01-01 00:00:00', 'active_to' => '2030-01-01 00:00:01']);
         foreach (['2029-12-31T23:59:59Z' => 0, '2030-01-01T00:00:00Z' => 1, '2030-01-01T00:00:02Z' => 0] as $moment => $expected) {
-            self::assertSame($expected, $this->public->countItems(new ContentCollectionItemQuery($this->collection, at: new DateTimeImmutable($moment))));
+            self::assertSame($expected, $this->public->countItems(new ContentCollectionItemQuery(collectionId: $this->collection, at: new DateTimeImmutable($moment))));
         }
     }
 

@@ -28,7 +28,7 @@ final class NewsMenuItemProviderTest extends TestCase
         $lookup = $this->createMock(CollectionLookupApiInterface::class);
         $lookup->expects(self::never())->method('findDeclared');
         $state = $this->createStub(SystemUpdateStateInterface::class);
-        $state->method('isRequired')->willReturn(true);
+        $state->method('isRequiredFor')->willReturn(true);
         $provider = new NewsMenuItemProvider(
             $this->createStub(NewsReadServiceInterface::class),
             new NewsCollectionAvailability($lookup, $state, new SystemOperationContext())

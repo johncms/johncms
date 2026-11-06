@@ -13,6 +13,9 @@ use Johncms\Updates\SystemUpdateStateInterface;
 
 final readonly class NewsCollectionAvailability implements CollectionContentAccessProviderInterface
 {
+    /** What the news stand on: an unfinished update of anything else leaves them alone. */
+    private const array MODULES = [NewsCollectionDeclaration::OWNER, 'johncms/collections'];
+
     public function __construct(private CollectionLookupApiInterface $lookup, private SystemUpdateStateInterface $state, private SystemOperationContext $context)
     {
     }
@@ -20,7 +23,7 @@ final readonly class NewsCollectionAvailability implements CollectionContentAcce
     /** Null until an update has finished: the schema may not yet have what the lookup reads. */
     public function collection(): ?CollectionRecordDTO
     {
-        if (! $this->context->isActive() && $this->state->isRequired()) {
+        if (! $this->context->isActive() && $this->state->isRequiredFor(...self::MODULES)) {
             return null;
         }
         return $this->lookup->findDeclared(NewsCollectionDeclaration::OWNER, NewsCollectionDeclaration::KEY);
@@ -33,7 +36,7 @@ final readonly class NewsCollectionAvailability implements CollectionContentAcce
 
     public function assertAvailable(int $collectionId): void
     {
-        if ($this->context->isActive() || ! $this->state->isRequired()) {
+        if ($this->context->isActive() || ! $this->state->isRequiredFor(...self::MODULES)) {
             return;
         }
         $collection = $this->lookup->findDeclared(NewsCollectionDeclaration::OWNER, NewsCollectionDeclaration::KEY);

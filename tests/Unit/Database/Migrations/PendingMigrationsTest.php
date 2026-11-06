@@ -52,6 +52,16 @@ final class PendingMigrationsTest extends TestCase
         self::assertSame(2, $this->pendingMigrations()->count());
     }
 
+    public function testItCountsPerSource(): void
+    {
+        $this->write('2026_09_01_120000_first.php');
+
+        $pending = $this->pendingMigrations();
+
+        self::assertSame(1, $pending->countFor('system'));
+        self::assertSame(0, $pending->countFor('another-source'));
+    }
+
     public function testTheAnswerIsCachedUntilItIsForgotten(): void
     {
         $this->write('2026_09_01_120000_first.php');

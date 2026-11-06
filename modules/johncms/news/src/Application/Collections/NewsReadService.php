@@ -90,10 +90,7 @@ final readonly class NewsReadService implements NewsReadServiceInterface
         if ($parentId !== null && ! isset($visible[$parentId])) {
             throw $this->notFound();
         }
-        return array_values(array_map(
-            fn (CollectionSectionDTO $section): NewsSectionViewDTO => $this->mapper->section($collection, $section),
-            array_filter($visible, static fn (CollectionSectionDTO $section): bool => $section->parent === $parentId)
-        ));
+        return $this->mapper->sections($collection, array_values(array_filter($visible, static fn (CollectionSectionDTO $section): bool => $section->parent === $parentId)));
     }
 
     public function section(int $sectionId): ?NewsSectionViewDTO
@@ -124,7 +121,7 @@ final readonly class NewsReadService implements NewsReadServiceInterface
         if (! isset($this->visibleSections($collection)[$sectionId])) {
             throw $this->notFound();
         }
-        return array_map(fn (CollectionSectionDTO $section): NewsSectionViewDTO => $this->mapper->section($collection, $section), $this->sections->getPath($collection->id, $sectionId));
+        return $this->mapper->sections($collection, $this->sections->getPath($collection->id, $sectionId));
     }
 
     public function homepage(): array
@@ -147,17 +144,18 @@ final readonly class NewsReadService implements NewsReadServiceInterface
     {
         $collection = $this->collection();
         $homeUrl = rtrim($homeUrl, '/');
-        foreach ($this->visibleSections($collection) as $section) {
-            $url = $this->urls->sectionUrl($collection, $section);
-            if ($url !== null) {
-                yield new SitemapUrlEntry($homeUrl . $url, ($section->updatedAt ?? $section->createdAt)?->format(DATE_W3C));
+        $sections = array_values($this->visibleSections($collection));
+        $urls = $this->urls->sectionUrls($collection, $sections);
+        foreach ($sections as $section) {
+            if (isset($urls[$section->id])) {
+                yield new SitemapUrlEntry($homeUrl . $urls[$section->id], ($section->updatedAt ?? $section->createdAt)?->format(DATE_W3C));
             }
         }
         $after = 0;
         $at = new DateTimeImmutable('now', new DateTimeZone('UTC'));
         do {
             $items = $this->items->getItems(new ContentCollectionItemQuery(
-                $collection->id,
+                collectionId: $collection->id,
                 filters: [new FieldFilterDTO('item.id', FilterOperator::Gt, $after)],
                 orderBy: [new OrderByDTO('item.id', SortDirection::Asc)],
                 limit: 500,
@@ -165,10 +163,10 @@ final readonly class NewsReadService implements NewsReadServiceInterface
                 at: $at,
                 includeText: false
             ));
+            $urls = $this->urls->itemUrls($collection, $items);
             foreach ($items as $item) {
-                $url = $this->urls->itemUrl($collection, $item);
-                if ($url !== null) {
-                    yield new SitemapUrlEntry($homeUrl . $url, ($item->updatedAt ?? $item->createdAt)?->format(DATE_W3C));
+                if (isset($urls[$item->id])) {
+                    yield new SitemapUrlEntry($homeUrl . $urls[$item->id], ($item->updatedAt ?? $item->createdAt)?->format(DATE_W3C));
                 }
                 $after = $item->id;
             }
@@ -217,9 +215,9 @@ final readonly class NewsReadService implements NewsReadServiceInterface
             $filters[] = new FieldFilterDTO('item.published_at', FilterOperator::Gte, $query->publishedSince);
         }
         return new ContentCollectionItemQuery(
-            $collection->id,
-            $query->sectionId,
-            $query->sectionId !== null && $query->includeSubsections,
+            collectionId: $collection->id,
+            sectionId: $query->sectionId,
+            includeSubsections: $query->sectionId !== null && $query->includeSubsections,
             filters: $filters,
             limit: $query->limit,
             offset: $query->offset,

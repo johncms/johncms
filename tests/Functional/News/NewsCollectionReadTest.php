@@ -42,8 +42,8 @@ final class NewsCollectionReadTest extends FunctionalTestCase
     {
         $top = $this->section('top');
         $child = $this->section('child', $top);
-        $first = $this->item('First', $child, tags: [' PHP ', 'php']);
-        $second = $this->item('Second', tags: ['phpstorm']);
+        $first = $this->item(name: 'First', section: $child, tags: [' PHP ', 'php']);
+        $second = $this->item(name: 'Second', tags: ['phpstorm']);
         $page = $this->news->page(new NewsQueryDTO(sectionId: $top));
         self::assertSame(1, $page->total);
         self::assertSame($first, $page->articles[0]->record->id);
@@ -65,7 +65,7 @@ final class NewsCollectionReadTest extends FunctionalTestCase
 
     public function testPreparedViewsRenderExistingTemplatesWithoutModelsOrAnAuthor(): void
     {
-        $id = $this->item('No author', values: ['page_title' => '<b>SEO title</b>', 'description' => '<p>SEO description</p>', 'keywords' => 'cms, php']);
+        $id = $this->item(name: 'No author', values: ['page_title' => '<b>SEO title</b>', 'description' => '<p>SEO description</p>', 'keywords' => 'cms, php']);
         $article = $this->news->findById($id);
         self::assertNull($article->author);
         self::assertSame(0, $article->stats->rating);
@@ -84,7 +84,7 @@ final class NewsCollectionReadTest extends FunctionalTestCase
     {
         $top = $this->section('top');
         $child = $this->section('child', $top);
-        $id = $this->item('Hidden branch', $child, tags: ['private-tag']);
+        $id = $this->item(name: 'Hidden branch', section: $child, tags: ['private-tag']);
         Capsule::table('collection_sections')->where('id', $top)->update(['active' => false]);
         self::assertNull($this->news->findById($id));
         self::assertSame(0, $this->news->count(new NewsQueryDTO(search: 'Body')));
@@ -106,7 +106,7 @@ final class NewsCollectionReadTest extends FunctionalTestCase
 
     public function testPreviewRequiresContentPermissionAndDoesNotCountViews(): void
     {
-        $id = $this->item('Draft', active: false);
+        $id = $this->item(name: 'Draft', active: false);
         $user = FunctionalUserFactory::createWithPermissions(['news.manage']);
         $this->handleRequest('/news/', cookies: $this->actingAs($user));
         self::assertSame($id, $this->news->preview($id)->record->id);
@@ -123,7 +123,7 @@ final class NewsCollectionReadTest extends FunctionalTestCase
         $this->news->registerView($id);
         $this->news->registerView($id);
         self::assertSame(1, $this->api->getItem($id)->viewCount);
-        $projected = $this->api->getItems(new ContentCollectionItemQuery($this->collection, fields: [], includeText: false))[0];
+        $projected = $this->api->getItems(new ContentCollectionItemQuery(collectionId: $this->collection, fields: [], includeText: false))[0];
         self::assertNull($projected->detailText);
         self::assertNull($projected->previewText);
         self::assertSame('Viewed', $projected->name);
@@ -136,7 +136,7 @@ final class NewsCollectionReadTest extends FunctionalTestCase
     {
         $recent = $this->item('Recent');
         $old = $this->item('Old');
-        $draft = $this->item('Draft', active: false);
+        $draft = $this->item(name: 'Draft', active: false);
         Capsule::table('collection_items')->where('id', $old)->update(['active_from' => '2001-01-01 00:00:00']);
         $this->withConfig(['news' => ['homepage_show' => true, 'homepage_days' => 3, 'homepage_quantity' => 1]], function () use ($recent): void {
             self::assertSame([$recent], array_map(static fn ($article) => $article->record->id, $this->news->homepage()));
@@ -153,7 +153,7 @@ final class NewsCollectionReadTest extends FunctionalTestCase
     {
         $author = FunctionalUserFactory::create();
         for ($i = 0; $i < 8; ++$i) {
-            $id = $this->item('Batch ' . $i, author: $author->id);
+            $id = $this->item(name: 'Batch ' . $i, author: $author->id);
             Fixture::insert('news_comments', ['article_id' => null, 'item_id' => $id, 'user_id' => $author->id, 'text' => 'Comment', 'user_data' => '{}', 'created_at' => gmdate('Y-m-d H:i:s')]);
             Fixture::insert('news_votes', ['article_id' => null, 'item_id' => $id, 'user_id' => $author->id, 'vote' => 1]);
         }
@@ -176,6 +176,36 @@ final class NewsCollectionReadTest extends FunctionalTestCase
             self::assertSame(1, $article->stats->comments);
             self::assertSame(1, $article->stats->rating);
         }
+    }
+
+    public function testListsDoNotReadTheSectionsOncePerRecord(): void
+    {
+        $parent = $this->section('parent');
+        for ($i = 0; $i < 12; ++$i) {
+            $this->section('child-' . $i, $parent);
+            $this->item('Sectioned ' . $i, $parent);
+        }
+        // The identity of the visitor is loaded once, by the first read.
+        $this->news->page(new NewsQueryDTO(limit: 1));
+        $connection = Capsule::connection();
+        $count = function (callable $read) use ($connection): int {
+            $connection->flushQueryLog();
+            $connection->enableQueryLog();
+            try {
+                $read();
+                return count($connection->getQueryLog());
+            } finally {
+                $connection->disableQueryLog();
+                $connection->flushQueryLog();
+            }
+        };
+        self::assertSame(
+            $count(fn () => $this->news->page(new NewsQueryDTO(sectionId: $parent, limit: 2))),
+            $count(fn () => $this->news->page(new NewsQueryDTO(sectionId: $parent, limit: 12)))
+        );
+        self::assertCount(12, $this->news->sections($parent));
+        self::assertLessThan(12, $count(fn () => $this->news->sections($parent)));
+        self::assertSame('/news/parent/child-0/', $this->news->sections($parent)[0]->url);
     }
 
     private function section(string $code, ?int $parent = null): int

@@ -43,7 +43,7 @@ final readonly class CollectionRouterController
     {
         // The catch-all answers every unknown address, and a schema waiting for its migrations
         // cannot be asked which of them exist.
-        if ($this->migrations->count() > 0) {
+        if ($this->migrations->countFor('collections') > 0) {
             $this->notFound();
         }
 

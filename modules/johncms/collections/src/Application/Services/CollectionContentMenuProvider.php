@@ -23,7 +23,7 @@ final readonly class CollectionContentMenuProvider implements MenuItemProviderIn
     public function menuItems(): iterable
     {
         // Runs on every page: until an update finishes the schema may not have what the query reads.
-        if ($this->update->isRequired() || $this->access->canManageSchema()) {
+        if ($this->update->isRequiredFor('johncms/collections') || $this->access->canManageSchema()) {
             return;
         }
         foreach ($this->collections->getForContentMenu() as $collection) {

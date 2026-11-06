@@ -21,6 +21,13 @@ interface CollectionSectionsApiInterface
     /** @return list<CollectionSectionDTO> Root to the section itself, or [] when missing/foreign. */
     public function getPath(int $collectionId, int $id): array;
 
+    /**
+     * The same for a whole list, reading the tree once.
+     * @param list<int> $ids
+     * @return array<int, list<CollectionSectionDTO>> Keyed by section id; missing or foreign ones are left out.
+     */
+    public function getPaths(int $collectionId, array $ids): array;
+
     /** @param list<string> $codes Complete root-to-section code chain; [] resolves to null. */
     public function resolvePath(int $collectionId, array $codes): ?CollectionSectionDTO;
 

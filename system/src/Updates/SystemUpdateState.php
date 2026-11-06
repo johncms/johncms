@@ -32,6 +32,19 @@ final readonly class SystemUpdateState implements SystemUpdateStateInterface
         return $this->migrations->count() > 0;
     }
 
+    public function isRequiredFor(string ...$modules): bool
+    {
+        $state = $this->read();
+        $enabled = $this->modules->enabled();
+        foreach ($modules as $key) {
+            $module = $enabled[$key] ?? null;
+            if ($module === null || ($state['modules'][$key] ?? null) !== ($module->version ?? CMS_VERSION) || $this->migrations->countFor($module->alias) > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function begin(?string $module = null): void
     {
         $state = $this->read();
@@ -67,7 +80,7 @@ final readonly class SystemUpdateState implements SystemUpdateStateInterface
         if ($raw === false) {
             throw new RuntimeException('Cannot read system update state: ' . $this->path);
         }
-        $state = json_decode($raw, true, flags: JSON_THROW_ON_ERROR);
+        $state = json_decode(json: $raw, associative: true, flags: JSON_THROW_ON_ERROR);
         if (
             ! is_array($state) || (isset($state['cms']) && ! is_string($state['cms']))
             || (isset($state['running']) && ! is_bool($state['running']))

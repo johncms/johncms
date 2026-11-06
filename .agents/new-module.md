@@ -398,8 +398,10 @@ Implement `Johncms\Updates\DeclarationSynchronizerInterface` to register a decla
 actionable exception if differences remain after all hooks. Neither phase may silently swallow errors.
 
 `Johncms\Updates\SystemUpdateStateInterface::isRequired()` reports an incomplete CMS/module update
-or pending migrations. A module that cannot serve its data until an update completes should use
-this service to refuse mutations and render a maintenance response. Completion markers live outside
+or pending migrations, which is what the panel warns about. A module that cannot serve its data
+until an update completes asks `isRequiredFor('vendor/module', ...)` instead, naming itself and what
+it stands on, and refuses mutations and renders a maintenance response: the failed update of an
+unrelated module must not take it down. Completion markers live outside
 the cache. Only a successful full update acknowledges the CMS version; scoped module completion
 does not acknowledge an unrelated failed full update. Lifecycle mutations and their fresh-process
 completion acquire the same lock in separate phases, with a pending marker between them.

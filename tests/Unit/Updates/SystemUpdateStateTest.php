@@ -11,6 +11,7 @@ use Johncms\Database\Migrations\MigrationRepositoryInterface;
 use Johncms\Database\Migrations\Migrator;
 use Johncms\Database\Migrations\PendingMigrations;
 use Johncms\Database\Schema\SchemaInterface;
+use Johncms\Modules\Manifest\ModuleManifest;
 use Johncms\Modules\ModuleRegistry;
 use Johncms\Modules\ModuleRepositoryInterface;
 use Johncms\Modules\ModuleStateStore;
@@ -61,6 +62,29 @@ final class SystemUpdateStateTest extends TestCase
         self::assertTrue($this->state(2)->isRequired());
     }
 
+    public function testAModuleIsNotHeldBackByTheUpdateOfAnother(): void
+    {
+        $modules = ['test/stable' => $this->manifest('test/stable', 'stable'), 'test/failing' => $this->manifest('test/failing', 'failing')];
+        $state = $this->state(modules: $modules);
+        self::assertTrue($state->isRequiredFor('test/stable'));
+        $state->complete();
+        self::assertFalse($state->isRequiredFor('test/stable'));
+        $state->begin('test/failing');
+        self::assertTrue($state->isRequired());
+        self::assertTrue($state->isRequiredFor('test/failing'));
+        self::assertFalse($state->isRequiredFor('test/stable'));
+        self::assertTrue($state->isRequiredFor('test/stable', 'test/failing'));
+        self::assertTrue($state->isRequiredFor('test/missing'));
+    }
+
+    public function testMigrationsOfTheModuleItselfHoldItBack(): void
+    {
+        $modules = ['test/own' => $this->manifest('test/own', 'test'), 'test/other' => $this->manifest('test/other', 'other')];
+        $this->state(modules: $modules)->complete();
+        self::assertTrue($this->state(1, $modules)->isRequiredFor('test/own'));
+        self::assertFalse($this->state(1, $modules)->isRequiredFor('test/other'));
+    }
+
     public function testScopedCompletionDoesNotAcknowledgeFailedGlobalUpdate(): void
     {
         $state = $this->state();
@@ -70,7 +94,8 @@ final class SystemUpdateStateTest extends TestCase
         self::assertTrue($state->isRequired());
     }
 
-    private function state(int $pending = 0): SystemUpdateState
+    /** @param array<string, ModuleManifest> $modules */
+    private function state(int $pending = 0, array $modules = []): SystemUpdateState
     {
         $migrator = new Migrator(
             new MigrationLocator([]), $this->createStub(MigrationRepositoryInterface::class),
@@ -78,12 +103,17 @@ final class SystemUpdateStateTest extends TestCase
             $this->createStub(ScheduleMutexInterface::class)
         );
         $cache = $this->createStub(CacheInterface::class);
-        $cache->method('remember')->willReturn($pending);
+        $cache->method('remember')->willReturn($pending > 0 ? ['test' => $pending] : []);
         $repo = $this->createStub(ModuleRepositoryInterface::class);
-        $repo->method('all')->willReturn([]);
+        $repo->method('all')->willReturn($modules);
         return new SystemUpdateState(
             new PendingMigrations($migrator, $cache, new NullLogger()),
-            new ModuleRegistry($repo, new ModuleStateStore($this->path . '.php')), $this->path
+            new ModuleRegistry($repo, new ModuleStateStore($this->path . '.php'), array_keys($modules)), $this->path
         );
+    }
+
+    private function manifest(string $key, string $alias): ModuleManifest
+    {
+        return new ModuleManifest(key: $key, alias: $alias, path: sys_get_temp_dir(), name: $key);
     }
 }

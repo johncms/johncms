@@ -36,7 +36,7 @@ final class CollectionContentMenuProviderTest extends TestCase
         $access = $this->createStub(AccessCheckerInterface::class);
         $access->method('allows')->willReturn(false);
         $state = $this->createStub(SystemUpdateStateInterface::class);
-        $state->method('isRequired')->willReturn($updateRequired);
+        $state->method('isRequiredFor')->willReturn($updateRequired);
 
         return new CollectionContentMenuProvider($collections, new EnsureCollectionContentAccessUseCase($access, $collections), $state);
     }

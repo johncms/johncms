@@ -45,6 +45,7 @@ final readonly class NewsViewMapper implements NewsViewMapperInterface
             }
         }
         $ids = array_map(static fn (CollectionItemDTO $item): int => $item->id, $items);
+        $urls = $this->urls->itemUrls($collection, $items);
         $authors = $this->users->findMany(array_values(array_unique(array_filter(array_map(static fn (CollectionItemDTO $item): ?int => $item->createdBy, $items)))));
         $stats = $this->discussion->stats($ids, $this->user->id());
         $settings = $this->settings->getSettings();
@@ -57,7 +58,7 @@ final readonly class NewsViewMapper implements NewsViewMapperInterface
             $tags = $field('tags');
             $result[] = new NewsArticleViewDTO(
                 $item,
-                $this->urls->itemUrl($collection, $item) ?? '',
+                $urls[$item->id] ?? '',
                 $this->content->renderOrNull($item->previewText ?? ''),
                 $this->content->renderOrNull($item->detailText ?? ''),
                 is_array($tags) ? array_values(array_filter($tags, 'is_string')) : [],
@@ -75,12 +76,24 @@ final readonly class NewsViewMapper implements NewsViewMapperInterface
 
     public function section(CollectionRecordDTO $collection, CollectionSectionDTO $section): NewsSectionViewDTO
     {
+        return $this->sections($collection, [$section])[0];
+    }
+
+    public function sections(CollectionRecordDTO $collection, array $sections): array
+    {
         $settings = $this->settings->getSettings();
+        $urls = $this->urls->sectionUrls($collection, $sections);
+        return array_map(fn (CollectionSectionDTO $section): NewsSectionViewDTO => $this->sectionView($section, $settings, $urls[$section->id] ?? ''), $sections);
+    }
+
+    /** @param array<string, mixed> $settings */
+    private function sectionView(CollectionSectionDTO $section, array $settings, string $url): NewsSectionViewDTO
+    {
         $text = static fn (string $key): string => is_string($section->metadata[$key] ?? null) ? $section->metadata[$key] : '';
         $template = fn (string $key): string => $this->setting($settings, $key, '#section_name#', $section->name);
         return new NewsSectionViewDTO(
             $section,
-            $this->urls->sectionUrl($collection, $section) ?? '',
+            $url,
             $this->content->renderOrNull($section->description ?? ''),
             $this->content->toPlainText($text('meta_title') ?: ($template('section_title') ?: $section->name)),
             $this->content->toPlainText($text('meta_description') ?: $template('section_meta_description')) ?: $this->content->toPlainText($section->description ?? ''),

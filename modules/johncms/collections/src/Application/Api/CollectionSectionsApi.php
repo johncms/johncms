@@ -47,14 +47,22 @@ final readonly class CollectionSectionsApi implements CollectionSectionsApiInter
 
     public function getPath(int $collectionId, int $id): array
     {
+        return $this->getPaths($collectionId, [$id])[$id] ?? [];
+    }
+
+    public function getPaths(int $collectionId, array $ids): array
+    {
         $byId = $this->sections->getAllByCollection($collectionId)->keyBy('id');
         $tree = SectionTree::of($byId);
-        if (! $tree->has($id)) {
-            return [];
+        $paths = [];
+        foreach ($ids as $id) {
+            if ($tree->has($id)) {
+                $paths[$id] = array_map(fn (int $sectionId): CollectionSectionDTO => $this->mapper->section($byId[$sectionId]), [
+                    ...array_reverse($tree->ancestorsOf($id)), $id,
+                ]);
+            }
         }
-        return array_map(fn (int $sectionId): CollectionSectionDTO => $this->mapper->section($byId[$sectionId]), [
-            ...array_reverse($tree->ancestorsOf($id)), $id,
-        ]);
+        return $paths;
     }
 
     public function resolvePath(int $collectionId, array $codes): ?CollectionSectionDTO
