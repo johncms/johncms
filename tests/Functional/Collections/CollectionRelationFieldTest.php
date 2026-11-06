@@ -294,6 +294,30 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
         self::assertArrayNotHasKey('related', $this->api->getItem($source)->values);
     }
 
+    public function testSourceViewsDoNotInvalidateDeletionConfirmationButContentChangesDo(): void
+    {
+        $this->field(target: $this->target, settings: ['on_delete' => 'clear']);
+        $target = $this->api->addItem($this->form($this->target, 'target'));
+        $source = $this->api->addItem($this->form($this->source, 'source', (string) $target));
+        $before = $this->api->previewItemDeletion($target);
+        $this->api->incrementViews($source);
+        self::assertSame($before->revision, $this->api->previewItemDeletion($target)->revision);
+        $this->api->patchItem($source, new CollectionItemPatchDTO(attributes: ['name' => 'Changed source']));
+        self::assertNotSame($before->revision, $this->api->previewItemDeletion($target)->revision);
+        try {
+            $this->api->deleteItem(id: $target, expectedRelations: $before->revision);
+            self::fail('Source edits must still invalidate the confirmation.');
+        } catch (CollectionDeletionException $exception) {
+            self::assertArrayHasKey('revision', $exception->errors);
+            self::assertNotNull($this->api->getItem($target));
+        }
+        $current = $this->api->previewItemDeletion($target);
+        $this->api->incrementViews($source);
+        $this->api->deleteItem(id: $target, expectedRelations: $current->revision);
+        self::assertNull($this->api->getItem($target));
+        self::assertArrayNotHasKey('related', $this->api->getItem($source)->values);
+    }
+
     public function testRequiredRelationsCannotUseClearAndDefaultsStillPreventDeletion(): void
     {
         foreach ([['on_delete' => 'cascade'], ['on_delete' => 'clear']] as $settings) {

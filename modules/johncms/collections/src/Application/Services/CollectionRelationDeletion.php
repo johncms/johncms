@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Services;
 
+use DateTimeImmutable;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeStateDTO;
@@ -63,7 +64,7 @@ final readonly class CollectionRelationDeletion
         }
         $this->values->deleteRelationValues($rows->pluck('id')->all());
         foreach ($sources as $source) {
-            $this->items->update($source->id, ['updated_by' => null, 'updated_at' => new \DateTimeImmutable()]);
+            $this->items->update($source->id, ['updated_by' => null, 'updated_at' => new DateTimeImmutable()]);
             $state = new CollectionChangeStateDTO($source->section_id, $source->active, $source->code);
             $changes->dispatch(new CollectionChangeDTO('item', 'saved', $source->collection_id, $source->id, $state, $state));
         }
@@ -87,7 +88,9 @@ final readonly class CollectionRelationDeletion
             } else {
                 ++$blocked;
             }
-            $evidence[] = [$row->getRawOriginal(), $field->getRawOriginal(), $row->item->getRawOriginal()];
+            $source = $row->item->getRawOriginal();
+            unset($source['view_count']);
+            $evidence[] = [$row->getRawOriginal(), $field->getRawOriginal(), $source];
         }
         foreach ($fields as $field) {
             if ($field->collection_id === $deletedCollectionId) {
