@@ -30,6 +30,7 @@
     <form action="{{ form_action }}" method="post" enctype="multipart/form-data" id="item-form" class="row g-3 align-items-start">
         <input type="hidden" name="upload_context" value="{{ fields.upload_context }}">
         <input type="hidden" name="collection_form_started" value="1">
+        <input type="hidden" name="back" value="{{ back_url }}">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         {% if id is not null %}
             <input type="hidden" name="id" value="{{ id }}">
@@ -37,7 +38,7 @@
 
         <div class="col-lg-8 d-flex flex-column gap-3">
             <section class="card">
-                {{ ui.card_head('file-text', __('Item')) }}
+                {{ ui.card_head('file-text', workspace_labels.singular) }}
                 <div class="card-body">
                     <div class="row g-3">
                         <div class="col-md-7">
@@ -152,6 +153,20 @@
         </div>
 
         <div class="col-lg-4 d-flex flex-column gap-3">
+            <section class="card">
+                {{ ui.card_head('check', __('Actions')) }}
+                <div class="card-body d-flex flex-column gap-2">
+                    <button class="btn btn-outline-primary" type="submit" name="continue" value="1">{{ __('Save and continue editing') }}</button>
+                    {% for action in item_actions %}
+                        <a class="btn btn-outline-secondary" href="{{ action.url }}" target="_blank" rel="noopener">
+                            {% include '@admin/components/ui/icon.twig' with {name: action.icon, size: 14} only %}
+                            {{ action.title }}
+                        </a>
+                    {% endfor %}
+                    {% if item_actions %}<div class="form-text">{{ __('Save changes before opening the preview or the published page.') }}</div>{% endif %}
+                </div>
+            </section>
+
             <section class="card">
                 {{ ui.card_head('eye', __('Publication')) }}
                 <div class="card-body d-flex flex-column gap-3">

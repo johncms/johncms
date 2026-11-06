@@ -11,6 +11,7 @@ msgid "News is unavailable until system:update completes."
 msgstr ""
 
 #: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:29
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:39
 #: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:185
 #: modules/johncms/news/src/Application/Collections/NewsViewMapper.php:94
 #: modules/johncms/news/src/Application/Controllers/Admin/NewsSettingsController.php:77
@@ -37,6 +38,23 @@ msgstr ""
 
 #: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:35
 msgid "Tags"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:38
+msgid "News item"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:40
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:41
+msgid "Add news"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:42
+msgid "Edit news"
+msgstr ""
+
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:43
+msgid "Delete news"
 msgstr ""
 
 #: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:92

@@ -22,6 +22,7 @@ final readonly class CollectionDeclarationsSynchronizer implements DeclarationSy
         private CollectionTransactionInterface $transaction,
         private CollectionFieldSettingsValidator $settingsValidator = new CollectionFieldSettingsValidator(),
         private ?CollectionFileValues $fileValues = null,
+        private CollectionWorkspaceSettings $workspace = new CollectionWorkspaceSettings(),
     ) {
     }
 
@@ -139,6 +140,7 @@ final readonly class CollectionDeclarationsSynchronizer implements DeclarationSy
             if (
                 $collection->code !== $declaration->code || $collection->getRawOriginal('name') !== $declaration->label->message
                 || $collection->label_domain !== $declaration->label->domain || ($collection->settings['_content_permission'] ?? null) !== $declaration->contentPermission
+                || ! $this->workspace->same($collection->settings['_workspace'] ?? [], $declaration->settings['_workspace'] ?? [])
             ) {
                 $problems[] = sprintf(d__('collections', 'Collection %s differs from its declaration. Run system:update.'), $identity);
             }
@@ -166,7 +168,9 @@ final readonly class CollectionDeclarationsSynchronizer implements DeclarationSy
      */
     private function settings(CollectionDeclarationDTO $declaration, array $existing): array
     {
-        return array_replace($declaration->settings, $existing, ['_content_permission' => $declaration->contentPermission]);
+        $workspace = $declaration->settings['_workspace'] ?? [];
+        $this->workspace->validate($workspace, true);
+        return array_replace($declaration->settings, $existing, ['_content_permission' => $declaration->contentPermission, '_workspace' => $workspace]);
     }
 
     /** @return array<string, mixed> */

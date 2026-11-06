@@ -42,6 +42,7 @@ final readonly class CollectionsAdminController
         private Session $session,
         private \Johncms\Auth\Authorization\PermissionRegistry $permissions,
         private \Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface $fieldRepository,
+        private \Johncms\Modules\Collections\Application\Services\CollectionWorkspaceSettings $workspaceSettings,
     ) {
     }
 
@@ -88,6 +89,14 @@ final readonly class CollectionsAdminController
     public function store(Request $request): ViewResponse
     {
         $id = $request->bodyInt('id') ?: null;
+        if ($request->hasBody('collection_form_started') && $request->body('collection_form_complete') !== '1') {
+            $collection = $id !== null ? $this->repository->findWithCounts($id) : null;
+            return $this->renderAgain(
+                $id,
+                $collection !== null ? $this->fieldsFromCollection($collection) : $this->defaultFields(),
+                [d__('collections', 'The form was truncated. Nothing was saved. Reduce the number of values or ask the administrator to raise the form input limit.')],
+            );
+        }
         $fields = $this->fieldsFromRequest($request);
         $errors = $this->validate($fields);
 
@@ -223,7 +232,10 @@ final readonly class CollectionsAdminController
      */
     private function renderForm(?int $id, array $fields, array $errors = []): ViewResponse
     {
+        $fields['workspace_labels'] = array_filter($fields['workspace_labels'], is_string(...));
         $fields['permission_options'] = $this->permissionOptions($fields['content_permission']);
+        $fields['workspace_label_titles'] = $this->workspaceSettings->labelTitles();
+        $fields['workspace_defaults'] = $this->workspaceSettings->defaults();
         $fields['search_options'] = [];
         $title = __('New collection');
         $this->navChain->add(__('Collections'), self::URL);
@@ -246,13 +258,16 @@ final readonly class CollectionsAdminController
     private function renderSettings(ContentCollection $collection, array $fields, array $errors = []): ViewResponse
     {
         $fields['managed'] = $collection->owner_module !== null;
+        $fields['workspace_defaults'] = $this->workspaceSettings->defaults($collection);
         $fields['search_options'] = [];
         foreach ($this->fieldRepository->getByCollection($collection->id) as $field) {
             if (in_array($field->type, [\Johncms\Modules\Collections\Domain\Enums\FieldType::String_, \Johncms\Modules\Collections\Domain\Enums\FieldType::Text, \Johncms\Modules\Collections\Domain\Enums\FieldType::Html], true)) {
                 $fields['search_options'][$field->code] = $field->name;
             }
         }
+        $fields['workspace_labels'] = array_filter($fields['workspace_labels'], is_string(...));
         $fields['permission_options'] = $this->permissionOptions($fields['content_permission']);
+        $fields['workspace_label_titles'] = $this->workspaceSettings->labelTitles();
         $this->navChain->add(__('Collections'), self::URL);
         $this->navChain->add($collection->name, CollectionWorkspaceMapper::url($collection->id));
 
@@ -311,6 +326,8 @@ final readonly class CollectionsAdminController
             'per_page'     => max(1, abs($request->bodyInt('per_page', 10))),
             'content_permission' => trim($request->body('content_permission', 'collections.manage')),
             'search_fields' => $request->hasBody('search_fields') ? $request->bodyList('search_fields') : [],
+            'workspace_present' => $request->hasBody('workspace_present') || $request->hasBody('workspace_labels'),
+            'workspace_labels' => array_filter($request->bodyList('workspace_labels'), static fn ($value): bool => ! is_string($value) || trim($value) !== ''),
         ];
     }
 
@@ -332,6 +349,8 @@ final readonly class CollectionsAdminController
             'per_page'     => (int) ($settings['per_page'] ?? 10),
             'content_permission' => $settings['_content_permission'] ?? 'collections.manage',
             'search_fields' => $settings['search_fields'] ?? [],
+            'workspace_present' => true,
+            'workspace_labels' => $settings['workspace']['labels'] ?? [],
         ];
     }
 
@@ -351,6 +370,8 @@ final readonly class CollectionsAdminController
             'per_page'     => 10,
             'content_permission' => 'collections.manage',
             'search_fields' => [],
+            'workspace_present' => true,
+            'workspace_labels' => [],
         ];
     }
 
@@ -370,6 +391,7 @@ final readonly class CollectionsAdminController
             perPage: (int) $fields['per_page'],
             contentPermission: $fields['content_permission'],
             searchFields: $fields['search_fields'],
+            workspace: $fields['workspace_present'] ? ['labels' => $fields['workspace_labels']] : null,
         );
     }
 

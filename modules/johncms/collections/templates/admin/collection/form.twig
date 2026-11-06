@@ -9,6 +9,8 @@
 {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
 
 <form action="{{ form_action }}" method="post" id="collection-form" class="row g-3 align-items-start">
+    <input type="hidden" name="collection_form_started" value="1">
+    <input type="hidden" name="workspace_present" value="1">
     <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
     {% if id is not null %}
         <input type="hidden" name="id" value="{{ id }}">
@@ -62,6 +64,20 @@
                 </div>
             </div>
         </section>
+        <section class="card mt-3">
+            <div class="card-header"><h2 class="h6 mb-0">{{ __('Workspace labels') }}</h2></div>
+            <div class="card-body">
+                <p class="form-text">{{ __('Custom labels are shown as entered. Leave a label empty to use its translated default.') }}</p>
+                <div class="row g-3">
+                    {% for key, label in fields.workspace_label_titles %}
+                        <div class="col-md-6">
+                            <label class="form-label" for="workspace-label-{{ key }}">{{ label }}</label>
+                            <input class="form-control" id="workspace-label-{{ key }}" name="workspace_labels[{{ key }}]" maxlength="120" value="{{ fields.workspace_labels[key]|default('') }}" placeholder="{{ fields.workspace_defaults[key] }}">
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
     </div>
 
     <div class="col-lg-4 d-flex flex-column gap-3">
@@ -109,4 +125,5 @@
             </div>
         </section>
     </div>
+<input type="hidden" name="collection_form_complete" value="1">
 </form>

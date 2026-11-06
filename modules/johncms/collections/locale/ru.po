@@ -1247,3 +1247,36 @@ msgstr "Выберите файл для загрузки."
 
 msgid "No matching files were found. Change your search or upload a new file."
 msgstr "Подходящие файлы не найдены. Измените запрос или загрузите новый файл."
+
+msgid "Workspace labels"
+msgstr "Подписи рабочего пространства"
+
+msgid "Custom labels are shown as entered. Leave a label empty to use its translated default."
+msgstr "Собственные подписи выводятся как введены. Оставьте поле пустым, чтобы использовать перевод подписи по умолчанию."
+
+msgid "Record name (singular)"
+msgstr "Название записи в единственном числе"
+
+msgid "Record list title"
+msgstr "Заголовок списка записей"
+
+msgid "New record page title"
+msgstr "Заголовок страницы создания"
+
+msgid "Create action label"
+msgstr "Подпись действия создания"
+
+msgid "Edit action label"
+msgstr "Подпись действия редактирования"
+
+msgid "Delete action label"
+msgstr "Подпись действия удаления"
+
+msgid "Use known workspace labels with nonempty text of at most 120 characters."
+msgstr "Используйте допустимые подписи рабочего пространства с непустым текстом не длиннее 120 символов."
+
+msgid "Save and continue editing"
+msgstr "Сохранить и продолжить редактирование"
+
+msgid "Save changes before opening the preview or the published page."
+msgstr "Сохраните изменения перед открытием предпросмотра или опубликованной страницы."

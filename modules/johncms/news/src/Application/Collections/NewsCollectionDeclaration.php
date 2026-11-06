@@ -34,7 +34,14 @@ final class NewsCollectionDeclaration implements CollectionDeclarationProviderIn
                 new CollectionFieldDeclarationDTO('keywords', CollectionLabelDTO::translatableLabel('news', 'Meta keywords'), FieldType::Text, role: 'meta_keywords', sort: 300),
                 new CollectionFieldDeclarationDTO('tags', CollectionLabelDTO::translatableLabel('news', 'Tags'), FieldType::String_, multiple: true, role: 'tags', inList: true, sort: 400),
             ],
-            ['has_sections' => true, 'per_page' => 20, 'search_fields' => []]
+            ['has_sections' => true, 'per_page' => 20, 'search_fields' => [], '_workspace' => ['labels' => [
+                'singular' => CollectionLabelDTO::translatableLabel('news', 'News item')->toArray(),
+                'plural' => CollectionLabelDTO::translatableLabel('news', 'News')->toArray(),
+                'new' => CollectionLabelDTO::translatableLabel('news', 'Add news')->toArray(),
+                'create' => CollectionLabelDTO::translatableLabel('news', 'Add news')->toArray(),
+                'edit' => CollectionLabelDTO::translatableLabel('news', 'Edit news')->toArray(),
+                'delete' => CollectionLabelDTO::translatableLabel('news', 'Delete news')->toArray(),
+            ]]]
         )];
     }
 }

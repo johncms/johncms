@@ -21,7 +21,8 @@ final readonly class CollectionWorkspaceMapper
         private ?CollectionOwnerUrls $ownerUrls = null,
         private CollectionApiMapper $apiMapper = new CollectionApiMapper(),
         private ?\Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase $access = null,
-        private ?\Johncms\Modules\ModuleRegistry $modules = null
+        private ?\Johncms\Modules\ModuleRegistry $modules = null,
+        private CollectionWorkspaceSettings $configuration = new CollectionWorkspaceSettings(),
     ) {
     }
 
@@ -38,7 +39,7 @@ final readonly class CollectionWorkspaceMapper
     {
         $hasSections = ! empty($collection->settings['has_sections']);
         $tabs = [
-            [self::ITEMS, __('Items'), (int) $collection->getAttribute('items_count')],
+            [self::ITEMS, $this->labels($collection)['plural'], (int) $collection->getAttribute('items_count')],
             [self::SECTIONS, __('Sections'), (int) $collection->getAttribute('sections_count')],
             [self::FIELDS, __('Fields'), (int) $collection->getAttribute('fields_count')],
             [self::SETTINGS, __('Settings'), null],
@@ -67,6 +68,12 @@ final readonly class CollectionWorkspaceMapper
             'public_url' => $collection->owner_module !== null && $collection->active ? ($this->ownerUrls?->collection($this->apiMapper->collection($collection)) ?? '') : $collection->publicUrl(),
             'tabs'       => $mappedTabs,
         ];
+    }
+
+    /** @return array<string, string> */
+    public function labels(ContentCollection $collection): array
+    {
+        return $this->configuration->labels($collection);
     }
 
     /** @return array<string, bool> */

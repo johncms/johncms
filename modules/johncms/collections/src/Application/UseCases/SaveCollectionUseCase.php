@@ -24,6 +24,7 @@ final readonly class SaveCollectionUseCase
         private \Johncms\Modules\Collections\Domain\Repository\CollectionTransactionInterface $transaction,
         private CollectionChangeDispatcher $changes = new CollectionChangeDispatcher(),
         private ?\Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface $fields = null,
+        private \Johncms\Modules\Collections\Application\Services\CollectionWorkspaceSettings $workspace = new \Johncms\Modules\Collections\Application\Services\CollectionWorkspaceSettings(),
     ) {
     }
 
@@ -63,6 +64,12 @@ final readonly class SaveCollectionUseCase
                     }
                 }
             }
+            $workspace = $dto->workspace ?? ($current->settings['workspace'] ?? []);
+            $this->workspace->validate($workspace);
+            $settings = $current->settings ?? [];
+            if ($dto->workspace !== null || array_key_exists('workspace', $settings)) {
+                $settings['workspace'] = $workspace;
+            }
             $before = $current !== null ? new CollectionChangeStateDTO(null, $current->active, $current->code) : null;
             $attributes = [
             'code'        => $dto->code,
@@ -71,7 +78,7 @@ final readonly class SaveCollectionUseCase
             'active'      => $dto->active,
             'public'      => $dto->public,
             'sort'        => $dto->sort,
-            'settings'    => array_replace($current->settings ?? [], [
+            'settings'    => array_replace($settings, [
                 'has_sections' => $dto->hasSections,
                 'per_page'     => $dto->perPage,
                 'search_fields' => array_values(array_unique($selected)),

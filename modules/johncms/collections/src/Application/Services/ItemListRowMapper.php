@@ -23,8 +23,12 @@ final readonly class ItemListRowMapper
 {
     private const int TEXT_LENGTH = 60;
 
-    public function __construct(private ?CollectionOwnerUrls $ownerUrls = null, private CollectionApiMapper $apiMapper = new CollectionApiMapper(), private ?\Johncms\Files\FileStore $files = null)
-    {
+    public function __construct(
+        private ?CollectionOwnerUrls $ownerUrls = null,
+        private CollectionApiMapper $apiMapper = new CollectionApiMapper(),
+        private ?\Johncms\Files\FileStore $files = null,
+        private CollectionWorkspaceSettings $workspace = new CollectionWorkspaceSettings(),
+    ) {
     }
 
     /**
@@ -46,10 +50,10 @@ final readonly class ItemListRowMapper
         foreach ($items as $item) {
             $status = ItemStatus::of($item->active, $item->active_from, $item->active_to, $now);
             $values = $item->getValuesMap();
-            $editUrl = $base . '/' . $item->id . '/edit';
+            $editUrl = $base . '/' . $item->id . '/edit?back=' . rawurlencode($listUrl);
             $section = $item->section_id;
 
-            $actions = [['method' => 'get', 'url' => $editUrl, 'title' => __('Edit'), 'icon' => 'pencil', 'danger' => false, 'dialog' => false, 'fields' => []]];
+            $actions = [['method' => 'get', 'url' => $editUrl, 'title' => $this->workspace->labels($collection)['edit'], 'icon' => 'pencil', 'danger' => false, 'dialog' => false, 'fields' => []]];
             $ownerItemUrl = $ownerPreviewUrl = null;
             if ($collection->owner_module !== null && $this->ownerUrls !== null) {
                 $itemDto = $this->apiMapper->item($item);

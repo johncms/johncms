@@ -746,3 +746,15 @@ msgstr "У вас нет права удалять этот комментари
 
 msgid "News is unavailable until system:update completes."
 msgstr "Новости недоступны до завершения system:update."
+
+msgid "News item"
+msgstr "Новость"
+
+msgid "Add news"
+msgstr "Добавить новость"
+
+msgid "Edit news"
+msgstr "Редактировать новость"
+
+msgid "Delete news"
+msgstr "Удалить новость"

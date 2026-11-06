@@ -14,6 +14,12 @@ final readonly class CollectionLabelDTO
         }
     }
 
+    /** @return array{domain: string, message: string} */
+    public function toArray(): array
+    {
+        return ['domain' => $this->domain, 'message' => $this->message];
+    }
+
     /** Gettext extraction marker: its arguments must be literal domain and source message. */
     public static function translatableLabel(string $domain, string $message): self
     {

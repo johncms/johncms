@@ -22,7 +22,7 @@
 {% block collection_actions %}
     <a href="{{ add_url }}" class="btn btn-primary">
         {% include '@admin/components/ui/icon.twig' with {name: 'plus', size: 14} only %}
-        {{ __('New item') }}
+        {{ create_label }}
     </a>
 {% endblock %}
 
@@ -46,7 +46,7 @@
             rows: rows,
             total: total,
             pagination: pagination,
-            add_url: add_url,
+            add_url: add_url, create_label: create_label,
         } only %}
     </div>
 {% endblock %}

@@ -209,6 +209,10 @@
       'You are not allowed to vote on the news.' => 'У вас нет права оценивать новости.',
       'You are not allowed to delete this comment.' => 'У вас нет права удалять этот комментарий.',
       'News is unavailable until system:update completes.' => 'Новости недоступны до завершения system:update.',
+      'News item' => 'Новость',
+      'Add news' => 'Добавить новость',
+      'Edit news' => 'Редактировать новость',
+      'Delete news' => 'Удалить новость',
     ),
   ),
 );

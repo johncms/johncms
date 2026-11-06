@@ -85,7 +85,8 @@ final readonly class CollectionItemsAdminController
             'search'       => $filter->search,
             'total'        => $pagination->getTotal(),
             'pagination'   => $pagination->render(),
-            'add_url'      => $this->baseUrl($collection_id) . '/new' . ($filter->section ? '?section=' . $filter->section : ''),
+            'add_url' => $this->baseUrl($collection_id) . '/new?' . ($filter->section ? 'section=' . $filter->section . '&' : '') . 'back=' . rawurlencode($listUrl),
+            'create_label' => $this->workspace->labels($collection)['create'],
         ];
 
         if ($request->isXmlHttpRequest()) {
@@ -97,7 +98,7 @@ final readonly class CollectionItemsAdminController
         return new ViewResponse('@collections/admin/items.twig', [
             'page_title' => $collection->name,
             'collection' => $this->workspace->head($collection, CollectionWorkspaceMapper::ITEMS),
-        ] + $this->menu($this->pageTitle(__('Items'), $pagination->getCurrentPage()), $collection->name, $collection) + $data + [
+        ] + $this->menu($this->pageTitle($this->workspace->labels($collection)['plural'], $pagination->getCurrentPage()), $collection->name, $collection) + $data + [
             'success_message' => $this->session->getFlash('success_message') ?? '',
         ]);
     }
@@ -115,10 +116,10 @@ final readonly class CollectionItemsAdminController
                 $defaults[$field->code] = $field->settings['default'];
             }
         }
-        return $this->renderForm($collection, null, $this->defaultFields($this->querySection($request)), $defaults);
+        return $this->renderForm($collection, null, $this->defaultFields($this->querySection($request)) + ['back' => $this->returnUrl($collection_id, $request->queryParam('back'))], $defaults);
     }
 
-    public function editForm(int $collection_id, int $id): ViewResponse
+    public function editForm(Request $request, int $collection_id, int $id): ViewResponse
     {
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
@@ -130,7 +131,7 @@ final readonly class CollectionItemsAdminController
             return $this->wrongData($collection_id);
         }
 
-        return $this->renderForm($collection, $id, $this->fieldsFromItem($item), $item->getValuesMap());
+        return $this->renderForm($collection, $id, $this->fieldsFromItem($item) + ['back' => $this->returnUrl($collection_id, $request->queryParam('back'))], $item->getValuesMap());
     }
 
     public function store(Request $request, int $collection_id): ViewResponse
@@ -211,9 +212,10 @@ final readonly class CollectionItemsAdminController
         try {
             $dto = $this->dtoFromFields($collection_id, $fields);
             if ($id === null) {
-                $this->userApi->addItem($dto);
+                $savedId = $this->userApi->addItem($dto);
             } else {
                 $this->userApi->updateItem($id, $dto);
+                $savedId = $id;
             }
         } catch (CollectionItemFormException $exception) {
             return $this->renderFormWithFields($collection, $id, $fields, $exception->errors);
@@ -225,7 +227,8 @@ final readonly class CollectionItemsAdminController
 
         // $id is non-null only for an existing, owned item (guarded above), so it reliably marks an update.
         $this->session->flash('success_message', $id !== null ? __('Changes saved') : __('Created successfully'));
-        redirect($this->baseUrl($collection_id));
+        $back = $this->returnUrl($collection_id, $request->body('back'));
+        redirect($request->body('continue') === '1' ? $this->baseUrl($collection_id) . '/' . $savedId . '/edit?back=' . rawurlencode($back) : $back);
     }
 
     public function deleteConfirm(Request $request, int $collection_id, int $id): ViewResponse
@@ -249,7 +252,7 @@ final readonly class CollectionItemsAdminController
         $back = $this->returnUrl($collection_id, $request->queryParam('back') ?: $request->body('back'));
         $impact = $this->userApi->previewItemDeletion($collection_id, $id);
         $dialog = [
-            'title'       => __('Delete item'),
+            'title'       => $this->workspace->labels($collection)['delete'],
             'message'     => __('Are you sure you want to delete the item?'),
             'name'        => $item->name,
             'form_action' => $this->baseUrl($collection_id) . '/' . $id . '/delete',
@@ -301,6 +304,9 @@ final readonly class CollectionItemsAdminController
     {
         $list = $this->baseUrl($collectionId);
 
+        if (preg_match('/[\x00-\x20\\\\]/', $back)) {
+            return $list;
+        }
         return $back === $list || str_starts_with($back, $list . '?') ? $back : $list;
     }
 
@@ -319,15 +325,24 @@ final readonly class CollectionItemsAdminController
     {
         $this->breadcrumbs($collection);
         $fields['upload_context'] = $fields['upload_context'] ?? $this->files->createContext($collection->id, $id);
-        $title = $id !== null ? __('Edit item') : __('New item');
+        $labels = $this->workspace->labels($collection);
+        $title = $id !== null ? $labels['edit'] : $labels['new'];
         $this->navChain->add($title);
 
         $hasSections = $this->hasSections($collection);
-
+        $back = $this->returnUrl($collection->id, $fields['back'] ?? '');
+        $actions = [];
+        $item = $id !== null ? $this->itemRepository->findWithValues($id) : null;
+        if ($item !== null) {
+            $row = $this->rowMapper->rows(new Collection([$item]), [], $this->listItems->sectionTree($collection->id), $collection, $back)[0];
+            $actions = array_values(array_filter($row['actions'], static fn (array $action): bool => in_array($action['icon'], ['eye', 'external-link'], true)));
+        }
         return new ViewResponse('@collections/admin/item-form.twig', $this->menu($title, $collection->name, $collection) + [
             'upload_url'      => '/admin/collections/' . $collection->id . '/uploads?context=' . rawurlencode($fields['upload_context']),
             'form_action'     => $this->baseUrl($collection->id),
-            'back_url'        => $this->baseUrl($collection->id),
+            'back_url' => $back,
+            'item_actions' => $actions,
+            'workspace_labels' => $labels,
             'id'              => $id,
             'fields'          => $fields,
             'has_sections'    => $hasSections,
@@ -483,6 +498,7 @@ final readonly class CollectionItemsAdminController
     private function fieldsFromRequest(Request $request, ContentCollection $collection, Collection $fieldDefs): array
     {
         return [
+            'back' => $this->returnUrl($collection->id, $request->body('back')),
             'repeat_exact' => true,
             'relation_queries' => array_filter($request->bodyList('relation_query'), is_string(...)),
             'file_queries' => array_filter($request->bodyList('file_query'), is_string(...)),
