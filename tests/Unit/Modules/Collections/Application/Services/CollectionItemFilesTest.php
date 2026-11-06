@@ -67,7 +67,7 @@ final class CollectionItemFilesTest extends TestCase
         CollectionItemWriterFactory::validator();
         $this->collection = Fixture::insert('collections', ['code' => 'files', 'name' => 'Files']);
         $this->item = Fixture::insert('collection_items', ['collection_id' => $this->collection, 'name' => 'Item', 'code' => 'item']);
-        $this->disk = new FlysystemStorage(new Filesystem(new InMemoryFilesystemAdapter()), baseUrl: '/upload');
+        $this->disk = new FlysystemStorage(filesystem: new Filesystem(new InMemoryFilesystemAdapter()), baseUrl: '/upload');
         $registry = $this->createStub(StorageRegistryInterface::class);
         $registry->method('disk')->willReturn($this->disk);
         $registry->method('defaultName')->willReturn('local');
@@ -95,7 +95,7 @@ final class CollectionItemFilesTest extends TestCase
             new StoreEditorImageUseCase($this->store, $this->createStub(ImageProcessorInterface::class), new EditorImageSettings()),
             new EnsureCollectionContentAccessUseCase($access, new ContentCollectionRepository()), $user
         );
-        $this->changes = new CollectionChangeDispatcher([$this->files, $this->fileValues], transaction: new CollectionTransaction());
+        $this->changes = new CollectionChangeDispatcher(handlers: [$this->files, $this->fileValues], transaction: new CollectionTransaction());
     }
 
     protected function tearDown(): void
@@ -264,10 +264,10 @@ final class CollectionItemFilesTest extends TestCase
     private function field(array $settings = [], ?int $id = null): int
     {
         return (new \Johncms\Modules\Collections\Application\UseCases\SaveCollectionFieldUseCase(
-            new ContentCollectionFieldRepository(), new CollectionTransaction(), new ContentCollectionRepository(), CollectionItemWriterFactory::itemRepository(),
+            repository: new ContentCollectionFieldRepository(), transaction: new CollectionTransaction(), collections: new ContentCollectionRepository(), items: CollectionItemWriterFactory::itemRepository(),
             changes: $this->changes, context: $this->system
         ))->execute($id, new \Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO(
-            $this->collection, 'file', 'File', \Johncms\Modules\Collections\Domain\Enums\FieldType::File, false, false, 100, settings: $settings
+            collectionId: $this->collection, code: 'file', name: 'File', type: \Johncms\Modules\Collections\Domain\Enums\FieldType::File, required: false, multiple: false, sort: 100, settings: $settings
         ));
     }
 
@@ -279,6 +279,19 @@ final class CollectionItemFilesTest extends TestCase
     private function fileForm(?string $value = null): \Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO
     {
         return new \Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO($this->collection, null, 'item', 'Item', true, null, null, 100, null, null, $value !== null ? ['file' => $value] : []);
+    }
+
+    public function testAPartialWriteLeavesFileValuesItDoesNotChangeAlone(): void
+    {
+        $this->field();
+        $file = $this->store->storeContents('file value', 'value.txt', 'collections');
+        $this->system->runTrusted(fn () => $this->files->registerExisting($this->collection, $this->item, [$file->id]));
+        $this->writer()->execute($this->item, $this->fileForm((string) $file->id));
+        $this->disk->delete((string) Capsule::table('files')->where('id', $file->id)->value('path'));
+        $this->writer()->execute(id: $this->item, dto: $this->fileForm((string) $file->id), actorId: 42, valueFields: []);
+        self::assertSame((string) $file->id, CollectionItemWriterFactory::itemRepository()->findWithValues($this->item)->getValuesMap()['file']);
+        $this->expectException(CollectionItemFormException::class);
+        $this->writer()->execute(id: $this->item, dto: $this->fileForm((string) $file->id), actorId: 42, valueFields: ['file']);
     }
 
     public function testDeletionRemovesBytesOnlyAfterTheOutermostCommit(): void
@@ -305,6 +318,26 @@ final class CollectionItemFilesTest extends TestCase
         Capsule::connection()->rollBack();
         self::assertTrue($this->links->hasLinks($file->id));
         self::assertNotNull($this->store->find($file->id));
+    }
+
+    public function testAFileShownInTheTextOfAnotherRecordOutlivesTheRecordItWasUploadedFor(): void
+    {
+        $file = $this->store->storeContents('pasted image', 'photo.png', 'collections');
+        $this->system->runTrusted(fn () => $this->files->registerExisting($this->collection, $this->item, [$file->id], true));
+        $text = '<p><img src="' . $file->url . '"></p>';
+        $reader = Fixture::insert('collection_items', ['collection_id' => $this->collection, 'code' => 'reader', 'name' => 'Reader', 'detail_text' => $text]);
+        $other = Fixture::insert('collections', ['code' => 'other-files', 'name' => 'Other']);
+        $preview = Fixture::insert('collection_items', ['collection_id' => $other, 'code' => 'preview', 'name' => 'Preview', 'preview_text' => $text]);
+        CollectionItemWriterFactory::itemDeleter($this->changes)->execute($this->item);
+        self::assertNotNull($this->store->find($file->id));
+        self::assertSame([$file->id], $this->links->itemFiles($reader));
+        self::assertSame([$file->id], $this->links->itemFiles($preview));
+        Capsule::table('collection_items')->where('id', $preview)->update(['preview_text' => null]);
+        CollectionItemWriterFactory::itemDeleter($this->changes)->execute($preview);
+        self::assertNotNull($this->store->find($file->id));
+        Capsule::table('collection_items')->where('id', $reader)->update(['detail_text' => null]);
+        CollectionItemWriterFactory::itemDeleter($this->changes)->execute($reader);
+        self::assertNull($this->store->find($file->id));
     }
 
     public function testSharedFileSurvivesUntilItsLastItemIsDeleted(): void

@@ -341,7 +341,7 @@ final readonly class CollectionItemsAdminController
     private function renderForm(ContentCollection $collection, ?int $id, array $fields, array $valueMap, array $errors = []): ViewResponse
     {
         $this->breadcrumbs($collection);
-        $fields['upload_context'] = $fields['upload_context'] ?? $this->files->createContext($collection->id, $id);
+        $fields['upload_context'] = $this->files->renewContext($fields['upload_context'] ?? null, $collection->id, $id);
         $labels = $this->workspace->labels($collection);
         $title = $id !== null ? $labels['edit'] : $labels['new'];
         $this->navChain->add($title);

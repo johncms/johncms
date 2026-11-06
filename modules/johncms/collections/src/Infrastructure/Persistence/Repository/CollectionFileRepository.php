@@ -8,6 +8,8 @@ use Johncms\Modules\Collections\Domain\Models\CollectionUploadContext;
 use Johncms\Modules\Collections\Domain\Models\CollectionFileAsset;
 use Johncms\Modules\Collections\Domain\Models\CollectionFileLink;
 use Johncms\Modules\Collections\Domain\Models\CollectionFileValueLink;
+use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
+use Johncms\Modules\Collections\Domain\Models\ContentCollectionItemValue;
 use Johncms\Modules\Collections\Domain\Repository\CollectionFileRepositoryInterface;
 
 final class CollectionFileRepository implements CollectionFileRepositoryInterface
@@ -105,6 +107,20 @@ final class CollectionFileRepository implements CollectionFileRepositoryInterfac
             $query->lockForUpdate();
         }
         return $query->pluck('file_id')->all();
+    }
+
+    public function itemsMentioning(string $address): array
+    {
+        $like = '%' . str_replace(['!', '%', '_'], ['!!', '!%', '!_'], $address) . '%';
+        $items = ContentCollectionItem::query()->whereRaw("preview_text LIKE ? ESCAPE '!'", [$like])
+            ->orWhereRaw("detail_text LIKE ? ESCAPE '!'", [$like])->orderBy('id')->pluck('id')->all();
+        $values = ContentCollectionItemValue::query()->whereRaw("value_text LIKE ? ESCAPE '!'", [$like])->orderBy('item_id')->pluck('item_id')->all();
+        return array_values(array_unique([...$items, ...$values]));
+    }
+
+    public function touchContext(string $token, string $createdAt): void
+    {
+        CollectionUploadContext::query()->where('token', $token)->update(['created_at' => $createdAt]);
     }
 
     public function claim(string $token, int $itemId): void

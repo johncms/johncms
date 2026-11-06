@@ -41,6 +41,11 @@ interface CollectionFileRepositoryInterface
     /** @return list<int> */
     public function contextFiles(string $token, bool $current = false): array;
 
+    public function touchContext(string $token, string $createdAt): void;
+
+    /** @return list<int> Items whose text or field values mention the address. */
+    public function itemsMentioning(string $address): array;
+
     public function claim(string $token, int $itemId): void;
 
     public function linkItem(int $itemId, int $fileId): void;

@@ -22,6 +22,8 @@ use Throwable;
 
 final readonly class CollectionItemFiles implements CollectionChangeHandlerInterface
 {
+    private const string TOKEN = '/^[a-f0-9]{64}$/D';
+
     public function __construct(
         private CollectionFileRepositoryInterface $links,
         private CollectionTransactionInterface $transaction,
@@ -53,6 +55,17 @@ final readonly class CollectionItemFiles implements CollectionChangeHandlerInter
         });
     }
 
+    /** The context of a rendered form: the submitted one kept alive, or a new one if it is gone or not this form's. */
+    public function renewContext(?string $token, int $collectionId, ?int $itemId): string
+    {
+        $context = $token !== null && preg_match(self::TOKEN, $token) ? $this->links->context($token) : null;
+        if ($token !== null && $context !== null && $context['collection_id'] === $collectionId && $context['user_id'] === $this->user->id() && $context['item_id'] === $itemId) {
+            $this->links->touchContext($token, gmdate('Y-m-d H:i:s'));
+            return $token;
+        }
+        return $this->createContext($collectionId, $itemId);
+    }
+
     public function upload(int $collectionId, string $token, UploadedFileDTO $upload): StoredFileDTO
     {
         $this->guard->execute($collectionId);
@@ -76,27 +89,29 @@ final readonly class CollectionItemFiles implements CollectionChangeHandlerInter
         return $file;
     }
 
-    /** Current, authorized files of a still-open upload context. @return list<int> */
-    public function contextFiles(string $token, int $collectionId, ?int $itemId, ?int $actorId): array
+    /** New uploads need a context that has not lapsed. */
+    public function requireOpenContext(string $token, int $collectionId, ?int $actorId): void
     {
         if ($actorId === null) {
             throw $this->invalidContext();
         }
-        $context = $this->requireContext($token, $collectionId, $actorId, true);
-        if ($context['item_id'] !== null && $context['item_id'] !== $itemId) {
-            throw $this->invalidContext();
-        }
-        return $this->links->contextFiles($token, true);
+        $this->requireContext($token, $collectionId, $actorId, true);
+    }
+
+    /**
+     * Authorized files of an upload context. A form outlives its context: one that has lapsed still
+     * gives up its files, and one removed by cleanup simply has none left.
+     * @return list<int>
+     */
+    public function contextFiles(string $token, int $collectionId, ?int $itemId, ?int $actorId): array
+    {
+        return $this->claimableContext($token, $collectionId, $itemId, $actorId) !== null ? $this->links->contextFiles($token, true) : [];
     }
 
     public function claim(string $token, int $collectionId, int $itemId, ?int $actorId): void
     {
-        if ($actorId === null) {
-            throw $this->invalidContext();
-        }
-        $context = $this->requireContext($token, $collectionId, $actorId, true);
-        if ($context['item_id'] !== null && $context['item_id'] !== $itemId) {
-            throw $this->invalidContext();
+        if ($this->claimableContext($token, $collectionId, $itemId, $actorId) === null) {
+            return;
         }
         $ids = $this->links->contextFiles($token, true);
         $this->links->claim($token, $itemId);
@@ -182,7 +197,7 @@ final readonly class CollectionItemFiles implements CollectionChangeHandlerInter
             // Serialize cleanup with new references. This callback runs after the content commit.
             $this->transaction->run(function () use ($id): void {
                 $managed = $this->links->lockAsset($id);
-                if ($this->links->hasLinks($id, true)) {
+                if ($this->links->hasLinks($id, true) || ($managed && $this->keepMentioned($id))) {
                     return;
                 }
                 if ($managed) {
@@ -193,11 +208,57 @@ final readonly class CollectionItemFiles implements CollectionChangeHandlerInter
         }
     }
 
+    /**
+     * A file may be shown by a record it was never uploaded for: its address pasted into a text.
+     * Such records become its holders, so it goes away with the last of them and not before.
+     */
+    public function keepMentioned(int $fileId): bool
+    {
+        $address = parse_url($this->files->find($fileId)->url ?? '', PHP_URL_PATH);
+        if (! is_string($address) || $address === '') {
+            return false;
+        }
+        $items = $this->links->itemsMentioning($address);
+        foreach ($items as $itemId) {
+            $this->links->linkItem($itemId, $fileId);
+        }
+        return $items !== [];
+    }
+
     /** @return array{collection_id: int, user_id: int, item_id: ?int, created_at: string} */
     private function requireContext(string $token, int $collectionId, int $actorId, bool $lock = false): array
     {
-        $context = preg_match('/^[a-f0-9]{64}$/D', $token) ? $this->links->context($token, $lock) : null;
-        if ($context === null || $context['collection_id'] !== $collectionId || $context['user_id'] !== $actorId || $context['created_at'] <= gmdate('Y-m-d H:i:s', time() - 86400)) {
+        $context = $this->ownedContext($token, $collectionId, $actorId, $lock);
+        if ($context === null || $context['created_at'] <= gmdate('Y-m-d H:i:s', time() - 86400)) {
+            throw $this->invalidContext();
+        }
+        return $context;
+    }
+
+    /** @return array{collection_id: int, user_id: int, item_id: ?int, created_at: string}|null Null once cleanup has removed it. */
+    private function claimableContext(string $token, int $collectionId, ?int $itemId, ?int $actorId): ?array
+    {
+        if ($actorId === null) {
+            throw $this->invalidContext();
+        }
+        $context = $this->ownedContext($token, $collectionId, $actorId, true);
+        if ($context !== null && $context['item_id'] !== null && $context['item_id'] !== $itemId) {
+            throw $this->invalidContext();
+        }
+        return $context;
+    }
+
+    /** @return array{collection_id: int, user_id: int, item_id: ?int, created_at: string}|null */
+    private function ownedContext(string $token, int $collectionId, int $actorId, bool $lock): ?array
+    {
+        if (! preg_match(self::TOKEN, $token)) {
+            throw $this->invalidContext();
+        }
+        $context = $this->links->context($token, $lock);
+        if ($context === null) {
+            return null;
+        }
+        if ($context['collection_id'] !== $collectionId || $context['user_id'] !== $actorId) {
             throw $this->invalidContext();
         }
         if ($context['item_id'] !== null && $this->items->findById($context['item_id'])?->collection_id !== $collectionId) {

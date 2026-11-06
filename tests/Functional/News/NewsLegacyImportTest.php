@@ -27,9 +27,9 @@ final class NewsLegacyImportTest extends FunctionalTestCase
     {
         $top = $this->section('Top');
         $child = $this->section('Child', $top);
-        $removed = $this->section('Removed', deleted: true);
+        $removed = $this->section(code: 'Removed', deleted: true);
         $excludedChild = $this->section('InRemoved', $removed);
-        $blank = $this->section(null, name: 'Blank section');
+        $blank = $this->section(code: null, name: 'Blank section');
         $duplicate = $this->section('Top');
         $file = $this->file('news');
         $first = $this->article('Same.Code+', $child, ['attached_files' => json_encode([$file, 999999]), 'tags' => ' PHP ,php,"two, words"', 'view_count' => 42, 'created_by' => 77, 'updated_by' => 78, 'page_title' => 'SEO title', 'keywords' => str_repeat('seo,', 100)]);
@@ -38,7 +38,7 @@ final class NewsLegacyImportTest extends FunctionalTestCase
         $rootDuplicate = $this->article('Root.Code+');
         $reserved = $this->article('Root.Code+-legacy-' . $rootDuplicate);
         $this->article('Gone', $excludedChild, ['attached_files' => json_encode([$file])]);
-        $this->article('Deleted', attributes: ['deleted_at' => '2020-01-01 00:00:00']);
+        $this->article(code: 'Deleted', attributes: ['deleted_at' => '2020-01-01 00:00:00']);
         $comment = Fixture::insert('news_comments', ['created_at' => '2001-02-03 04:05:06', 'article_id' => $first, 'text' => 'Comment']);
         $deletedComment = Fixture::insert('news_comments', ['created_at' => '2001-02-03 04:05:06', 'article_id' => $first, 'deleted_at' => '2020-01-01 00:00:00']);
         $vote = Fixture::insert('news_votes', ['article_id' => $first, 'vote' => -1]);
@@ -110,9 +110,9 @@ final class NewsLegacyImportTest extends FunctionalTestCase
 
     public function testInvertedPublicationWindowIsImportedHiddenAndReported(): void
     {
-        $inverted = $this->article('Inverted', attributes: ['active_from' => '2001-01-01 00:00:00', 'active_to' => '2000-01-01 00:00:00']);
-        $hidden = $this->article('Already-hidden', attributes: ['active' => false, 'active_from' => '2001-01-01 00:00:00', 'active_to' => '2000-01-01 00:00:00']);
-        $ordinary = $this->article('Ordinary', attributes: ['active_from' => '2000-01-01 00:00:00', 'active_to' => '2001-01-01 00:00:00']);
+        $inverted = $this->article(code: 'Inverted', attributes: ['active_from' => '2001-01-01 00:00:00', 'active_to' => '2000-01-01 00:00:00']);
+        $hidden = $this->article(code: 'Already-hidden', attributes: ['active' => false, 'active_from' => '2001-01-01 00:00:00', 'active_to' => '2000-01-01 00:00:00']);
+        $ordinary = $this->article(code: 'Ordinary', attributes: ['active_from' => '2000-01-01 00:00:00', 'active_to' => '2001-01-01 00:00:00']);
         $report = $this->runImport();
         $rows = Capsule::table('collection_items')->whereIn('id', [$report->articles[$inverted], $report->articles[$hidden], $report->articles[$ordinary]])->get()->keyBy('id');
         foreach ([$inverted, $hidden] as $id) {
@@ -125,6 +125,19 @@ final class NewsLegacyImportTest extends FunctionalTestCase
         self::assertSame(1, (int) $rows[$report->articles[$ordinary]]->active);
         self::assertSame('2001-01-01 00:00:00', $rows[$report->articles[$ordinary]]->active_to);
         self::assertStringNotContainsString("Article $ordinary:", implode("\n", $report->warnings));
+    }
+
+    public function testFilesOfExcludedArticlesSurviveInTheTextOfKeptOnes(): void
+    {
+        $file = $this->file('news');
+        $url = $this->container()->get(\Johncms\Files\FileStore::class)->find($file)->url;
+        $this->article(code: 'Deleted', attributes: ['deleted_at' => '2020-01-01 00:00:00', 'attached_files' => json_encode([$file])]);
+        $this->article(code: 'Kept', attributes: ['text' => '<img src="' . $url . '">']);
+        $report = $this->runImport();
+        self::assertSame([$file], array_map(intval(...), Capsule::table('news_legacy_cleanup_files')->pluck('file_id')->all()));
+        $this->container()->get(\Johncms\Modules\News\Application\Collections\NewsDiscussionFiles::class)->cleanup([$file], $this->container()->get(NewsReadServiceInterface::class)->collection()->id);
+        self::assertSame(1, Capsule::table('files')->where('id', $file)->count());
+        self::assertSame(array_values($report->articles), array_map(intval(...), Capsule::table('collection_file_links')->where('file_id', $file)->pluck('item_id')->all()));
     }
 
     public function testInvalidSectionIsNamedInTheFailure(): void
@@ -173,7 +186,7 @@ final class NewsLegacyImportTest extends FunctionalTestCase
     public function testSharedFilesRemainExternallyOwnedUntilTheLastCommentIsRemoved(): void
     {
         $file = $this->file('news');
-        $article = $this->article('Shared', attributes: ['attached_files' => json_encode([$file])]);
+        $article = $this->article(code: 'Shared', attributes: ['attached_files' => json_encode([$file])]);
         $comment = Fixture::insert('news_comments', ['created_at' => '2001-02-03 04:05:06', 'article_id' => $article, 'attached_files' => json_encode([$file])]);
         $report = $this->runImport();
         self::assertSame(0, (int) Capsule::table('collection_file_assets')->where('file_id', $file)->value('managed'));
@@ -186,7 +199,7 @@ final class NewsLegacyImportTest extends FunctionalTestCase
 
     public function testMalformedAttachmentsRollBackTheImport(): void
     {
-        $this->article('Bad', attributes: ['attached_files' => '{broken']);
+        $this->article(code: 'Bad', attributes: ['attached_files' => '{broken']);
         try {
             $this->runImport();
             self::fail('Malformed legacy attachments must be repaired explicitly.');
@@ -212,7 +225,7 @@ final class NewsLegacyImportTest extends FunctionalTestCase
     {
         $file = $this->file('news');
         Capsule::table('files')->where('id', $file)->update(['size' => null]);
-        $article = $this->article('Unsized', attributes: ['attached_files' => json_encode([$file])]);
+        $article = $this->article(code: 'Unsized', attributes: ['attached_files' => json_encode([$file])]);
         $report = $this->runImport();
         $item = $this->container()->get(CollectionsApiInterface::class)->getItem($report->articles[$article]);
         self::assertSame([$file], $this->container()->get(CollectionItemFiles::class)->registeredFileIds($item->collectionId, $item->id));

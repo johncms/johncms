@@ -86,7 +86,7 @@ final readonly class CollectionFieldUpload
     private function requireContext(string $token, int $collectionId): void
     {
         $context = $this->links->context($token, true);
-        $this->attachments->contextFiles($token, $collectionId, $context['item_id'] ?? null, $this->user->id());
+        $this->attachments->requireOpenContext($token, $collectionId, $this->user->id());
         $this->access->executeAction($collectionId, ($context['item_id'] ?? null) === null ? 'create' : 'edit');
     }
 }

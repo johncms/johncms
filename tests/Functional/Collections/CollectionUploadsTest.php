@@ -35,7 +35,7 @@ final class CollectionUploadsTest extends FunctionalTestCase
     {
         $schema = $this->container()->get(\Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface::class);
         $field = $schema->saveField(null, new \Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO(
-            $this->collection, 'attachment', 'Attachment', \Johncms\Modules\Collections\Domain\Enums\FieldType::File, false, false, 100,
+            collectionId: $this->collection, code: 'attachment', name: 'Attachment', type: \Johncms\Modules\Collections\Domain\Enums\FieldType::File, required: false, multiple: false, sort: 100,
             settings: ['allowed_mime_types' => ['text/plain'], 'max_file_bytes' => 32]
         ));
         $user = FunctionalUserFactory::createWithPermissions(['news.manage']);
@@ -75,7 +75,7 @@ final class CollectionUploadsTest extends FunctionalTestCase
     public function testFieldImageKeepsItsAllowedFormatWhenTheEditorConvertsToWebp(): void
     {
         $this->container()->get(\Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface::class)->saveField(null, new \Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO(
-            $this->collection, 'cover', 'Cover', \Johncms\Modules\Collections\Domain\Enums\FieldType::File, false, false, 100,
+            collectionId: $this->collection, code: 'cover', name: 'Cover', type: \Johncms\Modules\Collections\Domain\Enums\FieldType::File, required: false, multiple: false, sort: 100,
             settings: ['allowed_mime_types' => ['image/png']]
         ));
         $user = FunctionalUserFactory::createWithPermissions(['news.manage']);
@@ -154,6 +154,40 @@ final class CollectionUploadsTest extends FunctionalTestCase
         self::assertSame(200, $this->postForm($base . '/items', ['id' => $second, 'upload_context' => $token, 'name' => 'Forged', 'code' => 'second', 'sort' => '100'], $user)->getStatusCode());
         self::assertSame('Second', Capsule::table('collection_items')->where('id', $second)->value('name'));
         self::assertSame(0, Capsule::table('collection_file_links')->where('item_id', $second)->count());
+    }
+
+    public function testAFormSavesAfterItsContextLapsedOrWasRemoved(): void
+    {
+        $user = FunctionalUserFactory::createWithPermissions(['news.manage']);
+        $item = Fixture::insert('collection_items', ['collection_id' => $this->collection, 'code' => 'first', 'name' => 'First']);
+        $base = '/admin/collections/' . $this->collection;
+        $lapsed = $this->context($base, $user, $item);
+        Capsule::table('collection_upload_contexts')->where('token', $lapsed)->update(['created_at' => '2000-01-01 00:00:00']);
+        $form = ['id' => $item, 'code' => 'first', 'sort' => '100'];
+        self::assertSame(302, $this->postForm($base . '/items', $form + ['upload_context' => $lapsed, 'name' => 'After a day'], $user)->getStatusCode());
+        self::assertSame('After a day', Capsule::table('collection_items')->where('id', $item)->value('name'));
+        $removed = $this->context($base, $user, $item);
+        Capsule::table('collection_upload_contexts')->where('token', $removed)->delete();
+        self::assertSame(302, $this->postForm($base . '/items', $form + ['upload_context' => $removed, 'name' => 'After cleanup'], $user)->getStatusCode());
+        self::assertSame('After cleanup', Capsule::table('collection_items')->where('id', $item)->value('name'));
+    }
+
+    public function testALapsedContextKeepsItsFilesAndTheFormRenewsIt(): void
+    {
+        $user = FunctionalUserFactory::createWithPermissions(['news.manage']);
+        $base = '/admin/collections/' . $this->collection;
+        $token = $this->context($base, $user);
+        $file = $this->upload($base, $token, $user);
+        Capsule::table('collection_upload_contexts')->where('token', $token)->update(['created_at' => '2000-01-01 00:00:00']);
+        $form = ['upload_context' => $token, 'name' => '', 'code' => 'late', 'sort' => '100'];
+        self::assertSame(200, $this->postForm($base . '/items', $form, $user)->getStatusCode());
+        self::assertSame(gmdate('Y-m-d'), substr((string) Capsule::table('collection_upload_contexts')->where('token', $token)->value('created_at'), 0, 10));
+        self::assertGreaterThan($file['id'], $this->upload($base, $token, $user)['id']);
+        Capsule::table('collection_upload_contexts')->where('token', $token)->update(['created_at' => '2000-01-01 00:00:00']);
+        $form['name'] = 'Late';
+        self::assertSame(302, $this->postForm($base . '/items', $form, $user)->getStatusCode());
+        $item = Capsule::table('collection_items')->where('code', 'late')->value('id');
+        self::assertSame($item, Capsule::table('collection_file_links')->where('file_id', $file['id'])->value('item_id'));
     }
 
     public function testExpiredContextsAndNonImagesAreRejectedWithoutCreatingFiles(): void
