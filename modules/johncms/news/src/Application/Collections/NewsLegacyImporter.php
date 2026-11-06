@@ -15,6 +15,8 @@ use Johncms\Modules\Collections\Application\Api\CollectionsImportApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemHistoryDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionSectionFormException;
 use Johncms\Modules\Collections\Application\Services\CollectionItemFiles;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\News\Application\DTO\NewsLegacyImportReportDTO;
@@ -81,7 +83,9 @@ final readonly class NewsLegacyImporter
                         $rows,
                         fn (string $code): ?int => $this->sections->resolvePath($collection->id, [...$path, $code])?->id,
                         function (array $row, string $code) use ($collection, $parentId, &$warnings): int {
-                            return $this->import->importSection(new CollectionSectionFormDTO(
+                            $createdAt = $this->date($row['created_at'], 'section ' . $row['id'] . ' created_at', $warnings);
+                            $updatedAt = $this->date($row['updated_at'], 'section ' . $row['id'] . ' updated_at', $warnings);
+                            return $this->forRecord('section ' . $row['id'], fn (): int => $this->import->importSection(new CollectionSectionFormDTO(
                                 $collection->id,
                                 $parentId,
                                 $code,
@@ -90,7 +94,7 @@ final readonly class NewsLegacyImporter
                                 true,
                                 100,
                                 ['meta_keywords' => $this->text($row['keywords']), 'meta_description' => $this->text($row['description'])]
-                            ), $this->date($row['created_at'], 'section ' . $row['id'] . ' created_at', $warnings), $this->date($row['updated_at'], 'section ' . $row['id'] . ' updated_at', $warnings));
+                            ), $createdAt, $updatedAt));
                         },
                         $warnings,
                         'section'
@@ -124,12 +128,21 @@ final readonly class NewsLegacyImporter
                         $oldId = (int) $row['id'];
                         $from = $this->date($row['active_from'], "article $oldId active_from", $warnings);
                         $to = $this->date($row['active_to'], "article $oldId active_to", $warnings);
-                        $id = $this->import->importItem(new CollectionItemFormDTO(
+                        $active = (bool) $row['active'];
+                        if ($from !== null && $to !== null && $from > $to) {
+                            // 9.9 accepted such a window and never showed the article: it stays hidden.
+                            $warnings[] = "Article $oldId: active_from {$row['active_from']} is later than active_to {$row['active_to']}; imported hidden without active_to.";
+                            $active = false;
+                            $to = null;
+                        }
+                        $createdAt = $this->date($row['created_at'], "article $oldId created_at", $warnings);
+                        $updatedAt = $this->date($row['updated_at'], "article $oldId updated_at", $warnings);
+                        $id = $this->forRecord("article $oldId", fn (): int => $this->import->importItem(new CollectionItemFormDTO(
                             $collection->id,
                             $sectionId,
                             $code,
                             (string) $row['name'],
-                            (bool) $row['active'],
+                            $active,
                             $from?->format('Y-m-d H:i:s'),
                             $to?->format('Y-m-d H:i:s'),
                             100,
@@ -138,12 +151,12 @@ final readonly class NewsLegacyImporter
                             ['page_title' => $this->text($row['page_title']) ?? '', 'description' => $this->text($row['description']) ?? '', 'keywords' => $this->text($row['keywords']) ?? '',
                                 'tags' => $row['tags'] === null || $row['tags'] === '' ? [] : array_map(static fn (?string $tag): string => $tag ?? '', str_getcsv((string) $row['tags'], ',', '"', ''))]
                         ), new CollectionItemHistoryDTO(
-                            $this->date($row['created_at'], "article $oldId created_at", $warnings),
-                            $this->date($row['updated_at'], "article $oldId updated_at", $warnings),
+                            $createdAt,
+                            $updatedAt,
                             $row['created_by'] === null ? null : (int) $row['created_by'],
                             $row['updated_by'] === null ? null : (int) $row['updated_by'],
                             (int) ($row['view_count'] ?? 0)
-                        ));
+                        )));
                         $expectedFiles = [];
                         foreach ($this->fileIds($row['attached_files']) as $fileId) {
                             if (! $this->files->isRegistered($fileId)) {
@@ -196,7 +209,7 @@ final readonly class NewsLegacyImporter
         $deferred = [];
         foreach ($rows as $row) {
             $code = (string) ($row['code'] ?? '');
-            $existing = $code === '' ? null : $find($code);
+            $existing = $code === '' ? null : $this->forRecord($kind . ' ' . $row['id'], static fn (): ?int => $find($code));
             if ($code === '' || ($existing !== null && in_array($existing, $map, true))) {
                 $deferred[] = $row;
                 continue;
@@ -221,6 +234,35 @@ final readonly class NewsLegacyImporter
             $warnings[] = ucfirst($kind) . ' ' . $row['id'] . ": code '$old' changed to '$code'.";
         }
         return $map;
+    }
+
+    /**
+     * Validation names fields only, while the person repairing the data needs the legacy row.
+     * @template T
+     * @param callable(): T $write
+     * @return T
+     */
+    private function forRecord(string $record, callable $write): mixed
+    {
+        try {
+            return $write();
+        } catch (CollectionItemFormException | CollectionSectionFormException $exception) {
+            $details = [];
+            foreach ($exception->errors as $field => $messages) {
+                $details[] = $field . ': ' . implode(' ', $messages);
+            }
+            throw $this->unimportable($record, implode(' ', $details), $exception);
+        } catch (\InvalidArgumentException $exception) {
+            throw $this->unimportable($record, $exception->getMessage(), $exception);
+        }
+    }
+
+    private function unimportable(string $record, string $reason, \Throwable $previous): NewsLegacyImportException
+    {
+        return new NewsLegacyImportException(
+            message: sprintf('Legacy %s cannot be imported. %s Repair it and retry system:update.', $record, $reason),
+            previous: $previous
+        );
     }
 
     /** @param list<string> $warnings */

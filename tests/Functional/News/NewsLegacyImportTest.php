@@ -90,11 +90,13 @@ final class NewsLegacyImportTest extends FunctionalTestCase
         $file = $this->file('news');
         $first = $this->article('First', $section, ['attached_files' => json_encode([$file])]);
         $comment = Fixture::insert('news_comments', ['created_at' => '2001-02-03 04:05:06', 'article_id' => $first]);
-        $bad = $this->article('Bad', $section, ['active_from' => '2000-01-01 00:00:00', 'active_to' => '1999-01-01 00:00:00']);
+        $bad = $this->article('not a code', $section);
         try {
             $this->runImport();
-            self::fail('Invalid publication interval must abort the entire import.');
-        } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException) {
+            self::fail('A record that cannot be imported must abort the entire import.');
+        } catch (NewsLegacyImportException $error) {
+            self::assertStringContainsString('article ' . $bad, $error->getMessage());
+            self::assertStringContainsString('code:', $error->getMessage());
             self::assertSame(0, Capsule::table('collection_items')->count());
             self::assertSame(0, Capsule::table('collection_sections')->count());
             self::assertSame(0, Capsule::table('collection_file_links')->count());
@@ -102,8 +104,39 @@ final class NewsLegacyImportTest extends FunctionalTestCase
             self::assertSame(2, Capsule::table('news_articles')->count());
             self::assertSame(1, Capsule::table('files')->where('id', $file)->count());
         }
-        Capsule::table('news_articles')->where('id', $bad)->update(['active_to' => null]);
+        Capsule::table('news_articles')->where('id', $bad)->update(['code' => 'repaired']);
         self::assertCount(2, $this->runImport()->articles);
+    }
+
+    public function testInvertedPublicationWindowIsImportedHiddenAndReported(): void
+    {
+        $inverted = $this->article('Inverted', attributes: ['active_from' => '2001-01-01 00:00:00', 'active_to' => '2000-01-01 00:00:00']);
+        $hidden = $this->article('Already-hidden', attributes: ['active' => false, 'active_from' => '2001-01-01 00:00:00', 'active_to' => '2000-01-01 00:00:00']);
+        $ordinary = $this->article('Ordinary', attributes: ['active_from' => '2000-01-01 00:00:00', 'active_to' => '2001-01-01 00:00:00']);
+        $report = $this->runImport();
+        $rows = Capsule::table('collection_items')->whereIn('id', [$report->articles[$inverted], $report->articles[$hidden], $report->articles[$ordinary]])->get()->keyBy('id');
+        foreach ([$inverted, $hidden] as $id) {
+            $row = $rows[$report->articles[$id]];
+            self::assertSame(0, (int) $row->active);
+            self::assertSame('2001-01-01 00:00:00', $row->active_from);
+            self::assertNull($row->active_to);
+            self::assertStringContainsString("Article $id: active_from 2001-01-01 00:00:00 is later than active_to 2000-01-01 00:00:00", implode("\n", $report->warnings));
+        }
+        self::assertSame(1, (int) $rows[$report->articles[$ordinary]]->active);
+        self::assertSame('2001-01-01 00:00:00', $rows[$report->articles[$ordinary]]->active_to);
+        self::assertStringNotContainsString("Article $ordinary:", implode("\n", $report->warnings));
+    }
+
+    public function testInvalidSectionIsNamedInTheFailure(): void
+    {
+        $section = $this->section('not a code');
+        try {
+            $this->runImport();
+            self::fail('A section that cannot be imported must abort the import.');
+        } catch (NewsLegacyImportException $error) {
+            self::assertStringContainsString('section ' . $section, $error->getMessage());
+            self::assertSame(0, Capsule::table('collection_sections')->count());
+        }
     }
 
     public function testCallerRollbackAndExistingTargetConflictPreserveAllOriginalData(): void

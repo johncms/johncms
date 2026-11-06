@@ -87,18 +87,19 @@ final class NewsStorageUpdateTest extends FunctionalTestCase
         $section = Fixture::insert('news_sections', ['code' => 'Original', 'name' => 'Original']);
         $first = $this->article('First', $section);
         $comment = $this->comment($first);
-        $bad = $this->article('Second', $section, ['active_from' => '2001-01-01 00:00:00', 'active_to' => '2000-01-01 00:00:00']);
+        $bad = $this->article('not a code', $section);
         try {
             $this->update();
             self::fail('The complete data phase must be rolled back.');
-        } catch (\Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException) {
+        } catch (\Johncms\Modules\News\Application\Exceptions\NewsLegacyImportException $error) {
+            self::assertStringContainsString('article ' . $bad, $error->getMessage());
             self::assertSame(2, Capsule::table('news_articles')->count());
             self::assertSame(1, Capsule::table('news_sections')->count());
             self::assertNull(Capsule::table('news_comments')->where('id', $comment)->value('item_id'));
             self::assertSame(0, Capsule::table('collection_items')->count());
             self::assertSame(0, Capsule::table('collection_sections')->count());
         }
-        Capsule::table('news_articles')->where('id', $bad)->update(['active_to' => null]);
+        Capsule::table('news_articles')->where('id', $bad)->update(['code' => 'Second']);
         $this->update();
         $this->assertLegacyRemoved();
         self::assertSame(2, Capsule::table('collection_items')->count());
