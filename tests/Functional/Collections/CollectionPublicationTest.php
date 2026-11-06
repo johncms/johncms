@@ -102,6 +102,24 @@ final class CollectionPublicationTest extends FunctionalTestCase
         self::assertSame(18, ContentCollectionItem::query()->find($id)->view_count);
     }
 
+    public function testPendingMigrationsAnswerNotFoundWithoutAskingTheSchema(): void
+    {
+        $pending = $this->container()->get(\Johncms\Database\Migrations\PendingMigrations::class);
+        \Illuminate\Database\Capsule\Manager::table('migrations')->orderBy('id')->limit(1)->delete();
+        $pending->forget();
+        $connection = \Illuminate\Database\Capsule\Manager::connection();
+        $connection->flushQueryLog();
+        $connection->enableQueryLog();
+        try {
+            self::assertSame(404, $this->handleRequest('/no-such-page')->getStatusCode());
+            $collections = array_filter($connection->getQueryLog(), static fn (array $entry): bool => str_contains($entry['query'], '"collections"') || str_contains($entry['query'], '`collections`'));
+            self::assertSame([], array_values($collections));
+        } finally {
+            $connection->disableQueryLog();
+            $pending->forget();
+        }
+    }
+
     public function testVisibleItemIsAvailableInListDetailAndSitemap(): void
     {
         $id = $this->item('entry');

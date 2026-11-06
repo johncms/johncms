@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Controllers;
 
+use Johncms\Database\Migrations\PendingMigrations;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -34,11 +35,18 @@ final readonly class CollectionRouterController
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
         private \Johncms\Modules\Collections\Application\Services\ItemContentFormatter $content,
+        private PendingMigrations $migrations,
     ) {
     }
 
     public function __invoke(string $route): ViewResponse
     {
+        // The catch-all answers every unknown address, and a schema waiting for its migrations
+        // cannot be asked which of them exist.
+        if ($this->migrations->count() > 0) {
+            $this->notFound();
+        }
+
         $segments = array_values(array_filter(explode('/', $route), static fn (string $s): bool => $s !== ''));
         if ($segments === []) {
             $this->notFound();
