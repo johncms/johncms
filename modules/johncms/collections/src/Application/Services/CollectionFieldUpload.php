@@ -48,14 +48,15 @@ final readonly class CollectionFieldUpload
         }
         $size = filesize($upload->tmpPath);
         $mime = (new finfo(FILEINFO_MIME_TYPE))->file($upload->tmpPath);
-        if ($size === false || $mime === false || ! isset(CollectionFilePolicy::TYPES[$mime])) {
+        $clientName = $upload->clientName ?? 'file';
+        $format = $mime !== false ? $this->policy->format($mime, $clientName) : null;
+        if ($size === false || $format === null) {
             throw new CollectionItemFormException(['values.' . $code => [d__('collections', 'This file content type is not supported.')]]);
         }
-        $this->policy->assertAllowed($code, $size, $mime, $field->settings ?? []);
-        $name = pathinfo($upload->clientName ?? 'file', PATHINFO_FILENAME) . '.' . CollectionFilePolicy::TYPES[$mime];
-        $safe = new UploadedFileDTO($name, $mime, $size, $upload->tmpPath, $upload->error);
+        $this->policy->assertAllowed($code, $size, $format, $field->settings ?? []);
+        $safe = new UploadedFileDTO($this->policy->fileName($format, $clientName), $format, $size, $upload->tmpPath, $upload->error);
         $directory = 'collections/' . $collectionId;
-        $file = str_starts_with($mime, 'image/') ? $this->images->execute($safe, $directory, EditorImageFormat::Original) : $this->files->storeUpload($safe, $directory);
+        $file = str_starts_with($format, 'image/') ? $this->images->execute($safe, $directory, EditorImageFormat::Original) : $this->files->storeUpload($safe, $directory);
         try {
             $this->transaction->run(function () use ($collectionId, $code, $token, $field, $file): void {
                 $this->collections->findForUpdate($collectionId) ?? throw new CollectionItemFormException(['collection_id' => [d__('collections', 'Collection not found.')]]);

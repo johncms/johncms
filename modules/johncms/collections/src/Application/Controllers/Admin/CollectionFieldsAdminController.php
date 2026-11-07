@@ -488,6 +488,7 @@ final readonly class CollectionFieldsAdminController
             'in_list'  => 0,
             'sort'     => 100,
             ...$this->settingsToFields([]),
+            'allowed_mime_types' => CollectionFilePolicy::DEFAULT_FORMATS,
         ];
     }
 
@@ -546,11 +547,13 @@ final readonly class CollectionFieldsAdminController
     private function fileTypeGroups(): array
     {
         $labels = [
-            'images'    => __('Images'),
-            'documents' => __('Documents'),
-            'archives'  => __('Archives'),
-            'audio'     => __('Audio'),
-            'video'     => __('Video'),
+            'images'        => __('Images'),
+            'documents'     => __('Documents'),
+            'spreadsheets'  => __('Spreadsheets'),
+            'presentations' => __('Presentations'),
+            'archives'      => __('Archives'),
+            'audio'         => __('Audio'),
+            'video'         => __('Video'),
         ];
         $groups = [];
         foreach (CollectionFilePolicy::GROUPS as $key => $mimes) {

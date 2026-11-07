@@ -12,10 +12,12 @@ use Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Users\User;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Tests\Functional\FunctionalTestCase;
 use Tests\Support\Fixture;
 use Tests\Support\FunctionalUserFactory;
+use ZipArchive;
 
 final class CollectionUploadsTest extends FunctionalTestCase
 {
@@ -74,6 +76,94 @@ final class CollectionUploadsTest extends FunctionalTestCase
         } finally {
             unlink($path);
         }
+    }
+
+    /**
+     * The field accepts everything, the name tells apart what the content cannot, and what gets
+     * through has passed the check of a stored file as well.
+     *
+     * @return array<string, array{string, string, string}>
+     */
+    public static function uploads(): array
+    {
+        return [
+            'text under its name'        => ['notes.txt', 'Plain words', 'notes.txt'],
+            'markdown keeps its name'    => ['readme.MD', '# Plain words', 'readme.md'],
+            'a log keeps its name'       => ['server.log', 'Plain words', 'server.log'],
+            'a table keeps its name'     => ['prices.csv', "name,price\nfoo,1\nbar,2\n", 'prices.csv'],
+            'a script loses its name'    => ['evil.php', 'Plain words', 'evil.txt'],
+            'a page loses its name'      => ['evil.html', 'Plain words', 'evil.txt'],
+            'the last extension decides' => ['evil.php.csv', 'Plain words', 'evil.php.csv'],
+        ];
+    }
+
+    #[DataProvider('uploads')]
+    public function testTheNameOfAnUploadFollowsItsContent(string $name, string $contents, string $stored): void
+    {
+        self::assertSame($stored, $this->uploadAs($name, $contents)['name']);
+    }
+
+    public function testDocumentsInAContainerKeepTheirFormatAndWhatTheContentRefutesDoesNot(): void
+    {
+        $archive = $this->archive();
+        self::assertSame('report.docx', $this->uploadAs('report.docx', $archive)['name']);
+        self::assertSame('table.xlsx', $this->uploadAs('table.xlsx', $archive)['name']);
+        self::assertSame('macro.zip', $this->uploadAs('macro.docm', $archive)['name']);
+        self::assertSame('plain.zip', $this->uploadAs('plain.zip', $archive)['name']);
+        self::assertSame(422, $this->uploadAs('fake.docx', "<?php echo 'x';\n", 422)['status']);
+    }
+
+    public function testAFieldAcceptsOnlyTheChosenFormatOfAContainer(): void
+    {
+        $archive = $this->archive();
+        $settings = ['allowed_mime_types' => ['application/vnd.openxmlformats-officedocument.wordprocessingml.document']];
+        self::assertSame('report.docx', $this->uploadAs('report.docx', $archive, 200, $settings)['name']);
+        self::assertSame(422, $this->uploadAs('plain.zip', $archive, 422, $settings)['status']);
+    }
+
+    /**
+     * @param array<string, mixed> $settings
+     * @return array<string, mixed>
+     */
+    private function uploadAs(string $name, string $contents, int $status = 200, array $settings = []): array
+    {
+        $schema = $this->container()->get(CollectionSchemaApiInterface::class);
+        $code = 'file' . count($schema->getFields($this->collection));
+        $schema->saveField(null, new CollectionFieldFormDTO(collectionId: $this->collection, code: $code, name: 'File', type: FieldType::File, required: false, multiple: false, sort: 100, settings: $settings));
+        $user = FunctionalUserFactory::createWithPermissions(['news.manage']);
+        $base = '/admin/collections/' . $this->collection;
+        $token = $this->context($base, $user);
+        $path = tempnam(sys_get_temp_dir(), 'field-upload-');
+        file_put_contents($path, $contents);
+        try {
+            $response = $this->handleRequest($base . '/uploads?field=' . $code . '&context=' . $token, 'POST', $this->withCsrfToken(), cookies: $this->actingAs($user), files: [
+                'upload' => new UploadedFile($path, $name, 'application/octet-stream', null, true),
+            ]);
+        } finally {
+            if (is_file($path)) {
+                unlink($path);
+            }
+        }
+        self::assertSame($status, $response->getStatusCode(), (string) $response->getContent());
+        $file = json_decode((string) $response->getContent(), true) + ['status' => $response->getStatusCode()];
+        if (isset($file['id'])) {
+            $this->files[] = $file['id'];
+        }
+        return $file;
+    }
+
+    /** An archive whose content alone looks like nothing but an archive. */
+    private function archive(): string
+    {
+        $path = tempnam(sys_get_temp_dir(), 'field-archive-');
+        $archive = new ZipArchive();
+        $archive->open($path, ZipArchive::OVERWRITE);
+        $archive->addFromString('notes.txt', 'Plain words');
+        $archive->addFromString('word/document.xml', '<document/>');
+        $archive->close();
+        $contents = (string) file_get_contents($path);
+        unlink($path);
+        return $contents;
     }
 
     public function testFieldImageKeepsItsAllowedFormatWhenTheEditorConvertsToWebp(): void

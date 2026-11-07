@@ -1688,3 +1688,9 @@ msgstr "Роль придаёт значению особый смысл на с
 
 msgid "The form of an item orders this field by the layout of the collection."
 msgstr "В форме записи порядок этого поля задаёт раскладка коллекции."
+
+msgid "Spreadsheets"
+msgstr "Таблицы"
+
+msgid "Presentations"
+msgstr "Презентации"

@@ -495,7 +495,7 @@ final readonly class CollectionItemsAdminController
                 'file_error' => $fileError,
                 'file_url' => '/admin/collections/' . $field->collection_id . '/files/' . $field->code . '?context=' . rawurlencode($context ?? ''),
                 'file_upload_url' => '/admin/collections/' . $field->collection_id . '/uploads?field=' . $field->code . '&context=' . rawurlencode($context ?? ''),
-                'file_accept' => implode(',', $field->settings['allowed_mime_types'] ?? array_keys(CollectionFilePolicy::TYPES)),
+                'file_accept' => implode(',', array_map(static fn (string $extension): string => '.' . $extension, CollectionFilePolicy::extensions($field->settings['allowed_mime_types'] ?? array_keys(CollectionFilePolicy::TYPES)))),
                 'file_types_label' => implode(', ', array_map(strtoupper(...), array_intersect_key(CollectionFilePolicy::TYPES, array_flip($field->settings['allowed_mime_types'] ?? array_keys(CollectionFilePolicy::TYPES))))),
                 'max_file_bytes' => $field->settings['max_file_bytes'] ?? CollectionFilePolicy::DEFAULT_MAX_BYTES,
                 'relation_url' => '/admin/collections/' . $field->collection_id . '/relations/' . $field->code,
