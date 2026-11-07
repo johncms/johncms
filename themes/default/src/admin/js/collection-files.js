@@ -3,8 +3,8 @@ class FileRequestError extends Error {}
 const validChoice = choice => choice && typeof choice.code === 'string' && /^[1-9]\d*$/u.test(choice.code)
   && typeof choice.label === 'string' && typeof choice.url === 'string' && typeof choice.sizeLabel === 'string' && typeof choice.image === 'boolean';
 
-function optionFor(choice, defaultSelected = false) {
-  const option = new Option(`${choice.label} (${choice.sizeLabel})`, choice.code, defaultSelected);
+function optionFor(choice) {
+  const option = new Option(`${choice.label} (${choice.sizeLabel})`, choice.code);
   option.dataset.fileLabel = choice.label;
   option.dataset.fileUrl = choice.url;
   option.dataset.fileSize = choice.sizeLabel;
@@ -12,108 +12,86 @@ function optionFor(choice, defaultSelected = false) {
   return option;
 }
 
-function refreshPreview(widget) {
-  const root = widget.closest('[data-file-field]');
-  const select = widget.querySelector('[data-file-select]');
-  const preview = widget.querySelector('[data-file-preview]');
-  const option = select.selectedOptions[0];
-  preview.replaceChildren();
-  preview.hidden = !select.value;
-  if (!select.value) return;
-  if (!option?.dataset.fileUrl) {
-    const unavailable = document.createElement('div');
-    unavailable.className = 'small text-danger';
-    unavailable.textContent = root.dataset.unavailable;
-    preview.append(unavailable);
-    return;
+function thumbnail(root, url, label, image) {
+  if (image) {
+    const picture = document.createElement('img');
+    picture.src = url;
+    picture.alt = label;
+    picture.loading = 'lazy';
+    picture.className = 'collection-file-thumb';
+    return picture;
   }
-  const line = document.createElement('div');
-  line.className = 'd-flex flex-wrap gap-2 align-items-baseline';
-  const link = document.createElement('a');
-  link.href = option.dataset.fileUrl;
-  link.target = '_blank';
-  link.rel = 'noopener';
-  link.className = 'text-break';
-  link.textContent = option.dataset.fileLabel;
-  const size = document.createElement('span');
-  size.className = 'small text-body-secondary';
-  size.textContent = option.dataset.fileSize;
-  line.append(link, size);
-  preview.append(line);
-  if (option.dataset.fileImage === '1') {
-    const image = document.createElement('img');
-    image.src = option.dataset.fileUrl;
-    image.alt = option.dataset.fileLabel;
-    image.loading = 'lazy';
-    image.className = 'img-thumbnail object-fit-contain mt-2';
-    image.style.maxWidth = '100%';
-    image.style.maxHeight = '160px';
-    preview.append(image);
-  }
-}
-
-function updateChoices(select, choices) {
-  const value = select.value;
-  const retained = [...select.options].filter(option => option.value === value || option.defaultSelected);
-  const defaults = new Set(retained.filter(option => option.defaultSelected).map(option => option.value));
-  const empty = [...select.options].find(option => option.value === '')?.cloneNode(true) ?? new Option('', '');
-  const options = [empty, ...choices.map(choice => optionFor(choice, defaults.has(choice.code)))];
-  retained.forEach(option => {
-    if (option.value && !options.some(candidate => candidate.value === option.value)) options.push(option.cloneNode(true));
-  });
-  select.replaceChildren(...options);
-  select.value = value;
+  const icon = document.createElement('span');
+  icon.className = 'collection-file-thumb';
+  icon.append(root.querySelector('[data-file-icon]').content.cloneNode(true));
+  return icon;
 }
 
 /** Selects and multipart POST controls remain usable when this enhancement is absent. */
 document.querySelectorAll('[data-file-field]').forEach(root => {
   const form = root.closest('form');
-  const query = root.querySelector('[data-file-query]');
-  const searchButton = root.querySelector('[data-file-search]');
-  const searchStatus = root.querySelector('[data-file-search-status]');
+  const picker = root.querySelector('[data-file-picker]');
+  const pickerQuery = root.querySelector('[data-file-picker-query]');
+  const pickerResults = root.querySelector('[data-file-picker-results]');
+  const pickerStatus = root.querySelector('[data-file-picker-status]');
+  const addRow = root.querySelector('[data-repeat-op="add"]');
   const uploads = new Map();
   let searchController;
+  let searchTimer;
+  let pickerTarget = null;
   const widgets = () => [...root.querySelectorAll('[data-file-widget]')];
-  const setBusy = (widget, value) => {
-    widget.toggleAttribute('aria-busy', value);
-    if (value) widget.setAttribute('aria-busy', 'true');
-    widget.querySelectorAll('[data-file-select], [data-file-upload-input], [data-file-upload-button], [data-file-clear]').forEach(control => { control.disabled = value; });
-  };
   const show = (node, message, error = false) => {
     node.textContent = message;
     node.classList.toggle('text-danger', error);
   };
-  const search = async () => {
-    searchController?.abort();
-    const controller = new AbortController();
-    searchController = controller;
-    searchButton.disabled = true;
-    root.setAttribute('aria-busy', 'true');
-    show(searchStatus, root.dataset.loading);
-    try {
-      const url = new URL(root.dataset.source, window.location.origin);
-      url.searchParams.set('q', query.value);
-      const response = await fetch(url, {signal: controller.signal, headers: {'Accept': 'application/json'}});
-      const data = await response.json();
-      if (!response.ok) throw new FileRequestError(data.error?.message || root.dataset.error);
-      if (!Array.isArray(data.files) || data.files.some(choice => !validChoice(choice))) throw new FileRequestError(root.dataset.error);
-      if (searchController !== controller) return;
-      root.querySelectorAll('[data-file-select]').forEach(select => updateChoices(select, data.files));
-      root.querySelectorAll('template[data-repeat-template]').forEach(template => template.content.querySelectorAll('[data-file-select]').forEach(select => updateChoices(select, data.files)));
-      widgets().forEach(refreshPreview);
-      show(searchStatus, data.files.length ? root.dataset.loaded : root.dataset.empty);
-    } catch (error) {
-      if (error.name !== 'AbortError' && searchController === controller) show(searchStatus, error instanceof FileRequestError ? error.message : root.dataset.error, true);
-    } finally {
-      if (searchController === controller) { searchButton.disabled = false; root.removeAttribute('aria-busy'); }
+  const render = widget => {
+    widget.querySelectorAll('[data-file-native]').forEach(node => { node.hidden = true; });
+    widget.querySelector('[data-file-upload-input]').multiple = addRow !== null;
+    const select = widget.querySelector('[data-file-select]');
+    const preview = widget.querySelector('[data-file-preview]');
+    const option = select.selectedOptions[0];
+    widget.querySelector('[data-file-card]').hidden = !select.value;
+    widget.querySelector('[data-file-drop]').hidden = Boolean(select.value);
+    widget.querySelector('[data-file-actions]').hidden = !select.value;
+    preview.replaceChildren();
+    if (!select.value) return;
+    if (!option?.dataset.fileUrl) {
+      const unavailable = document.createElement('div');
+      unavailable.className = 'small text-danger';
+      unavailable.textContent = root.dataset.unavailable;
+      preview.append(unavailable);
+      return;
     }
+    const name = document.createElement('div');
+    name.className = 'collection-file-name';
+    const link = document.createElement('a');
+    link.href = option.dataset.fileUrl;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.className = 'text-break';
+    link.textContent = option.dataset.fileLabel;
+    const size = document.createElement('span');
+    size.className = 'small text-body-secondary';
+    size.textContent = option.dataset.fileSize;
+    name.append(link, size);
+    preview.append(thumbnail(root, option.dataset.fileUrl, option.dataset.fileLabel, option.dataset.fileImage === '1'), name);
   };
-  const upload = async widget => {
+  const setBusy = (widget, value) => {
+    if (value) widget.setAttribute('aria-busy', 'true');
+    else widget.removeAttribute('aria-busy');
+    widget.querySelectorAll('[data-file-browse], [data-file-pick], [data-file-remove]').forEach(control => { control.disabled = value; });
+  };
+  const choose = (widget, choice) => {
+    const select = widget.querySelector('[data-file-select]');
+    [...select.options].filter(option => option.value === choice.code).forEach(option => option.remove());
+    select.append(optionFor(choice));
+    select.value = choice.code;
+    render(widget);
+  };
+  const upload = async (widget, file) => {
     if (uploads.has(widget)) return;
-    const input = widget.querySelector('[data-file-upload-input]');
-    const file = input.files[0];
     const status = widget.querySelector('[data-file-status]');
-    if (!file) { show(status, root.dataset.noFile, true); input.focus(); return; }
+    if (file.size > Number(root.dataset.maxBytes)) { show(status, root.dataset.tooLarge, true); return; }
     const controller = new AbortController();
     uploads.set(widget, controller);
     setBusy(widget, true);
@@ -128,12 +106,7 @@ document.querySelectorAll('[data-file-field]').forEach(root => {
       const choice = {code: data.code ?? String(data.id), label: data.name, url: data.url, sizeLabel: data.size_label, image: data.image};
       if (!validChoice(choice)) throw new FileRequestError(root.dataset.uploadError);
       if (uploads.get(widget) !== controller || !widget.isConnected) return;
-      const select = widget.querySelector('[data-file-select]');
-      select.querySelectorAll('option').forEach(option => { if (option.value === choice.code) option.remove(); });
-      select.append(optionFor(choice));
-      select.value = choice.code;
-      input.value = '';
-      refreshPreview(widget);
+      choose(widget, choice);
       show(status, root.dataset.uploaded);
     } catch (error) {
       if (error.name !== 'AbortError' && uploads.get(widget) === controller) show(status, error instanceof FileRequestError ? error.message : root.dataset.uploadError, true);
@@ -141,38 +114,142 @@ document.querySelectorAll('[data-file-field]').forEach(root => {
       if (uploads.get(widget) === controller) { uploads.delete(widget); setBusy(widget, false); }
     }
   };
+  /** The first file goes where it was dropped, the others fill the empty rows and then new ones. */
+  const uploadAll = (widget, files) => {
+    const free = () => widgets().filter(candidate => candidate !== widget && !uploads.has(candidate) && !candidate.querySelector('[data-file-select]').value);
+    const [first, ...rest] = files;
+    upload(widget, first);
+    for (const file of rest) {
+      const [target] = free();
+      if (target) { upload(target, file); continue; }
+      const count = widgets().length;
+      if (addRow) addRow.click();
+      if (widgets().length === count) { show(root.querySelector('[data-repeat-status]'), root.dataset.tooMany, true); return; }
+      upload(widgets().at(-1), file);
+    }
+  };
+  const showFiles = files => {
+    const current = pickerTarget?.querySelector('[data-file-select]').value;
+    pickerResults.replaceChildren(...files.map(choice => {
+      const tile = document.createElement('button');
+      tile.type = 'button';
+      tile.className = 'collection-file-tile';
+      if (choice.code === current) tile.setAttribute('aria-current', 'true');
+      const name = document.createElement('span');
+      name.className = 'collection-file-tile-name';
+      name.textContent = choice.label;
+      name.title = choice.label;
+      const size = document.createElement('small');
+      size.className = 'text-body-secondary';
+      size.textContent = choice.sizeLabel;
+      tile.append(thumbnail(root, choice.url, '', choice.image), name, size);
+      tile.addEventListener('click', () => {
+        const widget = pickerTarget;
+        picker.close();
+        choose(widget, choice);
+        show(widget.querySelector('[data-file-status]'), root.dataset.chosen);
+        widget.querySelector('[data-file-actions] [data-file-pick]').focus();
+      });
+      return tile;
+    }));
+    show(pickerStatus, files.length === 0 ? root.dataset.empty : (files.length >= 30 ? root.dataset.more : ''));
+  };
+  const search = async () => {
+    searchController?.abort();
+    const controller = new AbortController();
+    searchController = controller;
+    picker.setAttribute('aria-busy', 'true');
+    show(pickerStatus, root.dataset.loading);
+    try {
+      const url = new URL(root.dataset.source, window.location.origin);
+      url.searchParams.set('q', pickerQuery.value);
+      const response = await fetch(url, {signal: controller.signal, headers: {'Accept': 'application/json'}});
+      const data = await response.json();
+      if (!response.ok) throw new FileRequestError(data.error?.message || root.dataset.error);
+      if (!Array.isArray(data.files) || data.files.some(choice => !validChoice(choice))) throw new FileRequestError(root.dataset.error);
+      if (searchController === controller) showFiles(data.files);
+    } catch (error) {
+      if (error.name !== 'AbortError' && searchController === controller) show(pickerStatus, error instanceof FileRequestError ? error.message : root.dataset.error, true);
+    } finally {
+      if (searchController === controller) picker.removeAttribute('aria-busy');
+    }
+  };
+  const openPicker = widget => {
+    pickerTarget = widget;
+    pickerQuery.value = '';
+    pickerResults.replaceChildren();
+    picker.showModal();
+    pickerQuery.focus();
+    search();
+  };
   root.addEventListener('click', event => {
-    if (event.target.closest('[data-file-search]')) { event.preventDefault(); search(); return; }
-    const button = event.target.closest('[data-file-upload-button], [data-file-clear]');
+    if (event.target === picker || event.target.closest('[data-file-picker-close]')) { picker.close(); return; }
+    const button = event.target.closest('[data-file-browse], [data-file-pick], [data-file-remove]');
     if (!button || button.disabled) return;
-    event.preventDefault();
     const widget = button.closest('[data-file-widget]');
-    if (button.matches('[data-file-upload-button]')) { upload(widget); return; }
-    widget.querySelector('[data-file-select]').value = '';
-    widget.querySelector('[data-file-upload-input]').value = '';
-    refreshPreview(widget);
-    show(widget.querySelector('[data-file-status]'), root.dataset.cleared);
+    if (button.matches('[data-file-browse]')) widget.querySelector('[data-file-upload-input]').click();
+    else if (button.matches('[data-file-pick]')) openPicker(widget);
+    else {
+      widget.querySelector('[data-file-select]').value = '';
+      widget.querySelector('[data-file-upload-input]').value = '';
+      render(widget);
+      show(widget.querySelector('[data-file-status]'), root.dataset.cleared);
+      widget.querySelector('[data-file-drop] [data-file-browse]').focus();
+    }
   });
   root.addEventListener('change', event => {
+    if (!event.target.matches('[data-file-upload-input]') || !event.target.files.length) return;
+    const files = [...event.target.files];
+    event.target.value = '';
+    uploadAll(event.target.closest('[data-file-widget]'), files);
+  });
+  root.addEventListener('dragover', event => {
+    const widget = event.target.closest('[data-file-widget]');
+    if (!widget || !event.dataTransfer?.types.includes('Files')) return;
+    event.preventDefault();
+    widget.classList.add('is-dropping');
+  });
+  root.addEventListener('dragleave', event => {
+    const widget = event.target.closest('[data-file-widget]');
+    if (widget && !widget.contains(event.relatedTarget)) widget.classList.remove('is-dropping');
+  });
+  root.addEventListener('drop', event => {
     const widget = event.target.closest('[data-file-widget]');
     if (!widget) return;
-    if (event.target.matches('[data-file-select]')) refreshPreview(widget);
-    show(widget.querySelector('[data-file-status]'), '');
+    event.preventDefault();
+    widget.classList.remove('is-dropping');
+    if (!uploads.has(widget) && event.dataTransfer.files.length) uploadAll(widget, [...event.dataTransfer.files]);
   });
-  query.addEventListener('keydown', event => { if (event.key === 'Enter') { event.preventDefault(); search(); } });
-  query.addEventListener('input', () => { searchController?.abort(); searchController = null; searchButton.disabled = false; root.removeAttribute('aria-busy'); });
-  root.addEventListener('collection:values-changed', () => widgets().forEach(refreshPreview));
-  form.addEventListener('submit', event => {
-    if (uploads.size) { event.preventDefault(); show(searchStatus, root.dataset.uploading, true); }
+  pickerQuery.addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(search, 250);
   });
-  form.addEventListener('reset', () => {
+  pickerQuery.addEventListener('keydown', event => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      clearTimeout(searchTimer);
+      search();
+    }
+  });
+  picker.addEventListener('close', () => {
+    clearTimeout(searchTimer);
     searchController?.abort();
     searchController = null;
-    searchButton.disabled = false;
-    root.removeAttribute('aria-busy');
+    picker.removeAttribute('aria-busy');
+  });
+  root.addEventListener('collection:values-changed', () => widgets().forEach(render));
+  form.addEventListener('submit', event => {
+    if (!uploads.size) return;
+    event.preventDefault();
+    const [widget] = uploads.keys();
+    show(widget.querySelector('[data-file-status]'), root.dataset.uploading, true);
+  });
+  form.addEventListener('reset', () => {
     uploads.forEach((controller, widget) => { controller.abort(); setBusy(widget, false); });
     uploads.clear();
-    queueMicrotask(() => { widgets().forEach(widget => { refreshPreview(widget); show(widget.querySelector('[data-file-status]'), ''); }); show(searchStatus, ''); });
+    queueMicrotask(() => widgets().forEach(widget => { render(widget); show(widget.querySelector('[data-file-status]'), ''); }));
   });
-  widgets().forEach(refreshPreview);
+  root.querySelectorAll(':scope > [data-file-native]').forEach(node => { node.hidden = true; });
+  root.querySelectorAll(':scope > label[for]').forEach(label => label.removeAttribute('for'));
+  widgets().forEach(render);
 });

@@ -2,19 +2,32 @@
 {% set wide = def.multiple or def.type in ['text', 'html'] %}
 <div class="{{ wide ? 'col-12' : 'col-md-6' }}"{% if def.type == 'relation' %} data-collection-relation data-source="{{ def.relation_url }}" data-error="{{ __('Could not load related items.') }}" data-loaded="{{ __('Related items loaded. Choose a value and save the form.') }}"{% endif %}
      {% if def.registered_file %} data-file-field data-source="{{ def.file_url }}" data-upload-url="{{ def.file_upload_url }}"
-     data-loading="{{ __('Loading files...') }}" data-no-file="{{ __('Choose a file to upload.') }}" data-empty="{{ __('No matching files were found. Change your search or upload a new file.') }}"
-     data-error="{{ __('Could not load files. Try again.') }}" data-loaded="{{ __('Files loaded. Choose a value and save the form.') }}"
+     data-max-bytes="{{ def.max_file_bytes }}" data-too-large="{{ __('The file is larger than the limit of this field.') }}"
+     data-loading="{{ __('Loading files...') }}" data-empty="{{ __('No matching files were found. Change your search or upload a new file.') }}"
+     data-error="{{ __('Could not load files. Try again.') }}" data-more="{{ __('Up to 30 matching files. Refine your search to find another file.') }}"
      data-unavailable="{{ __('The selected file is unavailable or incompatible. Choose another file or clear the value.') }}"
+     data-too-many="{{ __('The field has too many values.') }}"
      data-uploading="{{ __('A file is still uploading. Wait before changing values or saving.') }}" data-upload-error="{{ __('Could not upload the file. Try again.') }}"
-     data-uploaded="{{ __('Files uploaded. Save the form to apply the selection.') }}" data-cleared="{{ __('File selection cleared. Save the form to apply the change.') }}"{% endif %}>
+     data-uploaded="{{ __('Files uploaded. Save the form to apply the selection.') }}" data-chosen="{{ __('File chosen. Save the form to apply the selection.') }}" data-cleared="{{ __('File selection cleared. Save the form to apply the change.') }}"{% endif %}>
     {% if def.registered_file %}
-        <label class="form-label" for="{{ input_id }}-file-query">{{ __('Search available files') }} — {{ def.name }}</label>
-        <div class="input-group mb-2">
-            <input class="form-control" type="search" id="{{ input_id }}-file-query" name="file_query[{{ def.code }}]" value="{{ def.file_query }}" maxlength="255" data-file-query>
-            <button class="btn btn-outline-secondary" type="submit" name="file_search" value="{{ def.code }}" data-file-search formnovalidate>{{ __('Search') }}</button>
+        <div data-file-native>
+            <label class="form-label" for="{{ input_id }}-file-query">{{ __('Search available files') }} — {{ def.name }}</label>
+            <div class="input-group mb-2">
+                <input class="form-control" type="search" id="{{ input_id }}-file-query" name="file_query[{{ def.code }}]" value="{{ def.file_query }}" maxlength="255">
+                <button class="btn btn-outline-secondary" type="submit" name="file_search" value="{{ def.code }}" formnovalidate>{{ __('Search') }}</button>
+            </div>
+            <div class="form-text mb-2" role="status">{{ def.file_error ? def.file_error : (def.file_choices|filter(choice => choice.inResults)|length ? __('Up to 30 matching files. Refine your search to find another file.') : __('No matching files were found. Change your search or upload a new file.')) }}</div>
         </div>
-        <div class="form-text mb-2" role="status" data-file-search-status>{{ def.file_error ? def.file_error : (def.file_choices|filter(choice => choice.inResults)|length ? __('Up to 30 matching files. Refine your search to find another file.') : __('No matching files were found. Change your search or upload a new file.')) }}</div>
-        <div class="form-text mb-2">{{ __('Maximum file size: %s')|format(def.max_file_bytes|format_size) }}</div>
+        <template data-file-icon>{% include '@admin/components/ui/icon.twig' with {name: 'file', size: 24} only %}</template>
+        <dialog class="collection-file-picker" data-file-picker aria-labelledby="{{ input_id }}-picker-title">
+            <div class="collection-file-picker-head">
+                <h2 class="h6 mb-0" id="{{ input_id }}-picker-title">{{ __('Choose a file') }} — {{ def.name }}</h2>
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-file-picker-close aria-label="{{ __('Close') }}">{% include '@admin/components/ui/icon.twig' with {name: 'x', size: 14} only %}</button>
+            </div>
+            <input type="search" class="form-control" maxlength="255" placeholder="{{ __('Search by file name') }}" aria-label="{{ __('Search by file name') }}" data-file-picker-query>
+            <div class="collection-file-grid" data-file-picker-results></div>
+            <div class="form-text mb-0" role="status" data-file-picker-status></div>
+        </dialog>
     {% endif %}
     {% if def.type == 'relation' %}
         <label class="form-label" for="{{ input_id }}-query">{{ __('Search related items') }} — {{ def.name }}</label>
@@ -72,6 +85,7 @@
             <input type="text" name="{{ def.input_name }}" class="form-control{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}" value="{{ def.value }}">
         {% endif %}
     {% endif %}
+    {% if def.registered_file %}<div class="form-text">{{ __('%1$s, up to %2$s')|format(def.file_types_label, def.max_file_bytes|format_size) }}</div>{% endif %}
     {% if def.hint %}<div class="form-text">{{ def.hint }}</div>{% endif %}
     {% if not def.multiple or def.role == 'tags' %}{% include '@theme/components/field-errors.twig' with {errors: def.errors} only %}{% endif %}
 </div>

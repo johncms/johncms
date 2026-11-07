@@ -178,3 +178,141 @@
 .admin-collection-fields__code {
   margin-top: 2px;
 }
+
+// A file of an item: the drop zone while the value is empty, the card once it is chosen.
+.collection-file-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--bs-border-radius);
+  background: var(--bg-inset);
+
+  &[hidden] { display: none; }
+}
+
+.collection-file-preview {
+  display: flex;
+  flex: 1 1 14rem;
+  align-items: center;
+  gap: 0.75rem;
+  min-inline-size: 0;
+}
+
+.collection-file-thumb {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  inline-size: 3.5rem;
+  block-size: 3.5rem;
+  border-radius: var(--bs-border-radius-sm);
+  background: var(--bg-elev);
+  color: var(--bs-secondary-color);
+  object-fit: cover;
+}
+
+.collection-file-name {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.collection-file-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+
+  &[hidden] { display: none; }
+}
+
+.collection-file-drop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--bs-border-radius);
+  color: var(--bs-secondary-color);
+  text-align: center;
+
+  &[hidden] { display: none; }
+}
+
+[data-file-widget].is-dropping {
+  .collection-file-drop,
+  .collection-file-card {
+    border-color: var(--bs-primary);
+    background: var(--bg-inset);
+  }
+}
+
+.collection-file-picker {
+  inline-size: min(44rem, calc(100vw - 2rem));
+  max-block-size: min(36rem, calc(100vh - 2rem));
+  padding: 1rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--bs-border-radius);
+  background: var(--bg-elev);
+  color: var(--bs-body-color);
+
+  &[open] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &::backdrop { background: oklch(0.12 0.015 250 / 0.55); }
+}
+
+.collection-file-picker-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+
+  .btn {
+    display: inline-flex;
+    padding: 0.25rem;
+  }
+}
+
+.collection-file-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+  gap: 0.5rem;
+  min-block-size: 0;
+  overflow-y: auto;
+}
+
+.collection-file-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.25rem;
+  min-inline-size: 0;
+  padding: 0.375rem;
+  border: 1px solid var(--border);
+  border-radius: var(--bs-border-radius);
+  background: var(--bg-inset);
+  color: inherit;
+  text-align: start;
+
+  &:hover,
+  &[aria-current='true'] { border-color: var(--bs-primary); }
+
+  .collection-file-thumb {
+    inline-size: 100%;
+    block-size: 5.5rem;
+  }
+}
+
+.collection-file-tile-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

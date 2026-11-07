@@ -1610,3 +1610,39 @@ msgstr "Аудио"
 
 msgid "Video"
 msgstr "Видео"
+
+msgid "%1$s, up to %2$s"
+msgstr "%1$s, до %2$s"
+
+msgid "Choose a file"
+msgstr "Выбор файла"
+
+msgid "Search by file name"
+msgstr "Поиск по имени файла"
+
+msgid "Replace"
+msgstr "Заменить"
+
+msgid "Choose another"
+msgstr "Выбрать другой"
+
+msgid "Remove"
+msgstr "Удалить"
+
+msgid "Drop a file here"
+msgstr "Перетащите файл сюда"
+
+msgid "Upload a file"
+msgstr "Загрузить файл"
+
+msgid "Choose from uploaded"
+msgstr "Выбрать из загруженных"
+
+msgid "The file is larger than the limit of this field."
+msgstr "Файл больше ограничения этого поля."
+
+msgid "File chosen. Save the form to apply the selection."
+msgstr "Файл выбран. Сохраните форму, чтобы применить выбор."
+
+msgid "Close"
+msgstr "Закрыть"

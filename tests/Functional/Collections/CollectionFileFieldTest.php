@@ -127,6 +127,7 @@ final class CollectionFileFieldTest extends FunctionalTestCase
         self::assertNotContains('', $chosen);
         $this->files = [...$this->files, ...array_map(intval(...), $chosen)];
         self::assertNotNull($document->querySelector('[data-file-preview] img'));
+        self::assertNotNull($document->querySelector('dialog[data-file-picker]'));
         self::assertStringContainsString('Unsaved file item', $html);
         self::assertStringContainsString('Unsaved body', $html);
         self::assertSame(0, Capsule::table('collection_items')->count());
