@@ -28,5 +28,5 @@
         {% endif %}
         {% if error|default('') %}<div class="invalid-feedback d-block" id="error-default_values-{{ index }}">{{ error }}</div>{% endif %}
     </div>
-    {% include '@collections/admin/components/repeat-actions.twig' with {action_key: action_key, index: index, last: last, remove_label: __('Remove value'), scripted: scripted|default(false)} only %}
+    {% include '@collections/admin/components/repeat-actions.twig' with {action_key: action_key, index: index, last: last, remove_label: __('Remove value')} only %}
 </div>

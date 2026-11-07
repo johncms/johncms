@@ -25,42 +25,17 @@ final class CollectionRepeatedInputTest extends FunctionalTestCase
         $this->collection = Fixture::insert('collections', ['code' => 'repeated', 'name' => 'Repeated']);
     }
 
-    public function testNativeReorderPreservesOtherInputAndDoesNotSaveUntilRequested(): void
+    public function testReorderedValuesAreSavedWithTheRestOfTheItem(): void
     {
         $this->field(FieldType::Text);
         $api = $this->container()->get(CollectionsApiInterface::class);
         $id = $api->addItem(new CollectionItemFormDTO($this->collection, null, 'entry', 'Original', true, null, null, 100, null, null, ['notes' => ["First\nline", 'Second']]));
         $user = FunctionalUserFactory::createSupervisor();
         $data = ['id' => $id, 'name' => 'Edited', 'code' => 'entry', 'sort' => '123', 'detail_text' => 'Unsaved body', 'field_notes' => ["First\nline", 'Second', '']];
-        $response = $this->postForm($this->itemsUrl(), $data + ['repeat_action' => 'field_notes:up:1'], $user);
-        self::assertSame(200, $response->getStatusCode());
-        self::assertSame(['Second', "First\nline", ''], $this->values((string) $response->getContent(), 'field_notes'));
-        self::assertStringContainsString('Unsaved body', (string) $response->getContent());
-        self::assertSame('Original', $api->getItem($id)->name);
-        self::assertSame(["First\nline", 'Second'], $api->getItem($id)->values['notes']);
         $data['field_notes'] = ['Second', "First\nline", ''];
         self::assertSame(302, $this->postForm($this->itemsUrl(), $data, $user)->getStatusCode());
         self::assertSame(['Second', "First\nline"], $api->getItem($id)->values['notes']);
         self::assertSame('Edited', $api->getItem($id)->name);
-    }
-
-    public function testNativeAddRemoveAndBoundsKeepFalseAndNeverCreateAnItem(): void
-    {
-        $this->field(FieldType::Boolean, ['max_values' => 2]);
-        $user = FunctionalUserFactory::createSupervisor();
-        $data = ['name' => '', 'field_notes' => ['0']];
-        $response = $this->postForm($this->itemsUrl(), $data + ['repeat_action' => 'field_notes:add:0'], $user);
-        self::assertSame(['0', ''], $this->values((string) $response->getContent(), 'field_notes'));
-        $data['field_notes'] = ['0', '1'];
-        $response = $this->postForm($this->itemsUrl(), $data + ['repeat_action' => 'field_notes:remove:0'], $user);
-        self::assertSame(['1'], $this->values((string) $response->getContent(), 'field_notes'));
-        foreach (['field_notes:add:0', 'field_notes:up:0', 'field_notes:remove:999', 'field_unknown:remove:0'] as $action) {
-            $response = $this->postForm($this->itemsUrl(), $data + ['repeat_action' => $action], $user);
-            self::assertSame(200, $response->getStatusCode());
-            self::assertSame(['0', '1'], $this->values((string) $response->getContent(), 'field_notes'));
-            self::assertStringContainsString('alert-danger', (string) $response->getContent());
-        }
-        self::assertSame(0, Capsule::table('collection_items')->count());
     }
 
     public function testReorderedDefaultsAreSavedInTheirNewOrder(): void
@@ -86,10 +61,10 @@ final class CollectionRepeatedInputTest extends FunctionalTestCase
         self::assertSame(0, Capsule::table('collection_items')->count());
     }
 
-    public function testNativeHtmlAdditionPreservesMarkupAndContentAccessIsRequired(): void
+    public function testHtmlValuesKeepTheirMarkupAndContentAccessIsRequired(): void
     {
         $this->field(FieldType::Html);
-        $data = ['field_notes' => ["<p>First\nline</p>"], 'repeat_action' => 'field_notes:add:0'];
+        $data = ['name' => '', 'field_notes' => ["<p>First\nline</p>", '']];
         $response = $this->postForm($this->itemsUrl(), $data, FunctionalUserFactory::createSupervisor());
         self::assertSame(["<p>First\nline</p>", ''], $this->values((string) $response->getContent(), 'field_notes'));
         self::assertSame(403, $this->postForm($this->itemsUrl(), $data, FunctionalUserFactory::create())->getStatusCode());

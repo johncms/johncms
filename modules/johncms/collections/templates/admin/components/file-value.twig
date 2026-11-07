@@ -1,7 +1,7 @@
-{# The select and the upload controls work without scripts; the panel script replaces them with the drop zone and the card. #}
+{# The select carries the value; the panel script shows the drop zone, the card and the picker instead. #}
 <div data-file-widget data-code="{{ code }}" data-index="{{ index }}">
     {% set selected = null %}
-    <div data-file-native>
+    <div data-file-native hidden>
         <select class="form-select{{ errors|default([]) ? ' is-invalid' : '' }}"{% if errors|default([]) %} aria-invalid="true"{% endif %} name="{{ input_name }}" id="{{ input_id }}" data-file-select>
             <option value=""{% if value is same as('') %} selected{% endif %}>{{ __('No value') }}</option>
             {% for choice in choices %}
@@ -38,13 +38,6 @@
             <button type="button" class="btn btn-outline-secondary btn-sm" data-file-pick>{{ __('Choose from uploaded') }}</button>
         </div>
     </div>
-    <div class="mt-2" data-file-native>
-        <label for="{{ input_id }}-upload" class="form-label small">{{ __('Upload a new file') }}</label>
-        <input type="file" class="form-control" id="{{ input_id }}-upload" name="file_uploads[{{ code }}][{{ index }}]" accept="{{ accept }}" data-file-upload-input>
-        <div class="d-flex flex-wrap gap-2 mt-2">
-            <button class="btn btn-outline-secondary btn-sm" type="submit" name="file_upload" value="{{ code }}:{{ index }}" data-file-upload-button formnovalidate>{{ __('Upload') }}</button>
-            <button class="btn btn-outline-secondary btn-sm" type="submit" name="file_clear" value="{{ code }}:{{ index }}" data-file-clear formnovalidate>{{ __('Clear file selection') }}</button>
-        </div>
-    </div>
+    <input type="file" id="{{ input_id }}-upload" accept="{{ accept }}" aria-label="{{ __('Upload a file') }}" hidden data-file-upload-input>
     <div class="form-text" role="status" data-file-status></div>
 </div>

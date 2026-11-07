@@ -10,14 +10,7 @@
      data-uploading="{{ __('A file is still uploading. Wait before changing values or saving.') }}" data-upload-error="{{ __('Could not upload the file. Try again.') }}"
      data-uploaded="{{ __('Files uploaded. Save the form to apply the selection.') }}" data-chosen="{{ __('File chosen. Save the form to apply the selection.') }}" data-cleared="{{ __('File selection cleared. Save the form to apply the change.') }}"{% endif %}>
     {% if def.registered_file %}
-        <div data-file-native>
-            <label class="form-label" for="{{ input_id }}-file-query">{{ __('Search available files') }} — {{ def.name }}</label>
-            <div class="input-group mb-2">
-                <input class="form-control" type="search" id="{{ input_id }}-file-query" name="file_query[{{ def.code }}]" value="{{ def.file_query }}" maxlength="255">
-                <button class="btn btn-outline-secondary" type="submit" name="file_search" value="{{ def.code }}" formnovalidate>{{ __('Search') }}</button>
-            </div>
-            <div class="form-text mb-2" role="status">{{ def.file_error ? def.file_error : (def.file_choices|filter(choice => choice.inResults)|length ? __('Up to 30 matching files. Refine your search to find another file.') : __('No matching files were found. Change your search or upload a new file.')) }}</div>
-        </div>
+        {% if def.file_error %}<div class="form-text text-danger mb-2" role="alert">{{ def.file_error }}</div>{% endif %}
         <template data-file-icon>{% include '@admin/components/ui/icon.twig' with {name: 'file', size: 24} only %}</template>
         <dialog class="collection-file-picker" data-file-picker aria-labelledby="{{ input_id }}-picker-title">
             <div class="collection-file-picker-head">
@@ -32,8 +25,8 @@
     {% if def.type == 'relation' %}
         <label class="form-label" for="{{ input_id }}-query">{{ __('Search related items') }} — {{ def.name }}</label>
         <div class="input-group mb-2">
-            <input class="form-control" type="search" id="{{ input_id }}-query" name="relation_query[{{ def.code }}]" value="{{ def.relation_query }}" maxlength="255" data-relation-query>
-            <button class="btn btn-outline-secondary" type="submit" name="relation_search" value="{{ def.code }}" formnovalidate data-relation-search>{{ __('Search') }}</button>
+            <input class="form-control" type="search" id="{{ input_id }}-query" maxlength="255" data-relation-query>
+            <button class="btn btn-outline-secondary" type="button" data-relation-search>{{ __('Search') }}</button>
         </div>
         <div class="form-text mb-2" role="status" data-relation-status>{{ def.relation_error ? def.relation_error : (def.relation_available ? __('Up to 30 matching items. Refine your search to find another item.') : __('You need access to the target collection to choose related items.')) }}</div>
     {% endif %}

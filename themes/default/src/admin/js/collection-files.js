@@ -27,7 +27,7 @@ function thumbnail(root, url, label, image) {
   return icon;
 }
 
-/** Selects and multipart POST controls remain usable when this enhancement is absent. */
+/** A file field: the drop zone, the card of the chosen file and the picker of uploaded ones. */
 document.querySelectorAll('[data-file-field]').forEach(root => {
   const form = root.closest('form');
   const picker = root.querySelector('[data-file-picker]');

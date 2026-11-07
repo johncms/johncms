@@ -23,11 +23,10 @@
 {% endmacro %}
 
 {% block content %}
-    {% if repeat_message|default('') %}<div class="alert alert-info" role="status">{{ repeat_message }}</div>{% endif %}
     {% import _self as ui %}
     {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
 
-    <form action="{{ form_action }}" method="post" enctype="multipart/form-data" id="item-form" class="row g-3 align-items-start">
+    <form action="{{ form_action }}" method="post" id="item-form" class="row g-3 align-items-start">
         <input type="hidden" name="upload_context" value="{{ fields.upload_context }}">
         <input type="hidden" name="collection_form_started" value="1">
         <input type="hidden" name="back" value="{{ back_url }}">

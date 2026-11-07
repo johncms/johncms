@@ -152,7 +152,7 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
         self::assertNull($this->api->getItem($second));
     }
 
-    public function testPickerSearchPreservesNativeFormAndIncludesSelectedItemsOutsideTheResultPage(): void
+    public function testPickerSearchAndARetainedSelectionOutsideTheResultPage(): void
     {
         $this->field($this->target);
         $this->schema->saveField(null, new CollectionFieldFormDTO(collectionId: $this->source, code: 'many', name: 'Many related items', type: FieldType::Relation, required: false, multiple: true, sort: 100, settings: ['target_collection_id' => $this->target]));
@@ -170,13 +170,12 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
         self::assertSame([], json_decode((string) $literal->getContent(), true)['options']);
         self::assertSame(400, $this->handleRequest($base . '/relations/related?q=' . str_repeat('a', 256), cookies: $this->actingAs($user))->getStatusCode());
         $response = $this->postForm($base . '/items', [
-            'name' => 'Unsaved source', 'sort' => '100', 'detail_text' => 'Unsaved body', 'field_related' => (string) $target,
-            'field_many' => [(string) $target], 'relation_search' => 'related', 'relation_query' => ['related' => 'ordinary-0'],
+            'name' => '', 'sort' => '100', 'detail_text' => 'Unsaved body', 'field_related' => (string) $target,
+            'field_many' => [(string) $target],
         ], $user);
         self::assertSame(200, $response->getStatusCode());
         $html = (string) $response->getContent();
-        self::assertStringContainsString('Unsaved source', $html);
-        self::assertStringContainsString('Unsaved body', $html);
+        self::assertStringContainsString('Unsaved body', $html, 'A failed save shows the form as it was posted.');
         self::assertStringContainsString('Needle &lt;b&gt;target&lt;/b&gt;', $html);
         self::assertSame((string) $target, HTMLDocument::createFromString($html, LIBXML_NOERROR)->querySelector('select[name="field_related"] option[selected]')->getAttribute('value'));
         self::assertSame(32, Manager::table('collection_items')->count());

@@ -140,7 +140,7 @@ final class CollectionFieldSettingsTest extends FunctionalTestCase
         $this->field('paragraphs', FieldType::Text, ['default' => $defaults], true);
         $editor = FunctionalUserFactory::createSupervisor();
         $html = (string) $this->handleRequest('/admin/collections/' . $this->collection . '/items/new', cookies: $this->actingAs($editor))->getContent();
-        self::assertSame(3, HTMLDocument::createFromString($html, LIBXML_NOERROR)->querySelectorAll('[data-key="field_paragraphs"] [data-repeat-rows] textarea')->length);
+        self::assertSame(2, HTMLDocument::createFromString($html, LIBXML_NOERROR)->querySelectorAll('[data-key="field_paragraphs"] [data-repeat-rows] textarea')->length);
         self::assertStringContainsString("First\nsecond line</textarea>", $html);
         $response = $this->postForm('/admin/collections/' . $this->collection . '/items', [
             'name' => 'Paragraphs', 'sort' => '100', 'active' => '1', 'field_paragraphs' => [...$defaults, ''],

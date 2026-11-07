@@ -1,7 +1,7 @@
 <div class="border rounded p-3 mb-2" data-repeat-row>
     <div class="d-flex align-items-center justify-content-between gap-2 mb-2">
         <div class="small text-muted">{{ __('Option') }} <span data-repeat-number>{{ index + 1 }}</span></div>
-        {% include '@collections/admin/components/repeat-actions.twig' with {action_key: 'options', index: index, last: last, remove_label: __('Remove option'), scripted: true} only %}
+        {% include '@collections/admin/components/repeat-actions.twig' with {action_key: 'options', index: index, last: last, remove_label: __('Remove option')} only %}
     </div>
     <div class="row g-2">
         <div class="col-md-7">

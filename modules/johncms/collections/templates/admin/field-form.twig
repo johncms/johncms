@@ -240,8 +240,7 @@
                         <fieldset data-default-multiple class="mt-2 mb-0"{% if fields.type == 'relation' or not fields.multiple or (fields.type in ['date', 'datetime'] and fields.date_default_mode != 'fixed') %} hidden{% endif %}{% if not fields.multiple or (fields.type in ['date', 'datetime'] and fields.date_default_mode != 'fixed') %} disabled{% endif %}>
                             {% include '@collections/admin/components/repeated-values.twig' with {
                                 entries: default_entries, input_name: 'default_values', action_key: 'default', id_prefix: 'field-default',
-                                type: 'text', label: __('Default values'), limit: 1000, row_errors: field_errors, allow_upload: false, upload_url: '',
-                                scripted: true
+                                type: 'text', label: __('Default values'), limit: 1000, row_errors: field_errors, allow_upload: false, upload_url: ''
                             } only %}
                         </fieldset>
                         <div class="form-text" data-default-format-help>{{ __('Pre-filled for new items. Existing items are not changed.') }}

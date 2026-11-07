@@ -1,16 +1,13 @@
 {#
-    Icon buttons of a row of a repeated list. They post the form without scripts; the panel script
-    moves the row in place.
+    Icon buttons of a row of a repeated list; the panel script moves and removes the row.
 
     @var string action_key   The list the row belongs to.
     @var int    index        The position of the row.
     @var bool   last         Whether the row is the last one.
     @var string remove_label What removing the row is called.
-    @var bool   scripted     The form has no fallback for these: the buttons do nothing but run the script.
 #}
-{% macro kind(scripted) %}{% if scripted %}type="button"{% else %}type="submit" name="repeat_action" formnovalidate{% endif %}{% endmacro %}
 <div class="collection-repeat-actions">
-    <button {{ _self.kind(scripted|default(false)) }} value="{{ action_key }}:up:{{ index }}" data-repeat-op="up" class="btn btn-outline-secondary btn-sm" aria-label="{{ __('Move up') }}" title="{{ __('Move up') }}"{% if index == 0 %} disabled{% endif %}>{% include '@admin/components/ui/icon.twig' with {name: 'arrow-up', size: 16} only %}</button>
-    <button {{ _self.kind(scripted|default(false)) }} value="{{ action_key }}:down:{{ index }}" data-repeat-op="down" class="btn btn-outline-secondary btn-sm" aria-label="{{ __('Move down') }}" title="{{ __('Move down') }}"{% if last %} disabled{% endif %}>{% include '@admin/components/ui/icon.twig' with {name: 'arrow-down', size: 16} only %}</button>
-    <button {{ _self.kind(scripted|default(false)) }} value="{{ action_key }}:remove:{{ index }}" data-repeat-op="remove" class="btn btn-outline-danger btn-sm" aria-label="{{ remove_label }}" title="{{ remove_label }}">{% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 16} only %}</button>
+    <button type="button" value="{{ action_key }}:up:{{ index }}" data-repeat-op="up" class="btn btn-outline-secondary btn-sm" aria-label="{{ __('Move up') }}" title="{{ __('Move up') }}"{% if index == 0 %} disabled{% endif %}>{% include '@admin/components/ui/icon.twig' with {name: 'arrow-up', size: 16} only %}</button>
+    <button type="button" value="{{ action_key }}:down:{{ index }}" data-repeat-op="down" class="btn btn-outline-secondary btn-sm" aria-label="{{ __('Move down') }}" title="{{ __('Move down') }}"{% if last %} disabled{% endif %}>{% include '@admin/components/ui/icon.twig' with {name: 'arrow-down', size: 16} only %}</button>
+    <button type="button" value="{{ action_key }}:remove:{{ index }}" data-repeat-op="remove" class="btn btn-outline-danger btn-sm" aria-label="{{ remove_label }}" title="{{ remove_label }}">{% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 16} only %}</button>
 </div>

@@ -1,4 +1,4 @@
-/** Search enhances the ordinary POST form without changing its select controls. */
+/** Search for related items: the results replace the choices of the selects of the field. */
 document.querySelectorAll('[data-collection-relation]').forEach(root => {
   const query = root.querySelector('[data-relation-query]');
   const button = root.querySelector('[data-relation-search]');

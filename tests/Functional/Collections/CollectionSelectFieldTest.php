@@ -89,7 +89,7 @@ final class CollectionSelectFieldTest extends FunctionalTestCase
         foreach ($document->querySelectorAll('[data-key="field_choice"] [data-repeat-rows] select option[selected]') as $option) {
             $selected[] = $option->getAttribute('value');
         }
-        self::assertSame(['1', '01', ''], $selected);
+        self::assertSame(['1', '01'], $selected);
         $this->expectException(CollectionItemFormException::class);
         $this->api->addItem($this->form('unknown', ['outside']));
     }

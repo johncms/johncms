@@ -1,7 +1,7 @@
 import { createRelationDefaultPicker } from './relation-default-picker';
 import { initializeAdminEditors, labelAdminEditors, removeAdminEditors, focusAdminEditor, setAdminEditorValue } from './editor';
 
-/** Ordinary POST buttons remain the fallback when this enhancement is unavailable. */
+/** The rows of a multiple value: add, move and remove them in place; the form posts what is left. */
 document.querySelectorAll('[data-collection-repeat]').forEach(root => {
   const list = root.querySelector('[data-repeat-rows]');
   const template = root.querySelector('[data-repeat-template]');
@@ -16,12 +16,7 @@ document.querySelectorAll('[data-collection-repeat]').forEach(root => {
     entries.forEach((row, index) => {
       row.querySelectorAll('[data-repeat-number]').forEach(number => { number.textContent = index + 1; });
       labelAdminEditors(row, `${root.querySelector('legend').textContent.trim()} ${index + 1}`);
-      row.querySelectorAll('[data-file-widget]').forEach(widget => {
-        widget.dataset.index = index;
-        widget.querySelector('[data-file-upload-input]').name = `file_uploads[${widget.dataset.code}][${index}]`;
-        widget.querySelector('[data-file-upload-button]').value = `${widget.dataset.code}:${index}`;
-        widget.querySelector('[data-file-clear]').value = `${widget.dataset.code}:${index}`;
-      });
+      row.querySelectorAll('[data-file-widget]').forEach(widget => { widget.dataset.index = index; });
       row.querySelectorAll('[data-repeat-op]').forEach(button => {
         const operation = button.dataset.repeatOp;
         button.value = `${root.dataset.key}:${operation}:${index}`;
