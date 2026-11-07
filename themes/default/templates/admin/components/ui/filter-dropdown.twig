@@ -5,7 +5,7 @@
     @param string label   The name of the filter: "Role".
     @param string value   The title of the chosen option.
     @param bool   applied Whether the filter narrows the list: anything but its first option.
-    @param array  options title, url, active.
+    @param array  options title, url, active; divider sets the option apart from the ones above.
 #}
 <div class="dropdown">
     <button type="button" class="admin-filter{{ applied ? ' admin-filter--applied' }}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -15,6 +15,7 @@
     </button>
     <ul class="dropdown-menu">
         {% for option in options %}
+            {% if option.divider|default(false) %}<li><hr class="dropdown-divider"></li>{% endif %}
             <li>
                 <a class="dropdown-item{{ option.active ? ' active' }}" href="{{ option.url }}"{% if option.active %} aria-current="true"{% endif %}>
                     <span class="admin-filter__check">

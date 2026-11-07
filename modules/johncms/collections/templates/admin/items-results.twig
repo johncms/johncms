@@ -40,7 +40,7 @@
                 </form>
             {% endif %}
             <div class="table-responsive">
-                {% include '@collections/admin/components/items-table.twig' with {rows: rows, columns: columns, bulk: bulk, meta_columns: meta_columns, has_sections: has_sections} only %}
+                {% include '@collections/admin/components/items-table.twig' with {rows: rows, columns: columns, bulk: bulk, meta_columns: meta_columns, has_sections: has_sections, sort_links: controls.sort_links} only %}
             </div>
             {% if bulk %}<input type="hidden" name="bulk_complete" value="1" form="collection-bulk-form">{% endif %}
             <div class="card-footer admin-list-footer">

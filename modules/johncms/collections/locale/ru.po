@@ -1694,3 +1694,9 @@ msgstr "Таблицы"
 
 msgid "Presentations"
 msgstr "Презентации"
+
+msgid "Created by"
+msgstr "Создал"
+
+msgid "More filters"
+msgstr "Дополнительные фильтры"

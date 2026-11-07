@@ -5,14 +5,28 @@
     @param list<string> columns      The names of the fields shown as columns, in the order of the
                                      values of a row.
     @param bool         has_sections
+    @param array        sort_links   By the key of an order: url, and direction when it is the current one.
 #}
+{% macro header(title, link, class) %}
+    {% if link %}
+        <th scope="col" class="{{ class }}"{% if link.direction %} aria-sort="{{ link.direction == 'asc' ? 'ascending' : 'descending' }}"{% endif %}>
+            <a class="admin-sort{{ link.direction ? ' admin-sort--active' }}" href="{{ link.url }}">
+                {{ title }}
+                {% include '@admin/components/ui/icon.twig' with {name: link.direction == 'asc' ? 'arrow-up' : (link.direction == 'desc' ? 'arrow-down' : 'arrow-up-down'), size: 12} only %}
+            </a>
+        </th>
+    {% else %}
+        <th scope="col" class="{{ class }}">{{ title }}</th>
+    {% endif %}
+{% endmacro %}
+{% set meta_sorts = {created_at: 'created_at', updated_at: 'updated_at', views: 'view_count'} %}
 <table class="table table-hover align-middle admin-collection-items">
     <thead>
         <tr>
             {% if bulk %}<th scope="col" class="admin-collection-items__selection"><span class="visually-hidden">{{ __('Select records') }}</span></th>{% endif %}
-            <th scope="col">{{ __('Item') }}</th>
-            {% for title in meta_columns %}
-                <th scope="col" class="d-none d-md-table-cell">{{ title }}</th>
+            {{ _self.header(__('Item'), sort_links.name|default(null), '') }}
+            {% for key, title in meta_columns %}
+                {{ _self.header(title, sort_links[meta_sorts[key]|default('')]|default(null), 'd-none d-md-table-cell') }}
             {% endfor %}
             {% for column in columns %}
                 <th scope="col" class="d-none d-lg-table-cell">{{ column }}</th>

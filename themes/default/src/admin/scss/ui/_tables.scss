@@ -24,6 +24,29 @@
   }
 }
 
+// A head a list can be ordered by: the whole title is the link, the arrow says the direction of
+// the current order and stays faint on the others.
+.admin-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: inherit;
+  text-decoration: none;
+
+  .admin-icon { opacity: 0.35; }
+
+  &:hover,
+  &:focus-visible { color: var(--fg); }
+
+  &:hover .admin-icon { opacity: 0.7; }
+}
+
+.admin-sort--active {
+  color: var(--fg);
+
+  .admin-icon { opacity: 1; }
+}
+
 // A selected row: the tint of .table-active and the accent along its left edge.
 .table > tbody > tr.table-active > :first-child {
   box-shadow: inset 2px 0 0 var(--accent), inset 0 0 0 9999px var(--bs-table-bg-state, var(--bs-table-bg-type, var(--bs-table-accent-bg)));

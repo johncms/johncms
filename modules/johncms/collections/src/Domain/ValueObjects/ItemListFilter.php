@@ -56,6 +56,11 @@ final readonly class ItemListFilter
         return new self($this->search, $this->section, $status, $this->sortBy, $this->direction, $this->author, $this->createdFrom, $this->createdTo, $this->minViews, $this->explicitOrder);
     }
 
+    public function withOrder(string $sortBy, string $direction): self
+    {
+        return new self($this->search, $this->section, $this->status, $sortBy, $direction, $this->author, $this->createdFrom, $this->createdTo, $this->minViews, true);
+    }
+
     public function isEmpty(): bool
     {
         return $this->search === '' && $this->section === null && $this->status === null && $this->author === null && $this->createdFrom === null && $this->createdTo === null && $this->minViews === null;

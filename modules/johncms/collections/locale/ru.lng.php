@@ -505,6 +505,8 @@
       'The form of an item orders this field by the layout of the collection.' => 'В форме записи порядок этого поля задаёт раскладка коллекции.',
       'Spreadsheets' => 'Таблицы',
       'Presentations' => 'Презентации',
+      'Created by' => 'Создал',
+      'More filters' => 'Дополнительные фильтры',
     ),
   ),
 );

@@ -18,9 +18,13 @@ use Johncms\Modules\Collections\Domain\ValueObjects\ItemListFilter;
  */
 final readonly class ItemListControlsMapper
 {
+    /** What reads best newest or largest first. */
+    private const array DESCENDING_FIRST = ['created_at', 'updated_at', 'view_count', 'active_from'];
+
     public function __construct(
         private ItemListFilterMapper $filterMapper,
         private ListFilterControl $control,
+        private CollectionListSettings $listing = new CollectionListSettings(),
     ) {
     }
 
@@ -35,6 +39,8 @@ final readonly class ItemListControlsMapper
             $filters[] = $this->sectionFilter($path, $filter, $tree);
         }
         $filters[] = $this->statusFilter($path, $filter);
+        // Last, and never a chip: an order does not narrow the list.
+        $filters[] = $this->sortControl($path, $filter);
 
         $chips = [];
         if ($filter->search !== '') {
@@ -66,6 +72,7 @@ final readonly class ItemListControlsMapper
             'action'    => $path,
             'search' => $filter->search,
             'filters'   => $filters,
+            'sort_links' => $this->sortLinks($path, $filter),
             'chips'     => $chips,
             'clear_url' => $chips === [] ? '' : $path,
             // The search field submits these along with what is typed, so the rest of the filter
@@ -82,6 +89,61 @@ final readonly class ItemListControlsMapper
             ItemStatus::SCHEDULED => __('Scheduled'),
             ItemStatus::EXPIRED   => __('Expired'),
         };
+    }
+
+    /**
+     * The order of the list as a dropdown among the filters: the fields first, then the direction.
+     *
+     * @return array<string, mixed>
+     */
+    private function sortControl(string $path, ItemListFilter $filter): array
+    {
+        $sorts = $this->listing->sorts();
+        $options = [];
+        foreach ($sorts as $key => $title) {
+            $direction = $key === $filter->sortBy ? $filter->direction : $this->firstDirection($key);
+            $options[] = ['title' => $title, 'url' => $this->filterMapper->url($path, $filter->withOrder($key, $direction)), 'active' => $key === $filter->sortBy];
+        }
+        foreach (['asc' => __('Ascending'), 'desc' => __('Descending')] as $direction => $title) {
+            $options[] = [
+                'title'   => $title,
+                'url'     => $this->filterMapper->url($path, $filter->withOrder($filter->sortBy, $direction)),
+                'active'  => $filter->direction === $direction,
+                'divider' => $direction === 'asc',
+            ];
+        }
+
+        return [
+            'name'    => 'order',
+            'label'   => __('Sorting'),
+            'value'   => ($sorts[$filter->sortBy] ?? $filter->sortBy) . ' ' . ($filter->direction === 'asc' ? '↑' : '↓'),
+            'applied' => false,
+            'options' => $options,
+            'chip'    => null,
+        ];
+    }
+
+    /**
+     * The headers of the columns the list can be ordered by: a click orders by the column, and a
+     * click on the current one turns the direction over.
+     *
+     * @return array<string, array{url: string, direction: ?string}>
+     */
+    private function sortLinks(string $path, ItemListFilter $filter): array
+    {
+        $links = [];
+        foreach (array_keys($this->listing->sorts()) as $key) {
+            $current = $key === $filter->sortBy;
+            $next = $current ? ($filter->direction === 'asc' ? 'desc' : 'asc') : $this->firstDirection($key);
+            $links[$key] = ['url' => $this->filterMapper->url($path, $filter->withOrder($key, $next)), 'direction' => $current ? $filter->direction : null];
+        }
+
+        return $links;
+    }
+
+    private function firstDirection(string $sort): string
+    {
+        return in_array($sort, self::DESCENDING_FIRST, true) ? 'desc' : 'asc';
     }
 
     /**

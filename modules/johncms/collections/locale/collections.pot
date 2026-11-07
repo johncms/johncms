@@ -761,8 +761,7 @@ msgid "Fill in the field \"%s\""
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Services/CollectionListSettings.php:16
-#: modules/johncms/collections/src/Install/Installer.php:63
-msgid "Author"
+msgid "Created by"
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Services/CollectionListSettings.php:16
@@ -781,7 +780,7 @@ msgid "Views"
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Services/CollectionListSettings.php:16
-#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:106
+#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:168
 #: modules/johncms/collections/templates/admin/item-form.twig:132
 #: modules/johncms/collections/templates/admin/section-form.twig:26
 #: modules/johncms/collections/templates/admin/sections.twig:39
@@ -789,8 +788,8 @@ msgid "Section"
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Services/CollectionListSettings.php:22
-#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:52
-#: modules/johncms/collections/templates/admin/components/list-options.twig:17
+#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:58
+#: modules/johncms/collections/templates/admin/components/list-options.twig:11
 msgid "Author ID"
 msgstr ""
 
@@ -799,8 +798,8 @@ msgid "Creation date"
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Services/CollectionListSettings.php:22
-#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:55
-#: modules/johncms/collections/templates/admin/components/list-options.twig:22
+#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:61
+#: modules/johncms/collections/templates/admin/components/list-options.twig:16
 msgid "Minimum views"
 msgstr ""
 
@@ -832,7 +831,7 @@ msgid "Module settings"
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Services/CollectionWorkspaceSettings.php:70
-#: modules/johncms/collections/templates/admin/components/items-table.twig:13
+#: modules/johncms/collections/templates/admin/components/items-table.twig:27
 msgid "Item"
 msgstr ""
 
@@ -896,58 +895,77 @@ msgstr ""
 msgid "Manage the collections"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:41
+#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:47
 #: modules/johncms/collections/templates/admin/components/item-field.twig:17
 #: modules/johncms/collections/templates/admin/components/item-field.twig:36
 #: modules/johncms/collections/templates/admin/field-form.twig:222
 msgid "Search"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:53
-#: modules/johncms/collections/templates/admin/components/list-options.twig:19
+#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:59
+#: modules/johncms/collections/templates/admin/components/list-options.twig:13
 msgid "Created from"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:54
-#: modules/johncms/collections/templates/admin/components/list-options.twig:20
+#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:60
+#: modules/johncms/collections/templates/admin/components/list-options.twig:14
 msgid "Created to"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:80
+#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:87
 msgid "Published"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:81
+#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:88
 #: modules/johncms/collections/templates/admin/sections.twig:72
 msgid "Hidden"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:82
+#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:89
 msgid "Scheduled"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:83
+#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:90
 msgid "Expired"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:94
+#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:107
+#: modules/johncms/collections/templates/admin/collection/form.twig:133
+msgid "Ascending"
+msgstr ""
+
+#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:107
+#: modules/johncms/collections/templates/admin/collection/form.twig:133
+msgid "Descending"
+msgstr ""
+
+#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:118
+#: modules/johncms/collections/templates/admin/collection/form.twig:192
+#: modules/johncms/collections/templates/admin/field-form.twig:302
+#: modules/johncms/collections/templates/admin/fields.twig:42
+#: modules/johncms/collections/templates/admin/item-form.twig:144
+#: modules/johncms/collections/templates/admin/section-form.twig:76
+msgid "Sorting"
+msgstr ""
+
+#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:156
 msgid "All sections"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:95
+#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:157
 #: modules/johncms/collections/templates/admin/bulk-confirm.twig:16
 #: modules/johncms/collections/templates/admin/item-form.twig:135
 #: modules/johncms/collections/templates/admin/items-results.twig:37
 msgid "Without a section"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:115
+#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:177
 msgid "Any"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:121
+#: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:183
 #: modules/johncms/collections/templates/admin/collections.twig:46
-#: modules/johncms/collections/templates/admin/components/items-table.twig:20
+#: modules/johncms/collections/templates/admin/components/items-table.twig:34
 #: modules/johncms/collections/templates/admin/sections.twig:41
 msgid "Status"
 msgstr ""
@@ -1085,6 +1103,10 @@ msgstr ""
 
 #: modules/johncms/collections/src/Install/Installer.php:51
 msgid "Demo blog collection."
+msgstr ""
+
+#: modules/johncms/collections/src/Install/Installer.php:63
+msgid "Author"
 msgstr ""
 
 #: modules/johncms/collections/src/Install/Installer.php:76
@@ -1232,20 +1254,7 @@ msgid "Default sort"
 msgstr ""
 
 #: modules/johncms/collections/templates/admin/collection/form.twig:133
-#: modules/johncms/collections/templates/admin/components/list-options.twig:14
 msgid "Direction"
-msgstr ""
-
-#: modules/johncms/collections/templates/admin/collection/form.twig:133
-#: modules/johncms/collections/templates/admin/components/list-options.twig:2
-#: modules/johncms/collections/templates/admin/components/list-options.twig:15
-msgid "Ascending"
-msgstr ""
-
-#: modules/johncms/collections/templates/admin/collection/form.twig:133
-#: modules/johncms/collections/templates/admin/components/list-options.twig:2
-#: modules/johncms/collections/templates/admin/components/list-options.twig:15
-msgid "Descending"
 msgstr ""
 
 #: modules/johncms/collections/templates/admin/collection/form.twig:141
@@ -1298,14 +1307,6 @@ msgstr ""
 msgid "Items per page"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/collection/form.twig:192
-#: modules/johncms/collections/templates/admin/field-form.twig:302
-#: modules/johncms/collections/templates/admin/fields.twig:42
-#: modules/johncms/collections/templates/admin/item-form.twig:144
-#: modules/johncms/collections/templates/admin/section-form.twig:76
-msgid "Sorting"
-msgstr ""
-
 #: modules/johncms/collections/templates/admin/collection/form.twig:196
 msgid "The sorting orders the collections in the list of the panel: the smaller the number, the higher."
 msgstr ""
@@ -1324,8 +1325,8 @@ msgstr ""
 
 #: modules/johncms/collections/templates/admin/collections.twig:47
 #: modules/johncms/collections/templates/admin/collections.twig:70
-#: modules/johncms/collections/templates/admin/components/items-table.twig:21
-#: modules/johncms/collections/templates/admin/components/items-table.twig:64
+#: modules/johncms/collections/templates/admin/components/items-table.twig:35
+#: modules/johncms/collections/templates/admin/components/items-table.twig:78
 #: modules/johncms/collections/templates/admin/fields.twig:43
 #: modules/johncms/collections/templates/admin/fields.twig:64
 #: modules/johncms/collections/templates/admin/item-form.twig:88
@@ -1502,37 +1503,33 @@ msgstr ""
 msgid "%1$s, up to %2$s"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/components/items-table.twig:12
+#: modules/johncms/collections/templates/admin/components/items-table.twig:26
 msgid "Select records"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/components/items-table.twig:27
+#: modules/johncms/collections/templates/admin/components/items-table.twig:41
 msgid "Select record: %s"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/components/items-table.twig:44
+#: modules/johncms/collections/templates/admin/components/items-table.twig:58
 #: modules/johncms/collections/templates/admin/components/option-row.twig:20
 #: modules/johncms/collections/templates/admin/components/repeated-row.twig:22
 #: modules/johncms/collections/templates/admin/field-form.twig:187
 msgid "Yes"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/components/items-table.twig:44
+#: modules/johncms/collections/templates/admin/components/items-table.twig:58
 #: modules/johncms/collections/templates/admin/components/option-row.twig:21
 #: modules/johncms/collections/templates/admin/components/repeated-row.twig:23
 #: modules/johncms/collections/templates/admin/field-form.twig:187
 msgid "No"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/components/list-options.twig:2
-msgid "List options"
+#: modules/johncms/collections/templates/admin/components/list-options.twig:4
+msgid "More filters"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/components/list-options.twig:10
-msgid "Sort by"
-msgstr ""
-
-#: modules/johncms/collections/templates/admin/components/list-options.twig:23
+#: modules/johncms/collections/templates/admin/components/list-options.twig:17
 msgid "Apply"
 msgstr ""
 

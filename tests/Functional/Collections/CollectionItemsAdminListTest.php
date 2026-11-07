@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Collections;
 
+use Dom\HTMLDocument;
+use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Modules\Collections\Application\Services\CollectionSearchIndexer;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
@@ -144,6 +146,30 @@ final class CollectionItemsAdminListTest extends FunctionalTestCase
         self::assertSame(Response::HTTP_OK, $response->getStatusCode(), $query);
 
         return (string) $response->getContent();
+    }
+
+    public function testTheOrderIsChosenAmongTheFiltersAndByTheHeads(): void
+    {
+        $this->item('Rarely read', 'rare');
+        $popular = $this->item('Often read', 'often');
+        Capsule::table('collection_items')->where('id', $popular)->update(['view_count' => 500]);
+        $document = HTMLDocument::createFromString($this->page(''), LIBXML_NOERROR);
+        $order = $document->querySelector('[data-live-list-region="filters"] .dropdown:last-child');
+        self::assertStringContainsString('↑', $order->querySelector('.admin-filter__value')->textContent);
+        self::assertSame(1, $order->querySelectorAll('.dropdown-divider')->length);
+        self::assertNull($document->querySelector('[data-live-list-region="options"] details'));
+        $name = $document->querySelector('thead a.admin-sort');
+        self::assertStringContainsString('order=name', $name->getAttribute('href'));
+        self::assertStringContainsString('direction=asc', $name->getAttribute('href'));
+
+        $html = $this->page('?order=view_count&direction=desc');
+        self::assertLessThan(strpos($html, 'Rarely read'), strpos($html, 'Often read'));
+        $document = HTMLDocument::createFromString($html, LIBXML_NOERROR);
+        self::assertNull($document->querySelector('thead th[aria-sort]'), 'Views are not a column here.');
+        $document = HTMLDocument::createFromString($this->page('?order=name&direction=desc'), LIBXML_NOERROR);
+        self::assertSame('descending', $document->querySelector('thead th[aria-sort]')?->getAttribute('aria-sort'));
+        self::assertStringContainsString('direction=asc', $document->querySelector('thead th[aria-sort] a')->getAttribute('href'));
+        self::assertNull($document->querySelector('.admin-chips'), 'An order is not a filter and leaves no chip.');
     }
 
     public function testARelationColumnShowsTheNameOfTheItem(): void
