@@ -199,3 +199,9 @@ body.dark {
 .form-group {
   margin-bottom: 1rem;
 }
+
+// The field of the rich text editor; the forms of the modules count on the gap below it, with or
+// without the editor loaded.
+.site-editor {
+  margin-bottom: 1rem;
+}

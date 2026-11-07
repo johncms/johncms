@@ -1,31 +1,34 @@
 {#
-    The rich text editor, as a Vue component. Every form that edits formatted text uses this one;
-    what differs between them is the name of the field and whether the editor may upload.
-
-    The scripts are loaded here rather than in the layout: a page without an editor must not pay
-    for them.
+    The rich text editor of the public forms. Without JavaScript the textarea stays an ordinary
+    form field; the editor is loaded only on a page that has one (themes/default/src/js/editor.js).
 
     @param string name         Name of the field in the form.
     @param string label
+    @param bool   label_hidden Keep the label for screen readers only.
     @param string value
     @param string id           Id of the field, the name by default.
     @param string errors       Messages of the field, already joined into one line.
     @param string upload_url   Where the editor uploads to; empty when it uploads nothing.
     @param bool   allow_upload
+    @param bool   required
 #}
-{% if app.locale != 'en' and asset_exists('ckeditor5/translations/' ~ app.locale ~ '.js') %}
-    <script src="{{ asset('ckeditor5/translations/' ~ app.locale ~ '.js', true) }}"></script>
-{% endif %}
-<script src="{{ asset('ckeditor5/ckeditor.js', true) }}"></script>
-<div class="vue_app">
-    <ckeditor-input-component
-        upload_url="{{ upload_url|default('') }}"
-        name="{{ name }}"
-        language="{{ app.locale }}"
-        errors="{{ errors|default('') }}"
-        id="{{ id|default(name) }}"
-        label="{{ label|default('') }}"
-        value="{{ value|default('') }}"
-        :allow_upload="{{ allow_upload|default(false) ? 'true' : 'false' }}"
-    ></ckeditor-input-component>
+{% set field_id = id|default(name) %}
+<div class="site-editor" data-editor
+     data-language="{{ app.locale }}"
+     data-upload-url="{{ allow_upload|default(false) ? upload_url|default('') : '' }}"
+     data-upload-message="{{ d__('system', 'Wait for the image upload to finish.') }}"
+     data-upload-error-message="{{ d__('system', 'The uploaded image could not be attached. Remove it and upload it again.') }}"
+     data-error-message="{{ d__('system', 'Could not load the editor. You can edit the HTML below.') }}">
+    {% if label|default('') %}
+        <label class="form-label{{ label_hidden|default(false) ? ' visually-hidden' : '' }}" for="{{ field_id }}">{{ label }}</label>
+    {% endif %}
+    <textarea class="form-control{{ errors|default('') ? ' is-invalid' : '' }}"
+              name="{{ name }}" id="{{ field_id }}" rows="6"
+              aria-label="{{ label|default('') ?: d__('system', 'Text') }}"
+              {% if required|default(false) %}required{% endif %}
+              {% if errors|default('') %}aria-invalid="true" aria-describedby="{{ field_id }}-errors"{% endif %}>{{ value|default('') }}</textarea>
+    {% if errors|default('') %}
+        <div class="invalid-feedback d-block" id="{{ field_id }}-errors">{{ errors }}</div>
+    {% endif %}
+    <div class="site-editor__status form-text text-danger" data-editor-status role="alert" hidden></div>
 </div>

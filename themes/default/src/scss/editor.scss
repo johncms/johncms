@@ -1,0 +1,30 @@
+// The public editor, loaded with the editor itself rather than with every page.
+@use 'editor-tokens';
+
+.site-editor {
+  min-inline-size: 0;
+
+  .ck.ck-editor__main > .ck-editor__editable {
+    min-block-size: 8rem;
+    max-block-size: 32rem;
+    border-color: var(--border-strong);
+    background: var(--bg-inset);
+    color: var(--fg);
+    line-height: 1.6;
+
+    > :first-child { margin-block-start: 0; }
+
+    &.ck-focused { border-color: var(--accent); box-shadow: 0 0 0 3px var(--focus-ring); }
+  }
+
+  &:has(textarea.is-invalid) { --ck-editor-frame-border-color: var(--danger); }
+
+  .ck-content {
+    pre { border-color: var(--border); background: var(--bg-elev-2); color: var(--fg); }
+    blockquote { border-inline-start-color: var(--accent); color: var(--fg-muted); }
+    .table table, .table table td, .table table th { border-color: var(--border-strong); }
+    .table table th { background: var(--bg-elev-2); }
+  }
+
+  &__status { margin-block-start: .375rem; }
+}

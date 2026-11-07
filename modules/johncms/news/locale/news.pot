@@ -21,7 +21,7 @@ msgstr ""
 #: modules/johncms/news/src/Application/Menu/NewsMenuItemProvider.php:38
 #: modules/johncms/news/src/Application/Services/NewsPermissions.php:31
 #: modules/johncms/news/templates/homepage/latest.twig:3
-#: modules/johncms/news/templates/public/article.twig:125
+#: modules/johncms/news/templates/public/article.twig:119
 msgid "News"
 msgstr ""
 
@@ -422,19 +422,19 @@ msgstr ""
 msgid "Copy link"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:111
+#: modules/johncms/news/templates/public/article.twig:105
 msgid "Author"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:130
+#: modules/johncms/news/templates/public/article.twig:124
 msgid "On the site since"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:140
+#: modules/johncms/news/templates/public/article.twig:134
 msgid "Read also"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:146
+#: modules/johncms/news/templates/public/article.twig:140
 msgid "Popular"
 msgstr ""
 
@@ -467,19 +467,15 @@ msgid "No comments yet. Be the first."
 msgstr ""
 
 #: modules/johncms/news/templates/public/components/comments.twig:38
-#: modules/johncms/news/templates/public/components/comments.twig:43
+#: modules/johncms/news/templates/public/components/comments.twig:46
 msgid "Write a comment"
 msgstr ""
 
-#: modules/johncms/news/templates/public/components/comments.twig:48
-msgid "Could not load the editor. You can use the text field."
-msgstr ""
-
-#: modules/johncms/news/templates/public/components/comments.twig:51
+#: modules/johncms/news/templates/public/components/comments.twig:55
 msgid "Send"
 msgstr ""
 
-#: modules/johncms/news/templates/public/components/comments.twig:59
+#: modules/johncms/news/templates/public/components/comments.twig:63
 msgid "You are not logged in. You must be <a href=\"/login/\">logged in</a> to comment."
 msgstr ""
 

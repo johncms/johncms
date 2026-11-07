@@ -84,7 +84,7 @@
         <div class="d-flex">
             {% if can_write and post.user.id|default(0) != (app.user.isValid ? app.user.id : 0) %}
                 <div class="ms-3">
-                    <a href="#" onclick="reply_to_post('{{ post.name|e('js') }}')">{{ __('Reply') }}</a>
+                    <a href="#message2" data-editor-reply="{{ post.name }}">{{ __('Reply') }}</a>
                 </div>
             {% endif %}
             {% if post.meta and post.meta.canManage %}

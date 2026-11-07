@@ -1,38 +1,5 @@
 // Loaded after CKEditor's own stylesheet, only when an editor is present.
-body {
-  --ck-color-base-foreground: var(--bg-inset);
-  --ck-color-base-background: var(--bg-elev);
-  --ck-color-base-border: var(--border);
-  --ck-color-base-border-light: var(--border);
-  --ck-color-base-action: var(--accent);
-  --ck-color-base-action-hover: color-mix(in oklab, var(--accent) 85%, var(--fg));
-  --ck-color-base-action-muted: var(--accent-soft);
-  --ck-color-base-action-disabled: var(--fg-dim);
-  --ck-color-base-focus: var(--accent);
-  --ck-color-base-text: var(--fg);
-  --ck-color-base-text-light: var(--fg-muted);
-  --ck-color-base-active: var(--accent);
-  --ck-color-base-active-focus: var(--accent);
-  --ck-color-base-hover: var(--bg-elev-2);
-  --ck-color-base-hover-strong: var(--bg-inset);
-  --ck-color-base-selected: var(--accent-soft);
-  --ck-color-base-selected-hover: color-mix(in oklab, var(--accent) 20%, var(--bg-elev));
-  --ck-color-base-error: var(--danger);
-  --ck-color-base-warning: var(--warn);
-  --ck-color-base-success: var(--accent);
-  --ck-color-base-focus-shadow: color-mix(in oklab, var(--accent) 20%, transparent);
-  --ck-color-base-focus-shadow-faded: color-mix(in oklab, var(--accent) 10%, transparent);
-  --ck-focus-border-color: var(--accent);
-  --ck-color-interactive-primary-text: var(--accent-ink);
-  --ck-color-link-default: var(--accent);
-  --ck-color-engine-placeholder-text: var(--fg-dim);
-  --ck-font-family: var(--bs-body-font-family);
-  --ck-font-size-base: 0.875rem;
-  --ck-radius-base: 0.4375rem;
-  --ck-border-radius-surface: 0.4375rem;
-  --ck-z-default: 1;
-  --ck-z-panel: 1080;
-}
+@use '../../scss/editor-tokens';
 
 // The card supplies the outer frame; keep the toolbar divider and the content's padding.
 .admin-editor-card {

@@ -38,14 +38,18 @@
                 <h3 class="site-news-compose__title" id="comment-form-title">{{ __('Write a comment') }}</h3>
             </div>
             {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% endif %}
-            <form method="post" action="/news/comments/add/{{ article_id }}/" data-comment-form>
+            <form method="post" action="/news/comments/add/{{ article_id }}/">
                 <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                <label for="comment-text" class="visually-hidden">{{ __('Write a comment') }}</label>
-                <textarea name="text" id="comment-text" class="form-control" rows="5" required
-                    data-comment-editor
-                    data-upload-url="/news/comments/upload_file/"
-                    data-language="{{ app.locale }}"
-                    data-editor-error="{{ __('Could not load the editor. You can use the text field.') }}">{{ text }}</textarea>
+                {% include '@theme/components/editor.twig' with {
+                    name: 'text',
+                    id: 'comment-text',
+                    label: __('Write a comment'),
+                    label_hidden: true,
+                    value: text,
+                    upload_url: '/news/comments/upload_file/',
+                    allow_upload: true,
+                    required: true,
+                } only %}
                 <div class="site-news-compose__actions">
                     <button type="submit" class="btn btn-primary">
                         {% include '@theme/components/icon.twig' with {name: 'send', size: 14} only %} {{ __('Send') }}

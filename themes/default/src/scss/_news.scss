@@ -275,13 +275,7 @@
   &__head { display: flex; align-items: center; gap: .625rem; margin-block-end: .875rem; }
   &__avatar { inline-size: 2rem; block-size: 2rem; border-radius: .5rem; object-fit: cover; }
   &__title { margin: 0; font-size: .875rem; font-weight: 700; }
-  .ck-editor { min-inline-size: 0; }
-  .ck-content { min-block-size: 8rem; }
-  .ck.ck-editor__main > .ck-editor__editable { background: var(--bg-inset); color: var(--fg); border-color: var(--border-strong); }
-  .ck.ck-toolbar { border-color: var(--border-strong); background: var(--bg-elev-2); }
-  .ck.ck-toolbar .ck-button { color: var(--fg); }
-  .ck.ck-toolbar .ck-button:not(.ck-disabled):hover { background: var(--accent-soft); }
-  &__actions { display: flex; justify-content: flex-end; margin-block-start: .875rem; }
+  &__actions { display: flex; justify-content: flex-end; }
   &__actions .btn { display: inline-flex; align-items: center; gap: .375rem; }
 }
 

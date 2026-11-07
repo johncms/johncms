@@ -1,4 +1,4 @@
-import { csrfHeaders } from './csrf';
+import { focusEditor, insertAddressee, whenEditorReady } from './editor';
 
 // Copy the canonical article address; keep feedback beside the action.
 for (const share of document.querySelectorAll('[data-news-share]')) {
@@ -22,62 +22,22 @@ for (const share of document.querySelectorAll('[data-news-share]')) {
     });
 }
 
-// The comment form works as a plain text field; the editor, replies and quotes enhance it.
-const commentEditorField = document.querySelector('[data-comment-editor]');
-if (commentEditorField) {
-    const form = commentEditorField.closest('form');
-    if (!window.ClassicEditor) {
-        console.error('CKEditor is not loaded; the comment form stays a plain text field.');
-    } else {
-        window.ClassicEditor.create(commentEditorField, {
-            language: commentEditorField.dataset.language,
-            simpleUpload: {
-                uploadUrl: commentEditorField.dataset.uploadUrl,
-                withCredentials: false,
-                headers: csrfHeaders(),
-                // An uploaded picture is posted with the comment so that it changes owner.
-                savedCallback: file => {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = 'attached_files[]';
-                    input.value = file.id;
-                    form.append(input);
-                },
-            },
-        }).then(editor => {
-            // The editor hides the field, so the browser could not point at it when it is empty.
-            commentEditorField.required = false;
-            enableCommentActions(editor, form);
-        }).catch(error => {
-            const alert = document.createElement('div');
-            alert.className = 'alert alert-warning';
-            alert.setAttribute('role', 'alert');
-            alert.textContent = commentEditorField.dataset.editorError;
-            form.prepend(alert);
-            console.error('Could not initialize the news comment editor.', error);
-        });
-    }
+// Replies and quotes need the editor of the comment form, so they appear once it is ready.
+const commentForm = document.querySelector('#comment-form [data-editor]');
+if (commentForm) {
+    whenEditorReady(commentForm).then(editor => {
+        if (editor) enableCommentActions(editor);
+    });
 }
 
-function enableCommentActions(editor, form) {
-    const scrollToForm = () => {
-        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        form.scrollIntoView({behavior: reduced ? 'instant' : 'smooth', block: 'center'});
-        editor.editing.view.focus();
-    };
+function enableCommentActions(editor) {
     for (const comment of document.querySelectorAll('[data-comment]')) {
         const author = comment.querySelector('[data-comment-author]').textContent.trim();
         const reply = comment.querySelector('[data-comment-reply]');
         const quote = comment.querySelector('[data-comment-quote]');
         if (reply) {
             reply.hidden = false;
-            reply.addEventListener('click', () => {
-                editor.model.change(writer => {
-                    writer.insertText(author + ', ', {}, editor.model.document.selection.getFirstPosition());
-                    writer.setSelection(writer.createPositionAt(editor.model.document.getRoot(), 'end'));
-                });
-                scrollToForm();
-            });
+            reply.addEventListener('click', () => insertAddressee(editor, author));
         }
         if (quote) {
             quote.hidden = false;
@@ -91,7 +51,7 @@ function enableCommentActions(editor, form) {
                 blockquote.append(paragraph);
                 const view = editor.data.processor.toView(blockquote.outerHTML + '<p></p>');
                 editor.model.insertContent(editor.data.toModel(view));
-                scrollToForm();
+                focusEditor(editor);
             });
         }
     }

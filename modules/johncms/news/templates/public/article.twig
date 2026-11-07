@@ -84,12 +84,6 @@
                         </div>
                     </footer>
                 </article>
-                {% if can_write %}
-                    {% if app.locale != 'en' and asset_exists('ckeditor5/translations/' ~ app.locale ~ '.js') %}
-                        <script src="{{ asset('ckeditor5/translations/' ~ app.locale ~ '.js', true) }}"></script>
-                    {% endif %}
-                    <script src="{{ asset('ckeditor5/ckeditor.js', true) }}"></script>
-                {% endif %}
                 {% include '@news/public/components/comments.twig' with {
                     article_id: article.id,
                     comments: comments,

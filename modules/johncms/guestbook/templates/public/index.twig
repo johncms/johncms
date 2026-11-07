@@ -80,20 +80,3 @@
         </div>
     {% endif %}
 {% endblock %}
-
-{% block scripts %}
-    {{ parent() }}
-    <script>
-        function reply_to_post(user_name)
-        {
-            event.preventDefault();
-            $('body,html').animate({scrollTop: 100}, 500);
-            editor.editing.view.focus();
-            editor.model.change(writer => {
-                const insertPosition = editor.model.document.selection.getFirstPosition();
-                writer.insertText(user_name + ', ', {}, insertPosition);
-                writer.setSelection(writer.createPositionAt(editor.model.document.getRoot(), 'end'));
-            });
-        }
-    </script>
-{% endblock %}

@@ -106,10 +106,10 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         self::assertNotNull($document->querySelector('.site-news-article__tags a[href="/news/search_tags/?tag=cms"]'));
         self::assertNotNull($document->querySelector('a[href="#article-comments"]'));
         self::assertNull($document->querySelector('.site-news-article__edit'));
-        self::assertNull($document->querySelector('script[src*="ckeditor5/ckeditor.js"]'));
+        self::assertNull($document->querySelector('[data-editor]'), 'A guest gets no comment form.');
         $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/entry.html', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()))->getContent(), LIBXML_NOERROR);
         self::assertSame('/admin/collections/' . $this->collection . '/items/' . $id . '/edit', $document->querySelector('.site-news-article__edit')->getAttribute('href'));
-        self::assertNotNull($document->querySelector('script[src*="ckeditor5/ckeditor.js"]'));
+        self::assertNotNull($document->querySelector('#comment-form [data-editor] textarea[name="text"]'));
     }
 
     public function testArticleOffersItsSectionFirstThenTheSiteAndThePopularNotShownAbove(): void
