@@ -80,6 +80,7 @@ final readonly class CollectionRelationDeletion
         $blocked = 0;
         $defaults = 0;
         $schema = 0;
+        $blockers = [];
         $evidence = [$ids, $deletedCollectionId];
         foreach ($rows as $row) {
             $field = $row->field;
@@ -87,6 +88,7 @@ final readonly class CollectionRelationDeletion
                 ++$clear;
             } else {
                 ++$blocked;
+                $blockers[] = ['target' => (int) $row->value_int, 'field' => $field->name, 'source' => $row->item->name];
             }
             $source = $row->item->getRawOriginal();
             unset($source['view_count']);
@@ -97,14 +99,18 @@ final readonly class CollectionRelationDeletion
                 continue;
             }
             $default = $field->settings['default'] ?? [];
-            if (array_intersect(array_map(strval(...), $ids), is_array($default) ? $default : [$default]) !== []) {
+            $held = array_intersect(array_map(strval(...), $ids), is_array($default) ? $default : [$default]);
+            if ($held !== []) {
                 ++$defaults;
+                foreach ($held as $target) {
+                    $blockers[] = ['target' => (int) $target, 'field' => $field->name, 'source' => null];
+                }
             }
             if ($deletedCollectionId !== null) {
                 ++$schema;
             }
             $evidence[] = $field->getRawOriginal();
         }
-        return new CollectionRelationImpactDTO($clear, $blocked, $defaults, $schema, hash('sha256', serialize($evidence)));
+        return new CollectionRelationImpactDTO($clear, $blocked, $defaults, $schema, hash('sha256', serialize($evidence)), $blockers);
     }
 }

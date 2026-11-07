@@ -56,6 +56,45 @@ final class CollectionBulkActionsTest extends FunctionalTestCase
         $this->bulk = $this->container()->get(CollectionBulkApiInterface::class);
     }
 
+    public function testTheConfirmationNamesWhatKeepsARecordAndDeletesTheRest(): void
+    {
+        $this->container()->get(CollectionSchemaApiInterface::class)->saveField(null, new CollectionFieldFormDTO(
+            collectionId: $this->collection, code: 'featured', name: 'Featured', type: FieldType::Relation, required: false, multiple: false, sort: 100,
+            settings: ['target_collection_id' => $this->collection, 'default' => (string) $this->first],
+        ));
+        $user = FunctionalUserFactory::createSupervisor();
+        $base = '/admin/collections/' . $this->collection . '/items/bulk';
+        $form = ['bulk_started' => '1', 'bulk_complete' => '1', 'ids' => [(string) $this->first, (string) $this->second], 'bulk_action' => 'delete'];
+        $response = $this->handleRequest($base, 'POST', $this->withCsrfToken($form), cookies: $this->actingAs($user), server: ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest']);
+        self::assertSame(200, $response->getStatusCode());
+        $html = (string) $response->getContent();
+        self::assertStringNotContainsString('<html', $html, 'The modal gets the dialog alone.');
+        $document = HTMLDocument::createFromString($html, LIBXML_NOERROR);
+        self::assertStringContainsString('Featured', $document->querySelector('.alert-danger')->textContent);
+        $exclude = $document->querySelector('button[name="exclude"][value="blocked"]');
+        self::assertNotNull($exclude);
+        self::assertNull($document->querySelector('button[type="submit"]:not([name])'), 'A blocked deletion cannot be confirmed.');
+
+        $response = $this->postForm($base, $form + ['exclude' => 'blocked', 'confirmed' => '1', 'revision' => 'stale'], $user);
+        self::assertSame(200, $response->getStatusCode(), 'Leaving out the kept record asks again rather than deleting.');
+        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
+        $ids = array_map(static fn ($input): string => $input->getAttribute('value'), iterator_to_array($document->querySelectorAll('input[name="ids[]"]')));
+        self::assertSame([(string) $this->second], $ids);
+        $revision = $document->querySelector('input[name="revision"]')->getAttribute('value');
+        self::assertSame(302, $this->postForm($base, ['bulk_started' => '1', 'bulk_complete' => '1', 'ids' => $ids, 'bulk_action' => 'delete', 'confirmed' => '1', 'revision' => $revision], $user)->getStatusCode());
+        self::assertNotNull($this->items->getItem($this->first));
+        self::assertNull($this->items->getItem($this->second));
+    }
+
+    public function testAnErrorOfTheModalIsADialog(): void
+    {
+        $response = $this->handleRequest('/admin/collections/' . $this->collection . '/items/bulk', 'POST', $this->withCsrfToken(['bulk_started' => '1', 'bulk_complete' => '1', 'ids' => [], 'bulk_action' => 'publish']), cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()), server: ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest']);
+        $html = (string) $response->getContent();
+        self::assertStringNotContainsString('<html', $html);
+        self::assertStringContainsString('modal-content', $html);
+        self::assertStringContainsString('alert-danger', $html);
+    }
+
     public function testAPartialWriteAnswersOnlyForWhatItChanges(): void
     {
         $this->container()->get(CollectionSchemaApiInterface::class)->saveField(null, new CollectionFieldFormDTO($this->collection, 'extra', 'Extra', FieldType::String_, true, false, 100));

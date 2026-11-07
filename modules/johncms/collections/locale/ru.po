@@ -1700,3 +1700,54 @@ msgstr "Создал"
 
 msgid "More filters"
 msgstr "Дополнительные фильтры"
+
+msgid "Publish the items"
+msgstr "Опубликовать записи"
+
+msgid "Hide the items"
+msgstr "Скрыть записи"
+
+msgid "Move the items"
+msgstr "Переместить записи"
+
+msgid "Delete the items"
+msgstr "Удалить записи"
+
+msgid "Every selected record is kept by relations or field defaults."
+msgstr "Все выбранные записи удерживаются связями или значениями полей по умолчанию."
+
+msgid "Some records cannot be deleted:"
+msgstr "Некоторые записи нельзя удалить:"
+
+msgid "«%1$s» is the default value of the field «%2$s»."
+msgstr "«%1$s» выбрана значением по умолчанию поля «%2$s»."
+
+msgid "«%1$s» is linked from «%2$s» through the field «%3$s»."
+msgstr "На «%1$s» ссылается запись «%2$s» через поле «%3$s»."
+
+msgid "And %d more."
+msgstr "И ещё %d."
+
+msgid "Delete the other %d"
+msgstr "Удалить остальные (%d)"
+
+msgid "Select all records on this page"
+msgstr "Выбрать все записи на странице"
+
+msgid "%d not shown"
+msgstr "%d не показаны"
+
+msgid "Select at most %d records."
+msgstr "Можно выбрать не больше %d записей."
+
+msgid "Publish"
+msgstr "Опубликовать"
+
+msgid "Hide"
+msgstr "Скрыть"
+
+msgid "Move to"
+msgstr "Переместить в"
+
+msgid "Clear selection"
+msgstr "Снять выбор"

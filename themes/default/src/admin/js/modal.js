@@ -18,6 +18,9 @@ import { Modal } from 'bootstrap';
  * alone — the .modal-content of components/ui/dialog.twig. A form in it posts as any form does,
  * and the page that answers replaces this one. Without the script, or when the request fails,
  * the link leads to the same dialog shown as a page.
+ *
+ * A form, or the button that submits it, with data-admin-modal posts the same way and opens the
+ * answer in the modal: a confirmation that needs what was chosen on the page.
  */
 const element = document.getElementById('admin-modal');
 
@@ -27,7 +30,7 @@ if (element) {
   const modal = Modal.getOrCreateInstance(element);
   let pending = null;
 
-  async function open(url, trigger) {
+  async function open(url, trigger, init = {}, fallback = () => window.location.assign(url)) {
     if (pending) {
       pending.abort();
     }
@@ -43,6 +46,7 @@ if (element) {
         credentials: 'same-origin',
         cache: 'no-store',
         signal: request.signal,
+        ...init,
       });
 
       if (!response.ok) {
@@ -55,7 +59,7 @@ if (element) {
       dialog.querySelector('[autofocus]')?.focus();
     } catch (error) {
       if (error.name !== 'AbortError') {
-        window.location.assign(url);
+        fallback();
       }
     } finally {
       if (pending === request) {
@@ -73,6 +77,30 @@ if (element) {
 
     event.preventDefault();
     open(trigger.getAttribute('href') ?? trigger.dataset.adminModal, trigger);
+  });
+
+  document.addEventListener('submit', function (event) {
+    const form = event.target;
+    const submitter = event.submitter;
+
+    if (!form.hasAttribute('data-admin-modal') && !submitter?.hasAttribute('data-admin-modal')) {
+      return;
+    }
+
+    event.preventDefault();
+    const body = new FormData(form, submitter);
+    form.removeAttribute('data-admin-modal');
+    open(submitter?.getAttribute('formaction') || form.action, submitter ?? form, {method: 'POST', body}, function () {
+      // The page answers the same post: carry the button that was pressed, which a plain submit loses.
+      if (submitter?.name) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = submitter.name;
+        input.value = submitter.value;
+        form.append(input);
+      }
+      HTMLFormElement.prototype.submit.call(form);
+    });
   });
 
   element.addEventListener('hidden.bs.modal', function () {

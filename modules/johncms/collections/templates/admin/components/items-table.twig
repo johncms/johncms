@@ -23,7 +23,7 @@
 <table class="table table-hover align-middle admin-collection-items">
     <thead>
         <tr>
-            {% if bulk %}<th scope="col" class="admin-collection-items__selection"><span class="visually-hidden">{{ __('Select records') }}</span></th>{% endif %}
+            {% if bulk %}<th scope="col" class="admin-collection-items__selection"><input class="form-check-input" type="checkbox" data-bulk-all hidden aria-label="{{ __('Select all records on this page') }}"><span class="visually-hidden" data-bulk-all-label>{{ __('Select records') }}</span></th>{% endif %}
             {{ _self.header(__('Item'), sort_links.name|default(null), '') }}
             {% for key, title in meta_columns %}
                 {{ _self.header(title, sort_links[meta_sorts[key]|default('')]|default(null), 'd-none d-md-table-cell') }}

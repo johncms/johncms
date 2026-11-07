@@ -1,0 +1,72 @@
+{#
+    Confirming a bulk action. Answered to the modal as it is, and put into a page of its own
+    (bulk-confirm.twig) for a plain visit.
+
+    @var string                        title
+    @var string                        form_action Empty when there is nothing to confirm.
+    @var string                        back_url
+    @var CollectionBulkPreviewDTO|null preview
+    @var list<array>                   items       name, blocked.
+    @var list<array>                   blockers    name, field, source (null for a field default).
+    @var int                           remaining   The selected records that can go.
+    @var list<string>                  errors
+#}
+{% embed '@admin/components/ui/dialog.twig' with {
+    title: title,
+    action: preview ? form_action : '',
+    close_url: back_url,
+    preview: preview,
+    items: items|default([]),
+    blockers: blockers|default([]),
+    remaining: remaining|default(0),
+    errors: errors|default([]),
+    back_url: back_url,
+} only %}
+    {% block body %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
+        {% if preview %}
+            <input type="hidden" name="bulk_started" value="1">
+            <input type="hidden" name="back" value="{{ back_url }}">
+            <input type="hidden" name="bulk_action" value="{{ preview.action }}">
+            <input type="hidden" name="target_section" value="{{ preview.targetSectionId|default(0) }}">
+            <input type="hidden" name="revision" value="{{ preview.revision }}">
+            <input type="hidden" name="confirmed" value="1">
+            {% for id in preview.ids %}<input type="hidden" name="ids[]" value="{{ id }}">{% endfor %}
+            <p class="mb-2">
+                {% if preview.action == 'publish' %}{{ __('The records will be enabled immediately and their publication dates will be cleared.') }}
+                {% elseif preview.action == 'hide' %}{{ __('The records will be disabled. Their publication dates will be preserved.') }}
+                {% elseif preview.action == 'move' %}{{ __('Destination section: %s')|format(preview.targetSectionName ?? __('Without a section')) }}
+                {% else %}{{ __('Selected records and their associated data will be deleted permanently.') }}{% endif %}
+            </p>
+            <div class="fw-semibold mb-1">{{ __('Selected records: %d.')|format(items|length) }}</div>
+            <ul class="collection-bulk-names">
+                {% for item in items %}<li{% if item.blocked %} class="text-danger"{% endif %}>{{ item.name }}</li>{% endfor %}
+            </ul>
+            {% if preview.relations and preview.relations.clearValues > 0 %}
+                <p class="form-text">{{ __('Relation values to clear: %d.')|format(preview.relations.clearValues) }}</p>
+            {% endif %}
+            {% if blockers is not empty %}
+                <div class="alert alert-danger mb-0">
+                    <div class="mb-1">{{ __('Some records cannot be deleted:') }}</div>
+                    <ul class="mb-0">
+                        {% for blocker in blockers|slice(0, 20) %}
+                            <li>{{ blocker.source is null
+                                ? __('«%1$s» is the default value of the field «%2$s».')|format(blocker.name, blocker.field)
+                                : __('«%1$s» is linked from «%2$s» through the field «%3$s».')|format(blocker.name, blocker.source, blocker.field) }}</li>
+                        {% endfor %}
+                        {% if blockers|length > 20 %}<li>{{ __('And %d more.')|format(blockers|length - 20) }}</li>{% endif %}
+                    </ul>
+                </div>
+            {% endif %}
+            <input type="hidden" name="bulk_complete" value="1">
+        {% endif %}
+    {% endblock %}
+    {% block footer %}
+        <a href="{{ close_url }}" class="btn btn-secondary" data-bs-dismiss="modal">{{ preview ? __('Cancel') : __('Close') }}</a>
+        {% if preview and preview.canExecute %}
+            <button type="submit" class="btn {{ preview.action == 'delete' ? 'btn-danger' : 'btn-primary' }}">{{ __('Confirm action') }}</button>
+        {% elseif preview and remaining > 0 %}
+            <button type="submit" name="exclude" value="blocked" class="btn btn-danger" formnovalidate data-admin-modal>{{ __('Delete the other %d')|format(remaining) }}</button>
+        {% endif %}
+    {% endblock %}
+{% endembed %}

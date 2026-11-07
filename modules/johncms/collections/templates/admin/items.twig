@@ -51,5 +51,27 @@
             pagination: pagination,
             add_url: add_url, can_create: can_create, create_label: create_label,
         } only %}
+        {% if bulk %}
+            {# Shown by src/admin/js/collection-bulk.js once a record is selected; the form above serves without it. #}
+            <div class="collection-bulk-bar" data-bulk-bar data-limit="100" data-count-label="{{ __('Selected: %d') }}" data-hidden-label="{{ __('%d not shown') }}" data-limit-label="{{ __('Select at most %d records.') }}" hidden>
+                <span class="collection-bulk-bar__count" data-bulk-count></span>
+                <div class="collection-bulk-bar__actions">
+                    {% if 'publish' in bulk.actions|keys %}<button type="button" class="btn btn-outline-secondary btn-sm" data-bulk-action="publish">{{ __('Publish') }}</button>{% endif %}
+                    {% if 'hide' in bulk.actions|keys %}<button type="button" class="btn btn-outline-secondary btn-sm" data-bulk-action="hide">{{ __('Hide') }}</button>{% endif %}
+                    {% if 'move' in bulk.actions|keys %}
+                        <div class="dropup">
+                            <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{{ __('Move to') }}</button>
+                            <ul class="dropdown-menu collection-bulk-bar__sections">
+                                <li><button type="button" class="dropdown-item" data-bulk-action="move" data-bulk-target="0">{{ __('Without a section') }}</button></li>
+                                {% for id, title in bulk.sections %}<li><button type="button" class="dropdown-item" data-bulk-action="move" data-bulk-target="{{ id }}">{{ title }}</button></li>{% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                    {% if 'delete' in bulk.actions|keys %}<button type="button" class="btn btn-outline-danger btn-sm" data-bulk-action="delete">{% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %} {{ __('Delete') }}</button>{% endif %}
+                </div>
+                <button type="button" class="btn btn-link btn-sm collection-bulk-bar__clear" data-bulk-clear>{{ __('Clear selection') }}</button>
+                <span class="collection-bulk-bar__limit text-danger" data-bulk-limit hidden></span>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

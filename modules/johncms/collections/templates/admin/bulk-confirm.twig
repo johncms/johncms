@@ -1,34 +1,10 @@
+{#
+    Confirmation of a bulk action as a page, for a plain visit.
+
+    @var array dialog What bulk-dialog.twig is given.
+#}
 {% extends '@admin/layouts/default.twig' %}
+
 {% block content %}
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
-    <form method="post" action="{{ form_action }}" class="card" id="bulk-confirm-form">
-        <div class="card-header"><h2 class="h6 mb-0">{{ action_title }}</h2></div>
-        <div class="card-body">
-            <input type="hidden" name="bulk_started" value="1">
-            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-            <input type="hidden" name="back" value="{{ back_url }}">
-            <input type="hidden" name="bulk_action" value="{{ preview.action }}">
-            <input type="hidden" name="target_section" value="{{ preview.targetSectionId|default(0) }}">
-            <input type="hidden" name="revision" value="{{ preview.revision }}">
-            <input type="hidden" name="confirmed" value="1">
-            <p>{{ __('Selected records: %d.')|format(preview.ids|length) }}</p>
-            <ul>{% for id in preview.ids %}<li>{{ preview.names[loop.index0] }}<input type="hidden" name="ids[]" value="{{ id }}"></li>{% endfor %}</ul>
-            {% if preview.action == 'move' %}<p>{{ __('Destination section: %s')|format(preview.targetSectionName ?? __('Without a section')) }}</p>{% endif %}
-            {% if preview.action == 'publish' %}<p>{{ __('The records will be enabled immediately and their publication dates will be cleared.') }}</p>{% endif %}
-            {% if preview.action == 'hide' %}<p>{{ __('The records will be disabled. Their publication dates will be preserved.') }}</p>{% endif %}
-            {% if preview.action == 'delete' %}
-                <p>{{ __('Selected records and their associated data will be deleted permanently.') }}</p>
-                <p>{{ __('Relation values to clear: %d.')|format(preview.relations.clearValues) }}</p>
-                <p>{{ __('Blocking relation values: %d.')|format(preview.relations.blockedValues) }}</p>
-                <p>{{ __('Field defaults preventing deletion: %d.')|format(preview.relations.defaultFields) }}</p>
-                {% if not preview.canExecute %}<div class="alert alert-danger">{{ __('Relations or field defaults prevent deletion. Remove the references or change their deletion policy first.') }}</div>{% endif %}
-            {% endif %}
-            <p class="form-text mb-0">{{ __('The whole selection is processed together. A validation or permission failure leaves all selected records unchanged.') }}</p>
-            <input type="hidden" name="bulk_complete" value="1">
-        </div>
-        <div class="card-footer d-flex gap-2">
-            {% if preview.canExecute %}<button class="btn {{ preview.action == 'delete' ? 'btn-danger' : 'btn-primary' }}" type="submit">{{ __('Confirm action') }}</button>{% endif %}
-            <a class="btn btn-outline-secondary" href="{{ back_url }}">{{ __('Cancel') }}</a>
-        </div>
-    </form>
+    {% include '@admin/components/ui/dialog-page.twig' with {dialog: '@collections/admin/bulk-dialog.twig', data: dialog} only %}
 {% endblock %}

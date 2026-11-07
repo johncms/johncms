@@ -29,7 +29,7 @@
             {% endif %}
         {% else %}
             {% if bulk %}
-                <form method="post" action="{{ bulk.action }}" id="collection-bulk-form" class="card-header d-flex flex-wrap gap-2 align-items-end">
+                <form method="post" action="{{ bulk.action }}" id="collection-bulk-form" class="card-header d-flex flex-wrap gap-2 align-items-end" data-bulk-form>
                     <input type="hidden" name="bulk_started" value="1">
                     <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                     <input type="hidden" name="back" value="{{ bulk.back }}">

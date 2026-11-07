@@ -42,6 +42,17 @@ final readonly class CollectionBulkApi implements CollectionBulkApiInterface
         return ['publish' => d__('collections', 'Publish now'), 'hide' => d__('collections', 'Hide items'), 'move' => d__('collections', 'Move items'), 'delete' => d__('collections', 'Delete items')];
     }
 
+    /** @return array<string, string> What the confirmation of each action is called. */
+    public static function confirmTitles(): array
+    {
+        return [
+            'publish' => d__('collections', 'Publish the items'),
+            'hide'    => d__('collections', 'Hide the items'),
+            'move'    => d__('collections', 'Move the items'),
+            'delete'  => d__('collections', 'Delete the items'),
+        ];
+    }
+
     public function preview(int $collectionId, array $ids, string $action, ?int $targetSectionId = null): CollectionBulkPreviewDTO
     {
         return $this->transaction->run(fn (): CollectionBulkPreviewDTO => $this->context($collectionId, $ids, $action, $targetSectionId));
