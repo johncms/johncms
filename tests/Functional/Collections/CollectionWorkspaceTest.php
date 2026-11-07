@@ -241,15 +241,19 @@ final class CollectionWorkspaceTest extends FunctionalTestCase
         $other = FunctionalUserFactory::create();
         $writer = $this->container()->get(SaveCollectionUseCase::class);
         $writer->execute($collection, $this->form('listing', ['listing' => [
-            'columns' => ['author', 'created_at', 'views'], 'filters' => ['author', 'created_at', 'views'],
+            'columns' => ['id', 'author', 'created_at', 'views'], 'filters' => ['author', 'created_at', 'views'],
             'sort' => ['field' => 'view_count', 'direction' => 'desc'],
         ]]));
         Fixture::insert('collection_items', ['collection_id' => $collection, 'name' => 'Few visits', 'code' => 'few', 'created_by' => $user->id, 'view_count' => 2, 'created_at' => '2026-01-02 12:00:00']);
-        Fixture::insert('collection_items', ['collection_id' => $collection, 'name' => 'Many visits', 'code' => 'many', 'created_by' => $other->id, 'view_count' => 20, 'created_at' => '2026-01-03 12:00:00']);
+        $itemId = Fixture::insert('collection_items', ['collection_id' => $collection, 'name' => 'Many visits', 'code' => 'many', 'created_by' => $other->id, 'view_count' => 20, 'created_at' => '2026-01-03 12:00:00']);
         $base = '/admin/collections/' . $collection . '/items';
         $html = (string) $this->handleRequest($base, cookies: $this->actingAs($user))->getContent();
         $document = HTMLDocument::createFromString($html, LIBXML_NOERROR);
         self::assertSame('Many visits', trim($document->querySelector('.admin-collection-items tbody tr:first-child .admin-collection-items__name')->textContent));
+        self::assertSame((string) $itemId, trim($document->querySelector('.admin-collection-items tbody tr:first-child td:nth-child(3)')->textContent));
+        self::assertSame('ID', trim($document->querySelector('.admin-collection-items th:nth-child(3)')->textContent));
+        self::assertStringContainsString('order=id', $document->querySelector('.admin-collection-items th:nth-child(3) a')->getAttribute('href'));
+        self::assertSame(['id', 'author', 'created_at', 'views'], $this->settings($collection)['workspace']['listing']['columns']);
         self::assertStringContainsString($other->name, $document->querySelector('tbody')->textContent);
         self::assertNotNull($document->querySelector('input[data-filter-field="created_from"]'));
         $query = '?author=' . $user->id . '&created_from=2026-01-02&created_to=2026-01-02&min_views=1';

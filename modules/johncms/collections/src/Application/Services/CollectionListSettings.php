@@ -12,7 +12,14 @@ final readonly class CollectionListSettings
     /** @return array<string, string> */
     public function columns(): array
     {
-        return ['author' => d__('collections', 'Created by'), 'created_at' => d__('collections', 'Created'), 'updated_at' => d__('collections', 'Updated'), 'views' => d__('collections', 'Views'), 'section' => d__('collections', 'Section')];
+        return [
+            'id' => 'ID',
+            'author' => d__('collections', 'Created by'),
+            'created_at' => d__('collections', 'Created'),
+            'updated_at' => d__('collections', 'Updated'),
+            'views' => d__('collections', 'Views'),
+            'section' => d__('collections', 'Section'),
+        ];
     }
 
     /** @return array<string, string> */

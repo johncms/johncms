@@ -106,6 +106,7 @@ final readonly class ItemListRowMapper
                 'status_title' => ItemListControlsMapper::statusTitle($status),
                 'values'       => array_map(fn (ContentCollectionField $field): array => $this->value($field, $values[$field->code] ?? null, $relatedNames), $fields),
                 'meta' => [
+                    'id' => $item->id,
                     'author' => $item->created_by !== null ? ($authors[$item->created_by]->name ?? '') : '',
                     'created_at' => $this->timestamp($item->getRawOriginal('created_at')),
                     'updated_at' => $this->timestamp($item->getRawOriginal('updated_at')),
