@@ -86,6 +86,28 @@ final class CollectionBulkActionsTest extends FunctionalTestCase
         self::assertNull($this->items->getItem($this->second));
     }
 
+    public function testTheDialogOfASingleDeletionNamesWhatKeepsTheRecord(): void
+    {
+        $this->container()->get(CollectionSchemaApiInterface::class)->saveField(null, new CollectionFieldFormDTO(
+            collectionId: $this->collection, code: 'featured', name: 'Featured', type: FieldType::Relation, required: false, multiple: false, sort: 100,
+            settings: ['target_collection_id' => $this->collection, 'default' => (string) $this->first],
+        ));
+        $response = $this->handleRequest('/admin/collections/' . $this->collection . '/items/' . $this->first . '/delete', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()), server: ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest']);
+        self::assertSame(200, $response->getStatusCode());
+        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
+        $reasons = $document->querySelector('.alert-danger')->textContent;
+        self::assertStringContainsString('First <record>', $reasons);
+        self::assertStringContainsString('Featured', $reasons);
+        self::assertNull($document->querySelector('button[type="submit"]'), 'A blocked deletion cannot be confirmed.');
+    }
+
+    public function testTheMoveConfirmationShowsThePathOfTheDestination(): void
+    {
+        $parent = Fixture::insert('collection_sections', ['collection_id' => $this->collection, 'code' => 'tech', 'name' => 'Tech']);
+        $child = Fixture::insert('collection_sections', ['collection_id' => $this->collection, 'parent' => $parent, 'code' => 'php', 'name' => 'PHP']);
+        self::assertSame('Tech › PHP', $this->bulk->preview($this->collection, [$this->first], 'move', $child)->targetSectionName);
+    }
+
     public function testAnErrorOfTheModalIsADialog(): void
     {
         $response = $this->handleRequest('/admin/collections/' . $this->collection . '/items/bulk', 'POST', $this->withCsrfToken(['bulk_started' => '1', 'bulk_complete' => '1', 'ids' => [], 'bulk_action' => 'publish']), cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()), server: ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest']);

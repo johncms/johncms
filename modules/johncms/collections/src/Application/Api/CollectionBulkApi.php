@@ -17,6 +17,7 @@ use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldReposito
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Services\SectionTree;
 
 final readonly class CollectionBulkApi implements CollectionBulkApiInterface
 {
@@ -141,7 +142,7 @@ final readonly class CollectionBulkApi implements CollectionBulkApiInterface
         }
         $impact = $action === 'delete' ? $this->relations->impact($collectionId, $ids, $ids, true) : null;
         $evidence[] = $impact?->revision;
-        return new CollectionBulkPreviewDTO($action, $ids, $names, hash('sha256', serialize($evidence)), $target, $targetSection?->name, $impact);
+        return new CollectionBulkPreviewDTO($action, $ids, $names, hash('sha256', serialize($evidence)), $target, $targetSection !== null ? implode(' › ', SectionTree::of($sections)->pathOf($target)) : null, $impact);
     }
 
     private function invalid(): CollectionItemFormException

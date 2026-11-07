@@ -7,6 +7,8 @@
     @var string name        What is about to be deleted.
     @var array  facts       What goes with it: label, value; may be empty.
     @var array  hidden      Fields posted with it, name => value; may be absent.
+    @var CollectionRelationImpactDTO|null relation_impact What relations keep or lose; may be absent.
+    @var array|null deletion What to do with the items of a deleted section; may be absent.
     @var string form_action
     @var string back_url
 #}
@@ -35,15 +37,20 @@
             </div>
         {% endif %}
         {% if relation_impact is not null %}
-            <div class="mt-3">
-                {% include '@admin/components/ui/facts.twig' with {items: [
-                    {label: __('Optional relation values to clear'), value: relation_impact.clearValues},
-                    {label: __('Relation values preventing deletion'), value: relation_impact.blockedValues},
-                    {label: __('Field defaults preventing deletion'), value: relation_impact.defaultFields},
-                    {label: __('External relation fields preventing collection deletion'), value: relation_impact.schemaFields}
-                ]} only %}
+            {% if relation_impact.clearValues > 0 %}
+                <p class="form-text mt-3 mb-0">{{ __('Relation values to clear: %d.')|format(relation_impact.clearValues) }}</p>
+            {% endif %}
+            {% if relation_impact.isBlocked %}
+                <div class="mt-3">
+                    {% include '@collections/admin/relation-blockers.twig' with {
+                        relations: relation_impact,
+                        heading: deletion is not null ? __('These items cannot be deleted, only moved:') : __('Deletion is not possible:'),
+                    } only %}
+                </div>
+            {% endif %}
+            {% if deletion is not null and (relation_impact.clearValues > 0 or relation_impact.isBlocked) %}
                 <div class="form-text">{{ __('Relation cleanup applies when items are deleted. Moving items preserves their relations.') }}</div>
-            </div>
+            {% endif %}
         {% endif %}
         {% if deletion is not null %}
             <div class="mt-3">
@@ -68,9 +75,11 @@
     {% endblock %}
     {% block footer %}
         <a href="{{ close_url }}" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</a>
-        <button type="submit" class="btn btn-danger">
-            {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
-            {{ __('Delete') }}
-        </button>
+        {% if relation_impact is null or not relation_impact.isBlocked or deletion is not null %}
+            <button type="submit" class="btn btn-danger">
+                {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+                {{ __('Delete') }}
+            </button>
+        {% endif %}
     {% endblock %}
 {% endembed %}

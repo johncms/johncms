@@ -1778,3 +1778,12 @@ msgstr "В этом году"
 
 msgid "Until %s"
 msgstr "по %s"
+
+msgid "Deletion is not possible:"
+msgstr "Удаление невозможно:"
+
+msgid "These items cannot be deleted, only moved:"
+msgstr "Эти записи нельзя удалить, только переместить:"
+
+msgid "The field «%1$s» of the collection «%2$s» links to this collection."
+msgstr "На эту коллекцию ссылается поле «%1$s» коллекции «%2$s»."

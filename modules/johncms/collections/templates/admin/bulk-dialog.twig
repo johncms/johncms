@@ -7,7 +7,6 @@
     @var string                        back_url
     @var CollectionBulkPreviewDTO|null preview
     @var list<array>                   items       name, blocked.
-    @var list<array>                   blockers    name, field, source (null for a field default).
     @var int                           remaining   The selected records that can go.
     @var list<string>                  errors
 #}
@@ -17,7 +16,6 @@
     close_url: back_url,
     preview: preview,
     items: items|default([]),
-    blockers: blockers|default([]),
     remaining: remaining|default(0),
     errors: errors|default([]),
     back_url: back_url,
@@ -45,18 +43,8 @@
             {% if preview.relations and preview.relations.clearValues > 0 %}
                 <p class="form-text">{{ __('Relation values to clear: %d.')|format(preview.relations.clearValues) }}</p>
             {% endif %}
-            {% if blockers is not empty %}
-                <div class="alert alert-danger mb-0">
-                    <div class="mb-1">{{ __('Some records cannot be deleted:') }}</div>
-                    <ul class="mb-0">
-                        {% for blocker in blockers|slice(0, 20) %}
-                            <li>{{ blocker.source is null
-                                ? __('«%1$s» is the default value of the field «%2$s».')|format(blocker.name, blocker.field)
-                                : __('«%1$s» is linked from «%2$s» through the field «%3$s».')|format(blocker.name, blocker.source, blocker.field) }}</li>
-                        {% endfor %}
-                        {% if blockers|length > 20 %}<li>{{ __('And %d more.')|format(blockers|length - 20) }}</li>{% endif %}
-                    </ul>
-                </div>
+            {% if preview.relations %}
+                {% include '@collections/admin/relation-blockers.twig' with {relations: preview.relations, heading: __('Some records cannot be deleted:')} only %}
             {% endif %}
             <input type="hidden" name="bulk_complete" value="1">
         {% endif %}

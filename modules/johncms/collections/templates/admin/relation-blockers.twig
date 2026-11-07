@@ -1,0 +1,27 @@
+{#
+    Why a deletion cannot go: the items held by relations or field defaults, and the relation
+    fields of other collections that point at a deleted collection.
+
+    @var CollectionRelationImpactDTO relations
+    @var string                      heading
+#}
+{% set reasons = [] %}
+{% for blocker in relations.blockers %}
+    {% set reasons = reasons|merge([blocker.source is null
+        ? __('«%1$s» is the default value of the field «%2$s».')|format(blocker.name, blocker.field)
+        : __('«%1$s» is linked from «%2$s» through the field «%3$s».')|format(blocker.name, blocker.source, blocker.field)]) %}
+{% endfor %}
+{% for blocker in relations.schemaBlockers %}
+    {% set reasons = reasons|merge([__('The field «%1$s» of the collection «%2$s» links to this collection.')|format(blocker.field, blocker.collection)]) %}
+{% endfor %}
+{% if reasons is not empty %}
+    <div class="alert alert-danger mb-0">
+        <div class="mb-1">{{ heading }}</div>
+        <ul class="mb-0">
+            {% for reason in reasons|slice(0, 20) %}
+                <li>{{ reason }}</li>
+            {% endfor %}
+            {% if reasons|length > 20 %}<li>{{ __('And %d more.')|format(reasons|length - 20) }}</li>{% endif %}
+        </ul>
+    </div>
+{% endif %}

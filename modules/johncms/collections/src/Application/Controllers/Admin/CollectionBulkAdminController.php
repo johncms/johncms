@@ -90,7 +90,6 @@ final readonly class CollectionBulkAdminController
             'back_url'    => $back,
             'preview'     => $preview,
             'items'       => array_map(static fn (int $id): array => ['name' => $names[$id], 'blocked' => in_array($id, $blocked, true)], $preview->ids),
-            'blockers'    => array_map(static fn (array $blocker): array => $blocker + ['name' => $names[$blocker['target']] ?? '#' . $blocker['target']], $preview->relations->blockers ?? []),
             'remaining'   => count($preview->ids) - count($blocked),
             'errors'      => $errors,
         ]);

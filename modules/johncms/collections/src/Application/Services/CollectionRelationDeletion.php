@@ -51,7 +51,7 @@ final readonly class CollectionRelationDeletion
         if ($expected !== null && ! hash_equals($impact->revision, $expected) && ($expected !== '' || $impact->clearValues > 0)) {
             throw new CollectionDeletionException(['revision' => [d__('collections', 'The contents changed after confirmation was opened. Check the new counts and confirm again.')]]);
         }
-        if ($impact->blockedValues > 0 || $impact->defaultFields > 0 || $impact->schemaFields > 0) {
+        if ($impact->isBlocked()) {
             throw new CollectionDeletionException(['relations' => [d__('collections', 'Relations or field defaults prevent deletion. Remove the references or change their deletion policy first.')]]);
         }
         $sources = $rows->map(static fn ($row) => $row->item)->unique('id')->sortBy('id');
@@ -81,6 +81,7 @@ final readonly class CollectionRelationDeletion
         $defaults = 0;
         $schema = 0;
         $blockers = [];
+        $schemaBlockers = [];
         $evidence = [$ids, $deletedCollectionId];
         foreach ($rows as $row) {
             $field = $row->field;
@@ -108,9 +109,14 @@ final readonly class CollectionRelationDeletion
             }
             if ($deletedCollectionId !== null) {
                 ++$schema;
+                $schemaBlockers[] = ['field' => $field->name, 'collection' => $field->collection->name];
             }
             $evidence[] = $field->getRawOriginal();
         }
-        return new CollectionRelationImpactDTO($clear, $blocked, $defaults, $schema, hash('sha256', serialize($evidence)), $blockers);
+        $names = $this->items->getNames(array_values(array_unique(array_column($blockers, 'target'))));
+        foreach ($blockers as $key => $blocker) {
+            $blockers[$key]['name'] = $names[$blocker['target']] ?? '#' . $blocker['target'];
+        }
+        return new CollectionRelationImpactDTO($clear, $blocked, $defaults, $schema, hash('sha256', serialize($evidence)), $blockers, $schemaBlockers);
     }
 }

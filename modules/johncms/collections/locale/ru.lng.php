@@ -533,6 +533,9 @@
       'Since %s' => 'с %s',
       'This year' => 'В этом году',
       'Until %s' => 'по %s',
+      'Deletion is not possible:' => 'Удаление невозможно:',
+      'These items cannot be deleted, only moved:' => 'Эти записи нельзя удалить, только переместить:',
+      'The field «%1$s» of the collection «%2$s» links to this collection.' => 'На эту коллекцию ссылается поле «%1$s» коллекции «%2$s».',
     ),
   ),
 );

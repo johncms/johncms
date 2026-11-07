@@ -22,6 +22,6 @@ final readonly class CollectionBulkPreviewDTO
 
     public function canExecute(): bool
     {
-        return $this->relations === null || ($this->relations->blockedValues === 0 && $this->relations->defaultFields === 0 && $this->relations->schemaFields === 0);
+        return $this->relations === null || ! $this->relations->isBlocked();
     }
 }
