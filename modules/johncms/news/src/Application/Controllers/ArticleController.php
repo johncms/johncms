@@ -38,6 +38,9 @@ final readonly class ArticleController
         $this->news->registerView($article->record->id);
         return new ViewResponse('@news/public/article.twig', $article->metadata() + [
             'article' => $article->toTemplate(), 'current_section' => $section?->toTemplate(),
+            'edit_url' => $this->access->allows(NewsPermissions::MANAGE)
+                ? '/admin/collections/' . $article->record->collectionId . '/items/' . $article->record->id . '/edit'
+                : null,
             'can_write' => $this->access->allows(NewsPermissions::COMMENTS_POST),
         ]);
     }

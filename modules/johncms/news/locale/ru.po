@@ -764,3 +764,21 @@ msgstr "Содержимое"
 
 msgid "SEO"
 msgstr "SEO"
+
+msgid "Like"
+msgstr "Нравится"
+
+msgid "Dislike"
+msgstr "Не нравится"
+
+msgid "Loading..."
+msgstr "Загрузка…"
+
+msgid "Copy link"
+msgstr "Скопировать ссылку"
+
+msgid "Link copied"
+msgstr "Ссылка скопирована"
+
+msgid "Could not copy the link."
+msgstr "Не удалось скопировать ссылку."

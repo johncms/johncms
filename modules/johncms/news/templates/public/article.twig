@@ -1,60 +1,63 @@
 {#
-    One article with its rating and comments.
-
-    @param array  article
-    @param ?array current_section
+    @var article array Article with sanitized text, author and discussion statistics.
+    @var current_section array|null
+    @var can_write bool
+    @var edit_url string|null
 #}
 {% extends '@theme/layouts/default.twig' %}
 
 {% block content %}
-    <div id="blog">
-        <div class="p-no-margin overflow-hidden">
-            {# Sanitized by the shared content renderer, with the media embedded, so it stays markup. #}
-            {{ article.text_safe }}
-        </div>
-        <div class="meta text-muted">
-            <div class="mt-3">{{ __('Published:') }} {{ article.display_date }}</div>
-            {% if article.author %}
-                <div class="mt-1">{{ __('Author:') }}
-                    {% if profile_url(article.author.id) %}
-                        <a href="{{ profile_url(article.author.id) }}" rel="nofollow">{{ article.author.name }}</a>
-                    {% else %}
-                        {{ article.author.name }}
-                    {% endif %}
-                </div>
-            {% endif %}
-            {% if article.tags is not empty %}
-                <div class="mt-1">
-                    {{ __('Tags:') }}
-                    {% for tag in article.tags %}
-                        <a href="/news/search_tags/?tag={{ tag|url_encode }}">{{ tag }}</a>{% if not loop.last %}, {% endif %}
-                    {% endfor %}
-                </div>
-            {% endif %}
-        </div>
-
-        <div class="article-stat border d-inline-flex align-items-center py-2 px-4 mt-3 border-radius-12">
-            <div class="d-flex align-items-center me-4 vue_app">
-                <div class="d-flex align-items-center me-2">{{ __('Rating:') }}</div>
-                <likes-component
-                    :article_id="{{ article.id }}"
-                    :rating="{{ article.rating }}"
-                    :can_vote="{{ can('news.vote') ? 'true' : 'false' }}"
-                    :voted="{{ article.current_vote }}"
-                ></likes-component>
+    <div class="site-news site-news--article" id="blog">
+        <article class="site-news-article">
+            <header class="site-news-article__meta">
+                {% if article.author %}
+                    <span>{{ __('Author:') }}
+                        {% if profile_url(article.author.id) %}
+                            <a href="{{ profile_url(article.author.id) }}" rel="nofollow">{{ article.author.name }}</a>
+                        {% else %}{{ article.author.name }}{% endif %}
+                    </span>
+                {% endif %}
+                <span>{{ __('Published:') }} {{ article.display_date }}</span>
+                {% if edit_url %}
+                    <a href="{{ edit_url }}" class="site-news-article__edit">
+                        {% include '@theme/components/icon.twig' with {name: 'pencil', size: 14} only %} {{ __('Edit') }}
+                    </a>
+                {% endif %}
+            </header>
+            <div class="site-news-article__body ck-content">
+                {{ article.text_safe }}
             </div>
-            {% if article.view_count %}
-                <div class="d-flex justify-content-end">
-                    <div class="text-muted forum-view-counter">
-                        <svg class="icon download-button-icon mt-n1 me-1">
-                            <use xlink:href="{{ asset('icons/sprite.svg') }}#eye"></use>
-                        </svg>
-                        {{ article.view_count }}
-                    </div>
-                </div>
+            {% if article.tags is not empty %}
+                <nav class="site-news-article__tags" aria-label="{{ __('Tags:') }}">
+                    {% for tag in article.tags %}<a href="/news/search_tags/?tag={{ tag|url_encode }}">#{{ tag }}</a>{% endfor %}
+                </nav>
             {% endif %}
-        </div>
-
+            <footer class="site-news-article__footer">
+                <div class="vue_app">
+                    <likes-component
+                        :article_id="{{ article.id }}"
+                        :rating="{{ article.rating }}"
+                        :can_vote="{{ can('news.vote') ? 'true' : 'false' }}"
+                        :voted="{{ article.current_vote }}"
+                        icon_sprite="{{ asset('icons/public.svg', true) }}"
+                        :i18n='{{ {like: __('Like'), dislike: __('Dislike'), rating: __('Rating'), loading: __('Loading...')}|json_encode }}'
+                    ></likes-component>
+                </div>
+                <span class="site-news-article__stat" title="{{ __('Views') }}">
+                    {% include '@theme/components/icon.twig' with {name: 'eye', size: 14} only %}
+                    <span class="visually-hidden">{{ __('Views') }}: </span>{{ article.view_count|format_number }}
+                </span>
+                <a class="site-news-article__stat" href="#article-comments" aria-label="{{ __('Comments') }}: {{ article.comments_count|format_number }}">
+                    {% include '@theme/components/icon.twig' with {name: 'message-square', size: 14} only %} {{ article.comments_count|format_number }}
+                </a>
+                <div class="site-news-share" data-news-share data-url="{{ article.url }}" data-copied="{{ __('Link copied') }}" data-error="{{ __('Could not copy the link.') }}">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-news-copy hidden>
+                        {% include '@theme/components/icon.twig' with {name: 'copy', size: 14} only %} {{ __('Copy link') }}
+                    </button>
+                    <span class="site-news-share__status" role="status"></span>
+                </div>
+            </footer>
+        </article>
         {% if app.locale != 'en' and asset_exists('ckeditor5/translations/' ~ app.locale ~ '.js') %}
             <script src="{{ asset('ckeditor5/translations/' ~ app.locale ~ '.js', true) }}"></script>
         {% endif %}
@@ -86,8 +89,8 @@
             </div>
         {% endif %}
 
-        <div class="mt-3">
-            <a href="{{ current_section ? current_section.url : '/news/' }}">{{ __('Back') }}</a>
-        </div>
+        <a class="site-news__back" href="{{ current_section ? current_section.url : '/news/' }}">
+            {% include '@theme/components/icon.twig' with {name: 'chevron-left', size: 14} only %} {{ __('Back') }}
+        </a>
     </div>
 {% endblock %}

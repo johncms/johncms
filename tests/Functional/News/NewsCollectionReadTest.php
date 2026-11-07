@@ -72,7 +72,12 @@ final class NewsCollectionReadTest extends FunctionalTestCase
         self::assertSame(0, $article->stats->rating);
         self::assertSame(0, $article->stats->comments);
         self::assertSame('SEO title', $article->metaTitle);
-        $html = $this->container()->get(RendererInterface::class)->render('@news/public/article.twig', $article->metadata() + ['article' => $article->toTemplate(), 'current_section' => null, 'can_write' => false]);
+        $html = $this->container()->get(RendererInterface::class)->render('@news/public/article.twig', $article->metadata() + [
+            'article' => $article->toTemplate(),
+            'current_section' => null,
+            'can_write' => false,
+            'edit_url' => null,
+        ]);
         self::assertStringContainsString('Body No author', $html);
         self::assertStringNotContainsString('<script>bad()</script>', $html);
         self::assertStringContainsString('name="description" content="SEO description"', $html);

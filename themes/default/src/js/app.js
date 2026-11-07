@@ -18,6 +18,7 @@ import '../scss/app.scss';
 import './jquery.magnific-popup';
 import './menu';
 import './preferences';
+import './news';
 
 if (document.querySelector('[data-site-icon-gallery]')) {
     import('./icon-gallery');

@@ -1,21 +1,15 @@
 <template>
-  <div class="position-relative">
-    <div class="d-flex justify-content-center position-absolute w-100 vote-preloader" v-if="loading">
-      <div class="spinner-border text-secondary" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
-    <button class="btn like-btn btn-sm" @click="setVote(1)" :class="current_voted > 0 ? 'liked' : ''" :disabled="current_voted > 0 || !can_vote">
-      <svg class="icon download-button-icon mt-n1">
-        <use xlink:href="/themes/default/assets/icons/sprite.svg#like"/>
-      </svg>
+  <div class="site-news-vote" role="group" :aria-label="i18n.rating" :aria-busy="loading">
+    <button type="button" @click="setVote(1)" :class="{'site-news-vote__active': current_voted > 0}"
+            :disabled="loading || current_voted > 0 || !can_vote" :aria-pressed="current_voted > 0" :aria-label="i18n.like" :title="i18n.like">
+      <svg class="site-icon site-icon--lucide" width="14" height="14" aria-hidden="true"><use :href="icon_sprite + '#thumbs-up'" /></svg>
     </button>
-    <span :class="rating_color" class="ms-2 me-2 fw-bold">{{ current_rating > 0 ? '+' : '' }}{{ current_rating }}</span>
-    <button class="btn like-btn btn-sm" @click="setVote(0)" :class="current_voted < 0 ? 'disliked' : ''" :disabled="current_voted < 0 || !can_vote">
-      <svg class="icon download-button-icon me-1">
-        <use xlink:href="/themes/default/assets/icons/sprite.svg#dislike"/>
-      </svg>
+    <span :class="rating_color" class="site-news-vote__rating" role="status">{{ current_rating > 0 ? '+' : '' }}{{ current_rating }}</span>
+    <button type="button" @click="setVote(0)" :class="{'site-news-vote__active': current_voted < 0}"
+            :disabled="loading || current_voted < 0 || !can_vote" :aria-pressed="current_voted < 0" :aria-label="i18n.dislike" :title="i18n.dislike">
+      <svg class="site-icon site-icon--lucide" width="14" height="14" aria-hidden="true"><use :href="icon_sprite + '#thumbs-down'" /></svg>
     </button>
+    <span class="visually-hidden" v-if="loading">{{ i18n.loading }}</span>
   </div>
 </template>
 
@@ -24,6 +18,11 @@ export default {
   name: "LikesComponent",
   props: {
     article_id: Number,
+    icon_sprite: String,
+    i18n: {
+      type: Object,
+      required: true,
+    },
     rating: {
       type: Number,
       default: 0

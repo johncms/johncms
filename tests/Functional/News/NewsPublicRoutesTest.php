@@ -89,6 +89,18 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         self::assertStringContainsString('Release notes', $document->querySelector('.site-news__description')->textContent);
     }
 
+    public function testArticleHasOneHeadingTagsAndAnEditLinkOnlyForEditors(): void
+    {
+        $id = $this->item(body: 'Article body', tags: ['cms']);
+        $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/entry.html')->getContent(), LIBXML_NOERROR);
+        self::assertSame(1, $document->querySelectorAll('h1')->length);
+        self::assertNotNull($document->querySelector('.site-news-article__tags a[href="/news/search_tags/?tag=cms"]'));
+        self::assertNotNull($document->querySelector('a[href="#article-comments"]'));
+        self::assertNull($document->querySelector('.site-news-article__edit'));
+        $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/entry.html', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()))->getContent(), LIBXML_NOERROR);
+        self::assertSame('/admin/collections/' . $this->collection . '/items/' . $id . '/edit', $document->querySelector('.site-news-article__edit')->getAttribute('href'));
+    }
+
     public function testCommentAndVoteHttpContractsUseCollectionIdsAndCurrentActor(): void
     {
         $id = $this->item('Public body');

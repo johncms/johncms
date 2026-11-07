@@ -2,108 +2,108 @@ msgid ""
 msgstr ""
 "X-Domain: news\n"
 
-#: modules/johncms/news/src/Application/Collections/NewsCollectionAvailability.php:31
+#: modules/johncms/news/src/Application/Collections/NewsCollectionAvailability.php:44
 #: modules/johncms/news/src/Application/Middleware/NewsAvailabilityMiddleware.php:22
-#: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:40
-#: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:50
-#: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:60
+#: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:41
+#: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:51
+#: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:61
 msgid "News is unavailable until system:update completes."
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:29
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:54
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:185
-#: modules/johncms/news/src/Application/Collections/NewsViewMapper.php:94
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:30
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:74
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:192
+#: modules/johncms/news/src/Application/Collections/NewsViewMapper.php:107
 #: modules/johncms/news/src/Application/Controllers/Admin/NewsSettingsController.php:77
 #: modules/johncms/news/src/Application/Controllers/ArticleController.php:26
-#: modules/johncms/news/src/Application/Controllers/SearchController.php:37
+#: modules/johncms/news/src/Application/Controllers/SearchController.php:38
 #: modules/johncms/news/src/Application/Controllers/SectionController.php:28
-#: modules/johncms/news/src/Application/Menu/NewsMenuItemProvider.php:40
+#: modules/johncms/news/src/Application/Menu/NewsMenuItemProvider.php:38
 #: modules/johncms/news/src/Application/Services/NewsPermissions.php:31
 #: modules/johncms/news/templates/homepage/latest.twig:3
 msgid "News"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:33
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:35
 msgid "Page title"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:36
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:39
 msgid "Left empty, the title is made of the template in the settings of the news."
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:39
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:43
 msgid "Meta description"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:42
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:48
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:47
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:55
 msgid "Left empty, they are made of the template in the settings of the news."
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:45
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:51
 msgid "Meta keywords"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:50
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:59
 msgid "Tags"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:53
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:73
 msgid "News item"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:55
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:56
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:75
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:76
 msgid "Add news"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:57
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:77
 msgid "Edit news"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:58
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:78
 msgid "Delete news"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:60
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:82
 msgid "Content"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:61
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:62
-#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:63
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:83
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:84
+#: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:85
 msgid "SEO"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:92
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:94
 msgid "Enter the comment text"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:96
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:105
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:98
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:107
 msgid "One of the comment attachments is not available."
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:119
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:129
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:121
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:134
 msgid "The comment is not available."
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:141
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:148
 msgid "Choose an upvote or a downvote."
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:205
-#: modules/johncms/news/src/Application/Collections/NewsReadService.php:49
-#: modules/johncms/news/src/Application/Collections/NewsReadService.php:208
-#: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:31
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:212
+#: modules/johncms/news/src/Application/Collections/NewsReadService.php:52
+#: modules/johncms/news/src/Application/Collections/NewsReadService.php:213
+#: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:32
 msgid "The news collection is missing. Run system:update."
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:217
-#: modules/johncms/news/src/Application/Collections/NewsReadService.php:249
-#: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:33
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:225
+#: modules/johncms/news/src/Application/Collections/NewsReadService.php:254
+#: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:34
 msgid "The requested article or section is not available."
 msgstr ""
 
@@ -123,35 +123,36 @@ msgstr ""
 msgid "News settings"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/CommentsController.php:53
-#: modules/johncms/news/src/Application/Controllers/CommentsController.php:66
-#: modules/johncms/news/src/Application/Controllers/CommentsController.php:103
-#: modules/johncms/news/src/Application/Controllers/CommentsController.php:106
+#: modules/johncms/news/src/Application/Controllers/CommentsController.php:54
+#: modules/johncms/news/src/Application/Controllers/CommentsController.php:67
+#: modules/johncms/news/src/Application/Controllers/CommentsController.php:104
+#: modules/johncms/news/src/Application/Controllers/CommentsController.php:107
 msgid "Bad Request"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/CommentsController.php:57
+#: modules/johncms/news/src/Application/Controllers/CommentsController.php:58
 msgid "The comment was added successfully"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/CommentsController.php:69
+#: modules/johncms/news/src/Application/Controllers/CommentsController.php:70
 msgid "The comment was deleted successfully"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/SearchController.php:38
+#: modules/johncms/news/src/Application/Controllers/SearchController.php:39
 msgid "Search by tags"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/SearchController.php:38
+#: modules/johncms/news/src/Application/Controllers/SearchController.php:39
+#: modules/johncms/news/templates/public/components/search-form.twig:5
 msgid "Search"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/SearchController.php:57
+#: modules/johncms/news/src/Application/Controllers/SearchController.php:59
 msgid "Enter a tag"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/SearchController.php:57
-#: modules/johncms/news/templates/public/index.twig:21
+#: modules/johncms/news/src/Application/Controllers/SearchController.php:59
+#: modules/johncms/news/templates/public/index.twig:14
 msgid "Search query"
 msgstr ""
 
@@ -159,11 +160,11 @@ msgstr ""
 msgid "Your vote is accepted"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Menu/NewsMenuItemProvider.php:26
+#: modules/johncms/news/src/Application/Menu/NewsMenuItemProvider.php:24
 msgid "News archive"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Menu/NewsMenuItemProvider.php:41
+#: modules/johncms/news/src/Application/Menu/NewsMenuItemProvider.php:39
 msgid "Write the news"
 msgstr ""
 
@@ -183,75 +184,75 @@ msgstr ""
 msgid "Manage the news"
 msgstr ""
 
-#: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:43
+#: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:44
 msgid "You are not allowed to comment on the news."
 msgstr ""
 
-#: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:53
+#: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:54
 msgid "You are not allowed to vote on the news."
 msgstr ""
 
-#: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:63
+#: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:64
 msgid "You are not allowed to delete this comment."
 msgstr ""
 
-#: modules/johncms/news/src/Install/Installer.php:44
+#: modules/johncms/news/src/Install/Installer.php:47
 msgid "Site news"
 msgstr ""
 
-#: modules/johncms/news/src/Install/Installer.php:44
+#: modules/johncms/news/src/Install/Installer.php:47
 msgid "Announcements"
 msgstr ""
 
-#: modules/johncms/news/src/Install/Installer.php:51
+#: modules/johncms/news/src/Install/Installer.php:54
 msgid "Welcome to the site!"
 msgstr ""
 
-#: modules/johncms/news/src/Install/Installer.php:52
+#: modules/johncms/news/src/Install/Installer.php:55
 msgid "<p>We are glad to welcome you to our site.</p>"
 msgstr ""
 
-#: modules/johncms/news/src/Install/Installer.php:53
+#: modules/johncms/news/src/Install/Installer.php:56
 msgid "<p>We are glad to welcome you to our site. Here you will find the latest news, useful materials and lively discussion.</p>"
 msgstr ""
 
-#: modules/johncms/news/src/Install/Installer.php:58
+#: modules/johncms/news/src/Install/Installer.php:61
 msgid "The site is launched"
 msgstr ""
 
-#: modules/johncms/news/src/Install/Installer.php:59
+#: modules/johncms/news/src/Install/Installer.php:62
 msgid "<p>Our site is officially open to visitors.</p>"
 msgstr ""
 
-#: modules/johncms/news/src/Install/Installer.php:60
+#: modules/johncms/news/src/Install/Installer.php:63
 msgid "<p>Our site is officially open to visitors. Stay tuned for updates — a lot of interesting things are coming!</p>"
 msgstr ""
 
-#: modules/johncms/news/src/Install/Installer.php:65
+#: modules/johncms/news/src/Install/Installer.php:68
 msgid "Site rules"
 msgstr ""
 
-#: modules/johncms/news/src/Install/Installer.php:66
+#: modules/johncms/news/src/Install/Installer.php:69
 msgid "<p>We ask all members to read the rules.</p>"
 msgstr ""
 
-#: modules/johncms/news/src/Install/Installer.php:67
+#: modules/johncms/news/src/Install/Installer.php:70
 msgid "<p>We ask all members to read the site rules. Respect each other, avoid rudeness and spam. The administration reserves the right to remove materials that violate the rules.</p>"
 msgstr ""
 
-#: modules/johncms/news/src/Install/Installer.php:72
+#: modules/johncms/news/src/Install/Installer.php:75
 msgid "Maintenance"
 msgstr ""
 
-#: modules/johncms/news/src/Install/Installer.php:73
+#: modules/johncms/news/src/Install/Installer.php:76
 msgid "<p>The scheduled maintenance is complete.</p>"
 msgstr ""
 
-#: modules/johncms/news/src/Install/Installer.php:74
+#: modules/johncms/news/src/Install/Installer.php:77
 msgid "<p>The scheduled maintenance has been completed successfully. All site features are working normally. Thank you for your patience!</p>"
 msgstr ""
 
-#: modules/johncms/news/src/Install/Installer.php:94
+#: modules/johncms/news/src/Install/Installer.php:97
 msgid "<p>Great news! Glad to see the site up and running.</p>"
 msgstr ""
 
@@ -345,85 +346,125 @@ msgid "Used where the article has no title, keywords or description of its own."
 msgstr ""
 
 #: modules/johncms/news/templates/homepage/latest.twig:3
+#: modules/johncms/news/templates/public/index.twig:42
+#: modules/johncms/news/templates/public/search.twig:17
 msgid "All news"
 msgstr ""
 
 #: modules/johncms/news/templates/homepage/latest.twig:13
-#: modules/johncms/news/templates/public/article.twig:73
+#: modules/johncms/news/templates/public/article.twig:50
+#: modules/johncms/news/templates/public/article.twig:76
+#: modules/johncms/news/templates/public/components/article-row.twig:16
 msgid "Comments"
 msgstr ""
 
 #: modules/johncms/news/templates/homepage/latest.twig:17
 #: modules/johncms/news/templates/homepage/latest.twig:20
+#: modules/johncms/news/templates/public/article.twig:46
+#: modules/johncms/news/templates/public/article.twig:48
+#: modules/johncms/news/templates/public/components/article-row.twig:12
+#: modules/johncms/news/templates/public/components/article-row.twig:14
 msgid "Views"
 msgstr ""
 
 #: modules/johncms/news/templates/homepage/latest.twig:22
 #: modules/johncms/news/templates/homepage/latest.twig:25
+#: modules/johncms/news/templates/public/article.twig:43
+#: modules/johncms/news/templates/public/components/article-row.twig:8
+#: modules/johncms/news/templates/public/components/article-row.twig:10
 msgid "Rating"
 msgstr ""
 
 #: modules/johncms/news/templates/homepage/latest.twig:32
+#: modules/johncms/news/templates/public/index.twig:48
 msgid "No news yet"
 msgstr ""
 
 #: modules/johncms/news/templates/homepage/latest.twig:33
+#: modules/johncms/news/templates/public/index.twig:48
 msgid "Published news will appear here."
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:16
-msgid "Published:"
-msgstr ""
-
-#: modules/johncms/news/templates/public/article.twig:18
+#: modules/johncms/news/templates/public/article.twig:14
 msgid "Author:"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:28
+#: modules/johncms/news/templates/public/article.twig:20
+msgid "Published:"
+msgstr ""
+
+#: modules/johncms/news/templates/public/article.twig:23
+msgid "Edit"
+msgstr ""
+
+#: modules/johncms/news/templates/public/article.twig:31
 msgid "Tags:"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:38
-msgid "Rating:"
+#: modules/johncms/news/templates/public/article.twig:43
+msgid "Like"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:68
-msgid "Write a comment"
+#: modules/johncms/news/templates/public/article.twig:43
+msgid "Dislike"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:69
-msgid "Send"
+#: modules/johncms/news/templates/public/article.twig:43
+msgid "Loading..."
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:70
-msgid "Delete"
+#: modules/johncms/news/templates/public/article.twig:53
+msgid "Link copied"
+msgstr ""
+
+#: modules/johncms/news/templates/public/article.twig:53
+msgid "Could not copy the link."
+msgstr ""
+
+#: modules/johncms/news/templates/public/article.twig:55
+msgid "Copy link"
 msgstr ""
 
 #: modules/johncms/news/templates/public/article.twig:71
-msgid "Quote"
+msgid "Write a comment"
 msgstr ""
 
 #: modules/johncms/news/templates/public/article.twig:72
-msgid "Reply"
+msgid "Send"
+msgstr ""
+
+#: modules/johncms/news/templates/public/article.twig:73
+msgid "Delete"
 msgstr ""
 
 #: modules/johncms/news/templates/public/article.twig:74
-#: modules/johncms/news/templates/public/index.twig:43
+msgid "Quote"
+msgstr ""
+
+#: modules/johncms/news/templates/public/article.twig:75
+msgid "Reply"
+msgstr ""
+
+#: modules/johncms/news/templates/public/article.twig:77
 msgid "The list is empty"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:84
+#: modules/johncms/news/templates/public/article.twig:87
 msgid "You are not logged in. You must be <a href=\"/login/\">logged in</a> to comment."
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:90
+#: modules/johncms/news/templates/public/article.twig:93
 msgid "Back"
 msgstr ""
 
-#: modules/johncms/news/templates/public/index.twig:13
+#: modules/johncms/news/templates/public/index.twig:19
 msgid "Admin panel"
 msgstr ""
 
-#: modules/johncms/news/templates/public/search.twig:33
+#: modules/johncms/news/templates/public/index.twig:26
+msgid "Sections"
+msgstr ""
+
+#: modules/johncms/news/templates/public/search.twig:24
 msgid "The search didn't yield any results."
 msgstr ""
