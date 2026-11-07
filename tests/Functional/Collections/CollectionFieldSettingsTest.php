@@ -325,6 +325,28 @@ final class CollectionFieldSettingsTest extends FunctionalTestCase
         }
     }
 
+    public function testAFileSizeIsShownInTheLargestExactUnit(): void
+    {
+        $editor = FunctionalUserFactory::createSupervisor();
+        $id = $this->field('file', FieldType::File, ['max_file_bytes' => 5242880, 'allowed_mime_types' => ['text/plain']]);
+        $document = HTMLDocument::createFromString((string) $this->handleRequest('/admin/collections/' . $this->collection . '/fields/' . $id . '/edit', cookies: $this->actingAs($editor))->getContent(), LIBXML_NOERROR);
+        self::assertSame('5', $document->querySelector('[name="max_file_bytes"]')->getAttribute('value'));
+        self::assertSame('1048576', $document->querySelector('[name="file_size_unit"] option[selected]')->getAttribute('value'));
+        $document = HTMLDocument::createFromString((string) $this->handleRequest('/admin/collections/' . $this->collection . '/fields/new', cookies: $this->actingAs($editor))->getContent(), LIBXML_NOERROR);
+        self::assertSame('10', $document->querySelector('[name="max_file_bytes"]')->getAttribute('value'));
+    }
+
+    public function testADefaultDoesNotSurviveAChangeOfItsKind(): void
+    {
+        $editor = FunctionalUserFactory::createSupervisor();
+        $data = ['code' => 'value', 'name' => 'Value', 'type' => 'string', 'default_type' => 'relation', 'use_default' => '1', 'default_value' => '36'];
+        self::assertSame(302, $this->postForm('/admin/collections/' . $this->collection . '/fields', $data, $editor)->getStatusCode());
+        self::assertNull($this->schema->getFields($this->collection)[0]->settings['default']);
+        $data = ['code' => 'kept', 'name' => 'Kept', 'type' => 'text', 'default_type' => 'string', 'use_default' => '1', 'default_value' => 'Kept'];
+        self::assertSame(302, $this->postForm('/admin/collections/' . $this->collection . '/fields', $data, $editor)->getStatusCode());
+        self::assertSame('Kept', $this->schema->getFields($this->collection)[1]->settings['default']);
+    }
+
     public function testFileSizeUnitsAreExactAndInvalidFractionsAreRejected(): void
     {
         $editor = FunctionalUserFactory::createSupervisor();

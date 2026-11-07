@@ -110,6 +110,11 @@ final readonly class CollectionFieldsAdminController
         $fields['legacy_length_limits'] = $current !== null && $current->type->value === $fields['type']
             && $fields['type'] === 'select'
             && (isset($current->settings['min_length']) || isset($current->settings['max_length']));
+        if ($request->hasBody('default_type') && $this->defaultGroup($request->body('default_type')) !== $this->defaultGroup($fields['type'])) {
+            $fields['default_value'] = '';
+            $fields['default_values'] = [];
+            $fields['use_default'] = false;
+        }
         if ($request->hasBody('clear_relation_default') && $fields['type'] === 'relation') {
             if ($fields['multiple']) {
                 $index = $request->bodyInt('clear_relation_default', -1);
@@ -506,7 +511,7 @@ final readonly class CollectionFieldsAdminController
             'hint' => $settings['hint'] ?? '',
             'target_collection_id' => $settings['target_collection_id'] ?? '',
             'relation_on_delete' => $settings['on_delete'] ?? 'restrict',
-            'max_file_bytes' => $settings['max_file_bytes'] ?? CollectionFilePolicy::DEFAULT_MAX_BYTES,
+            ...$this->fileSize($settings['max_file_bytes'] ?? CollectionFilePolicy::DEFAULT_MAX_BYTES),
             'allowed_mime_types' => $settings['allowed_mime_types'] ?? array_keys(CollectionFilePolicy::TYPES),
             'option_rows' => array_map(static fn (array $option): array => $option + ['active' => true], $settings['options'] ?? []), 'use_default' => $default !== null || ($settings['date_preset'] ?? null) === 'current',
             'default_value' => is_string($default) ? $default : '', 'default_values' => is_array($default) ? $default : [],
@@ -514,6 +519,23 @@ final readonly class CollectionFieldsAdminController
             'min_length' => $settings['min_length'] ?? '', 'max_length' => $settings['max_length'] ?? '',
             'min_value' => $settings['min_value'] ?? '', 'max_value' => $settings['max_value'] ?? '', 'max_values' => $settings['max_values'] ?? '',
         ];
+    }
+
+    /** @return array{max_file_bytes: int, file_size_unit: string} The size in the largest unit that holds it exactly. */
+    private function fileSize(int $bytes): array
+    {
+        foreach ([1073741824, 1048576, 1024] as $unit) {
+            if ($bytes % $unit === 0) {
+                return ['max_file_bytes' => intdiv($bytes, $unit), 'file_size_unit' => (string) $unit];
+            }
+        }
+        return ['max_file_bytes' => $bytes, 'file_size_unit' => '1'];
+    }
+
+    /** Types whose default values mean the same thing share a group. */
+    private function defaultGroup(string $type): string
+    {
+        return in_array($type, ['string', 'text', 'html'], true) ? 'text' : $type;
     }
 
     /** @param array<string, mixed> $fields
@@ -561,7 +583,7 @@ final readonly class CollectionFieldsAdminController
             $size = $fields['max_file_bytes'];
             $unit = $fields['file_size_unit'] ?? '1';
             if ($unit !== '1') {
-                $scaled = is_numeric($size) && in_array($unit, ['1024', '1048576'], true) ? (float) $size * (int) $unit : -1;
+                $scaled = is_numeric($size) && in_array($unit, ['1024', '1048576', '1073741824'], true) ? (float) $size * (int) $unit : -1;
                 $bytes = is_finite($scaled) && $scaled >= 1 && $scaled <= 1073741824 && floor($scaled) === $scaled ? (int) $scaled : false;
             }
             $settings['max_file_bytes'] = $size === '' ? null : ($bytes !== false ? $bytes : ($unit !== '1' ? 'invalid file size' : $size));

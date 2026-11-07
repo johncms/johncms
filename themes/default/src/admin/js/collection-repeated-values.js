@@ -102,6 +102,9 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   const dateSettings = form.querySelector('[data-date-default-settings]');
   const dateMode = form.elements.date_default_mode;
   const isDate = () => ['date', 'datetime'].includes(type.value);
+  const defaultGroup = value => (['string', 'text', 'html'].includes(value) ? 'text' : value);
+  const defaultDrafts = new Map();
+  let shownGroup = defaultGroup(type.value);
   form.querySelector('[data-refresh-field-settings]')?.setAttribute('hidden', '');
   const lookup = form.querySelector('[data-default-lookup]');
   const lookupStatus = lookup.querySelector('[data-default-lookup-status]');
@@ -248,7 +251,8 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
     const deletion = form.elements.relation_on_delete;
     const required = form.elements.required.checked && type.value === 'relation';
     deletion.querySelector('[value="clear"]').disabled = required;
-    deletion.setCustomValidity(required && deletion.value === 'clear' ? deletion.dataset.requiredError : '');
+    if (required) deletion.value = 'restrict';
+    form.querySelector('[data-required-relation-help]').hidden = !required;
     toggle(lookup, type.value === 'relation');
     toggle(form.querySelector('[data-default-single]'), fixedDefault && !multiple.checked);
     toggle(form.querySelector('[data-default-multiple]'), fixedDefault && multiple.checked);
@@ -268,6 +272,30 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   const choiceSelect = choice.querySelector('select');
   const single = form.querySelector('[name="default_value"]');
   const repeatedSources = () => [...defaults.querySelectorAll('[data-default-multiple] [data-repeat-row] textarea')];
+  const selectedDefaults = () => (multiple.checked ? repeatedSources().map(source => source.value) : [single.value]).filter(value => value.trim() !== '');
+  const writeRepeated = async values => {
+    const root = defaults.querySelector('[data-collection-repeat]');
+    toggle(form.querySelector('[data-default-multiple]'), true);
+    const rows = () => [...root.querySelector('[data-repeat-rows]').children];
+    const count = Math.max(1, values.length);
+    for (const row of rows().slice(count)) {
+      if (!await removeAdminEditors(row)) return false;
+      row.remove();
+    }
+    while (rows().length < count) {
+      const before = rows().length;
+      root.querySelector('[data-repeat-op="add"]').click();
+      if (rows().length === before) return false;
+    }
+    repeatedSources().forEach((source, index) => {
+      const wrapper = source.closest('[data-default-html]');
+      if (wrapper) setAdminEditorValue(wrapper, values[index] ?? '');
+      else source.value = values[index] ?? '';
+    });
+    root.dispatchEvent(new Event('collection:refresh'));
+    root.querySelector('[data-repeat-status]').textContent = '';
+    return true;
+  };
   const relationPicker = createRelationDefaultPicker({
     form, lookup, isActive: () => type.value === 'relation', isMultiple: () => multiple.checked,
     getOptions: () => lookupOptions, search: term => loadLookup(term),
@@ -276,30 +304,15 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
       lookupRequest = null;
       lookup.removeAttribute('aria-busy');
     },
-    getValues: () => (multiple.checked ? repeatedSources().map(source => source.value) : [single.value]).filter(value => value.trim() !== ''),
+    getValues: () => selectedDefaults(),
     setValues: async values => {
       const target = form.querySelector('#relation-target').value;
       const shape = multiple.checked;
       await htmlQueue;
       if (type.value !== 'relation' || target !== form.querySelector('#relation-target').value || shape !== multiple.checked) return false;
       if (multiple.checked) {
-        const root = defaults.querySelector('[data-collection-repeat]');
-        const limit = Number(root.dataset.limit);
-        if (values.length > limit) { lookupStatus.textContent = defaults.dataset.limitError; return false; }
-        toggle(form.querySelector('[data-default-multiple]'), true);
-        const rows = () => [...root.querySelector('[data-repeat-rows]').children];
-        const count = Math.max(1, values.length);
-        for (const row of rows().slice(count)) {
-          if (!await removeAdminEditors(row)) return false;
-          row.remove();
-        }
-        while (rows().length < count) {
-          const before = rows().length;
-          root.querySelector('[data-repeat-op="add"]').click();
-          if (rows().length === before) return false;
-        }
-        repeatedSources().forEach((source, index) => { source.value = values[index] ?? ''; });
-        root.dispatchEvent(new Event('collection:refresh'));
+        if (values.length > Number(defaults.querySelector('[data-collection-repeat]').dataset.limit)) { lookupStatus.textContent = defaults.dataset.limitError; return false; }
+        if (!await writeRepeated(values)) return false;
       } else single.value = values[0] ?? '';
       useDefault.checked = values.length > 0;
       update();
@@ -358,8 +371,40 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
     lookupStatus.textContent = '';
     enhanceDefaults();
   };
-  form.querySelector('[name="target_collection_id"]').addEventListener('change', invalidateLookup);
+  const target = form.querySelector('[name="target_collection_id"]');
+  const reloadSelected = () => {
+    if (type.value === 'relation' && target.value && selectedDefaults().length) loadLookup('');
+  };
+  target.addEventListener('change', () => {
+    invalidateLookup();
+    reloadSelected();
+  });
   type.addEventListener('change', invalidateLookup);
+  /** A default belongs to its kind of value: another kind starts empty, and coming back restores it. */
+  const switchDefaults = () => {
+    const group = defaultGroup(type.value);
+    if (group === shownGroup) return;
+    defaultDrafts.set(shownGroup, {value: single.value, values: repeatedSources().map(source => source.value), use: useDefault.checked});
+    shownGroup = group;
+    const draft = defaultDrafts.get(group) ?? {value: '', values: [], use: false};
+    toggle(choice, false);
+    useDefault.checked = draft.use;
+    const wrapper = single.closest('[data-default-html]');
+    if (wrapper) setAdminEditorValue(wrapper, draft.value);
+    else single.value = draft.value;
+    htmlQueue = htmlQueue.then(() => writeRepeated(draft.values)).catch(error => { console.error('Could not restore default values.', error); }).then(() => {
+      update();
+      reloadSelected();
+    });
+  };
+  const sizeUnit = form.elements.file_size_unit;
+  let currentSizeUnit = Number(sizeUnit.value);
+  sizeUnit.addEventListener('change', () => {
+    const size = form.elements.max_file_bytes;
+    const unit = Number(sizeUnit.value);
+    if (size.value !== '' && Number.isFinite(Number(size.value))) size.value = String(Number(size.value) * currentSizeUnit / unit);
+    currentSizeUnit = unit;
+  });
   multiple.addEventListener('change', () => {
     if (isDate() && dateMode.value !== 'fixed') { toggle(choice, false); update(); return; }
     if (multiple.checked) {
@@ -401,9 +446,9 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
     toggle(choice, false);
     multiple.focus();
   });
+  type.addEventListener('change', switchDefaults);
   type.addEventListener('change', update);
   form.elements.required.addEventListener('change', update);
-  form.elements.relation_on_delete.addEventListener('change', update);
   useDefault.addEventListener('change', update);
   dateMode.addEventListener('change', update);
   form.elements.max_values.addEventListener('input', updateLimit);
@@ -418,9 +463,10 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   form.addEventListener('change', event => {
     if (event.target.closest('[data-key="options"]')) enhanceDefaults();
   });
-  form.addEventListener('reset', () => queueMicrotask(() => { lookupRequest?.abort(); lookupRequest = null; lookup.removeAttribute('aria-busy'); toggle(choice, false); lookupOptions = JSON.parse(lookup.dataset.options); update(); }));
+  form.addEventListener('reset', () => queueMicrotask(() => { lookupRequest?.abort(); lookupRequest = null; lookup.removeAttribute('aria-busy'); toggle(choice, false); lookupOptions = JSON.parse(lookup.dataset.options); currentSizeUnit = Number(sizeUnit.value); shownGroup = defaultGroup(type.value); defaultDrafts.clear(); update(); }));
   form.addEventListener('submit', () => {
     form.elements.default_shape.value = multiple.checked ? '1' : '0';
+    form.elements.default_type.value = type.value;
     const drafts = form.querySelector('[data-default-drafts]');
     drafts.replaceChildren();
     const values = [

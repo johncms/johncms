@@ -465,6 +465,11 @@
       'Selected: %d' => 'Выбрано: %d',
       'No records selected' => 'Записи не выбраны',
       'Done' => 'Готово',
+      'KB' => 'КБ',
+      'MB' => 'МБ',
+      'GB' => 'ГБ',
+      'A required relation always prevents deletion.' => 'Обязательная связь всегда запрещает удаление.',
+      'A file field has no default value.' => 'У файлового поля нет значения по умолчанию.',
     ),
   ),
 );

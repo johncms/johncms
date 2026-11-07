@@ -24,6 +24,7 @@
 
         <input type="hidden" name="collection_form_started" value="1">
         <input type="hidden" name="default_shape" value="{{ fields.multiple }}">
+        <input type="hidden" name="default_type" value="{{ fields.type }}">
         <div data-default-drafts hidden>
             {% if fields.multiple %}<input type="hidden" name="draft_default_value" value="{{ fields.default_value }}">
             {% else %}{% for value in fields.default_values %}<input type="hidden" name="draft_default_values[]" value="{{ value }}">{% endfor %}{% endif %}
@@ -99,7 +100,7 @@
                             <input class="form-control" type="number" min="0" step="any" name="max_file_bytes" id="max-file-bytes" value="{{ fields.max_file_bytes }}"{% if field_errors['max_file_bytes']|default('') %} aria-invalid="true" aria-describedby="error-max_file_bytes"{% endif %}>
                             {{ _self.error(field_errors, 'max_file_bytes') }}
                             <select class="form-select" name="file_size_unit" aria-label="{{ __('File size unit') }}">
-                                {% for unit, label in {'1': __('Bytes'), '1024': 'KiB', '1048576': 'MiB'} %}<option value="{{ unit }}"{% if file_size_unit == unit ~ '' %} selected{% endif %}>{{ label }}</option>{% endfor %}
+                                {% for unit, label in {'1': __('Bytes'), '1024': __('KB'), '1048576': __('MB'), '1073741824': __('GB')} %}<option value="{{ unit }}"{% if file_size_unit == unit ~ '' %} selected{% endif %}>{{ label }}</option>{% endfor %}
                             </select>
                         </div>
                         <label class="form-label mt-2" for="file-types">{{ __('Allowed file types') }}</label>
@@ -127,6 +128,7 @@
                             <option value="clear"{% if fields.relation_on_delete == 'clear' %} selected{% endif %}>{{ __('Clear optional relations') }}</option>
                         </select>
                         {{ _self.error(field_errors, 'relation_on_delete') }}
+                        <div class="form-text" data-required-relation-help{% if not fields.required %} hidden{% endif %}>{{ __('A required relation always prevents deletion.') }}</div>
                         <div class="form-text">{{ __('Required relations and field defaults must be resolved before deleting their targets.') }}</div>
                     </fieldset>
                     <fieldset class="col-12 mb-0" data-field-types="select"{% if fields.type != 'select' %} hidden disabled{% endif %}>

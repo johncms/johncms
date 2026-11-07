@@ -1574,3 +1574,18 @@ msgstr "Записи не выбраны"
 
 msgid "Done"
 msgstr "Готово"
+
+msgid "KB"
+msgstr "КБ"
+
+msgid "MB"
+msgstr "МБ"
+
+msgid "GB"
+msgstr "ГБ"
+
+msgid "A required relation always prevents deletion."
+msgstr "Обязательная связь всегда запрещает удаление."
+
+msgid "A file field has no default value."
+msgstr "У файлового поля нет значения по умолчанию."
