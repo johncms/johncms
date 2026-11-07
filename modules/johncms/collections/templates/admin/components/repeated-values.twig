@@ -8,14 +8,14 @@
         {% for entry in entries %}
             {% include '@collections/admin/components/repeated-row.twig' with {
                 input_name: input_name, input_id: id_prefix ~ '_' ~ loop.index0, type: type, value: entry,
-                label: label, error: row_errors['default_values.' ~ loop.index0]|default(''), index: loop.index0, last: loop.last, action_key: action_key,
+                label: label, error: row_errors['default_values.' ~ loop.index0]|default(''), index: loop.index0, last: loop.last, action_key: action_key, scripted: scripted|default(false),
                 allow_upload: allow_upload, upload_url: upload_url, options: options|default([]),
                 file_code: file_code|default(''), file_choices: file_choices|default([]), file_accept: file_accept|default(''), errors: errors|default([])
             } only %}
         {% endfor %}
     </div>
     {% if type == 'select' %}<div class="form-text mb-2">{{ __('Selected options are stored once, in their first order.') }}</div>{% endif %}
-    <button type="submit" name="repeat_action" value="{{ action_key }}:add:0" data-repeat-op="add" class="btn btn-outline-secondary btn-sm" formnovalidate{% if entries|length >= limit %} disabled{% endif %}>{{ __('Add value') }}</button>
+    <button {% if scripted|default(false) %}type="button"{% else %}type="submit" name="repeat_action" formnovalidate{% endif %} value="{{ action_key }}:add:0" data-repeat-op="add" class="btn btn-outline-secondary btn-sm"{% if entries|length >= limit %} disabled{% endif %}>{{ __('Add value') }}</button>
     <p class="form-text mb-0" data-repeat-status role="status">{{ status|default('') }}</p>
     {% if errors|default([]) %}
         <div class="invalid-feedback d-block" id="{{ id_prefix }}-errors">{% for error in errors %}{{ error }}{% if not loop.last %}<br>{% endif %}{% endfor %}</div>
@@ -23,7 +23,7 @@
     <template data-repeat-template>
         {% include '@collections/admin/components/repeated-row.twig' with {
             input_name: input_name, input_id: id_prefix ~ '___INDEX__', type: type, value: '',
-            label: label, index: 0, last: true, action_key: action_key, allow_upload: allow_upload, upload_url: upload_url, options: options|default([]),
+            label: label, index: 0, last: true, action_key: action_key, scripted: scripted|default(false), allow_upload: allow_upload, upload_url: upload_url, options: options|default([]),
                 file_code: file_code|default(''), file_choices: file_choices|default([]), file_accept: file_accept|default(''), errors: errors|default([])
         } only %}
     </template>

@@ -112,6 +112,25 @@ Modules contribute home-page content through `HomepageBlockProviderInterface`. T
 below the section tiles. Weights still order blocks within each position. Existing providers
 need no change and keep full-width rendering unless they opt into the shared content card.
 
+## Scripts in the panel
+
+The panel needs JavaScript for whatever is interactive: reordering the rows of a list, a picker
+that searches as you type, uploading a file, a dialog. Build such a part for the script alone and
+do **not** add a second way to do the same by posting the form — an "up" button that submits and
+re-renders the page, a search button that reloads it, a hidden draft that survives the round trip.
+Each of those doubles the controller and the tests and breeds bugs of its own.
+
+What keeps working without the script, because it costs nothing and lets an administrator repair
+a site whose scripts broke:
+
+* a form posts as an ordinary form, and the controller validates everything it receives;
+* a link with `data-admin-modal` leads to the same dialog shown as a page;
+* the links of a live list are real addresses.
+
+A button only a script handles is `type="button"`, so a missing script never turns it into a
+submit of the whole form. The no-script fallbacks that already exist go away as their forms are
+reworked, one form at a time, not in a sweep.
+
 ## Live lists (the panel)
 
 For admin lists with tabs, search or filters, use the live-list pattern so they update without a

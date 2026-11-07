@@ -63,16 +63,13 @@ final class CollectionRepeatedInputTest extends FunctionalTestCase
         self::assertSame(0, Capsule::table('collection_items')->count());
     }
 
-    public function testDefaultsCanBeReorderedWithoutWritingTheSchema(): void
+    public function testReorderedDefaultsAreSavedInTheirNewOrder(): void
     {
         $id = $this->field(FieldType::Text, ['default' => ["First\nline", 'Second']]);
         $user = FunctionalUserFactory::createSupervisor();
         $data = ['id' => $id, 'code' => 'notes', 'name' => 'Notes', 'type' => 'text', 'multiple' => '1', 'sort' => '100', 'use_default' => '1', 'default_values' => ["First\nline", 'Second', '']];
         $url = '/admin/collections/' . $this->collection . '/fields';
-        $response = $this->postForm($url, $data + ['repeat_action' => 'default:down:0'], $user);
-        self::assertSame(['Second', "First\nline", ''], $this->values((string) $response->getContent(), 'default'));
         $schema = $this->container()->get(CollectionSchemaApiInterface::class);
-        self::assertSame(["First\nline", 'Second'], $schema->getFields($this->collection)[0]->settings['default']);
         $data['default_values'] = ['Second', "First\nline", ''];
         self::assertSame(302, $this->postForm($url, $data, $user)->getStatusCode());
         self::assertSame(['Second', "First\nline"], $schema->getFields($this->collection)[0]->settings['default']);

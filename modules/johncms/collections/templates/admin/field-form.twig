@@ -16,19 +16,13 @@
 {% endmacro %}
 
 {% block content %}
-    {% if repeat_message|default('') %}<div class="alert alert-info" role="status">{{ repeat_message }}</div>{% endif %}
     {% if managed %}<div class="alert alert-info">{{ __('This field is managed by its module. Change its declaration in code.') }} <strong>{{ owner_module }}</strong></div>{% endif %}
     {% if errors %}<div tabindex="-1" data-field-error-summary>{% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}</div>{% endif %}
 
     <form action="{{ form_action }}" method="post" id="field-form" data-collection-field-settings data-field-errors="{{ field_errors|json_encode }}" class="row g-3 align-items-start">
 
         <input type="hidden" name="collection_form_started" value="1">
-        <input type="hidden" name="default_shape" value="{{ fields.multiple }}">
         <input type="hidden" name="default_type" value="{{ fields.type }}">
-        <div data-default-drafts hidden>
-            {% if fields.multiple %}<input type="hidden" name="draft_default_value" value="{{ fields.default_value }}">
-            {% else %}{% for value in fields.default_values %}<input type="hidden" name="draft_default_values[]" value="{{ value }}">{% endfor %}{% endif %}
-        </div>
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         {% if id is not null %}
             <input type="hidden" name="id" value="{{ id }}">
@@ -73,7 +67,6 @@
                                 <div class="form-text">{{ __('Convert existing values explicitly before changing their type or multiplicity.') }}</div>
                             {% endif %}
                         </div>
-                        {% if not managed %}<div class="col-12"><button type="submit" name="refresh_settings" value="1" formnovalidate class="btn btn-outline-secondary btn-sm" data-refresh-field-settings>{{ __('Update field settings') }}</button></div>{% endif %}
                         <div class="col-12 d-flex flex-column gap-3">
                             <div class="form-check form-switch" data-field-required{% if fields.type == 'boolean' %} hidden{% endif %}>
                                 <input type="checkbox" class="form-check-input" role="switch" name="required" value="1" id="required"{% if fields.required %} checked{% endif %}{% if managed %} disabled{% endif %}>
@@ -219,7 +212,6 @@
                                 <div class="input-group">
                                     <input type="search" class="form-control" id="default-query" name="default_query" maxlength="255" value="{{ default_query }}">
                                     <button type="button" class="btn btn-outline-secondary" data-relation-clear hidden>{{ __('Clear') }}</button>
-                                    <button type="submit" class="btn btn-outline-secondary" name="lookup_defaults" value="1" formnovalidate>{{ __('Search') }}</button>
                                 </div>
                                 <div class="relation-default-popup shadow" data-relation-popup hidden>
                                     <div class="list-group list-group-flush relation-default-results" id="relation-default-results" role="listbox" aria-label="{{ __('Search results') }}" data-relation-results hidden></div>
@@ -232,32 +224,12 @@
                             <p class="form-text mb-0" role="status" id="default-lookup-status" data-default-lookup-status>{{ default_lookup_error }}</p>
                             <p class="form-text text-danger mb-0" id="relation-default-warning" role="alert" data-relation-warning hidden></p>
                             <ul class="relation-default-selected" data-relation-selected aria-label="{{ __('Default values') }}" hidden></ul>
-                            <select name="lookup_value" class="form-select mt-2" data-default-lookup-result aria-label="{{ __('Default value') }}">
-                                {% include '@collections/admin/components/select-options.twig' with {options: default_options, current: ''} only %}
-                            </select>
-                            <button type="submit" name="apply_default" value="1" formnovalidate class="btn btn-outline-secondary btn-sm mt-2" data-default-lookup-apply>{{ __('Use this value') }}</button>
                         </fieldset>
-                        <div data-relation-fallback{% if fields.type != 'relation' %} hidden{% endif %}>
-                            <div class="form-label">{{ fields.multiple ? __('Default values') : __('Default value') }}</div>
-                            {% if not relation_selected %}<p class="form-text mb-0">{{ __('No value') }}</p>{% endif %}
-                            <ul class="list-group">
-                                {% for selected in relation_selected %}
-                                    <li class="list-group-item d-flex flex-wrap align-items-center gap-2">
-                                        <span class="flex-grow-1 text-break">{{ selected.label }}</span>
-                                        {% if fields.multiple %}
-                                            <button type="submit" class="btn btn-outline-secondary btn-sm" name="repeat_action" value="default:up:{{ selected.index }}" formnovalidate{% if loop.first %} disabled{% endif %}>{{ __('Move up') }}</button>
-                                            <button type="submit" class="btn btn-outline-secondary btn-sm" name="repeat_action" value="default:down:{{ selected.index }}" formnovalidate{% if loop.last %} disabled{% endif %}>{{ __('Move down') }}</button>
-                                        {% endif %}
-                                        <button type="submit" class="btn btn-outline-secondary btn-sm" name="clear_relation_default" value="{{ selected.index }}" formnovalidate>{{ __('Clear') }}</button>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                        <fieldset class="border rounded p-3 mb-3" data-default-choice{% if not default_choice_values %} hidden disabled{% endif %}>
+                        <fieldset class="border rounded p-3 mb-3" data-default-choice hidden disabled>
                             <label class="form-label" for="default-choice">{{ __('Choose the default value to keep. Other values remain in the draft until you save.') }}</label>
-                            <select class="form-select mb-2" id="default-choice" name="default_choice">{% for value in default_choice_values %}<option value="{{ value }}">{{ default_choice_labels[value]|default(value) }}</option>{% endfor %}</select>
-                            <button type="submit" name="choose_default" value="1" formnovalidate class="btn btn-outline-primary btn-sm" data-default-choose>{{ __('Use this value') }}</button>
-                            <button type="submit" name="cancel_default_choice" value="1" formnovalidate class="btn btn-outline-secondary btn-sm" data-default-cancel>{{ __('Cancel') }}</button>
+                            <select class="form-select mb-2" id="default-choice"></select>
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-default-choose>{{ __('Use this value') }}</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" data-default-cancel>{{ __('Cancel') }}</button>
                         </fieldset>
                         {{ _self.error(field_errors, 'default') }}
                         <fieldset class="mb-0" data-default-single{% if fields.type == 'relation' or fields.multiple or (fields.type in ['date', 'datetime'] and fields.date_default_mode != 'fixed') %} hidden{% endif %}{% if fields.multiple or (fields.type in ['date', 'datetime'] and fields.date_default_mode != 'fixed') %} disabled{% endif %}>
@@ -268,7 +240,8 @@
                         <fieldset data-default-multiple class="mt-2 mb-0"{% if fields.type == 'relation' or not fields.multiple or (fields.type in ['date', 'datetime'] and fields.date_default_mode != 'fixed') %} hidden{% endif %}{% if not fields.multiple or (fields.type in ['date', 'datetime'] and fields.date_default_mode != 'fixed') %} disabled{% endif %}>
                             {% include '@collections/admin/components/repeated-values.twig' with {
                                 entries: default_entries, input_name: 'default_values', action_key: 'default', id_prefix: 'field-default',
-                                type: 'text', label: __('Default values'), limit: 1000, row_errors: field_errors, allow_upload: false, upload_url: ''
+                                type: 'text', label: __('Default values'), limit: 1000, row_errors: field_errors, allow_upload: false, upload_url: '',
+                                scripted: true
                             } only %}
                         </fieldset>
                         <div class="form-text" data-default-format-help>{{ __('Pre-filled for new items. Existing items are not changed.') }}

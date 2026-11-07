@@ -9,7 +9,7 @@
             {% include '@collections/admin/components/option-row.twig' with {option: option, index: loop.index0, last: loop.last, input_id: 'select-option-' ~ loop.index0, field_errors: field_errors|default([])} only %}
         {% endfor %}
     </div>
-    <button type="submit" name="repeat_action" value="options:add:0" data-repeat-op="add" class="btn btn-outline-secondary btn-sm" formnovalidate{% if options|length >= 500 %} disabled{% endif %}>{{ __('Add option') }}</button>
+    <button type="button" value="options:add:0" data-repeat-op="add" class="btn btn-outline-secondary btn-sm"{% if options|length >= 500 %} disabled{% endif %}>{{ __('Add option') }}</button>
     <p class="form-text mb-0" data-repeat-status role="status"></p>
     <template data-repeat-template>
         {% include '@collections/admin/components/option-row.twig' with {option: {code: '', label: '', active: true}, index: 0, last: true, input_id: 'select-option-__INDEX__'} only %}

@@ -93,7 +93,7 @@ document.querySelectorAll('[data-collection-repeat]').forEach(root => {
   });
 });
 
-/** Both default inputs remain available without scripts; the server chooses their declared shape. */
+/** The settings of a field: which inputs fit its type, and its default value in the shape it has. */
 document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   const multiple = form.querySelector('input[name="multiple"]');
   const type = form.querySelector('select[name="type"]');
@@ -105,10 +105,8 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   const defaultGroup = value => (['string', 'text', 'html'].includes(value) ? 'text' : value);
   const defaultDrafts = new Map();
   let shownGroup = defaultGroup(type.value);
-  form.querySelector('[data-refresh-field-settings]')?.setAttribute('hidden', '');
   const lookup = form.querySelector('[data-default-lookup]');
   const lookupStatus = lookup.querySelector('[data-default-lookup-status]');
-  const lookupResult = lookup.querySelector('[data-default-lookup-result]');
   let lookupOptions = JSON.parse(lookup.dataset.options);
   let lookupRequest;
   const fieldErrors = JSON.parse(form.dataset.fieldErrors);
@@ -356,7 +354,6 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
       if (!Array.isArray(data.options) || !data.options.every(option => typeof option.code === 'string' && typeof option.label === 'string')) throw new Error(lookup.dataset.error);
       if (lookupRequest !== request) return null;
       lookupOptions = data.options;
-      lookupResult.replaceChildren(new Option(defaults.dataset.empty, ''), ...lookupOptions.map(option => new Option(option.label, option.code)));
       lookupStatus.textContent = '';
       enhanceDefaults();
       return lookupOptions;
@@ -367,27 +364,11 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
       if (lookupRequest === request) lookup.removeAttribute('aria-busy');
     }
   };
-  lookup.querySelector('[name="lookup_defaults"]').addEventListener('click', event => { event.preventDefault(); loadLookup(); });
-  lookup.querySelector('[data-default-lookup-apply]').addEventListener('click', event => {
-    event.preventDefault();
-    if (!lookupResult.value) return;
-    useDefault.checked = true;
-    if (multiple.checked) {
-      let target = repeatedSources().find(source => source.value === '');
-      if (!target) {
-        defaults.querySelector('[data-default-multiple] [data-repeat-op="add"]').click();
-        target = repeatedSources().at(-1);
-      }
-      if (target) target.value = lookupResult.value;
-    } else single.value = lookupResult.value;
-    update();
-  });
   const invalidateLookup = () => {
     lookupRequest?.abort();
     lookupRequest = null;
     lookup.removeAttribute('aria-busy');
     lookupOptions = [];
-    lookupResult.replaceChildren(new Option(defaults.dataset.empty, ''));
     lookupStatus.textContent = '';
     enhanceDefaults();
   };
@@ -500,21 +481,7 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   });
   form.addEventListener('reset', () => queueMicrotask(() => { lookupRequest?.abort(); lookupRequest = null; lookup.removeAttribute('aria-busy'); toggle(choice, false); lookupOptions = JSON.parse(lookup.dataset.options); currentSizeUnit = Number(sizeUnit.value); fileTypeGroups.forEach(sync => sync()); shownGroup = defaultGroup(type.value); defaultDrafts.clear(); update(); }));
   form.addEventListener('submit', () => {
-    form.elements.default_shape.value = multiple.checked ? '1' : '0';
     form.elements.default_type.value = type.value;
-    const drafts = form.querySelector('[data-default-drafts]');
-    drafts.replaceChildren();
-    const values = [
-      ...(single.matches(':disabled') ? [['draft_default_value', single.value]] : []),
-      ...repeatedSources().filter(source => source.matches(':disabled')).map(source => ['draft_default_values[]', source.value]),
-    ];
-    for (const [name, value] of values) {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = name;
-      input.value = value;
-      drafts.append(input);
-    }
   });
   update();
   form.parentElement.querySelector('[data-field-error-summary]')?.focus();

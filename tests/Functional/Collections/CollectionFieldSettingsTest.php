@@ -291,7 +291,7 @@ final class CollectionFieldSettingsTest extends FunctionalTestCase
         self::assertSame('Changed hint', $this->schema->getFields($this->collection)[0]->settings['hint']);
     }
 
-    public function testUnsavedRelationChoicesAreScopedAndPostFallbackDoesNotSaveSchema(): void
+    public function testUnsavedRelationChoicesAreScoped(): void
     {
         $target = Fixture::insert('collections', ['code' => 'target', 'name' => 'Target']);
         $selected = Fixture::insert('collection_items', ['collection_id' => $target, 'name' => 'Selected']);
@@ -303,11 +303,6 @@ final class CollectionFieldSettingsTest extends FunctionalTestCase
         $options = json_decode((string) $response->getContent(), true, 512, JSON_THROW_ON_ERROR)['options'];
         self::assertSame([(string) $selected], array_column($options, 'code'));
         self::assertStringContainsString('Selected', $options[0]['label']);
-        $response = $this->postForm('/admin/collections/' . $this->collection . '/fields', $data + ['apply_default' => '1', 'lookup_value' => (string) $selected], $editor);
-        self::assertSame(200, $response->getStatusCode());
-        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
-        self::assertSame((string) $selected, $document->querySelector('[name="default_value"]')->textContent);
-        self::assertSame(0, Capsule::table('collection_fields')->where('collection_id', $this->collection)->count());
         $member = FunctionalUserFactory::createWithPermissions([]);
         self::assertSame(403, $this->postForm('/admin/collections/' . $this->collection . '/fields/choices', $data, $member)->getStatusCode());
     }
@@ -423,36 +418,6 @@ final class CollectionFieldSettingsTest extends FunctionalTestCase
         self::assertCount(0, $this->schema->getFields($this->collection));
     }
 
-    public function testWithoutScriptsMultiplicityRequiresExplicitChoiceAndPreservesDraft(): void
-    {
-        $editor = FunctionalUserFactory::createSupervisor();
-        $url = '/admin/collections/' . $this->collection . '/fields';
-        $data = ['code' => 'value', 'name' => 'Value', 'type' => 'text', 'use_default' => '1', 'default_shape' => '1', 'default_values' => ["First\nparagraph", '0']];
-        $response = $this->postForm($url, $data, $editor);
-        self::assertSame(200, $response->getStatusCode());
-        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
-        self::assertCount(0, $this->schema->getFields($this->collection));
-        self::assertFalse($document->querySelector('[data-default-choice]')->hasAttribute('hidden'));
-        self::assertSame(2, $document->querySelectorAll('#default-choice option')->length);
-        $response = $this->postForm($url, $data + ['choose_default' => '1', 'default_choice' => '0'], $editor);
-        self::assertSame(200, $response->getStatusCode());
-        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
-        self::assertSame('0', $document->querySelector('[name="default_value"]')->textContent);
-        self::assertSame(2, $document->querySelectorAll('[name="default_values[]"]')->length);
-        $response = $this->postForm($url, [
-            'code' => 'value', 'name' => 'Value', 'type' => 'text', 'default_shape' => '0', 'multiple' => '1',
-            'default_value' => '0', 'draft_default_values' => ["First\nparagraph", '0'], 'refresh_settings' => '1',
-        ], $editor);
-        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
-        self::assertSame("First\nparagraph", $document->querySelector('[name="default_values[]"]')->textContent);
-        self::assertSame('0', $document->querySelector('[name="draft_default_value"]')->getAttribute('value'));
-
-        $response = $this->postForm($url, ['code' => 'other', 'name' => 'Other', 'type' => 'text', 'default_shape' => '0', 'multiple' => '1', 'default_value' => "One\nparagraph", 'refresh_settings' => '1'], $editor);
-        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
-        self::assertSame("One\nparagraph", $document->querySelector('[name="default_values[]"]')->textContent);
-        self::assertCount(0, $this->schema->getFields($this->collection));
-    }
-
     public function testCurrentDatePresetsAreResolvedOnOpeningAndPostedValuesStayFixed(): void
     {
         $this->field('day', FieldType::Date, ['date_preset' => 'current']);
@@ -510,7 +475,7 @@ final class CollectionFieldSettingsTest extends FunctionalTestCase
         $this->field('invalid', FieldType::String_, ['date_preset' => 'current']);
     }
 
-    public function testRelationDefaultNeedsNoToggleAndCanBeClearedWithoutScripts(): void
+    public function testRelationDefaultNeedsNoToggleAndIsClearedByAnEmptyValue(): void
     {
         $target = Fixture::insert('collections', ['code' => 'relation-target', 'name' => 'Target']);
         $record = Fixture::insert('collection_items', ['collection_id' => $target, 'name' => '<b>Selected title</b>']);
@@ -525,39 +490,24 @@ final class CollectionFieldSettingsTest extends FunctionalTestCase
         $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
         self::assertTrue($document->querySelector('[data-default-toggle]')->hasAttribute('hidden'));
         self::assertTrue($document->querySelector('[data-default-single]')->hasAttribute('hidden'));
-        self::assertStringContainsString('<b>Selected title</b>', $document->querySelector('[data-relation-fallback]')->textContent);
-        self::assertNull($document->querySelector('[data-relation-fallback] b'));
-        $response = $this->postForm($url, $data + ['clear_relation_default' => '0'], $editor);
-        self::assertSame(200, $response->getStatusCode());
-        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
-        self::assertSame('', $document->querySelector('[name="default_value"]')->textContent);
-        self::assertSame((string) $record, $this->schema->getFields($this->collection)[0]->settings['default']);
+        $options = json_decode($document->querySelector('[data-default-lookup]')->getAttribute('data-options'), true, 512, JSON_THROW_ON_ERROR);
+        self::assertStringContainsString('<b>Selected title</b>', $options[0]['label'], 'The picker gets the name of the chosen record as text.');
         $data['default_value'] = '';
         self::assertSame(302, $this->postForm($url, $data, $editor)->getStatusCode());
         self::assertNull($this->schema->getFields($this->collection)[0]->settings['default']);
     }
 
-    public function testRepeatedRelationFallbackAvoidsDuplicatesAndSupportsRemovingAndOrdering(): void
+    public function testRepeatedRelationDefaultsAreStoredOnceInTheirOrder(): void
     {
         $first = Fixture::insert('collection_items', ['collection_id' => $this->collection, 'name' => 'First']);
         $second = Fixture::insert('collection_items', ['collection_id' => $this->collection, 'name' => 'Second']);
         $editor = FunctionalUserFactory::createSupervisor();
-        $url = '/admin/collections/' . $this->collection . '/fields';
-        $data = ['code' => 'relations', 'name' => 'Relations', 'type' => 'relation', 'multiple' => '1', 'target_collection_id' => (string) $this->collection, 'default_values' => [(string) $first, '', (string) $second]];
-        $response = $this->postForm($url, $data + ['apply_default' => '1', 'lookup_value' => (string) $first], $editor);
-        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
-        self::assertSame(2, $document->querySelectorAll('[data-relation-fallback] li')->length);
-        self::assertCount(0, $this->schema->getFields($this->collection));
-        $response = $this->postForm($url, $data + ['repeat_action' => 'default:up:1'], $editor);
-        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
-        self::assertStringContainsString('Second', $document->querySelector('[data-relation-fallback] li')->textContent);
-        $response = $this->postForm($url, $data + ['clear_relation_default' => '0'], $editor);
-        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
-        self::assertSame(1, $document->querySelectorAll('[data-relation-fallback] li')->length);
-        self::assertStringContainsString('Second', $document->querySelector('[data-relation-fallback] li')->textContent);
-        $data['default_values'][] = (string) $first;
-        self::assertSame(302, $this->postForm($url, $data, $editor)->getStatusCode());
-        self::assertSame([(string) $first, (string) $second], $this->schema->getFields($this->collection)[0]->settings['default']);
+        $data = [
+            'code' => 'relations', 'name' => 'Relations', 'type' => 'relation', 'multiple' => '1', 'target_collection_id' => (string) $this->collection,
+            'default_values' => [(string) $second, '', (string) $first, (string) $second],
+        ];
+        self::assertSame(302, $this->postForm('/admin/collections/' . $this->collection . '/fields', $data, $editor)->getStatusCode());
+        self::assertSame([(string) $second, (string) $first], $this->schema->getFields($this->collection)[0]->settings['default']);
     }
 
     /** @param array<string, mixed> $settings */

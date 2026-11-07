@@ -14,9 +14,6 @@ export function createRelationDefaultPicker({form, lookup, isActive, isMultiple,
   const clear = lookup.querySelector('[data-relation-clear]');
   const warning = lookup.querySelector('[data-relation-warning]');
   const status = lookup.querySelector('[data-default-lookup-status]');
-  const searchButton = lookup.querySelector('[name="lookup_defaults"]');
-  const nativeResult = lookup.querySelector('[data-default-lookup-result]');
-  const apply = lookup.querySelector('[data-default-lookup-apply]');
   const strings = lookup.dataset;
   const labels = new Map();
   let active = false;
@@ -207,13 +204,9 @@ export function createRelationDefaultPicker({form, lookup, isActive, isMultiple,
       shownTerm = null;
     }
     active = enabled;
-    searchButton.hidden = enabled;
-    nativeResult.hidden = enabled;
-    apply.hidden = enabled;
     selected.hidden = !enabled || !multiple || getValues().length === 0;
     clear.hidden = !enabled || multiple || getValues().length === 0;
     input.parentElement.classList.toggle('input-group', !enabled || !clear.hidden);
-    form.querySelector('[data-relation-fallback]').hidden = true;
     if (!enabled) {
       control.after(status);
       warning.hidden = true;
