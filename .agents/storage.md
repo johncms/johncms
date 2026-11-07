@@ -82,6 +82,13 @@ Decided in `FileStore`, and the two halves are ordered on purpose:
   registered before.
 * **Deleting** removes the row first; if the disk then fails, it is **logged, not thrown**. A row
   pointing at nothing means broken links on pages; a file nobody points at costs bytes.
+* **Identical contents share a path**, so both go through `FilePathLockInterface` for that path:
+  storing checks for the bytes and inserts its row under the lock, deleting checks for other rows
+  and removes the bytes under it. A copy stored while the last other copy is deleted either has
+  its row in place before the check or writes the bytes again. `LocalFilePathLock` holds the
+  processes of one server (`flock` in `data/locks/files`); several servers need a lock they share.
+  A row inserted inside an outer transaction is invisible to the check until the commit, so
+  store files outside one.
 
 `FileStore` does not join a transaction of the caller. A file stored inside a rolled-back
 `Capsule::transaction()` stays on the disk — in this CMS an attachment exists before the post

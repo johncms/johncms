@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Files;
 
+use Closure;
+use Johncms\Files\FilePathLockInterface;
 use Johncms\Files\FileStore;
 use Johncms\Files\FileStoreException;
 use Johncms\Http\UploadedFileDTO;
@@ -112,6 +114,54 @@ final class FileStoreTest extends TestCase
             $hash
         );
         self::assertSame($expected, $this->files->findById($stored->id)?->path);
+    }
+
+    public function testStoringAndDeletingTakeTheLockOfThePath(): void
+    {
+        $locks = new class implements FilePathLockInterface {
+            /** @var list<string> */
+            public array $taken = [];
+
+            public function synchronized(string $storage, string $path, callable $action): mixed
+            {
+                $this->taken[] = $storage . ':' . $path;
+                return $action();
+            }
+        };
+        $store = new FileStore($this->registry($this->disk), $this->files, $this->logger, $locks);
+        $file = $store->storeContents('locked', 'locked.txt', 'collections');
+        $path = $this->files->findById($file->id)->path;
+        $store->delete($file->id);
+        self::assertSame(['local:' . $path, 'local:' . $path], $locks->taken);
+    }
+
+    /** The race the lock closes: a copy registered while the last other copy is being deleted. */
+    public function testACopyRegisteredDuringTheDeleteKeepsItsBytes(): void
+    {
+        $first = $this->store->storeContents('shared', 'shared.txt', 'collections');
+        $path = $this->files->findById($first->id)->path;
+        $second = null;
+        $locks = new class (function () use (&$second): void {
+            $second = $this->store->storeContents('shared', 'shared.txt', 'collections');
+        }) implements FilePathLockInterface {
+            private bool $raced = false;
+
+            public function __construct(private readonly Closure $race)
+            {
+            }
+
+            public function synchronized(string $storage, string $path, callable $action): mixed
+            {
+                if (! $this->raced) {
+                    $this->raced = true;
+                    ($this->race)();
+                }
+                return $action();
+            }
+        };
+        (new FileStore($this->registry($this->disk), $this->files, $this->logger, $locks))->delete($first->id);
+        self::assertNotNull($second);
+        self::assertTrue($this->disk->exists($path), 'The bytes of a row registered before the check must stay.');
     }
 
     public function testTheUrlComesFromTheDisk(): void

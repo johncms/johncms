@@ -25,6 +25,7 @@ docker-compose.override.yml
 !/data/logs/.gitkeep
 /data/admin_tasks/
 /data/schedule/
+/data/locks/
 /data/system-update.json
 /data/user-rights-backup-*.json
 

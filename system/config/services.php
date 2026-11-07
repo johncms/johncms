@@ -66,7 +66,9 @@ use Johncms\Database\Schema\Adapters\IlluminateSchema;
 use Johncms\Database\Schema\SchemaInterface;
 use Johncms\Database\SchemaBuilderFactory;
 use Johncms\Files\FileRepositoryInterface;
+use Johncms\Files\FilePathLockInterface;
 use Johncms\Files\FileStore;
+use Johncms\Files\Infrastructure\LocalFilePathLock;
 use Johncms\Files\Infrastructure\Persistence\Repository\EloquentFileRepository;
 use Johncms\Image\ImageProcessorInterface;
 use Johncms\Image\InterventionImageProcessor;
@@ -368,6 +370,7 @@ return static function (ContainerConfigurator $container): void {
     // nothing in the application needs the Symfony-specific part of the contract.
     $services->set(ContainerInterface::class)->synthetic();
     $services->set(FileRepositoryInterface::class, EloquentFileRepository::class);
+    $services->set(FilePathLockInterface::class, LocalFilePathLock::class);
     $services->set(FileStore::class, FileStore::class);
     $services->set(LoggerInterface::class)->factory(service(LoggerFactory::class));
     // The request is not a service: a controller takes it as an action argument, and a service

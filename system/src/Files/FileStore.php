@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Files;
 
 use Johncms\FileInfo;
+use Johncms\Files\Infrastructure\LocalFilePathLock;
 use Johncms\Http\UploadedFileDTO;
 use Johncms\Storage\StorageException;
 use Johncms\Storage\StorageInterface;
@@ -51,6 +52,7 @@ final readonly class FileStore
         private StorageRegistryInterface $storages,
         private FileRepositoryInterface $files,
         private LoggerInterface $logger,
+        private FilePathLockInterface $locks = new LocalFilePathLock(),
     ) {
     }
 
@@ -234,11 +236,14 @@ final readonly class FileStore
         $this->files->deleteByIds($files->pluck('id')->all());
 
         foreach ($files as $file) {
-            if ($this->files->hasPath($file->storage, $file->path)) {
-                continue;
-            }
             try {
-                $this->storages->disk($file->storage)->delete($file->path);
+                // A copy stored meanwhile either finds the bytes gone and writes them again, or
+                // has its row in place before the check below: never a row without its bytes.
+                $this->locks->synchronized($file->storage, $file->path, function () use ($file): void {
+                    if (! $this->files->hasPath($file->storage, $file->path)) {
+                        $this->storages->disk($file->storage)->delete($file->path);
+                    }
+                });
             } catch (StorageException $exception) {
                 // The row is gone, so the file is deleted as far as the site is concerned. What
                 // is left is a file nobody points at, which the log is for.
@@ -305,37 +310,43 @@ final readonly class FileStore
         $storage = $this->storages->disk($diskName);
         $path = $this->path($directory, $hash, $extension);
 
-        try {
-            // The path is built from the hash of the contents, so a file that is already there
-            // is byte for byte the file being stored. Writing it again would only cost the time.
-            $written = ! $storage->exists($path);
-            if ($written) {
-                $write($storage, $path);
+        // The check for the bytes and the row that claims them go together: a delete of the last
+        // other copy in between would take the bytes away from under the new row.
+        $file = $this->locks->synchronized($diskName, $path, function () use ($storage, $path, $write, $diskName, $name, $size, $hash, $sha1): StoredFile {
+            try {
+                // The path is built from the hash of the contents, so a file that is already there
+                // is byte for byte the file being stored. Writing it again would only cost the time.
+                $written = ! $storage->exists($path);
+                if ($written) {
+                    $write($storage, $path);
+                }
+            } catch (StorageException $exception) {
+                throw new FileStoreException($exception->getMessage(), 0, $exception);
             }
-        } catch (StorageException $exception) {
-            throw new FileStoreException($exception->getMessage(), 0, $exception);
-        }
 
-        try {
-            $file = $this->files->create(
-                [
-                    'storage' => $diskName,
-                    'name'    => $name,
-                    'path'    => $path,
-                    'size'    => $size,
-                    'md5'     => $hash,
-                    'sha1'    => $sha1,
-                ]
-            );
-        } catch (Throwable $exception) {
-            $this->rollBack($storage, $path, $written);
+            try {
+                $file = $this->files->create(
+                    [
+                        'storage' => $diskName,
+                        'name'    => $name,
+                        'path'    => $path,
+                        'size'    => $size,
+                        'md5'     => $hash,
+                        'sha1'    => $sha1,
+                    ]
+                );
+            } catch (Throwable $exception) {
+                $this->rollBack($storage, $path, $written);
 
-            throw new FileStoreException(
-                sprintf('Could not register the file "%s": %s', $name, $exception->getMessage()),
-                0,
-                $exception
-            );
-        }
+                throw new FileStoreException(
+                    sprintf('Could not register the file "%s": %s', $name, $exception->getMessage()),
+                    0,
+                    $exception
+                );
+            }
+
+            return $file;
+        });
 
         return $this->toDTO($file, $storage);
     }
