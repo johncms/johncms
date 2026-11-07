@@ -16,6 +16,7 @@ use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemHistoryDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
+use Johncms\Modules\Collections\Application\Services\CollectionFilePolicy;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Updates\SystemOperationContext;
 use Tests\Functional\FunctionalTestCase;
@@ -334,6 +335,7 @@ final class CollectionFieldSettingsTest extends FunctionalTestCase
         self::assertSame('1048576', $document->querySelector('[name="file_size_unit"] option[selected]')->getAttribute('value'));
         $document = HTMLDocument::createFromString((string) $this->handleRequest('/admin/collections/' . $this->collection . '/fields/new', cookies: $this->actingAs($editor))->getContent(), LIBXML_NOERROR);
         self::assertSame('10', $document->querySelector('[name="max_file_bytes"]')->getAttribute('value'));
+        self::assertSame(count(CollectionFilePolicy::TYPES), $document->querySelectorAll('[name="allowed_mime_types[]"]')->length);
     }
 
     public function testADefaultDoesNotSurviveAChangeOfItsKind(): void

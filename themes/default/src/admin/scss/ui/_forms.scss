@@ -290,6 +290,19 @@ button.admin-slug-action:hover {
   }
 }
 
+.collection-file-types {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 1rem;
+  row-gap: 0.25rem;
+}
+
+.collection-file-types-group {
+  inline-size: 9rem;
+  font-weight: 600;
+}
+
 .relation-default-control {
   position: relative;
 }

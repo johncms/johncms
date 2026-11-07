@@ -1592,3 +1592,21 @@ msgstr "У файлового поля нет значения по умолча
 
 msgid "Selected: %d of %d"
 msgstr "Выбрано: %d из %d"
+
+msgid "The server accepts up to %s."
+msgstr "Сервер принимает файлы до %s."
+
+msgid "Images"
+msgstr "Изображения"
+
+msgid "Documents"
+msgstr "Документы"
+
+msgid "Archives"
+msgstr "Архивы"
+
+msgid "Audio"
+msgstr "Аудио"
+
+msgid "Video"
+msgstr "Видео"

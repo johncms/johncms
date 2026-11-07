@@ -16,6 +16,13 @@ final readonly class CollectionFilePolicy
         'application/pdf' => 'pdf', 'text/plain' => 'txt', 'application/zip' => 'zip',
         'audio/mpeg' => 'mp3', 'audio/ogg' => 'ogg', 'video/mp4' => 'mp4',
     ];
+    public const array GROUPS = [
+        'images'    => ['image/jpeg', 'image/png', 'image/gif', 'image/webp'],
+        'documents' => ['application/pdf', 'text/plain'],
+        'archives'  => ['application/zip'],
+        'audio'     => ['audio/mpeg', 'audio/ogg'],
+        'video'     => ['video/mp4'],
+    ];
 
     public function __construct(private FileStore $files)
     {

@@ -97,22 +97,36 @@
                         <input type="hidden" name="file_constraints_present" value="1">
                         <label class="form-label" for="max-file-bytes">{{ __('Maximum file size') }}</label>
                         <div class="input-group">
-                            <input class="form-control" type="number" min="0" step="any" name="max_file_bytes" id="max-file-bytes" value="{{ fields.max_file_bytes }}"{% if field_errors['max_file_bytes']|default('') %} aria-invalid="true" aria-describedby="error-max_file_bytes"{% endif %}>
-                            {{ _self.error(field_errors, 'max_file_bytes') }}
+                            <input class="form-control" type="number" min="0" step="any" name="max_file_bytes" id="max-file-bytes" value="{{ fields.max_file_bytes }}" required{% if field_errors['max_file_bytes']|default('') %} aria-invalid="true" aria-describedby="error-max_file_bytes"{% endif %}>
                             <select class="form-select" name="file_size_unit" aria-label="{{ __('File size unit') }}">
                                 {% for unit, label in {'1': __('Bytes'), '1024': __('KB'), '1048576': __('MB'), '1073741824': __('GB')} %}<option value="{{ unit }}"{% if file_size_unit == unit ~ '' %} selected{% endif %}>{{ label }}</option>{% endfor %}
                             </select>
                         </div>
-                        <label class="form-label mt-2" for="file-types">{{ __('Allowed file types') }}</label>
-                        <div class="d-flex flex-wrap gap-3" id="file-types">
-                            {% for mime, extension in file_types %}
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" name="allowed_mime_types[]" id="file-type-{{ loop.index }}" value="{{ mime }}"{% if mime in fields.allowed_mime_types %} checked{% endif %}>
-                                    <label class="form-check-label" for="file-type-{{ loop.index }}">{{ extension|upper }} <span class="text-muted small">{{ mime }}</span></label>
-                                </div>
-                            {% endfor %}
-                        </div>
-                        {{ _self.error(field_errors, 'allowed_mime_types') }}
+                        {{ _self.error(field_errors, 'max_file_bytes') }}
+                        {% if server_upload_limit %}<div class="form-text">{{ __('The server accepts up to %s.')|format(server_upload_limit|format_size) }}</div>{% endif %}
+                        <fieldset class="mt-3 mb-0" id="file-types">
+                            <legend class="form-label">{{ __('Allowed file types') }}</legend>
+                            <div class="d-flex flex-column gap-2">
+                                {% for group in file_type_groups %}
+                                    {% set group_id = loop.index %}
+                                    <div class="collection-file-types" data-file-type-group>
+                                        <div class="form-check collection-file-types-group">
+                                            <input type="checkbox" class="form-check-input" id="file-type-group-{{ group_id }}" data-file-type-toggle hidden>
+                                            <label class="form-check-label" for="file-type-group-{{ group_id }}">{{ group.label }}</label>
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-3">
+                                            {% for mime, extension in group.types %}
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" name="allowed_mime_types[]" id="file-type-{{ group_id }}-{{ loop.index }}" value="{{ mime }}"{% if mime in fields.allowed_mime_types %} checked{% endif %}>
+                                                    <label class="form-check-label" for="file-type-{{ group_id }}-{{ loop.index }}" title="{{ mime }}">{{ extension|upper }}</label>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {{ _self.error(field_errors, 'allowed_mime_types') }}
+                        </fieldset>
                         <div class="form-text">{{ __('The actual file content is checked. Server upload and image limits also apply.') }}</div>
                     </fieldset>
                     <fieldset class="col-12 mb-0" data-field-types="relation"{% if fields.type != 'relation' %} hidden disabled{% endif %}>

@@ -398,6 +398,20 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
       reloadSelected();
     });
   };
+  const fileTypeGroups = [...form.querySelectorAll('[data-file-type-group]')].map(group => {
+    const toggler = group.querySelector('[data-file-type-toggle]');
+    const types = [...group.querySelectorAll('[name="allowed_mime_types[]"]')];
+    const sync = () => {
+      const chosen = types.filter(input => input.checked).length;
+      toggler.checked = chosen === types.length;
+      toggler.indeterminate = chosen > 0 && chosen < types.length;
+    };
+    toggler.hidden = false;
+    toggler.addEventListener('change', () => types.forEach(input => { input.checked = toggler.checked; }));
+    types.forEach(input => input.addEventListener('change', sync));
+    sync();
+    return sync;
+  });
   const sizeUnit = form.elements.file_size_unit;
   let currentSizeUnit = Number(sizeUnit.value);
   sizeUnit.addEventListener('change', () => {
@@ -464,7 +478,7 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   form.addEventListener('change', event => {
     if (event.target.closest('[data-key="options"]')) enhanceDefaults();
   });
-  form.addEventListener('reset', () => queueMicrotask(() => { lookupRequest?.abort(); lookupRequest = null; lookup.removeAttribute('aria-busy'); toggle(choice, false); lookupOptions = JSON.parse(lookup.dataset.options); currentSizeUnit = Number(sizeUnit.value); shownGroup = defaultGroup(type.value); defaultDrafts.clear(); update(); }));
+  form.addEventListener('reset', () => queueMicrotask(() => { lookupRequest?.abort(); lookupRequest = null; lookup.removeAttribute('aria-busy'); toggle(choice, false); lookupOptions = JSON.parse(lookup.dataset.options); currentSizeUnit = Number(sizeUnit.value); fileTypeGroups.forEach(sync => sync()); shownGroup = defaultGroup(type.value); defaultDrafts.clear(); update(); }));
   form.addEventListener('submit', () => {
     form.elements.default_shape.value = multiple.checked ? '1' : '0';
     form.elements.default_type.value = type.value;

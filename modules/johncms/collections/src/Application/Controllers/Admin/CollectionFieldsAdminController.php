@@ -7,6 +7,7 @@ namespace Johncms\Modules\Collections\Application\Controllers\Admin;
 use InvalidArgumentException;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
+use Johncms\Http\UploadLimits;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldListItemDTO;
@@ -40,6 +41,7 @@ final readonly class CollectionFieldsAdminController
         private DeleteCollectionFieldUseCase $deleteField,
         private Session $session,
         private CollectionFieldFormChoices $choices,
+        private UploadLimits $uploadLimits,
         private CollectionRepeatedValues $repeated = new CollectionRepeatedValues(),
     ) {
     }
@@ -369,7 +371,8 @@ final readonly class CollectionFieldsAdminController
         }
         return new ViewResponse('@collections/admin/field-form.twig', $this->menu($title, $collection->name) + [
             'form_action'  => $this->baseUrl($collection->id),
-            'file_types' => CollectionFilePolicy::TYPES,
+            'file_type_groups' => $this->fileTypeGroups(),
+            'server_upload_limit' => $this->uploadLimits->maxUploadBytes(),
             'collection_options' => $this->choices->collections(),
             'default_options' => $defaultOptions,
             'relation_selected' => $relationSelected,
@@ -530,6 +533,23 @@ final readonly class CollectionFieldsAdminController
             }
         }
         return ['max_file_bytes' => $bytes, 'file_size_unit' => '1'];
+    }
+
+    /** @return list<array{label: string, types: array<string, string>}> */
+    private function fileTypeGroups(): array
+    {
+        $labels = [
+            'images'    => __('Images'),
+            'documents' => __('Documents'),
+            'archives'  => __('Archives'),
+            'audio'     => __('Audio'),
+            'video'     => __('Video'),
+        ];
+        $groups = [];
+        foreach (CollectionFilePolicy::GROUPS as $key => $mimes) {
+            $groups[] = ['label' => $labels[$key], 'types' => array_intersect_key(CollectionFilePolicy::TYPES, array_flip($mimes))];
+        }
+        return $groups;
     }
 
     /** Types whose default values mean the same thing share a group. */
