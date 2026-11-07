@@ -1,40 +1,22 @@
-{#
-    One article in a list.
-
-    @param array article
-#}
-<div class="new_post-item without_avatar">
-    <a href="{{ article.url }}" class="post-title">{{ article.name }}</a>
-    {% if article.preview_text_safe is not empty %}
-        {# Sanitized by the shared content renderer, with the media embedded, so it stays markup. #}
-        <div class="post-body pt-2">{{ article.preview_text_safe }}</div>
+{# @var article array Published article with sanitized preview and discussion statistics. #}
+<article class="site-news-card">
+    <h3 class="site-news-card__title"><a href="{{ article.url }}">{{ article.name }}</a></h3>
+    {% if article.preview_text_safe %}
+        <div class="site-news-card__preview">{{ article.preview_text_safe }}</div>
     {% endif %}
-    <div class="d-flex">
-        <div class="text-muted forum-view-counter">
-            <svg class="icon download-button-icon mt-n1 me-1">
-                <use xlink:href="{{ asset('icons/sprite.svg') }}#rating"/>
-            </svg>
-            {% if article.rating > 0 %}
-                <span class="text-success fw-bold">{{ article.rating }}</span>
-            {% elseif article.rating < 0 %}
-                <span class="text-danger fw-bold">{{ article.rating }}</span>
-            {% else %}
-                <span class="fw-bold">{{ article.rating }}</span>
-            {% endif %}
-        </div>
-        <div class="text-muted forum-view-counter ms-3">
-            <svg class="icon download-button-icon mt-n1 me-1">
-                <use xlink:href="{{ asset('icons/sprite.svg') }}#eye"/>
-            </svg>
-            {{ article.view_count }}
-        </div>
-        <div class="text-muted forum-view-counter ms-3 link-no-underline">
-            <a href="{{ article.url }}#article-comments">
-                <svg class="icon download-button-icon me-1">
-                    <use xlink:href="{{ asset('icons/sprite.svg') }}#forum"/>
-                </svg>
-                {{ article.comments_count }}
-            </a>
-        </div>
+    <div class="site-news-card__meta">
+        <span class="site-news-card__rating{{ article.rating > 0 ? ' site-news-card__rating--positive' : (article.rating < 0 ? ' site-news-card__rating--negative' : '') }}" title="{{ __('Rating') }}">
+            {% include '@theme/components/icon.twig' with {name: 'chart-column', size: 12} only %}
+            <span class="visually-hidden">{{ __('Rating') }}: </span>{{ article.rating > 0 ? '+' : '' }}{{ article.rating|format_number }}
+        </span>
+        <span class="site-news-card__stat" title="{{ __('Views') }}">
+            {% include '@theme/components/icon.twig' with {name: 'eye', size: 12} only %}
+            <span class="visually-hidden">{{ __('Views') }}: </span>{{ article.view_count|format_number }}
+        </span>
+        <a class="site-news-card__stat" href="{{ article.url }}#article-comments" aria-label="{{ __('Comments') }}: {{ article.comments_count|format_number }}" title="{{ __('Comments') }}">
+            {% include '@theme/components/icon.twig' with {name: 'message-square', size: 12} only %}
+            {{ article.comments_count|format_number }}
+        </a>
+        <span class="site-news-card__date">{{ article.display_date }}</span>
     </div>
-</div>
+</article>

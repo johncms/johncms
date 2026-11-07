@@ -1,46 +1,59 @@
 {#
-    Articles of a section, or of the whole news archive.
-
-    @param iterable articles
-    @param iterable sections Child sections of the current one.
-    @param ?Markup  pagination
+    @var articles iterable<array> Published articles.
+    @var sections iterable<array> Child sections of the current one.
+    @var current_section array|null
+    @var pagination \Twig\Markup|null
+    @var workspace_url string
 #}
 {% extends '@theme/layouts/default.twig' %}
 
 {% block content %}
-    {% if can('news.manage') %}
-        <div class="mb-3 mt-n1">
-            <a href="{{ workspace_url }}" class="btn btn-outline-danger btn-sm">{{ __('Admin panel') }}</a>
-        </div>
-    {% endif %}
-
-    <div class="mb-3">
-        {% include '@news/public/components/search-form.twig' with {
-            action: '/news/search/',
-            field: 'query',
-            placeholder: __('Search query')
-        } only %}
-        {% if sections|length > 0 %}
-            <nav class="nav">
-                {% for section in sections %}
-                    <a class="nav-link ps-0" href="{{ section.url }}">{{ section.name }}</a>
-                {% endfor %}
-            </nav>
-        {% endif %}
-    </div>
-
-    <div>
-        {% if articles|length > 0 %}
-            {% for article in articles %}
-                {% include '@news/public/components/article-row.twig' with {article: article} only %}
-            {% endfor %}
-            {% if pagination %}
-                <div class="mt-3">
-                    {{ pagination }}
-                </div>
+    <div class="site-news">
+        <div class="site-news__toolbar">
+            {% include '@news/public/components/search-form.twig' with {
+                action: '/news/search/', field: 'query', placeholder: __('Search query')
+            } only %}
+            {% if can('news.manage') %}
+                <a href="{{ workspace_url }}" class="btn btn-outline-secondary btn-sm">
+                    {% include '@theme/components/icon.twig' with {name: 'settings', size: 14} only %}
+                    {{ __('Admin panel') }}
+                </a>
             {% endif %}
-        {% else %}
-            <div class="alert alert-info">{{ __('The list is empty') }}</div>
+        </div>
+
+        {% if sections|length > 0 %}
+            <section class="site-news__sections" aria-labelledby="news-sections-title">
+                <h2 class="site-news__heading" id="news-sections-title">{{ __('Sections') }}</h2>
+                <div class="site-news__list">
+                    {% for section in sections %}
+                        <div class="site-news-section">
+                            <span class="site-news-section__icon">{% include '@theme/components/icon.twig' with {name: 'folder', size: 18} only %}</span>
+                            <div class="site-news-section__main">
+                                <h3><a href="{{ section.url }}">{{ section.name }}</a></h3>
+                                {% if section.text_safe %}<div class="site-news-section__description">{{ section.text_safe }}</div>{% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+
+        <section aria-labelledby="news-list-title">
+            <h2 class="site-news__heading" id="news-list-title">{{ __('All news') }}</h2>
+            <div class="site-news__list">
+                {% for article in articles %}
+                    {% include '@news/public/components/article-row.twig' with {article: article} only %}
+                {% else %}
+                    {% include '@theme/components/empty-state.twig' with {
+                        icon: 'newspaper', title: __('No news yet'), description: __('Published news will appear here.')
+                    } only %}
+                {% endfor %}
+            </div>
+            {% if pagination %}<div class="site-news__pagination">{{ pagination }}</div>{% endif %}
+        </section>
+
+        {% if current_section and current_section.text_safe %}
+            <div class="site-news__description">{{ current_section.text_safe }}</div>
         {% endif %}
     </div>
 {% endblock %}

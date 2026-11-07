@@ -1,36 +1,30 @@
 {#
-    Search results, by words or by tag.
-
-    @param ?iterable articles   Null when nothing has been searched for yet.
-    @param ?Markup   pagination
-    @param string    query      What has been searched for.
-    @param string    form_action
-    @param string    form_field
-    @param string    form_placeholder
+    @var articles iterable<array>|null
+    @var pagination \Twig\Markup|null
+    @var query string
+    @var form_action string
+    @var form_field string
+    @var form_placeholder string
 #}
 {% extends '@theme/layouts/default.twig' %}
 
 {% block content %}
-    <div>
-        {% include '@news/public/components/search-form.twig' with {
-            action: form_action,
-            field: form_field,
-            placeholder: form_placeholder,
-            value: query
-        } only %}
-    </div>
-    <div>
-        {% if articles is not null and articles|length > 0 %}
+    <div class="site-news">
+        <div class="site-news__toolbar">
+            {% include '@news/public/components/search-form.twig' with {
+                action: form_action, field: form_field, placeholder: form_placeholder, value: query
+            } only %}
+            <a href="/news/" class="site-news__back">{{ __('All news') }}</a>
+        </div>
+        <div class="site-news__list">
             {% for article in articles %}
                 {% include '@news/public/components/article-row.twig' with {article: article} only %}
+            {% else %}
+                {% include '@theme/components/empty-state.twig' with {
+                    icon: 'search', title: __('The search didn\'t yield any results.'), description: ''
+                } only %}
             {% endfor %}
-            {% if pagination %}
-                <div class="mt-3">
-                    {{ pagination }}
-                </div>
-            {% endif %}
-        {% else %}
-            <div class="alert alert-info">{{ __('The search didn\'t yield any results.') }}</div>
-        {% endif %}
+        </div>
+        {% if pagination %}<div class="site-news__pagination">{{ pagination }}</div>{% endif %}
     </div>
 {% endblock %}

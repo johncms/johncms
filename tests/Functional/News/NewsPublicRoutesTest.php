@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional\News;
 
+use Dom\HTMLDocument;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Http\Kernel;
 use Johncms\Http\Request;
@@ -59,6 +60,33 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         Capsule::table('collection_sections')->where('id', $a)->update(['active' => false]);
         self::assertSame(404, $this->handleRequest('/news/a/same.html')->getStatusCode());
         self::assertSame(404, $this->handleRequest('/news/a/')->getStatusCode());
+    }
+
+    public function testArchiveKeepsSectionDescriptionsPreviewLinksAndDiscussionAnchors(): void
+    {
+        $sections = $this->container()->get(CollectionSectionsApiInterface::class);
+        $section = $sections->addSection(new CollectionSectionFormDTO($this->collection, null, 'releases', 'Releases', '<p>Release notes</p>', true, 100));
+        $this->api->addItem(new CollectionItemFormDTO(
+            collectionId: $this->collection,
+            sectionId: $section,
+            code: 'release',
+            name: 'A release',
+            active: true,
+            activeFrom: null,
+            activeTo: null,
+            sort: 100,
+            previewText: '<p>Read <a href="https://example.com/notes">the notes</a></p>',
+            detailText: null,
+            values: [],
+        ));
+        $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/')->getContent(), LIBXML_NOERROR);
+        self::assertSame('Releases', trim($document->querySelector('.site-news-section h3 a')->textContent));
+        self::assertStringContainsString('Release notes', $document->querySelector('.site-news-section__description')->textContent);
+        self::assertNotNull($document->querySelector('.site-news-card__preview a[href="https://example.com/notes"]'));
+        self::assertNotNull($document->querySelector('.site-news-card a[href="/news/releases/release.html#article-comments"]'));
+        self::assertNull($document->querySelector('.site-news-card > a'), 'Rich previews must not be wrapped in an article link.');
+        $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/releases/')->getContent(), LIBXML_NOERROR);
+        self::assertStringContainsString('Release notes', $document->querySelector('.site-news__description')->textContent);
     }
 
     public function testCommentAndVoteHttpContractsUseCollectionIdsAndCurrentActor(): void
