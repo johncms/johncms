@@ -93,36 +93,26 @@
                 <div class="card-header"><h2 class="h6 mb-0">{{ __('Input settings') }}</h2></div>
                 <div class="card-body row g-3">
                     <fieldset class="col-12 mb-0" data-field-types="file"{% if fields.type != 'file' %} hidden disabled{% endif %}>
-                        <label class="form-label" for="file-storage">{{ __('File storage') }}</label>
-                        <select class="form-select" id="file-storage" name="file_storage"{% if structure_locked %} disabled{% endif %}>
-                            <option value="registry"{% if fields.file_storage == 'registry' %} selected{% endif %}>{{ __('Registered files') }}</option>
-                            {% if legacy_file %}<option value="legacy"{% if fields.file_storage == 'legacy' %} selected{% endif %}>{{ __('Legacy file paths') }}</option>{% endif %}
-                        </select>
-                        {{ _self.error(field_errors, 'file_storage') }}
-                        {% if structure_locked %}<input type="hidden" name="file_storage" value="{{ fields.file_storage }}">{% endif %}
-                        <div class="form-text">{{ __('Existing paths require explicit conversion before switching to registered file IDs.') }}</div>
-                        <fieldset class="mb-0" data-file-storage="registry"{% if fields.file_storage != 'registry' %} hidden disabled{% endif %}>
-                            <input type="hidden" name="file_constraints_present" value="1">
-                            <label class="form-label mt-2" for="max-file-bytes">{{ __('Maximum file size') }}</label>
-                            <div class="input-group">
-                                <input class="form-control" type="number" min="0" step="any" name="max_file_bytes" id="max-file-bytes" value="{{ fields.max_file_bytes }}"{% if field_errors['max_file_bytes']|default('') %} aria-invalid="true" aria-describedby="error-max_file_bytes"{% endif %}>
-                                {{ _self.error(field_errors, 'max_file_bytes') }}
-                                <select class="form-select" name="file_size_unit" aria-label="{{ __('File size unit') }}">
-                                    {% for unit, label in {'1': __('Bytes'), '1024': 'KiB', '1048576': 'MiB'} %}<option value="{{ unit }}"{% if file_size_unit == unit ~ '' %} selected{% endif %}>{{ label }}</option>{% endfor %}
-                                </select>
-                            </div>
-                            <label class="form-label mt-2" for="file-types">{{ __('Allowed file types') }}</label>
-                            <div class="d-flex flex-wrap gap-3" id="file-types">
-                                {% for mime, extension in file_types %}
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="allowed_mime_types[]" id="file-type-{{ loop.index }}" value="{{ mime }}"{% if mime in fields.allowed_mime_types %} checked{% endif %}>
-                                        <label class="form-check-label" for="file-type-{{ loop.index }}">{{ extension|upper }} <span class="text-muted small">{{ mime }}</span></label>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                            {{ _self.error(field_errors, 'allowed_mime_types') }}
-                            <div class="form-text">{{ __('The actual file content is checked. Server upload and image limits also apply.') }}</div>
-                        </fieldset>
+                        <input type="hidden" name="file_constraints_present" value="1">
+                        <label class="form-label" for="max-file-bytes">{{ __('Maximum file size') }}</label>
+                        <div class="input-group">
+                            <input class="form-control" type="number" min="0" step="any" name="max_file_bytes" id="max-file-bytes" value="{{ fields.max_file_bytes }}"{% if field_errors['max_file_bytes']|default('') %} aria-invalid="true" aria-describedby="error-max_file_bytes"{% endif %}>
+                            {{ _self.error(field_errors, 'max_file_bytes') }}
+                            <select class="form-select" name="file_size_unit" aria-label="{{ __('File size unit') }}">
+                                {% for unit, label in {'1': __('Bytes'), '1024': 'KiB', '1048576': 'MiB'} %}<option value="{{ unit }}"{% if file_size_unit == unit ~ '' %} selected{% endif %}>{{ label }}</option>{% endfor %}
+                            </select>
+                        </div>
+                        <label class="form-label mt-2" for="file-types">{{ __('Allowed file types') }}</label>
+                        <div class="d-flex flex-wrap gap-3" id="file-types">
+                            {% for mime, extension in file_types %}
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" name="allowed_mime_types[]" id="file-type-{{ loop.index }}" value="{{ mime }}"{% if mime in fields.allowed_mime_types %} checked{% endif %}>
+                                    <label class="form-check-label" for="file-type-{{ loop.index }}">{{ extension|upper }} <span class="text-muted small">{{ mime }}</span></label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {{ _self.error(field_errors, 'allowed_mime_types') }}
+                        <div class="form-text">{{ __('The actual file content is checked. Server upload and image limits also apply.') }}</div>
                     </fieldset>
                     <fieldset class="col-12 mb-0" data-field-types="relation"{% if fields.type != 'relation' %} hidden disabled{% endif %}>
                         <label class="form-label" for="relation-target">{{ __('Target collection') }}</label>
@@ -148,12 +138,12 @@
                         <textarea class="form-control" id="field-hint" name="hint" rows="2" maxlength="2000"{% if field_errors['hint']|default('') %} aria-invalid="true" aria-describedby="error-hint"{% endif %}>{{ fields.hint }}</textarea>
                         {{ _self.error(field_errors, 'hint') }}
                     </div>
-                    <fieldset class="col-md-6 mb-0" data-field-types="string text html{{ fields.legacy_length_limits|default(false) ? ' select file' : '' }}"{% if fields.type not in ['string', 'text', 'html'] and not (fields.legacy_length_limits and fields.type in ['select', 'file']) %} hidden disabled{% endif %}>
+                    <fieldset class="col-md-6 mb-0" data-field-types="string text html{{ fields.legacy_length_limits|default(false) ? ' select' : '' }}"{% if fields.type not in ['string', 'text', 'html'] and not (fields.legacy_length_limits and fields.type == 'select') %} hidden disabled{% endif %}>
                         <label class="form-label" for="min-length">{{ __('Minimum text length') }}</label>
                         <input type="number" class="form-control" min="0" id="min-length" name="min_length" value="{{ fields.min_length }}"{% if field_errors['min_length']|default('') %} aria-invalid="true" aria-describedby="error-min_length"{% endif %}>
                         {{ _self.error(field_errors, 'min_length') }}
                     </fieldset>
-                    <fieldset class="col-md-6 mb-0" data-field-types="string text html{{ fields.legacy_length_limits|default(false) ? ' select file' : '' }}"{% if fields.type not in ['string', 'text', 'html'] and not (fields.legacy_length_limits and fields.type in ['select', 'file']) %} hidden disabled{% endif %}>
+                    <fieldset class="col-md-6 mb-0" data-field-types="string text html{{ fields.legacy_length_limits|default(false) ? ' select' : '' }}"{% if fields.type not in ['string', 'text', 'html'] and not (fields.legacy_length_limits and fields.type == 'select') %} hidden disabled{% endif %}>
                         <label class="form-label" for="max-length">{{ __('Maximum text length') }}</label>
                         <input type="number" class="form-control" min="0" id="max-length" name="max_length" value="{{ fields.max_length }}"{% if field_errors['max_length']|default('') %} aria-invalid="true" aria-describedby="error-max_length"{% endif %}>
                         {{ _self.error(field_errors, 'max_length') }}
@@ -176,7 +166,7 @@
                     </fieldset>
                     <p class="col-12 form-text mb-0" data-field-types="html"{% if fields.type != 'html' %} hidden{% endif %}>{{ __('HTML length includes markup. Limits apply to each value.') }}</p>
                     <p class="col-12 form-text mb-0" data-field-types="string"{% if fields.type != 'string' %} hidden{% endif %}>{{ __('Strings are stored with a maximum of 255 characters. Limits apply to each value.') }}</p>
-                    <div class="col-12" data-default-settings data-limit-error="{{ __('The default exceeds the configured number of values.') }}" data-yes="{{ __('Yes') }}" data-no="{{ __('No') }}" data-empty="{{ __('No value') }}" data-invalid="{{ __('Choose an available option for this field.') }}">
+                    <div class="col-12" data-default-settings{% if fields.type == 'file' %} hidden{% endif %} data-limit-error="{{ __('The default exceeds the configured number of values.') }}" data-yes="{{ __('Yes') }}" data-no="{{ __('No') }}" data-empty="{{ __('No value') }}" data-invalid="{{ __('Choose an available option for this field.') }}">
                         <div class="form-check mb-2" data-default-toggle{% if fields.type in ['date', 'datetime', 'relation'] %} hidden{% endif %}>
                             <input class="form-check-input" type="checkbox" name="use_default" id="use-default" value="1"{% if fields.use_default %} checked{% endif %}>
                             <label class="form-check-label" for="use-default">{{ __('Use a default value') }}</label>
@@ -201,7 +191,7 @@
                                   data-relation-unavailable="{{ __('Unavailable record') }}"
                                   data-relation-count-label="{{ __('Selected: %d') }}" data-relation-none="{{ __('No records selected') }}"
                                   data-relation-up="{{ __('Move up') }}" data-relation-down="{{ __('Move down') }}" data-relation-remove="{{ __('Remove value') }}"
-                                  data-options="{{ default_options|json_encode }}"{% if fields.type != 'relation' and not (fields.type == 'file' and fields.file_storage == 'registry') %} hidden disabled{% endif %} data-error="{{ __('Could not load default choices. Try again.') }}" data-loaded="{{ __('Choose a value and apply it to the default.') }}" data-empty="{{ __('No matching values were found. Refine your search.') }}">
+                                  data-options="{{ default_options|json_encode }}"{% if fields.type != 'relation' %} hidden disabled{% endif %} data-error="{{ __('Could not load default choices. Try again.') }}" data-empty="{{ __('No matching values were found. Refine your search.') }}">
                             <p class="form-text mb-2" id="relation-default-context" data-relation-context hidden></p>
                             <label class="form-label" for="default-query">{{ __('Search default values') }}</label>
                             {% for action, icon in {'up': 'arrow-up', 'down': 'arrow-down', 'remove': 'x', 'check': 'check'} %}

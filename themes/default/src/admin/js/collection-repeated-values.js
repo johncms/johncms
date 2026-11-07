@@ -97,7 +97,6 @@ document.querySelectorAll('[data-collection-repeat]').forEach(root => {
 document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   const multiple = form.querySelector('input[name="multiple"]');
   const type = form.querySelector('select[name="type"]');
-  const fileStorage = form.querySelector('select[name="file_storage"]');
   const useDefault = form.querySelector('input[name="use_default"]');
   const defaults = form.querySelector('[data-default-settings]');
   const dateSettings = form.querySelector('[data-date-default-settings]');
@@ -109,7 +108,6 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   const lookupResult = lookup.querySelector('[data-default-lookup-result]');
   let lookupOptions = JSON.parse(lookup.dataset.options);
   let lookupRequest;
-  const usesLookup = () => type.value === 'relation' || (type.value === 'file' && fileStorage.value === 'registry');
   const fieldErrors = JSON.parse(form.dataset.fieldErrors);
   for (const [key, message] of Object.entries(fieldErrors)) {
     const [name, index] = key.split('.');
@@ -163,15 +161,14 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
       if (label) label.htmlFor = source.id;
       if (type.value === 'relation') { source.hidden = true; return; }
       const inputType = {string: 'text', integer: 'number', double: 'number', date: 'date', datetime: 'datetime-local'}[type.value];
-      if (!inputType && !['boolean', 'select'].includes(type.value) && !usesLookup()) return;
+      if (!inputType && !['boolean', 'select'].includes(type.value)) return;
       if (type.value === 'string' && /[\r\n]/.test(source.value)) return;
-      const control = document.createElement(['boolean', 'select'].includes(type.value) || usesLookup() ? 'select' : 'input');
+      const control = document.createElement(['boolean', 'select'].includes(type.value) ? 'select' : 'input');
       control.setAttribute('data-default-control', '');
-      control.className = ['boolean', 'select'].includes(type.value) || usesLookup() ? 'form-select' : 'form-control';
-      if (type.value === 'select' || usesLookup()) {
+      control.className = ['boolean', 'select'].includes(type.value) ? 'form-select' : 'form-control';
+      if (type.value === 'select') {
         control.add(new Option(defaults.dataset.empty, ''));
-        if (usesLookup()) lookupOptions.forEach(option => control.add(new Option(option.label, option.code)));
-        else form.querySelectorAll('[data-key="options"] [data-repeat-row]').forEach(row => {
+        form.querySelectorAll('[data-key="options"] [data-repeat-row]').forEach(row => {
           const code = row.querySelector('[name="option_code[]"]').value;
           const label = row.querySelector('[name="option_label[]"]').value;
           const active = row.querySelector('[name="option_active[]"]').value === '1';
@@ -241,6 +238,8 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
     form.querySelector('[data-default-toggle]').hidden = date || type.value === 'relation';
     if (type.value === 'relation') useDefault.checked = (multiple.checked ? repeatedSources() : [single]).some(source => source.value.trim() !== '');
     if (date) useDefault.checked = dateMode.value !== 'none';
+    if (type.value === 'file') useDefault.checked = false;
+    defaults.hidden = type.value === 'file';
     const current = dateMode.querySelector('[value="current"]');
     current.textContent = type.value === 'date' ? current.dataset.currentDateLabel : current.dataset.currentDatetimeLabel;
     form.querySelector('[data-date-current-help]').hidden = !date || dateMode.value !== 'current';
@@ -250,7 +249,7 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
     const required = form.elements.required.checked && type.value === 'relation';
     deletion.querySelector('[value="clear"]').disabled = required;
     deletion.setCustomValidity(required && deletion.value === 'clear' ? deletion.dataset.requiredError : '');
-    toggle(lookup, type.value === 'relation' || (useDefault.checked && usesLookup()));
+    toggle(lookup, type.value === 'relation');
     toggle(form.querySelector('[data-default-single]'), fixedDefault && !multiple.checked);
     toggle(form.querySelector('[data-default-multiple]'), fixedDefault && multiple.checked);
     if (type.value === 'relation') {
@@ -259,7 +258,6 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
     }
     form.querySelectorAll('[data-field-types]').forEach(group => toggle(group, group.dataset.fieldTypes.split(' ').includes(type.value)));
     form.querySelectorAll('[data-field-multiple]').forEach(group => toggle(group, multiple.checked));
-    form.querySelectorAll('[data-file-storage]').forEach(group => toggle(group, type.value === 'file' && group.dataset.fileStorage === fileStorage.value));
     form.querySelectorAll('input[name="min_value"], input[name="max_value"]').forEach(input => {
       input.step = type.value === 'integer' ? '1' : 'any';
     });
@@ -326,7 +324,7 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
       if (lookupRequest !== request) return null;
       lookupOptions = data.options;
       lookupResult.replaceChildren(new Option(defaults.dataset.empty, ''), ...lookupOptions.map(option => new Option(option.label, option.code)));
-      lookupStatus.textContent = type.value === 'relation' ? '' : (lookupOptions.length ? lookup.dataset.loaded : lookup.dataset.empty);
+      lookupStatus.textContent = '';
       enhanceDefaults();
       return lookupOptions;
     } catch (error) {
@@ -360,11 +358,8 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
     lookupStatus.textContent = '';
     enhanceDefaults();
   };
-  for (const input of form.querySelectorAll('[name="target_collection_id"], [name="max_file_bytes"], [name="file_size_unit"], [name="allowed_mime_types[]"]')) {
-    input.addEventListener('change', invalidateLookup);
-  }
+  form.querySelector('[name="target_collection_id"]').addEventListener('change', invalidateLookup);
   type.addEventListener('change', invalidateLookup);
-  fileStorage.addEventListener('change', invalidateLookup);
   multiple.addEventListener('change', () => {
     if (isDate() && dateMode.value !== 'fixed') { toggle(choice, false); update(); return; }
     if (multiple.checked) {
@@ -409,7 +404,6 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   type.addEventListener('change', update);
   form.elements.required.addEventListener('change', update);
   form.elements.relation_on_delete.addEventListener('change', update);
-  fileStorage.addEventListener('change', update);
   useDefault.addEventListener('change', update);
   dateMode.addEventListener('change', update);
   form.elements.max_values.addEventListener('input', updateLimit);

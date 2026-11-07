@@ -20,7 +20,7 @@ interface CollectionFileRepositoryInterface
      * @param list<int> $fileIds
      * @return list<int>
      */
-    public function replaceValueLinks(int $fieldId, ?int $itemId, array $fileIds): array;
+    public function replaceValueLinks(int $fieldId, int $itemId, array $fileIds): array;
 
     /** @return list<int> */
     public function unlinkField(int $fieldId): array;

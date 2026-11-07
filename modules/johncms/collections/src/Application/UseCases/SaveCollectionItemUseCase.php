@@ -107,7 +107,7 @@ final readonly class SaveCollectionItemUseCase
             $dto = $this->validator->validate(form: $dto, definitions: $definitions->values(), applyDefaults: $id === null && $history === null, existingValues: $existingValues, allowInactiveOptions: $history !== null, scope: $scope);
             $this->validateRelations($dto, $definitions->values(), $valueFields);
             $written = $valueFields === null ? $definitions->values() : $definitions->filter(static fn (ContentCollectionField $field): bool => in_array($field->code, $valueFields, true))->values();
-            $registeredFiles = $written->contains(static fn ($field): bool => $field->type === FieldType::File && ($field->settings['file_storage'] ?? 'legacy') === 'registry');
+            $registeredFiles = $written->contains(static fn ($field): bool => $field->type === FieldType::File);
             if ($registeredFiles && $this->fileValues === null) {
                 throw new LogicException('Collection file values are not configured.');
             }

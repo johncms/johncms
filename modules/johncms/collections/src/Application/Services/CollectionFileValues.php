@@ -19,7 +19,7 @@ use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldReposito
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemValueRepositoryInterface;
 use Johncms\Updates\SystemOperationContext;
 
-/** File values and schema defaults have references separate from ordinary text attachments. */
+/** File values have references separate from ordinary text attachments. */
 final readonly class CollectionFileValues implements CollectionChangeHandlerInterface
 {
     public function __construct(
@@ -45,7 +45,7 @@ final readonly class CollectionFileValues implements CollectionChangeHandlerInte
         }
         $prepared = [];
         foreach ($fields as $field) {
-            if ($field->type === FieldType::File && ($field->settings['file_storage'] ?? 'legacy') === 'registry') {
+            if ($field->type === FieldType::File) {
                 $prepared[$field->id] = $this->validate($field, $form->values[$field->code] ?? [], $available);
             }
         }
@@ -67,29 +67,27 @@ final readonly class CollectionFileValues implements CollectionChangeHandlerInte
             return;
         }
         $field = $this->fields->findForUpdate($change->id);
-        if ($change->action === 'deleted' || $field === null || $field->type !== FieldType::File || ($field->settings['file_storage'] ?? 'legacy') !== 'registry') {
+        if ($change->action === 'deleted' || $field === null || $field->type !== FieldType::File) {
             $removed = $this->links->unlinkField($change->id);
-        } else {
-            try {
-                $available = $this->links->availableForCollection($change->collectionId);
-                $ids = $this->validate($field, $field->settings['default'] ?? [], $available);
-                $groups = $this->values->getFieldValuesForUpdate($field->id)->groupBy('item_id');
-                $itemIds = array_unique([...$this->links->fieldItems($field->id), ...$groups->keys()->all()]);
-                foreach ($itemIds as $itemId) {
-                    $rows = $groups->get($itemId);
-                    if ($rows !== null && $rows->contains(static fn ($row): bool => $row->item->collection_id !== $change->collectionId)) {
-                        throw $this->invalid($field);
-                    }
-                    $references = $this->validate($field, $rows?->pluck('value_string')->all() ?? [], $available);
-                    $old = $this->links->replaceValueLinks($field->id, $itemId, $references);
-                    $this->transaction->afterCommit(fn () => $this->attachments->removeUnreferenced($old));
-                }
-            } catch (CollectionItemFormException $exception) {
-                throw new CollectionSchemaException(implode(" ", array_merge(...array_values($exception->errors))), 0, $exception);
-            }
-            $removed = $this->links->replaceValueLinks($field->id, null, $ids);
+            $this->transaction->afterCommit(fn () => $this->attachments->removeUnreferenced($removed));
+            return;
         }
-        $this->transaction->afterCommit(fn () => $this->attachments->removeUnreferenced($removed));
+        try {
+            $available = $this->links->availableForCollection($change->collectionId);
+            $groups = $this->values->getFieldValuesForUpdate($field->id)->groupBy('item_id');
+            $itemIds = array_unique([...$this->links->fieldItems($field->id), ...$groups->keys()->all()]);
+            foreach ($itemIds as $itemId) {
+                $rows = $groups->get($itemId);
+                if ($rows !== null && $rows->contains(static fn ($row): bool => $row->item->collection_id !== $change->collectionId)) {
+                    throw $this->invalid($field);
+                }
+                $references = $this->validate($field, $rows?->pluck('value_string')->all() ?? [], $available);
+                $old = $this->links->replaceValueLinks($field->id, $itemId, $references);
+                $this->transaction->afterCommit(fn () => $this->attachments->removeUnreferenced($old));
+            }
+        } catch (CollectionItemFormException $exception) {
+            throw new CollectionSchemaException(implode(" ", array_merge(...array_values($exception->errors))), 0, $exception);
+        }
     }
 
     public function afterCommit(CollectionChangeDTO $change): void

@@ -80,15 +80,6 @@ final readonly class SaveCollectionFieldUseCase
                 throw new CollectionSchemaException(d__('collections', 'Convert existing values explicitly before changing their type or multiplicity.'));
             }
             $settings = array_replace($current->settings ?? [], $dto->settings);
-            if ($dto->type === FieldType::File) {
-                $settings['file_storage'] ??= $current?->type === $dto->type ? 'legacy' : 'registry';
-                if ($current?->type === $dto->type && ($current->settings['file_storage'] ?? 'legacy') !== $settings['file_storage'] && $this->repository->hasValues($current->id) && ! $this->context->isActive()) {
-                    throw new CollectionSchemaException(d__('collections', 'Convert existing file values explicitly before changing their storage mode.'));
-                }
-                if ($current?->type !== FieldType::File && $settings['file_storage'] === 'legacy' && ! $this->context->isActive()) {
-                    throw new CollectionSchemaException(d__('collections', 'New file fields must use registered files.'));
-                }
-            }
             $this->settingsValidator->validate($dto->type, $dto->multiple, $settings, $dto->required);
             if ($dto->type === FieldType::Relation) {
                 $target = $settings['target_collection_id'];

@@ -19,7 +19,6 @@ final readonly class CollectionFieldFormChoices
         private ContentCollectionRepositoryInterface $collections,
         private ContentCollectionItemRepositoryInterface $items,
         private EnsureCollectionContentAccessUseCase $access,
-        private CollectionFileChoices $files,
         private CollectionFieldSettingsValidator $validator,
     ) {
     }
@@ -36,20 +35,14 @@ final readonly class CollectionFieldFormChoices
      * @param list<string> $selected
      * @return list<array{code: string, label: string}>
      */
-    public function values(int $collectionId, FieldType $type, array $settings, string $term, array $selected): array
+    public function relationValues(int $collectionId, array $settings, string $term, array $selected): array
     {
         $this->access->execute($collectionId);
         if (mb_strlen($term) > 255 || count($selected) > 1000) {
             throw new InvalidArgumentException(d__('collections', 'Use a search term of at most 255 characters.'));
         }
         unset($settings['default']);
-        $this->validator->validate($type, false, $settings);
-        if ($type === FieldType::File && ($settings['file_storage'] ?? 'legacy') === 'registry') {
-            return array_map(static fn ($file): array => ['code' => $file->code, 'label' => $file->label . ' (' . $file->sizeLabel . ')'], $this->files->searchSettings($collectionId, 'default', $settings, $term, $selected));
-        }
-        if ($type !== FieldType::Relation) {
-            return [];
-        }
+        $this->validator->validate(FieldType::Relation, false, $settings);
         $target = $settings['target_collection_id'];
         $this->access->execute($target);
         if ($this->collections->findById($target) === null) {

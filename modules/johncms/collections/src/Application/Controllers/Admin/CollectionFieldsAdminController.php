@@ -108,7 +108,7 @@ final readonly class CollectionFieldsAdminController
         $fields = $this->fieldsFromRequest($request);
         $current = $id !== null ? $this->findOwnedField($collection_id, $id) : null;
         $fields['legacy_length_limits'] = $current !== null && $current->type->value === $fields['type']
-            && in_array($fields['type'], ['select', 'file'], true)
+            && $fields['type'] === 'select'
             && (isset($current->settings['min_length']) || isset($current->settings['max_length']));
         if ($request->hasBody('clear_relation_default') && $fields['type'] === 'relation') {
             if ($fields['multiple']) {
@@ -231,11 +231,10 @@ final readonly class CollectionFieldsAdminController
      */
     private function defaultOptions(int $collectionId, array $fields): array
     {
-        $type = FieldType::tryFrom($fields['type']);
-        if (! in_array($type, [FieldType::Relation, FieldType::File], true) || ($type === FieldType::File && $fields['file_storage'] !== 'registry')) {
+        if ($fields['type'] !== FieldType::Relation->value) {
             return [];
         }
-        return $this->choices->values($collectionId, $type, $this->settingsFromFields($fields), $fields['default_query'] ?? '', array_values(array_unique([$fields['default_value'], ...$fields['default_values']])));
+        return $this->choices->relationValues($collectionId, $this->settingsFromFields($fields), $fields['default_query'] ?? '', array_values(array_unique([$fields['default_value'], ...$fields['default_values']])));
     }
 
     public function deleteConfirm(Request $request, int $collection_id, int $id): ViewResponse
@@ -344,7 +343,7 @@ final readonly class CollectionFieldsAdminController
 
         $defaultOptions = [];
         $lookupError = '';
-        if (in_array($fields['type'], ['file', 'relation'], true)) {
+        if ($fields['type'] === FieldType::Relation->value) {
             try {
                 $defaultOptions = $this->defaultOptions($collection->id, $fields);
             } catch (CollectionSchemaException | InvalidArgumentException | CollectionAccessDeniedException $exception) {
@@ -373,7 +372,6 @@ final readonly class CollectionFieldsAdminController
             'file_size_unit' => $fields['file_size_unit'] ?? '1',
             'default_lookup_error' => $lookupError,
             'structure_locked' => $locked,
-            'legacy_file' => $field?->type === FieldType::File && ($field->settings['file_storage'] ?? 'legacy') === 'legacy',
             'owner_module' => $field->owner_module ?? '',
             'back_url'     => $this->baseUrl($collection->id),
             'id'           => $id,
@@ -410,11 +408,9 @@ final readonly class CollectionFieldsAdminController
             'option_rows' => $this->optionsFromRequest($request),
             'target_collection_id' => $request->body('target_collection_id'),
             'relation_on_delete' => $request->body('relation_on_delete', 'restrict'),
-            'file_storage' => $request->body('file_storage', 'registry'),
             'max_file_bytes' => $request->body('max_file_bytes'),
             'file_size_unit' => $request->body('file_size_unit', '1'),
             'file_constraints_present' => $request->hasBody('file_constraints_present'),
-            'file_storage_present' => $request->hasBody('file_storage'),
             'allowed_mime_types' => array_values(array_filter($request->bodyList('allowed_mime_types'), is_string(...))),
             'date_default_mode' => $request->body('date_default_mode', $request->hasBody('use_default') ? 'fixed' : 'none'),
             'date_default_mode_present' => $request->hasBody('date_default_mode'),
@@ -443,7 +439,7 @@ final readonly class CollectionFieldsAdminController
             'in_list'  => $field->in_list ? 1 : 0,
             'sort'     => $field->sort,
             ...$this->settingsToFields($field->settings ?? []),
-            'legacy_length_limits' => in_array($field->type, [FieldType::Select, FieldType::File], true)
+            'legacy_length_limits' => $field->type === FieldType::Select
                 && (isset($field->settings['min_length']) || isset($field->settings['max_length'])),
         ];
     }
@@ -477,7 +473,6 @@ final readonly class CollectionFieldsAdminController
             'in_list'  => 0,
             'sort'     => 100,
             ...$this->settingsToFields([]),
-            'file_storage' => 'registry',
         ];
     }
 
@@ -511,12 +506,11 @@ final readonly class CollectionFieldsAdminController
             'hint' => $settings['hint'] ?? '',
             'target_collection_id' => $settings['target_collection_id'] ?? '',
             'relation_on_delete' => $settings['on_delete'] ?? 'restrict',
-            'file_storage' => $settings['file_storage'] ?? 'legacy',
             'max_file_bytes' => $settings['max_file_bytes'] ?? CollectionFilePolicy::DEFAULT_MAX_BYTES,
             'allowed_mime_types' => $settings['allowed_mime_types'] ?? array_keys(CollectionFilePolicy::TYPES),
             'option_rows' => array_map(static fn (array $option): array => $option + ['active' => true], $settings['options'] ?? []), 'use_default' => $default !== null || ($settings['date_preset'] ?? null) === 'current',
             'default_value' => is_string($default) ? $default : '', 'default_values' => is_array($default) ? $default : [],
-            'legacy_length_limits' => isset($settings['min_length']) || isset($settings['max_length']),
+            'legacy_length_limits' => false,
             'min_length' => $settings['min_length'] ?? '', 'max_length' => $settings['max_length'] ?? '',
             'min_value' => $settings['min_value'] ?? '', 'max_value' => $settings['max_value'] ?? '', 'max_values' => $settings['max_values'] ?? '',
         ];
@@ -534,7 +528,7 @@ final readonly class CollectionFieldsAdminController
             $default = array_values(array_unique($default));
         }
         $useDefault = $fields['type'] === 'relation' ? ($fields['multiple'] ? $default !== [] : trim($default) !== '') : $fields['use_default'];
-        $settings = ['hint' => $fields['hint'], 'default' => $useDefault ? $default : null];
+        $settings = ['hint' => $fields['hint'], 'default' => $useDefault && $fields['type'] !== 'file' ? $default : null];
         $settings['date_preset'] = null;
         if (in_array($fields['type'], ['date', 'datetime'], true) && ($fields['date_default_mode_present'] ?? true)) {
             $mode = $fields['date_default_mode'];
@@ -546,7 +540,7 @@ final readonly class CollectionFieldsAdminController
         }
 
         $lengthLimits = in_array($fields['type'], ['string', 'text', 'html'], true)
-            || (in_array($fields['type'], ['select', 'file'], true) && ($fields['legacy_length_limits'] ?? false));
+            || ($fields['type'] === 'select' && ($fields['legacy_length_limits'] ?? false));
         $numericLimits = in_array($fields['type'], ['integer', 'double'], true);
         foreach (['min_length', 'max_length', 'min_value', 'max_value', 'max_values'] as $key) {
             $applicable = match ($key) {
@@ -562,24 +556,16 @@ final readonly class CollectionFieldsAdminController
             $integer = filter_var($raw, FILTER_VALIDATE_INT);
             $settings[$key] = $raw === '' ? null : ($integer !== false ? $integer : (in_array($key, ['min_value', 'max_value'], true) && is_numeric($raw) ? (float) $raw : $raw));
         }
-        if ($fields['type'] === 'file') {
-            if ($fields['file_storage_present'] ?? true) {
-                $settings['file_storage'] = $fields['file_storage'];
+        if ($fields['type'] === 'file' && ($fields['file_constraints_present'] ?? true)) {
+            $bytes = filter_var($fields['max_file_bytes'], FILTER_VALIDATE_INT);
+            $size = $fields['max_file_bytes'];
+            $unit = $fields['file_size_unit'] ?? '1';
+            if ($unit !== '1') {
+                $scaled = is_numeric($size) && in_array($unit, ['1024', '1048576'], true) ? (float) $size * (int) $unit : -1;
+                $bytes = is_finite($scaled) && $scaled >= 1 && $scaled <= 1073741824 && floor($scaled) === $scaled ? (int) $scaled : false;
             }
-            if ($fields['file_storage'] === 'legacy') {
-                $settings['max_file_bytes'] = null;
-                $settings['allowed_mime_types'] = null;
-            } elseif ($fields['file_constraints_present'] ?? true) {
-                $bytes = filter_var($fields['max_file_bytes'], FILTER_VALIDATE_INT);
-                $size = $fields['max_file_bytes'];
-                $unit = $fields['file_size_unit'] ?? '1';
-                if ($unit !== '1') {
-                    $scaled = is_numeric($size) && in_array($unit, ['1024', '1048576'], true) ? (float) $size * (int) $unit : -1;
-                    $bytes = is_finite($scaled) && $scaled >= 1 && $scaled <= 1073741824 && floor($scaled) === $scaled ? (int) $scaled : false;
-                }
-                $settings['max_file_bytes'] = $size === '' ? null : ($bytes !== false ? $bytes : ($unit !== '1' ? 'invalid file size' : $size));
-                $settings['allowed_mime_types'] = $fields['allowed_mime_types'];
-            }
+            $settings['max_file_bytes'] = $size === '' ? null : ($bytes !== false ? $bytes : ($unit !== '1' ? 'invalid file size' : $size));
+            $settings['allowed_mime_types'] = $fields['allowed_mime_types'];
         }
         if ($fields['type'] === 'relation') {
             $target = filter_var($fields['target_collection_id'], FILTER_VALIDATE_INT);

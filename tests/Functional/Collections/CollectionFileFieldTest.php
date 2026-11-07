@@ -42,7 +42,6 @@ final class CollectionFileFieldTest extends FunctionalTestCase
         Fixture::insert('collection_file_links', ['file_id' => $available, 'item_id' => $source]);
         $schema = $this->container()->get(CollectionSchemaApiInterface::class);
         $schema->saveField(null, new CollectionFieldFormDTO(collectionId: $collection, code: 'attachment', name: 'Attachment', type: FieldType::File, required: false, multiple: false, sort: 100, inList: true));
-        self::assertSame('registry', $schema->getFields($collection)[0]->settings['file_storage']);
         $user = FunctionalUserFactory::createSupervisor();
         $url = '/admin/collections/' . $collection . '/items';
         self::assertSame(200, $this->postForm($url, ['name' => 'Forged', 'sort' => '100', 'field_attachment' => (string) $foreign], $user)->getStatusCode());
@@ -237,20 +236,5 @@ final class CollectionFileFieldTest extends FunctionalTestCase
         $file = $this->container()->get(FileStore::class)->storeContents($contents, $name, 'file-widget-tests/' . bin2hex(random_bytes(8)));
         $this->files[] = $file->id;
         return $file->id;
-    }
-
-    public function testLegacyPathsAreNotReinterpretedByEditingTheField(): void
-    {
-        $collection = Fixture::insert('collections', ['code' => 'legacy-files', 'name' => 'Legacy']);
-        $field = Fixture::insert('collection_fields', ['collection_id' => $collection, 'code' => 'attachment', 'name' => 'Attachment', 'type' => 'file']);
-        $item = Fixture::insert('collection_items', ['collection_id' => $collection, 'code' => 'legacy', 'name' => 'Legacy']);
-        Fixture::insert('collection_item_values', ['field_id' => $field, 'item_id' => $item, 'value_string' => '/legacy/photo.jpg']);
-        $user = FunctionalUserFactory::createSupervisor();
-        $url = '/admin/collections/' . $collection . '/fields';
-        $html = (string) $this->handleRequest($url . '/' . $field . '/edit', cookies: $this->actingAs($user))->getContent();
-        self::assertSame('legacy', HTMLDocument::createFromString($html, LIBXML_NOERROR)->querySelector('select[name="file_storage"] option[selected]')->getAttribute('value'));
-        self::assertSame(200, $this->postForm($url, ['id' => $field, 'code' => 'attachment', 'name' => 'Attachment', 'type' => 'file', 'sort' => '100', 'file_storage' => 'registry'], $user)->getStatusCode());
-        self::assertSame('/legacy/photo.jpg', Capsule::table('collection_item_values')->where('field_id', $field)->value('value_string'));
-        self::assertSame(302, $this->postForm($url, ['id' => $field, 'code' => 'attachment', 'name' => 'Attachment renamed', 'type' => 'file', 'sort' => '100', 'file_storage' => 'legacy'], $user)->getStatusCode());
     }
 }

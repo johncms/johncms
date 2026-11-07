@@ -477,7 +477,7 @@ final readonly class CollectionItemsAdminController
             }
             $fileChoices = [];
             $fileError = '';
-            $registeredFile = $field->type === FieldType::File && ($field->settings['file_storage'] ?? 'legacy') === 'registry';
+            $registeredFile = $field->type === FieldType::File;
             if ($registeredFile) {
                 try {
                     $fileChoices = $this->fileChoices->search($field->collection_id, $field->code, $context, $fileQueries[$field->code] ?? '', $field->multiple ? $entries : [$value]);
@@ -688,7 +688,7 @@ final readonly class CollectionItemsAdminController
         $index = (int) $match[2];
         $value = $fields['values'][$match[1]] ?? null;
         if (
-            $field === null || $field->type !== FieldType::File || ($field->settings['file_storage'] ?? 'legacy') !== 'registry'
+            $field === null || $field->type !== FieldType::File
             || ($field->multiple ? (! is_array($value) || ! array_key_exists($index, $value)) : ($index !== 0 || ! is_string($value)))
         ) {
             throw new InvalidArgumentException('Choose an existing registered file field and row.');

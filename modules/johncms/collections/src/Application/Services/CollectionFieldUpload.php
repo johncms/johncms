@@ -80,7 +80,7 @@ final readonly class CollectionFieldUpload
     /** @phpstan-assert ContentCollectionField $field */
     private function requireField(?ContentCollectionField $field): void
     {
-        if ($field === null || $field->type !== FieldType::File || ($field->settings['file_storage'] ?? 'legacy') !== 'registry') {
+        if ($field === null || $field->type !== FieldType::File) {
             throw new CollectionItemFormException(['files' => [d__('collections', 'Choose a registered file field of this collection.')]]);
         }
     }

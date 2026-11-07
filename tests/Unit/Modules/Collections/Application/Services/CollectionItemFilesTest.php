@@ -204,30 +204,9 @@ final class CollectionItemFilesTest extends TestCase
         self::assertNull($this->store->find($file->id));
     }
 
-    public function testSchemaDefaultsOwnTheirReferencesIndependentlyOfTheOriginalItem(): void
-    {
-        $file = $this->store->storeContents('default file', 'default.txt', 'collections');
-        $this->system->runTrusted(fn () => $this->files->registerExisting($this->collection, $this->item, [$file->id], true));
-        $field = $this->field(['default' => (string) $file->id]);
-        CollectionItemWriterFactory::itemDeleter($this->changes)->execute($this->item);
-        self::assertNotNull($this->store->find($file->id));
-        $item = $this->writer()->execute(null, $this->fileForm());
-        self::assertSame((string) $file->id, CollectionItemWriterFactory::itemRepository()->findWithValues($item)->getValuesMap()['file']);
-        $this->field(['default' => null], $field);
-        self::assertNotNull($this->store->find($file->id));
-        CollectionItemWriterFactory::itemDeleter($this->changes)->execute($item);
-        self::assertNull($this->store->find($file->id));
-    }
-
-    public function testUnrelatedRegistryEntriesCannotBeAssignedOrUsedAsDefaults(): void
+    public function testUnrelatedRegistryEntriesCannotBeAssigned(): void
     {
         $file = $this->store->storeContents('unrelated file', 'other.txt', 'elsewhere');
-        try {
-            $this->field(['default' => (string) $file->id]);
-            self::fail('A schema default must not grant access to an unrelated registry entry.');
-        } catch (CollectionSchemaException) {
-            self::assertSame(0, Capsule::table('collection_fields')->count());
-        }
         $this->field();
         $this->expectException(CollectionItemFormException::class);
         $this->writer()->execute($this->item, $this->fileForm((string) $file->id));
@@ -250,27 +229,6 @@ final class CollectionItemFilesTest extends TestCase
         $this->writer()->execute($this->item, $form, 42);
         self::assertNull($this->links->context($token));
         self::assertSame((string) $file->id, CollectionItemWriterFactory::itemRepository()->findWithValues($this->item)->getValuesMap()['file']);
-    }
-
-    public function testLegacyPathsRequireExplicitConversionAndConvertedValuesReceiveReferences(): void
-    {
-        $field = $this->system->runTrusted(fn () => $this->field(['file_storage' => 'legacy']));
-        $this->writer()->execute($this->item, $this->fileForm('/legacy/picture.jpg'));
-        try {
-            $this->field(['file_storage' => 'registry'], $field);
-            self::fail('Existing strings must not silently turn into registry IDs.');
-        } catch (CollectionSchemaException) {
-            self::assertSame('/legacy/picture.jpg', Capsule::table('collection_item_values')->value('value_string'));
-        }
-        $file = $this->store->storeContents('external converted value', 'external.txt', 'elsewhere');
-        $this->system->runTrusted(fn () => Capsule::connection()->transaction(function () use ($field, $file): void {
-            Capsule::table('collection_item_values')->where('field_id', $field)->update(['value_string' => (string) $file->id]);
-            $this->field(['file_storage' => 'registry'], $field);
-        }));
-        self::assertTrue($this->links->hasLinks($file->id));
-        self::assertSame([$file->id], $this->links->itemFiles($this->item));
-        $this->writer()->execute($this->item, $this->fileForm(''));
-        self::assertNotNull($this->store->find($file->id), 'External file ownership must remain external.');
     }
 
     /** @param array<string, mixed> $settings */

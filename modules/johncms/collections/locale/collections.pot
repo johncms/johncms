@@ -61,8 +61,8 @@ msgstr ""
 
 #: modules/johncms/collections/src/Application/Checks/CollectionDeclarationsCheck.php:22
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionBulkAdminController.php:75
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:669
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:687
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:655
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:673
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:791
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:810
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:408
@@ -122,8 +122,8 @@ msgid "Bulk actions"
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:55
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:696
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:697
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:682
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:683
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:162
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:209
 #: modules/johncms/collections/src/Application/Services/CollectionWorkspaceMapper.php:55
@@ -134,12 +134,12 @@ msgstr ""
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:127
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:180
 #: modules/johncms/collections/src/Application/Services/CollectionFieldValueRules.php:50
-#: modules/johncms/collections/templates/admin/field-form.twig:179
+#: modules/johncms/collections/templates/admin/field-form.twig:169
 msgid "Choose an available option for this field."
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:149
-#: modules/johncms/collections/templates/admin/field-form.twig:249
+#: modules/johncms/collections/templates/admin/field-form.twig:239
 msgid "Choose the default value to keep. Other values remain in the draft until you save."
 msgstr ""
 
@@ -184,33 +184,33 @@ msgstr ""
 msgid "Collection not found."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:254
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:253
 #: modules/johncms/collections/src/Application/UseCases/DeleteCollectionFieldUseCase.php:40
 #: modules/johncms/collections/src/Application/UseCases/SaveCollectionFieldUseCase.php:53
 msgid "This field is managed by its module. Change the declaration or use its trusted update hook."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:257
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:256
 msgid "Delete field"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:258
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:257
 msgid "Are you sure you want to delete the field?"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:288
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:287
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:343
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:211
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:192
 msgid "Deleted successfully"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:322
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:321
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:256
 msgid "Edit"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:323
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:322
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:260
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:214
 #: modules/johncms/collections/src/Application/Services/ItemListRowMapper.php:88
@@ -218,84 +218,84 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:342
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:341
 msgid "Edit field"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:342
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:341
 #: modules/johncms/collections/templates/admin/fields.twig:16
 #: modules/johncms/collections/templates/admin/fields.twig:31
 msgid "New field"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:361
-#: modules/johncms/collections/templates/admin/field-form.twig:201
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:360
+#: modules/johncms/collections/templates/admin/field-form.twig:191
 msgid "Unavailable record"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:542
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:536
 msgid "Choose a valid initial date value."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:617
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:603
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:498
 msgid "The required fields are not filled"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:622
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:608
 msgid "The code may contain only lowercase latin letters, digits, hyphen and underscore"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:626
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:612
 msgid "Unknown field type"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:648
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:634
 msgid "String"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:649
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:635
 msgid "Text"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:650
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:636
 msgid "HTML"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:651
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:637
 msgid "Integer"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:652
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:638
 msgid "Number (fractional)"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:653
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:639
 msgid "Boolean"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:654
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:640
 msgid "Date"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:655
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:641
 msgid "Date and time"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:656
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:642
 msgid "File"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:657
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:643
 msgid "Select"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:658
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:644
 msgid "Relation"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:689
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:699
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:675
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:685
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:812
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:822
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:429
@@ -461,37 +461,37 @@ msgstr ""
 msgid "Enable the owning module before deleting its content."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/CollectionDeclarationsSynchronizer.php:141
+#: modules/johncms/collections/src/Application/Services/CollectionDeclarationsSynchronizer.php:135
 #, php-format
 msgid "Collection %s is missing. Run system:update; rename any custom collection using code %s."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/CollectionDeclarationsSynchronizer.php:149
+#: modules/johncms/collections/src/Application/Services/CollectionDeclarationsSynchronizer.php:143
 #, php-format
 msgid "Collection %s differs from its declaration. Run system:update."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/CollectionDeclarationsSynchronizer.php:155
+#: modules/johncms/collections/src/Application/Services/CollectionDeclarationsSynchronizer.php:149
 #, php-format
 msgid "Field %s in %s is missing. Run system:update and resolve any conflicting field role."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/CollectionDeclarationsSynchronizer.php:157
+#: modules/johncms/collections/src/Application/Services/CollectionDeclarationsSynchronizer.php:151
 #, php-format
 msgid "Field %s in %s belongs to the administrator. Rename this custom field before updating."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/CollectionDeclarationsSynchronizer.php:159
+#: modules/johncms/collections/src/Application/Services/CollectionDeclarationsSynchronizer.php:153
 #, php-format
 msgid "Field %s in %s needs type or multiplicity conversion in the owner update hook."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/CollectionDeclarationsSynchronizer.php:161
+#: modules/johncms/collections/src/Application/Services/CollectionDeclarationsSynchronizer.php:155
 #, php-format
 msgid "Field %s in %s needs option migration in the owner update hook."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/CollectionDeclarationsSynchronizer.php:163
+#: modules/johncms/collections/src/Application/Services/CollectionDeclarationsSynchronizer.php:157
 #, php-format
 msgid "Field %s in %s differs from its declaration. Run system:update."
 msgstr ""
@@ -510,12 +510,12 @@ msgstr ""
 msgid "The contents changed after confirmation was opened. Check the new counts and confirm again."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/CollectionFieldFormChoices.php:43
+#: modules/johncms/collections/src/Application/Services/CollectionFieldFormChoices.php:42
 msgid "Use a search term of at most 255 characters."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/CollectionFieldFormChoices.php:56
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionFieldUseCase.php:96
+#: modules/johncms/collections/src/Application/Services/CollectionFieldFormChoices.php:49
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionFieldUseCase.php:87
 msgid "Choose an existing target collection."
 msgstr ""
 
@@ -539,28 +539,28 @@ msgstr ""
 msgid "The minimum limit must not exceed the maximum."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/CollectionFieldSettingsValidator.php:57
-msgid "Choose registry or legacy storage for a file field."
-msgstr ""
-
-#: modules/johncms/collections/src/Application/Services/CollectionFieldSettingsValidator.php:63
+#: modules/johncms/collections/src/Application/Services/CollectionFieldSettingsValidator.php:60
 msgid "Choose a file size limit from 1 byte to 1 GiB and at least one supported content type."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/CollectionFieldSettingsValidator.php:67
+#: modules/johncms/collections/src/Application/Services/CollectionFieldSettingsValidator.php:64
 msgid "Choose supported file content types."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/CollectionFieldSettingsValidator.php:72
+#: modules/johncms/collections/src/Application/Services/CollectionFieldSettingsValidator.php:69
 msgid "Choose a target collection for this relation field."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/CollectionFieldSettingsValidator.php:75
+#: modules/johncms/collections/src/Application/Services/CollectionFieldSettingsValidator.php:72
 msgid "Use restrict or clear for relation deletion. Required relations must use restrict."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/CollectionFieldSettingsValidator.php:85
+#: modules/johncms/collections/src/Application/Services/CollectionFieldSettingsValidator.php:82
 msgid "Use the current date preset only on date fields without a fixed default."
+msgstr ""
+
+#: modules/johncms/collections/src/Application/Services/CollectionFieldSettingsValidator.php:88
+msgid "A file field has no default value."
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Services/CollectionFieldSettingsValidator.php:92
@@ -568,7 +568,7 @@ msgid "Use a string default for one value or a list of strings for multiple valu
 msgstr ""
 
 #: modules/johncms/collections/src/Application/Services/CollectionFieldSettingsValidator.php:96
-#: modules/johncms/collections/templates/admin/field-form.twig:179
+#: modules/johncms/collections/templates/admin/field-form.twig:169
 msgid "The default exceeds the configured number of values."
 msgstr ""
 
@@ -622,7 +622,7 @@ msgstr ""
 msgid "The registered file is unavailable. Restore it or upload another file."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/CollectionFileValues.php:131
+#: modules/johncms/collections/src/Application/Services/CollectionFileValues.php:129
 msgid "Choose a registered file of this collection or upload it in your current form."
 msgstr ""
 
@@ -852,7 +852,7 @@ msgstr ""
 #: modules/johncms/collections/src/Application/Services/ItemListControlsMapper.php:41
 #: modules/johncms/collections/templates/admin/components/item-field.twig:14
 #: modules/johncms/collections/templates/admin/components/item-field.twig:23
-#: modules/johncms/collections/templates/admin/field-form.twig:215
+#: modules/johncms/collections/templates/admin/field-form.twig:205
 msgid "Search"
 msgstr ""
 
@@ -909,9 +909,9 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: modules/johncms/collections/src/Application/Services/ItemListRowMapper.php:162
-#: modules/johncms/collections/src/Application/Services/ItemListRowMapper.php:166
-#: modules/johncms/collections/src/Application/Services/ItemListRowMapper.php:168
+#: modules/johncms/collections/src/Application/Services/ItemListRowMapper.php:159
+#: modules/johncms/collections/src/Application/Services/ItemListRowMapper.php:163
+#: modules/johncms/collections/src/Application/Services/ItemListRowMapper.php:165
 #: modules/johncms/collections/templates/admin/components/file-value.twig:12
 msgid "Unavailable file"
 msgstr ""
@@ -961,7 +961,7 @@ msgstr ""
 
 #: modules/johncms/collections/src/Application/UseCases/SaveCollectionFieldUseCase.php:63
 #: modules/johncms/collections/src/Application/UseCases/SaveCollectionFieldUseCase.php:64
-#: modules/johncms/collections/templates/admin/field-form.twig:290
+#: modules/johncms/collections/templates/admin/field-form.twig:280
 msgid "The tags role requires a multiple string field."
 msgstr ""
 
@@ -974,23 +974,15 @@ msgstr ""
 msgid "Convert existing values explicitly before changing their type or multiplicity."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionFieldUseCase.php:86
-msgid "Convert existing file values explicitly before changing their storage mode."
-msgstr ""
-
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionFieldUseCase.php:89
-msgid "New file fields must use registered files."
-msgstr ""
-
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionFieldUseCase.php:99
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionFieldUseCase.php:90
 msgid "Convert existing relations explicitly before changing their target collection."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionFieldUseCase.php:104
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionFieldUseCase.php:95
 msgid "Relation defaults must reference existing items of the target collection."
 msgstr ""
 
-#: modules/johncms/collections/src/Application/UseCases/SaveCollectionFieldUseCase.php:112
+#: modules/johncms/collections/src/Application/UseCases/SaveCollectionFieldUseCase.php:103
 msgid "A used option cannot be removed. Disable it instead."
 msgstr ""
 
@@ -1109,7 +1101,7 @@ msgstr ""
 
 #: modules/johncms/collections/templates/admin/bulk-confirm.twig:31
 #: modules/johncms/collections/templates/admin/delete-dialog.twig:70
-#: modules/johncms/collections/templates/admin/field-form.twig:252
+#: modules/johncms/collections/templates/admin/field-form.twig:242
 msgid "Cancel"
 msgstr ""
 
@@ -1255,7 +1247,7 @@ msgid "Items per page"
 msgstr ""
 
 #: modules/johncms/collections/templates/admin/collection/form.twig:192
-#: modules/johncms/collections/templates/admin/field-form.twig:293
+#: modules/johncms/collections/templates/admin/field-form.twig:283
 #: modules/johncms/collections/templates/admin/fields.twig:42
 #: modules/johncms/collections/templates/admin/item-form.twig:144
 #: modules/johncms/collections/templates/admin/section-form.twig:76
@@ -1309,9 +1301,9 @@ msgstr ""
 #: modules/johncms/collections/templates/admin/components/file-value.twig:4
 #: modules/johncms/collections/templates/admin/components/repeated-row.twig:19
 #: modules/johncms/collections/templates/admin/components/select-options.twig:1
-#: modules/johncms/collections/templates/admin/field-form.twig:179
-#: modules/johncms/collections/templates/admin/field-form.twig:187
-#: modules/johncms/collections/templates/admin/field-form.twig:234
+#: modules/johncms/collections/templates/admin/field-form.twig:169
+#: modules/johncms/collections/templates/admin/field-form.twig:177
+#: modules/johncms/collections/templates/admin/field-form.twig:224
 msgid "No value"
 msgstr ""
 
@@ -1431,14 +1423,14 @@ msgstr ""
 #: modules/johncms/collections/templates/admin/components/items-table.twig:44
 #: modules/johncms/collections/templates/admin/components/option-row.twig:17
 #: modules/johncms/collections/templates/admin/components/repeated-row.twig:20
-#: modules/johncms/collections/templates/admin/field-form.twig:179
+#: modules/johncms/collections/templates/admin/field-form.twig:169
 msgid "Yes"
 msgstr ""
 
 #: modules/johncms/collections/templates/admin/components/items-table.twig:44
 #: modules/johncms/collections/templates/admin/components/option-row.twig:18
 #: modules/johncms/collections/templates/admin/components/repeated-row.twig:21
-#: modules/johncms/collections/templates/admin/field-form.twig:179
+#: modules/johncms/collections/templates/admin/field-form.twig:169
 msgid "No"
 msgstr ""
 
@@ -1472,15 +1464,15 @@ msgstr ""
 
 #: modules/johncms/collections/templates/admin/components/option-row.twig:23
 #: modules/johncms/collections/templates/admin/components/repeated-row.twig:29
-#: modules/johncms/collections/templates/admin/field-form.twig:203
-#: modules/johncms/collections/templates/admin/field-form.twig:240
+#: modules/johncms/collections/templates/admin/field-form.twig:193
+#: modules/johncms/collections/templates/admin/field-form.twig:230
 msgid "Move up"
 msgstr ""
 
 #: modules/johncms/collections/templates/admin/components/option-row.twig:24
 #: modules/johncms/collections/templates/admin/components/repeated-row.twig:30
-#: modules/johncms/collections/templates/admin/field-form.twig:203
-#: modules/johncms/collections/templates/admin/field-form.twig:241
+#: modules/johncms/collections/templates/admin/field-form.twig:193
+#: modules/johncms/collections/templates/admin/field-form.twig:231
 msgid "Move down"
 msgstr ""
 
@@ -1510,7 +1502,7 @@ msgid "Value"
 msgstr ""
 
 #: modules/johncms/collections/templates/admin/components/repeated-row.twig:31
-#: modules/johncms/collections/templates/admin/field-form.twig:203
+#: modules/johncms/collections/templates/admin/field-form.twig:193
 msgid "Remove value"
 msgstr ""
 
@@ -1612,237 +1604,217 @@ msgstr ""
 msgid "Input settings"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:96
-msgid "File storage"
-msgstr ""
-
-#: modules/johncms/collections/templates/admin/field-form.twig:98
-msgid "Registered files"
-msgstr ""
-
-#: modules/johncms/collections/templates/admin/field-form.twig:99
-msgid "Legacy file paths"
-msgstr ""
-
-#: modules/johncms/collections/templates/admin/field-form.twig:103
-msgid "Existing paths require explicit conversion before switching to registered file IDs."
-msgstr ""
-
-#: modules/johncms/collections/templates/admin/field-form.twig:106
+#: modules/johncms/collections/templates/admin/field-form.twig:97
 msgid "Maximum file size"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:110
+#: modules/johncms/collections/templates/admin/field-form.twig:101
 msgid "File size unit"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:111
+#: modules/johncms/collections/templates/admin/field-form.twig:102
 msgid "Bytes"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:114
+#: modules/johncms/collections/templates/admin/field-form.twig:105
 msgid "Allowed file types"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:124
+#: modules/johncms/collections/templates/admin/field-form.twig:115
 msgid "The actual file content is checked. Server upload and image limits also apply."
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:128
+#: modules/johncms/collections/templates/admin/field-form.twig:118
 msgid "Target collection"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:134
+#: modules/johncms/collections/templates/admin/field-form.twig:124
 msgid "When a related item is deleted"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:136
+#: modules/johncms/collections/templates/admin/field-form.twig:126
 msgid "Prevent deletion while referenced"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:137
+#: modules/johncms/collections/templates/admin/field-form.twig:127
 msgid "Clear optional relations"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:140
+#: modules/johncms/collections/templates/admin/field-form.twig:130
 msgid "Required relations and field defaults must be resolved before deleting their targets."
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:147
+#: modules/johncms/collections/templates/admin/field-form.twig:137
 msgid "Hint"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:152
+#: modules/johncms/collections/templates/admin/field-form.twig:142
 msgid "Minimum text length"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:157
+#: modules/johncms/collections/templates/admin/field-form.twig:147
 msgid "Maximum text length"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:162
+#: modules/johncms/collections/templates/admin/field-form.twig:152
 msgid "Minimum numeric value"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:167
+#: modules/johncms/collections/templates/admin/field-form.twig:157
 msgid "Maximum numeric value"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:172
+#: modules/johncms/collections/templates/admin/field-form.twig:162
 msgid "Maximum number of values"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:175
+#: modules/johncms/collections/templates/admin/field-form.twig:165
 msgid "For multiple fields. Leave limits empty to use the storage limits."
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:177
+#: modules/johncms/collections/templates/admin/field-form.twig:167
 msgid "HTML length includes markup. Limits apply to each value."
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:178
+#: modules/johncms/collections/templates/admin/field-form.twig:168
 msgid "Strings are stored with a maximum of 255 characters. Limits apply to each value."
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:182
+#: modules/johncms/collections/templates/admin/field-form.twig:172
 msgid "Use a default value"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:185
+#: modules/johncms/collections/templates/admin/field-form.twig:175
 msgid "Initial value"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:188
+#: modules/johncms/collections/templates/admin/field-form.twig:178
 msgid "Today"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:188
+#: modules/johncms/collections/templates/admin/field-form.twig:178
 msgid "Current date and time"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:189
+#: modules/johncms/collections/templates/admin/field-form.twig:179
 msgid "Specified date"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:192
+#: modules/johncms/collections/templates/admin/field-form.twig:182
 msgid "Filled when opening a new item form, using site time. You can edit the displayed value before saving."
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:195
-#: modules/johncms/collections/templates/admin/field-form.twig:227
-#: modules/johncms/collections/templates/admin/field-form.twig:233
-#: modules/johncms/collections/templates/admin/field-form.twig:256
-#: modules/johncms/collections/templates/admin/field-form.twig:310
+#: modules/johncms/collections/templates/admin/field-form.twig:185
+#: modules/johncms/collections/templates/admin/field-form.twig:217
+#: modules/johncms/collections/templates/admin/field-form.twig:223
+#: modules/johncms/collections/templates/admin/field-form.twig:246
+#: modules/johncms/collections/templates/admin/field-form.twig:300
 msgid "Default value"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:195
-#: modules/johncms/collections/templates/admin/field-form.twig:210
-#: modules/johncms/collections/templates/admin/field-form.twig:233
-#: modules/johncms/collections/templates/admin/field-form.twig:263
+#: modules/johncms/collections/templates/admin/field-form.twig:185
+#: modules/johncms/collections/templates/admin/field-form.twig:200
+#: modules/johncms/collections/templates/admin/field-form.twig:223
+#: modules/johncms/collections/templates/admin/field-form.twig:253
 msgid "Default values"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:196
+#: modules/johncms/collections/templates/admin/field-form.twig:186
 msgid "Search records by name"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:197
+#: modules/johncms/collections/templates/admin/field-form.twig:187
 msgid "Select the target collection first."
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:198
+#: modules/johncms/collections/templates/admin/field-form.twig:188
 msgid "Search in collection: %s"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:200
+#: modules/johncms/collections/templates/admin/field-form.twig:190
 msgid "The selected record is unavailable in this collection. Clear it or select another record."
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:202
+#: modules/johncms/collections/templates/admin/field-form.twig:192
 msgid "Selected: %d"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:202
+#: modules/johncms/collections/templates/admin/field-form.twig:192
 msgid "No records selected"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:204
+#: modules/johncms/collections/templates/admin/field-form.twig:194
 msgid "Could not load default choices. Try again."
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:204
-msgid "Choose a value and apply it to the default."
-msgstr ""
-
-#: modules/johncms/collections/templates/admin/field-form.twig:204
+#: modules/johncms/collections/templates/admin/field-form.twig:194
 msgid "No matching values were found. Refine your search."
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:206
+#: modules/johncms/collections/templates/admin/field-form.twig:196
 msgid "Search default values"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:214
-#: modules/johncms/collections/templates/admin/field-form.twig:243
+#: modules/johncms/collections/templates/admin/field-form.twig:204
+#: modules/johncms/collections/templates/admin/field-form.twig:233
 msgid "Clear"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:218
+#: modules/johncms/collections/templates/admin/field-form.twig:208
 msgid "Search results"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:221
+#: modules/johncms/collections/templates/admin/field-form.twig:211
 msgid "Done"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:230
-#: modules/johncms/collections/templates/admin/field-form.twig:251
+#: modules/johncms/collections/templates/admin/field-form.twig:220
+#: modules/johncms/collections/templates/admin/field-form.twig:241
 msgid "Use this value"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:266
+#: modules/johncms/collections/templates/admin/field-form.twig:256
 msgid "Pre-filled for new items. Existing items are not changed."
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:267
+#: modules/johncms/collections/templates/admin/field-form.twig:257
 msgid "Use 1 for Yes and 0 for No."
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:268
+#: modules/johncms/collections/templates/admin/field-form.twig:258
 msgid "Enter a date as YYYY-MM-DD, for example 2026-11-06."
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:269
+#: modules/johncms/collections/templates/admin/field-form.twig:259
 msgid "Enter date and time as YYYY-MM-DD HH:MM:SS, for example 2026-11-06 12:30:00."
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:279
+#: modules/johncms/collections/templates/admin/field-form.twig:269
 #: modules/johncms/collections/templates/admin/fields.twig:41
 msgid "Properties"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:283
+#: modules/johncms/collections/templates/admin/field-form.twig:273
 msgid "Field role"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:286
+#: modules/johncms/collections/templates/admin/field-form.twig:276
 msgid "Use meta_title, meta_description or meta_keywords for SEO fields. Leave empty for ordinary content."
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:296
+#: modules/johncms/collections/templates/admin/field-form.twig:286
 msgid "The order of the fields in the form of an item and of the columns of the list."
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:300
+#: modules/johncms/collections/templates/admin/field-form.twig:290
 msgid "Show in the list of items"
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:301
+#: modules/johncms/collections/templates/admin/field-form.twig:291
 msgid "The value becomes a column of the list of the items in the panel."
 msgstr ""
 
-#: modules/johncms/collections/templates/admin/field-form.twig:313
+#: modules/johncms/collections/templates/admin/field-form.twig:303
 #: modules/johncms/collections/templates/admin/item-preview.twig:14
 msgid "Back"
 msgstr ""

@@ -35,22 +35,10 @@ final readonly class CollectionFileChoices
     {
         $this->access->execute($collectionId);
         $field = $this->fields->findByCode($collectionId, $code);
-        if ($field === null || $field->type !== FieldType::File || ($field->settings['file_storage'] ?? 'legacy') !== 'registry' || mb_strlen($term) > 255 || count($selected) > 1000) {
+        if ($field === null || $field->type !== FieldType::File || mb_strlen($term) > 255 || count($selected) > 1000) {
             throw new InvalidArgumentException('Choose a registered file field, a search term up to 255 characters and at most 1000 selected values.');
         }
-        return $this->searchSettings($collectionId, $code, $field->settings ?? [], $term, $selected, $context);
-    }
-
-    /** @param array<string, mixed> $settings
-     * @param list<string> $selected
-     * @return list<CollectionFileChoiceDTO>
-     */
-    public function searchSettings(int $collectionId, string $code, array $settings, string $term = '', array $selected = [], ?string $context = null): array
-    {
-        $this->access->execute($collectionId);
-        if (mb_strlen($term) > 255 || count($selected) > 1000) {
-            throw new InvalidArgumentException('Use a search term up to 255 characters and at most 1000 selected values.');
-        }
+        $settings = $field->settings ?? [];
         $term = trim($term);
         $ids = $this->links->availableForCollection($collectionId, false);
         if ($context !== null) {

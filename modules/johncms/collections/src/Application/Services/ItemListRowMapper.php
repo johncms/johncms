@@ -151,9 +151,6 @@ final readonly class ItemListRowMapper
 
     private function fileName(ContentCollectionField $field, string $value): string
     {
-        if (($field->settings['file_storage'] ?? 'legacy') !== 'registry') {
-            return $this->shorten($value);
-        }
         if ($this->files === null) {
             throw new LogicException('Collection file rendering is not configured.');
         }

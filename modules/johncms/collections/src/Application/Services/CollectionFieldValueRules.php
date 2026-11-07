@@ -18,7 +18,7 @@ final readonly class CollectionFieldValueRules
         $valid = match ($type) {
             FieldType::Integer => filter_var($value, FILTER_VALIDATE_INT) !== false,
             FieldType::Relation => filter_var($value, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) !== false,
-            FieldType::File => ($settings['file_storage'] ?? 'legacy') !== 'registry' || filter_var($value, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) !== false,
+            FieldType::File => filter_var($value, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) !== false,
             FieldType::Double => is_numeric($value) && is_finite((float) $value),
             FieldType::Boolean => in_array($value, ['', '0', '1'], true),
             FieldType::Date => $this->date($value, true) !== null,
@@ -28,9 +28,9 @@ final readonly class CollectionFieldValueRules
         if (! $valid) {
             return d__('collections', 'Enter a valid value for this field type.');
         }
-        if (in_array($type, [FieldType::String_, FieldType::Text, FieldType::Html, FieldType::Select, FieldType::File], true)) {
+        if (in_array($type, [FieldType::String_, FieldType::Text, FieldType::Html, FieldType::Select], true)) {
             $length = mb_strlen($value);
-            $max = $settings['max_length'] ?? (in_array($type, [FieldType::String_, FieldType::Select, FieldType::File], true) ? 255 : null);
+            $max = $settings['max_length'] ?? (in_array($type, [FieldType::String_, FieldType::Select], true) ? 255 : null);
             if ($length < ($settings['min_length'] ?? 0) || ($max !== null && $length > $max)) {
                 return d__('collections', 'The value does not meet the configured length limits.');
             }

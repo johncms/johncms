@@ -31,7 +31,7 @@ final readonly class CollectionFieldSettingsValidator
             if (! isset($settings[$key])) {
                 continue;
             }
-            $max = $key === 'max_values' ? 1000 : (in_array($type, [FieldType::String_, FieldType::Select, FieldType::File], true) ? 255 : 1000000);
+            $max = $key === 'max_values' ? 1000 : (in_array($type, [FieldType::String_, FieldType::Select], true) ? 255 : 1000000);
             if (! is_int($settings[$key]) || $settings[$key] < ($key === 'max_values' ? 1 : 0) || $settings[$key] > $max) {
                 $this->fail(d__('collections', 'Use valid integer limits for field length and number of values.'), [$key]);
             }
@@ -53,10 +53,7 @@ final readonly class CollectionFieldSettingsValidator
                 $this->fail(d__('collections', 'The minimum limit must not exceed the maximum.'), [$minimum, $maximum]);
             }
         }
-        if ($type === FieldType::File && ! in_array($settings['file_storage'] ?? 'legacy', ['registry', 'legacy'], true)) {
-            $this->fail(d__('collections', 'Choose registry or legacy storage for a file field.'), ['file_storage']);
-        }
-        if ($type === FieldType::File && ($settings['file_storage'] ?? 'legacy') === 'registry') {
+        if ($type === FieldType::File) {
             $bytes = $settings['max_file_bytes'] ?? CollectionFilePolicy::DEFAULT_MAX_BYTES;
             $mimes = $settings['allowed_mime_types'] ?? array_keys(CollectionFilePolicy::TYPES);
             if (! is_int($bytes) || $bytes < 1 || $bytes > 1073741824 || ! is_array($mimes) || ! array_is_list($mimes) || $mimes === [] || count($mimes) > count(CollectionFilePolicy::TYPES)) {
@@ -86,6 +83,9 @@ final readonly class CollectionFieldSettingsValidator
         }
         if (! isset($settings['default'])) {
             return;
+        }
+        if ($type === FieldType::File) {
+            $this->fail(d__('collections', 'A file field has no default value.'), ['default']);
         }
         $default = $settings['default'];
         if (($multiple && (! is_array($default) || ! array_is_list($default))) || (! $multiple && ! is_string($default))) {

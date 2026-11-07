@@ -229,7 +229,7 @@ final class CollectionFieldSettingsTest extends FunctionalTestCase
         ]);
         $editor = FunctionalUserFactory::createSupervisor();
         $html = (string) $this->handleRequest('/admin/collections/' . $this->collection . '/fields/' . $id . '/edit', cookies: $this->actingAs($editor))->getContent();
-        self::assertStringContainsString('data-field-types="string text html select file"', $html);
+        self::assertStringContainsString('data-field-types="string text html select"', $html);
         $response = $this->postForm('/admin/collections/' . $this->collection . '/fields', [
             'id' => (string) $id,
             'code' => 'choice',
@@ -311,35 +311,24 @@ final class CollectionFieldSettingsTest extends FunctionalTestCase
         self::assertSame(403, $this->postForm('/admin/collections/' . $this->collection . '/fields/choices', $data, $member)->getStatusCode());
     }
 
-    public function testUnsavedFileChoicesExcludeForeignAndIncompatibleFiles(): void
+    public function testAFileFieldHasNoDefault(): void
     {
-        $store = $this->container()->get(FileStore::class);
-        $file = $store->storeContents('Available text', 'available.txt', 'field-default-tests');
-        $foreign = $store->storeContents('Foreign text', 'foreign.txt', 'field-default-tests');
+        $editor = FunctionalUserFactory::createSupervisor();
+        $data = ['code' => 'file', 'name' => 'File', 'type' => 'file', 'use_default' => '1', 'default_value' => '7', 'file_constraints_present' => '1', 'max_file_bytes' => '1024', 'allowed_mime_types' => ['text/plain']];
+        self::assertSame(302, $this->postForm('/admin/collections/' . $this->collection . '/fields', $data, $editor)->getStatusCode());
+        self::assertNull($this->schema->getFields($this->collection)[0]->settings['default']);
         try {
-            $item = Fixture::insert('collection_items', ['collection_id' => $this->collection, 'name' => 'Source']);
-            Fixture::insert('collection_file_assets', ['file_id' => $file->id, 'managed' => false]);
-            Fixture::insert('collection_file_links', ['file_id' => $file->id, 'item_id' => $item]);
-            $editor = FunctionalUserFactory::createSupervisor();
-            $url = '/admin/collections/' . $this->collection . '/fields/choices';
-            $data = ['type' => 'file', 'file_storage' => 'registry', 'file_constraints_present' => '1', 'max_file_bytes' => '1024', 'allowed_mime_types' => ['text/plain']];
-            $response = $this->postForm($url, $data, $editor);
-            self::assertSame(200, $response->getStatusCode());
-            $options = json_decode((string) $response->getContent(), true, 512, JSON_THROW_ON_ERROR)['options'];
-            self::assertSame([(string) $file->id], array_column($options, 'code'));
-            self::assertStringContainsString('available.txt', $options[0]['label']);
-            $data['max_file_bytes'] = '1';
-            $response = $this->postForm($url, $data, $editor);
-            self::assertSame([], json_decode((string) $response->getContent(), true, 512, JSON_THROW_ON_ERROR)['options']);
-        } finally {
-            $store->deleteMany([$file->id, $foreign->id]);
+            $this->field('forced', FieldType::File, ['default' => '7']);
+            self::fail('A declared default of a file field must be refused.');
+        } catch (CollectionSchemaException $exception) {
+            self::assertArrayHasKey('default', $exception->errors);
         }
     }
 
     public function testFileSizeUnitsAreExactAndInvalidFractionsAreRejected(): void
     {
         $editor = FunctionalUserFactory::createSupervisor();
-        $data = ['code' => 'file', 'name' => 'File', 'type' => 'file', 'file_storage' => 'registry', 'file_constraints_present' => '1', 'max_file_bytes' => '1.5', 'file_size_unit' => '1048576', 'allowed_mime_types' => ['text/plain']];
+        $data = ['code' => 'file', 'name' => 'File', 'type' => 'file', 'file_constraints_present' => '1', 'max_file_bytes' => '1.5', 'file_size_unit' => '1048576', 'allowed_mime_types' => ['text/plain']];
         $response = $this->postForm('/admin/collections/' . $this->collection . '/fields', $data, $editor);
         self::assertSame(302, $response->getStatusCode());
         self::assertSame(1572864, $this->schema->getFields($this->collection)[0]->settings['max_file_bytes']);

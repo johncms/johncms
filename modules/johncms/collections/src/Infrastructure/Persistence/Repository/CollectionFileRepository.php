@@ -40,7 +40,7 @@ final class CollectionFileRepository implements CollectionFileRepositoryInterfac
         return array_values(array_unique([...$attachments->pluck('collection_file_links.file_id')->all(), ...$values->pluck('collection_file_value_links.file_id')->all()]));
     }
 
-    public function replaceValueLinks(int $fieldId, ?int $itemId, array $fileIds): array
+    public function replaceValueLinks(int $fieldId, int $itemId, array $fileIds): array
     {
         $query = CollectionFileValueLink::query()->where('field_id', $fieldId)->where('item_id', $itemId);
         $old = (clone $query)->lockForUpdate()->orderBy('file_id')->pluck('file_id')->all();
@@ -53,7 +53,7 @@ final class CollectionFileRepository implements CollectionFileRepositoryInterfac
 
     public function fieldItems(int $fieldId): array
     {
-        return CollectionFileValueLink::query()->where('field_id', $fieldId)->whereNotNull('item_id')->orderBy('item_id')->lockForUpdate()->distinct()->pluck('item_id')->all();
+        return CollectionFileValueLink::query()->where('field_id', $fieldId)->orderBy('item_id')->lockForUpdate()->distinct()->pluck('item_id')->all();
     }
 
     public function unlinkField(int $fieldId): array

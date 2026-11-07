@@ -55,7 +55,7 @@ final readonly class GetPublicItemUseCase
                 $metadata[$field->role] = $this->contentFormatter->plain($list[0] ?? null);
                 continue;
             }
-            if ($field->type === FieldType::File && ($field->settings['file_storage'] ?? 'legacy') === 'registry') {
+            if ($field->type === FieldType::File) {
                 if ($list === []) {
                     continue;
                 }
