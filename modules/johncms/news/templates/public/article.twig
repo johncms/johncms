@@ -58,13 +58,16 @@
                 </div>
             </footer>
         </article>
-        {% if app.locale != 'en' and asset_exists('ckeditor5/translations/' ~ app.locale ~ '.js') %}
-            <script src="{{ asset('ckeditor5/translations/' ~ app.locale ~ '.js', true) }}"></script>
+        {% if can_write %}
+            {% if app.locale != 'en' and asset_exists('ckeditor5/translations/' ~ app.locale ~ '.js') %}
+                <script src="{{ asset('ckeditor5/translations/' ~ app.locale ~ '.js', true) }}"></script>
+            {% endif %}
+            <script src="{{ asset('ckeditor5/ckeditor.js', true) }}"></script>
         {% endif %}
-        <script src="{{ asset('ckeditor5/ckeditor.js', true) }}"></script>
         <div class="vue_app" id="article-comments">
             <comments-component
                 upload_url="/news/comments/upload_file/"
+                icon_sprite="{{ asset('icons/public.svg', true) }}"
                 :article_id="{{ article.id }}"
                 :can_write="{{ can_write ? 'true' : 'false' }}"
                 :i18n='{{ {
@@ -74,7 +77,16 @@
                     quote: __('Quote'),
                     reply: __('Reply'),
                     comments: __('Comments'),
-                    empty_list: __('The list is empty')
+                    empty_list: __('The list is empty'),
+                    loading: __('Loading...'),
+                    online: __('Online'),
+                    download: __('Download'),
+                    unknown_user: __('Unknown user'),
+                    confirm_delete: __('Delete this comment?'),
+                    load_error: __('Could not load the comments.'),
+                    send_error: __('Could not send the comment.'),
+                    delete_error: __('Could not delete the comment.'),
+                    editor_error: __('Could not load the editor. You can use the text field.')
                 }|json_encode }}'
                 language="{{ app.locale }}"
             ></comments-component>

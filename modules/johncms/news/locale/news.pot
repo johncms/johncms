@@ -353,7 +353,7 @@ msgstr ""
 
 #: modules/johncms/news/templates/homepage/latest.twig:13
 #: modules/johncms/news/templates/public/article.twig:50
-#: modules/johncms/news/templates/public/article.twig:76
+#: modules/johncms/news/templates/public/article.twig:79
 #: modules/johncms/news/templates/public/components/article-row.twig:16
 msgid "Comments"
 msgstr ""
@@ -410,6 +410,7 @@ msgid "Dislike"
 msgstr ""
 
 #: modules/johncms/news/templates/public/article.twig:43
+#: modules/johncms/news/templates/public/article.twig:81
 msgid "Loading..."
 msgstr ""
 
@@ -425,35 +426,67 @@ msgstr ""
 msgid "Copy link"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:71
+#: modules/johncms/news/templates/public/article.twig:74
 msgid "Write a comment"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:72
+#: modules/johncms/news/templates/public/article.twig:75
 msgid "Send"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:73
+#: modules/johncms/news/templates/public/article.twig:76
 msgid "Delete"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:74
+#: modules/johncms/news/templates/public/article.twig:77
 msgid "Quote"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:75
+#: modules/johncms/news/templates/public/article.twig:78
 msgid "Reply"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:77
+#: modules/johncms/news/templates/public/article.twig:80
 msgid "The list is empty"
 msgstr ""
 
+#: modules/johncms/news/templates/public/article.twig:82
+msgid "Online"
+msgstr ""
+
+#: modules/johncms/news/templates/public/article.twig:83
+msgid "Download"
+msgstr ""
+
+#: modules/johncms/news/templates/public/article.twig:84
+msgid "Unknown user"
+msgstr ""
+
+#: modules/johncms/news/templates/public/article.twig:85
+msgid "Delete this comment?"
+msgstr ""
+
+#: modules/johncms/news/templates/public/article.twig:86
+msgid "Could not load the comments."
+msgstr ""
+
 #: modules/johncms/news/templates/public/article.twig:87
+msgid "Could not send the comment."
+msgstr ""
+
+#: modules/johncms/news/templates/public/article.twig:88
+msgid "Could not delete the comment."
+msgstr ""
+
+#: modules/johncms/news/templates/public/article.twig:89
+msgid "Could not load the editor. You can use the text field."
+msgstr ""
+
+#: modules/johncms/news/templates/public/article.twig:99
 msgid "You are not logged in. You must be <a href=\"/login/\">logged in</a> to comment."
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:93
+#: modules/johncms/news/templates/public/article.twig:105
 msgid "Back"
 msgstr ""
 

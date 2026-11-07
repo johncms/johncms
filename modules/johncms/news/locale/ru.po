@@ -782,3 +782,27 @@ msgstr "Ссылка скопирована"
 
 msgid "Could not copy the link."
 msgstr "Не удалось скопировать ссылку."
+
+msgid "Online"
+msgstr "В сети"
+
+msgid "Unknown user"
+msgstr "Неизвестный пользователь"
+
+msgid "Delete this comment?"
+msgstr "Удалить этот комментарий?"
+
+msgid "Could not load the comments."
+msgstr "Не удалось загрузить комментарии."
+
+msgid "Could not send the comment."
+msgstr "Не удалось отправить комментарий."
+
+msgid "Could not delete the comment."
+msgstr "Не удалось удалить комментарий."
+
+msgid "Could not load the editor. You can use the text field."
+msgstr "Не удалось загрузить редактор. Можно воспользоваться текстовым полем."
+
+msgid "Download"
+msgstr "Скачать"
