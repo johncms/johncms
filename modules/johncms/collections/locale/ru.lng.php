@@ -470,6 +470,7 @@
       'GB' => 'ГБ',
       'A required relation always prevents deletion.' => 'Обязательная связь всегда запрещает удаление.',
       'A file field has no default value.' => 'У файлового поля нет значения по умолчанию.',
+      'Selected: %d of %d' => 'Выбрано: %d из %d',
     ),
   ),
 );

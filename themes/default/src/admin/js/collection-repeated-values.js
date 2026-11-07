@@ -299,6 +299,7 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   const relationPicker = createRelationDefaultPicker({
     form, lookup, isActive: () => type.value === 'relation', isMultiple: () => multiple.checked,
     getOptions: () => lookupOptions, search: term => loadLookup(term),
+    getLimit: () => Number(defaults.querySelector('[data-collection-repeat]').dataset.limit),
     cancelSearch: () => {
       lookupRequest?.abort();
       lookupRequest = null;

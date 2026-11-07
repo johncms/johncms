@@ -1589,3 +1589,6 @@ msgstr "Обязательная связь всегда запрещает уд
 
 msgid "A file field has no default value."
 msgstr "У файлового поля нет значения по умолчанию."
+
+msgid "Selected: %d of %d"
+msgstr "Выбрано: %d из %d"

@@ -1,5 +1,5 @@
 /** The popup never participates in form layout; selection stays in the ordinary form controls. */
-export function createRelationDefaultPicker({form, lookup, isActive, isMultiple, getValues, setValues, getOptions, search, cancelSearch}) {
+export function createRelationDefaultPicker({form, lookup, isActive, isMultiple, getValues, setValues, getOptions, getLimit, search, cancelSearch}) {
   const input = lookup.querySelector('[name="default_query"]');
   const label = lookup.querySelector('label[for="default-query"]');
   const originalLabel = label.textContent;
@@ -12,7 +12,6 @@ export function createRelationDefaultPicker({form, lookup, isActive, isMultiple,
   const count = lookup.querySelector('[data-relation-count]');
   const done = lookup.querySelector('[data-relation-done]');
   const clear = lookup.querySelector('[data-relation-clear]');
-  const context = lookup.querySelector('[data-relation-context]');
   const warning = lookup.querySelector('[data-relation-warning]');
   const status = lookup.querySelector('[data-default-lookup-status]');
   const searchButton = lookup.querySelector('[name="lookup_defaults"]');
@@ -83,7 +82,10 @@ export function createRelationDefaultPicker({form, lookup, isActive, isMultiple,
       mark.replaceChildren();
       if (checked) mark.append(lookup.querySelector('[data-relation-icon="check"]').content.cloneNode(true));
     });
-    count.textContent = strings.relationCountLabel.replace('%d', String(chosen.size));
+    const limit = getLimit();
+    count.textContent = limit < 1000
+      ? strings.relationCountLimit.replace('%d', String(chosen.size)).replace('%d', String(limit))
+      : strings.relationCountLabel.replace('%d', String(chosen.size));
     footer.hidden = !isMultiple();
   };
   const change = async values => {
@@ -208,8 +210,7 @@ export function createRelationDefaultPicker({form, lookup, isActive, isMultiple,
     searchButton.hidden = enabled;
     nativeResult.hidden = enabled;
     apply.hidden = enabled;
-    selected.hidden = !enabled || !multiple;
-    context.hidden = !enabled;
+    selected.hidden = !enabled || !multiple || getValues().length === 0;
     clear.hidden = !enabled || multiple || getValues().length === 0;
     input.parentElement.classList.toggle('input-group', !enabled || !clear.hidden);
     form.querySelector('[data-relation-fallback]').hidden = true;
@@ -240,31 +241,26 @@ export function createRelationDefaultPicker({form, lookup, isActive, isMultiple,
     warning.hidden = !invalid;
     warning.textContent = invalid ? strings.relationInvalid : '';
     input.disabled = !target.value;
-    input.placeholder = target.value ? strings.relationPlaceholder : strings.relationTarget;
+    input.placeholder = target.value ? strings.relationContext.replace('%s', target.selectedOptions[0].textContent) : strings.relationTarget;
     input.setAttribute('role', 'combobox');
     input.setAttribute('aria-autocomplete', 'list');
     input.setAttribute('aria-controls', results.id);
-    input.setAttribute('aria-describedby', 'relation-default-context default-lookup-status relation-default-warning');
+    input.setAttribute('aria-describedby', 'default-lookup-status relation-default-warning');
     if (!input.hasAttribute('aria-expanded')) input.setAttribute('aria-expanded', 'false');
     label.textContent = multiple ? strings.relationPlural : strings.relationSingular;
-    context.textContent = target.value ? strings.relationContext.replace('%s', target.selectedOptions[0].textContent) : strings.relationTarget;
     selected.replaceChildren();
-    if (!values.length) {
-      const empty = document.createElement('li');
-      empty.className = 'small text-muted';
-      empty.textContent = strings.relationNone;
-      selected.append(empty);
-    }
     values.forEach((code, index) => {
       const row = document.createElement('li');
-      row.className = 'relation-default-chip';
-      row.title = `${name(code)} (#${code})`;
+      row.className = 'relation-default-item';
       const text = document.createElement('span');
-      text.className = 'relation-default-chip-label';
+      text.className = 'relation-default-item-label';
       text.textContent = name(code);
       if (!valid.has(code)) text.classList.add('text-danger');
-      row.append(text);
-      for (const [action, caption] of [['up', strings.relationUp], ['down', strings.relationDown], ['remove', strings.relationRemove]]) {
+      const id = document.createElement('small');
+      id.className = 'text-muted';
+      id.textContent = `#${code}`;
+      row.append(text, id);
+      for (const [action, caption] of [...(values.length > 1 ? [['up', strings.relationUp], ['down', strings.relationDown]] : []), ['remove', strings.relationRemove]]) {
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'btn btn-outline-secondary btn-sm';
@@ -280,7 +276,7 @@ export function createRelationDefaultPicker({form, lookup, isActive, isMultiple,
             [next[index], next[other]] = [next[other], next[index]];
           }
           await change(next);
-          const rows = selected.querySelectorAll('.relation-default-chip');
+          const rows = selected.querySelectorAll('.relation-default-item');
           const focus = rows[Math.min(index, rows.length - 1)]?.querySelector('button:not(:disabled)');
           if (focus) focus.focus({preventScroll: true});
           else focusInput();
