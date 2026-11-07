@@ -8,6 +8,7 @@ use Johncms\Modules\Collections\Application\DTO\CollectionFieldDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldDeclarationDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO;
 use Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer;
+use Johncms\Modules\Collections\Application\Services\CollectionStructureMemo;
 use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionFieldUseCase;
 use Johncms\Modules\Collections\Application\UseCases\SaveCollectionFieldUseCase;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
@@ -19,10 +20,17 @@ final readonly class CollectionSchemaApi implements CollectionSchemaApiInterface
         private SaveCollectionFieldUseCase $save,
         private DeleteCollectionFieldUseCase $delete,
         private CollectionDeclarationsSynchronizer $declarations,
+        private CollectionStructureMemo $memo,
     ) {
     }
 
     public function getFields(int $collectionId): array
+    {
+        return $this->memo->remember('fields_' . $collectionId, fn (): array => $this->loadFields($collectionId));
+    }
+
+    /** @return list<CollectionFieldDTO> */
+    private function loadFields(int $collectionId): array
     {
         return $this->fields->getByCollection($collectionId)->map(static fn ($field): CollectionFieldDTO => new CollectionFieldDTO(
             $field->id,

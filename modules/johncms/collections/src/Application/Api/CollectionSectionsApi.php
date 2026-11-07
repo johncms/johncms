@@ -11,6 +11,7 @@ use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionTreeNodeDTO;
 use Johncms\Modules\Collections\Application\Services\CollectionApiMapper;
 use Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner;
+use Johncms\Modules\Collections\Application\Services\CollectionStructureMemo;
 use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionSectionUseCase;
 use Johncms\Modules\Collections\Application\UseCases\ListCollectionSectionsUseCase;
 use Johncms\Modules\Collections\Application\UseCases\SaveCollectionSectionUseCase;
@@ -27,6 +28,7 @@ final readonly class CollectionSectionsApi implements CollectionSectionsApiInter
         private DeleteCollectionSectionUseCase $delete,
         private CollectionApiMapper $mapper,
         private CollectionDeletionPlanner $deletions,
+        private CollectionStructureMemo $memo,
     ) {
     }
 
@@ -38,12 +40,12 @@ final readonly class CollectionSectionsApi implements CollectionSectionsApiInter
 
     public function getTree(int $collectionId): array
     {
-        return array_map(fn ($node): CollectionSectionTreeNodeDTO => new CollectionSectionTreeNodeDTO(
+        return $this->memo->remember('tree_' . $collectionId, fn (): array => array_map(fn ($node): CollectionSectionTreeNodeDTO => new CollectionSectionTreeNodeDTO(
             $this->mapper->section($node->section),
             $node->depth,
             $node->items,
             $node->itemsInSubtree
-        ), $this->list->getTree($collectionId));
+        ), $this->list->getTree($collectionId)));
     }
 
     public function getPath(int $collectionId, int $id): array

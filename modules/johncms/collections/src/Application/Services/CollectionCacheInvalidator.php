@@ -10,8 +10,11 @@ use Johncms\Modules\Collections\Application\Extension\CollectionChangeHandlerInt
 
 final readonly class CollectionCacheInvalidator implements CollectionChangeHandlerInterface
 {
-    public function __construct(private CacheInterface $cache, private CollectionCodeCacheInterface $codes)
-    {
+    public function __construct(
+        private CacheInterface $cache,
+        private CollectionCodeCacheInterface $codes,
+        private CollectionStructureMemo $memo,
+    ) {
     }
 
     public static function tag(int $collectionId): string
@@ -26,6 +29,7 @@ final readonly class CollectionCacheInvalidator implements CollectionChangeHandl
     public function afterCommit(CollectionChangeDTO $change): void
     {
         $this->cache->invalidateTags(self::tag($change->collectionId));
+        $this->memo->reset();
         if ($change->entity === 'collection') {
             $this->codes->invalidate();
         }

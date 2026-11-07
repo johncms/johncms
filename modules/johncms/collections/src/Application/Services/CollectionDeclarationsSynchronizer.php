@@ -27,6 +27,7 @@ final readonly class CollectionDeclarationsSynchronizer implements DeclarationSy
         private CollectionFieldSettingsValidator $settingsValidator = new CollectionFieldSettingsValidator(),
         private ?CollectionFileValues $fileValues = null,
         private CollectionWorkspaceSettings $workspace = new CollectionWorkspaceSettings(),
+        private ?CollectionStructureMemo $memo = null,
     ) {
     }
 
@@ -40,6 +41,10 @@ final readonly class CollectionDeclarationsSynchronizer implements DeclarationSy
     {
         foreach ($this->registry->all() as ['owner' => $owner, 'declaration' => $declaration]) {
             $this->transaction->run(function () use ($owner, $declaration): void {
+                // The synchronization writes past the change dispatcher, so it forgets what was read itself.
+                if ($this->memo !== null) {
+                    $this->transaction->afterCommit($this->memo->reset(...));
+                }
                 $collection = $this->collections->findByDeclaration($owner, $declaration->key);
                 $collision = $this->collections->findByCode($declaration->code);
                 if ($collection === null) {

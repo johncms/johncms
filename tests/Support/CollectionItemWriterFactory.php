@@ -9,6 +9,7 @@ use Gettext\TranslatorFunctions;
 use Johncms\Modules\Collections\Application\Api\CollectionSectionsApi;
 use Johncms\Modules\Collections\Application\Api\CollectionsApi;
 use Johncms\Modules\Collections\Application\Services\CollectionApiMapper;
+use Johncms\Modules\Collections\Application\Services\CollectionStructureMemo;
 use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
 use Johncms\Modules\Collections\Application\Services\CollectionCodeCache;
 use Johncms\Modules\Collections\Application\Services\CollectionCodeCacheInterface;
@@ -96,7 +97,7 @@ final class CollectionItemWriterFactory
             $sections, new ListCollectionSectionsUseCase($sections),
             self::sectionWriter(changes: $changes),
             new DeleteCollectionSectionUseCase($sections, new ContentCollectionItemRepository(new ContentCollectionFieldRepository(), new ContentCollectionItemQueryCompiler()), new CollectionTransaction(), self::deletionPlanner(), self::itemDeleter($changes), $changes ?? new CollectionChangeDispatcher()),
-            new CollectionApiMapper(), self::deletionPlanner()
+            new CollectionApiMapper(), self::deletionPlanner(), new CollectionStructureMemo()
         );
     }
 

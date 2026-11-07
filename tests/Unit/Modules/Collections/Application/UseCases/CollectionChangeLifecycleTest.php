@@ -16,6 +16,7 @@ use Johncms\Modules\Collections\Application\DTO\CollectionItemPatchDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Application\Extension\CollectionChangeHandlerInterface;
 use Johncms\Modules\Collections\Application\Services\CollectionCacheInvalidator;
+use Johncms\Modules\Collections\Application\Services\CollectionStructureMemo;
 use Johncms\Modules\Collections\Application\Services\CollectionChangeDispatcher;
 use Johncms\Modules\Collections\Application\Services\CollectionCodeCache;
 use Johncms\Modules\Collections\Application\Services\ReservedCodeCheckerInterface;
@@ -188,7 +189,7 @@ final class CollectionChangeLifecycleTest extends TestCase
     {
         $cache = InMemoryCache::create();
         $codes = new CollectionCodeCache($cache, new ContentCollectionRepository());
-        $invalidator = new CollectionCacheInvalidator($cache, $codes);
+        $invalidator = new CollectionCacheInvalidator($cache, $codes, new CollectionStructureMemo());
         $changes = new CollectionChangeDispatcher(handlers: [$invalidator], transaction: new CollectionTransaction());
         $cache->rememberForever('affected', static fn () => 'old', [CollectionCacheInvalidator::tag($this->collection)]);
         $cache->rememberForever('other', static fn () => 'unrelated', [CollectionCacheInvalidator::tag($this->collection + 1)]);

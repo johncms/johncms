@@ -19,6 +19,7 @@ use Johncms\Modules\Collections\Application\DTO\CollectionLabelDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
 use Johncms\Modules\Collections\Application\Extension\CollectionOwnerUrlProviderInterface;
 use Johncms\Modules\Collections\Application\Services\CollectionDeclarationRegistry;
+use Johncms\Modules\Collections\Application\Services\CollectionStructureMemo;
 use Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer;
 use Johncms\Modules\Collections\Application\Services\CollectionOwnerUrls;
 use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionFieldUseCase;
@@ -76,7 +77,8 @@ final class CollectionDeclarationsTest extends TestCase
         return new CollectionSchemaApi($fields,
             new SaveCollectionFieldUseCase(repository: $fields, transaction: new CollectionTransaction(), collections: new ContentCollectionRepository(), items: CollectionItemWriterFactory::itemRepository(), context: $this->context),
             new DeleteCollectionFieldUseCase(repository: $fields, transaction: new CollectionTransaction(), collections: new ContentCollectionRepository(), context: $this->context),
-            $this->sync
+            $this->sync,
+            new CollectionStructureMemo(),
         );
     }
 
