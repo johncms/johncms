@@ -8,67 +8,73 @@ use Johncms\Http\EditorImageUploadResponder;
 use Johncms\Http\Environment;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\Modules\News\Application\Collections\NewsDiscussionServiceInterface;
-use Johncms\Modules\News\Application\DTO\NewsCommentViewDTO;
+use Johncms\Modules\News\Application\Collections\NewsReadServiceInterface;
 use Johncms\Modules\News\Application\Exceptions\NewsDiscussionAccessDeniedException;
 use Johncms\Modules\News\Application\Exceptions\NewsDiscussionValidationException;
 use Johncms\Modules\News\Application\Exceptions\NewsItemNotFoundException;
-use Johncms\Users\ProfileLinksInterface;
-use Johncms\View\Twig\Runtime\AssetRuntime;
-use JsonException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+/** Comment forms of the article page; every action answers with a redirect back to the article. */
 final readonly class CommentsController
 {
+    /** Flash keys the article page reads after a redirect. */
+    public const string MESSAGE = 'news_comment_message';
+    public const string ERROR = 'news_comment_error';
+    public const string TEXT = 'news_comment_text';
+
     public function __construct(
         private NewsDiscussionServiceInterface $discussion,
+        private NewsReadServiceInterface $news,
         private PaginationFactory $paginationFactory,
-        private ProfileLinksInterface $profiles,
-        private AssetRuntime $assets,
+        private Session $session,
     ) {
     }
 
-    public function index(int $article_id): JsonResponse
+    public function add(int $article_id, Request $request, Environment $env): never
     {
-        return $this->respond(function () use ($article_id): JsonResponse {
-            $first = $this->discussion->comments($article_id, 1);
-            $pager = $this->paginationFactory->create($first->total);
-            $page = $this->discussion->comments($article_id, $pager->getPerPage(), $pager->getOffset());
-            return new JsonResponse([
-                'current_page' => $pager->getCurrentPage(), 'data' => array_map($this->comment(...), $page->comments),
-                'from' => $page->total > 0 ? $pager->getOffset() + 1 : null, 'last_page' => $pager->getTotalPages(),
-                'next_page_url' => $pager->getCurrentPage() < $pager->getTotalPages() ? $pager->getUrl($pager->getCurrentPage() + 1) : null,
-                'per_page' => $pager->getPerPage(), 'prev_page_url' => $pager->getCurrentPage() > 1 ? $pager->getUrl($pager->getCurrentPage() - 1) : null,
-                'to' => $page->total > 0 ? $pager->getOffset() + count($page->comments) : null, 'total' => $page->total,
-            ]);
-        });
+        $url = $this->articleUrl($article_id);
+        $text = $request->body('text');
+        try {
+            $files = [];
+            foreach ($request->bodyList('attached_files') as $file) {
+                if (! is_string($file) || ! ctype_digit($file) || strlen($file) > 10) {
+                    throw new NewsDiscussionValidationException(d__('news', 'One of the comment attachments is not available.'));
+                }
+                $files[] = (int) $file;
+            }
+            $id = $this->discussion->addComment(
+                itemId:   $article_id,
+                text:     $text,
+                files:    $files,
+                metadata: ['user_agent' => $env->getUserAgent(), 'ip' => $env->getIp(false), 'ip_via_proxy' => $env->getIpViaProxy(false)],
+            );
+        } catch (NewsDiscussionAccessDeniedException | NewsDiscussionValidationException | NewsItemNotFoundException $exception) {
+            $this->session->flash(self::ERROR, $exception->getMessage());
+            $this->session->flash(self::TEXT, $text);
+            redirect($url . '#comment-form');
+        }
+        $this->session->flash(self::MESSAGE, d__('news', 'The comment was added successfully'));
+        redirect($this->pageUrl($url, $this->lastPage($article_id)) . '#comment-' . $id);
     }
 
-    public function add(int $article_id, Request $request, Environment $env): JsonResponse
+    public function del(Request $request): never
     {
-        return $this->respond(function () use ($article_id, $request, $env): JsonResponse {
-            $data = $this->decode($request);
-            $text = $data['comment'] ?? '';
-            $files = $data['attached_files'] ?? [];
-            if (! is_string($text) || ! is_array($files) || ! array_is_list($files)) {
-                throw new NewsDiscussionValidationException(d__('news', 'Bad Request'));
-            }
-            $this->discussion->addComment($article_id, $text, $files, ['user_agent' => $env->getUserAgent(), 'ip' => $env->getIp(false), 'ip_via_proxy' => $env->getIpViaProxy(false)]);
-            $total = $this->discussion->comments($article_id, 1)->total;
-            return new JsonResponse(['message' => d__('news', 'The comment was added successfully'), 'last_page' => $this->paginationFactory->create($total)->getTotalPages()]);
-        });
-    }
-
-    public function del(Request $request): JsonResponse
-    {
-        return $this->respond(function () use ($request): JsonResponse {
-            $id = $this->decode($request)['comment_id'] ?? null;
-            if (! is_int($id) || $id < 1) {
-                throw new NewsDiscussionValidationException(d__('news', 'Bad Request'));
-            }
-            $this->discussion->deleteComment($id);
-            return new JsonResponse(['message' => d__('news', 'The comment was deleted successfully')]);
-        });
+        $id = $request->bodyInt('comment_id');
+        $page = max(1, $request->bodyInt('page'));
+        try {
+            $articleId = $this->discussion->deleteComment($id);
+        } catch (NewsDiscussionAccessDeniedException | NewsDiscussionValidationException | NewsItemNotFoundException $exception) {
+            $this->session->flash(self::ERROR, $exception->getMessage());
+            redirect($this->articleUrl($request->bodyInt('article_id')) . '#article-comments');
+        }
+        $this->session->flash(self::MESSAGE, d__('news', 'The comment was deleted successfully'));
+        $article = $this->news->findById($articleId);
+        if ($article === null) {
+            redirect('/news/');
+        }
+        redirect($this->pageUrl($article->url, min($page, max(1, $this->lastPage($articleId)))) . '#article-comments');
     }
 
     public function loadFile(Request $request, EditorImageUploadResponder $responder): JsonResponse
@@ -76,50 +82,18 @@ final readonly class CommentsController
         return $responder->store($request, 'news_comments', 'news');
     }
 
-    /** @return array<string, mixed> */
-    private function comment(NewsCommentViewDTO $comment): array
+    private function articleUrl(int $articleId): string
     {
-        $author = $comment->author;
-        $data = [
-            'id' => $comment->id, 'created_at' => $comment->createdAt, 'text' => (string) $comment->text,
-            'user' => ['id' => $author?->id, 'user_name' => $author !== null ? $author->name : '',
-                'status' => $author !== null ? $author->status : '', 'is_online' => $author !== null && $author->online, 'rights_name' => $author !== null ? $author->rightsName : '',
-                'avatar' => $this->assets->avatar($author?->id), 'profile_url' => $author !== null ? ($this->profiles->urlOf($author->id) ?? '') : ''],
-            'can_delete' => $comment->canDelete, 'can_reply' => $comment->canReply, 'can_quote' => $comment->canReply,
-        ];
-        if ($comment->moderatorData !== []) {
-            $data += $comment->moderatorData;
-            $data['search_ip_url'] = '/admin/ip-search?ip=' . rawurlencode((string) ($comment->moderatorData['ip'] ?? ''));
-            $data['search_ip_via_proxy_url'] = '/admin/ip-search?ip=' . rawurlencode((string) ($comment->moderatorData['ip_via_proxy'] ?? ''));
-        }
-        return $data;
+        return $this->news->findById($articleId)->url ?? '/news/';
     }
 
-    /** @return array<string, mixed> */
-    private function decode(Request $request): array
+    private function lastPage(int $articleId): int
     {
-        try {
-            $data = json_decode(json: $request->getContent(), associative: true, flags: JSON_THROW_ON_ERROR);
-        } catch (JsonException) {
-            throw new NewsDiscussionValidationException(d__('news', 'Bad Request'));
-        }
-        if (! is_array($data)) {
-            throw new NewsDiscussionValidationException(d__('news', 'Bad Request'));
-        }
-        return $data;
+        return $this->paginationFactory->create($this->discussion->comments($articleId, 1)->total)->getTotalPages();
     }
 
-    /** @param callable(): JsonResponse $operation */
-    private function respond(callable $operation): JsonResponse
+    private function pageUrl(string $url, int $page): string
     {
-        try {
-            return $operation();
-        } catch (NewsDiscussionAccessDeniedException $exception) {
-            return new JsonResponse(['message' => $exception->getMessage()], 403);
-        } catch (NewsItemNotFoundException $exception) {
-            return new JsonResponse(['message' => $exception->getMessage()], 404);
-        } catch (NewsDiscussionValidationException $exception) {
-            return new JsonResponse(['message' => $exception->getMessage()], 422);
-        }
+        return $page > 1 ? $url . '?page=' . $page : $url;
     }
 }

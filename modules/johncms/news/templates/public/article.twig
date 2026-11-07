@@ -5,6 +5,14 @@
     @var popular         list<array> The most viewed news, none of them shown above.
     @var author_articles int   Published news of the author.
     @var can_write       bool
+    @var comments        list<NewsCommentViewDTO> Comments of the current page of the discussion.
+    @var comments_total  int
+    @var comments_offset int
+    @var comments_page   int
+    @var comments_pagination \Twig\Markup|null
+    @var comment_error   string|null
+    @var comment_message string|null
+    @var comment_text    string
     @var edit_url        string|null
 #}
 {% extends '@theme/layouts/default.twig' %}
@@ -82,43 +90,18 @@
                     {% endif %}
                     <script src="{{ asset('ckeditor5/ckeditor.js', true) }}"></script>
                 {% endif %}
-                <div class="vue_app" id="article-comments">
-                    <comments-component
-                        upload_url="/news/comments/upload_file/"
-                        icon_sprite="{{ asset('icons/public.svg', true) }}"
-                        :article_id="{{ article.id }}"
-                        :can_write="{{ can_write ? 'true' : 'false' }}"
-                        :i18n='{{ {
-                            write_comment: __('Write a comment'),
-                            send: __('Send'),
-                            delete: __('Delete'),
-                            quote: __('Quote'),
-                            reply: __('Reply'),
-                            comments: __('Comments'),
-                            empty_list: __('The list is empty'),
-                            loading: __('Loading...'),
-                            online: __('Online'),
-                            download: __('Download'),
-                            unknown_user: __('Unknown user'),
-                            confirm_delete: __('Delete this comment?'),
-                            load_error: __('Could not load the comments.'),
-                            send_error: __('Could not send the comment.'),
-                            delete_error: __('Could not delete the comment.'),
-                            editor_error: __('Could not load the editor. You can use the text field.')
-                        }|json_encode }}'
-                        language="{{ app.locale }}"
-                    ></comments-component>
-                </div>
-
-                {% if not app.user.isValid %}
-                    <div class="d-flex">
-                        <div class="alert alert-warning">
-                            {# The link to the login page is part of the translated string. #}
-                            {{ __('You are not logged in. You must be <a href="/login/">logged in</a> to comment.')|raw }}
-                        </div>
-                    </div>
-                {% endif %}
-
+                {% include '@news/public/components/comments.twig' with {
+                    article_id: article.id,
+                    comments: comments,
+                    total: comments_total,
+                    offset: comments_offset,
+                    page: comments_page,
+                    pagination: comments_pagination,
+                    can_write: can_write,
+                    error: comment_error,
+                    message: comment_message,
+                    text: comment_text,
+                } only %}
             </div>
 
             <aside class="site-news-layout__side">

@@ -114,7 +114,7 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
         });
     }
 
-    public function deleteComment(int $commentId): void
+    public function deleteComment(int $commentId): int
     {
         $comment = $this->discussion->findComment($commentId);
         if ($comment === null) {
@@ -139,6 +139,7 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
             },
             publishedOnly: ! $this->access->allows(NewsPermissions::COMMENTS_MODERATE),
         );
+        return $comment->item_id;
     }
 
     public function vote(int $itemId, int $vote): NewsDiscussionStats

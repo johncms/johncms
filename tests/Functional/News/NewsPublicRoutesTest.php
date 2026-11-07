@@ -131,27 +131,47 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         self::assertNotNull($document->querySelector('.site-news-article__section[href="/news/releases/"]'));
     }
 
-    public function testCommentAndVoteHttpContractsUseCollectionIdsAndCurrentActor(): void
+    public function testCommentsArePostedAsFormsAndRenderedWithThePage(): void
     {
         $id = $this->item('Public body');
         $user = FunctionalUserFactory::create();
-        $cookies = $this->actingAs($user);
-        $response = $this->json('/news/comments/add/' . $id, ['comment' => '<b>Comment</b>', 'user_id' => 999, 'user_data' => ['ip' => 'fake']], $cookies);
-        self::assertSame(200, $response->getStatusCode());
-        self::assertSame($user->id, (int) Capsule::table('news_comments')->where('item_id', $id)->value('user_id'));
-        $list = json_decode((string) $this->handleRequest('/news/comments/' . $id)->getContent(), true);
-        self::assertSame(1, $list['total']);
-        self::assertArrayNotHasKey('ip', $list['data'][0]);
-        self::assertStringContainsString('Comment', $list['data'][0]['text']);
+        $response = $this->postForm('/news/comments/add/' . $id, ['text' => '<b>Comment</b>', 'user_id' => '999', 'user_data' => ['ip' => 'fake']], $user);
+        $comment = (int) Capsule::table('news_comments')->where('item_id', $id)->value('id');
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('/news/entry.html#comment-' . $comment, $response->headers->get('Location'));
+        self::assertSame($user->id, (int) Capsule::table('news_comments')->where('id', $comment)->value('user_id'), 'The author is the signed-in user, never a posted field.');
+
+        $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/entry.html')->getContent(), LIBXML_NOERROR);
+        $rendered = $document->querySelector('#comment-' . $comment);
+        self::assertNotNull($rendered, 'Comments are part of the page, not loaded afterwards.');
+        self::assertSame('Comment', trim($rendered->querySelector('.site-news-comment__body')->textContent));
+        self::assertSame('#1', trim($rendered->querySelector('.site-news-comment__anchor')->textContent));
+        self::assertNull($rendered->querySelector('.site-news-comment__ip'), 'Only moderators see the address.');
+        self::assertNull($rendered->querySelector('form[action="/news/comments/del/"]'), 'A guest cannot delete.');
+        $moderated = HTMLDocument::createFromString((string) $this->handleRequest('/news/entry.html', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()))->getContent(), LIBXML_NOERROR);
+        self::assertNotNull($moderated->querySelector('#comment-' . $comment . ' .site-news-comment__ip'));
+
+        $empty = $this->postForm('/news/comments/add/' . $id, ['text' => '  '], $user);
+        self::assertSame('/news/entry.html#comment-form', $empty->headers->get('Location'), 'A rejected comment goes back to the form.');
+        self::assertSame(1, Capsule::table('news_comments')->count());
+
+        $deleted = $this->postForm('/news/comments/del/', ['comment_id' => (string) $comment, 'article_id' => (string) $id, 'page' => '1'], $user);
+        self::assertSame('/news/entry.html#article-comments', $deleted->headers->get('Location'));
+        self::assertSame(0, Capsule::table('news_comments')->whereNull('deleted_at')->count());
+        Capsule::table('collection_items')->where('id', $id)->update(['active' => false]);
+        self::assertSame(404, $this->handleRequest('/news/entry.html')->getStatusCode());
+    }
+
+    public function testVoteHttpContractUsesCollectionIdsAndCurrentActor(): void
+    {
+        $id = $this->item('Public body');
+        $cookies = $this->actingAs(FunctionalUserFactory::create());
         $vote = $this->json('/news/add_vote/' . $id . '/1', [], $cookies);
         self::assertSame(200, $vote->getStatusCode());
         self::assertSame(1, json_decode((string) $vote->getContent(), true)['rating']);
         self::assertSame(404, $this->handleRequest('/news/add_vote/' . $id . '/1')->getStatusCode());
         self::assertSame(1, Capsule::table('news_votes')->count());
-        self::assertSame(200, $this->json('/news/comments/del', ['comment_id' => $list['data'][0]['id']], $cookies)->getStatusCode());
-        self::assertSame(0, Capsule::table('news_comments')->whereNull('deleted_at')->count());
         Capsule::table('collection_items')->where('id', $id)->update(['active' => false]);
-        self::assertSame(404, $this->handleRequest('/news/comments/' . $id)->getStatusCode());
         self::assertSame(404, $this->json('/news/add_vote/' . $id . '/1', [], $cookies)->getStatusCode());
     }
 

@@ -6,7 +6,12 @@ namespace Johncms\Modules\News\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Exceptions\PageNotFoundException;
+use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
+use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\News\Application\Collections\NewsDiscussionServiceInterface;
 use Johncms\Modules\News\Application\Collections\NewsReadServiceInterface;
 use Johncms\Modules\News\Application\DTO\NewsArticleViewDTO;
 use Johncms\Modules\News\Application\DTO\NewsQueryDTO;
@@ -27,6 +32,10 @@ final readonly class ArticleController
         private NewsReadServiceInterface $news,
         private NavChain $navChain,
         private AccessCheckerInterface $access,
+        private NewsDiscussionServiceInterface $discussion,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
+        private Session $session,
     ) {
     }
 
@@ -44,6 +53,11 @@ final readonly class ArticleController
                 $this->navChain->add($crumb->record->name, $crumb->url);
             }
         }
+        $pagination = $this->paginationFactory->create($article->stats->comments);
+        $redirect = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirect !== null) {
+            redirect($redirect);
+        }
         $this->navChain->add($article->record->name);
         $this->news->registerView($article->record->id);
         $related = $this->news->related($article, self::RELATED);
@@ -51,7 +65,9 @@ final readonly class ArticleController
             $article->record->id,
             ...array_map(static fn (NewsArticleViewDTO $entry): int => $entry->record->id, $related),
         ]);
-        return new ViewResponse('@news/public/article.twig', $article->metadata() + [
+        $metadata = $article->metadata();
+        $meta = new PageMeta($metadata['title'], $pagination->getCurrentPage(), $metadata['description']);
+        return new ViewResponse('@news/public/article.twig', ['title' => $meta->title, 'description' => $meta->description] + $metadata + [
             'article' => $article->toTemplate(), 'current_section' => $section?->toTemplate(),
             'related' => array_map(static fn (NewsArticleViewDTO $entry): array => $entry->toTemplate(), $related),
             'popular' => array_map(static fn (NewsArticleViewDTO $entry): array => $entry->toTemplate(), $popular),
@@ -60,6 +76,16 @@ final readonly class ArticleController
                 ? '/admin/collections/' . $article->record->collectionId . '/items/' . $article->record->id . '/edit'
                 : null,
             'can_write' => $this->access->allows(NewsPermissions::COMMENTS_POST),
+            'comments' => $article->stats->comments > 0
+                ? $this->discussion->comments($article->record->id, $pagination->getPerPage(), $pagination->getOffset())->comments
+                : [],
+            'comments_total' => $article->stats->comments,
+            'comments_offset' => $pagination->getOffset(),
+            'comments_page' => $pagination->getCurrentPage(),
+            'comments_pagination' => $pagination->hasPages() ? $pagination->render() : null,
+            'comment_error' => $this->session->getFlash(CommentsController::ERROR),
+            'comment_text' => $this->session->getFlash(CommentsController::TEXT) ?? '',
+            'comment_message' => $this->session->getFlash(CommentsController::MESSAGE),
         ]);
     }
 }

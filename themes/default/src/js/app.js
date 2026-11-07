@@ -35,7 +35,6 @@ import './progress';
 import './main';
 
 import { createApp } from 'vue';
-import { Bootstrap5Pagination } from 'laravel-vue-pagination';
 
 // Prism is loaded in manual mode, see ./bootstrap.
 window.Prism.highlightAll();
@@ -61,6 +60,5 @@ document.querySelectorAll('.vue_app').forEach(function (el) {
         app.component(path.split('/').pop().replace(/\.vue$/, ''), component.default);
     });
 
-    app.component('pagination', Bootstrap5Pagination);
     app.mount(el);
 });

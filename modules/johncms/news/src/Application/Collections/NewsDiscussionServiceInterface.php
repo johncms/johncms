@@ -17,7 +17,8 @@ interface NewsDiscussionServiceInterface
      */
     public function addComment(int $itemId, string $text, array $files = [], array $metadata = []): int;
 
-    public function deleteComment(int $commentId): void;
+    /** @return int The article the comment belonged to. */
+    public function deleteComment(int $commentId): int;
 
     public function vote(int $itemId, int $vote): NewsDiscussionStats;
 

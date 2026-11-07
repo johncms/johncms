@@ -1,0 +1,62 @@
+{#
+    The discussion of an article, rendered with the page so that search engines see it.
+
+    @var article_id int
+    @var comments   list<NewsCommentViewDTO> The comments of the current page.
+    @var total      int
+    @var offset     int Comments before the current page.
+    @var page       int
+    @var pagination \Twig\Markup|null
+    @var can_write  bool
+    @var error      string|null What went wrong with the last comment.
+    @var message    string|null What happened to the last comment.
+    @var text       string The text to put back into the form after an error.
+#}
+<section class="site-news-comments" id="article-comments" aria-labelledby="article-comments-title">
+    <h2 class="site-news__heading" id="article-comments-title">
+        {{ __('Comments') }}
+        <span class="site-news__count">{{ total|format_number }}</span>
+    </h2>
+    {% if message %}<div class="alert alert-success" role="status">{{ message }}</div>{% endif %}
+    {% if comments is empty %}
+        <div class="site-news-comments__empty">{{ __('No comments yet. Be the first.') }}</div>
+    {% else %}
+        <div class="site-news-comments__feed">
+            {% for comment in comments %}
+                {% include '@news/public/components/comment.twig' with {
+                    comment: comment, number: offset + loop.index, article_id: article_id, page: page
+                } only %}
+            {% endfor %}
+        </div>
+        {% if pagination %}<div class="site-news-comments__pagination">{{ pagination }}</div>{% endif %}
+    {% endif %}
+
+    {% if can_write %}
+        <section class="site-news-compose" id="comment-form" aria-labelledby="comment-form-title">
+            <div class="site-news-compose__head">
+                <img class="site-news-compose__avatar" src="{{ avatar(app.user.id) }}" alt="" width="32" height="32">
+                <h3 class="site-news-compose__title" id="comment-form-title">{{ __('Write a comment') }}</h3>
+            </div>
+            {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% endif %}
+            <form method="post" action="/news/comments/add/{{ article_id }}/" data-comment-form>
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                <label for="comment-text" class="visually-hidden">{{ __('Write a comment') }}</label>
+                <textarea name="text" id="comment-text" class="form-control" rows="5" required
+                    data-comment-editor
+                    data-upload-url="/news/comments/upload_file/"
+                    data-language="{{ app.locale }}"
+                    data-editor-error="{{ __('Could not load the editor. You can use the text field.') }}">{{ text }}</textarea>
+                <div class="site-news-compose__actions">
+                    <button type="submit" class="btn btn-primary">
+                        {% include '@theme/components/icon.twig' with {name: 'send', size: 14} only %} {{ __('Send') }}
+                    </button>
+                </div>
+            </form>
+        </section>
+    {% elseif not app.user.isValid %}
+        <div class="site-news-comments__login">
+            {# The link to the login page is part of the translated string. #}
+            {{ __('You are not logged in. You must be <a href="/login/">logged in</a> to comment.')|raw }}
+        </div>
+    {% endif %}
+</section>

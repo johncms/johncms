@@ -17,7 +17,6 @@ return static function (RouteCollection $router): void {
         $router->map(['GET', 'POST'], '/news/search', [SearchController::class, 'index'])->name('news.search');
         $router->map(['GET', 'POST'], '/news/search_tags', [SearchController::class, 'byTags'])->name('news.search_tags');
         $router->post('/news/add_vote/{article_id:number}/{type_vote:number}', [VoteController::class, 'add'])->name('news.add_vote');
-        $router->map(['GET', 'POST'], '/news/comments/{article_id:number}', [CommentsController::class, 'index'])->name('news.comments');
         $router->post('/news/comments/add/{article_id:number}', [CommentsController::class, 'add'])->name('news.comments_add');
         $router->post('/news/comments/del', [CommentsController::class, 'del'])->name('news.comments_delete');
     // Signing in is not enough: the permission is what a ban takes away, and uploading a picture

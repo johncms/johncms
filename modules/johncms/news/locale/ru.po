@@ -854,3 +854,6 @@ msgstr[3] "%s просмотра"
 
 msgid "Popular"
 msgstr "Популярное"
+
+msgid "No comments yet. Be the first."
+msgstr "Комментариев пока нет. Будьте первым."

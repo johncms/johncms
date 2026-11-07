@@ -44,8 +44,24 @@ $(function () {
     type: 'image',
     image: {
       verticalFit: true,
+      // The caption is built from text nodes: the title and the source come from user content.
       titleSrc: function (item) {
-        return item.el.attr('title') + ' &middot; <a class="image-source-link" href="' + item.el.attr('data-source') + '" target="_blank">Download</a>';
+        const title = document.createElement('span');
+        title.textContent = item.el.attr('title') || '';
+        const source = item.el.attr('data-source');
+        if (source) {
+          const url = new URL(source, window.location.href);
+          if (['http:', 'https:'].includes(url.protocol)) {
+            const link = document.createElement('a');
+            link.href = url.href;
+            link.target = '_blank';
+            link.rel = 'noopener';
+            link.className = 'image-source-link';
+            link.textContent = 'Download';
+            title.append(' · ', link);
+          }
+        }
+        return title.innerHTML;
       }
     },
     zoom: {

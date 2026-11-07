@@ -12,16 +12,16 @@ msgstr ""
 
 #: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:30
 #: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:74
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:192
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:193
 #: modules/johncms/news/src/Application/Collections/NewsViewMapper.php:121
 #: modules/johncms/news/src/Application/Controllers/Admin/NewsSettingsController.php:77
-#: modules/johncms/news/src/Application/Controllers/ArticleController.php:35
+#: modules/johncms/news/src/Application/Controllers/ArticleController.php:44
 #: modules/johncms/news/src/Application/Controllers/SearchController.php:38
 #: modules/johncms/news/src/Application/Controllers/SectionController.php:28
 #: modules/johncms/news/src/Application/Menu/NewsMenuItemProvider.php:38
 #: modules/johncms/news/src/Application/Services/NewsPermissions.php:31
 #: modules/johncms/news/templates/homepage/latest.twig:3
-#: modules/johncms/news/templates/public/article.twig:142
+#: modules/johncms/news/templates/public/article.twig:125
 msgid "News"
 msgstr ""
 
@@ -83,6 +83,7 @@ msgstr ""
 
 #: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:98
 #: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:107
+#: modules/johncms/news/src/Application/Controllers/CommentsController.php:43
 msgid "One of the comment attachments is not available."
 msgstr ""
 
@@ -91,18 +92,18 @@ msgstr ""
 msgid "The comment is not available."
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:148
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:149
 msgid "Choose an upvote or a downvote."
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:212
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:213
 #: modules/johncms/news/src/Application/Collections/NewsReadService.php:52
 #: modules/johncms/news/src/Application/Collections/NewsReadService.php:231
 #: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:32
 msgid "The news collection is missing. Run system:update."
 msgstr ""
 
-#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:225
+#: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:226
 #: modules/johncms/news/src/Application/Collections/NewsReadService.php:310
 #: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:34
 msgid "The requested article or section is not available."
@@ -124,18 +125,11 @@ msgstr ""
 msgid "News settings"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/CommentsController.php:54
-#: modules/johncms/news/src/Application/Controllers/CommentsController.php:67
-#: modules/johncms/news/src/Application/Controllers/CommentsController.php:104
-#: modules/johncms/news/src/Application/Controllers/CommentsController.php:107
-msgid "Bad Request"
-msgstr ""
-
 #: modules/johncms/news/src/Application/Controllers/CommentsController.php:58
 msgid "The comment was added successfully"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/CommentsController.php:70
+#: modules/johncms/news/src/Application/Controllers/CommentsController.php:72
 msgid "The comment was deleted successfully"
 msgstr ""
 
@@ -352,16 +346,16 @@ msgid "All news"
 msgstr ""
 
 #: modules/johncms/news/templates/homepage/latest.twig:13
-#: modules/johncms/news/templates/public/article.twig:65
-#: modules/johncms/news/templates/public/article.twig:97
+#: modules/johncms/news/templates/public/article.twig:73
 #: modules/johncms/news/templates/public/components/article-row.twig:16
+#: modules/johncms/news/templates/public/components/comments.twig:17
 msgid "Comments"
 msgstr ""
 
 #: modules/johncms/news/templates/homepage/latest.twig:17
 #: modules/johncms/news/templates/homepage/latest.twig:20
-#: modules/johncms/news/templates/public/article.twig:61
-#: modules/johncms/news/templates/public/article.twig:63
+#: modules/johncms/news/templates/public/article.twig:69
+#: modules/johncms/news/templates/public/article.twig:71
 #: modules/johncms/news/templates/public/components/article-row.twig:12
 #: modules/johncms/news/templates/public/components/article-row.twig:14
 #: modules/johncms/news/templates/public/components/side-list.twig:16
@@ -371,7 +365,7 @@ msgstr ""
 
 #: modules/johncms/news/templates/homepage/latest.twig:22
 #: modules/johncms/news/templates/homepage/latest.twig:25
-#: modules/johncms/news/templates/public/article.twig:58
+#: modules/johncms/news/templates/public/article.twig:66
 #: modules/johncms/news/templates/public/components/article-row.twig:8
 #: modules/johncms/news/templates/public/components/article-row.twig:10
 msgid "Rating"
@@ -387,122 +381,106 @@ msgstr ""
 msgid "Published news will appear here."
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:18
+#: modules/johncms/news/templates/public/article.twig:26
 msgid "published %s"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:19
+#: modules/johncms/news/templates/public/article.twig:27
 msgid "%s view"
 msgid_plural "%s views"
 msgstr[0] ""
 
-#: modules/johncms/news/templates/public/article.twig:36
+#: modules/johncms/news/templates/public/article.twig:44
 msgid "Tags:"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:41
+#: modules/johncms/news/templates/public/article.twig:49
 msgid "Edit"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:58
+#: modules/johncms/news/templates/public/article.twig:66
 msgid "Like"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:58
+#: modules/johncms/news/templates/public/article.twig:66
 msgid "Dislike"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:58
-#: modules/johncms/news/templates/public/article.twig:99
+#: modules/johncms/news/templates/public/article.twig:66
 msgid "Loading..."
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:68
+#: modules/johncms/news/templates/public/article.twig:76
 msgid "Link copied"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:68
+#: modules/johncms/news/templates/public/article.twig:76
 msgid "Could not copy the link."
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:73
+#: modules/johncms/news/templates/public/article.twig:81
 msgid "Copy link"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:92
-msgid "Write a comment"
-msgstr ""
-
-#: modules/johncms/news/templates/public/article.twig:93
-msgid "Send"
-msgstr ""
-
-#: modules/johncms/news/templates/public/article.twig:94
-msgid "Delete"
-msgstr ""
-
-#: modules/johncms/news/templates/public/article.twig:95
-msgid "Quote"
-msgstr ""
-
-#: modules/johncms/news/templates/public/article.twig:96
-msgid "Reply"
-msgstr ""
-
-#: modules/johncms/news/templates/public/article.twig:98
-msgid "The list is empty"
-msgstr ""
-
-#: modules/johncms/news/templates/public/article.twig:100
-msgid "Online"
-msgstr ""
-
-#: modules/johncms/news/templates/public/article.twig:101
-msgid "Download"
-msgstr ""
-
-#: modules/johncms/news/templates/public/article.twig:102
-msgid "Unknown user"
-msgstr ""
-
-#: modules/johncms/news/templates/public/article.twig:103
-msgid "Delete this comment?"
-msgstr ""
-
-#: modules/johncms/news/templates/public/article.twig:104
-msgid "Could not load the comments."
-msgstr ""
-
-#: modules/johncms/news/templates/public/article.twig:105
-msgid "Could not send the comment."
-msgstr ""
-
-#: modules/johncms/news/templates/public/article.twig:106
-msgid "Could not delete the comment."
-msgstr ""
-
-#: modules/johncms/news/templates/public/article.twig:107
-msgid "Could not load the editor. You can use the text field."
-msgstr ""
-
-#: modules/johncms/news/templates/public/article.twig:117
-msgid "You are not logged in. You must be <a href=\"/login/\">logged in</a> to comment."
-msgstr ""
-
-#: modules/johncms/news/templates/public/article.twig:128
+#: modules/johncms/news/templates/public/article.twig:111
 msgid "Author"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:147
+#: modules/johncms/news/templates/public/article.twig:130
 msgid "On the site since"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:157
+#: modules/johncms/news/templates/public/article.twig:140
 msgid "Read also"
 msgstr ""
 
-#: modules/johncms/news/templates/public/article.twig:163
+#: modules/johncms/news/templates/public/article.twig:146
 msgid "Popular"
+msgstr ""
+
+#: modules/johncms/news/templates/public/components/comment.twig:14
+msgid "Online"
+msgstr ""
+
+#: modules/johncms/news/templates/public/components/comment.twig:21
+msgid "Unknown user"
+msgstr ""
+
+#: modules/johncms/news/templates/public/components/comment.twig:36
+msgid "Reply"
+msgstr ""
+
+#: modules/johncms/news/templates/public/components/comment.twig:39
+msgid "Quote"
+msgstr ""
+
+#: modules/johncms/news/templates/public/components/comment.twig:43
+msgid "Delete this comment?"
+msgstr ""
+
+#: modules/johncms/news/templates/public/components/comment.twig:48
+msgid "Delete"
+msgstr ""
+
+#: modules/johncms/news/templates/public/components/comments.twig:22
+msgid "No comments yet. Be the first."
+msgstr ""
+
+#: modules/johncms/news/templates/public/components/comments.twig:38
+#: modules/johncms/news/templates/public/components/comments.twig:43
+msgid "Write a comment"
+msgstr ""
+
+#: modules/johncms/news/templates/public/components/comments.twig:48
+msgid "Could not load the editor. You can use the text field."
+msgstr ""
+
+#: modules/johncms/news/templates/public/components/comments.twig:51
+msgid "Send"
+msgstr ""
+
+#: modules/johncms/news/templates/public/components/comments.twig:59
+msgid "You are not logged in. You must be <a href=\"/login/\">logged in</a> to comment."
 msgstr ""
 
 #: modules/johncms/news/templates/public/components/section-card.twig:7

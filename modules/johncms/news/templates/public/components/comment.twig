@@ -1,0 +1,57 @@
+{#
+    One comment of the article discussion.
+
+    @var comment    NewsCommentViewDTO
+    @var number     int Position of the comment in the discussion, from 1.
+    @var article_id int
+    @var page       int Page of the discussion the comment is on.
+#}
+{% set author = comment.author %}
+{% set author_url = author ? profile_url(author.id) : null %}
+<article class="site-news-comment" id="comment-{{ comment.id }}" data-comment>
+    <div class="site-news-comment__avatar">
+        <img src="{{ avatar(author ? author.id : 0) }}" alt="" width="40" height="40" loading="lazy">
+        {% if author and author.online %}<span class="site-news-comment__online" title="{{ __('Online') }}"></span>{% endif %}
+    </div>
+    <div class="site-news-comment__main">
+        <header class="site-news-comment__header">
+            {% if author_url %}
+                <a class="site-news-comment__name" href="{{ author_url }}" data-comment-author>{{ author.name }}</a>
+            {% else %}
+                <span class="site-news-comment__name" data-comment-author>{{ author ? author.name : __('Unknown user') }}</span>
+            {% endif %}
+            {% if author and author.rightsName %}<span class="site-news-comment__role">{{ author.rightsName }}</span>{% endif %}
+            <time class="site-news-comment__date" data-comment-date>{{ comment.createdAt }}</time>
+            <a class="site-news-comment__anchor" href="#comment-{{ comment.id }}">#{{ number }}</a>
+        </header>
+        <div class="site-news-comment__body ck-content" data-comment-body>{{ comment.text }}</div>
+        {% if comment.moderatorData.ip|default('') or comment.canReply or comment.canDelete %}
+            <footer class="site-news-comment__footer">
+                {% if comment.moderatorData.ip|default('') %}
+                    <a class="site-news-comment__ip" href="/admin/ip-search?ip={{ comment.moderatorData.ip|url_encode }}" title="{{ comment.moderatorData.user_agent|default('') }}">{{ comment.moderatorData.ip }}</a>
+                {% endif %}
+                <div class="site-news-comment__actions">
+                    {% if comment.canReply %}
+                        <button type="button" data-comment-reply hidden>
+                            {% include '@theme/components/icon.twig' with {name: 'message-square', size: 12} only %} {{ __('Reply') }}
+                        </button>
+                        <button type="button" data-comment-quote hidden>
+                            {% include '@theme/components/icon.twig' with {name: 'quote', size: 12} only %} {{ __('Quote') }}
+                        </button>
+                    {% endif %}
+                    {% if comment.canDelete %}
+                        <form method="post" action="/news/comments/del/" data-confirm="{{ __('Delete this comment?') }}">
+                            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                            <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                            <input type="hidden" name="article_id" value="{{ article_id }}">
+                            <input type="hidden" name="page" value="{{ page }}">
+                            <button type="submit" class="site-news-comment__delete" title="{{ __('Delete') }}" aria-label="{{ __('Delete') }}">
+                                {% include '@theme/components/icon.twig' with {name: 'trash-2', size: 12} only %}
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+            </footer>
+        {% endif %}
+    </div>
+</article>
