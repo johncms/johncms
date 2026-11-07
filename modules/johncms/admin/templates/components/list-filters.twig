@@ -11,6 +11,8 @@
             value: filter.value,
             applied: filter.applied,
             options: filter.options,
+            searchable: filter.searchable|default(false),
+            custom: filter.custom|default(null),
         } only %}
     {% endfor %}
 </div>

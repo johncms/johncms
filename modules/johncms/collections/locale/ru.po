@@ -1751,3 +1751,30 @@ msgstr "Переместить в"
 
 msgid "Clear selection"
 msgstr "Снять выбор"
+
+msgid "%1$s – %2$s"
+msgstr "%1$s – %2$s"
+
+msgid "Any date"
+msgstr "Любая дата"
+
+msgid "Anyone"
+msgstr "Любой"
+
+msgid "From %s"
+msgstr "от %s"
+
+msgid "Last 30 days"
+msgstr "За 30 дней"
+
+msgid "Last 7 days"
+msgstr "За 7 дней"
+
+msgid "Since %s"
+msgstr "с %s"
+
+msgid "This year"
+msgstr "В этом году"
+
+msgid "Until %s"
+msgstr "по %s"

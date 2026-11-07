@@ -105,9 +105,16 @@ final readonly class CollectionItemsAdminController
         }
         $data = [
             'bulk' => $bulkActions !== [] ? ['action' => $this->baseUrl($collection_id) . '/bulk', 'back' => $listUrl, 'actions' => $bulkActions, 'sections' => $hasSections ? $this->sectionOptions($collection_id) : []] : [],
-            'list_controls' => $this->listing->controls($collection, $filter),
             'meta_columns' => $metaColumns,
-            'controls'     => $this->controlsMapper->map($this->baseUrl($collection_id), $filter, $tree, $hasSections),
+            'controls'     => $this->controlsMapper->map(
+                path: $this->baseUrl($collection_id),
+                filter: $filter,
+                tree: $tree,
+                hasSections: $hasSections,
+                enabled: $this->listing->settings($collection)['filters'],
+                collectionId: $collection_id,
+                today: $this->siteNow(),
+            ),
             'columns'      => array_map(static fn ($field): string => $field->name, $fields),
             'has_sections' => $hasSections,
             'rows'         => $this->rowMapper->rows($items, $fields, $tree, $collection, $listUrl),
@@ -143,8 +150,7 @@ final readonly class CollectionItemsAdminController
 
         $defaults = [];
         // Resolve date presets once on GET; subsequent requests carry the displayed values.
-        $config = config('johncms');
-        $openedAt = (new DateTimeImmutable())->modify(sprintf('%+d hours', (int) ($config['timeshift'] ?? 0)));
+        $openedAt = $this->siteNow();
         foreach ($this->fieldRepository->getByCollection($collection_id) as $field) {
             if (($field->settings['date_preset'] ?? null) === 'current' && in_array($field->type, [FieldType::Date, FieldType::Datetime], true)) {
                 $value = $openedAt->format($field->type === FieldType::Date ? 'Y-m-d' : 'Y-m-d H:i:s');
@@ -636,6 +642,12 @@ final readonly class CollectionItemsAdminController
     private function postSection(Request $request): ?int
     {
         return filter_var($request->body('section_id', '0'), FILTER_VALIDATE_INT) ?: ($request->body('section_id', '0') === '0' ? null : -1);
+    }
+
+    /** The time of the site: the server clock moved by the configured shift. */
+    private function siteNow(): DateTimeImmutable
+    {
+        return (new DateTimeImmutable())->modify(sprintf('%+d hours', (int) (config('johncms')['timeshift'] ?? 0)));
     }
 
     private function baseUrl(int $collectionId): string

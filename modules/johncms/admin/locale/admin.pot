@@ -105,6 +105,7 @@ msgid "Users"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:37
+#: themes/default/templates/admin/components/ui/filter-dropdown.twig:21
 #: modules/johncms/admin/src/Application/Services/AuthLogControlsMapper.php:42
 #: modules/johncms/admin/src/Application/Services/BanListControlsMapper.php:39
 #: modules/johncms/admin/src/Application/Services/UserListControlsMapper.php:50

@@ -25,6 +25,9 @@ interface ContentCollectionItemRepositoryInterface
     /** @return Collection<int, ContentCollectionItem> */
     public function getNameMatches(int $collectionId, string $term, int $limit): Collection;
 
+    /** @return list<int> Who created the items of the collection, the most productive first. */
+    public function getAuthors(int $collectionId, int $limit): array;
+
     /**
      * @param list<int> $ids
      * @return array<int, string> Names keyed by item id; an item that is gone is left out.

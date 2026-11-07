@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Collections;
 
+use DateTimeImmutable;
 use Dom\HTMLDocument;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Modules\Collections\Application\DTO\CollectionFormDTO;
@@ -250,7 +251,7 @@ final class CollectionWorkspaceTest extends FunctionalTestCase
         $document = HTMLDocument::createFromString($html, LIBXML_NOERROR);
         self::assertSame('Many visits', trim($document->querySelector('.admin-collection-items tbody tr:first-child .admin-collection-items__name')->textContent));
         self::assertStringContainsString($other->name, $document->querySelector('tbody')->textContent);
-        self::assertNotNull($document->querySelector('input[name="created_from"]'));
+        self::assertNotNull($document->querySelector('input[data-filter-field="created_from"]'));
         $query = '?author=' . $user->id . '&created_from=2026-01-02&created_to=2026-01-02&min_views=1';
         $html = (string) $this->handleRequest($base . $query, cookies: $this->actingAs($user), catch: false)->getContent();
         $document = HTMLDocument::createFromString($html, LIBXML_NOERROR);
@@ -258,6 +259,31 @@ final class CollectionWorkspaceTest extends FunctionalTestCase
         self::assertSame('Few visits', trim($document->querySelector('tbody tr td a')->textContent));
         self::assertStringContainsString('author=', rawurldecode($document->querySelector('a[href*="/edit?"]')->getAttribute('href')));
         self::assertStringContainsString(d__('collections', 'Created from'), $html);
+    }
+
+    public function testExtraFiltersAreDropdownsWithNamesPeriodsAndThresholds(): void
+    {
+        $collection = Fixture::insert('collections', ['code' => 'extra-filters', 'name' => 'Extra filters']);
+        $user = FunctionalUserFactory::createSupervisor();
+        $writer = $this->container()->get(SaveCollectionUseCase::class);
+        $writer->execute($collection, $this->form('extra-filters', ['listing' => ['filters' => ['author', 'created_at', 'views']]]));
+        Fixture::insert('collection_items', ['collection_id' => $collection, 'name' => 'Written', 'code' => 'written', 'created_by' => $user->id, 'view_count' => 150]);
+        $base = '/admin/collections/' . $collection . '/items';
+        $document = HTMLDocument::createFromString((string) $this->handleRequest($base, cookies: $this->actingAs($user))->getContent(), LIBXML_NOERROR);
+        $filters = $document->querySelector('[data-live-list-region="filters"]');
+        self::assertNull($document->querySelector('[data-live-list-region="options"]'), 'The extra filters live among the others.');
+        self::assertStringContainsString($user->name, $filters->textContent);
+        $today = (new DateTimeImmutable())->format('Y-m-d');
+        self::assertNotNull($filters->querySelector('a[href*="created_from=' . $today . '"]'));
+        self::assertNotNull($filters->querySelector('a[href*="min_views=100"]'));
+        self::assertNotNull($filters->querySelector('input[data-filter-field="created_from"][type="date"]'));
+        self::assertNull($filters->querySelector('form'), 'The menu sits inside the form of the live list and holds no form of its own.');
+
+        $document = HTMLDocument::createFromString((string) $this->handleRequest($base . '?author=' . $user->id . '&min_views=100', cookies: $this->actingAs($user))->getContent(), LIBXML_NOERROR);
+        $chips = $document->querySelector('.admin-chips')->textContent;
+        self::assertStringContainsString($user->name, $chips, 'A chip names the author, not their ID.');
+        self::assertStringContainsString('100', $chips);
+        self::assertSame(1, $document->querySelectorAll('.admin-collection-items tbody tr')->length);
     }
 
     public function testListConfigurationAndQueryCannotInjectSortColumns(): void

@@ -215,3 +215,21 @@
   margin-left: auto;
   font-size: 0.75rem;
 }
+
+// The menu of a filter: a search above long lists, a form of one's own value below.
+.admin-filter__menu {
+  max-block-size: 24rem;
+  overflow-y: auto;
+}
+
+.admin-filter__search {
+  padding: 0.25rem 0.5rem 0.375rem;
+}
+
+.admin-filter__custom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-inline-size: 13rem;
+  padding: 0.25rem 0.75rem 0.5rem;
+}

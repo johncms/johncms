@@ -63,6 +63,13 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
             ->orderBy('sort')->orderBy('id')->limit($limit)->get(['id', 'name']);
     }
 
+    public function getAuthors(int $collectionId, int $limit): array
+    {
+        return ContentCollectionItem::query()->where('collection_id', $collectionId)->whereNotNull('created_by')
+            ->groupBy('created_by')->orderByRaw('COUNT(*) DESC')->orderBy('created_by')->limit($limit)
+            ->pluck('created_by')->map(intval(...))->all();
+    }
+
     public function getNames(array $ids): array
     {
         return $ids === [] ? [] : ContentCollectionItem::query()->whereIn('id', $ids)->pluck('name', 'id')->all();

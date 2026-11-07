@@ -6,6 +6,10 @@
     @param string value   The title of the chosen option.
     @param bool   applied Whether the filter narrows the list: anything but its first option.
     @param array  options title, url, active; divider sets the option apart from the ones above.
+    @param bool   searchable A field above the options narrows them as it is typed into (src/admin/js/filter-dropdown.js).
+    @param array  custom  One's own value under the options: action, hidden (name => value), fields
+                          (name, label, type, value), submit. Not a form: the menu sits inside the form
+                          of a live list, so src/admin/js/filter-dropdown.js builds the address. May be absent.
 #}
 <div class="dropdown">
     <button type="button" class="admin-filter{{ applied ? ' admin-filter--applied' }}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -13,7 +17,10 @@
         <span class="admin-filter__value" title="{{ value }}">{{ value }}</span>
         {% include '@admin/components/ui/icon.twig' with {name: 'chevron-down', size: 12} only %}
     </button>
-    <ul class="dropdown-menu">
+    <ul class="dropdown-menu admin-filter__menu">
+        {% if searchable|default(false) %}
+            <li class="admin-filter__search"><input type="search" class="form-control form-control-sm" aria-label="{{ d__('admin', 'Search') }}" placeholder="{{ d__('admin', 'Search') }}" data-filter-search></li>
+        {% endif %}
         {% for option in options %}
             {% if option.divider|default(false) %}<li><hr class="dropdown-divider"></li>{% endif %}
             <li>
@@ -27,5 +34,17 @@
                 </a>
             </li>
         {% endfor %}
+        {% if custom|default(null) %}
+            <li><hr class="dropdown-divider"></li>
+            <li>
+                <div class="admin-filter__custom" data-filter-custom data-action="{{ custom.action }}" data-hidden="{{ custom.hidden|json_encode }}">
+                    {% for field in custom.fields %}
+                        <label class="form-label small mb-0" for="filter-{{ field.name }}">{{ field.label }}</label>
+                        <input class="form-control form-control-sm" type="{{ field.type }}" id="filter-{{ field.name }}" value="{{ field.value }}" data-filter-field="{{ field.name }}"{% if field.type == 'number' %} min="0" max="2147483647"{% endif %}>
+                    {% endfor %}
+                    <button type="button" class="btn btn-outline-primary btn-sm mt-1" data-filter-apply>{{ custom.submit }}</button>
+                </div>
+            </li>
+        {% endif %}
     </ul>
 </div>

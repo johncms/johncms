@@ -6,7 +6,6 @@ namespace Johncms\Modules\Collections\Application\Services;
 
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
-use Johncms\Modules\Collections\Domain\ValueObjects\ItemListFilter;
 
 final readonly class CollectionListSettings
 {
@@ -70,16 +69,6 @@ final readonly class CollectionListSettings
             $collection->settings['_workspace']['listing'] ?? [],
             $collection->settings['workspace']['listing'] ?? [],
         );
-    }
-
-    /** @return array<string, mixed> */
-    public function controls(ContentCollection $collection, ItemListFilter $filter): array
-    {
-        return [
-            'enabled' => $this->settings($collection)['filters'], 'sorts' => $this->sorts(),
-            'sort' => $filter->sortBy, 'direction' => $filter->direction, 'author' => $filter->author,
-            'created_from' => $filter->createdFrom, 'created_to' => $filter->createdTo, 'min_views' => $filter->minViews,
-        ];
     }
 
     private function invalid(): CollectionSchemaException

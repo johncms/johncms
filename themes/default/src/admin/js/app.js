@@ -17,6 +17,7 @@ import '../scss/app.scss';
 
 import './shell';
 import './live-list';
+import './filter-dropdown';
 import './tabs';
 import './role-permissions';
 import './modal';
