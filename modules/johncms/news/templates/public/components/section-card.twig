@@ -1,0 +1,14 @@
+{# @var section array Child section with its summary and what it holds. #}
+<a class="site-news-section" href="{{ section.url }}">
+    <span class="site-news-section__icon">{% include '@theme/components/icon.twig' with {name: 'folder', size: 16} only %}</span>
+    <span class="site-news-section__main">
+        <span class="site-news-section__head">
+            <span class="site-news-section__title">{{ section.name }}</span>
+            <span class="site-news__count" title="{{ __('Publications') }}">{{ section.items_count|format_number }}</span>
+        </span>
+        {% if section.summary %}<span class="site-news-section__summary">{{ section.summary }}</span>{% endif %}
+    </span>
+    {% if section.last_date %}
+        <span class="site-news-section__last">{{ __('updated %s')|format(section.last_date) }}</span>
+    {% endif %}
+</a>

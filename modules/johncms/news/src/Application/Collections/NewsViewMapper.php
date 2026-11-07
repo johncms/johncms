@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Collections;
 
-use Carbon\Carbon;
 use Johncms\Auth\CurrentUser;
 use Johncms\Content\ContentRendererInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionRecordDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionDTO;
+use Johncms\Modules\Collections\Application\DTO\CollectionSectionStatsDTO;
 use Johncms\Modules\News\Application\DTO\NewsArticleViewDTO;
 use Johncms\Modules\News\Application\DTO\NewsAuthorDTO;
 use Johncms\Modules\News\Application\DTO\NewsSectionViewDTO;
@@ -22,6 +22,9 @@ use Johncms\Utils\DateFormatterInterface;
 
 final readonly class NewsViewMapper implements NewsViewMapperInterface
 {
+    /** Characters of the section description shown on its card. */
+    private const int SUMMARY_LENGTH = 160;
+
     public function __construct(
         private ContentRendererInterface $content,
         private CollectionSchemaApiInterface $schema,
@@ -70,10 +73,7 @@ final readonly class NewsViewMapper implements NewsViewMapperInterface
                 $this->content->toPlainText($text('meta_description') ?: $template('article_meta_description'))
                     ?: ($this->content->toPlainText($item->previewText ?? '') ?: $this->content->toPlainText($item->detailText ?? '')),
                 $this->content->toPlainText($text('meta_keywords') ?: $template('article_meta_keywords')),
-                $item->publishedAt !== null ? Carbon::createFromTimestamp(
-                    $item->publishedAt->getTimestamp(),
-                    (int) config('johncms.timeshift', 0) + $this->user->user()->config->timeshift,
-                )->format('d.m.Y') : '',
+                $item->publishedAt !== null ? $this->dates->day($item->publishedAt->getTimestamp()) : '',
             );
         }
         return $result;
@@ -84,16 +84,17 @@ final readonly class NewsViewMapper implements NewsViewMapperInterface
         return $this->sections($collection, [$section])[0];
     }
 
-    public function sections(CollectionRecordDTO $collection, array $sections): array
+    public function sections(CollectionRecordDTO $collection, array $sections, array $stats = []): array
     {
         $settings = $this->settings->getSettings();
         $urls = $this->urls->sectionUrls($collection, $sections);
-        return array_map(fn (CollectionSectionDTO $section): NewsSectionViewDTO => $this->sectionView($section, $settings, $urls[$section->id] ?? ''), $sections);
+        return array_map(fn (CollectionSectionDTO $section): NewsSectionViewDTO => $this->sectionView($section, $settings, $urls[$section->id] ?? '', $stats[$section->id] ?? null), $sections);
     }
 
     /** @param array<string, mixed> $settings */
-    private function sectionView(CollectionSectionDTO $section, array $settings, string $url): NewsSectionViewDTO
+    private function sectionView(CollectionSectionDTO $section, array $settings, string $url, ?CollectionSectionStatsDTO $stats): NewsSectionViewDTO
     {
+        $summary = $this->content->toPlainText($section->description ?? '');
         $text = static fn (string $key): string => is_string($section->metadata[$key] ?? null) ? $section->metadata[$key] : '';
         $template = fn (string $key): string => $this->setting($settings, $key, '#section_name#', $section->name);
         return new NewsSectionViewDTO(
@@ -103,6 +104,9 @@ final readonly class NewsViewMapper implements NewsViewMapperInterface
             $this->content->toPlainText($text('meta_title') ?: ($template('section_title') ?: $section->name)),
             $this->content->toPlainText($text('meta_description') ?: $template('section_meta_description')) ?: $this->content->toPlainText($section->description ?? ''),
             $this->content->toPlainText($text('meta_keywords') ?: $template('section_meta_keywords')),
+            mb_strlen($summary) > self::SUMMARY_LENGTH ? rtrim(mb_substr($summary, 0, self::SUMMARY_LENGTH)) . '…' : $summary,
+            $stats->items ?? 0,
+            $stats?->lastPublishedAt !== null ? $this->dates->day($stats->lastPublishedAt->getTimestamp()) : '',
         );
     }
 

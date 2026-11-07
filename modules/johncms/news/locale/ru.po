@@ -809,3 +809,29 @@ msgstr "Скачать"
 
 msgid "Search news…"
 msgstr "Поиск по новостям…"
+
+msgid "Publications"
+msgstr "Публикации"
+
+msgid "updated %s"
+msgstr "обновлён %s"
+
+msgid "%d section"
+msgid_plural "%d sections"
+msgstr[0] "%d раздел"
+msgstr[1] "%d раздела"
+msgstr[2] "%d разделов"
+msgstr[3] "%d раздела"
+
+msgid "%d publication"
+msgid_plural "%d publications"
+msgstr[0] "%d публикация"
+msgstr[1] "%d публикации"
+msgstr[2] "%d публикаций"
+msgstr[3] "%d публикации"
+
+msgid "Subsections"
+msgstr "Подразделы"
+
+msgid "Section news"
+msgstr "Новости раздела"

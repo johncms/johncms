@@ -37,7 +37,8 @@ final readonly class SectionController
             }
         }
         $id = $section?->record->id;
-        $pagination = $this->paginationFactory->create($this->news->count(new NewsQueryDTO(sectionId: $id)));
+        $total = $this->news->count(new NewsQueryDTO(sectionId: $id));
+        $pagination = $this->paginationFactory->create($total);
         $redirect = $this->paginationGuard->redirectUrl($pagination);
         if ($redirect !== null) {
             redirect($redirect);
@@ -46,6 +47,7 @@ final readonly class SectionController
         return new ViewResponse('@news/public/index.twig', ($section?->metadata() ?? $this->news->rootMetadata()) + [
             'sections' => array_map(static fn ($entry): array => $entry->toTemplate(), $this->news->sections($id)),
             'articles' => array_map(static fn ($entry): array => $entry->toTemplate(), $page->articles),
+            'articles_total' => $total,
             'pagination' => $pagination->hasPages() ? $pagination->render() : null, 'current_section' => $section?->toTemplate(),
             'workspace_url' => '/admin/collections/' . $this->news->collection()->id . '/items',
         ]);

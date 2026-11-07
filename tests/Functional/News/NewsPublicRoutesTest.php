@@ -80,8 +80,13 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
             values: [],
         ));
         $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/')->getContent(), LIBXML_NOERROR);
-        self::assertSame('Releases', trim($document->querySelector('.site-news-section h3 a')->textContent));
-        self::assertStringContainsString('Release notes', $document->querySelector('.site-news-section__description')->textContent);
+        $card = $document->querySelector('a.site-news-section[href="/news/releases/"]');
+        self::assertNotNull($card, 'The whole section card leads to the section.');
+        self::assertSame('Releases', trim($card->querySelector('.site-news-section__title')->textContent));
+        self::assertSame('Release notes', trim($card->querySelector('.site-news-section__summary')->textContent));
+        self::assertSame('1', trim($card->querySelector('.site-news__count')->textContent));
+        self::assertNotNull($card->querySelector('.site-news-section__last'), 'The card tells when the section was last updated.');
+        self::assertStringContainsString(sprintf(dn__('news', '%d publication', '%d publications', 1), 1), $document->querySelector('.site-page-stat')->textContent);
         self::assertNotNull($document->querySelector('.site-news-card__preview a[href="https://example.com/notes"]'));
         self::assertNotNull($document->querySelector('.site-news-card a[href="/news/releases/release.html#article-comments"]'));
         self::assertNull($document->querySelector('.site-news-card > a'), 'Rich previews must not be wrapped in an article link.');

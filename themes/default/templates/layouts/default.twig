@@ -2,6 +2,8 @@
     Public shell; module content and the existing extension blocks remain server-rendered.
 
     @var page_title string Heading above the content, omitted when the page owns its heading.
+
+    Block page_subtitle: a line under the heading, e.g. what the page holds.
 #}
 {% extends '@theme/layouts/base.twig' %}
 
@@ -41,6 +43,7 @@
                         {% include '@theme/components/breadcrumbs.twig' only %}
                     {% endblock %}
                     {% if page_title|default('') %}<h1>{{ page_title }}</h1>{% endif %}
+                    {% block page_subtitle %}{% endblock %}
                 {% endset %}
                 {% if layout_page_heading|trim %}<div class="site-page-heading">{{ layout_page_heading }}</div>{% endif %}
                 {% set layout_header_ads = ads('content_header') %}

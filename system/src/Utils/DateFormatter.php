@@ -38,4 +38,11 @@ final readonly class DateFormatter implements DateFormatterInterface
                 ]
             );
     }
+
+    public function day(int $timestamp): string
+    {
+        $shift = (int) config('johncms.timeshift', 0) + $this->currentUser->user()->config->timeshift;
+
+        return Carbon::createFromTimestamp($timestamp, $shift)->locale($this->translator->getLocale())->isoFormat('D MMM YYYY');
+    }
 }

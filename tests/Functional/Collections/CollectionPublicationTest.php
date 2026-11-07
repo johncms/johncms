@@ -67,6 +67,7 @@ final class CollectionPublicationTest extends FunctionalTestCase
         self::assertSame([], $this->public->getItems($query));
         self::assertSame(0, $this->public->countItems($query));
         self::assertSame(0, $this->public->getPage($query)->total);
+        self::assertSame([], $this->public->getSectionStats($this->collection));
         self::assertNull($this->public->findItem($this->collection, $id));
         self::assertNull($this->public->findItemByCode($this->collection, $child, 'entry'));
         self::assertNotNull($this->container()->get(CollectionsApiInterface::class)->getItem($id));
@@ -121,6 +122,25 @@ final class CollectionPublicationTest extends FunctionalTestCase
             $connection->disableQueryLog();
             $pending->forget();
         }
+    }
+
+    public function testSectionStatsCountTheSubtreeAndItsLatestPublication(): void
+    {
+        $top = $this->section('top');
+        $child = $this->section('child', $top);
+        $empty = $this->section('empty');
+        $this->item('old', ['section_id' => $top, 'active_from' => '2020-01-01 10:00:00']);
+        $this->item('new', ['section_id' => $child, 'active_from' => '2024-05-06 07:08:09']);
+        $this->item('hidden', ['section_id' => $child, 'active' => false, 'active_from' => '2025-01-01 00:00:00']);
+        $this->item('loose');
+
+        $stats = $this->public->getSectionStats($this->collection);
+
+        self::assertSame([$top, $child], array_keys($stats), 'A section without published items is left out.');
+        self::assertArrayNotHasKey($empty, $stats);
+        self::assertSame(2, $stats[$top]->items);
+        self::assertSame('2024-05-06 07:08:09', $stats[$top]->lastPublishedAt?->format('Y-m-d H:i:s'));
+        self::assertSame(1, $stats[$child]->items);
     }
 
     public function testVisibleItemIsAvailableInListDetailAndSitemap(): void

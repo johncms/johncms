@@ -1,15 +1,44 @@
 {#
-    @var articles iterable<array> Published articles.
-    @var sections iterable<array> Child sections of the current one.
+    @var articles       iterable<array> Published articles.
+    @var articles_total int             Published articles of the section with its subsections, or of all news.
+    @var sections       iterable<array> Child sections of the current one.
     @var current_section array|null
-    @var pagination \Twig\Markup|null
-    @var workspace_url string
+    @var pagination     \Twig\Markup|null
+    @var workspace_url  string
 #}
 {% extends '@theme/layouts/default.twig' %}
 
 {% block content_class %}site-content--news{% endblock %}
 
+{% block page_subtitle %}
+    <p class="site-page-heading__subtitle">
+        <span class="site-page-stat">
+            <span class="site-page-stat__dot" aria-hidden="true"></span>
+            {% if not current_section and sections|length > 0 %}
+                {{ n__('%d section', '%d sections', sections|length)|format(sections|length) }} ·
+            {% endif %}
+            {{ n__('%d publication', '%d publications', articles_total)|format(articles_total) }}
+        </span>
+    </p>
+{% endblock %}
+
 {% block content %}
+    {% set sections_block %}
+        {% if sections|length > 0 %}
+            <section aria-labelledby="news-sections-title">
+                <h2 class="site-news__heading" id="news-sections-title">
+                    {{ current_section ? __('Subsections') : __('Sections') }}
+                    <span class="site-news__count">{{ sections|length }}</span>
+                </h2>
+                <div class="site-news__list site-news__list--tight">
+                    {% for section in sections %}
+                        {% include '@news/public/components/section-card.twig' with {section: section} only %}
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+    {% endset %}
+
     <div class="site-news">
         <div class="site-news__toolbar">
             {% include '@news/public/components/search-form.twig' with {
@@ -23,25 +52,13 @@
             {% endif %}
         </div>
 
-        {% if sections|length > 0 %}
-            <section class="site-news__sections" aria-labelledby="news-sections-title">
-                <h2 class="site-news__heading" id="news-sections-title">{{ __('Sections') }}</h2>
-                <div class="site-news__list">
-                    {% for section in sections %}
-                        <div class="site-news-section">
-                            <span class="site-news-section__icon">{% include '@theme/components/icon.twig' with {name: 'folder', size: 18} only %}</span>
-                            <div class="site-news-section__main">
-                                <h3><a href="{{ section.url }}">{{ section.name }}</a></h3>
-                                {% if section.text_safe %}<div class="site-news-section__description">{{ section.text_safe }}</div>{% endif %}
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </section>
-        {% endif %}
+        {% if not current_section %}{{ sections_block }}{% endif %}
 
         <section aria-labelledby="news-list-title">
-            <h2 class="site-news__heading" id="news-list-title">{{ __('All news') }}</h2>
+            <h2 class="site-news__heading" id="news-list-title">
+                {{ current_section ? __('Section news') : __('All news') }}
+                <span class="site-news__count">{{ articles_total|format_number }}</span>
+            </h2>
             <div class="site-news__list">
                 {% for article in articles %}
                     {% include '@news/public/components/article-row.twig' with {article: article} only %}
@@ -53,6 +70,8 @@
             </div>
             {% if pagination %}<div class="site-news__pagination">{{ pagination }}</div>{% endif %}
         </section>
+
+        {% if current_section %}{{ sections_block }}{% endif %}
 
         {% if current_section and current_section.text_safe %}
             <div class="site-news__description">{{ current_section.text_safe }}</div>

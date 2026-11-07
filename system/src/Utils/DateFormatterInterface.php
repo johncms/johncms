@@ -18,4 +18,7 @@ interface DateFormatterInterface
      * Formats a Unix timestamp for display, applying the site and user time shift.
      */
     public function format(int $timestamp): string;
+
+    /** The day alone, with the month in words of the current language, e.g. «4 Feb 2026». */
+    public function day(int $timestamp): string;
 }

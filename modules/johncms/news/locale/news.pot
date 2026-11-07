@@ -13,7 +13,7 @@ msgstr ""
 #: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:30
 #: modules/johncms/news/src/Application/Collections/NewsCollectionDeclaration.php:74
 #: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:192
-#: modules/johncms/news/src/Application/Collections/NewsViewMapper.php:107
+#: modules/johncms/news/src/Application/Collections/NewsViewMapper.php:116
 #: modules/johncms/news/src/Application/Controllers/Admin/NewsSettingsController.php:77
 #: modules/johncms/news/src/Application/Controllers/ArticleController.php:26
 #: modules/johncms/news/src/Application/Controllers/SearchController.php:38
@@ -96,13 +96,13 @@ msgstr ""
 
 #: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:212
 #: modules/johncms/news/src/Application/Collections/NewsReadService.php:52
-#: modules/johncms/news/src/Application/Collections/NewsReadService.php:213
+#: modules/johncms/news/src/Application/Collections/NewsReadService.php:214
 #: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:32
 msgid "The news collection is missing. Run system:update."
 msgstr ""
 
 #: modules/johncms/news/src/Application/Collections/NewsDiscussionService.php:225
-#: modules/johncms/news/src/Application/Collections/NewsReadService.php:254
+#: modules/johncms/news/src/Application/Collections/NewsReadService.php:255
 #: modules/johncms/news/src/Application/UseCases/EnsureNewsDiscussionAccessUseCase.php:34
 msgid "The requested article or section is not available."
 msgstr ""
@@ -345,7 +345,7 @@ msgid "Used where the article has no title, keywords or description of its own."
 msgstr ""
 
 #: modules/johncms/news/templates/homepage/latest.twig:3
-#: modules/johncms/news/templates/public/index.twig:44
+#: modules/johncms/news/templates/public/index.twig:59
 #: modules/johncms/news/templates/public/search.twig:19
 msgid "All news"
 msgstr ""
@@ -375,12 +375,12 @@ msgid "Rating"
 msgstr ""
 
 #: modules/johncms/news/templates/homepage/latest.twig:32
-#: modules/johncms/news/templates/public/index.twig:50
+#: modules/johncms/news/templates/public/index.twig:67
 msgid "No news yet"
 msgstr ""
 
 #: modules/johncms/news/templates/homepage/latest.twig:33
-#: modules/johncms/news/templates/public/index.twig:50
+#: modules/johncms/news/templates/public/index.twig:67
 msgid "Published news will appear here."
 msgstr ""
 
@@ -489,16 +489,42 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: modules/johncms/news/templates/public/index.twig:16
+#: modules/johncms/news/templates/public/components/section-card.twig:7
+msgid "Publications"
+msgstr ""
+
+#: modules/johncms/news/templates/public/components/section-card.twig:12
+msgid "updated %s"
+msgstr ""
+
+#: modules/johncms/news/templates/public/index.twig:18
+msgid "%d section"
+msgid_plural "%d sections"
+msgstr[0] ""
+
+#: modules/johncms/news/templates/public/index.twig:20
+msgid "%d publication"
+msgid_plural "%d publications"
+msgstr[0] ""
+
+#: modules/johncms/news/templates/public/index.twig:30
+msgid "Subsections"
+msgstr ""
+
+#: modules/johncms/news/templates/public/index.twig:30
+msgid "Sections"
+msgstr ""
+
+#: modules/johncms/news/templates/public/index.twig:45
 msgid "Search news…"
 msgstr ""
 
-#: modules/johncms/news/templates/public/index.twig:21
+#: modules/johncms/news/templates/public/index.twig:50
 msgid "Admin panel"
 msgstr ""
 
-#: modules/johncms/news/templates/public/index.twig:28
-msgid "Sections"
+#: modules/johncms/news/templates/public/index.twig:59
+msgid "Section news"
 msgstr ""
 
 #: modules/johncms/news/templates/public/search.twig:26

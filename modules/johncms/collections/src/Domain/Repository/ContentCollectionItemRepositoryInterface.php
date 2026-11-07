@@ -29,6 +29,13 @@ interface ContentCollectionItemRepositoryInterface
     public function getAuthors(int $collectionId, int $limit): array;
 
     /**
+     * Items published at the moment, counted by the section they lie in directly.
+     *
+     * @return array<int, array{items: int, last_published_at: string}> Keyed by section id; the date is UTC.
+     */
+    public function getPublishedSectionStats(int $collectionId, DateTimeImmutable $at): array;
+
+    /**
      * @param list<int> $ids
      * @return array<int, string> Names keyed by item id; an item that is gone is left out.
      */

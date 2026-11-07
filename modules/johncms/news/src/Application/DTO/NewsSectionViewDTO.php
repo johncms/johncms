@@ -16,13 +16,19 @@ final readonly class NewsSectionViewDTO
         public string $metaTitle,
         public string $metaDescription,
         public string $metaKeywords,
+        public string $summary = '',
+        public int $itemsCount = 0,
+        public string $lastDate = '',
     ) {
     }
 
     /** @return array<string, mixed> */
     public function toTemplate(): array
     {
-        return ['id' => $this->record->id, 'name' => $this->record->name, 'code' => $this->record->code, 'url' => $this->url, 'text_safe' => $this->text];
+        return [
+            'id' => $this->record->id, 'name' => $this->record->name, 'code' => $this->record->code, 'url' => $this->url, 'text_safe' => $this->text,
+            'summary' => $this->summary, 'items_count' => $this->itemsCount, 'last_date' => $this->lastDate,
+        ];
     }
 
     /** @return array{title: string, page_title: string, description: string, keywords: string} */

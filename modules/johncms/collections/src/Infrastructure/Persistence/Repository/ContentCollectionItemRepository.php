@@ -70,6 +70,23 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
             ->pluck('created_by')->map(intval(...))->all();
     }
 
+    public function getPublishedSectionStats(int $collectionId, DateTimeImmutable $at): array
+    {
+        $query = ContentCollectionItem::query();
+        $query->where('collection_id', $collectionId)->whereNotNull('section_id');
+        $this->publication->apply($query, $collectionId, $at);
+        $stats = [];
+        $rows = $query->toBase()->groupBy('section_id')->get([
+            'section_id',
+            new Expression('COUNT(*) AS items'),
+            new Expression('MAX(COALESCE(collection_items.active_from, collection_items.created_at)) AS last_published_at'),
+        ]);
+        foreach ($rows as $row) {
+            $stats[(int) $row->section_id] = ['items' => (int) $row->items, 'last_published_at' => (string) $row->last_published_at];
+        }
+        return $stats;
+    }
+
     public function getNames(array $ids): array
     {
         return $ids === [] ? [] : ContentCollectionItem::query()->whereIn('id', $ids)->pluck('name', 'id')->all();

@@ -93,7 +93,8 @@ final readonly class NewsReadService implements NewsReadServiceInterface
         if ($parentId !== null && ! isset($visible[$parentId])) {
             throw $this->notFound();
         }
-        return $this->mapper->sections($collection, array_values(array_filter($visible, static fn (CollectionSectionDTO $section): bool => $section->parent === $parentId)));
+        $children = array_values(array_filter($visible, static fn (CollectionSectionDTO $section): bool => $section->parent === $parentId));
+        return $this->mapper->sections($collection, $children, $children !== [] ? $this->items->getSectionStats($collection->id) : []);
     }
 
     public function section(int $sectionId): ?NewsSectionViewDTO
