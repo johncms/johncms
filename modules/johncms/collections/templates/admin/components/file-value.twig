@@ -27,7 +27,7 @@
         <div class="collection-file-actions" data-file-actions hidden>
             <button type="button" class="btn btn-outline-secondary btn-sm" data-file-browse>{{ __('Replace') }}</button>
             <button type="button" class="btn btn-outline-secondary btn-sm" data-file-pick>{{ __('Choose another') }}</button>
-            <button type="button" class="btn btn-outline-danger btn-sm" data-file-remove>{{ __('Remove') }}</button>
+            {% if not in_row|default(false) %}<button type="button" class="btn btn-outline-danger btn-sm" data-file-remove>{{ __('Remove') }}</button>{% endif %}
         </div>
     </div>
     <div class="collection-file-drop" data-file-drop hidden>

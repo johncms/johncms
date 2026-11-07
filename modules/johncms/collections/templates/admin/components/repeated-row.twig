@@ -1,33 +1,32 @@
 {# Native array controls retain their DOM order in the submitted values. #}
-<div class="border rounded p-3 mb-2" data-repeat-row>
-    <label class="form-label small" for="{{ input_id }}">{{ __('Value') }} <span data-repeat-number>{{ index + 1 }}</span></label>
-    {% if type == 'html' %}
-        {% include '@admin/components/ui/editor.twig' with {name: input_name ~ '[]', id: input_id, value: value, label: label, allow_upload: allow_upload, upload_url: upload_url} only %}
-    {% elseif type == 'text' or (type == 'string' and value matches '/[\r\n]/') %}
-        <textarea name="{{ input_name }}[]" class="form-control" id="{{ input_id }}"{% if error|default('') %} aria-invalid="true" aria-describedby="error-default_values-{{ index }}"{% endif %} rows="3">{{ value }}</textarea>
-    {% elseif type == 'registered_file' %}
-        {% include '@collections/admin/components/file-value.twig' with {
-            code: file_code, index: index, value: value, input_name: input_name ~ '[]', input_id: input_id,
-            choices: file_choices, accept: file_accept, errors: errors|default([])
-        } only %}
-    {% elseif type in ['select', 'relation'] %}
-        <select name="{{ input_name }}[]" class="form-select" id="{{ input_id }}"{% if error|default('') %} aria-invalid="true" aria-describedby="error-default_values-{{ index }}"{% endif %}{% if type == 'relation' %} data-relation-select{% endif %}>
-            {% include '@collections/admin/components/select-options.twig' with {options: options|default([]), current: value} only %}
-        </select>
-    {% elseif type == 'boolean' %}
-        <select name="{{ input_name }}[]" class="form-select" id="{{ input_id }}"{% if error|default('') %} aria-invalid="true" aria-describedby="error-default_values-{{ index }}"{% endif %}>
-            <option value=""{% if value == '' %} selected{% endif %}>{{ __('No value') }}</option>
-            <option value="1"{% if value == '1' %} selected{% endif %}>{{ __('Yes') }}</option>
-            <option value="0"{% if value == '0' %} selected{% endif %}>{{ __('No') }}</option>
-        </select>
-    {% else %}
-        <input type="{{ type in ['integer', 'double'] ? 'number' : (type == 'date' ? 'date' : (type == 'datetime' ? 'datetime-local' : 'text')) }}"
-               {% if type == 'double' %}step="any"{% elseif type == 'datetime' %}step="1"{% endif %} name="{{ input_name }}[]" class="form-control" id="{{ input_id }}"{% if error|default('') %} aria-invalid="true" aria-describedby="error-default_values-{{ index }}"{% endif %} value="{{ value }}">
-    {% endif %}
-    {% if error|default('') %}<div class="invalid-feedback d-block" id="error-default_values-{{ index }}">{{ error }}</div>{% endif %}
-    <div class="d-flex flex-wrap gap-2 mt-2">
-        <button type="submit" name="repeat_action" value="{{ action_key }}:up:{{ index }}" data-repeat-op="up" class="btn btn-outline-secondary btn-sm" formnovalidate{% if index == 0 %} disabled{% endif %}>{{ __('Move up') }}</button>
-        <button type="submit" name="repeat_action" value="{{ action_key }}:down:{{ index }}" data-repeat-op="down" class="btn btn-outline-secondary btn-sm" formnovalidate{% if last %} disabled{% endif %}>{{ __('Move down') }}</button>
-        <button type="submit" name="repeat_action" value="{{ action_key }}:remove:{{ index }}" data-repeat-op="remove" class="btn btn-outline-danger btn-sm" formnovalidate>{{ __('Remove value') }}</button>
+<div class="collection-repeat-row" data-repeat-row>
+    <span class="collection-repeat-number" aria-hidden="true"><span data-repeat-number>{{ index + 1 }}</span>.</span>
+    <div class="collection-repeat-value">
+        <label class="visually-hidden" for="{{ input_id }}">{{ __('Value') }} <span data-repeat-number>{{ index + 1 }}</span></label>
+        {% if type == 'html' %}
+            {% include '@admin/components/ui/editor.twig' with {name: input_name ~ '[]', id: input_id, value: value, label: label, allow_upload: allow_upload, upload_url: upload_url} only %}
+        {% elseif type == 'text' or (type == 'string' and value matches '/[\r\n]/') %}
+            <textarea name="{{ input_name }}[]" class="form-control" id="{{ input_id }}"{% if error|default('') %} aria-invalid="true" aria-describedby="error-default_values-{{ index }}"{% endif %} rows="3">{{ value }}</textarea>
+        {% elseif type == 'registered_file' %}
+            {% include '@collections/admin/components/file-value.twig' with {
+                code: file_code, index: index, value: value, input_name: input_name ~ '[]', input_id: input_id,
+                choices: file_choices, accept: file_accept, errors: errors|default([]), in_row: true
+            } only %}
+        {% elseif type in ['select', 'relation'] %}
+            <select name="{{ input_name }}[]" class="form-select" id="{{ input_id }}"{% if error|default('') %} aria-invalid="true" aria-describedby="error-default_values-{{ index }}"{% endif %}{% if type == 'relation' %} data-relation-select{% endif %}>
+                {% include '@collections/admin/components/select-options.twig' with {options: options|default([]), current: value} only %}
+            </select>
+        {% elseif type == 'boolean' %}
+            <select name="{{ input_name }}[]" class="form-select" id="{{ input_id }}"{% if error|default('') %} aria-invalid="true" aria-describedby="error-default_values-{{ index }}"{% endif %}>
+                <option value=""{% if value == '' %} selected{% endif %}>{{ __('No value') }}</option>
+                <option value="1"{% if value == '1' %} selected{% endif %}>{{ __('Yes') }}</option>
+                <option value="0"{% if value == '0' %} selected{% endif %}>{{ __('No') }}</option>
+            </select>
+        {% else %}
+            <input type="{{ type in ['integer', 'double'] ? 'number' : (type == 'date' ? 'date' : (type == 'datetime' ? 'datetime-local' : 'text')) }}"
+                   {% if type == 'double' %}step="any"{% elseif type == 'datetime' %}step="1"{% endif %} name="{{ input_name }}[]" class="form-control" id="{{ input_id }}"{% if error|default('') %} aria-invalid="true" aria-describedby="error-default_values-{{ index }}"{% endif %} value="{{ value }}">
+        {% endif %}
+        {% if error|default('') %}<div class="invalid-feedback d-block" id="error-default_values-{{ index }}">{{ error }}</div>{% endif %}
     </div>
+    {% include '@collections/admin/components/repeat-actions.twig' with {action_key: action_key, index: index, last: last, remove_label: __('Remove value')} only %}
 </div>

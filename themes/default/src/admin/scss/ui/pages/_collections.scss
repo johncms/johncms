@@ -316,3 +316,46 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+// A row of a repeated list: its number, the value, and the icon buttons that move and remove it.
+.collection-repeat-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-block-end: 0.5rem;
+}
+
+.collection-repeat-number {
+  flex-shrink: 0;
+  min-inline-size: 1.5rem;
+  padding-block-start: 0.5rem;
+  color: var(--bs-secondary-color);
+  font-size: 0.875rem;
+  text-align: end;
+}
+
+.collection-repeat-value {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+.collection-repeat-actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 0.25rem;
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 2.25rem;
+    block-size: 2.25rem;
+    padding: 0;
+  }
+
+  // A single value has no order to change: its arrows go, and only removing it is offered.
+  [data-repeat-row]:only-child & {
+    [data-repeat-op='up'],
+    [data-repeat-op='down'] { display: none; }
+  }
+}

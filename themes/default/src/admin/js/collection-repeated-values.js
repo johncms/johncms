@@ -14,7 +14,7 @@ document.querySelectorAll('[data-collection-repeat]').forEach(root => {
   const refresh = () => {
     const entries = rows();
     entries.forEach((row, index) => {
-      row.querySelector('[data-repeat-number]').textContent = index + 1;
+      row.querySelectorAll('[data-repeat-number]').forEach(number => { number.textContent = index + 1; });
       labelAdminEditors(row, `${root.querySelector('legend').textContent.trim()} ${index + 1}`);
       row.querySelectorAll('[data-file-widget]').forEach(widget => {
         widget.dataset.index = index;
