@@ -34,7 +34,7 @@
         <button type="button" class="site-scrim" data-site-nav-close tabindex="-1" aria-label="{{ d__('system', 'Close menu') }}"></button>
         <div class="site-main">
             {% include '@theme/components/site-topbar.twig' with {notifications: layout_notifications} only %}
-            <main class="site-content" id="site-content" tabindex="-1">
+            <main class="site-content {% block content_class %}{% endblock %}" id="site-content" tabindex="-1">
                 {% include '@theme/components/impersonation-banner.twig' only %}
                 {% set layout_page_heading %}
                     {% block breadcrumbs %}

@@ -6,7 +6,7 @@
     {% endif %}
     <div class="site-news-card__meta">
         <span class="site-news-card__rating{{ article.rating > 0 ? ' site-news-card__rating--positive' : (article.rating < 0 ? ' site-news-card__rating--negative' : '') }}" title="{{ __('Rating') }}">
-            {% include '@theme/components/icon.twig' with {name: 'chart-column', size: 12} only %}
+            {% include '@theme/components/icon.twig' with {name: article.rating < 0 ? 'thumbs-down' : 'thumbs-up', size: 12} only %}
             <span class="visually-hidden">{{ __('Rating') }}: </span>{{ article.rating > 0 ? '+' : '' }}{{ article.rating|format_number }}
         </span>
         <span class="site-news-card__stat" title="{{ __('Views') }}">
@@ -17,6 +17,6 @@
             {% include '@theme/components/icon.twig' with {name: 'message-square', size: 12} only %}
             {{ article.comments_count|format_number }}
         </a>
-        <span class="site-news-card__date">{{ article.display_date }}</span>
+        <span class="site-news-card__date" title="{{ article.display_date }}">{{ article.short_date }}</span>
     </div>
 </article>

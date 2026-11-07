@@ -1,3 +1,13 @@
+// Keep the heading, ads and news content on the same column as the reference.
+.site-content.site-content--news {
+  max-inline-size: 60rem;
+  padding: 2.5rem 3rem 3.5rem;
+
+  .site-page-heading { margin-block-end: 1.75rem; }
+  .site-page-heading h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.05; letter-spacing: -.03em; }
+  .site-ads--content { margin-block: 0 1.375rem; font-size: .75rem; }
+}
+
 // Public news pages share the public palette and keep rich content independent of card links.
 .site-news {
   display: flex;
@@ -7,7 +17,7 @@
 
   &__toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; padding-block-end: 1.125rem; border-block-end: 1px solid var(--border); }
   &__toolbar > .btn { display: inline-flex; align-items: center; gap: .375rem; }
-  &__heading { margin-block-end: .875rem; font-size: .8125rem; font-weight: 700; }
+  &__heading { margin-block-end: .875rem; font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
   &__list { display: flex; flex-direction: column; gap: .5rem; }
   &__pagination { margin-block-start: 1.25rem; }
   &__back { font-size: .8125rem; }
@@ -20,9 +30,9 @@
   align-items: center;
   gap: .625rem;
   flex: 1 1 20rem;
-  max-inline-size: 30rem;
+  max-inline-size: 22.5rem;
   min-inline-size: 0;
-  padding: .375rem .5rem .375rem .875rem;
+  padding: .1875rem .375rem .1875rem .875rem;
   border: 1px solid var(--border-strong);
   border-radius: 2rem;
   background: var(--bg-elev);
@@ -30,23 +40,23 @@
   &:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--focus-ring); }
   > input { inline-size: 100%; min-inline-size: 0; padding: .25rem 0; border: 0; outline: 0; background: transparent; color: var(--fg); font-size: .8125rem; }
   > input::placeholder { color: var(--fg-muted); opacity: 1; }
-  > button { flex-shrink: 0; border-radius: 2rem; }
+  > button { flex-shrink: 0; padding: .1875rem .5rem; border-radius: 2rem; font-size: .75rem; }
 }
 
 .site-news-section {
   display: flex;
   gap: .875rem;
-  align-items: flex-start;
-  padding: .875rem;
+  align-items: center;
+  padding: .75rem .875rem;
   border: 1px solid var(--border);
   border-radius: .625rem;
   background: var(--bg-elev);
   &__icon { display: grid; place-items: center; flex-shrink: 0; inline-size: 2.125rem; block-size: 2.125rem; border: 1px solid var(--border); border-radius: .5rem; background: var(--bg-inset); color: var(--accent); }
   &__main { min-inline-size: 0; }
-  h3 { margin: .125rem 0 .25rem; font-size: .90625rem; font-weight: 700; overflow-wrap: anywhere; }
+  h3 { margin: 0; font-size: .90625rem; font-weight: 700; overflow-wrap: anywhere; }
   h3 a { color: var(--fg); text-decoration: none; }
   h3 a:hover { color: var(--accent); }
-  &__description { color: var(--fg-muted); font-size: .8125rem; overflow-wrap: anywhere; overflow: auto; }
+  &__description { margin-block-start: .25rem; color: var(--fg-muted); font-size: .8125rem; overflow-wrap: anywhere; overflow: auto; }
   &__description > :last-child { margin-block-end: 0; }
 }
 
@@ -130,7 +140,7 @@
   min-inline-size: 0;
   scroll-margin-block-start: 5rem;
   &__heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; margin-block-end: 1rem; }
-  &__heading h2 { display: inline-flex; align-items: center; gap: .5rem; margin: 0; font-size: .875rem; font-weight: 700; }
+  &__heading h2 { display: inline-flex; align-items: center; gap: .5rem; margin: 0; font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
   &__count { padding: .125rem .375rem; border: 1px solid var(--border); border-radius: .25rem; color: var(--fg-muted); font-family: var(--bs-font-monospace); font-size: .6875rem; }
   &__loading { color: var(--fg-muted); font-size: .75rem; }
   &__empty { padding: 1.5rem; border: 1px dashed var(--border-strong); border-radius: .75rem; text-align: center; color: var(--fg-muted); }
@@ -157,11 +167,11 @@
   &__date, &__anchor { font-family: var(--bs-font-monospace); color: var(--fg-dim); font-size: .6875rem; }
   &__anchor { flex-shrink: 0; text-decoration: none; }
   &__status { margin-block-start: .25rem; font-size: .75rem; color: var(--fg-muted); overflow-wrap: anywhere; }
-  &__body { overflow-wrap: anywhere; overflow: auto; font-size: .875rem; line-height: 1.7; }
+  &__body { margin-inline-start: 3.25rem; overflow-wrap: anywhere; overflow: auto; font-size: .875rem; line-height: 1.7; }
   &__body > :last-child { margin-block-end: 0; }
   &__body img { block-size: auto; }
   &__body blockquote { margin-block: .5rem; padding: .75rem 1rem; border-inline-start: 3px solid var(--accent); border-radius: 0; background: var(--bg-inset); color: var(--fg-muted); }
-  &__footer { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block-start: 1rem; padding-block-start: .75rem; border-block-start: 1px dashed var(--border); }
+  &__footer { margin-inline-start: 3.25rem; display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block-start: 1rem; padding-block-start: .75rem; border-block-start: 1px dashed var(--border); }
   &__moderation { display: flex; flex-wrap: wrap; align-items: center; gap: .375rem .75rem; min-inline-size: 0; font-family: var(--bs-font-monospace); font-size: .6875rem; color: var(--fg-muted); overflow-wrap: anywhere; }
   &__moderation a { color: var(--accent); }
   &__actions { display: flex; flex-wrap: wrap; gap: .375rem; margin-inline-start: auto; }
@@ -191,4 +201,10 @@
 @media (max-width: 520px) {
   .site-news-comment, .site-news-compose { padding: 1rem; }
   .site-news-comment__date { flex-basis: 100%; }
+}
+
+@media (max-width: 700px) {
+  .site-content.site-content--news { padding: 1.5rem 1rem 2.5rem; }
+  .site-content.site-content--news .site-page-heading h1 { font-size: 1.875rem; }
+  .site-news-comment__body, .site-news-comment__footer { margin-inline-start: 0; }
 }

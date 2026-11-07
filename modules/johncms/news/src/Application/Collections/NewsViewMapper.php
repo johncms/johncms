@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Collections;
 
+use Carbon\Carbon;
 use Johncms\Auth\CurrentUser;
 use Johncms\Content\ContentRendererInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface;
@@ -69,6 +70,10 @@ final readonly class NewsViewMapper implements NewsViewMapperInterface
                 $this->content->toPlainText($text('meta_description') ?: $template('article_meta_description'))
                     ?: ($this->content->toPlainText($item->previewText ?? '') ?: $this->content->toPlainText($item->detailText ?? '')),
                 $this->content->toPlainText($text('meta_keywords') ?: $template('article_meta_keywords')),
+                $item->publishedAt !== null ? Carbon::createFromTimestamp(
+                    $item->publishedAt->getTimestamp(),
+                    (int) config('johncms.timeshift', 0) + $this->user->user()->config->timeshift,
+                )->format('d.m.Y') : '',
             );
         }
         return $result;

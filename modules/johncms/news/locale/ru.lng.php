@@ -229,6 +229,7 @@
       'Could not delete the comment.' => 'Не удалось удалить комментарий.',
       'Could not load the editor. You can use the text field.' => 'Не удалось загрузить редактор. Можно воспользоваться текстовым полем.',
       'Download' => 'Скачать',
+      'Search news…' => 'Поиск по новостям…',
     ),
   ),
 );

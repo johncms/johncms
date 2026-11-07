@@ -23,6 +23,7 @@ final readonly class NewsArticleViewDTO
         public string $metaTitle,
         public string $metaDescription,
         public string $metaKeywords,
+        public string $shortDate = '',
     ) {
     }
 
@@ -37,6 +38,7 @@ final readonly class NewsArticleViewDTO
             'section_id' => $this->record->sectionId, 'url' => $this->url, 'preview_text_safe' => $this->previewText,
             'text_safe' => $this->detailText, 'view_count' => $this->record->viewCount, 'tags' => $this->tags,
             'display_date' => $this->displayDate, 'author' => $this->author, 'rating' => $this->stats->rating,
+            'short_date' => $this->shortDate,
             'current_vote' => $this->stats->currentVote, 'comments_count' => $this->stats->comments,
         ];
     }

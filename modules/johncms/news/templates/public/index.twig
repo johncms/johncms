@@ -7,11 +7,13 @@
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--news{% endblock %}
+
 {% block content %}
     <div class="site-news">
         <div class="site-news__toolbar">
             {% include '@news/public/components/search-form.twig' with {
-                action: '/news/search/', field: 'query', placeholder: __('Search query')
+                action: '/news/search/', field: 'query', placeholder: __('Search news…')
             } only %}
             {% if can('news.manage') %}
                 <a href="{{ workspace_url }}" class="btn btn-outline-secondary btn-sm">

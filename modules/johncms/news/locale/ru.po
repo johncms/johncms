@@ -806,3 +806,6 @@ msgstr "Не удалось загрузить редактор. Можно во
 
 msgid "Download"
 msgstr "Скачать"
+
+msgid "Search news…"
+msgstr "Поиск по новостям…"
