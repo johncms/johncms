@@ -391,7 +391,9 @@ final readonly class CollectionItemsAdminController
             $options = $field->settings['options'] ?? [];
             $relationAvailable = true;
             $relationError = '';
+            $relationTarget = '';
             if ($field->type === FieldType::Relation) {
+                $relationTarget = $this->collectionRepository->findById((int) ($field->settings['target_collection_id'] ?? 0))->name ?? '';
                 try {
                     $options = $this->relationChoices->search($field->collection_id, $field->code, '', $field->multiple ? $entries : [$value]);
                 } catch (CollectionAccessDeniedException) {
@@ -427,6 +429,7 @@ final readonly class CollectionItemsAdminController
                 'relation_url' => '/admin/collections/' . $field->collection_id . '/relations/' . $field->code,
                 'relation_available' => $relationAvailable,
                 'relation_error' => $relationError,
+                'relation_target' => $relationTarget,
                 'code' => $field->code,
                 'tags_url' => $field->role === 'tags' ? '/admin/collections/' . $field->collection_id . '/tags/' . $field->code : '',
                 'role' => $field->role,

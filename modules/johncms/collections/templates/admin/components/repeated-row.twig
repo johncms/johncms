@@ -12,8 +12,8 @@
                 code: file_code, index: index, value: value, input_name: input_name ~ '[]', input_id: input_id,
                 choices: file_choices, accept: file_accept, errors: errors|default([]), in_row: true
             } only %}
-        {% elseif type in ['select', 'relation'] %}
-            <select name="{{ input_name }}[]" class="form-select" id="{{ input_id }}"{% if error|default('') %} aria-invalid="true" aria-describedby="error-default_values-{{ index }}"{% endif %}{% if type == 'relation' %} data-relation-select{% endif %}>
+        {% elseif type == 'select' %}
+            <select name="{{ input_name }}[]" class="form-select" id="{{ input_id }}"{% if error|default('') %} aria-invalid="true" aria-describedby="error-default_values-{{ index }}"{% endif %}>
                 {% include '@collections/admin/components/select-options.twig' with {options: options|default([]), current: value} only %}
             </select>
         {% elseif type == 'boolean' %}

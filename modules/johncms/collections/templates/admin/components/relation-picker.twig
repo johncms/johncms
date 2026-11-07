@@ -1,0 +1,44 @@
+{#
+    A search for records of a collection that keeps the chosen ones (src/admin/js/relation-picker.js).
+    The values themselves live where the page keeps them; this is the search, its popup and the list.
+
+    @param string id       Prefix of the ids of its parts.
+    @param string label
+    @param bool   required
+    @param string status   A message to start with, such as why the search is unavailable.
+    @param array  labels   singular, plural: what the label says for one and for several values; may be absent.
+    @param string disabled What the field says when there is nothing to search in.
+#}
+<div data-relation-picker
+     {% if labels.singular|default('') %}data-relation-singular="{{ labels.singular }}" data-relation-plural="{{ labels.plural }}"{% endif %}
+     data-relation-target="{{ disabled|default(__('Select the target collection first.')) }}"
+     data-relation-context="{{ __('Search in collection: %s') }}"
+     data-relation-no-records="{{ __('This collection has no records yet.') }}"
+     data-relation-more="{{ __('Up to 30 matching items. Refine your search to find another item.') }}"
+     data-relation-loading="{{ d__('system', 'Please wait...') }}"
+     data-relation-invalid="{{ __('The selected record is unavailable in this collection. Clear it or select another record.') }}"
+     data-relation-unavailable="{{ __('Unavailable record') }}"
+     data-relation-count-label="{{ __('Selected: %d') }}" data-relation-count-limit="{{ __('Selected: %d of %d') }}"
+     data-relation-up="{{ __('Move up') }}" data-relation-down="{{ __('Move down') }}" data-relation-remove="{{ __('Remove value') }}"
+     data-empty="{{ __('No matching values were found. Refine your search.') }}">
+    <label class="form-label" for="{{ id }}-query">{{ label }}{% if required|default(false) %} <span class="text-danger" title="{{ __('Required') }}">*</span>{% endif %}</label>
+    {% for action, icon in {'up': 'arrow-up', 'down': 'arrow-down', 'remove': 'x', 'check': 'check'} %}
+        <template data-relation-icon="{{ action }}">{% include '@admin/components/ui/icon.twig' with {name: icon, size: 14} only %}</template>
+    {% endfor %}
+    <div class="relation-default-control" data-relation-control>
+        <div class="input-group">
+            <input type="search" class="form-control" id="{{ id }}-query" maxlength="255" autocomplete="off" data-relation-input>
+            <button type="button" class="btn btn-outline-secondary" data-relation-clear hidden>{{ __('Clear') }}</button>
+        </div>
+        <div class="relation-default-popup shadow" data-relation-popup hidden>
+            <div class="list-group list-group-flush relation-default-results" id="{{ id }}-results" role="listbox" aria-label="{{ __('Search results') }}" data-relation-results hidden></div>
+            <div class="relation-default-footer" data-relation-footer hidden>
+                <span class="small text-muted" role="status" data-relation-count></span>
+                <button type="button" class="btn btn-primary btn-sm" data-relation-done>{{ __('Done') }}</button>
+            </div>
+        </div>
+    </div>
+    <p class="form-text mb-0" role="status" id="{{ id }}-status" data-relation-status>{{ status|default('') }}</p>
+    <p class="form-text text-danger mb-0" id="{{ id }}-warning" role="alert" data-relation-warning hidden></p>
+    <ul class="relation-default-selected" data-relation-selected aria-label="{{ label }}" hidden></ul>
+</div>

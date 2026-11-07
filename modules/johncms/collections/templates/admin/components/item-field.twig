@@ -1,6 +1,8 @@
 {% set input_id = 'f_' ~ def.input_name %}
 {% set wide = def.multiple or def.type in ['text', 'html'] %}
-<div class="{{ wide ? 'col-12' : 'col-md-6' }}"{% if def.type == 'relation' %} data-collection-relation data-source="{{ def.relation_url }}" data-error="{{ __('Could not load related items.') }}" data-loaded="{{ __('Related items loaded. Choose a value and save the form.') }}"{% endif %}
+<div class="{{ wide ? 'col-12' : 'col-md-6' }}"{% if def.type == 'relation' %} data-collection-relation data-source="{{ def.relation_url }}" data-error="{{ __('Could not load related items.') }}"
+     data-options="{{ def.options|json_encode }}" data-target="{{ def.relation_target }}" data-multiple="{{ def.multiple ? '1' : '0' }}" data-limit="{{ def.limit }}"
+     data-name="{{ def.input_name }}" data-available="{{ def.relation_available and not def.relation_error ? '1' : '0' }}" data-limit-error="{{ __('The field has too many values.') }}"{% endif %}
      {% if def.registered_file %} data-file-field data-source="{{ def.file_url }}" data-upload-url="{{ def.file_upload_url }}"
      data-max-bytes="{{ def.max_file_bytes }}" data-too-large="{{ __('The file is larger than the limit of this field.') }}"
      data-loading="{{ __('Loading files...') }}" data-empty="{{ __('No matching files were found. Change your search or upload a new file.') }}"
@@ -23,14 +25,21 @@
         </dialog>
     {% endif %}
     {% if def.type == 'relation' %}
-        <label class="form-label" for="{{ input_id }}-query">{{ __('Search related items') }} — {{ def.name }}</label>
-        <div class="input-group mb-2">
-            <input class="form-control" type="search" id="{{ input_id }}-query" maxlength="255" data-relation-query>
-            <button class="btn btn-outline-secondary" type="button" data-relation-search>{{ __('Search') }}</button>
+        {% include '@collections/admin/components/relation-picker.twig' with {
+            id: input_id, label: def.name, required: def.required,
+            status: def.relation_error,
+            disabled: def.relation_error ?: __('You need access to the target collection to choose related items.'),
+        } only %}
+        {# What is chosen, posted as the value of the field; the picker writes it. #}
+        <div data-relation-values hidden>
+            {% if def.multiple %}
+                {% for entry in def.entries|filter(entry => entry != '') %}<input type="hidden" name="{{ def.input_name }}[]" value="{{ entry }}">{% endfor %}
+            {% else %}
+                <input type="hidden" name="{{ def.input_name }}" value="{{ def.value }}">
+            {% endif %}
         </div>
-        <div class="form-text mb-2" role="status" data-relation-status>{{ def.relation_error ? def.relation_error : (def.relation_available ? __('Up to 30 matching items. Refine your search to find another item.') : __('You need access to the target collection to choose related items.')) }}</div>
-    {% endif %}
-    {% if def.type == 'boolean' and not def.multiple %}
+        {% include '@theme/components/field-errors.twig' with {errors: def.errors} only %}
+    {% elseif def.type == 'boolean' and not def.multiple %}
         <div class="form-check form-switch mt-md-4">
             <input type="checkbox" class="form-check-input{{ def.errors ? ' is-invalid' : '' }}" role="switch" name="{{ def.input_name }}" value="1" id="{{ input_id }}"{% if def.value == '1' %} checked{% endif %}>
             <label class="form-check-label" for="{{ input_id }}">{{ def.name }}</label>
@@ -60,8 +69,8 @@
                 code: def.code, index: 0, value: def.value, input_name: def.input_name, input_id: input_id,
                 choices: def.file_choices, accept: def.file_accept, errors: def.errors
             } only %}
-        {% elseif def.type in ['select', 'relation'] %}
-            <select name="{{ def.input_name }}" class="form-select{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}"{% if def.type == 'relation' %} data-relation-select{% endif %}>
+        {% elseif def.type == 'select' %}
+            <select name="{{ def.input_name }}" class="form-select{{ def.errors ? ' is-invalid' : '' }}" id="{{ input_id }}">
                 {% include '@collections/admin/components/select-options.twig' with {options: def.options, current: def.value} only %}
             </select>
         {% elseif def.type == 'html' %}
@@ -80,5 +89,5 @@
     {% endif %}
     {% if def.registered_file %}<div class="form-text">{{ __('%1$s, up to %2$s')|format(def.file_types_label, def.max_file_bytes|format_size) }}</div>{% endif %}
     {% if def.hint %}<div class="form-text">{{ def.hint }}</div>{% endif %}
-    {% if not def.multiple or def.role == 'tags' %}{% include '@theme/components/field-errors.twig' with {errors: def.errors} only %}{% endif %}
+    {% if def.type != 'relation' and (not def.multiple or def.role == 'tags') %}{% include '@theme/components/field-errors.twig' with {errors: def.errors} only %}{% endif %}
 </div>

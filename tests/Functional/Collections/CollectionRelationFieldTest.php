@@ -176,8 +176,13 @@ final class CollectionRelationFieldTest extends FunctionalTestCase
         self::assertSame(200, $response->getStatusCode());
         $html = (string) $response->getContent();
         self::assertStringContainsString('Unsaved body', $html, 'A failed save shows the form as it was posted.');
-        self::assertStringContainsString('Needle &lt;b&gt;target&lt;/b&gt;', $html);
-        self::assertSame((string) $target, HTMLDocument::createFromString($html, LIBXML_NOERROR)->querySelector('select[name="field_related"] option[selected]')->getAttribute('value'));
+        self::assertStringNotContainsString('<b>target</b>', $html, 'The name of a record reaches the page escaped.');
+        $document = HTMLDocument::createFromString($html, LIBXML_NOERROR);
+        self::assertSame((string) $target, $document->querySelector('input[name="field_related"]')->getAttribute('value'));
+        self::assertSame((string) $target, $document->querySelector('input[name="field_many[]"]')->getAttribute('value'));
+        $options = json_decode($document->querySelector('[data-collection-relation]')->getAttribute('data-options'), true, 512, JSON_THROW_ON_ERROR);
+        self::assertContains(['code' => (string) $target, 'label' => 'Needle <b>target</b>'], $options, 'The picker knows the name of the chosen record.');
+        self::assertNotNull($document->querySelector('[data-relation-picker] [data-relation-input]'));
         self::assertSame(32, Manager::table('collection_items')->count());
     }
 

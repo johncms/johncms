@@ -1,9 +1,14 @@
-/** The popup never participates in form layout; selection stays in the ordinary form controls. */
-export function createRelationDefaultPicker({form, lookup, isActive, isMultiple, getValues, setValues, getOptions, getLimit, search, cancelSearch}) {
-  const input = lookup.querySelector('[name="default_query"]');
-  const label = lookup.querySelector('label[for="default-query"]');
+/**
+ * A search for records of a collection that keeps the chosen ones in a list (or in the field, for
+ * one): components/relation-picker.twig is its markup. The popup never takes part in the layout;
+ * what is chosen lives where the caller keeps it, read and written through getValues/setValues.
+ *
+ * getTarget() names the collection searched: {value, label}; an empty value disables the search.
+ */
+export function createRelationPicker({form, lookup, isActive, isMultiple, getValues, setValues, getOptions, getLimit, getTarget, search, cancelSearch}) {
+  const input = lookup.querySelector('[data-relation-input]');
+  const label = lookup.querySelector(`label[for="${input.id}"]`);
   const originalLabel = label.textContent;
-  const target = form.querySelector('#relation-target');
   const selected = lookup.querySelector('[data-relation-selected]');
   const control = lookup.querySelector('[data-relation-control]');
   const popup = lookup.querySelector('[data-relation-popup]');
@@ -13,7 +18,7 @@ export function createRelationDefaultPicker({form, lookup, isActive, isMultiple,
   const done = lookup.querySelector('[data-relation-done]');
   const clear = lookup.querySelector('[data-relation-clear]');
   const warning = lookup.querySelector('[data-relation-warning]');
-  const status = lookup.querySelector('[data-default-lookup-status]');
+  const status = lookup.querySelector('[data-relation-status]');
   const strings = lookup.dataset;
   const labels = new Map();
   let active = false;
@@ -23,7 +28,7 @@ export function createRelationDefaultPicker({form, lookup, isActive, isMultiple,
   let shownTerm = null;
   let timer;
   let revision = 0;
-  let scope = target.value;
+  let scope = getTarget().value;
   let busy = false;
   let loading = false;
   let focusing = false;
@@ -174,7 +179,7 @@ export function createRelationDefaultPicker({form, lookup, isActive, isMultiple,
     if (restored >= 0) highlight(restored);
   };
   const load = async term => {
-    if (!isActive() || !target.value || input.matches(':disabled')) return;
+    if (!isActive() || !getTarget().value || input.matches(':disabled')) return;
     clearTimeout(timer);
     const current = ++revision;
     loading = true;
@@ -218,6 +223,7 @@ export function createRelationDefaultPicker({form, lookup, isActive, isMultiple,
       return;
     }
     if (status.parentElement !== popup) popup.prepend(status);
+    const target = getTarget();
     if (scope !== target.value) {
       scope = target.value;
       close();
@@ -234,13 +240,13 @@ export function createRelationDefaultPicker({form, lookup, isActive, isMultiple,
     warning.hidden = !invalid;
     warning.textContent = invalid ? strings.relationInvalid : '';
     input.disabled = !target.value;
-    input.placeholder = target.value ? strings.relationContext.replace('%s', target.selectedOptions[0].textContent) : strings.relationTarget;
+    input.placeholder = target.value ? strings.relationContext.replace('%s', target.label) : strings.relationTarget;
     input.setAttribute('role', 'combobox');
     input.setAttribute('aria-autocomplete', 'list');
     input.setAttribute('aria-controls', results.id);
-    input.setAttribute('aria-describedby', 'default-lookup-status relation-default-warning');
+    input.setAttribute('aria-describedby', `${status.id} ${warning.id}`);
     if (!input.hasAttribute('aria-expanded')) input.setAttribute('aria-expanded', 'false');
-    label.textContent = multiple ? strings.relationPlural : strings.relationSingular;
+    if (strings.relationSingular) label.textContent = multiple ? strings.relationPlural : strings.relationSingular;
     selected.replaceChildren();
     values.forEach((code, index) => {
       const row = document.createElement('li');

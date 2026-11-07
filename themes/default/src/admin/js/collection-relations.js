@@ -1,58 +1,73 @@
-/** Search for related items: the results replace the choices of the selects of the field. */
+import { createRelationPicker } from './relation-picker';
+
+/**
+ * A relation field of an item: the search of components/relation-picker.twig over the target
+ * collection, with the chosen records kept as hidden fields named after the field.
+ */
 document.querySelectorAll('[data-collection-relation]').forEach(root => {
-  const query = root.querySelector('[data-relation-query]');
-  const button = root.querySelector('[data-relation-search]');
+  const form = root.closest('form');
+  const values = root.querySelector('[data-relation-values]');
   const status = root.querySelector('[data-relation-status]');
-  if (!query || !button || !status) return;
+  const multiple = root.dataset.multiple === '1';
+  const limit = Number(root.dataset.limit);
+  let options = JSON.parse(root.dataset.options);
   let pending;
-  const search = async () => {
-    pending?.abort();
-    const controller = new AbortController();
-    pending = controller;
-    button.disabled = true;
-    root.setAttribute('aria-busy', 'true');
-    try {
-      const url = new URL(root.dataset.source, window.location.origin);
-      url.searchParams.set('q', query.value);
-      const response = await fetch(url, {signal: controller.signal, headers: {'Accept': 'application/json'}});
-      if (!response.ok) throw new Error('Relation search failed');
-      const data = await response.json();
-      if (!Array.isArray(data.options) || data.options.some(option => typeof option.code !== 'string' || typeof option.label !== 'string')) throw new Error('Invalid relation options');
-      if (controller !== pending) return;
-      const update = select => {
-        const current = select.value;
-        const retained = [...select.options].find(option => option.value === current);
-        const empty = [...select.options].find(option => option.value === '');
-        const options = empty ? [new Option(empty.textContent, '')] : [];
-        data.options.forEach(option => options.push(new Option(option.label, option.code)));
-        if (current && !data.options.some(option => option.code === current) && retained) options.push(new Option(retained.textContent, current));
-        select.replaceChildren(...options);
-        select.value = current;
-      };
-      root.querySelectorAll('[data-relation-select]').forEach(update);
-      root.querySelectorAll('template[data-repeat-template]').forEach(template => template.content.querySelectorAll('[data-relation-select]').forEach(update));
-      status.textContent = root.dataset.loaded;
-      status.classList.remove('text-danger');
-    } catch (error) {
-      if (error.name !== 'AbortError' && controller === pending) {
-        status.textContent = root.dataset.error;
-        status.classList.add('text-danger');
-      }
-    } finally {
-      if (controller === pending) {
-        button.disabled = false;
-        root.removeAttribute('aria-busy');
-      }
-    }
+
+  const getValues = () => [...values.querySelectorAll('input')].map(input => input.value).filter(value => value !== '');
+  const write = list => {
+    const inputs = (multiple ? list : [list[0] ?? '']).map(value => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = multiple ? `${root.dataset.name}[]` : root.dataset.name;
+      input.value = value;
+      return input;
+    });
+    values.replaceChildren(...inputs);
   };
-  button.addEventListener('click', event => { event.preventDefault(); search(); });
-  query.addEventListener('keydown', event => {
-    if (event.key === 'Enter') { event.preventDefault(); search(); }
+
+  const picker = createRelationPicker({
+    form,
+    lookup: root.querySelector('[data-relation-picker]'),
+    isActive: () => true,
+    isMultiple: () => multiple,
+    // Without access to the target the search stays disabled and says why.
+    getTarget: () => (root.dataset.available === '1' ? {value: '1', label: root.dataset.target} : {value: '', label: ''}),
+    getLimit: () => limit,
+    getOptions: () => options,
+    getValues,
+    setValues: async list => {
+      if (multiple && list.length > limit) {
+        status.textContent = root.dataset.limitError;
+        return false;
+      }
+      write(list);
+      return true;
+    },
+    search: async term => {
+      pending?.abort();
+      const request = new AbortController();
+      pending = request;
+      try {
+        const url = new URL(root.dataset.source, window.location.origin);
+        url.searchParams.set('q', term);
+        const response = await fetch(url, {signal: request.signal, headers: {'Accept': 'application/json'}});
+        const data = await response.json();
+        if (!response.ok || !Array.isArray(data.options) || data.options.some(option => typeof option.code !== 'string' || typeof option.label !== 'string')) {
+          throw new Error(root.dataset.error);
+        }
+        if (pending !== request) return null;
+        // The chosen records keep their names even when the search no longer finds them.
+        const known = new Map(options.map(option => [option.code, option]));
+        data.options.forEach(option => known.set(option.code, option));
+        options = getValues().map(code => known.get(code)).filter(Boolean);
+        data.options.forEach(option => { if (!options.includes(option)) options.push(option); });
+        return data.options;
+      } catch (error) {
+        if (error.name !== 'AbortError' && pending === request) status.textContent = root.dataset.error;
+        return null;
+      }
+    },
+    cancelSearch: () => { pending?.abort(); pending = null; },
   });
-  query.addEventListener('input', () => {
-    pending?.abort();
-    pending = null;
-    button.disabled = false;
-    root.removeAttribute('aria-busy');
-  });
+  picker.refresh();
 });

@@ -193,37 +193,11 @@
                             <div class="form-text" data-date-current-help{% if fields.date_default_mode != 'current' %} hidden{% endif %}>{{ __('Filled when opening a new item form, using site time. You can edit the displayed value before saving.') }}</div>
                         </fieldset>
                         <fieldset class="mb-3" data-default-lookup data-url="{{ form_action }}/choices"
-                                  data-relation-singular="{{ __('Default value') }}" data-relation-plural="{{ __('Default values') }}"
-                                  data-relation-target="{{ __('Select the target collection first.') }}"
-                                  data-relation-context="{{ __('Search in collection: %s') }}"
-                                  data-relation-no-records="{{ __('This collection has no records yet.') }}"
-                                  data-relation-more="{{ __('Up to 30 matching items. Refine your search to find another item.') }}"
-                                  data-relation-loading="{{ d__('system', 'Please wait...') }}"
-                                  data-relation-invalid="{{ __('The selected record is unavailable in this collection. Clear it or select another record.') }}"
-                                  data-relation-unavailable="{{ __('Unavailable record') }}"
-                                  data-relation-count-label="{{ __('Selected: %d') }}" data-relation-count-limit="{{ __('Selected: %d of %d') }}"
-                                  data-relation-up="{{ __('Move up') }}" data-relation-down="{{ __('Move down') }}" data-relation-remove="{{ __('Remove value') }}"
-                                  data-options="{{ default_options|json_encode }}"{% if fields.type != 'relation' %} hidden disabled{% endif %} data-error="{{ __('Could not load default choices. Try again.') }}" data-empty="{{ __('No matching values were found. Refine your search.') }}">
-                            <label class="form-label" for="default-query">{{ __('Search default values') }}</label>
-                            {% for action, icon in {'up': 'arrow-up', 'down': 'arrow-down', 'remove': 'x', 'check': 'check'} %}
-                                <template data-relation-icon="{{ action }}">{% include '@admin/components/ui/icon.twig' with {name: icon, size: 14} only %}</template>
-                            {% endfor %}
-                            <div class="relation-default-control" data-relation-control>
-                                <div class="input-group">
-                                    <input type="search" class="form-control" id="default-query" name="default_query" maxlength="255" value="{{ default_query }}">
-                                    <button type="button" class="btn btn-outline-secondary" data-relation-clear hidden>{{ __('Clear') }}</button>
-                                </div>
-                                <div class="relation-default-popup shadow" data-relation-popup hidden>
-                                    <div class="list-group list-group-flush relation-default-results" id="relation-default-results" role="listbox" aria-label="{{ __('Search results') }}" data-relation-results hidden></div>
-                                    <div class="relation-default-footer" data-relation-footer hidden>
-                                        <span class="small text-muted" role="status" data-relation-count></span>
-                                        <button type="button" class="btn btn-primary btn-sm" data-relation-done>{{ __('Done') }}</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="form-text mb-0" role="status" id="default-lookup-status" data-default-lookup-status>{{ default_lookup_error }}</p>
-                            <p class="form-text text-danger mb-0" id="relation-default-warning" role="alert" data-relation-warning hidden></p>
-                            <ul class="relation-default-selected" data-relation-selected aria-label="{{ __('Default values') }}" hidden></ul>
+                                  data-options="{{ default_options|json_encode }}"{% if fields.type != 'relation' %} hidden disabled{% endif %} data-error="{{ __('Could not load default choices. Try again.') }}">
+                            {% include '@collections/admin/components/relation-picker.twig' with {
+                                id: 'relation-default', label: __('Default value'), status: default_lookup_error,
+                                labels: {singular: __('Default value'), plural: __('Default values')},
+                            } only %}
                         </fieldset>
                         <fieldset class="border rounded p-3 mb-3" data-default-choice hidden disabled>
                             <label class="form-label" for="default-choice">{{ __('Choose the default value to keep. Other values remain in the draft until you save.') }}</label>

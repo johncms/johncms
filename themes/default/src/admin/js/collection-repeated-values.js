@@ -1,4 +1,4 @@
-import { createRelationDefaultPicker } from './relation-default-picker';
+import { createRelationPicker } from './relation-picker';
 import { initializeAdminEditors, labelAdminEditors, removeAdminEditors, focusAdminEditor, setAdminEditorValue } from './editor';
 
 /** The rows of a multiple value: add, move and remove them in place; the form posts what is left. */
@@ -101,7 +101,7 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   const defaultDrafts = new Map();
   let shownGroup = defaultGroup(type.value);
   const lookup = form.querySelector('[data-default-lookup]');
-  const lookupStatus = lookup.querySelector('[data-default-lookup-status]');
+  const lookupStatus = lookup.querySelector('[data-relation-status]');
   let lookupOptions = JSON.parse(lookup.dataset.options);
   let lookupRequest;
   const fieldErrors = JSON.parse(form.dataset.fieldErrors);
@@ -308,8 +308,12 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
     root.querySelector('[data-repeat-status]').textContent = '';
     return true;
   };
-  const relationPicker = createRelationDefaultPicker({
-    form, lookup, isActive: () => type.value === 'relation', isMultiple: () => multiple.checked,
+  const relationPicker = createRelationPicker({
+    form, lookup: lookup.querySelector('[data-relation-picker]'), isActive: () => type.value === 'relation', isMultiple: () => multiple.checked,
+    getTarget: () => {
+      const select = form.querySelector('#relation-target');
+      return {value: select.value, label: select.selectedOptions[0]?.textContent ?? ''};
+    },
     getOptions: () => lookupOptions, search: term => loadLookup(term),
     getLimit: () => Number(defaults.querySelector('[data-collection-repeat]').dataset.limit),
     cancelSearch: () => {
