@@ -16,6 +16,9 @@ final readonly class NewsQueryDTO
         public int $limit = 20,
         public int $offset = 0,
         public ?DateTimeImmutable $publishedSince = null,
+        public ?int $authorId = null,
+        /** The most viewed first instead of the latest first. */
+        public bool $popular = false,
     ) {
     }
 }

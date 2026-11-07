@@ -28,6 +28,21 @@ interface NewsReadServiceInterface
     /** @return list<NewsSectionViewDTO> */
     public function sections(?int $parentId = null): array;
 
+    /**
+     * Other news of the article's section, topped up with the latest news of the site.
+     *
+     * @return list<NewsArticleViewDTO>
+     */
+    public function related(NewsArticleViewDTO $article, int $limit): array;
+
+    /**
+     * The most viewed news of the last days, topped up with the most viewed of all time.
+     *
+     * @param list<int> $exclude Article ids to leave out.
+     * @return list<NewsArticleViewDTO>
+     */
+    public function popular(int $days, int $limit, array $exclude = []): array;
+
     public function section(int $sectionId): ?NewsSectionViewDTO;
 
     /** Root resolves to null; a missing or hidden path throws NewsItemNotFoundException. */

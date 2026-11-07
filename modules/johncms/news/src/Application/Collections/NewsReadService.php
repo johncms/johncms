@@ -97,6 +97,23 @@ final readonly class NewsReadService implements NewsReadServiceInterface
         return $this->mapper->sections($collection, $children, $children !== [] ? $this->items->getSectionStats($collection->id) : []);
     }
 
+    public function related(NewsArticleViewDTO $article, int $limit): array
+    {
+        $queries = [new NewsQueryDTO(sectionId: $article->record->sectionId)];
+        if ($article->record->sectionId !== null) {
+            $queries[] = new NewsQueryDTO();
+        }
+        return $this->collect($queries, $limit, [$article->record->id]);
+    }
+
+    public function popular(int $days, int $limit, array $exclude = []): array
+    {
+        return $this->collect([
+            new NewsQueryDTO(publishedSince: $this->since($days), popular: true),
+            new NewsQueryDTO(popular: true),
+        ], $limit, $exclude);
+    }
+
     public function section(int $sectionId): ?NewsSectionViewDTO
     {
         $collection = $this->collection();
@@ -215,6 +232,9 @@ final readonly class NewsReadService implements NewsReadServiceInterface
             }
             $filters[] = new FieldFilterDTO('field.' . $code, FilterOperator::Eq, $query->tag);
         }
+        if ($query->authorId !== null) {
+            $filters[] = new FieldFilterDTO('item.created_by', FilterOperator::Eq, $query->authorId);
+        }
         if ($query->publishedSince !== null) {
             $filters[] = new FieldFilterDTO('item.published_at', FilterOperator::Gte, $query->publishedSince);
         }
@@ -225,8 +245,43 @@ final readonly class NewsReadService implements NewsReadServiceInterface
             filters: $filters,
             limit: $query->limit,
             offset: $query->offset,
+            orderBy: $query->popular ? [
+                new OrderByDTO('item.view_count', SortDirection::Desc),
+                new OrderByDTO('item.published_at', SortDirection::Desc),
+                new OrderByDTO('item.id', SortDirection::Desc),
+            ] : [],
             search: trim($query->search) !== '' ? new CollectionTextSearchDTO($query->search) : null
         );
+    }
+
+    /**
+     * Fills the list from each query in turn, skipping what is already taken or excluded.
+     *
+     * @param list<NewsQueryDTO> $queries
+     * @param list<int> $exclude
+     * @return list<NewsArticleViewDTO>
+     */
+    private function collect(array $queries, int $limit, array $exclude): array
+    {
+        $picked = [];
+        foreach ($queries as $query) {
+            $query = new NewsQueryDTO(
+                sectionId:      $query->sectionId,
+                publishedSince: $query->publishedSince,
+                limit:          $limit + count($exclude),
+                popular:        $query->popular,
+            );
+            foreach ($this->page($query)->articles as $article) {
+                if (! in_array($article->record->id, $exclude, true)) {
+                    $picked[] = $article;
+                    $exclude[] = $article->record->id;
+                }
+                if (count($picked) === $limit) {
+                    return $picked;
+                }
+            }
+        }
+        return $picked;
     }
 
     /** @return array<int, CollectionSectionDTO> */

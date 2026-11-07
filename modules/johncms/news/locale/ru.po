@@ -835,3 +835,22 @@ msgstr "Подразделы"
 
 msgid "Section news"
 msgstr "Новости раздела"
+
+msgid "Read also"
+msgstr "Читайте также"
+
+msgid "On the site since"
+msgstr "На сайте с"
+
+msgid "published %s"
+msgstr "опубликовано %s"
+
+msgid "%s view"
+msgid_plural "%s views"
+msgstr[0] "%s просмотр"
+msgstr[1] "%s просмотра"
+msgstr[2] "%s просмотров"
+msgstr[3] "%s просмотра"
+
+msgid "Popular"
+msgstr "Популярное"

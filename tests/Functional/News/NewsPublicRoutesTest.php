@@ -20,6 +20,7 @@ use Johncms\Security\Csrf;
 use Johncms\Updates\SystemUpdateStateInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Functional\FunctionalTestCase;
+use Tests\Support\Fixture;
 use Tests\Support\FunctionalUserFactory;
 
 final class NewsPublicRoutesTest extends FunctionalTestCase
@@ -44,9 +45,10 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         $this->item('Second body', $b, 'same', ['phpstorm']);
         $this->item(body: 'Draft body', code: 'draft', active: false);
         self::assertStringContainsString('First body', (string) $this->handleRequest('/news/a/same.html')->getContent());
-        $second = (string) $this->handleRequest('/news/b/same.html')->getContent();
+        $second = HTMLDocument::createFromString((string) $this->handleRequest('/news/b/same.html')->getContent(), LIBXML_NOERROR)
+            ->querySelector('.site-news-article__body')->textContent;
         self::assertStringContainsString('Second body', $second);
-        self::assertStringNotContainsString('First body', $second);
+        self::assertStringNotContainsString('First body', $second, 'The same code in another section is another article.');
         self::assertSame(404, $this->handleRequest('/news/same.html')->getStatusCode());
         self::assertSame(404, $this->handleRequest('/news/draft.html')->getStatusCode());
         $tags = (string) $this->handleRequest('/news/search_tags?tag=PHP')->getContent();
@@ -108,6 +110,25 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/entry.html', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()))->getContent(), LIBXML_NOERROR);
         self::assertSame('/admin/collections/' . $this->collection . '/items/' . $id . '/edit', $document->querySelector('.site-news-article__edit')->getAttribute('href'));
         self::assertNotNull($document->querySelector('script[src*="ckeditor5/ckeditor.js"]'));
+    }
+
+    public function testArticleOffersItsSectionFirstThenTheSiteAndThePopularNotShownAbove(): void
+    {
+        $section = Fixture::insert('collection_sections', ['collection_id' => $this->collection, 'code' => 'releases', 'name' => 'Releases', 'active' => 1]);
+        $this->item(body: 'Current', section: $section, code: 'current');
+        $this->item(body: 'Neighbour', section: $section, code: 'neighbour');
+        foreach (['first', 'second', 'third', 'fourth'] as $views => $code) {
+            $id = $this->item(body: ucfirst($code), code: $code);
+            Capsule::table('collection_items')->where('id', $id)->update(['view_count' => $views, 'created_at' => '2020-01-0' . ($views + 1) . ' 00:00:00']);
+        }
+        $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/releases/current.html')->getContent(), LIBXML_NOERROR);
+        $links = static fn (string $panel): array => array_map(
+            static fn ($link): string => $link->getAttribute('href'),
+            iterator_to_array($document->querySelectorAll('[aria-labelledby="' . $panel . '"] a')),
+        );
+        self::assertSame(['/news/releases/neighbour.html', '/news/fourth.html', '/news/third.html'], $links('news-related-title'), 'The section goes first, the latest news of the site fill the rest.');
+        self::assertSame(['/news/second.html', '/news/first.html'], $links('news-popular-title'), 'Popular news skip the article and what is offered above.');
+        self::assertNotNull($document->querySelector('.site-news-article__section[href="/news/releases/"]'));
     }
 
     public function testCommentAndVoteHttpContractsUseCollectionIdsAndCurrentActor(): void

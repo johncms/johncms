@@ -67,7 +67,12 @@ final readonly class NewsViewMapper implements NewsViewMapperInterface
                 $this->content->renderOrNull($item->detailText ?? ''),
                 is_array($tags) ? array_values(array_filter($tags, 'is_string')) : [],
                 $item->publishedAt !== null ? $this->dates->format($item->publishedAt->getTimestamp()) : '',
-                $author !== null ? new NewsAuthorDTO($author->id, $author->name) : null,
+                $author !== null ? new NewsAuthorDTO(
+                    id:         $author->id,
+                    name:       $author->name,
+                    rightsName: $author->rights_name,
+                    joinedAt:   $author->datereg,
+                ) : null,
                 $stats[$item->id] ?? new NewsDiscussionStats(),
                 $this->content->toPlainText($text('meta_title') ?: ($template('article_title') ?: $item->name)),
                 $this->content->toPlainText($text('meta_description') ?: $template('article_meta_description'))

@@ -75,6 +75,9 @@ final class NewsCollectionReadTest extends FunctionalTestCase
         $html = $this->container()->get(RendererInterface::class)->render('@news/public/article.twig', $article->metadata() + [
             'article' => $article->toTemplate(),
             'current_section' => null,
+            'related' => [],
+            'popular' => [],
+            'author_articles' => 0,
             'can_write' => false,
             'edit_url' => null,
         ]);

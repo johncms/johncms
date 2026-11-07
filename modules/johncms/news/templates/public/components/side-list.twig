@@ -1,0 +1,24 @@
+{#
+    A panel of the article sidebar listing other news.
+
+    @var id    string      Id of the panel heading.
+    @var title string
+    @var items list<array> Articles: name, url, short_date, view_count.
+#}
+<section class="site-news-panel" aria-labelledby="{{ id }}">
+    <h2 class="site-news-panel__title" id="{{ id }}">{{ title }}</h2>
+    <ul class="site-news-related">
+        {% for item in items %}
+            <li>
+                <a href="{{ item.url }}">{{ item.name }}</a>
+                <span class="site-news-related__meta">
+                    <span>{{ item.short_date }}</span>
+                    <span title="{{ __('Views') }}">
+                        {% include '@theme/components/icon.twig' with {name: 'eye', size: 11} only %}
+                        <span class="visually-hidden">{{ __('Views') }}: </span>{{ item.view_count|format_number }}
+                    </span>
+                </span>
+            </li>
+        {% endfor %}
+    </ul>
+</section>

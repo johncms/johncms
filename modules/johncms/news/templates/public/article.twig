@@ -1,110 +1,169 @@
 {#
-    @var article array Article with sanitized text, author and discussion statistics.
+    @var article         array Article with sanitized text, author and discussion statistics.
     @var current_section array|null
-    @var can_write bool
-    @var edit_url string|null
+    @var related         list<array> Other news of the section topped up with the latest news, the latest first.
+    @var popular         list<array> The most viewed news, none of them shown above.
+    @var author_articles int   Published news of the author.
+    @var can_write       bool
+    @var edit_url        string|null
 #}
 {% extends '@theme/layouts/default.twig' %}
 
-{% block content_class %}site-content--news{% endblock %}
+{% block content_class %}site-content--news site-content--news-article{% endblock %}
+
+{% block page_subtitle %}
+    <p class="site-page-heading__subtitle">
+        <span class="site-page-stat">
+            <span class="site-page-stat__dot" aria-hidden="true"></span>
+            {{ __('published %s')|format(article.display_date) }} ·
+            {{ n__('%s view', '%s views', article.view_count)|format(article.view_count|format_number) }}
+        </span>
+    </p>
+{% endblock %}
 
 {% block content %}
+    {% set article_url = config('johncms.homeurl')|trim('/', 'right') ~ article.url %}
     <div class="site-news site-news--article" id="blog">
-        <article class="site-news-article">
-            <header class="site-news-article__meta">
-                {% if article.author %}
-                    <span>{{ __('Author:') }}
-                        {% if profile_url(article.author.id) %}
-                            <a href="{{ profile_url(article.author.id) }}" rel="nofollow">{{ article.author.name }}</a>
-                        {% else %}{{ article.author.name }}{% endif %}
-                    </span>
+        <div class="site-news-layout">
+            <div class="site-news-layout__main">
+                <article class="site-news-article">
+                    {% if current_section or article.tags is not empty or edit_url %}
+                        <div class="site-news-article__labels">
+                            {% if current_section %}
+                                <a class="site-news-article__section" href="{{ current_section.url }}">{{ current_section.name }}</a>
+                            {% endif %}
+                            {% if article.tags is not empty %}
+                                <nav class="site-news-article__tags" aria-label="{{ __('Tags:') }}">
+                                    {% for tag in article.tags %}<a href="/news/search_tags/?tag={{ tag|url_encode }}">#{{ tag }}</a>{% endfor %}
+                                </nav>
+                            {% endif %}
+                            {% if edit_url %}
+                                <a href="{{ edit_url }}" class="site-news-article__edit" title="{{ __('Edit') }}" aria-label="{{ __('Edit') }}">
+                                    {% include '@theme/components/icon.twig' with {name: 'pencil', size: 14} only %}
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    <div class="site-news-article__body ck-content">
+                        {{ article.text_safe }}
+                    </div>
+                    <footer class="site-news-article__footer">
+                        <div class="vue_app">
+                            <likes-component
+                                :article_id="{{ article.id }}"
+                                :rating="{{ article.rating }}"
+                                :can_vote="{{ can('news.vote') ? 'true' : 'false' }}"
+                                :voted="{{ article.current_vote }}"
+                                icon_sprite="{{ asset('icons/public.svg', true) }}"
+                                :i18n='{{ {like: __('Like'), dislike: __('Dislike'), rating: __('Rating'), loading: __('Loading...')}|json_encode }}'
+                            ></likes-component>
+                        </div>
+                        <span class="site-news-article__stat" title="{{ __('Views') }}">
+                            {% include '@theme/components/icon.twig' with {name: 'eye', size: 14} only %}
+                            <span class="visually-hidden">{{ __('Views') }}: </span>{{ article.view_count|format_number }}
+                        </span>
+                        <a class="site-news-article__stat" href="#article-comments" aria-label="{{ __('Comments') }}: {{ article.comments_count|format_number }}">
+                            {% include '@theme/components/icon.twig' with {name: 'message-square', size: 14} only %} {{ article.comments_count|format_number }}
+                        </a>
+                        <div class="site-news-share" data-news-share data-url="{{ article.url }}" data-copied="{{ __('Link copied') }}" data-error="{{ __('Could not copy the link.') }}">
+                            <a class="btn btn-outline-secondary btn-sm" href="https://t.me/share/url?url={{ article_url|url_encode }}&amp;text={{ article.name|url_encode }}" target="_blank" rel="noopener noreferrer">
+                                {% include '@theme/components/icon.twig' with {name: 'send', size: 14} only %} Telegram
+                            </a>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" data-news-copy hidden>
+                                {% include '@theme/components/icon.twig' with {name: 'copy', size: 14} only %} {{ __('Copy link') }}
+                            </button>
+                            <span class="site-news-share__status" role="status"></span>
+                        </div>
+                    </footer>
+                </article>
+                {% if can_write %}
+                    {% if app.locale != 'en' and asset_exists('ckeditor5/translations/' ~ app.locale ~ '.js') %}
+                        <script src="{{ asset('ckeditor5/translations/' ~ app.locale ~ '.js', true) }}"></script>
+                    {% endif %}
+                    <script src="{{ asset('ckeditor5/ckeditor.js', true) }}"></script>
                 {% endif %}
-                <span>{{ __('Published:') }} {{ article.display_date }}</span>
-                {% if edit_url %}
-                    <a href="{{ edit_url }}" class="site-news-article__edit">
-                        {% include '@theme/components/icon.twig' with {name: 'pencil', size: 14} only %} {{ __('Edit') }}
-                    </a>
-                {% endif %}
-            </header>
-            <div class="site-news-article__body ck-content">
-                {{ article.text_safe }}
-            </div>
-            {% if article.tags is not empty %}
-                <nav class="site-news-article__tags" aria-label="{{ __('Tags:') }}">
-                    {% for tag in article.tags %}<a href="/news/search_tags/?tag={{ tag|url_encode }}">#{{ tag }}</a>{% endfor %}
-                </nav>
-            {% endif %}
-            <footer class="site-news-article__footer">
-                <div class="vue_app">
-                    <likes-component
-                        :article_id="{{ article.id }}"
-                        :rating="{{ article.rating }}"
-                        :can_vote="{{ can('news.vote') ? 'true' : 'false' }}"
-                        :voted="{{ article.current_vote }}"
+                <div class="vue_app" id="article-comments">
+                    <comments-component
+                        upload_url="/news/comments/upload_file/"
                         icon_sprite="{{ asset('icons/public.svg', true) }}"
-                        :i18n='{{ {like: __('Like'), dislike: __('Dislike'), rating: __('Rating'), loading: __('Loading...')}|json_encode }}'
-                    ></likes-component>
+                        :article_id="{{ article.id }}"
+                        :can_write="{{ can_write ? 'true' : 'false' }}"
+                        :i18n='{{ {
+                            write_comment: __('Write a comment'),
+                            send: __('Send'),
+                            delete: __('Delete'),
+                            quote: __('Quote'),
+                            reply: __('Reply'),
+                            comments: __('Comments'),
+                            empty_list: __('The list is empty'),
+                            loading: __('Loading...'),
+                            online: __('Online'),
+                            download: __('Download'),
+                            unknown_user: __('Unknown user'),
+                            confirm_delete: __('Delete this comment?'),
+                            load_error: __('Could not load the comments.'),
+                            send_error: __('Could not send the comment.'),
+                            delete_error: __('Could not delete the comment.'),
+                            editor_error: __('Could not load the editor. You can use the text field.')
+                        }|json_encode }}'
+                        language="{{ app.locale }}"
+                    ></comments-component>
                 </div>
-                <span class="site-news-article__stat" title="{{ __('Views') }}">
-                    {% include '@theme/components/icon.twig' with {name: 'eye', size: 14} only %}
-                    <span class="visually-hidden">{{ __('Views') }}: </span>{{ article.view_count|format_number }}
-                </span>
-                <a class="site-news-article__stat" href="#article-comments" aria-label="{{ __('Comments') }}: {{ article.comments_count|format_number }}">
-                    {% include '@theme/components/icon.twig' with {name: 'message-square', size: 14} only %} {{ article.comments_count|format_number }}
-                </a>
-                <div class="site-news-share" data-news-share data-url="{{ article.url }}" data-copied="{{ __('Link copied') }}" data-error="{{ __('Could not copy the link.') }}">
-                    <button type="button" class="btn btn-outline-secondary btn-sm" data-news-copy hidden>
-                        {% include '@theme/components/icon.twig' with {name: 'copy', size: 14} only %} {{ __('Copy link') }}
-                    </button>
-                    <span class="site-news-share__status" role="status"></span>
-                </div>
-            </footer>
-        </article>
-        {% if can_write %}
-            {% if app.locale != 'en' and asset_exists('ckeditor5/translations/' ~ app.locale ~ '.js') %}
-                <script src="{{ asset('ckeditor5/translations/' ~ app.locale ~ '.js', true) }}"></script>
-            {% endif %}
-            <script src="{{ asset('ckeditor5/ckeditor.js', true) }}"></script>
-        {% endif %}
-        <div class="vue_app" id="article-comments">
-            <comments-component
-                upload_url="/news/comments/upload_file/"
-                icon_sprite="{{ asset('icons/public.svg', true) }}"
-                :article_id="{{ article.id }}"
-                :can_write="{{ can_write ? 'true' : 'false' }}"
-                :i18n='{{ {
-                    write_comment: __('Write a comment'),
-                    send: __('Send'),
-                    delete: __('Delete'),
-                    quote: __('Quote'),
-                    reply: __('Reply'),
-                    comments: __('Comments'),
-                    empty_list: __('The list is empty'),
-                    loading: __('Loading...'),
-                    online: __('Online'),
-                    download: __('Download'),
-                    unknown_user: __('Unknown user'),
-                    confirm_delete: __('Delete this comment?'),
-                    load_error: __('Could not load the comments.'),
-                    send_error: __('Could not send the comment.'),
-                    delete_error: __('Could not delete the comment.'),
-                    editor_error: __('Could not load the editor. You can use the text field.')
-                }|json_encode }}'
-                language="{{ app.locale }}"
-            ></comments-component>
-        </div>
 
-        {% if not app.user.isValid %}
-            <div class="d-flex">
-                <div class="alert alert-warning">
-                    {# The link to the login page is part of the translated string. #}
-                    {{ __('You are not logged in. You must be <a href="/login/">logged in</a> to comment.')|raw }}
-                </div>
+                {% if not app.user.isValid %}
+                    <div class="d-flex">
+                        <div class="alert alert-warning">
+                            {# The link to the login page is part of the translated string. #}
+                            {{ __('You are not logged in. You must be <a href="/login/">logged in</a> to comment.')|raw }}
+                        </div>
+                    </div>
+                {% endif %}
+
             </div>
-        {% endif %}
 
-        <a class="site-news__back" href="{{ current_section ? current_section.url : '/news/' }}">
-            {% include '@theme/components/icon.twig' with {name: 'chevron-left', size: 14} only %} {{ __('Back') }}
-        </a>
+            <aside class="site-news-layout__side">
+                {% if article.author %}
+                    {% set author_url = profile_url(article.author.id) %}
+                    <section class="site-news-panel" aria-labelledby="news-author-title">
+                        <h2 class="site-news-panel__title" id="news-author-title">{{ __('Author') }}</h2>
+                        <div class="site-news-author">
+                            <img class="site-news-author__avatar" src="{{ avatar(article.author.id) }}" alt="" width="44" height="44" loading="lazy">
+                            <div class="site-news-author__main">
+                                {% if author_url %}
+                                    <a class="site-news-author__name" href="{{ author_url }}" rel="nofollow">{{ article.author.name }}</a>
+                                {% else %}
+                                    <span class="site-news-author__name">{{ article.author.name }}</span>
+                                {% endif %}
+                                {% if article.author.rightsName %}<span class="site-news-author__role">{{ article.author.rightsName }}</span>{% endif %}
+                            </div>
+                        </div>
+                        <dl class="site-news-author__stats">
+                            <div>
+                                <dt>{{ __('News') }}</dt>
+                                <dd>{{ author_articles|format_number }}</dd>
+                            </div>
+                            {% if article.author.joinedAt > 0 %}
+                                <div>
+                                    <dt>{{ __('On the site since') }}</dt>
+                                    <dd>{{ article.author.joinedAt|date('Y') }}</dd>
+                                </div>
+                            {% endif %}
+                        </dl>
+                    </section>
+                {% endif %}
+
+                {% if related is not empty %}
+                    {% include '@news/public/components/side-list.twig' with {
+                        id: 'news-related-title', title: __('Read also'), items: related
+                    } only %}
+                {% endif %}
+
+                {% if popular is not empty %}
+                    {% include '@news/public/components/side-list.twig' with {
+                        id: 'news-popular-title', title: __('Popular'), items: popular
+                    } only %}
+                {% endif %}
+            </aside>
+        </div>
     </div>
 {% endblock %}
