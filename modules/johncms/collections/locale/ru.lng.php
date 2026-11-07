@@ -462,6 +462,9 @@
       'Unavailable record' => 'Недоступная запись',
       'Clear' => 'Очистить',
       'Search results' => 'Результаты поиска',
+      'Selected: %d' => 'Выбрано: %d',
+      'No records selected' => 'Записи не выбраны',
+      'Done' => 'Готово',
     ),
   ),
 );

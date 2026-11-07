@@ -1,13 +1,19 @@
-/** Search and selection share one control; canonical values belong to the ordinary form. */
-export function createRelationDefaultPicker({form, lookup, isActive, isMultiple, getValues, setValues, getOptions, search}) {
+/** The popup never participates in form layout; selection stays in the ordinary form controls. */
+export function createRelationDefaultPicker({form, lookup, isActive, isMultiple, getValues, setValues, getOptions, search, cancelSearch}) {
   const input = lookup.querySelector('[name="default_query"]');
   const label = lookup.querySelector('label[for="default-query"]');
   const originalLabel = label.textContent;
   const target = form.querySelector('#relation-target');
   const selected = lookup.querySelector('[data-relation-selected]');
+  const control = lookup.querySelector('[data-relation-control]');
+  const popup = lookup.querySelector('[data-relation-popup]');
   const results = lookup.querySelector('[data-relation-results]');
+  const footer = lookup.querySelector('[data-relation-footer]');
+  const count = lookup.querySelector('[data-relation-count]');
+  const done = lookup.querySelector('[data-relation-done]');
   const clear = lookup.querySelector('[data-relation-clear]');
   const context = lookup.querySelector('[data-relation-context]');
+  const warning = lookup.querySelector('[data-relation-warning]');
   const status = lookup.querySelector('[data-default-lookup-status]');
   const searchButton = lookup.querySelector('[name="lookup_defaults"]');
   const nativeResult = lookup.querySelector('[data-default-lookup-result]');
@@ -15,22 +21,70 @@ export function createRelationDefaultPicker({form, lookup, isActive, isMultiple,
   const strings = lookup.dataset;
   const labels = new Map();
   let active = false;
+  let multiple = isMultiple();
   let options = [];
   let highlighted = -1;
+  let shownTerm = null;
   let timer;
   let revision = 0;
   let scope = target.value;
   let busy = false;
+  let loading = false;
+  let focusing = false;
   const title = option => {
     const suffix = ` (#${option.code})`;
     return option.label.endsWith(suffix) ? option.label.slice(0, -suffix.length) : option.label;
   };
   const name = code => labels.get(code) ?? `${strings.relationUnavailable} (#${code})`;
-  const close = () => {
-    results.hidden = true;
+  const searchTerm = () => !isMultiple() && getValues().length && input.value === name(getValues()[0]) ? '' : input.value;
+  const position = () => {
+    if (popup.hidden) return;
+    const rect = control.getBoundingClientRect();
+    const viewport = window.visualViewport;
+    const viewportTop = viewport?.offsetTop ?? 0;
+    const header = document.querySelector('.admin-topbar')?.getBoundingClientRect();
+    const top = header && header.top <= viewportTop ? Math.max(viewportTop, header.bottom) : viewportTop;
+    const bottom = viewportTop + (viewport?.height ?? window.innerHeight);
+    const below = bottom - rect.bottom - 8;
+    const above = rect.top - top - 8;
+    const upwards = below < 240 && above > below;
+    popup.classList.toggle('is-above', upwards);
+    popup.style.setProperty('--relation-popup-height', `${Math.max(0, Math.min(320, upwards ? above : below))}px`);
+  };
+  const close = (restore = true) => {
+    if (active || isActive()) cancelSearch();
+    clearTimeout(timer);
+    revision++;
+    loading = false;
+    popup.hidden = true;
     input.setAttribute('aria-expanded', 'false');
     input.removeAttribute('aria-activedescendant');
     highlighted = -1;
+    if (restore && !isMultiple()) input.value = getValues().length ? name(getValues()[0]) : '';
+  };
+  const open = () => {
+    popup.hidden = false;
+    input.setAttribute('aria-expanded', 'true');
+    position();
+  };
+  const focusInput = () => {
+    focusing = true;
+    input.focus({preventScroll: true});
+    focusing = false;
+  };
+  const syncOptions = () => {
+    const chosen = new Set(getValues());
+    results.setAttribute('aria-multiselectable', String(isMultiple()));
+    [...results.children].forEach((button, index) => {
+      const checked = chosen.has(options[index].code);
+      button.setAttribute('aria-selected', String(checked));
+      const mark = button.querySelector('[data-relation-check]');
+      mark.hidden = !isMultiple();
+      mark.replaceChildren();
+      if (checked) mark.append(lookup.querySelector('[data-relation-icon="check"]').content.cloneNode(true));
+    });
+    count.textContent = strings.relationCountLabel.replace('%d', String(chosen.size));
+    footer.hidden = !isMultiple();
   };
   const change = async values => {
     if (busy) return false;
@@ -44,102 +98,136 @@ export function createRelationDefaultPicker({form, lookup, isActive, isMultiple,
     }
   };
   const choose = async code => {
+    cancelSearch();
+    status.textContent = '';
     clearTimeout(timer);
-    revision++;
-    if (await change(isMultiple() ? [...getValues(), code] : [code]) === false) return;
-    input.value = isMultiple() ? '' : name(code);
-    close();
-    input.focus();
-    // Focus can open the list again; selection is already complete.
-    close();
+    const current = ++revision;
+    loading = false;
+    const term = input.value;
+    const scroll = results.scrollTop;
+    const values = getValues();
+    const next = isMultiple() ? (values.includes(code) ? values.filter(value => value !== code) : [...values, code]) : [code];
+    if (await change(next) === false || current !== revision || !active) return;
+    if (isMultiple()) {
+      input.value = term;
+      syncOptions();
+      results.scrollTop = scroll;
+      position();
+      focusInput();
+    } else {
+      close();
+      focusInput();
+    }
   };
   const highlight = index => {
     highlighted = index;
-    [...results.children].forEach((button, i) => {
-      button.classList.toggle('active', i === index);
-      button.setAttribute('aria-selected', String(i === index));
-    });
+    [...results.children].forEach((button, i) => button.classList.toggle('active', i === index));
     const option = results.children[index];
     if (option) {
       input.setAttribute('aria-activedescendant', option.id);
-      option.scrollIntoView({block: 'nearest'});
+      const rect = option.getBoundingClientRect();
+      const list = results.getBoundingClientRect();
+      if (rect.top < list.top) results.scrollTop += rect.top - list.top;
+      else if (rect.bottom > list.bottom) results.scrollTop += rect.bottom - list.bottom;
     }
   };
   const show = (items, term) => {
-    const chosen = new Set(isMultiple() ? getValues() : []);
+    const scroll = shownTerm === term ? results.scrollTop : 0;
+    const focusedCode = shownTerm === term ? options[highlighted]?.code : null;
+    shownTerm = term;
     const query = term.trim().toLocaleLowerCase();
-    options = items.filter(option => !chosen.has(option.code) && (!query || title(option).toLocaleLowerCase().includes(query)));
+    options = items.filter(option => !query || title(option).toLocaleLowerCase().includes(query));
     results.replaceChildren();
     options.forEach((option, index) => {
       const button = document.createElement('button');
       button.type = 'button';
-      button.className = 'list-group-item list-group-item-action text-start';
+      button.className = 'list-group-item list-group-item-action text-start d-flex align-items-center gap-2';
       button.id = `relation-default-result-${index}`;
       button.setAttribute('role', 'option');
-      button.setAttribute('aria-selected', 'false');
       button.tabIndex = -1;
+      const mark = document.createElement('span');
+      mark.className = 'relation-default-check';
+      mark.setAttribute('data-relation-check', '');
+      mark.setAttribute('aria-hidden', 'true');
+      const text = document.createElement('span');
+      text.className = 'flex-grow-1';
       const heading = document.createElement('span');
       heading.className = 'd-block text-break';
       heading.textContent = title(option);
       const id = document.createElement('small');
       id.className = 'd-block text-muted';
       id.textContent = `#${option.code}`;
-      button.append(heading, id);
+      text.append(heading, id);
+      button.append(mark, text);
       button.addEventListener('pointerdown', event => event.preventDefault());
       button.addEventListener('mousedown', event => event.preventDefault());
       button.addEventListener('click', () => choose(option.code));
       results.append(button);
     });
     results.hidden = options.length === 0;
-    input.setAttribute('aria-expanded', String(options.length > 0));
     input.removeAttribute('aria-activedescendant');
     highlighted = -1;
     status.textContent = options.length ? '' : strings.empty;
+    syncOptions();
+    open();
+    results.scrollTop = scroll;
+    const restored = options.findIndex(option => option.code === focusedCode);
+    if (restored >= 0) highlight(restored);
   };
   const load = async term => {
     if (!isActive() || !target.value || input.matches(':disabled')) return;
+    clearTimeout(timer);
     const current = ++revision;
+    loading = true;
+    if (getOptions().length) show(getOptions(), term);
+    else { results.hidden = true; open(); }
     status.textContent = strings.relationLoading;
     const items = await search(term);
     if (current !== revision || !isActive()) return;
+    loading = false;
     if (items !== null) {
       for (const option of items) labels.set(option.code, title(option));
       show(items, term);
-    } else close();
+    } else {
+      results.hidden = true;
+      highlighted = -1;
+      input.removeAttribute('aria-activedescendant');
+      open();
+    }
   };
   const refresh = () => {
     const enabled = isActive();
-    if (enabled !== active) {
-      clearTimeout(timer);
-      revision++;
+    const shapeChanged = multiple !== isMultiple();
+    multiple = isMultiple();
+    if (enabled !== active || shapeChanged) {
       close();
       input.value = '';
+      shownTerm = null;
     }
     active = enabled;
     searchButton.hidden = enabled;
     nativeResult.hidden = enabled;
     apply.hidden = enabled;
-    selected.hidden = !enabled || !isMultiple();
+    selected.hidden = !enabled || !multiple;
     context.hidden = !enabled;
-    clear.hidden = !enabled || isMultiple() || getValues().length === 0;
+    clear.hidden = !enabled || multiple || getValues().length === 0;
     input.parentElement.classList.toggle('input-group', !enabled || !clear.hidden);
     form.querySelector('[data-relation-fallback]').hidden = true;
     if (!enabled) {
+      control.after(status);
+      warning.hidden = true;
       label.textContent = originalLabel;
       input.disabled = false;
       input.placeholder = '';
-      input.removeAttribute('role');
-      input.removeAttribute('aria-controls');
-      input.removeAttribute('aria-describedby');
-      input.removeAttribute('aria-expanded');
+      for (const attribute of ['role', 'aria-controls', 'aria-describedby', 'aria-expanded', 'aria-autocomplete']) input.removeAttribute(attribute);
       input.setCustomValidity('');
       return;
     }
+    if (status.parentElement !== popup) popup.prepend(status);
     if (scope !== target.value) {
       scope = target.value;
-      clearTimeout(timer);
-      revision++;
       close();
+      shownTerm = null;
       status.textContent = '';
     }
     for (const option of getOptions()) labels.set(option.code, title(option));
@@ -149,28 +237,33 @@ export function createRelationDefaultPicker({form, lookup, isActive, isMultiple,
     input.setCustomValidity(invalid ? strings.relationInvalid : '');
     input.classList.toggle('is-invalid', invalid);
     input.setAttribute('aria-invalid', String(invalid));
+    warning.hidden = !invalid;
+    warning.textContent = invalid ? strings.relationInvalid : '';
     input.disabled = !target.value;
     input.placeholder = target.value ? strings.relationPlaceholder : strings.relationTarget;
     input.setAttribute('role', 'combobox');
     input.setAttribute('aria-autocomplete', 'list');
     input.setAttribute('aria-controls', results.id);
-    input.setAttribute('aria-describedby', 'relation-default-context default-lookup-status');
+    input.setAttribute('aria-describedby', 'relation-default-context default-lookup-status relation-default-warning');
     if (!input.hasAttribute('aria-expanded')) input.setAttribute('aria-expanded', 'false');
-    label.textContent = isMultiple() ? strings.relationPlural : strings.relationSingular;
+    label.textContent = multiple ? strings.relationPlural : strings.relationSingular;
     context.textContent = target.value ? strings.relationContext.replace('%s', target.selectedOptions[0].textContent) : strings.relationTarget;
-    if (invalid) status.textContent = strings.relationInvalid;
     selected.replaceChildren();
+    if (!values.length) {
+      const empty = document.createElement('li');
+      empty.className = 'small text-muted';
+      empty.textContent = strings.relationNone;
+      selected.append(empty);
+    }
     values.forEach((code, index) => {
       const row = document.createElement('li');
-      row.className = 'list-group-item d-flex flex-wrap align-items-center gap-2';
+      row.className = 'relation-default-chip';
+      row.title = `${name(code)} (#${code})`;
       const text = document.createElement('span');
-      text.className = 'flex-grow-1 text-break';
+      text.className = 'relation-default-chip-label';
       text.textContent = name(code);
       if (!valid.has(code)) text.classList.add('text-danger');
-      const id = document.createElement('small');
-      id.className = 'text-muted';
-      id.textContent = `#${code}`;
-      row.append(text, id);
+      row.append(text);
       for (const [action, caption] of [['up', strings.relationUp], ['down', strings.relationDown], ['remove', strings.relationRemove]]) {
         const button = document.createElement('button');
         button.type = 'button';
@@ -187,25 +280,33 @@ export function createRelationDefaultPicker({form, lookup, isActive, isMultiple,
             [next[index], next[other]] = [next[other], next[index]];
           }
           await change(next);
-          const focus = selected.children[Math.min(index, selected.children.length - 1)]?.querySelector('button:not(:disabled)');
-          (focus ?? input).focus();
+          const rows = selected.querySelectorAll('.relation-default-chip');
+          const focus = rows[Math.min(index, rows.length - 1)]?.querySelector('button:not(:disabled)');
+          if (focus) focus.focus({preventScroll: true});
+          else focusInput();
         });
         row.append(button);
       }
       selected.append(row);
     });
-    if (document.activeElement !== input) input.value = !isMultiple() && values.length ? name(values[0]) : '';
+    if (!multiple && (shapeChanged || (document.activeElement !== input && popup.hidden))) input.value = values.length ? name(values[0]) : '';
+    syncOptions();
+    position();
   };
   input.addEventListener('focus', () => {
-    if (!active) return;
-    input.select();
-    load('');
+    if (!active || focusing) return;
+    if (!isMultiple()) input.select();
+    load(searchTerm());
+  });
+  input.addEventListener('click', () => {
+    if (active && popup.hidden && !loading) {
+      if (!isMultiple()) input.select();
+      load(searchTerm());
+    }
   });
   input.addEventListener('input', () => {
     if (!active) return;
-    clearTimeout(timer);
-    revision++;
-    close();
+    close(false);
     const term = input.value;
     timer = setTimeout(() => load(term), 250);
   });
@@ -213,43 +314,40 @@ export function createRelationDefaultPicker({form, lookup, isActive, isMultiple,
     if (!active) return;
     if (event.key === 'Escape') {
       event.preventDefault();
-      clearTimeout(timer);
-      revision++;
       close();
-      input.value = !isMultiple() && getValues().length ? name(getValues()[0]) : '';
     } else if (['ArrowDown', 'ArrowUp'].includes(event.key)) {
       event.preventDefault();
       const down = event.key === 'ArrowDown';
-      if (!options.length || results.hidden) load('').then(() => {
-        if (!results.hidden && document.activeElement === input) highlight(down ? 0 : options.length - 1);
+      if (!options.length || popup.hidden || results.hidden) load(searchTerm()).then(() => {
+        if (!popup.hidden && document.activeElement === input && options.length) highlight(down ? 0 : options.length - 1);
       });
       else highlight(highlighted < 0 ? (down ? 0 : options.length - 1) : (highlighted + (down ? 1 : -1) + options.length) % options.length);
     } else if (event.key === 'Enter') {
       event.preventDefault();
-      if (!results.hidden && highlighted >= 0) choose(options[highlighted].code);
-      else load(input.value);
+      if (!popup.hidden && !results.hidden && highlighted >= 0) choose(options[highlighted].code);
+      else load(searchTerm());
     }
   });
-  input.addEventListener('blur', () => {
-    if (!active) return;
-    clearTimeout(timer);
-    revision++;
-    close();
-    input.value = !isMultiple() && getValues().length ? name(getValues()[0]) : '';
-  });
+  const outside = element => !control.contains(element) && !selected.contains(element);
+  document.addEventListener('pointerdown', event => { if (active && outside(event.target)) close(); });
+  document.addEventListener('focusin', event => { if (active && outside(event.target)) close(); });
+  input.addEventListener('blur', event => { if (active && outside(event.relatedTarget)) close(); });
+  done.addEventListener('click', () => { close(); focusInput(); });
   form.addEventListener('reset', () => queueMicrotask(() => {
-    clearTimeout(timer);
-    revision++;
     close();
+    shownTerm = null;
     refresh();
-    if (active) input.value = !isMultiple() && getValues().length ? name(getValues()[0]) : '';
+    if (active && !isMultiple()) input.value = getValues().length ? name(getValues()[0]) : '';
   }));
   clear.addEventListener('click', async () => {
-    clearTimeout(timer);
-    revision++;
+    close();
     await change([]);
     input.value = '';
-    input.focus();
+    focusInput();
   });
+  window.addEventListener('resize', position);
+  window.addEventListener('scroll', position, {capture: true, passive: true});
+  window.visualViewport?.addEventListener('resize', position);
+  window.visualViewport?.addEventListener('scroll', position);
   return {refresh, label: name};
 }

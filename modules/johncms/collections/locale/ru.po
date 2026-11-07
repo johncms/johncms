@@ -1565,3 +1565,12 @@ msgstr "Очистить"
 
 msgid "Search results"
 msgstr "Результаты поиска"
+
+msgid "Selected: %d"
+msgstr "Выбрано: %d"
+
+msgid "No records selected"
+msgstr "Записи не выбраны"
+
+msgid "Done"
+msgstr "Готово"

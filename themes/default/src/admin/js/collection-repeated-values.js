@@ -273,6 +273,11 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   const relationPicker = createRelationDefaultPicker({
     form, lookup, isActive: () => type.value === 'relation', isMultiple: () => multiple.checked,
     getOptions: () => lookupOptions, search: term => loadLookup(term),
+    cancelSearch: () => {
+      lookupRequest?.abort();
+      lookupRequest = null;
+      lookup.removeAttribute('aria-busy');
+    },
     getValues: () => (multiple.checked ? repeatedSources().map(source => source.value) : [single.value]).filter(value => value.trim() !== ''),
     setValues: async values => {
       const target = form.querySelector('#relation-target').value;
