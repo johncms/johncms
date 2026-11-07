@@ -35,6 +35,7 @@ final readonly class ArticleController
                 $this->navChain->add($crumb->record->name, $crumb->url);
             }
         }
+        $this->navChain->add($article->record->name);
         $this->news->registerView($article->record->id);
         return new ViewResponse('@news/public/article.twig', $article->metadata() + [
             'article' => $article->toTemplate(), 'current_section' => $section?->toTemplate(),
