@@ -146,6 +146,19 @@ final class CollectionItemsAdminListTest extends FunctionalTestCase
         return (string) $response->getContent();
     }
 
+    public function testARelationColumnShowsTheNameOfTheItem(): void
+    {
+        $target = $this->item('Linked record', 'linked');
+        $source = $this->item('Source', 'source');
+        $field = $this->field('link', 'Link', 'relation', true);
+        Fixture::insert('collection_item_values', ['item_id' => $source, 'field_id' => $field, 'value_int' => $target, 'sort' => 0]);
+        Fixture::insert('collection_item_values', ['item_id' => $target, 'field_id' => $field, 'value_int' => 999999, 'sort' => 0]);
+        $html = $this->page('');
+        self::assertGreaterThanOrEqual(2, substr_count($html, 'Linked record'));
+        self::assertStringContainsString('#999999', $html);
+        self::assertStringContainsString('#999999', $html);
+    }
+
     private function field(string $code, string $name, string $type, bool $inList): int
     {
         return Fixture::insert('collection_fields', [

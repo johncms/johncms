@@ -16,6 +16,7 @@ use Johncms\Modules\Collections\Application\Exceptions\CollectionAccessDeniedExc
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSchemaException;
 use Johncms\Modules\Collections\Application\Services\CollectionFilePolicy;
 use Johncms\Modules\Collections\Application\Services\CollectionFieldFormChoices;
+use Johncms\Modules\Collections\Application\Services\CollectionFormLayout;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Johncms\Modules\Collections\Application\Services\CollectionRepeatedValues;
 use Johncms\Modules\Collections\Application\Services\CollectionWorkspaceMapper;
@@ -43,6 +44,7 @@ final readonly class CollectionFieldsAdminController
         private CollectionFieldFormChoices $choices,
         private UploadLimits $uploadLimits,
         private CollectionRepeatedValues $repeated = new CollectionRepeatedValues(),
+        private CollectionFormLayout $layout = new CollectionFormLayout(),
     ) {
     }
 
@@ -73,7 +75,9 @@ final readonly class CollectionFieldsAdminController
             return $this->collectionNotFound();
         }
 
-        return $this->renderForm($collection, null, $this->defaultFields());
+        $sorts = $this->fieldRepository->getByCollection($collection_id)->pluck('sort');
+
+        return $this->renderForm($collection, null, ['sort' => $sorts->isEmpty() ? 100 : $sorts->max() + 10] + $this->defaultFields());
     }
 
     public function editForm(int $collection_id, int $id): ViewResponse
@@ -386,6 +390,9 @@ final readonly class CollectionFieldsAdminController
             'fields'       => $fields,
             'managed'      => $id !== null && $this->fieldRepository->findById($id)?->owner_module !== null,
             'type_options' => $this->typeOptions(),
+            'role_options' => $this->roleOptions($fields['role'] ?? null),
+            'role_available' => ($fields['role'] ?? null) !== null || in_array($fields['type'], ['string', 'text', 'html'], true),
+            'layout_sort' => isset($this->layout->settings($collection)['fields'][$fields['code']]['sort']),
             'slug_linked' => $fields['slug_linked'] ?? ($id === null && $fields['code'] === ''),
             'errors'       => $errors,
             'field_errors' => $fieldErrors,
@@ -668,6 +675,22 @@ final readonly class CollectionFieldsAdminController
         }
 
         return $options;
+    }
+
+    /** @return list<array{code: string, label: string, types: list<string>, multiple: bool}> */
+    private function roleOptions(?string $current): array
+    {
+        $text = ['string', 'text', 'html'];
+        $roles = [
+            ['code' => 'meta_title', 'label' => __('Page title'), 'types' => $text, 'multiple' => false],
+            ['code' => 'meta_description', 'label' => __('Meta description'), 'types' => $text, 'multiple' => false],
+            ['code' => 'meta_keywords', 'label' => __('Meta keywords'), 'types' => $text, 'multiple' => false],
+            ['code' => 'tags', 'label' => __('Tags'), 'types' => ['string'], 'multiple' => true],
+        ];
+        if ($current !== null && ! in_array($current, array_column($roles, 'code'), true)) {
+            $roles[] = ['code' => $current, 'label' => $current, 'types' => array_column(FieldType::cases(), 'value'), 'multiple' => false];
+        }
+        return $roles;
     }
 
     private function typeLabel(FieldType $type): string

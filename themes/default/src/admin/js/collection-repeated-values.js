@@ -235,6 +235,18 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
     group.hidden = !visible;
     group.disabled = !visible;
   };
+  const updateRole = () => {
+    const role = form.elements.role;
+    let available = 0;
+    for (const option of [...role.options].filter(candidate => candidate.dataset.types)) {
+      const fits = option.dataset.types.split(' ').includes(type.value) && (!('multiple' in option.dataset) || multiple.checked);
+      option.hidden = !fits;
+      option.disabled = !fits;
+      if (fits) available++;
+      else if (option.selected) role.value = '';
+    }
+    form.querySelector('[data-field-role]').hidden = available === 0 && role.value === '';
+  };
   const update = () => {
     const date = isDate();
     toggle(dateSettings, date);
@@ -253,6 +265,13 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
     deletion.querySelector('[value="clear"]').disabled = required;
     if (required) deletion.value = 'restrict';
     form.querySelector('[data-required-relation-help]').hidden = !required;
+    form.querySelectorAll('[data-relation-delete-help]').forEach(help => { help.hidden = required || help.dataset.relationDeleteHelp !== deletion.value; });
+    const boolean = type.value === 'boolean';
+    if (boolean) form.elements.required.checked = false;
+    form.querySelector('[data-field-required]').hidden = boolean;
+    form.querySelector('[data-field-multiple-switch]').hidden = boolean && !multiple.checked;
+    updateRole();
+    form.elements.max_length.max = type.value === 'string' ? '255' : '1000000';
     toggle(lookup, type.value === 'relation');
     toggle(form.querySelector('[data-default-single]'), fixedDefault && !multiple.checked);
     toggle(form.querySelector('[data-default-multiple]'), fixedDefault && multiple.checked);
@@ -464,6 +483,7 @@ document.querySelectorAll('[data-collection-field-settings]').forEach(form => {
   type.addEventListener('change', switchDefaults);
   type.addEventListener('change', update);
   form.elements.required.addEventListener('change', update);
+  form.elements.relation_on_delete.addEventListener('change', update);
   useDefault.addEventListener('change', update);
   dateMode.addEventListener('change', update);
   form.elements.max_values.addEventListener('input', updateLimit);

@@ -338,6 +338,45 @@ final class CollectionFieldSettingsTest extends FunctionalTestCase
         self::assertSame(count(CollectionFilePolicy::TYPES), $document->querySelectorAll('[name="allowed_mime_types[]"]')->length);
     }
 
+    public function testANewFieldGoesAfterTheLastOne(): void
+    {
+        $editor = FunctionalUserFactory::createSupervisor();
+        $url = '/admin/collections/' . $this->collection . '/fields/new';
+        $document = HTMLDocument::createFromString((string) $this->handleRequest($url, cookies: $this->actingAs($editor))->getContent(), LIBXML_NOERROR);
+        self::assertSame('100', $document->querySelector('[name="sort"]')->getAttribute('value'));
+        $this->field('first', FieldType::String_);
+        $document = HTMLDocument::createFromString((string) $this->handleRequest($url, cookies: $this->actingAs($editor))->getContent(), LIBXML_NOERROR);
+        self::assertSame('110', $document->querySelector('[name="sort"]')->getAttribute('value'));
+    }
+
+    public function testRolesFitTheTypeOfTheField(): void
+    {
+        $editor = FunctionalUserFactory::createSupervisor();
+        $url = '/admin/collections/' . $this->collection . '/fields';
+        $response = $this->postForm($url, ['code' => 'title', 'name' => 'Title', 'type' => 'boolean', 'role' => 'meta_title'], $editor);
+        self::assertSame(200, $response->getStatusCode());
+        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
+        self::assertNotNull($document->querySelector('#error-role'));
+        self::assertSame(302, $this->postForm($url, ['code' => 'title', 'name' => 'Title', 'type' => 'string', 'role' => 'meta_title'], $editor)->getStatusCode());
+        $response = $this->postForm($url, ['code' => 'other', 'name' => 'Other', 'type' => 'text', 'role' => 'meta_title'], $editor);
+        $document = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR);
+        self::assertNotNull($document->querySelector('#error-role'));
+    }
+
+    public function testACustomRoleStaysAvailableInTheForm(): void
+    {
+        $editor = FunctionalUserFactory::createSupervisor();
+        $id = $this->schema->saveField(null, new CollectionFieldFormDTO(collectionId: $this->collection, code: 'own', name: 'Own', type: FieldType::Integer, required: false, multiple: false, sort: 100, role: 'module_role'));
+        $document = HTMLDocument::createFromString((string) $this->handleRequest('/admin/collections/' . $this->collection . '/fields/' . $id . '/edit', cookies: $this->actingAs($editor))->getContent(), LIBXML_NOERROR);
+        self::assertSame('module_role', $document->querySelector('[name="role"] option[selected]')->getAttribute('value'));
+    }
+
+    public function testAMaximumLengthOfZeroIsRefused(): void
+    {
+        $this->expectException(CollectionSchemaException::class);
+        $this->field('nothing', FieldType::String_, ['max_length' => 0]);
+    }
+
     public function testADefaultDoesNotSurviveAChangeOfItsKind(): void
     {
         $editor = FunctionalUserFactory::createSupervisor();

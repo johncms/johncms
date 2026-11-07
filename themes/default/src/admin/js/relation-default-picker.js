@@ -169,7 +169,7 @@ export function createRelationDefaultPicker({form, lookup, isActive, isMultiple,
     results.hidden = options.length === 0;
     input.removeAttribute('aria-activedescendant');
     highlighted = -1;
-    status.textContent = options.length ? '' : strings.empty;
+    status.textContent = options.length ? (items.length >= 30 ? strings.relationMore : '') : (term.trim() ? strings.empty : strings.relationNoRecords);
     syncOptions();
     open();
     results.scrollTop = scroll;

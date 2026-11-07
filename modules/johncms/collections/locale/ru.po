@@ -1646,3 +1646,45 @@ msgstr "Файл выбран. Сохраните форму, чтобы при�
 
 msgid "Close"
 msgstr "Закрыть"
+
+msgid "Page title"
+msgstr "Заголовок страницы"
+
+msgid "Tags"
+msgstr "Теги"
+
+msgid "SEO roles require a text field."
+msgstr "SEO-роли доступны только текстовым полям."
+
+msgid "Choose a collection"
+msgstr "Выберите коллекцию"
+
+msgid "Prevent deletion"
+msgstr "Запретить удаление"
+
+msgid "Remove the link from the items"
+msgstr "Убрать связь из записей"
+
+msgid "A record cannot be deleted while items link to it."
+msgstr "Запись нельзя удалить, пока на неё ссылаются другие записи."
+
+msgid "The link disappears from the items when the record is deleted."
+msgstr "При удалении записи связь с ней исчезнет из других записей."
+
+msgid "A record chosen as a default value cannot be deleted until the default changes."
+msgstr "Запись, выбранную значением по умолчанию, нельзя удалить, пока оно не изменится."
+
+msgid "Leave empty to use the storage limit."
+msgstr "Оставьте пустым, чтобы действовал предел хранилища."
+
+msgid "This collection has no records yet."
+msgstr "В этой коллекции пока нет записей."
+
+msgid "Ordinary field"
+msgstr "Обычное поле"
+
+msgid "A role gives the value a special meaning on the site."
+msgstr "Роль придаёт значению особый смысл на сайте."
+
+msgid "The form of an item orders this field by the layout of the collection."
+msgstr "В форме записи порядок этого поля задаёт раскладка коллекции."

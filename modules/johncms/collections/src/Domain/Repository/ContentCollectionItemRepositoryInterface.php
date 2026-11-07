@@ -25,6 +25,12 @@ interface ContentCollectionItemRepositoryInterface
     /** @return Collection<int, ContentCollectionItem> */
     public function getNameMatches(int $collectionId, string $term, int $limit): Collection;
 
+    /**
+     * @param list<int> $ids
+     * @return array<int, string> Names keyed by item id; an item that is gone is left out.
+     */
+    public function getNames(array $ids): array;
+
     public function findById(int $id): ?ContentCollectionItem;
 
     public function findForUpdate(int $id): ?ContentCollectionItem;

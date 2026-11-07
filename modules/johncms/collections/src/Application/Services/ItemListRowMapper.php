@@ -17,6 +17,7 @@ use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
 use Johncms\Modules\Collections\Domain\Services\SectionTree;
 use Johncms\Users\Repository\UserRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
 use LogicException;
 
 /**
@@ -35,6 +36,7 @@ final readonly class ItemListRowMapper
         private CollectionWorkspaceSettings $workspace = new CollectionWorkspaceSettings(),
         private ?UserRepositoryInterface $users = null,
         private ?EnsureCollectionContentAccessUseCase $access = null,
+        private ?ContentCollectionItemRepositoryInterface $relatedItems = null,
     ) {
     }
 
@@ -56,6 +58,8 @@ final readonly class ItemListRowMapper
         $authors = $this->users?->findMany(array_values(array_unique(array_filter($items->pluck('created_by')->all())))) ?? [];
         $owned = $collection->owner_module !== null && $this->ownerUrls !== null;
         $ownerItemUrls = $owned ? $this->ownerUrls->items($collectionDto, $items->values()->map($this->apiMapper->item(...))->all()) : [];
+
+        $relatedNames = $this->relatedNames($items, $fields);
 
         foreach ($items as $item) {
             $status = ItemStatus::of($item->active, $item->active_from, $item->active_to, $now);
@@ -100,7 +104,7 @@ final readonly class ItemListRowMapper
                 'section'      => $section !== null ? implode(' › ', $tree->pathOf($section)) : '',
                 'status'       => $status->value,
                 'status_title' => ItemListControlsMapper::statusTitle($status),
-                'values'       => array_map(fn (ContentCollectionField $field): array => $this->value($field, $values[$field->code] ?? null), $fields),
+                'values'       => array_map(fn (ContentCollectionField $field): array => $this->value($field, $values[$field->code] ?? null, $relatedNames), $fields),
                 'meta' => [
                     'author' => $item->created_by !== null ? ($authors[$item->created_by]->name ?? '') : '',
                     'created_at' => $this->timestamp($item->getRawOriginal('created_at')),
@@ -122,14 +126,39 @@ final readonly class ItemListRowMapper
     }
 
     /**
+     * The names of the items the shown relation fields point at, read at once for the whole page.
+     *
+     * @param Collection<int, ContentCollectionItem> $items
+     * @param list<ContentCollectionField>           $fields
+     * @return array<int, string>
+     */
+    private function relatedNames(Collection $items, array $fields): array
+    {
+        $relations = array_filter($fields, static fn (ContentCollectionField $field): bool => $field->type === FieldType::Relation);
+        if ($relations === [] || $this->relatedItems === null) {
+            return [];
+        }
+        $ids = [];
+        foreach ($items as $item) {
+            $values = $item->getValuesMap();
+            foreach ($relations as $field) {
+                array_push($ids, ...array_map(intval(...), (array) ($values[$field->code] ?? [])));
+            }
+        }
+
+        return $this->relatedItems->getNames(array_values(array_unique($ids)));
+    }
+
+    /**
      * A value as a cell shows it: kind (text, number, yes_no, date, empty) and the value itself.
      *
+     * @param array<int, string> $relatedNames
      * @return array{kind: string, value: mixed, with_time?: bool}
      */
-    private function value(ContentCollectionField $field, mixed $value): array
+    private function value(ContentCollectionField $field, mixed $value, array $relatedNames = []): array
     {
         if (is_array($value)) {
-            $parts = array_filter(array_map(fn (mixed $one): string => (string) $this->value($field, $one)['value'], $value), static fn (string $part): bool => $part !== '');
+            $parts = array_filter(array_map(fn (mixed $one): string => (string) $this->value($field, $one, $relatedNames)['value'], $value), static fn (string $part): bool => $part !== '');
 
             return $parts === [] ? ['kind' => 'empty', 'value' => ''] : ['kind' => 'text', 'value' => implode(', ', $parts)];
         }
@@ -140,6 +169,7 @@ final readonly class ItemListRowMapper
 
         return match ($field->type) {
             FieldType::File => ['kind' => 'text', 'value' => $this->fileName($field, (string) $value)],
+            FieldType::Relation => ['kind' => 'text', 'value' => $this->shorten($relatedNames[(int) $value] ?? '#' . $value)],
             FieldType::Select => ['kind' => 'text', 'value' => $this->shorten(CollectionSelectOptions::label($field->settings ?? [], (string) $value))],
             FieldType::Boolean                  => ['kind' => 'yes_no', 'value' => (bool) $value],
             FieldType::Integer, FieldType::Double => ['kind' => 'number', 'value' => $this->number($value)],

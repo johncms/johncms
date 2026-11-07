@@ -64,6 +64,15 @@ final readonly class SaveCollectionFieldUseCase
                     errors: ['role' => d__('collections', 'The tags role requires a multiple string field.')],
                 );
             }
+            if (
+                ! $this->context->isActive() && in_array($dto->role, ['meta_title', 'meta_description', 'meta_keywords'], true)
+                && ! in_array($dto->type, [FieldType::String_, FieldType::Text, FieldType::Html], true)
+            ) {
+                throw new CollectionSchemaException(
+                    message: d__('collections', 'SEO roles require a text field.'),
+                    errors: ['role' => d__('collections', 'SEO roles require a text field.')],
+                );
+            }
             if ($dto->sort < -2147483648 || $dto->sort > 2147483647) {
                 throw new CollectionSchemaException(d__('collections', 'Enter an integer between -2147483648 and 2147483647.'));
             }
@@ -74,7 +83,10 @@ final readonly class SaveCollectionFieldUseCase
             }
             $roleHolder = $dto->role !== null ? $this->repository->findByRole($dto->collectionId, $dto->role) : null;
             if ($roleHolder !== null && $roleHolder->id !== $id) {
-                throw new CollectionSchemaException(d__('collections', 'Another field already uses this role.'));
+                throw new CollectionSchemaException(
+                    message: d__('collections', 'Another field already uses this role.'),
+                    errors: ['role' => d__('collections', 'Another field already uses this role.')],
+                );
             }
             if ($current !== null && ($current->type !== $dto->type || $current->multiple !== $dto->multiple) && $this->repository->hasValues($current->id) && ! $this->context->isActive()) {
                 throw new CollectionSchemaException(d__('collections', 'Convert existing values explicitly before changing their type or multiplicity.'));

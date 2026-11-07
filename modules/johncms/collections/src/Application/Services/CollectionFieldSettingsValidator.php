@@ -32,7 +32,7 @@ final readonly class CollectionFieldSettingsValidator
                 continue;
             }
             $max = $key === 'max_values' ? 1000 : (in_array($type, [FieldType::String_, FieldType::Select], true) ? 255 : 1000000);
-            if (! is_int($settings[$key]) || $settings[$key] < ($key === 'max_values' ? 1 : 0) || $settings[$key] > $max) {
+            if (! is_int($settings[$key]) || $settings[$key] < ($key === 'min_length' ? 0 : 1) || $settings[$key] > $max) {
                 $this->fail(d__('collections', 'Use valid integer limits for field length and number of values.'), [$key]);
             }
         }

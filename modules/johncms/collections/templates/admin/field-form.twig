@@ -75,16 +75,21 @@
                         </div>
                         {% if not managed %}<div class="col-12"><button type="submit" name="refresh_settings" value="1" formnovalidate class="btn btn-outline-secondary btn-sm" data-refresh-field-settings>{{ __('Update field settings') }}</button></div>{% endif %}
                         <div class="col-12 d-flex flex-column gap-3">
-                            <div class="form-check form-switch">
+                            <div class="form-check form-switch" data-field-required{% if fields.type == 'boolean' %} hidden{% endif %}>
                                 <input type="checkbox" class="form-check-input" role="switch" name="required" value="1" id="required"{% if fields.required %} checked{% endif %}{% if managed %} disabled{% endif %}>
                                 <label class="form-check-label" for="required">{{ __('Required') }}</label>
                                 <div class="form-text mt-0">{{ __('An item is not saved without a value.') }}</div>
                             </div>
-                            <div class="form-check form-switch">
+                            <div class="form-check form-switch" data-field-multiple-switch{% if fields.type == 'boolean' and not fields.multiple %} hidden{% endif %}>
                                 <input type="checkbox" class="form-check-input" role="switch" name="multiple" value="1" id="multiple"{% if fields.multiple %} checked{% endif %}{% if managed or structure_locked %} disabled{% endif %}>
                                 {% if structure_locked and fields.multiple %}<input type="hidden" name="multiple" value="1">{% endif %}
                                 <label class="form-check-label" for="multiple">{{ __('Allow multiple values') }}</label>
                             </div>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="field-hint">{{ __('Hint') }}</label>
+                            <textarea class="form-control" id="field-hint" name="hint" rows="2" maxlength="2000"{% if managed %} disabled{% endif %}{% if field_errors['hint']|default('') %} aria-invalid="true" aria-describedby="error-hint"{% endif %}>{{ fields.hint }}</textarea>
+                            {{ _self.error(field_errors, 'hint') }}
                         </div>
                     </div>
                 </div>
@@ -131,29 +136,26 @@
                     </fieldset>
                     <fieldset class="col-12 mb-0" data-field-types="relation"{% if fields.type != 'relation' %} hidden disabled{% endif %}>
                         <label class="form-label" for="relation-target">{{ __('Target collection') }}</label>
-                        <select class="form-select" name="target_collection_id" id="relation-target"{% if structure_locked %} disabled{% endif %}{% if field_errors['target_collection_id']|default('') %} aria-invalid="true" aria-describedby="error-target_collection_id"{% endif %}>
-                            {% include '@collections/admin/components/select-options.twig' with {options: collection_options, current: fields.target_collection_id ~ ''} only %}
+                        <select class="form-select" name="target_collection_id" id="relation-target" required{% if structure_locked %} disabled{% endif %}{% if field_errors['target_collection_id']|default('') %} aria-invalid="true" aria-describedby="error-target_collection_id"{% endif %}>
+                            {% include '@collections/admin/components/select-options.twig' with {options: collection_options, current: fields.target_collection_id ~ '', empty_label: __('Choose a collection')} only %}
                         </select>
                         {{ _self.error(field_errors, 'target_collection_id') }}
                         {% if structure_locked %}<input type="hidden" name="target_collection_id" value="{{ fields.target_collection_id }}"{% if field_errors['target_collection_id']|default('') %} aria-invalid="true" aria-describedby="error-target_collection_id"{% endif %}>{% endif %}
                         <label class="form-label mt-2" for="relation-on-delete">{{ __('When a related item is deleted') }}</label>
                         <select class="form-select" id="relation-on-delete" name="relation_on_delete"{% if field_errors['relation_on_delete']|default('') %} aria-invalid="true" aria-describedby="error-relation_on_delete"{% endif %}>
-                            <option value="restrict"{% if fields.relation_on_delete == 'restrict' %} selected{% endif %}>{{ __('Prevent deletion while referenced') }}</option>
-                            <option value="clear"{% if fields.relation_on_delete == 'clear' %} selected{% endif %}>{{ __('Clear optional relations') }}</option>
+                            <option value="restrict"{% if fields.relation_on_delete == 'restrict' %} selected{% endif %}>{{ __('Prevent deletion') }}</option>
+                            <option value="clear"{% if fields.relation_on_delete == 'clear' %} selected{% endif %}>{{ __('Remove the link from the items') }}</option>
                         </select>
                         {{ _self.error(field_errors, 'relation_on_delete') }}
                         <div class="form-text" data-required-relation-help{% if not fields.required %} hidden{% endif %}>{{ __('A required relation always prevents deletion.') }}</div>
-                        <div class="form-text">{{ __('Required relations and field defaults must be resolved before deleting their targets.') }}</div>
+                        <div class="form-text" data-relation-delete-help="restrict"{% if fields.relation_on_delete != 'restrict' or fields.required %} hidden{% endif %}>{{ __('A record cannot be deleted while items link to it.') }}</div>
+                        <div class="form-text" data-relation-delete-help="clear"{% if fields.relation_on_delete != 'clear' or fields.required %} hidden{% endif %}>{{ __('The link disappears from the items when the record is deleted.') }}</div>
+                        <div class="form-text">{{ __('A record chosen as a default value cannot be deleted until the default changes.') }}</div>
                     </fieldset>
                     <fieldset class="col-12 mb-0" data-field-types="select"{% if fields.type != 'select' %} hidden disabled{% endif %}>
                         {% include '@collections/admin/components/option-settings.twig' with {options: option_rows, field_errors: field_errors} only %}
                         {{ _self.error(field_errors, 'options') }}
                     </fieldset>
-                    <div class="col-12">
-                        <label class="form-label" for="field-hint">{{ __('Hint') }}</label>
-                        <textarea class="form-control" id="field-hint" name="hint" rows="2" maxlength="2000"{% if field_errors['hint']|default('') %} aria-invalid="true" aria-describedby="error-hint"{% endif %}>{{ fields.hint }}</textarea>
-                        {{ _self.error(field_errors, 'hint') }}
-                    </div>
                     <fieldset class="col-md-6 mb-0" data-field-types="string text html{{ fields.legacy_length_limits|default(false) ? ' select' : '' }}"{% if fields.type not in ['string', 'text', 'html'] and not (fields.legacy_length_limits and fields.type == 'select') %} hidden disabled{% endif %}>
                         <label class="form-label" for="min-length">{{ __('Minimum text length') }}</label>
                         <input type="number" class="form-control" min="0" id="min-length" name="min_length" value="{{ fields.min_length }}"{% if field_errors['min_length']|default('') %} aria-invalid="true" aria-describedby="error-min_length"{% endif %}>
@@ -161,7 +163,7 @@
                     </fieldset>
                     <fieldset class="col-md-6 mb-0" data-field-types="string text html{{ fields.legacy_length_limits|default(false) ? ' select' : '' }}"{% if fields.type not in ['string', 'text', 'html'] and not (fields.legacy_length_limits and fields.type == 'select') %} hidden disabled{% endif %}>
                         <label class="form-label" for="max-length">{{ __('Maximum text length') }}</label>
-                        <input type="number" class="form-control" min="0" id="max-length" name="max_length" value="{{ fields.max_length }}"{% if field_errors['max_length']|default('') %} aria-invalid="true" aria-describedby="error-max_length"{% endif %}>
+                        <input type="number" class="form-control" min="1" id="max-length" name="max_length" value="{{ fields.max_length }}"{% if field_errors['max_length']|default('') %} aria-invalid="true" aria-describedby="error-max_length"{% endif %}>
                         {{ _self.error(field_errors, 'max_length') }}
                     </fieldset>
                     <fieldset class="col-md-6 mb-0" data-field-types="integer double"{% if fields.type not in ['integer', 'double'] %} hidden disabled{% endif %}>
@@ -178,7 +180,7 @@
                         <label class="form-label" for="max-values">{{ __('Maximum number of values') }}</label>
                         <input type="number" class="form-control" min="1" max="1000" id="max-values" name="max_values" value="{{ fields.max_values }}"{% if field_errors['max_values']|default('') %} aria-invalid="true" aria-describedby="error-max_values"{% endif %}>
                         {{ _self.error(field_errors, 'max_values') }}
-                        <div class="form-text">{{ __('For multiple fields. Leave limits empty to use the storage limits.') }}</div>
+                        <div class="form-text">{{ __('Leave empty to use the storage limit.') }}</div>
                     </fieldset>
                     <p class="col-12 form-text mb-0" data-field-types="html"{% if fields.type != 'html' %} hidden{% endif %}>{{ __('HTML length includes markup. Limits apply to each value.') }}</p>
                     <p class="col-12 form-text mb-0" data-field-types="string"{% if fields.type != 'string' %} hidden{% endif %}>{{ __('Strings are stored with a maximum of 255 characters. Limits apply to each value.') }}</p>
@@ -201,6 +203,8 @@
                                   data-relation-singular="{{ __('Default value') }}" data-relation-plural="{{ __('Default values') }}"
                                   data-relation-target="{{ __('Select the target collection first.') }}"
                                   data-relation-context="{{ __('Search in collection: %s') }}"
+                                  data-relation-no-records="{{ __('This collection has no records yet.') }}"
+                                  data-relation-more="{{ __('Up to 30 matching items. Refine your search to find another item.') }}"
                                   data-relation-loading="{{ d__('system', 'Please wait...') }}"
                                   data-relation-invalid="{{ __('The selected record is unavailable in this collection. Clear it or select another record.') }}"
                                   data-relation-unavailable="{{ __('Unavailable record') }}"
@@ -283,21 +287,22 @@
                     <h2 class="h6 mb-0 ms-2">{{ __('Properties') }}</h2>
                 </div>
                 <div class="card-body d-flex flex-column gap-3">
-                    <div class="col-12">
+                    <div class="col-12" data-field-role{% if not role_available %} hidden{% endif %}>
                         <label class="form-label" for="field-role">{{ __('Field role') }}</label>
-                        <input type="text" name="role" maxlength="255" class="form-control font-monospace" id="field-role" list="field-roles" value="{{ fields.role ?? '' }}" pattern="[a-z0-9_]+"{% if managed %} disabled{% endif %}{% if field_errors['role']|default('') %} aria-invalid="true" aria-describedby="error-role"{% endif %}>
+                        <select name="role" class="form-select" id="field-role"{% if managed %} disabled{% endif %}{% if field_errors['role']|default('') %} aria-invalid="true" aria-describedby="error-role"{% endif %}>
+                            <option value="">{{ __('Ordinary field') }}</option>
+                            {% for role in role_options %}
+                                <option value="{{ role.code }}" data-types="{{ role.types|join(' ') }}"{% if role.multiple %} data-multiple{% endif %}{% if fields.role == role.code %} selected{% endif %}>{{ role.label }}</option>
+                            {% endfor %}
+                        </select>
                         {{ _self.error(field_errors, 'role') }}
-                        <div class="form-text">{{ __('Use meta_title, meta_description or meta_keywords for SEO fields. Leave empty for ordinary content.') }}</div>
-                        <datalist id="field-roles">
-                            <option value="meta_title"></option><option value="meta_description"></option><option value="meta_keywords"></option><option value="tags"></option>
-                        </datalist>
-                        <div class="form-text">{{ __('The tags role requires a multiple string field.') }}</div>
+                        <div class="form-text">{{ __('A role gives the value a special meaning on the site.') }}</div>
                     </div>
                     <div class="col-12">
                         <label class="form-label" for="sort">{{ __('Sorting') }}</label>
                         <input type="number" name="sort" min="-2147483648" max="2147483647" class="form-control" id="sort" value="{{ fields.sort }}"{% if managed %} disabled{% endif %}{% if field_errors['sort']|default('') %} aria-invalid="true" aria-describedby="error-sort"{% endif %}>
                         {{ _self.error(field_errors, 'sort') }}
-                        <div class="form-text">{{ __('The order of the fields in the form of an item and of the columns of the list.') }}</div>
+                        <div class="form-text">{{ __('The order of the fields in the form of an item and of the columns of the list.') }}{% if layout_sort %} {{ __('The form of an item orders this field by the layout of the collection.') }}{% endif %}</div>
                     </div>
                     <div class="form-check form-switch">
                         <input type="checkbox" class="form-check-input" role="switch" name="in_list" value="1" id="in_list"{% if fields.in_list %} checked{% endif %}{% if managed %} disabled{% endif %}>

@@ -63,6 +63,11 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
             ->orderBy('sort')->orderBy('id')->limit($limit)->get(['id', 'name']);
     }
 
+    public function getNames(array $ids): array
+    {
+        return $ids === [] ? [] : ContentCollectionItem::query()->whereIn('id', $ids)->pluck('name', 'id')->all();
+    }
+
     public function countItems(ContentCollectionItemQuery $query): int
     {
         return $this->baseQuery($query, $this->resolveFields($query))->count();

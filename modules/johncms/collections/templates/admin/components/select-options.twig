@@ -1,4 +1,4 @@
-<option value=""{% if current is same as('') %} selected{% endif %}>{{ __('No value') }}</option>
+<option value=""{% if current is same as('') %} selected{% endif %}>{{ empty_label|default(__('No value')) }}</option>
 {% set known = current is same as('') %}
 {% for option in options %}
     {% set selected = current is same as(option.code) %}
