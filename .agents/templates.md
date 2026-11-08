@@ -112,20 +112,28 @@ Modules contribute home-page content through `HomepageBlockProviderInterface`. T
 below the section tiles. Weights still order blocks within each position. Existing providers
 need no change and keep full-width rendering unless they opt into the shared content card.
 
-## Toasts (the public site)
+## Toasts
 
 The result of an action — saved, deleted, refused — is a toast at the top centre of the page,
-seen wherever the action was taken: not an alert above a list the user may be far below. The
-server asks for one with `@theme/components/toast.twig` (`message`, `type`: success, info,
-warning or error); without the script it stays an alert in place, with it `src/js/toast.js` takes
-it out and shows it, both on the page as it loads and in a fragment of a live list. A script
-calls `toast(message, {type})` from `src/js/toast.js`. The stack lives in `layouts/base.twig`.
+seen wherever the action was taken: not an alert above a list the user may be far below. Each
+bundle has its own implementation with the same contract, since the bundles share no code:
+
+| | public site | panel |
+| --- | --- | --- |
+| server | `@theme/components/toast.twig` | `@admin/components/ui/toast.twig` |
+| script | `src/js/toast.js` | `src/admin/js/toast.js` |
+| stack | `layouts/base.twig` | `admin/layouts/base.twig` |
+| example | `/style-guide`, Messages | `/admin/style-guide`, Alerts |
+
+The server component takes `message` and `type` (success, info, warning or error). Without the
+script it stays an alert in place; with it the script takes it out and shows it, both on the page
+as it loads and in what a live list (or, in the panel, a side panel) brings in. A script calls
+`toast(message, {type})` of its own bundle.
 
 * **When the page shows the result itself**, the comment just added for instance, pass
   `announce: true`: the message is only read out to a screen reader.
 * **An error of a form** stays beside the form, where the user is; a toast is for an action
   that has no form to answer at, or whose user may have none.
-* They belong to the public bundle: the panel does not load them; toasts there are built in its own bundle.
 
 ## Bootstrap components
 

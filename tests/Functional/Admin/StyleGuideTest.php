@@ -37,5 +37,7 @@ final class StyleGuideTest extends FunctionalTestCase
         self::assertStringContainsString('<button type="button" class="btn btn-primary">btn-primary</button>', $body);
         self::assertStringContainsString('&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot;&gt;btn-primary&lt;/button&gt;', $body);
         self::assertStringContainsString('{% include &#039;@admin/components/ui/icon.twig&#039;', $body, 'The Twig of an example, not its output.');
+        self::assertSame(4, substr_count($body, 'data-admin-toast-show="'), 'Every kind of toast can be shown from the guide.');
+        self::assertStringContainsString('data-admin-toasts', $body, 'The stack of toasts is on every page of the panel from the start.');
     }
 }

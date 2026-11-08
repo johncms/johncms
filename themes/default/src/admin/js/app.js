@@ -15,6 +15,7 @@ import '@fontsource-variable/inter/opsz.css';
 import '@fontsource-variable/jetbrains-mono';
 import '../scss/app.scss';
 
+import './toast';
 import './shell';
 import './live-list';
 import './filter-dropdown';

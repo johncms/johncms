@@ -1,0 +1,12 @@
+{#
+    The result of an action, shown as a toast at the top of the panel. Without the script it stays
+    in place as an alert; src/admin/js/toast.js takes it out and shows it as a toast instead, on the
+    page as it loads and in a fragment a live list or a side panel brings in.
+
+    @var message  string
+    @var type     string  success, info, warning or error.
+    @var announce bool    Only read out to a screen reader, not shown: the page already shows the
+                          result.
+#}
+{% set type = type|default('success') %}
+<div class="alert alert-{{ type == 'error' ? 'danger' : type }}" role="{{ type == 'error' ? 'alert' : 'status' }}" data-admin-toast="{{ type }}"{% if announce|default(false) %} data-admin-toast-announce{% endif %}>{{ message }}</div>
