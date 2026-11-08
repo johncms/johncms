@@ -32,10 +32,10 @@
                 {% endif %}
                 <div class="site-news-comment__actions">
                     {% if comment.canReply %}
-                        <button type="button" data-comment-reply hidden>
+                        <button type="button" class="btn btn-outline-secondary btn-xs" data-comment-reply hidden>
                             {% include '@theme/components/icon.twig' with {name: 'message-square', size: 12} only %} {{ __('Reply') }}
                         </button>
-                        <button type="button" data-comment-quote hidden>
+                        <button type="button" class="btn btn-outline-secondary btn-xs" data-comment-quote hidden>
                             {% include '@theme/components/icon.twig' with {name: 'quote', size: 12} only %} {{ __('Quote') }}
                         </button>
                     {% endif %}
@@ -45,7 +45,7 @@
                             <input type="hidden" name="comment_id" value="{{ comment.id }}">
                             <input type="hidden" name="article_id" value="{{ article_id }}">
                             <input type="hidden" name="page" value="{{ page }}">
-                            <button type="submit" class="site-news-comment__delete" title="{{ __('Delete') }}" aria-label="{{ __('Delete') }}">
+                            <button type="submit" class="btn btn-outline-secondary btn-xs btn-icon site-news-comment__delete" title="{{ __('Delete') }}" aria-label="{{ __('Delete') }}">
                                 {% include '@theme/components/icon.twig' with {name: 'trash-2', size: 12} only %}
                             </button>
                         </form>

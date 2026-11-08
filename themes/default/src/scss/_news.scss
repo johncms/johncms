@@ -266,11 +266,7 @@
   &__ip { padding: .125rem .375rem; border-radius: .25rem; background: var(--accent-soft); color: var(--accent); font-family: var(--bs-font-monospace); font-size: .6875rem; text-decoration: none; }
   &__actions { display: flex; flex-wrap: wrap; align-items: center; gap: .375rem; margin-inline-start: auto; }
   &__actions form { display: contents; }
-  &__actions button { display: inline-flex; align-items: center; justify-content: center; gap: .3125rem; min-block-size: 1.625rem; padding: .3125rem .625rem; border: 1px solid var(--border); border-radius: .375rem; background: transparent; color: var(--fg-muted); font-size: .75rem; line-height: 1.1666667; }
-  &__actions button[hidden] { display: none; }
-  &__actions button:hover { color: var(--accent); border-color: var(--accent); }
-  &__actions .site-news-comment__delete { padding-inline: .4375rem; }
-  &__actions .site-news-comment__delete:hover { color: var(--danger); border-color: var(--danger); }
+  &__delete { --bs-btn-hover-color: var(--danger); --bs-btn-hover-border-color: var(--danger); --bs-btn-hover-bg: var(--danger-soft); }
 }
 
 .site-news-compose {

@@ -1,4 +1,5 @@
 <div class="d-flex flex-wrap align-items-center gap-2">
+    <button type="button" class="btn btn-primary btn-xs">btn-xs</button>
     <button type="button" class="btn btn-primary btn-sm">btn-sm</button>
     <button type="button" class="btn btn-primary">btn</button>
     <button type="button" class="btn btn-primary btn-lg">btn-lg</button>
@@ -11,5 +12,14 @@
     </button>
     <button type="button" class="btn btn-outline-secondary btn-icon" aria-label="{{ d__('system', 'Edit') }}" title="{{ d__('system', 'Edit') }}">
         {% include '@theme/components/icon.twig' with {name: 'pencil', size: 14} only %}
+    </button>
+</div>
+<div class="d-flex flex-wrap align-items-center gap-2 mt-3">
+    <button type="button" class="btn btn-outline-secondary btn-xs">
+        {% include '@theme/components/icon.twig' with {name: 'message-square', size: 12} only %}
+        {{ d__('system', 'Reply') }}
+    </button>
+    <button type="button" class="btn btn-outline-secondary btn-xs btn-icon" aria-label="{{ d__('system', 'Delete') }}" title="{{ d__('system', 'Delete') }}">
+        {% include '@theme/components/icon.twig' with {name: 'trash-2', size: 12} only %}
     </button>
 </div>
