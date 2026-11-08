@@ -70,12 +70,3 @@ discussion?.addEventListener('live-list:update', event => {
     const field = form.querySelector('[data-editor]');
     if (field) clearEditor(field);
 });
-
-// Taken on the document while the event goes down, before a live list sends the form: forms
-// swapped in by a live list ask as well.
-document.addEventListener('submit', event => {
-    const form = event.target.closest('form[data-confirm]');
-    if (form && !window.confirm(form.dataset.confirm)) {
-        event.preventDefault();
-    }
-}, true);

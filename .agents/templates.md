@@ -242,8 +242,18 @@ header, so the fragment comes from the page controller as usual:
   the comment just added — is passed by a flash and marked `data-live-list-target` in the fragment.
 * **A form outside the regions is reset by its owner** on `live-list:update`, whose `detail.form`
   is the form sent: `clearEditor()` empties an editor and its attachments.
-* **A confirmation listens in the capture phase** (`addEventListener('submit', …, true)`), so it
-  cancels the form before the script sends it; the script skips a cancelled form.
+* **A form that asks first** carries `data-confirm` (see Confirmations below): the question is
+  asked before the script sends the form, which then sends only a form that was let through.
+
+## Confirmations (the public site)
+
+A form that must be confirmed — a deletion, a cleanup — carries `data-confirm="<question>"`, with
+`data-confirm-button` for the button that goes ahead, an optional `data-confirm-text` under the
+question and `data-confirm-tone="primary"` when the action is not destructive. `src/js/confirm.js`
+asks in the dialog of the layout (`@theme/components/confirm-dialog.twig`), never in
+`window.confirm()`, and sends the form again with the same button on yes; a script asks with
+`confirmAction()`. It listens while the submit event goes down, so it comes before any other
+handler of the form. Without the script the form is sent at once.
 
 ## Dialogs (the panel)
 

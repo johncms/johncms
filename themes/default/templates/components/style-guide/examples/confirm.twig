@@ -1,0 +1,4 @@
+{# A form that asks first: data-confirm on it. From a script: confirmAction() of src/js/confirm.js. #}
+<form method="get" action="#messages" data-confirm="{{ d__('system', 'Do you really want to delete?') }}" data-confirm-button="{{ d__('system', 'Delete') }}">
+    <button type="submit" class="btn btn-outline-danger">{{ d__('system', 'Delete') }}</button>
+</form>

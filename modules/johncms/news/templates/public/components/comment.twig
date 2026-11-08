@@ -41,7 +41,7 @@
                         </button>
                     {% endif %}
                     {% if comment.canDelete %}
-                        <form method="post" action="/news/comments/del/" data-live-list-form data-confirm="{{ __('Delete this comment?') }}">
+                        <form method="post" action="/news/comments/del/" data-live-list-form data-confirm="{{ __('Delete this comment?') }}" data-confirm-button="{{ __('Delete') }}">
                             <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                             <input type="hidden" name="comment_id" value="{{ comment.id }}">
                             <input type="hidden" name="article_id" value="{{ article_id }}">

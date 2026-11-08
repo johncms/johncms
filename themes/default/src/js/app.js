@@ -19,6 +19,7 @@ import './jquery.magnific-popup';
 import './menu';
 import './preferences';
 import './toast';
+import './confirm';
 import './editor';
 import './live-list';
 import './news';

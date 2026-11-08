@@ -1,0 +1,16 @@
+// The dialog that asks before a form is sent (components/confirm-dialog.twig): a question, an
+// optional line under it and the two answers, with nothing else around them.
+
+.site-confirm {
+  --bs-modal-width: 25rem;
+  --bs-modal-padding: 1.25rem;
+  --bs-modal-border-radius: .75rem;
+  --bs-modal-border-color: var(--border);
+  --bs-modal-footer-gap: .5rem;
+  --bs-modal-footer-border-width: 0;
+
+  .modal-footer { padding-block-start: 0; }
+
+  &__title { margin: 0; font-size: 1.0625rem; font-weight: 700; line-height: 1.4; overflow-wrap: anywhere; }
+  &__text { margin: .5rem 0 0; color: var(--fg-muted); font-size: .875rem; line-height: 1.55; }
+}

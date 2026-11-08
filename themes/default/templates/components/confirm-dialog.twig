@@ -1,0 +1,21 @@
+{#
+    The dialog that asks before a form is sent: one per page, filled by src/js/confirm.js from the
+    form that asks. A form opts in with data-confirm="<question>"; data-confirm-text adds a line
+    under the question, data-confirm-button names the button that goes ahead, and
+    data-confirm-tone="primary" paints it as a plain action instead of a destructive one.
+#}
+<div class="modal fade site-confirm" tabindex="-1" aria-labelledby="site-confirm-title" aria-hidden="true" data-confirm-dialog
+    data-default-button="{{ d__('system', 'Confirm') }}">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h2 class="site-confirm__title" id="site-confirm-title" data-confirm-title></h2>
+                <p class="site-confirm__text" data-confirm-text hidden></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" data-confirm-cancel>{{ d__('system', 'Cancel') }}</button>
+                <button type="button" class="btn btn-danger" data-confirm-accept></button>
+            </div>
+        </div>
+    </div>
+</div>
