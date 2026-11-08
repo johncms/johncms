@@ -53,7 +53,7 @@ final readonly class ArticleController
                 $this->navChain->add($crumb->record->name, $crumb->url);
             }
         }
-        $pagination = $this->paginationFactory->create($article->stats->comments);
+        $pagination = $this->paginationFactory->create(total: $article->stats->comments, fragment: 'article-comments');
         $redirect = $this->paginationGuard->redirectUrl($pagination);
         if ($redirect !== null) {
             redirect($redirect);

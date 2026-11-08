@@ -60,6 +60,15 @@ final class PaginationTest extends TestCase
         self::assertSame('/guestbook/?page=3', $pagination->getUrl(3));
     }
 
+    public function testUrlsLeadToTheFragment(): void
+    {
+        $pagination = $this->makePagination(total: 50, currentPage: 2, fragment: 'comments');
+
+        self::assertSame('/guestbook/#comments', $pagination->getUrl(1));
+        self::assertSame('/guestbook/?page=3#comments', $pagination->getUrl(3));
+        self::assertSame('/guestbook/#comments', $pagination->getItems()[0]['url']);
+    }
+
     public function testItemsAreEmptyWhenThereIsOnlyOnePage(): void
     {
         self::assertSame([], $this->makePagination(total: 10)->getItems());
@@ -147,6 +156,7 @@ final class PaginationTest extends TestCase
         int $perPage = 10,
         int $currentPage = 1,
         ?RendererInterface $renderer = null,
+        string $fragment = '',
     ): Pagination {
         return new Pagination(
             queryStringBuilder: new QueryStringBuilder(),
@@ -156,6 +166,7 @@ final class PaginationTest extends TestCase
             total:              $total,
             perPage:            $perPage,
             currentPage:        $currentPage,
+            fragment:           $fragment,
         );
     }
 }

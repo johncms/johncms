@@ -163,6 +163,22 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         self::assertSame(404, $this->handleRequest('/news/entry.html')->getStatusCode());
     }
 
+    public function testCommentPagesOpenOnTheDiscussion(): void
+    {
+        $id = $this->item('Long body');
+        $user = FunctionalUserFactory::create();
+        for ($i = 1; $i <= 11; $i++) {
+            $this->postForm('/news/comments/add/' . $id, ['text' => 'Comment ' . $i], $user);
+        }
+
+        $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/entry.html')->getContent(), LIBXML_NOERROR);
+        self::assertNotNull(
+            $document->querySelector('.site-news-comments__pagination a[href="/news/entry.html?page=2#article-comments"]'),
+            'A page of comments opens on the discussion, not on the top of the article.',
+        );
+        self::assertSame('/news/entry.html?page=2#article-comments', $this->handleRequest('/news/entry.html?page=9')->headers->get('Location'));
+    }
+
     public function testVoteHttpContractUsesCollectionIdsAndCurrentActor(): void
     {
         $id = $this->item('Public body');

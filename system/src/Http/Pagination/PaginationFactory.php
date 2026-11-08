@@ -26,11 +26,13 @@ final readonly class PaginationFactory
     ) {
     }
 
+    /** @param string $fragment Id of the element the page links lead to, without "#"; see Pagination. */
     public function create(
         int $total,
         ?int $perPage = null,
         string $pageParamName = 'page',
         ?int $currentPage = null,
+        string $fragment = '',
     ): Pagination {
         $request = $this->request();
         $perPage ??= (int) $this->currentUser->user()->config->kmess;
@@ -45,6 +47,7 @@ final readonly class PaginationFactory
             perPage:            $perPage,
             currentPage:        $currentPage,
             pageParamName:      $pageParamName,
+            fragment:           $fragment,
         );
     }
 

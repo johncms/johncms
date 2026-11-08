@@ -23,6 +23,9 @@ final class Pagination
 
     /**
      * @param array<string, mixed> $currentQuery Current query parameters (e.g. $_GET).
+     * @param string               $fragment     Id of the element the page links lead to, without "#":
+     *                                           a list below a long text sets it so that a new page
+     *                                           opens on the list. Empty for none.
      */
     public function __construct(
         private readonly QueryStringBuilder $queryStringBuilder,
@@ -34,6 +37,7 @@ final class Pagination
         int $currentPage,
         private readonly string $pageParamName = 'page',
         int $windowLength = 2,
+        private readonly string $fragment = '',
     ) {
         $this->perPage = max(1, $perPage);
         $this->totalPages = max(1, (int) ceil($this->total / $this->perPage));
@@ -81,11 +85,11 @@ final class Pagination
      */
     public function getUrl(int $page): string
     {
-        if ($page <= 1) {
-            return $this->queryStringBuilder->build($this->currentPath, $this->currentQuery, [$this->pageParamName]);
-        }
+        $url = $page <= 1
+            ? $this->queryStringBuilder->build($this->currentPath, $this->currentQuery, [$this->pageParamName])
+            : $this->queryStringBuilder->build($this->currentPath, $this->currentQuery, [], [$this->pageParamName => $page]);
 
-        return $this->queryStringBuilder->build($this->currentPath, $this->currentQuery, [], [$this->pageParamName => $page]);
+        return $this->fragment !== '' ? $url . '#' . $this->fragment : $url;
     }
 
     /**
