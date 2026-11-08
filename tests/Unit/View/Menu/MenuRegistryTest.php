@@ -102,6 +102,33 @@ final class MenuRegistryTest extends TestCase
     }
 
     /**
+     * A page draws several menus, and a provider may read the database to decide what it offers:
+     * it is asked once, whichever menus the page draws.
+     */
+    public function testTheProvidersAreAskedOnceForAllMenus(): void
+    {
+        $asked = 0;
+        $provider = new class ($asked) implements MenuItemProviderInterface {
+            public function __construct(private int &$asked)
+            {
+            }
+
+            public function menuItems(): iterable
+            {
+                $this->asked++;
+                yield new MenuItem(MenuArea::Main, 'Blog', '/blog/');
+                yield new MenuItem(MenuArea::Staff, 'Moderation', '/blog/moderate');
+            }
+        };
+        $registry = new MenuRegistry([$provider], $this->createStub(AccessCheckerInterface::class));
+
+        self::assertSame(['Blog'], $this->titles($registry->items(MenuArea::Main)));
+        self::assertSame(['Moderation'], $this->titles($registry->items(MenuArea::Staff)));
+        self::assertSame([], $registry->items(MenuArea::Admin));
+        self::assertSame(1, $asked);
+    }
+
+    /**
      * The registry serves one visitor at a time and is shared between requests, so what it worked
      * out for one of them must not be handed to the next.
      */

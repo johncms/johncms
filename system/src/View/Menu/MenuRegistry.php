@@ -24,6 +24,15 @@ use Symfony\Contracts\Service\ResetInterface;
  */
 final class MenuRegistry implements ResetInterface
 {
+    /**
+     * Everything the providers gave, by area, before access is checked. The providers are asked
+     * once per request: a page draws several menus, and a provider may read the database to
+     * decide what it offers.
+     *
+     * @var array<string, list<MenuItem>>|null
+     */
+    private ?array $offered = null;
+
     /** @var array<string, list<MenuItem>> */
     private array $items = [];
 
@@ -45,20 +54,10 @@ final class MenuRegistry implements ResetInterface
             return $this->items[$area->value];
         }
 
-        $items = [];
-        foreach ($this->providers as $provider) {
-            foreach ($provider->menuItems() as $item) {
-                if ($item->area !== $area) {
-                    continue;
-                }
-
-                if ($item->permission !== null && ! $this->access->allows($item->permission)) {
-                    continue;
-                }
-
-                $items[] = $item;
-            }
-        }
+        $items = array_values(array_filter(
+            $this->offered()[$area->value] ?? [],
+            fn (MenuItem $item): bool => $item->permission === null || $this->access->allows($item->permission)
+        ));
 
         usort(
             $items,
@@ -71,6 +70,26 @@ final class MenuRegistry implements ResetInterface
 
     public function reset(): void
     {
+        $this->offered = null;
         $this->items = [];
+    }
+
+    /**
+     * @return array<string, list<MenuItem>>
+     */
+    private function offered(): array
+    {
+        if ($this->offered !== null) {
+            return $this->offered;
+        }
+
+        $offered = [];
+        foreach ($this->providers as $provider) {
+            foreach ($provider->menuItems() as $item) {
+                $offered[$item->area->value][] = $item;
+            }
+        }
+
+        return $this->offered = $offered;
     }
 }
