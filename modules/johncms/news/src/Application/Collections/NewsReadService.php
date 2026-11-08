@@ -192,18 +192,18 @@ final readonly class NewsReadService implements NewsReadServiceInterface
         } while ($items !== []);
     }
 
-    public function registerView(int $itemId): void
+    public function registerView(NewsArticleViewDTO $article): void
     {
-        $collection = $this->collection();
-        if ($this->items->findItem($collection->id, $itemId) === null) {
-            throw $this->notFound();
-        }
+        $itemId = $article->record->id;
         $viewed = $this->session->get('news_viewed_items', []);
         $viewed = is_array($viewed) ? $viewed : [];
-        if (! in_array($itemId, $viewed, true)) {
-            $this->items->incrementViews($itemId);
-            $this->session->set('news_viewed_items', [...$viewed, $itemId]);
+        if (in_array($itemId, $viewed, true)) {
+            return;
         }
+        if (! $this->items->incrementViews($article->record->collectionId, $itemId)) {
+            throw $this->notFound();
+        }
+        $this->session->set('news_viewed_items', [...$viewed, $itemId]);
     }
 
     public function rootMetadata(): array
@@ -261,6 +261,7 @@ final readonly class NewsReadService implements NewsReadServiceInterface
      */
     private function collect(array $queries, int $limit, array $exclude): array
     {
+        $collection = $this->collection();
         $picked = [];
         foreach ($queries as $query) {
             $query = new NewsQueryDTO(
@@ -269,17 +270,18 @@ final readonly class NewsReadService implements NewsReadServiceInterface
                 limit:          $limit + count($exclude),
                 popular:        $query->popular,
             );
-            foreach ($this->articles($query) as $article) {
-                if (! in_array($article->record->id, $exclude, true)) {
-                    $picked[] = $article;
-                    $exclude[] = $article->record->id;
+            foreach ($this->items->getItems($this->query($collection, $query)) as $item) {
+                if (! in_array($item->id, $exclude, true)) {
+                    $picked[] = $item;
+                    $exclude[] = $item->id;
                 }
                 if (count($picked) === $limit) {
-                    return $picked;
+                    break 2;
                 }
             }
         }
-        return $picked;
+        // Authors and discussion counters are read once for the whole list, not once per query.
+        return $this->mapper->articles($collection, $picked);
     }
 
     /** @return array<int, CollectionSectionDTO> */

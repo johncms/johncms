@@ -6,6 +6,7 @@ namespace Tests\Functional\News;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Auth\CurrentUser;
+use Johncms\Http\Session;
 use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
@@ -140,16 +141,20 @@ final class NewsCollectionReadTest extends FunctionalTestCase
     public function testViewsAreCountedOncePerSessionAndProjectionOmitsLargeTexts(): void
     {
         $id = $this->item('Viewed');
-        $this->news->registerView($id);
-        $this->news->registerView($id);
+        $article = $this->news->findById($id);
+        $this->news->registerView($article);
+        $this->news->registerView($article);
         self::assertSame(1, $this->api->getItem($id)->viewCount);
         $projected = $this->api->getItems(new ContentCollectionItemQuery(collectionId: $this->collection, fields: [], includeText: false))[0];
         self::assertNull($projected->detailText);
         self::assertNull($projected->previewText);
         self::assertSame('Viewed', $projected->name);
         Capsule::table('collection_items')->where('id', $id)->update(['active' => false]);
+        self::assertNull($this->news->findById($id));
+        // Hidden between reading the article and counting its view, for a visitor who has not seen it.
+        $this->container()->get(Session::class)->remove('news_viewed_items');
         $this->expectException(NewsItemNotFoundException::class);
-        $this->news->registerView($id);
+        $this->news->registerView($article);
     }
 
     public function testHomepageNewCounterAndSitemapUseTheSamePublicationWindow(): void

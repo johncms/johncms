@@ -132,14 +132,14 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
         return $query->find($id);
     }
 
-    public function incrementViews(int $id): bool
+    public function incrementViews(int $id, ?int $collectionId = null, ?SectionTree $sections = null): bool
     {
-        $collectionId = ContentCollectionItem::query()->where('id', $id)->value('collection_id');
+        $collectionId ??= ContentCollectionItem::query()->where('id', $id)->value('collection_id');
         if ($collectionId === null) {
             return false;
         }
         $query = ContentCollectionItem::query()->where('id', $id);
-        $this->publication->apply($query, (int) $collectionId, new DateTimeImmutable('now', new DateTimeZone('UTC')));
+        $this->publication->apply(builder: $query, collectionId: (int) $collectionId, at: new DateTimeImmutable('now', new DateTimeZone('UTC')), sections: $sections);
         return $query->toBase()->update(['view_count' => new Expression('COALESCE(view_count, 0) + 1')]) === 1;
     }
 

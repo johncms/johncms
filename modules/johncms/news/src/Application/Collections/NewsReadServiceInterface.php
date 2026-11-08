@@ -64,7 +64,8 @@ interface NewsReadServiceInterface
     /** @return iterable<SitemapUrlEntry> */
     public function sitemap(string $homeUrl): iterable;
 
-    public function registerView(int $itemId): void;
+    /** Counts the view of an article read for this visitor, once per session. */
+    public function registerView(NewsArticleViewDTO $article): void;
 
     /** @return array{title: string, page_title: string, description: string, keywords: string} */
     public function rootMetadata(): array;

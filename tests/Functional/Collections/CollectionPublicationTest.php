@@ -10,7 +10,6 @@ use Illuminate\Database\Capsule\Manager;
 use Johncms\Database\Migrations\PendingMigrations;
 use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsPublicApiInterface;
-use Johncms\Modules\Collections\Application\Exceptions\CollectionItemFormException;
 use Johncms\Modules\Collections\Application\Services\CollectionCodeCacheInterface;
 use Johncms\Modules\Collections\Application\Services\CollectionsPermissions;
 use Johncms\Modules\Collections\Application\Sitemap\CollectionsUrlsProvider;
@@ -71,12 +70,8 @@ final class CollectionPublicationTest extends FunctionalTestCase
         self::assertNull($this->public->findItem($this->collection, $id));
         self::assertNull($this->public->findItemByCode($this->collection, $child, 'entry'));
         self::assertNotNull($this->container()->get(CollectionsApiInterface::class)->getItem($id));
-        try {
-            $this->public->incrementViews($id);
-            self::fail('Hidden items must not count public views.');
-        } catch (CollectionItemFormException) {
-            self::assertSame(17, ContentCollectionItem::query()->find($id)->view_count);
-        }
+        self::assertFalse($this->public->incrementViews($this->collection, $id), 'Hidden items must not count public views.');
+        self::assertSame(17, ContentCollectionItem::query()->find($id)->view_count);
         $urls = array_map(static fn ($entry) => $entry->loc, iterator_to_array($this->container()->get(CollectionsUrlsProvider::class)->getEntries('https://example.test')));
         foreach ($urls as $url) {
             self::assertStringNotContainsString('entry.html', $url);
@@ -102,7 +97,8 @@ final class CollectionPublicationTest extends FunctionalTestCase
         self::assertSame(1, $this->public->getPage(new ContentCollectionItemQuery($this->collection))->total);
         self::assertSame(404, $this->handleRequest('/publication/entry.html')->getStatusCode());
         self::assertSame([], iterator_to_array($this->container()->get(CollectionsUrlsProvider::class)->getEntries('https://example.test')));
-        $this->public->incrementViews($id);
+        self::assertFalse($this->public->incrementViews($this->collection + 1, $id), 'An item is counted only within its own collection.');
+        self::assertTrue($this->public->incrementViews($this->collection, $id));
         self::assertSame(18, ContentCollectionItem::query()->find($id)->view_count);
     }
 

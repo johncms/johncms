@@ -78,19 +78,21 @@ final readonly class CollectionSectionsApi implements CollectionSectionsApiInter
         if (! array_is_list($codes)) {
             throw new InvalidArgumentException('Section codes must be a list.');
         }
+        $byPlace = [];
+        foreach ($this->getSections($collectionId) as $candidate) {
+            $byPlace[($candidate->parent ?? 0) . '/' . mb_strtolower($candidate->code)] = $candidate;
+        }
         $section = null;
-        $parent = null;
         foreach ($codes as $code) {
             if (! is_string($code) || $code === '' || ! preg_match('/^(?!\.{1,2}$)[\w.+-]+$/D', $code)) {
                 throw new InvalidArgumentException('Invalid section path segment.');
             }
-            $section = $this->sections->findByCode($collectionId, $parent, $code);
+            $section = $byPlace[($section->id ?? 0) . '/' . mb_strtolower($code)] ?? null;
             if ($section === null) {
                 return null;
             }
-            $parent = $section->id;
         }
-        return $section === null ? null : $this->mapper->section($section);
+        return $section;
     }
 
     public function addSection(CollectionSectionFormDTO $section): int

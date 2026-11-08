@@ -55,7 +55,8 @@ interface ContentCollectionItemRepositoryInterface
 
     public function findWithValuesForUpdate(int $id): ?ContentCollectionItem;
 
-    public function incrementViews(int $id): bool;
+    /** The collection and its sections are read here unless the caller has them. */
+    public function incrementViews(int $id, ?int $collectionId = null, ?SectionTree $sections = null): bool;
 
     public function findByCode(int $collectionId, ?int $sectionId, string $code): ?ContentCollectionItem;
 

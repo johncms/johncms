@@ -24,6 +24,7 @@ use Johncms\Modules\Collections\Domain\Query\FieldFilterDTO;
 use Johncms\Modules\Collections\Domain\Enums\FilterOperator;
 use Johncms\Modules\News\Application\DTO\NewsAuthorDTO;
 use Johncms\Modules\News\Application\DTO\NewsCommentViewDTO;
+use Johncms\Modules\News\Application\DTO\NewsArticleViewDTO;
 use Johncms\Modules\News\Application\DTO\NewsCommentPageDTO;
 use Johncms\Modules\News\Application\Exceptions\NewsCollectionUnavailableException;
 use Johncms\Modules\News\Application\Exceptions\NewsItemNotFoundException;
@@ -62,6 +63,17 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
     public function comments(int $itemId, int $limit = 20, int $offset = 0): NewsCommentPageDTO
     {
         $this->guard->read($itemId);
+        return new NewsCommentPageDTO($this->page($itemId, $limit, $offset), $this->discussion->countComments($itemId), $limit, $offset);
+    }
+
+    public function articleComments(NewsArticleViewDTO $article, int $limit, int $offset): array
+    {
+        return $this->page($article->record->id, $limit, $offset);
+    }
+
+    /** @return list<NewsCommentViewDTO> */
+    private function page(int $itemId, int $limit, int $offset): array
+    {
         if ($limit < 1 || $limit > 1000 || $offset < 0 || $offset > 1000000) {
             throw new InvalidArgumentException('Use a valid comment limit and offset.');
         }
@@ -85,7 +97,7 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
                 $moderates ? ($row->user_data ?? []) : []
             );
         }
-        return new NewsCommentPageDTO($comments, $this->discussion->countComments($itemId), $limit, $offset);
+        return $comments;
     }
 
     public function addComment(int $itemId, string $text, array $files = [], array $metadata = []): int

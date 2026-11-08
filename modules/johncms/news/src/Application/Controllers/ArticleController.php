@@ -68,7 +68,7 @@ final readonly class ArticleController
             }
         }
         $this->navChain->add($article->record->name);
-        $this->news->registerView($article->record->id);
+        $this->news->registerView($article);
         $related = $this->news->related($article, self::RELATED);
         $popular = $this->news->popular(self::POPULAR_DAYS, self::POPULAR, [
             $article->record->id,
@@ -97,7 +97,7 @@ final readonly class ArticleController
         return [
             'article_id' => $article->record->id,
             'comments' => $article->stats->comments > 0
-                ? $this->discussion->comments($article->record->id, $pagination->getPerPage(), $pagination->getOffset())->comments
+                ? $this->discussion->articleComments($article, $pagination->getPerPage(), $pagination->getOffset())
                 : [],
             'comments_total' => $article->stats->comments,
             'comments_offset' => $pagination->getOffset(),

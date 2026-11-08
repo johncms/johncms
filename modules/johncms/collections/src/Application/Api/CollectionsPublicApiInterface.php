@@ -33,5 +33,6 @@ interface CollectionsPublicApiInterface
 
     public function findItemByCode(int $collectionId, ?int $sectionId, string $code): ?CollectionItemDTO;
 
-    public function incrementViews(int $id): void;
+    /** Counts a view of a published item; false when the collection has no such published item. */
+    public function incrementViews(int $collectionId, int $id): bool;
 }

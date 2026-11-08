@@ -87,9 +87,9 @@ final readonly class CollectionsPublicApi implements CollectionsPublicApiInterfa
         return $item === null ? null : $this->mapper->item($item);
     }
 
-    public function incrementViews(int $id): void
+    public function incrementViews(int $collectionId, int $id): bool
     {
-        $this->api->incrementViews($id);
+        return $this->items->incrementViews(id: $id, collectionId: $collectionId, sections: $this->structures->of($collectionId)->sections);
     }
 
     /** Public readers cannot disable visibility, and read the structure the request remembers. */
