@@ -36,7 +36,7 @@
                 <h3 class="site-news-compose__title" id="comment-form-title">{{ __('Write a comment') }}</h3>
             </div>
             {% include '@news/public/components/comment-error.twig' with {error: error} only %}
-            <form method="post" action="/news/comments/add/{{ article_id }}/" data-live-list-form data-comment-form>
+            <form id="news-comment-form-{{ article_id }}" method="post" action="/news/comments/add/{{ article_id }}/" data-live-list-form data-comment-form>
                 <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                 {% include '@theme/components/editor.twig' with {
                     name: 'text',

@@ -191,6 +191,22 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         self::assertStringStartsWith('Long body — ' . d__('system', 'Page') . ' 2 | ', (string) $document->querySelector('title')?->textContent, 'The title follows the page of comments.');
         self::assertSame('11', trim((string) $document->querySelector('[data-live-list-region="comments-stat"]')?->textContent), 'The count in the header of the article follows the discussion.');
         self::assertSame($views, $this->api->getItem($id)->viewCount, 'Another page of comments is not another view of the article.');
+        $pageField = $region->querySelector('input[name="page"]');
+        self::assertSame('2', $pageField?->getAttribute('value'));
+        self::assertSame('news-comment-form-' . $id, $pageField->getAttribute('form'));
+
+        $response = $this->postForm('/news/comments/add/' . $id, ['text' => '<p>&nbsp;</p>', 'page' => '2'], $user);
+        self::assertSame('/news/entry.html?page=2#comment-form', $response->headers->get('Location'));
+        $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/entry.html?page=2', cookies: $this->actingAs($user))->getContent(), LIBXML_NOERROR);
+        self::assertNotNull($document->querySelector('#comment-form .alert-danger'));
+        self::assertSame('#11', trim($document->querySelector('.site-news-comment__anchor')->textContent));
+        self::assertNotNull($document->querySelector('form#news-comment-form-' . $id));
+
+        $this->postForm('/news/comments/add/' . $id, ['text' => '<p>&nbsp;</p>', 'page' => '2'], $user);
+        $fragment = $this->fragment('/news/entry.html?page=2', ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest']);
+        self::assertNotNull($fragment->querySelector('[data-live-list-region="comment-error"] .alert-danger'));
+        self::assertSame('2', $fragment->querySelector('[data-live-list-region="comments"] input[name="page"]')?->getAttribute('value'));
+
     }
 
     public function testTheLiveListLearnsTheResultOfACommentFromThePageAfterTheForm(): void

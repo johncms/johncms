@@ -15,6 +15,7 @@
     @var delete_error string|null Why the last comment could not be deleted.
 #}
 <div class="site-news-comments__region" data-live-list-region="comments">
+    <input type="hidden" name="page" value="{{ page }}" form="news-comment-form-{{ article_id }}">
     <h2 class="site-news__heading" id="article-comments-title" tabindex="-1" data-live-list-focus>
         {{ __('Comments') }}
         <span class="site-news__count">{{ total|format_number }}</span>

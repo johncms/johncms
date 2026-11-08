@@ -37,6 +37,7 @@ final readonly class CommentsController
     public function add(int $article_id, Request $request, Environment $env): never
     {
         $url = $this->articleUrl($article_id);
+        $page = max(1, $request->bodyInt('page'));
         $text = $request->body('text');
         try {
             $files = [];
@@ -55,7 +56,7 @@ final readonly class CommentsController
         } catch (NewsDiscussionAccessDeniedException | NewsDiscussionValidationException | NewsItemNotFoundException $exception) {
             $this->session->flash(self::ERROR, $exception->getMessage());
             $this->session->flash(self::TEXT, $text);
-            redirect($url . '#comment-form');
+            redirect($this->pageUrl($url, $page) . '#comment-form');
         }
         $this->session->flash(self::MESSAGE, d__('news', 'The comment was added successfully'));
         // The anchor of the redirect does not reach the server, so a live list learns the comment from here.
