@@ -121,8 +121,10 @@ function initLiveList(root) {
       if (target) {
         target.scrollIntoView({block: 'center'});
       } else if (!form && history !== 'none' && url.hash) {
-        // The anchor of the link leads to the start of the list: the new page is read from its beginning.
-        document.getElementById(decodeURIComponent(url.hash.slice(1)))?.scrollIntoView({block: 'start'});
+        // The anchor of the link leads to the start of the list: the new page is read from its
+        // beginning and opens there at once, as a page loaded by the browser does. The comment just
+        // added is still brought in smoothly: that short move shows where the text went.
+        document.getElementById(decodeURIComponent(url.hash.slice(1)))?.scrollIntoView({block: 'start', behavior: 'instant'});
       }
 
       root.dispatchEvent(new CustomEvent('live-list:update', {bubbles: true, detail: {form}}));
