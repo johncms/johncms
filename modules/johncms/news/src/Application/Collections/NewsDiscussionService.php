@@ -32,6 +32,7 @@ use Johncms\Modules\News\Application\Services\NewsPermissions;
 use Johncms\Modules\News\Application\UseCases\EnsureNewsDiscussionAccessUseCase;
 use Johncms\Modules\News\Domain\Repository\NewsDiscussionRepositoryInterface;
 use Johncms\Modules\News\Domain\ValueObjects\NewsDiscussionStats;
+use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\Users\Repository\UserRepositoryInterface;
 use Johncms\Utils\DateFormatterInterface;
 use Johncms\View\CommentFeed\FeedComment;
@@ -54,6 +55,7 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
         private StaffTitles $staff,
         private DateFormatterInterface $dates,
         private NewsCollectionOwnerUrls $urls,
+        private EditorContentNormalizer $editorContentNormalizer,
     ) {
     }
 
@@ -89,7 +91,7 @@ final readonly class NewsDiscussionService implements NewsDiscussionServiceInter
     public function addComment(int $itemId, string $text, array $files = [], array $metadata = []): int
     {
         $this->guard->comment();
-        $text = trim($text);
+        $text = $this->editorContentNormalizer->trimEdgeEmptyBlocks($text);
         if ($text === '' || $this->content->renderOrNull($text) === null) {
             throw new NewsDiscussionValidationException(d__('news', 'Enter the comment text'));
         }

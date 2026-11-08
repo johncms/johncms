@@ -65,6 +65,31 @@ final class NewsCollectionDiscussionTest extends FunctionalTestCase
         self::assertSame(-1, $article->stats->currentVote);
     }
 
+    public function testCommentTrimsEmptyEdgesAndPreservesInternalSpacingAndMedia(): void
+    {
+        $this->asUser(FunctionalUserFactory::createWithPermissions(['news.comments.post']));
+        $contents = [
+            '<p>First</p><p>&nbsp;</p><p>Last</p>',
+            '<figure class="image"><img src="/upload/photo.jpg"></figure>',
+            '<figure class="media"><oembed url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"></oembed></figure>',
+        ];
+        foreach ($contents as $content) {
+            $id = $this->discussion->addComment($this->item, "  <p><br></p>\n" . $content . '<p>&nbsp;</p><div><br></div>  ');
+            self::assertSame($content, Capsule::table('news_comments')->where('id', $id)->value('text'));
+        }
+    }
+
+    public function testCommentContainingOnlyEmptyBlocksIsRejected(): void
+    {
+        $this->asUser(FunctionalUserFactory::createWithPermissions(['news.comments.post']));
+        try {
+            $this->discussion->addComment($this->item, '<p>&nbsp;</p><p><br></p><div> </div>');
+            self::fail('Empty editor blocks cannot form a comment.');
+        } catch (NewsDiscussionValidationException) {
+            self::assertSame(0, Capsule::table('news_comments')->count());
+        }
+    }
+
     public function testUnavailableAndForeignItemsRejectReadingAndWritingDiscussion(): void
     {
         $this->asUser(FunctionalUserFactory::createWithPermissions(['news.comments.post', 'news.vote', 'news.manage']));

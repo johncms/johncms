@@ -52,6 +52,15 @@ final class GuestbookFormTest extends TestCase
         self::assertSame([3, 7], $formData['attached_files']);
     }
 
+    public function testVideoOnlyMessageIsPreservedWithoutEmptyEdgeParagraphs(): void
+    {
+        $video = '<figure class="media"><oembed url="https://youtu.be/dQw4w9WgXcQ"></oembed></figure>';
+        $form = $this->makeForm(CurrentUserFactory::withProfile(UserFactory::make()));
+        $data = $form->getFormData(new Request([], ['message' => '<p><br></p>' . $video . '<p>&nbsp;</p>']));
+
+        self::assertSame($video, $data['message']);
+    }
+
     public function testValidationRulesForValidUser(): void
     {
         $rules = $this->makeForm(CurrentUserFactory::withProfile(UserFactory::make()))->getValidationRules();

@@ -33,7 +33,8 @@ final class EditorContentNormalizer
 
         $plainText = trim(html_entity_decode(strip_tags($normalized), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
         $hasValidImage = (bool) preg_match('/<img\b[^>]*\bsrc\s*=\s*["\'][^"\']+["\']/iu', $normalized);
-        if ($plainText === '' && ! $hasValidImage) {
+        $hasMediaEmbed = (bool) preg_match('/<oembed\b[^>]*\burl\s*=\s*["\'][^"\'\s][^"\']*["\']/iu', $normalized);
+        if ($plainText === '' && ! $hasValidImage && ! $hasMediaEmbed) {
             return '';
         }
 

@@ -100,4 +100,24 @@ final class EditorContentNormalizerTest extends TestCase
             $this->normalizer->trimEdgeEmptyBlocks('<p>Some text</p><figure class="image"><img></figure>')
         );
     }
+
+    public function testMediaEmbedWithoutTextIsPreservedAndEmptyEdgesAreTrimmed(): void
+    {
+        $video = '<figure class="media"><oembed url="https://youtu.be/dQw4w9WgXcQ"></oembed></figure>';
+        self::assertSame($video, $this->normalizer->trimEdgeEmptyBlocks('<p>&nbsp;</p>' . $video . '<p><br></p>'));
+    }
+
+    public function testMediaEmbedWithoutUrlIsEmpty(): void
+    {
+        foreach (['<oembed></oembed>', '<oembed url=""></oembed>', '<oembed url=" "></oembed>'] as $embed) {
+            self::assertSame('', $this->normalizer->trimEdgeEmptyBlocks('<figure class="media">' . $embed . '</figure>'));
+        }
+    }
+
+    public function testInternalEmptyParagraphsArePreserved(): void
+    {
+        $text = '<p>First</p><p>&nbsp;</p><p>Last</p>';
+        self::assertSame($text, $this->normalizer->trimEdgeEmptyBlocks('<p><br></p>' . $text . '<p></p>'));
+    }
+
 }
