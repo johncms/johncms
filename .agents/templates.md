@@ -162,11 +162,13 @@ A button only a script handles is `type="button"`, so a missing script never tur
 submit of the whole form. The no-script fallbacks that already exist go away as their forms are
 reworked, one form at a time, not in a sweep.
 
-## Live lists (the panel)
+## Live lists
 
-For admin lists with tabs, search or filters, use the live-list pattern so they update without a
-full page reload. `src/admin/js/live-list.js` handles the markup below; `admin::users` is the
-reference:
+A part of a page that changes without a full reload — an admin list with tabs, search and
+filters, the pages of the comments below an article — follows one protocol. The panel and the
+public site each have their own script for it, since their bundles share no code:
+`src/admin/js/live-list.js` (reference: `admin::users`) and `src/js/live-list.js` (reference:
+the discussion of `news`). Never import one bundle's script into the other.
 
 ```twig
 <div data-live-list>
@@ -179,19 +181,28 @@ reference:
 ```
 
 * **Every changing part is a region** — an element with `data-live-list-region="<name>"`, drawn
-  by a template of its own. The page includes them; a second template (`users/live.twig`)
-  includes all of them and nothing else.
+  by a template of its own. The page includes them; a second template (`users/live.twig`,
+  `news/public/comments-live.twig`) includes all of them and nothing else.
 * **The controller answers the script with the fragment**: `$request->isXmlHttpRequest()` picks
-  the second template, with the same data. Same address, same pagination guard.
-* **Links and the form are the API.** Typing into a text field reloads after a pause, a link of
-  the list to the same path reloads at once, and the address follows (`history`). Without the
-  script the same links and form work as plain pages, so build every link from the filter
-  (`UserListFilterMapper` is the pattern) and never only from JavaScript.
-* **The search field stays outside the regions**, so it keeps the focus and the caret while the
-  list changes around it; the rest of the filter rides along as hidden fields in a region inside
-  the form.
+  the second template, with the same data. Same address, same pagination guard. Take the branch
+  before the work only the full page needs: a view counter, side blocks, breadcrumbs.
+* **Links and the form are the API.** Without the script the same links and form work as plain
+  pages, so build every link on the server (`UserListFilterMapper` is the pattern) and never only
+  from JavaScript. The address follows (`history`).
+* **What must survive stays outside the regions**: the search field keeps the focus and the caret,
+  a form with an editor keeps its text.
+* **Behaviour on the regions is delegated** from the root, or set up again on `live-list:update`,
+  which the root fires once the regions are in place: the buttons inside them are new elements.
 * A fragment test asks with `HTTP_X_REQUESTED_WITH`: the page around it carries the query log of
   the whole process when debugging is on.
+
+The panel's script also follows its form: typing reloads after a pause, other fields at once,
+and the rest of the filter rides along as hidden fields in a region inside the form.
+
+The public script follows links inside a region to another page of the same address. A list
+below a long text gives its pagination a fragment (`PaginationFactory::create(fragment: …)`), so
+both the plain page and the script open it on the list; the script scrolls to that anchor and
+moves the focus to `[data-live-list-focus]` when the focus was in the replaced region.
 
 ## Dialogs (the panel)
 

@@ -1,0 +1,21 @@
+{#
+    The regions of the discussion, as the live list asks for them: each replaces the region of the
+    same name on the article page. A fragment, so it extends nothing.
+
+    @var article_id          int
+    @var comments            list<NewsCommentViewDTO>
+    @var comments_total      int
+    @var comments_offset     int
+    @var comments_page       int
+    @var comments_pagination \Twig\Markup|null
+    @var comment_message     string|null
+#}
+{% include '@news/public/components/comments-feed.twig' with {
+    article_id: article_id,
+    comments: comments,
+    total: comments_total,
+    offset: comments_offset,
+    page: comments_page,
+    pagination: comments_pagination,
+    message: comment_message,
+} only %}

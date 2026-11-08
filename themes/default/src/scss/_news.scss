@@ -229,6 +229,9 @@
 .site-news-comments {
   min-inline-size: 0;
   scroll-margin-block-start: 5rem;
+  &__region { transition: opacity .15s; }
+  &[aria-busy="true"] &__region { opacity: .6; }
+  &__region > .site-news__heading:focus:not(:focus-visible) { outline: none; }
   &__empty { padding: 1.5rem; border: 1px dashed var(--border-strong); border-radius: .75rem; text-align: center; color: var(--fg-muted); }
   &__feed { display: flex; flex-direction: column; gap: .75rem; }
   &__pagination { margin-block-start: 1rem; }

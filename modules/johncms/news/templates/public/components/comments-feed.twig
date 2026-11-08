@@ -1,0 +1,32 @@
+{#
+    The changing part of the discussion: the heading with the count, the result of the last action,
+    the comments of the page and the pagination. A region of the live list, so a page of comments
+    is replaced without reloading the article.
+
+    @var article_id int
+    @var comments   list<NewsCommentViewDTO> The comments of the current page.
+    @var total      int
+    @var offset     int Comments before the current page.
+    @var page       int
+    @var pagination \Twig\Markup|null
+    @var message    string|null What happened to the last comment.
+#}
+<div class="site-news-comments__region" data-live-list-region="comments">
+    <h2 class="site-news__heading" id="article-comments-title" tabindex="-1" data-live-list-focus>
+        {{ __('Comments') }}
+        <span class="site-news__count">{{ total|format_number }}</span>
+    </h2>
+    {% if message %}<div class="alert alert-success" role="status">{{ message }}</div>{% endif %}
+    {% if comments is empty %}
+        <div class="site-news-comments__empty">{{ __('No comments yet. Be the first.') }}</div>
+    {% else %}
+        <div class="site-news-comments__feed">
+            {% for comment in comments %}
+                {% include '@news/public/components/comment.twig' with {
+                    comment: comment, number: offset + loop.index, article_id: article_id, page: page
+                } only %}
+            {% endfor %}
+        </div>
+        {% if pagination %}<div class="site-news-comments__pagination">{{ pagination }}</div>{% endif %}
+    {% endif %}
+</div>

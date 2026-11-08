@@ -1,5 +1,6 @@
 {#
-    The discussion of an article, rendered with the page so that search engines see it.
+    The discussion of an article, rendered with the page so that search engines see it. The feed
+    is a live list: its pages are swapped in place, the form stays as it is.
 
     @var article_id int
     @var comments   list<NewsCommentViewDTO> The comments of the current page.
@@ -12,24 +13,16 @@
     @var message    string|null What happened to the last comment.
     @var text       string The text to put back into the form after an error.
 #}
-<section class="site-news-comments" id="article-comments" aria-labelledby="article-comments-title">
-    <h2 class="site-news__heading" id="article-comments-title">
-        {{ __('Comments') }}
-        <span class="site-news__count">{{ total|format_number }}</span>
-    </h2>
-    {% if message %}<div class="alert alert-success" role="status">{{ message }}</div>{% endif %}
-    {% if comments is empty %}
-        <div class="site-news-comments__empty">{{ __('No comments yet. Be the first.') }}</div>
-    {% else %}
-        <div class="site-news-comments__feed">
-            {% for comment in comments %}
-                {% include '@news/public/components/comment.twig' with {
-                    comment: comment, number: offset + loop.index, article_id: article_id, page: page
-                } only %}
-            {% endfor %}
-        </div>
-        {% if pagination %}<div class="site-news-comments__pagination">{{ pagination }}</div>{% endif %}
-    {% endif %}
+<section class="site-news-comments" id="article-comments" aria-labelledby="article-comments-title" data-live-list>
+    {% include '@news/public/components/comments-feed.twig' with {
+        article_id: article_id,
+        comments: comments,
+        total: total,
+        offset: offset,
+        page: page,
+        pagination: pagination,
+        message: message,
+    } only %}
 
     {% if can_write %}
         <section class="site-news-compose" id="comment-form" aria-labelledby="comment-form-title">

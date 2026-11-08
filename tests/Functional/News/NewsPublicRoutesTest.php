@@ -8,6 +8,7 @@ use Dom\HTMLDocument;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Http\Kernel;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
@@ -177,6 +178,17 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
             'A page of comments opens on the discussion, not on the top of the article.',
         );
         self::assertSame('/news/entry.html?page=2#article-comments', $this->handleRequest('/news/entry.html?page=9')->headers->get('Location'));
+
+        $views = $this->api->getItem($id)->viewCount;
+        // A view is counted once per session: forget it, so that only the kind of request decides.
+        $this->container()->get(Session::class)->remove('news_viewed_items');
+        $fragment = $this->handleRequest('/news/entry.html?page=2', server: ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest']);
+        $document = HTMLDocument::createFromString('<!doctype html><body>' . $fragment->getContent(), LIBXML_NOERROR);
+        $region = $document->querySelector('[data-live-list-region="comments"]');
+        self::assertNotNull($region, 'The live list gets the region of the discussion.');
+        self::assertSame('#11', trim($region->querySelector('.site-news-comment__anchor')->textContent));
+        self::assertNull($document->querySelector('.site-news-article__body'), 'The fragment holds the discussion only.');
+        self::assertSame($views, $this->api->getItem($id)->viewCount, 'Another page of comments is not another view of the article.');
     }
 
     public function testVoteHttpContractUsesCollectionIdsAndCurrentActor(): void

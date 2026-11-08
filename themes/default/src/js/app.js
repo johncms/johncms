@@ -19,6 +19,7 @@ import './jquery.magnific-popup';
 import './menu';
 import './preferences';
 import './editor';
+import './live-list';
 import './news';
 
 if (document.querySelector('[data-site-icon-gallery]')) {
@@ -37,8 +38,10 @@ import './main';
 
 import { createApp } from 'vue';
 
-// Prism is loaded in manual mode, see ./bootstrap.
+// Prism is loaded in manual mode, see ./bootstrap. Code swapped in by a live list is highlighted
+// on arrival.
 window.Prism.highlightAll();
+document.addEventListener('live-list:update', event => window.Prism.highlightAllUnder(event.target));
 
 /**
  * The following block of code may be used to automatically register your

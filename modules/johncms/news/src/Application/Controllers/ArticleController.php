@@ -8,7 +8,9 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\Pagination;
 use Johncms\Http\Pagination\PaginationGuard;
+use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\News\Application\Collections\NewsDiscussionServiceInterface;
@@ -39,24 +41,29 @@ final readonly class ArticleController
     ) {
     }
 
-    public function index(string $article_code, string $category = ''): ViewResponse
+    public function index(Request $request, string $article_code, string $category = ''): ViewResponse
     {
-        $this->navChain->add(d__('news', 'News'), '/news/');
         try {
             $article = $this->news->findByCode($category, $article_code) ?? throw new NewsItemNotFoundException();
         } catch (NewsItemNotFoundException) {
             throw new PageNotFoundException();
         }
+        $pagination = $this->paginationFactory->create(total: $article->stats->comments, fragment: 'article-comments');
+        $redirect = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirect !== null) {
+            redirect($redirect);
+        }
+        // The live list asks for a page of the discussion: the article is not viewed again.
+        if ($request->isXmlHttpRequest()) {
+            return new ViewResponse('@news/public/comments-live.twig', $this->discussionData($article, $pagination));
+        }
+
+        $this->navChain->add(d__('news', 'News'), '/news/');
         $section = $article->record->sectionId !== null ? $this->news->section($article->record->sectionId) : null;
         if ($section !== null) {
             foreach ($this->news->breadcrumbs($section->record->id) as $crumb) {
                 $this->navChain->add($crumb->record->name, $crumb->url);
             }
-        }
-        $pagination = $this->paginationFactory->create(total: $article->stats->comments, fragment: 'article-comments');
-        $redirect = $this->paginationGuard->redirectUrl($pagination);
-        if ($redirect !== null) {
-            redirect($redirect);
         }
         $this->navChain->add($article->record->name);
         $this->news->registerView($article->record->id);
@@ -76,6 +83,20 @@ final readonly class ArticleController
                 ? '/admin/collections/' . $article->record->collectionId . '/items/' . $article->record->id . '/edit'
                 : null,
             'can_write' => $this->access->allows(NewsPermissions::COMMENTS_POST),
+            'comment_error' => $this->session->getFlash(CommentsController::ERROR),
+            'comment_text' => $this->session->getFlash(CommentsController::TEXT) ?? '',
+        ] + $this->discussionData($article, $pagination));
+    }
+
+    /**
+     * The comments of the requested page: the article renders them, the live list swaps them.
+     *
+     * @return array<string, mixed>
+     */
+    private function discussionData(NewsArticleViewDTO $article, Pagination $pagination): array
+    {
+        return [
+            'article_id' => $article->record->id,
             'comments' => $article->stats->comments > 0
                 ? $this->discussion->comments($article->record->id, $pagination->getPerPage(), $pagination->getOffset())->comments
                 : [],
@@ -83,9 +104,7 @@ final readonly class ArticleController
             'comments_offset' => $pagination->getOffset(),
             'comments_page' => $pagination->getCurrentPage(),
             'comments_pagination' => $pagination->hasPages() ? $pagination->render() : null,
-            'comment_error' => $this->session->getFlash(CommentsController::ERROR),
-            'comment_text' => $this->session->getFlash(CommentsController::TEXT) ?? '',
             'comment_message' => $this->session->getFlash(CommentsController::MESSAGE),
-        ]);
+        ];
     }
 }
