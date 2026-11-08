@@ -112,6 +112,30 @@ Modules contribute home-page content through `HomepageBlockProviderInterface`. T
 below the section tiles. Weights still order blocks within each position. Existing providers
 need no change and keep full-width rendering unless they opt into the shared content card.
 
+## Bootstrap components
+
+When a block of a page is a card, a list group, a dropdown, a modal or another Bootstrap
+component, start from the Bootstrap class and add a modifier of the module for what differs:
+`<article class="card site-news-card"><div class="card-body">…`, not a card written from
+scratch. The colours of these components are already bound to the theme palette in
+`themes/<theme>/src/scss/_theme-components.scss`, so the modifier does not repeat the
+background, the text colour or the border.
+
+The modifier tunes the component through its CSS variables (`--bs-card-spacer-y`,
+`--bs-card-spacer-x`, `--bs-card-border-radius`, …) instead of overriding `padding`,
+`border-radius` or `background` directly, so a later change of the theme reaches every card.
+It keeps only what Bootstrap has no notion of: the hover state, the elements of its own
+(`__meta`, `__rating`, …), the layout inside the body. A Bootstrap component that does not yet
+follow the palette gets its variables mapped in `_theme-components.scss`, not in the module.
+
+A card that is a link as a whole:
+
+* has no links or rich content inside → the card itself is the `<a class="card …">`;
+* contains a link, a button or user HTML (previews with links and embeds) → keep the link on
+  the title with `.stretched-link` and lift the inner interactive elements above it with
+  `position: relative; z-index: 2`. Never wrap such a card in `<a>`: nested links are invalid
+  HTML and an embedded video stops receiving clicks.
+
 ## Scripts in the panel
 
 The panel needs JavaScript for whatever is interactive: reordering the rows of a list, a picker

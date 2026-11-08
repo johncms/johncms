@@ -23,7 +23,7 @@ automatically; `CLAUDE.md` is a symlink to it for Claude Code.
 | `images.md` | processing pictures: resizing, thumbnails, cached previews |
 | `storage.md` | storing files: disks, the file registry, public and private disks |
 | `new-module.md` | creating a new module |
-| `templates.md` | Twig templates: namespaces, environments, components, traps |
+| `templates.md` | Twig templates: namespaces, environments, components, Bootstrap components, traps |
 | `validation.md` | form validation: rules, the null policy, messages, adding a rule |
 | `captcha.md` | captcha: asking for one in a form, scopes, settings, adding a provider |
 | `testing.md` | writing a test: the two suites, the functional harness, accounts and fixtures |

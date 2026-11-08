@@ -21,7 +21,7 @@ guide first:
 * User input handling, output escaping in templates, sanitizing user HTML → read `.agents/escaping.md`
 * Translations, `.po`/`.pot`/`.lng.php` files, `__()` strings → read `.agents/localization.md`
 * Creating a new module (structure, autoload, DI, routes, templates) → read `.agents/new-module.md`
-* Writing or changing a template (namespaces, environments, components) → read `.agents/templates.md`
+* Writing or changing a template or its styles (namespaces, environments, components, Bootstrap components) → read `.agents/templates.md`
 * Validating a form, adding a validation rule, messages of a rule → read `.agents/validation.md`
 * Asking a form for a captcha, adding a captcha provider → read `.agents/captcha.md`
 * Writing a test: the two suites, the harness of a functional test, accounts and fixtures → read `.agents/testing.md`
