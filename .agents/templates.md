@@ -128,6 +128,13 @@ It keeps only what Bootstrap has no notion of: the hover state, the elements of 
 (`__meta`, `__rating`, …), the layout inside the body. A Bootstrap component that does not yet
 follow the palette gets its variables mapped in `_theme-components.scss`, not in the module.
 
+Buttons come in the sizes of the theme: `btn-xs` (26px, the row of actions under a post or a
+comment: reply, quote, delete), `btn-sm`, the default and `btn-lg`; `btn-icon` turns any of
+them into a square holding only an icon. A module does not write its own button size or a
+button from scratch — a missing size is added to `themes/<theme>/src/scss/_buttons.scss`
+through the `--bs-btn-*` variables and shown on `/style-guide`. A modifier of the module may
+only retune the variables of a state, like the red hover of a delete button.
+
 A card that is a link as a whole:
 
 * has no links or rich content inside → the card itself is the `<a class="card …">`;
