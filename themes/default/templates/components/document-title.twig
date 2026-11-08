@@ -1,0 +1,10 @@
+{#
+    The text of the <title> of a public page: the title of the page with the site name, or the site
+    name alone on the home page. The layout prints it, and so does a live list that changes the page
+    of a list without reloading it.
+
+    @var title string Page title, without the site name; empty for the site name alone.
+#}
+{%- set site_name = config('johncms.copyright') -%}
+{%- set base_title = title ?: site_name -%}
+{{- (not app.is_home_page and base_title != site_name) ? base_title ~ ' | ' ~ site_name : base_title -}}

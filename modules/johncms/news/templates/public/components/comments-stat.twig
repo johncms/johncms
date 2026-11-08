@@ -1,0 +1,9 @@
+{#
+    The number of comments in the header of the article, a link to the discussion. A region of the
+    live list of the discussion, so it follows a comment added or deleted below.
+
+    @var count int
+#}
+<a class="site-news-article__stat" href="#article-comments" aria-label="{{ __('Comments') }}: {{ count|format_number }}" data-live-list-region="comments-stat">
+    {% include '@theme/components/icon.twig' with {name: 'message-square', size: 14} only %} {{ count|format_number }}
+</a>

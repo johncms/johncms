@@ -202,7 +202,11 @@ and the rest of the filter rides along as hidden fields in a region inside the f
 The public script follows links inside a region to another page of the same address. A list
 below a long text gives its pagination a fragment (`PaginationFactory::create(fragment: …)`), so
 both the plain page and the script open it on the list; the script scrolls to that anchor and
-moves the focus to `[data-live-list-focus]` when the focus was in the replaced region.
+moves the focus to `[data-live-list-focus]` when the focus was in the replaced region. Its regions
+are looked up on the whole page, so a region may sit outside the root (the number of comments in
+the header of the article); keep their names unique on the page. A `<title>` in the fragment,
+printed with `@theme/components/document-title.twig` from the same `PageMeta` as the full page,
+becomes the title of the document.
 
 It also posts the forms marked `data-live-list-form`. The action keeps its plain contract — a
 redirect back to the page with flash messages — and `fetch` follows the redirect with the same

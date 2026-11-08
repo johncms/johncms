@@ -53,9 +53,11 @@ final readonly class ArticleController
         if ($redirect !== null) {
             redirect($redirect);
         }
+        $metadata = $article->metadata();
+        $meta = new PageMeta($metadata['title'], $pagination->getCurrentPage(), $metadata['description']);
         // The live list asks for a page of the discussion: the article is not viewed again.
         if ($request->isXmlHttpRequest()) {
-            return new ViewResponse('@news/public/comments-live.twig', $this->discussionData($article, $pagination));
+            return new ViewResponse('@news/public/comments-live.twig', ['title' => $meta->title] + $this->discussionData($article, $pagination));
         }
 
         $this->navChain->add(d__('news', 'News'), '/news/');
@@ -72,8 +74,6 @@ final readonly class ArticleController
             $article->record->id,
             ...array_map(static fn (NewsArticleViewDTO $entry): int => $entry->record->id, $related),
         ]);
-        $metadata = $article->metadata();
-        $meta = new PageMeta($metadata['title'], $pagination->getCurrentPage(), $metadata['description']);
         return new ViewResponse('@news/public/article.twig', ['title' => $meta->title, 'description' => $meta->description] + $metadata + [
             'article' => $article->toTemplate(), 'current_section' => $section?->toTemplate(),
             'related' => array_map(static fn (NewsArticleViewDTO $entry): array => $entry->toTemplate(), $related),

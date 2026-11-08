@@ -17,10 +17,11 @@
  *
  * A link inside a region to another page of the same address is asked for with X-Requested-With;
  * the server answers with a fragment holding the regions again, and each one replaces the region
- * of the same name. A form marked data-live-list-form is posted the same way: the server answers
- * it with its usual redirect, which the browser follows with the same header, so the fragment
- * comes back after it. What is outside the regions, a form with an editor for instance, stays as
- * it is. The address of the page follows, so a reload, a bookmark and the back button land on the
+ * of the same name — inside the root or anywhere on the page, since the names are unique on it —
+ * while a <title> in the fragment becomes the title of the page. A form marked data-live-list-form
+ * is posted the same way: the server answers it with its usual redirect, which the browser follows
+ * with the same header, so the fragment comes back after it. What is outside the regions, a form
+ * with an editor for instance, stays as it is. The address of the page follows, so a reload, a bookmark and the back button land on the
  * same page. Once the regions are in place the root fires live-list:update, which bubbles, with
  * the form that was sent, if any, for what has to be set up on them again.
  *
@@ -84,13 +85,20 @@ function initLiveList(root) {
       const template = document.createElement('template');
       template.innerHTML = await response.text();
 
+      // A region may sit outside the root: the number of comments in the header of the article.
       template.content.querySelectorAll('[data-live-list-region]').forEach(function (region) {
-        const current = root.querySelector('[data-live-list-region="' + CSS.escape(region.dataset.liveListRegion) + '"]');
+        const current = document.querySelector('[data-live-list-region="' + CSS.escape(region.dataset.liveListRegion) + '"]');
 
         if (current) {
           current.replaceWith(region);
         }
       });
+
+      const title = template.content.querySelector('title');
+
+      if (title) {
+        document.title = title.textContent;
+      }
 
       const target = form ? root.querySelector('[data-live-list-target]') : null;
 

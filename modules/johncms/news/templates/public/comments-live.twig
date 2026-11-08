@@ -1,7 +1,9 @@
 {#
     The regions of the discussion, as the live list asks for them: each replaces the region of the
-    same name on the article page. A fragment, so it extends nothing.
+    same name on the article page, and the title follows the page of comments. A fragment, so it
+    extends nothing.
 
+    @var title               string Title of the page, without the site name.
     @var article_id          int
     @var comments            list<NewsCommentViewDTO>
     @var comments_total      int
@@ -12,6 +14,7 @@
     @var comment_error       string|null
     @var comment_added       int|null
 #}
+<title>{% include '@theme/components/document-title.twig' with {title: title} only %}</title>
 {% include '@news/public/components/comments-feed.twig' with {
     article_id: article_id,
     comments: comments,
@@ -23,3 +26,4 @@
     added: comment_added,
 } only %}
 {% include '@news/public/components/comment-error.twig' with {error: comment_error} only %}
+{% include '@news/public/components/comments-stat.twig' with {count: comments_total} only %}

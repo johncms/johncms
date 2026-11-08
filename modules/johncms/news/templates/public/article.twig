@@ -71,9 +71,7 @@
                             {% include '@theme/components/icon.twig' with {name: 'eye', size: 14} only %}
                             <span class="visually-hidden">{{ __('Views') }}: </span>{{ article.view_count|format_number }}
                         </span>
-                        <a class="site-news-article__stat" href="#article-comments" aria-label="{{ __('Comments') }}: {{ article.comments_count|format_number }}">
-                            {% include '@theme/components/icon.twig' with {name: 'message-square', size: 14} only %} {{ article.comments_count|format_number }}
-                        </a>
+                        {% include '@news/public/components/comments-stat.twig' with {count: comments_total} only %}
                         <div class="site-news-share" data-news-share data-url="{{ article.url }}" data-copied="{{ __('Link copied') }}" data-error="{{ __('Could not copy the link.') }}">
                             <a class="btn btn-outline-secondary btn-sm" href="https://t.me/share/url?url={{ article_url|url_encode }}&amp;text={{ article.name|url_encode }}" target="_blank" rel="noopener noreferrer">
                                 {% include '@theme/components/icon.twig' with {name: 'send', size: 14} only %} Telegram

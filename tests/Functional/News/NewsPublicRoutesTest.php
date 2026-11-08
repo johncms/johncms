@@ -188,6 +188,8 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         self::assertNotNull($region, 'The live list gets the region of the discussion.');
         self::assertSame('#11', trim($region->querySelector('.site-news-comment__anchor')->textContent));
         self::assertNull($document->querySelector('.site-news-article__body'), 'The fragment holds the discussion only.');
+        self::assertStringStartsWith('Long body — ' . d__('system', 'Page') . ' 2 | ', (string) $document->querySelector('title')?->textContent, 'The title follows the page of comments.');
+        self::assertSame('11', trim((string) $document->querySelector('[data-live-list-region="comments-stat"]')?->textContent), 'The count in the header of the article follows the discussion.');
         self::assertSame($views, $this->api->getItem($id)->viewCount, 'Another page of comments is not another view of the article.');
     }
 
