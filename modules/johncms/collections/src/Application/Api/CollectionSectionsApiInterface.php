@@ -18,6 +18,9 @@ interface CollectionSectionsApiInterface
     /** @return list<CollectionSectionTreeNodeDTO> Flat preorder, with direct/subtree counts of all items. */
     public function getTree(int $collectionId): array;
 
+    /** @return list<CollectionSectionDTO> Every section of the collection, active or not, by sort then id. */
+    public function getSections(int $collectionId): array;
+
     /** @return list<CollectionSectionDTO> Root to the section itself, or [] when missing/foreign. */
     public function getPath(int $collectionId, int $id): array;
 

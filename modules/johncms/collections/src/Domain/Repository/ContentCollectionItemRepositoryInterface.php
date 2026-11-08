@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\Collections\Domain\ValueObjects\ItemListFilter;
+use Johncms\Modules\Collections\Domain\Services\SectionTree;
 
 interface ContentCollectionItemRepositoryInterface
 {
@@ -33,7 +34,7 @@ interface ContentCollectionItemRepositoryInterface
      *
      * @return array<int, array{items: int, last_published_at: string}> Keyed by section id; the date is UTC.
      */
-    public function getPublishedSectionStats(int $collectionId, DateTimeImmutable $at): array;
+    public function getPublishedSectionStats(int $collectionId, DateTimeImmutable $at, ?SectionTree $sections = null): array;
 
     /**
      * @param list<int> $ids
@@ -62,11 +63,11 @@ interface ContentCollectionItemRepositoryInterface
      * Find an item by code that is currently published (active + within the
      * active_from/active_to window), with its values eager loaded. For the public site.
      */
-    public function findVisibleById(int $collectionId, int $id): ?ContentCollectionItem;
+    public function findVisibleById(int $collectionId, int $id, ?SectionTree $sections = null): ?ContentCollectionItem;
 
     public function findVisibleByIdForUpdate(int $collectionId, int $id): ?ContentCollectionItem;
 
-    public function findVisibleByCode(int $collectionId, ?int $sectionId, string $code): ?ContentCollectionItem;
+    public function findVisibleByCode(int $collectionId, ?int $sectionId, string $code, ?SectionTree $sections = null): ?ContentCollectionItem;
 
     /**
      * Lazily iterate published items of a collection for the sitemap.

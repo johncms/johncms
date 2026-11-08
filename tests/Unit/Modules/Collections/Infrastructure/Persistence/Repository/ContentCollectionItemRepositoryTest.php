@@ -9,9 +9,13 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Modules\Collections\Domain\Enums\FilterOperator;
 use Johncms\Modules\Collections\Domain\Enums\SortDirection;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
+use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
+use Johncms\Modules\Collections\Domain\Query\CollectionFieldDefinition;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\Collections\Domain\Query\FieldFilterDTO;
+use Johncms\Modules\Collections\Domain\Query\ItemQueryStructure;
 use Johncms\Modules\Collections\Domain\Query\OrderByDTO;
+use Johncms\Modules\Collections\Domain\Services\SectionTree;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Query\ContentCollectionItemQueryCompiler;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionFieldRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemRepository;
@@ -114,6 +118,42 @@ final class ContentCollectionItemRepositoryTest extends TestCase
 
         // Full active set is [a-low, a-high, b-active]; offset 1, limit 1 -> a-high.
         self::assertSame(['a-high'], $codes);
+    }
+
+    /**
+     * A caller that already has the structure of the collection hands it over, and the selection
+     * reads neither the fields nor the sections again — while choosing exactly what it would have.
+     */
+    public function testAGivenStructureIsNotReadAgain(): void
+    {
+        $filter = new FieldFilterDTO('field.rating', FilterOperator::Gte, 1);
+        $plain = new ContentCollectionItemQuery(collectionId: $this->collectionId, filters: [$filter]);
+        $fields = [];
+        foreach ((new ContentCollectionFieldRepository())->getByCollection($this->collectionId) as $field) {
+            $fields[$field->code] = CollectionFieldDefinition::of($field);
+        }
+        $structure = new ItemQueryStructure(
+            fields:   $fields,
+            sections: SectionTree::of(ContentCollectionSection::query()->where('collection_id', $this->collectionId)->get()),
+        );
+        $given = $plain->withStructure($structure);
+
+        $connection = Capsule::connection();
+        $connection->flushQueryLog();
+        $connection->enableQueryLog();
+        try {
+            $codes = $this->repository->findItems($given)->pluck('code')->all();
+            $total = $this->repository->countItems($given);
+            $queries = array_column($connection->getQueryLog(), 'query');
+        } finally {
+            $connection->disableQueryLog();
+            $connection->flushQueryLog();
+        }
+
+        self::assertSame($this->repository->findItems($plain)->pluck('code')->all(), $codes);
+        self::assertSame($this->repository->countItems($plain), $total);
+        $structureReads = array_filter($queries, static fn (string $query): bool => preg_match('/from [`"]?collection_(fields|sections)[`"]? where [`"]?collection_id/i', $query) === 1);
+        self::assertSame([], array_values($structureReads));
     }
 
     public function testFindByIdAndByCode(): void

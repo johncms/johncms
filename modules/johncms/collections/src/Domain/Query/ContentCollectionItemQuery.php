@@ -31,6 +31,7 @@ final readonly class ContentCollectionItemQuery
         public DateTimeImmutable $at = new DateTimeImmutable('now', new DateTimeZone('UTC')),
         public ?CollectionTextSearchDTO $search = null,
         public bool $includeText = true,
+        public ?ItemQueryStructure $structure = null,
     ) {
         if (($withoutSection && ($sectionId !== null || $includeSubsections)) || ($includeSubsections && $sectionId === null)) {
             throw new InvalidArgumentException('Choose collection, root-only, exact section or section subtree explicitly.');
@@ -39,6 +40,7 @@ final readonly class ContentCollectionItemQuery
             throw new InvalidArgumentException('Use valid collection/section ids, limit 1..1000 and offset 0..1000000.');
         }
     }
+
     /** Public readers cannot disable visibility; default ordering uses the effective publication date. */
     public function forPublication(): self
     {
@@ -58,7 +60,29 @@ final readonly class ContentCollectionItemQuery
             $this->withoutSection,
             $this->at,
             $this->search,
-            $this->includeText
+            $this->includeText,
+            $this->structure
+        );
+    }
+
+    /** The same selection, reading the structure the caller already has. */
+    public function withStructure(ItemQueryStructure $structure): self
+    {
+        return new self(
+            collectionId:       $this->collectionId,
+            sectionId:          $this->sectionId,
+            includeSubsections: $this->includeSubsections,
+            filters:            $this->filters,
+            onlyActive:         $this->onlyActive,
+            orderBy:            $this->orderBy,
+            limit:              $this->limit,
+            offset:             $this->offset,
+            fields:             $this->fields,
+            withoutSection:     $this->withoutSection,
+            at:                 $this->at,
+            search:             $this->search,
+            includeText:        $this->includeText,
+            structure:          $structure,
         );
     }
 }

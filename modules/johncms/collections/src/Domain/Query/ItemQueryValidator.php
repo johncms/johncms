@@ -8,7 +8,6 @@ use DateTimeImmutable;
 use InvalidArgumentException;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Modules\Collections\Domain\Enums\FilterOperator;
-use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
 
 final class ItemQueryValidator
 {
@@ -21,7 +20,7 @@ final class ItemQueryValidator
         'created_at' => FieldType::Datetime, 'updated_at' => FieldType::Datetime, 'published_at' => FieldType::Datetime,
     ];
 
-    /** @param array<string, ContentCollectionField> $fields */
+    /** @param array<string, CollectionFieldDefinition> $fields */
     public function validate(ContentCollectionItemQuery $query, array $fields): void
     {
         foreach ($query->search->fields ?? [] as $code) {
@@ -81,7 +80,7 @@ final class ItemQueryValidator
         }
     }
 
-    /** @param array<string, ContentCollectionField> $fields */
+    /** @param array<string, CollectionFieldDefinition> $fields */
     private function type(string $reference, array $fields): FieldType
     {
         if (str_starts_with($reference, 'item.')) {

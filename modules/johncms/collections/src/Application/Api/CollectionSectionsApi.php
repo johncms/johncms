@@ -17,7 +17,6 @@ use Johncms\Modules\Collections\Application\UseCases\ListCollectionSectionsUseCa
 use Johncms\Modules\Collections\Application\UseCases\SaveCollectionSectionUseCase;
 use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
-use Johncms\Modules\Collections\Domain\Services\SectionTree;
 
 final readonly class CollectionSectionsApi implements CollectionSectionsApiInterface
 {
@@ -48,6 +47,12 @@ final readonly class CollectionSectionsApi implements CollectionSectionsApiInter
         ), $this->list->getTree($collectionId)));
     }
 
+    public function getSections(int $collectionId): array
+    {
+        return $this->memo->remember('sections_' . $collectionId, $collectionId, fn (): array => $this->sections->getAllByCollection($collectionId)
+            ->map($this->mapper->section(...))->values()->all());
+    }
+
     public function getPath(int $collectionId, int $id): array
     {
         return $this->getPaths($collectionId, [$id])[$id] ?? [];
@@ -55,12 +60,12 @@ final readonly class CollectionSectionsApi implements CollectionSectionsApiInter
 
     public function getPaths(int $collectionId, array $ids): array
     {
-        $byId = $this->sections->getAllByCollection($collectionId)->keyBy('id');
-        $tree = SectionTree::of($byId);
+        $byId = array_column($this->getSections($collectionId), null, 'id');
+        $tree = $this->mapper->sectionTree($byId);
         $paths = [];
         foreach ($ids as $id) {
             if ($tree->has($id)) {
-                $paths[$id] = array_map(fn (int $sectionId): CollectionSectionDTO => $this->mapper->section($byId[$sectionId]), [
+                $paths[$id] = array_map(static fn (int $sectionId): CollectionSectionDTO => $byId[$sectionId], [
                     ...array_reverse($tree->ancestorsOf($id)), $id,
                 ]);
             }

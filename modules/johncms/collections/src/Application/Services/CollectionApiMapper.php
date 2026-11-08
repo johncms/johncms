@@ -14,6 +14,7 @@ use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
+use Johncms\Modules\Collections\Domain\Services\SectionTree;
 
 final class CollectionApiMapper
 {
@@ -33,6 +34,20 @@ final class CollectionApiMapper
             $collection->owner_module,
             $collection->declaration_key
         );
+    }
+
+    /** @param iterable<CollectionSectionDTO> $sections All the sections of one collection. */
+    public function sectionTree(iterable $sections): SectionTree
+    {
+        $parents = $names = $sorts = $codes = $active = [];
+        foreach ($sections as $section) {
+            $parents[$section->id] = $section->parent ?? 0;
+            $names[$section->id] = $section->name;
+            $sorts[$section->id] = $section->sort;
+            $codes[$section->id] = $section->code;
+            $active[$section->id] = $section->active;
+        }
+        return new SectionTree(parents: $parents, names: $names, sorts: $sorts, codes: $codes, active: $active);
     }
 
     public function section(ContentCollectionSection $section): CollectionSectionDTO

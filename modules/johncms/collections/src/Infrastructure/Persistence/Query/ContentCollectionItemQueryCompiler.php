@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Query\Expression;
 use Johncms\Modules\Collections\Domain\Enums\FilterOperator;
-use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
+use Johncms\Modules\Collections\Domain\Query\CollectionFieldDefinition;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
 use Johncms\Modules\Collections\Domain\Query\CollectionTextSearchDTO;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
@@ -33,7 +33,7 @@ final class ContentCollectionItemQueryCompiler
     private const ITEMS_TABLE = 'collection_items';
     private const VALUES_TABLE = 'collection_item_values';
 
-    /** @param array<string, ContentCollectionField> $fields */
+    /** @param array<string, CollectionFieldDefinition> $fields */
     public function validate(ContentCollectionItemQuery $query, array $fields): void
     {
         (new ItemQueryValidator())->validate($query, $fields);
@@ -41,7 +41,7 @@ final class ContentCollectionItemQueryCompiler
 
     /**
      * @param Builder<ContentCollectionItem> $builder
-     * @param array<string, ContentCollectionField> $fields collection fields keyed by code
+     * @param array<string, CollectionFieldDefinition> $fields collection fields keyed by code
      */
     public function applyFilters(Builder $builder, ContentCollectionItemQuery $query, array $fields): void
     {
@@ -59,7 +59,7 @@ final class ContentCollectionItemQueryCompiler
 
     /**
      * @param Builder<ContentCollectionItem> $builder
-     * @param array<string, ContentCollectionField> $fields collection fields keyed by code
+     * @param array<string, CollectionFieldDefinition> $fields collection fields keyed by code
      */
     public function applyOrder(Builder $builder, ContentCollectionItemQuery $query, array $fields): void
     {
@@ -108,7 +108,7 @@ final class ContentCollectionItemQueryCompiler
     /**
      * @param Builder<ContentCollectionItem> $builder
      */
-    private function applyCustomFieldFilter(Builder $builder, FieldFilterDTO $filter, ContentCollectionField $field): void
+    private function applyCustomFieldFilter(Builder $builder, FieldFilterDTO $filter, CollectionFieldDefinition $field): void
     {
         $valueColumn = $field->type->valueColumn();
 
@@ -146,7 +146,7 @@ final class ContentCollectionItemQueryCompiler
      *
      * @param Builder<ContentCollectionItem> $builder
      */
-    private function applyCustomFieldOrder(Builder $builder, ContentCollectionField $field, OrderByDTO $order): void
+    private function applyCustomFieldOrder(Builder $builder, CollectionFieldDefinition $field, OrderByDTO $order): void
     {
         $valueColumn = $field->type->valueColumn();
 

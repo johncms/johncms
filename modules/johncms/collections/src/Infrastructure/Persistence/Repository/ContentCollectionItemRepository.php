@@ -13,9 +13,9 @@ use Illuminate\Database\Query\Expression;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
 use Johncms\Modules\Collections\Domain\Enums\ItemStatus;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
-use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
+use Johncms\Modules\Collections\Domain\Query\CollectionFieldDefinition;
 use Johncms\Modules\Collections\Domain\Query\CollectionTextSearchDTO;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
@@ -70,11 +70,11 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
             ->pluck('created_by')->map(intval(...))->all();
     }
 
-    public function getPublishedSectionStats(int $collectionId, DateTimeImmutable $at): array
+    public function getPublishedSectionStats(int $collectionId, DateTimeImmutable $at, ?SectionTree $sections = null): array
     {
         $query = ContentCollectionItem::query();
         $query->where('collection_id', $collectionId)->whereNotNull('section_id');
-        $this->publication->apply($query, $collectionId, $at);
+        $this->publication->apply(builder: $query, collectionId: $collectionId, at: $at, sections: $sections);
         $stats = [];
         $rows = $query->toBase()->groupBy('section_id')->get([
             'section_id',
@@ -201,10 +201,10 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
         return $query->orderBy('id')->cursor();
     }
 
-    public function findVisibleByCode(int $collectionId, ?int $sectionId, string $code): ?ContentCollectionItem
+    public function findVisibleByCode(int $collectionId, ?int $sectionId, string $code, ?SectionTree $sections = null): ?ContentCollectionItem
     {
         $query = ContentCollectionItem::query()->with(['values' => static fn ($values) => $values->orderBy('sort')->orderBy('id'), 'values.field'])->where('code', $code)->where('section_id', $sectionId);
-        $this->publication->apply($query, $collectionId, new DateTimeImmutable('now', new DateTimeZone('UTC')));
+        $this->publication->apply(builder: $query, collectionId: $collectionId, at: new DateTimeImmutable('now', new DateTimeZone('UTC')), sections: $sections);
         return $query->first();
     }
 
@@ -216,10 +216,10 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
         return $query->first();
     }
 
-    public function findVisibleById(int $collectionId, int $id): ?ContentCollectionItem
+    public function findVisibleById(int $collectionId, int $id, ?SectionTree $sections = null): ?ContentCollectionItem
     {
         $query = ContentCollectionItem::query()->with(['values' => static fn ($values) => $values->orderBy('sort')->orderBy('id'), 'values.field'])->where('id', $id);
-        $this->publication->apply($query, $collectionId, new DateTimeImmutable('now', new DateTimeZone('UTC')));
+        $this->publication->apply(builder: $query, collectionId: $collectionId, at: new DateTimeImmutable('now', new DateTimeZone('UTC')), sections: $sections);
         return $query->first();
     }
 
@@ -308,7 +308,7 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
      * Builds the base query: collection, section and the active/publish window,
      * plus the query's filter clauses (base columns and custom EAV fields).
      *
-     * @param array<string, ContentCollectionField> $fields
+     * @param array<string, CollectionFieldDefinition> $fields
      * @return Builder<ContentCollectionItem>
      */
     private function baseQuery(ContentCollectionItemQuery $query, array $fields): Builder
@@ -319,7 +319,7 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
             $builder->whereNull('section_id');
         } elseif ($query->sectionId !== null) {
             if ($query->includeSubsections) {
-                $tree = SectionTree::of(ContentCollectionSection::query()->where('collection_id', $query->collectionId)->get());
+                $tree = $query->structure->sections ?? SectionTree::of(ContentCollectionSection::query()->where('collection_id', $query->collectionId)->get());
                 $builder->whereIn('section_id', $tree->subtreeOf($query->sectionId));
             } else {
                 $builder->where('section_id', $query->sectionId);
@@ -327,7 +327,7 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
         }
 
         if ($query->onlyActive) {
-            $this->publication->apply($builder, $query->collectionId, $query->at);
+            $this->publication->apply(builder: $builder, collectionId: $query->collectionId, at: $query->at, sections: $query->structure?->sections);
         }
 
         $this->compiler->validate($query, $fields);
@@ -337,14 +337,16 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
     }
 
     /**
-     * Field definitions used to validate references and selected custom values.
+     * Field definitions used to validate references and selected custom values: those the query
+     * brings, read otherwise.
      *
-     * @return array<string, ContentCollectionField>
+     * @return array<string, CollectionFieldDefinition>
      */
     private function resolveFields(ContentCollectionItemQuery $query): array
     {
-        return $this->fieldRepository->getByCollection($query->collectionId)
+        return $query->structure->fields ?? $this->fieldRepository->getByCollection($query->collectionId)
             ->keyBy('code')
+            ->map(CollectionFieldDefinition::of(...))
             ->all();
     }
 }
