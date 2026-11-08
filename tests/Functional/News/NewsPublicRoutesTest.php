@@ -92,6 +92,7 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         self::assertNotNull($document->querySelector('.site-news-card__preview a[href="https://example.com/notes"]'));
         self::assertNotNull($document->querySelector('.site-news-card a[href="/news/releases/release.html#article-comments"]'));
         self::assertNull($document->querySelector('.site-news-card > a'), 'Rich previews must not be wrapped in an article link.');
+        self::assertNotNull($document->querySelector('.site-news-card__title a.stretched-link[href="/news/releases/release.html"]'), 'The title link makes the whole card clickable.');
         $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/releases/')->getContent(), LIBXML_NOERROR);
         self::assertStringContainsString('Release notes', $document->querySelector('.site-news__description')->textContent);
     }

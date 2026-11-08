@@ -63,44 +63,45 @@
   &__dot { inline-size: .375rem; block-size: .375rem; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 25%, transparent); }
 }
 
+// Section and article cards are Bootstrap cards: the theme gives them colours and the border,
+// the modifiers tune the spacing through the card variables and add the hover state.
 .site-news-section {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: .875rem;
-  align-items: center;
-  padding: .75rem .875rem;
-  border: 1px solid var(--border);
-  border-radius: .625rem;
-  background: var(--bg-elev);
-  color: inherit;
+  --bs-card-spacer-y: .75rem;
+  --bs-card-spacer-x: .875rem;
+  --bs-card-border-radius: .625rem;
   text-decoration: none;
   transition: border-color .12s, background-color .1s;
-  &:hover { border-color: var(--border-strong); background: color-mix(in oklab, var(--bg-elev) 60%, var(--bg-inset)); color: inherit; }
+  &:hover, &:focus-visible { border-color: var(--border-strong); background: color-mix(in oklab, var(--bg-elev) 60%, var(--bg-inset)); }
+  &__body { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: .875rem; align-items: center; }
   &__icon { display: grid; place-items: center; inline-size: 2.125rem; block-size: 2.125rem; border: 1px solid var(--border); border-radius: .5rem; background: var(--bg-inset); color: var(--accent); }
   &__main { display: flex; flex-direction: column; gap: .125rem; min-inline-size: 0; }
   &__head { display: flex; align-items: center; gap: .5rem; min-inline-size: 0; }
   &__title { font-size: .90625rem; font-weight: 700; color: var(--fg); overflow-wrap: anywhere; }
-  &:hover &__title { color: var(--accent); }
+  &:hover &__title, &:focus-visible &__title { color: var(--accent); }
   &__summary { color: var(--fg-muted); font-size: .78125rem; overflow-wrap: anywhere; }
   &__last { color: var(--fg-dim); font-family: var(--bs-font-monospace); font-size: .6875rem; white-space: nowrap; }
 }
 
 @media (max-width: 520px) {
-  .site-news-section { grid-template-columns: auto minmax(0, 1fr); gap: .625rem; }
+  .site-news-section__body { grid-template-columns: auto minmax(0, 1fr); gap: .625rem; }
   .site-news-section__last { grid-column: 1 / -1; padding-inline-start: 2.75rem; }
 }
 
+// The title link stretches over the card; interactive content of the card is lifted above that layer.
 .site-news-card {
-  min-inline-size: 0;
-  padding: 1rem 1.125rem;
-  border: 1px solid var(--border);
-  border-radius: .75rem;
-  background: var(--bg-elev);
+  --bs-card-spacer-y: 1rem;
+  --bs-card-spacer-x: 1.125rem;
+  --bs-card-border-radius: .75rem;
+  transition: border-color .12s;
+  &:hover, &:has(.stretched-link:focus-visible) { border-color: var(--accent); }
   &__title { margin: 0; font-size: .9375rem; font-weight: 700; line-height: 1.4; overflow-wrap: anywhere; }
   &__title a { color: var(--fg); text-decoration: none; }
-  &__title a:hover { color: var(--accent); }
+  &__title a:focus-visible { outline: none; }
+  &:hover &__title a, &__title a:focus-visible { color: var(--accent); }
   &__preview { margin-block-start: .375rem; color: var(--fg-muted); font-size: .875rem; line-height: 1.6; overflow-wrap: anywhere; overflow: auto; }
   &__preview > :last-child { margin-block-end: 0; }
+  &__preview :is(a, iframe, video, audio, button, input, select, textarea, details, summary),
+  &__meta a { position: relative; z-index: 2; }
   &__meta { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .875rem; margin-block-start: .75rem; font-family: var(--bs-font-monospace); font-size: .6875rem; color: var(--fg-dim); }
   &__stat, &__rating { display: inline-flex; align-items: center; gap: .25rem; color: inherit; text-decoration: none; }
   a.site-news-card__stat:hover { color: var(--accent); }
@@ -113,7 +114,7 @@
 .site-news img, .site-news iframe { max-inline-size: 100%; }
 
 @media (max-width: 520px) {
-  .site-news-card { padding: .875rem 1rem; }
+  .site-news-card { --bs-card-spacer-y: .875rem; --bs-card-spacer-x: 1rem; }
   .site-news-card__date { flex-basis: 100%; margin-inline-start: 0; }
 }
 
