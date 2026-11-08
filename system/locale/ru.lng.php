@@ -447,6 +447,7 @@ The number is shown so that support for the old scheme is not removed while it i
       'Disconnect from name' => 'Отключить связь с названием',
       'Link to name' => 'Связать с названием',
       'Generate code from name' => 'Сформировать код из названия',
+      'Close' => 'Закрыть',
     ),
   ),
 );

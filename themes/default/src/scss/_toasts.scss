@@ -1,0 +1,89 @@
+// Toasts (src/js/toast.js): a stack at the top centre, above the shell, where a result is seen
+// wherever the action was taken. Each toast takes the color of its kind for the icon and the bar
+// that counts down to its closing.
+
+.site-toasts {
+  position: fixed;
+  inset-block-start: .75rem;
+  inset-inline: 0;
+  z-index: 1090;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  inline-size: min(24rem, calc(100vw - 2rem));
+  margin-inline: auto;
+  pointer-events: none;
+}
+
+.site-toast {
+  --toast-color: var(--info);
+
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: .75rem;
+  align-items: start;
+  padding: .875rem .75rem 1rem 1rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: .625rem;
+  background: var(--bg-elev);
+  color: var(--fg);
+  box-shadow: 0 .75rem 2rem -.75rem rgb(0 0 0 / .3), 0 .125rem .375rem rgb(0 0 0 / .08);
+  font-size: .875rem;
+  line-height: 1.45;
+  pointer-events: auto;
+  animation: site-toast-in .22s ease-out;
+
+  &--success { --toast-color: var(--accent); }
+  &--warning { --toast-color: var(--warn); }
+  &--error { --toast-color: var(--danger); }
+  &--leaving { animation: site-toast-out .18s ease-in forwards; }
+
+  &__icon { margin-block-start: .0625rem; color: var(--toast-color); }
+  &__text { overflow-wrap: anywhere; }
+  &__close {
+    display: grid;
+    place-items: center;
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    margin: -.125rem -.125rem 0 0;
+    padding: 0;
+    border: 0;
+    border-radius: .375rem;
+    background: transparent;
+    color: var(--fg-dim);
+    &:hover { background: var(--bg-inset); color: var(--fg); }
+    &:focus-visible { outline: 2px solid var(--accent); outline-offset: 0; }
+  }
+  &__close-icon { inline-size: 1rem; block-size: 1rem; }
+  &__bar {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    block-size: 3px;
+    background: var(--toast-color);
+    transform-origin: left;
+    animation: site-toast-bar linear forwards;
+  }
+
+  // The time to read stops while the toast is being looked at or the page is away.
+  &:hover &__bar, &:focus-within &__bar, .site-toasts--paused &__bar { animation-play-state: paused; }
+}
+
+@keyframes site-toast-in {
+  from { opacity: 0; transform: translateY(-.75rem) scale(.98); }
+}
+
+@keyframes site-toast-out {
+  to { opacity: 0; transform: translateY(-.5rem); }
+}
+
+@keyframes site-toast-bar {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-toast, .site-toast--leaving { animation: none; }
+}

@@ -13,6 +13,7 @@
     @var comment_error   string|null
     @var comment_message string|null
     @var comment_added   int|null
+    @var comment_delete_error string|null
     @var comment_text    string
     @var edit_url        string|null
 #}
@@ -94,6 +95,7 @@
                     error: comment_error,
                     message: comment_message,
                     added: comment_added,
+                    delete_error: comment_delete_error,
                     text: comment_text,
                 } only %}
             </div>

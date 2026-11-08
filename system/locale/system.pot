@@ -134,6 +134,7 @@ msgstr ""
 #: themes/default/templates/components/site-topbar.twig:13
 #: themes/default/templates/components/site-topbar.twig:39
 #: themes/default/templates/components/style-guide/examples/dropdown-menu.twig:20
+#: themes/default/templates/components/toasts.twig:6
 msgid "Notifications"
 msgstr ""
 
@@ -433,6 +434,7 @@ msgstr ""
 #: system/src/Http/EditorImageUploadResponder.php:92
 #: system/src/Http/ExceptionResponseFactory.php:128
 #: themes/default/templates/components/style-guide/examples/messages.twig:11
+#: themes/default/templates/components/style-guide/examples/toasts.twig:6
 msgid "Access denied"
 msgstr ""
 
@@ -786,6 +788,7 @@ msgstr ""
 #: system/src/Comments.php:201
 #: system/src/Comments.php:266
 #: system/src/Comments.php:267
+#: themes/default/templates/components/style-guide/examples/button-states.twig:20
 #: themes/default/templates/pages/comments-list.twig:106
 msgid "Reply"
 msgstr ""
@@ -798,22 +801,20 @@ msgstr ""
 #: system/src/Comments.php:372
 #: system/src/Http/EditorImageUploadResponder.php:60
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionBulkAdminController.php:42
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFilesController.php:23
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:209
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:217
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:447
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:459
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionRelationsController.php:22
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionTagsController.php:22
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:36
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFilesController.php:24
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:410
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:422
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionRelationsController.php:23
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionTagsController.php:23
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:37
 msgid "Wrong data"
 msgstr ""
 
 #: system/src/Comments.php:292
 #: system/src/Comments.php:358
 #: system/src/Comments.php:359
-#: themes/default/templates/components/style-guide/examples/button-states.twig:10
-#: themes/default/templates/components/style-guide/examples/button-states.twig:12
+#: themes/default/templates/components/style-guide/examples/button-states.twig:11
+#: themes/default/templates/components/style-guide/examples/button-states.twig:13
 #: themes/default/templates/pages/comments-list.twig:118
 msgid "Edit"
 msgstr ""
@@ -825,6 +826,7 @@ msgstr ""
 #: system/src/Comments.php:384
 #: system/src/Comments.php:418
 #: system/src/Comments.php:419
+#: themes/default/templates/components/style-guide/examples/button-states.twig:22
 #: themes/default/templates/pages/comments-delete.twig:16
 #: themes/default/templates/pages/comments-list.twig:121
 msgid "Delete"
@@ -993,8 +995,7 @@ msgid "Style guide"
 msgstr ""
 
 #: system/src/Http/EditorImageUploadResponder.php:59
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:166
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:36
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:37
 msgid "The file is too large for the server to accept"
 msgstr ""
 
@@ -1002,8 +1003,7 @@ msgstr ""
 #: system/src/Image/StoreEditorImageUseCase.php:118
 #: system/src/Image/StoreEditorImageUseCase.php:139
 #: system/src/Image/StoreEditorImageUseCase.php:191
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:207
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:49
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:50
 msgid "Error uploading file"
 msgstr ""
 
@@ -1227,22 +1227,27 @@ msgid "Exit"
 msgstr ""
 
 #: themes/default/templates/admin/components/ui/editor.twig:16
+#: modules/johncms/collections/templates/admin/components/relation-picker.twig:18
 msgid "Please wait..."
 msgstr ""
 
 #: themes/default/templates/admin/components/ui/editor.twig:17
+#: themes/default/templates/components/editor.twig:19
 msgid "Wait for the image upload to finish."
 msgstr ""
 
 #: themes/default/templates/admin/components/ui/editor.twig:18
+#: themes/default/templates/components/editor.twig:20
 msgid "The uploaded image could not be attached. Remove it and upload it again."
 msgstr ""
 
 #: themes/default/templates/admin/components/ui/editor.twig:19
+#: themes/default/templates/components/editor.twig:21
 msgid "Could not load the editor. You can edit the HTML below."
 msgstr ""
 
 #: themes/default/templates/admin/components/ui/editor.twig:25
+#: themes/default/templates/components/editor.twig:27
 msgid "Text"
 msgstr ""
 
@@ -1327,7 +1332,7 @@ msgstr ""
 
 #: themes/default/templates/components/sidebar-main-menu.twig:10
 #: themes/default/templates/components/site-topbar.twig:4
-#: themes/default/templates/layouts/default.twig:12
+#: themes/default/templates/layouts/default.twig:14
 msgid "Menu"
 msgstr ""
 
@@ -1417,7 +1422,7 @@ msgstr ""
 #: themes/default/templates/components/style-guide/examples/cards.twig:2
 #: themes/default/templates/components/style-guide/examples/content-card.twig:2
 #: themes/default/templates/pages/style-guide.twig:17
-#: themes/default/templates/pages/style-guide.twig:52
+#: themes/default/templates/pages/style-guide.twig:53
 msgid "Cards"
 msgstr ""
 
@@ -1505,14 +1510,17 @@ msgid "Click an icon to copy its Twig markup."
 msgstr ""
 
 #: themes/default/templates/components/style-guide/examples/messages.twig:2
+#: themes/default/templates/components/style-guide/examples/toasts.twig:3
 msgid "Changes saved successfully."
 msgstr ""
 
 #: themes/default/templates/components/style-guide/examples/messages.twig:5
+#: themes/default/templates/components/style-guide/examples/toasts.twig:4
 msgid "This is an informational message."
 msgstr ""
 
 #: themes/default/templates/components/style-guide/examples/messages.twig:8
+#: themes/default/templates/components/style-guide/examples/toasts.twig:5
 msgid "Check the entered data before continuing."
 msgstr ""
 
@@ -1524,6 +1532,10 @@ msgstr ""
 #: themes/default/templates/pages/style-guide.twig:12
 #: themes/default/templates/pages/style-guide.twig:31
 msgid "Buttons"
+msgstr ""
+
+#: themes/default/templates/components/toasts.twig:7
+msgid "Close"
 msgstr ""
 
 #: themes/default/templates/emails/changed-email-notification.twig:9
@@ -1686,20 +1698,20 @@ msgstr ""
 msgid "If you receive this mail by mistake, just ignore this letter"
 msgstr ""
 
-#: themes/default/templates/layouts/default.twig:10
+#: themes/default/templates/layouts/default.twig:12
 msgid "Skip to content"
 msgstr ""
 
-#: themes/default/templates/layouts/default.twig:15
-#: themes/default/templates/layouts/default.twig:34
+#: themes/default/templates/layouts/default.twig:17
+#: themes/default/templates/layouts/default.twig:36
 msgid "Close menu"
 msgstr ""
 
-#: themes/default/templates/layouts/default.twig:30
+#: themes/default/templates/layouts/default.twig:32
 msgid "Online"
 msgstr ""
 
-#: themes/default/templates/layouts/default.twig:60
+#: themes/default/templates/layouts/default.twig:63
 msgid "Scroll page"
 msgstr ""
 
@@ -1764,21 +1776,21 @@ msgid "Messages"
 msgstr ""
 
 #: themes/default/templates/pages/style-guide.twig:16
-#: themes/default/templates/pages/style-guide.twig:48
+#: themes/default/templates/pages/style-guide.twig:49
 msgid "Badges"
 msgstr ""
 
 #: themes/default/templates/pages/style-guide.twig:18
-#: themes/default/templates/pages/style-guide.twig:57
+#: themes/default/templates/pages/style-guide.twig:58
 msgid "Tables"
 msgstr ""
 
 #: themes/default/templates/pages/style-guide.twig:19
-#: themes/default/templates/pages/style-guide.twig:61
+#: themes/default/templates/pages/style-guide.twig:62
 msgid "Pagination"
 msgstr ""
 
 #: themes/default/templates/pages/style-guide.twig:20
-#: themes/default/templates/pages/style-guide.twig:65
+#: themes/default/templates/pages/style-guide.twig:66
 msgid "Dropdown menus"
 msgstr ""

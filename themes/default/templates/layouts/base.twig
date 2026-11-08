@@ -59,6 +59,7 @@
 </head>
 <body class="{{ app.color_scheme }}">
 {% block body %}{% endblock %}
+{% include '@theme/components/toasts.twig' only %}
 {% block scripts %}
     {% if app.locale != 'en' and asset_exists('js/flatpickr/' ~ app.locale ~ '.js') %}
         {# The bundle is a deferred module, so the locale has to wait for it to define flatpickr. #}

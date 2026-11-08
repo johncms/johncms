@@ -204,7 +204,17 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         $fragment = $this->fragment('/news/entry.html', $live);
         self::assertSame('comment-' . $comment, $fragment->querySelector('[data-live-list-target]')?->getAttribute('id'), 'The comment just added is the one to bring into view.');
         self::assertNull($fragment->querySelector('[data-live-list-region="comment-error"] .alert'));
+        self::assertNotNull($fragment->querySelector('[data-toast="success"][data-toast-announce]'), 'The comment shows itself: the message is only read out.');
         self::assertNull($this->fragment('/news/entry.html', $live)->querySelector('[data-live-list-target]'), 'Only the page right after the form marks it.');
+
+        $this->postForm('/news/comments/del/', ['comment_id' => (string) $comment, 'article_id' => (string) $id, 'page' => '1'], FunctionalUserFactory::create());
+        $fragment = $this->fragment('/news/entry.html', $live);
+        self::assertNotNull($fragment->querySelector('[data-toast="error"]'), 'A refused deletion is a toast: whoever deletes may have no form.');
+        self::assertNull($fragment->querySelector('[data-live-list-region="comment-error"] .alert'));
+        $this->postForm('/news/comments/del/', ['comment_id' => (string) $comment, 'article_id' => (string) $id, 'page' => '1'], $user);
+        $toast = $this->fragment('/news/entry.html', $live)->querySelector('[data-toast="success"]');
+        self::assertNotNull($toast);
+        self::assertFalse($toast->hasAttribute('data-toast-announce'), 'A deleted comment leaves nothing to show the result: the toast does.');
 
         $this->postForm('/news/comments/add/' . $id, ['text' => '  '], $user);
         $fragment = $this->fragment('/news/entry.html', $live);

@@ -248,7 +248,8 @@
   border-radius: .75rem;
   background: var(--bg-elev);
   scroll-margin-block-start: 5rem;
-  &:target, &[data-live-list-target] { border-color: var(--accent); }
+  // The comment just added, or the one a link leads to, lights up for a moment and keeps its border.
+  &:target, &[data-live-list-target] { border-color: var(--accent); animation: site-news-comment-shown 1.6s ease-out; }
   &__avatar { position: relative; align-self: start; }
   &__avatar img { display: block; inline-size: 2.5rem; block-size: 2.5rem; border-radius: .625rem; object-fit: cover; }
   &__online { position: absolute; inset-block-end: -.125rem; inset-inline-end: -.125rem; inline-size: .625rem; block-size: .625rem; border: 2px solid var(--bg-elev); border-radius: 50%; background: var(--accent); }
@@ -270,6 +271,14 @@
   &__actions { display: flex; flex-wrap: wrap; align-items: center; gap: .375rem; margin-inline-start: auto; }
   &__actions form { display: contents; }
   &__delete { --bs-btn-hover-color: var(--danger); --bs-btn-hover-border-color: var(--danger); --bs-btn-hover-bg: var(--danger-soft); }
+}
+
+@keyframes site-news-comment-shown {
+  from { background-color: color-mix(in oklab, var(--accent) 16%, var(--bg-elev)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-news-comment:target, .site-news-comment[data-live-list-target] { animation: none; }
 }
 
 .site-news-compose {

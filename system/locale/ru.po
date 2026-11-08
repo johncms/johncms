@@ -1614,3 +1614,6 @@ msgstr "Связать с названием"
 
 msgid "Generate code from name"
 msgstr "Сформировать код из названия"
+
+msgid "Close"
+msgstr "Закрыть"

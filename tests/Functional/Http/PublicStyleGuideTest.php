@@ -48,7 +48,9 @@ final class PublicStyleGuideTest extends FunctionalTestCase
         self::assertNotNull($page->querySelector('#typography'));
         self::assertNotNull($page->querySelector('#buttons .btn-primary[disabled]'));
         self::assertSame('noindex,follow', $page->querySelector('meta[name="robots"]')?->getAttribute('content'));
-        self::assertCount(14, $page->querySelectorAll('.site-guide__code'));
+        self::assertCount(15, $page->querySelectorAll('.site-guide__code'));
+        self::assertCount(4, $page->querySelectorAll('#messages [data-toast-show]'));
+        self::assertNotNull($page->querySelector('[data-toasts][aria-live="polite"]'), 'The stack of toasts is on every public page from the start.');
         self::assertNotNull($page->querySelector('#dropdowns details[data-site-popover] .site-popover__panel'));
         self::assertNotNull($page->querySelector('#colors [data-site-palette] [data-contrast-pair]'));
         self::assertNotNull($page->querySelector('#pagination .pagination .page-item.active'));

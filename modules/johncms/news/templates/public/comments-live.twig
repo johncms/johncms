@@ -13,6 +13,7 @@
     @var comment_message     string|null
     @var comment_error       string|null
     @var comment_added       int|null
+    @var comment_delete_error string|null
 #}
 <title>{% include '@theme/components/document-title.twig' with {title: title} only %}</title>
 {% include '@news/public/components/comments-feed.twig' with {
@@ -24,6 +25,7 @@
     pagination: comments_pagination,
     message: comment_message,
     added: comment_added,
+    delete_error: comment_delete_error,
 } only %}
 {% include '@news/public/components/comment-error.twig' with {error: comment_error} only %}
 {% include '@news/public/components/comments-stat.twig' with {count: comments_total} only %}

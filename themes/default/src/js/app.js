@@ -18,6 +18,7 @@ import '../scss/app.scss';
 import './jquery.magnific-popup';
 import './menu';
 import './preferences';
+import './toast';
 import './editor';
 import './live-list';
 import './news';

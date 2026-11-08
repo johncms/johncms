@@ -13,6 +13,7 @@
     @var error      string|null What went wrong with the last comment.
     @var message    string|null What happened to the last comment.
     @var added      int|null    The comment just added, which the live list scrolls to.
+    @var delete_error string|null Why the last comment could not be deleted.
     @var text       string The text to put back into the form after an error.
 #}
 <section class="site-news-comments" id="article-comments" aria-labelledby="article-comments-title" data-live-list>
@@ -25,6 +26,7 @@
         pagination: pagination,
         message: message,
         added: added,
+        delete_error: delete_error,
     } only %}
 
     {% if can_write %}

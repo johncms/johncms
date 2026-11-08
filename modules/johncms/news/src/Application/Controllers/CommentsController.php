@@ -24,6 +24,7 @@ final readonly class CommentsController
     public const string ERROR = 'news_comment_error';
     public const string TEXT = 'news_comment_text';
     public const string ADDED = 'news_comment_added';
+    public const string DELETE_ERROR = 'news_comment_delete_error';
 
     public function __construct(
         private NewsDiscussionServiceInterface $discussion,
@@ -69,7 +70,8 @@ final readonly class CommentsController
         try {
             $articleId = $this->discussion->deleteComment($id);
         } catch (NewsDiscussionAccessDeniedException | NewsDiscussionValidationException | NewsItemNotFoundException $exception) {
-            $this->session->flash(self::ERROR, $exception->getMessage());
+            // Not beside the form: a moderator who cannot write has none.
+            $this->session->flash(self::DELETE_ERROR, $exception->getMessage());
             redirect($this->articleUrl($request->bodyInt('article_id')) . '#article-comments');
         }
         $this->session->flash(self::MESSAGE, d__('news', 'The comment was deleted successfully'));

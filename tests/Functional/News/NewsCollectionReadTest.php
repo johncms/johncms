@@ -85,6 +85,7 @@ final class NewsCollectionReadTest extends FunctionalTestCase
             'comment_error' => null,
             'comment_message' => null,
             'comment_added' => null,
+            'comment_delete_error' => null,
             'comment_text' => '',
             'author_articles' => 0,
             'can_write' => false,

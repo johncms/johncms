@@ -112,6 +112,21 @@ Modules contribute home-page content through `HomepageBlockProviderInterface`. T
 below the section tiles. Weights still order blocks within each position. Existing providers
 need no change and keep full-width rendering unless they opt into the shared content card.
 
+## Toasts (the public site)
+
+The result of an action — saved, deleted, refused — is a toast at the top centre of the page,
+seen wherever the action was taken: not an alert above a list the user may be far below. The
+server asks for one with `@theme/components/toast.twig` (`message`, `type`: success, info,
+warning or error); without the script it stays an alert in place, with it `src/js/toast.js` takes
+it out and shows it, both on the page as it loads and in a fragment of a live list. A script
+calls `toast(message, {type})` from `src/js/toast.js`. The stack lives in `layouts/base.twig`.
+
+* **When the page shows the result itself**, the comment just added for instance, pass
+  `announce: true`: the message is only read out to a screen reader.
+* **An error of a form** stays beside the form, where the user is; a toast is for an action
+  that has no form to answer at, or whose user may have none.
+* They belong to the public bundle: the panel does not load them; toasts there are built in its own bundle.
+
 ## Bootstrap components
 
 When a block of a page is a card, a list group, a dropdown, a modal or another Bootstrap

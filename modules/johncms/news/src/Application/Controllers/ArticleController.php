@@ -105,6 +105,7 @@ final readonly class ArticleController
             'comments_pagination' => $pagination->hasPages() ? $pagination->render() : null,
             'comment_message' => $this->session->getFlash(CommentsController::MESSAGE),
             'comment_error' => $this->session->getFlash(CommentsController::ERROR),
+            'comment_delete_error' => $this->session->getFlash(CommentsController::DELETE_ERROR),
             'comment_added' => $this->session->getFlash(CommentsController::ADDED),
             // The live list keeps the text in the editor, yet the flash is read so that it is not
             // put back into the form of the next page.

@@ -1,0 +1,7 @@
+{#
+    The stack of toasts at the top of the page, filled by src/js/toast.js. It is on the page from
+    the start and stays there, so a screen reader announces what is added to it. The toasts carry
+    no markup of their own here: the script builds them, the labels and the icons come from here.
+#}
+<section class="site-toasts" aria-label="{{ d__('system', 'Notifications') }}" aria-live="polite" data-toasts
+    data-close-label="{{ d__('system', 'Close') }}" data-icon-sprite="{{ asset('icons/public.svg', true) }}"></section>

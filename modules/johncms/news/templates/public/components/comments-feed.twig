@@ -9,15 +9,22 @@
     @var offset     int Comments before the current page.
     @var page       int
     @var pagination \Twig\Markup|null
-    @var message    string|null What happened to the last comment.
-    @var added      int|null    The comment just added.
+    @var message      string|null What happened to the last comment.
+    @var added        int|null    The comment just added: it shows the result itself, so the
+                                  message is only read out.
+    @var delete_error string|null Why the last comment could not be deleted.
 #}
 <div class="site-news-comments__region" data-live-list-region="comments">
     <h2 class="site-news__heading" id="article-comments-title" tabindex="-1" data-live-list-focus>
         {{ __('Comments') }}
         <span class="site-news__count">{{ total|format_number }}</span>
     </h2>
-    {% if message %}<div class="alert alert-success" role="status">{{ message }}</div>{% endif %}
+    {% if message %}
+        {% include '@theme/components/toast.twig' with {message: message, announce: added is not null} only %}
+    {% endif %}
+    {% if delete_error %}
+        {% include '@theme/components/toast.twig' with {message: delete_error, type: 'error'} only %}
+    {% endif %}
     {% if comments is empty %}
         <div class="site-news-comments__empty">{{ __('No comments yet. Be the first.') }}</div>
     {% else %}
