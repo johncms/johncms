@@ -1,0 +1,9 @@
+{#
+    What went wrong with the last comment, above the form. A region of the live list: the form
+    keeps its text and only this message changes.
+
+    @var error string|null
+#}
+<div data-live-list-region="comment-error">
+    {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% endif %}
+</div>

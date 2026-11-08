@@ -7,23 +7,29 @@
  */
 
 /**
- * A part of a public page that follows its own links without reloading the page: the pages of a
- * discussion below an article, for instance.
+ * A part of a public page that follows its own links and sends its own forms without reloading
+ * the page: the discussion below an article, for instance.
  *
  *     <section id="article-comments" data-live-list>
  *         <div data-live-list-region="comments">… <a href="?page=2#article-comments">2</a> …</div>
- *         <form>…</form>
+ *         <form method="post" action="…" data-live-list-form>…</form>
  *     </section>
  *
- * A link inside the root to the same page asks for that address with X-Requested-With; the server
- * answers with a fragment holding the regions again, and each one replaces the region of the same
- * name. What is outside the regions, a form with an editor for instance, stays as it is. The
- * address of the page follows, so a reload, a bookmark and the back button land on the same page.
- * Once the regions are in place the root fires live-list:update, which bubbles, for what has to be
- * set up on them again.
+ * A link inside a region to another page of the same address is asked for with X-Requested-With;
+ * the server answers with a fragment holding the regions again, and each one replaces the region
+ * of the same name. A form marked data-live-list-form is posted the same way: the server answers
+ * it with its usual redirect, which the browser follows with the same header, so the fragment
+ * comes back after it. What is outside the regions, a form with an editor for instance, stays as
+ * it is. The address of the page follows, so a reload, a bookmark and the back button land on the
+ * same page. Once the regions are in place the root fires live-list:update, which bubbles, with
+ * the form that was sent, if any, for what has to be set up on them again.
  *
- * Nothing here is needed for the page to work: without the script, or when a request fails, the
- * links lead to the same addresses as plain pages.
+ * After a link the page goes to the anchor of the link, as it does when the browser follows it.
+ * After a form it stays where it is, unless the answer marks an element with data-live-list-target
+ * — the comment just added, for instance — which is then brought into view.
+ *
+ * Nothing here is needed for the page to work: without the script the links and the forms lead to
+ * the same addresses as plain pages, and a failed request falls back to them.
  */
 function initLiveList(root) {
   const path = location.pathname;
@@ -31,27 +37,36 @@ function initLiveList(root) {
   // of a comment for instance, asks for nothing.
   let shown = location.search;
   let pending = null;
+  // A form being sent is not cut off: its answer is what tells the page the text was taken.
+  let sending = false;
 
-  // The anchor of the link leads to the start of the list, as it does when the browser follows the
-  // link itself: the new page is read from its beginning.
-  function reveal(hash) {
-    const target = hash ? document.getElementById(decodeURIComponent(hash.slice(1))) : null;
-    target?.scrollIntoView({block: 'start'});
-  }
+  async function load(url, options = {}) {
+    const {form = null, submitter = null, history = 'push'} = options;
 
-  async function load(url, history) {
+    if (sending) {
+      return;
+    }
+
     if (pending) {
       pending.abort();
     }
 
+    sending = form !== null;
+
     const request = new AbortController();
     pending = request;
     root.setAttribute('aria-busy', 'true');
+    const buttons = form ? [...form.querySelectorAll('button[type="submit"], input[type="submit"]')] : [];
+    buttons.forEach(button => button.disabled = true);
     // The focus is lost with the region it is in, so it is moved to the start of the new one.
-    const hadFocus = root.contains(document.activeElement) && document.activeElement.closest('[data-live-list-region]') !== null;
+    const active = document.activeElement;
+    const hadFocus = active !== null && root.contains(active) && active.closest('[data-live-list-region]') !== null;
+    let response = null;
 
     try {
-      const response = await fetch(url, {
+      response = await fetch(url, {
+        method: form ? 'POST' : 'GET',
+        body: form ? new FormData(form, submitter) : undefined,
         headers: {'X-Requested-With': 'XMLHttpRequest'},
         credentials: 'same-origin',
         cache: 'no-store',
@@ -62,10 +77,10 @@ function initLiveList(root) {
         throw new Error('The list answered ' + response.status);
       }
 
-      // The server may have moved the request, to the last page for instance. The address of an
-      // answer carries no anchor, so the one of the link is kept.
+      // The server may have moved the request: to the last page, or back to the page after a form.
+      // The address of an answer carries no anchor, so the one of the link is kept.
       const finalUrl = new URL(response.url);
-      finalUrl.hash = url.hash;
+      finalUrl.hash = form ? '' : url.hash;
       const template = document.createElement('template');
       template.innerHTML = await response.text();
 
@@ -77,9 +92,15 @@ function initLiveList(root) {
         }
       });
 
-      if (history === 'push') {
+      const target = form ? root.querySelector('[data-live-list-target]') : null;
+
+      if (target?.id) {
+        finalUrl.hash = target.id;
+      }
+
+      if (history === 'push' && finalUrl.search !== shown) {
         window.history.pushState({liveList: true}, '', finalUrl);
-      } else if (history === 'replace') {
+      } else if (history !== 'none') {
         window.history.replaceState({liveList: true}, '', finalUrl);
       }
 
@@ -89,16 +110,31 @@ function initLiveList(root) {
         root.querySelector('[data-live-list-focus]')?.focus({preventScroll: true});
       }
 
-      if (history !== 'none') {
-        reveal(finalUrl.hash);
+      if (target) {
+        target.scrollIntoView({block: 'center'});
+      } else if (!form && history !== 'none' && url.hash) {
+        // The anchor of the link leads to the start of the list: the new page is read from its beginning.
+        document.getElementById(decodeURIComponent(url.hash.slice(1)))?.scrollIntoView({block: 'start'});
       }
 
-      root.dispatchEvent(new CustomEvent('live-list:update', {bubbles: true}));
+      root.dispatchEvent(new CustomEvent('live-list:update', {bubbles: true, detail: {form}}));
     } catch (error) {
-      if (error.name !== 'AbortError') {
+      if (error.name === 'AbortError') {
+        return;
+      }
+
+      if (!form) {
         window.location.assign(url);
+      } else if (response?.redirected) {
+        // The form was taken and only the page after it failed: it is not sent again.
+        window.location.assign(response.url);
+      } else {
+        HTMLFormElement.prototype.submit.call(form);
       }
     } finally {
+      buttons.forEach(button => button.disabled = false);
+      sending = false;
+
       if (pending === request) {
         pending = null;
         root.removeAttribute('aria-busy');
@@ -122,12 +158,25 @@ function initLiveList(root) {
     }
 
     event.preventDefault();
-    load(url, 'push');
+    load(url);
+  });
+
+  // A handler that cancels the form — a confirmation, an upload still running — has had its say:
+  // they listen on the form itself or while the event goes down.
+  root.addEventListener('submit', function (event) {
+    const form = event.target.closest('form[data-live-list-form]');
+
+    if (!form || event.defaultPrevented || form.method.toLowerCase() !== 'post') {
+      return;
+    }
+
+    event.preventDefault();
+    load(new URL(form.action, location.href), {form, submitter: event.submitter});
   });
 
   window.addEventListener('popstate', function () {
     if (location.pathname === path && location.search !== shown) {
-      load(new URL(location.href), 'none');
+      load(new URL(location.href), {history: 'none'});
     }
   });
 }

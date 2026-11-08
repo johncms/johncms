@@ -23,6 +23,7 @@ final readonly class CommentsController
     public const string MESSAGE = 'news_comment_message';
     public const string ERROR = 'news_comment_error';
     public const string TEXT = 'news_comment_text';
+    public const string ADDED = 'news_comment_added';
 
     public function __construct(
         private NewsDiscussionServiceInterface $discussion,
@@ -56,6 +57,8 @@ final readonly class CommentsController
             redirect($url . '#comment-form');
         }
         $this->session->flash(self::MESSAGE, d__('news', 'The comment was added successfully'));
+        // The anchor of the redirect does not reach the server, so a live list learns the comment from here.
+        $this->session->flash(self::ADDED, $id);
         redirect($this->pageUrl($url, $this->lastPage($article_id)) . '#comment-' . $id);
     }
 

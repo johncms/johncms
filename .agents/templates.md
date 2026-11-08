@@ -204,6 +204,20 @@ below a long text gives its pagination a fragment (`PaginationFactory::create(fr
 both the plain page and the script open it on the list; the script scrolls to that anchor and
 moves the focus to `[data-live-list-focus]` when the focus was in the replaced region.
 
+It also posts the forms marked `data-live-list-form`. The action keeps its plain contract — a
+redirect back to the page with flash messages — and `fetch` follows the redirect with the same
+header, so the fragment comes from the page controller as usual:
+
+* **The result goes into a region.** An error of the form is a region of its own beside the form
+  (`news/public/components/comment-error.twig`); the page controller reads every flash of the
+  action in both branches, so a message shown by the script does not come back on the next page.
+* **The anchor of the redirect does not reach the server.** What the page should bring into view —
+  the comment just added — is passed by a flash and marked `data-live-list-target` in the fragment.
+* **A form outside the regions is reset by its owner** on `live-list:update`, whose `detail.form`
+  is the form sent: `clearEditor()` empties an editor and its attachments.
+* **A confirmation listens in the capture phase** (`addEventListener('submit', …, true)`), so it
+  cancels the form before the script sends it; the script skips a cancelled form.
+
 ## Dialogs (the panel)
 
 A confirmation that needs data from the server (what deleting an account leaves behind) is a

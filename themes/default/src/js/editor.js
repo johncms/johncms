@@ -83,6 +83,13 @@ function initialize(field) {
     });
 }
 
+/** Empties the field once its text was sent without leaving the page: the text and its pictures. */
+export function clearEditor(field) {
+  field.querySelectorAll('input[name="attached_files[]"]').forEach(input => input.remove());
+  field.querySelector('textarea').value = '';
+  return whenEditorReady(field).then(editor => editor?.setData(''));
+}
+
 /** Puts the caret at the end of the editor and scrolls the form into view. */
 export function focusEditor(editor) {
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -248,7 +248,7 @@
   border-radius: .75rem;
   background: var(--bg-elev);
   scroll-margin-block-start: 5rem;
-  &:target { border-color: var(--accent); }
+  &:target, &[data-live-list-target] { border-color: var(--accent); }
   &__avatar { position: relative; align-self: start; }
   &__avatar img { display: block; inline-size: 2.5rem; block-size: 2.5rem; border-radius: .625rem; object-fit: cover; }
   &__online { position: absolute; inset-block-end: -.125rem; inset-inline-end: -.125rem; inline-size: .625rem; block-size: .625rem; border: 2px solid var(--bg-elev); border-radius: 50%; background: var(--accent); }

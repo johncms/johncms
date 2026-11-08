@@ -10,6 +10,7 @@
     @var page       int
     @var pagination \Twig\Markup|null
     @var message    string|null What happened to the last comment.
+    @var added      int|null    The comment just added.
 #}
 <div class="site-news-comments__region" data-live-list-region="comments">
     <h2 class="site-news__heading" id="article-comments-title" tabindex="-1" data-live-list-focus>
@@ -23,7 +24,8 @@
         <div class="site-news-comments__feed">
             {% for comment in comments %}
                 {% include '@news/public/components/comment.twig' with {
-                    comment: comment, number: offset + loop.index, article_id: article_id, page: page
+                    comment: comment, number: offset + loop.index, article_id: article_id, page: page,
+                    added: comment.id == added
                 } only %}
             {% endfor %}
         </div>

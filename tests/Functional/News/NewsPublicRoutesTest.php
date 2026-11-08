@@ -191,6 +191,27 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         self::assertSame($views, $this->api->getItem($id)->viewCount, 'Another page of comments is not another view of the article.');
     }
 
+    public function testTheLiveListLearnsTheResultOfACommentFromThePageAfterTheForm(): void
+    {
+        $id = $this->item('Public body');
+        $user = FunctionalUserFactory::create();
+        $live = ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'];
+
+        $this->postForm('/news/comments/add/' . $id, ['text' => 'Live comment'], $user);
+        $comment = (int) Capsule::table('news_comments')->where('item_id', $id)->value('id');
+        $fragment = $this->fragment('/news/entry.html', $live);
+        self::assertSame('comment-' . $comment, $fragment->querySelector('[data-live-list-target]')?->getAttribute('id'), 'The comment just added is the one to bring into view.');
+        self::assertNull($fragment->querySelector('[data-live-list-region="comment-error"] .alert'));
+        self::assertNull($this->fragment('/news/entry.html', $live)->querySelector('[data-live-list-target]'), 'Only the page right after the form marks it.');
+
+        $this->postForm('/news/comments/add/' . $id, ['text' => '  '], $user);
+        $fragment = $this->fragment('/news/entry.html', $live);
+        self::assertNotNull($fragment->querySelector('[data-live-list-region="comment-error"] .alert-danger'), 'A rejected comment is reported beside the form.');
+        self::assertNull($fragment->querySelector('[data-live-list-target]'));
+        $page = HTMLDocument::createFromString((string) $this->handleRequest('/news/entry.html', cookies: $this->actingAs($user))->getContent(), LIBXML_NOERROR);
+        self::assertNull($page->querySelector('#comment-form .alert-danger'), 'The error was shown by the live list, not again on the next page.');
+    }
+
     public function testVoteHttpContractUsesCollectionIdsAndCurrentActor(): void
     {
         $id = $this->item('Public body');
@@ -276,6 +297,12 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
     private function item(string $body, ?int $section = null, string $code = 'entry', array $tags = [], bool $active = true): int
     {
         return $this->api->addItem(new CollectionItemFormDTO($this->collection, $section, $code, $body, $active, null, null, 100, null, $body, ['tags' => $tags]));
+    }
+
+    /** @param array<string, string> $server */
+    private function fragment(string $url, array $server): HTMLDocument
+    {
+        return HTMLDocument::createFromString('<!doctype html><body>' . $this->handleRequest($url, server: $server)->getContent(), LIBXML_NOERROR);
     }
 
     /** @param array<string, mixed> $body

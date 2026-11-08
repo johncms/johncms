@@ -1,4 +1,4 @@
-import { focusEditor, insertAddressee, whenEditorReady } from './editor';
+import { clearEditor, focusEditor, insertAddressee, whenEditorReady } from './editor';
 
 // Copy the canonical article address; keep feedback beside the action.
 for (const share of document.querySelectorAll('[data-news-share]')) {
@@ -63,10 +63,19 @@ function enableCommentActions(discussion, editor) {
     });
 }
 
-// Taken on the document: forms swapped in by a live list ask as well.
+// The comment sent by the live list was taken unless the answer brought an error: the form starts empty.
+discussion?.addEventListener('live-list:update', event => {
+    const form = event.detail.form;
+    if (!form?.matches('[data-comment-form]') || discussion.querySelector('[data-live-list-region="comment-error"] .alert')) return;
+    const field = form.querySelector('[data-editor]');
+    if (field) clearEditor(field);
+});
+
+// Taken on the document while the event goes down, before a live list sends the form: forms
+// swapped in by a live list ask as well.
 document.addEventListener('submit', event => {
     const form = event.target.closest('form[data-confirm]');
     if (form && !window.confirm(form.dataset.confirm)) {
         event.preventDefault();
     }
-});
+}, true);

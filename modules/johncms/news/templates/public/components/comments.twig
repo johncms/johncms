@@ -1,6 +1,7 @@
 {#
     The discussion of an article, rendered with the page so that search engines see it. The feed
-    is a live list: its pages are swapped in place, the form stays as it is.
+    is a live list: its pages are swapped in place, and the forms are sent without leaving the
+    page, while the form with the editor stays as it is.
 
     @var article_id int
     @var comments   list<NewsCommentViewDTO> The comments of the current page.
@@ -11,6 +12,7 @@
     @var can_write  bool
     @var error      string|null What went wrong with the last comment.
     @var message    string|null What happened to the last comment.
+    @var added      int|null    The comment just added, which the live list scrolls to.
     @var text       string The text to put back into the form after an error.
 #}
 <section class="site-news-comments" id="article-comments" aria-labelledby="article-comments-title" data-live-list>
@@ -22,6 +24,7 @@
         page: page,
         pagination: pagination,
         message: message,
+        added: added,
     } only %}
 
     {% if can_write %}
@@ -30,8 +33,8 @@
                 <img class="site-news-compose__avatar" src="{{ avatar(app.user.id) }}" alt="" width="32" height="32">
                 <h3 class="site-news-compose__title" id="comment-form-title">{{ __('Write a comment') }}</h3>
             </div>
-            {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% endif %}
-            <form method="post" action="/news/comments/add/{{ article_id }}/">
+            {% include '@news/public/components/comment-error.twig' with {error: error} only %}
+            <form method="post" action="/news/comments/add/{{ article_id }}/" data-live-list-form data-comment-form>
                 <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                 {% include '@theme/components/editor.twig' with {
                     name: 'text',

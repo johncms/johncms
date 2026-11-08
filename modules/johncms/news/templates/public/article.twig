@@ -12,6 +12,7 @@
     @var comments_pagination \Twig\Markup|null
     @var comment_error   string|null
     @var comment_message string|null
+    @var comment_added   int|null
     @var comment_text    string
     @var edit_url        string|null
 #}
@@ -94,6 +95,7 @@
                     can_write: can_write,
                     error: comment_error,
                     message: comment_message,
+                    added: comment_added,
                     text: comment_text,
                 } only %}
             </div>

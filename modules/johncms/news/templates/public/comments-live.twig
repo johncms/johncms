@@ -9,6 +9,8 @@
     @var comments_page       int
     @var comments_pagination \Twig\Markup|null
     @var comment_message     string|null
+    @var comment_error       string|null
+    @var comment_added       int|null
 #}
 {% include '@news/public/components/comments-feed.twig' with {
     article_id: article_id,
@@ -18,4 +20,6 @@
     page: comments_page,
     pagination: comments_pagination,
     message: comment_message,
+    added: comment_added,
 } only %}
+{% include '@news/public/components/comment-error.twig' with {error: comment_error} only %}

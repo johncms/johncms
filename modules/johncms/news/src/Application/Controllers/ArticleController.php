@@ -83,13 +83,12 @@ final readonly class ArticleController
                 ? '/admin/collections/' . $article->record->collectionId . '/items/' . $article->record->id . '/edit'
                 : null,
             'can_write' => $this->access->allows(NewsPermissions::COMMENTS_POST),
-            'comment_error' => $this->session->getFlash(CommentsController::ERROR),
-            'comment_text' => $this->session->getFlash(CommentsController::TEXT) ?? '',
         ] + $this->discussionData($article, $pagination));
     }
 
     /**
-     * The comments of the requested page: the article renders them, the live list swaps them.
+     * The comments of the requested page and the result of the last action on them: the article
+     * renders them, the live list swaps them.
      *
      * @return array<string, mixed>
      */
@@ -105,6 +104,11 @@ final readonly class ArticleController
             'comments_page' => $pagination->getCurrentPage(),
             'comments_pagination' => $pagination->hasPages() ? $pagination->render() : null,
             'comment_message' => $this->session->getFlash(CommentsController::MESSAGE),
+            'comment_error' => $this->session->getFlash(CommentsController::ERROR),
+            'comment_added' => $this->session->getFlash(CommentsController::ADDED),
+            // The live list keeps the text in the editor, yet the flash is read so that it is not
+            // put back into the form of the next page.
+            'comment_text' => $this->session->getFlash(CommentsController::TEXT) ?? '',
         ];
     }
 }

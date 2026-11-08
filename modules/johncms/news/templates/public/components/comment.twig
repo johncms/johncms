@@ -5,10 +5,11 @@
     @var number     int Position of the comment in the discussion, from 1.
     @var article_id int
     @var page       int Page of the discussion the comment is on.
+    @var added      bool The comment was just added: the live list scrolls to it.
 #}
 {% set author = comment.author %}
 {% set author_url = author ? profile_url(author.id) : null %}
-<article class="site-news-comment" id="comment-{{ comment.id }}" data-comment>
+<article class="site-news-comment" id="comment-{{ comment.id }}" data-comment{% if added|default(false) %} data-live-list-target{% endif %}>
     <div class="site-news-comment__avatar">
         <img src="{{ avatar(author ? author.id : 0) }}" alt="" width="40" height="40" loading="lazy">
         {% if author and author.online %}<span class="site-news-comment__online" title="{{ __('Online') }}"></span>{% endif %}
@@ -40,7 +41,7 @@
                         </button>
                     {% endif %}
                     {% if comment.canDelete %}
-                        <form method="post" action="/news/comments/del/" data-confirm="{{ __('Delete this comment?') }}">
+                        <form method="post" action="/news/comments/del/" data-live-list-form data-confirm="{{ __('Delete this comment?') }}">
                             <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                             <input type="hidden" name="comment_id" value="{{ comment.id }}">
                             <input type="hidden" name="article_id" value="{{ article_id }}">
