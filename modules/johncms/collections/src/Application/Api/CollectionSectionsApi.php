@@ -40,7 +40,7 @@ final readonly class CollectionSectionsApi implements CollectionSectionsApiInter
 
     public function getTree(int $collectionId): array
     {
-        return $this->memo->remember('tree_' . $collectionId, fn (): array => array_map(fn ($node): CollectionSectionTreeNodeDTO => new CollectionSectionTreeNodeDTO(
+        return $this->memo->remember('tree_' . $collectionId, $collectionId, fn (): array => array_map(fn ($node): CollectionSectionTreeNodeDTO => new CollectionSectionTreeNodeDTO(
             $this->mapper->section($node->section),
             $node->depth,
             $node->items,

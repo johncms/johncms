@@ -35,6 +35,8 @@ use Tests\Support\CollectionItemWriterFactory;
 use Tests\Support\Fixture;
 use Tests\Support\MutableCollectionDeclarationProvider;
 use Tests\Support\RunsMigrations;
+use Johncms\System\i18n\Translator as CmsTranslator;
+use Tests\Support\InMemoryCache;
 
 final class CollectionDeclarationsTest extends TestCase
 {
@@ -78,7 +80,7 @@ final class CollectionDeclarationsTest extends TestCase
             new SaveCollectionFieldUseCase(repository: $fields, transaction: new CollectionTransaction(), collections: new ContentCollectionRepository(), items: CollectionItemWriterFactory::itemRepository(), context: $this->context),
             new DeleteCollectionFieldUseCase(repository: $fields, transaction: new CollectionTransaction(), collections: new ContentCollectionRepository(), context: $this->context),
             $this->sync,
-            new CollectionStructureMemo(),
+            new CollectionStructureMemo(InMemoryCache::create(), new CmsTranslator()),
         );
     }
 

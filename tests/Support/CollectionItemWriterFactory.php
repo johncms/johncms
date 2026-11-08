@@ -42,6 +42,7 @@ use Johncms\Validator\SymfonyValidator;
 use Johncms\Validator\Translation\GettextTranslator;
 use Johncms\Validator\ValidatorInterface;
 use Symfony\Component\Validator\Validation;
+use Johncms\System\i18n\Translator as CmsTranslator;
 
 final class CollectionItemWriterFactory
 {
@@ -97,7 +98,7 @@ final class CollectionItemWriterFactory
             $sections, new ListCollectionSectionsUseCase($sections),
             self::sectionWriter(changes: $changes),
             new DeleteCollectionSectionUseCase($sections, new ContentCollectionItemRepository(new ContentCollectionFieldRepository(), new ContentCollectionItemQueryCompiler()), new CollectionTransaction(), self::deletionPlanner(), self::itemDeleter($changes), $changes ?? new CollectionChangeDispatcher()),
-            new CollectionApiMapper(), self::deletionPlanner(), new CollectionStructureMemo()
+            new CollectionApiMapper(), self::deletionPlanner(), new CollectionStructureMemo(InMemoryCache::create(), new CmsTranslator())
         );
     }
 

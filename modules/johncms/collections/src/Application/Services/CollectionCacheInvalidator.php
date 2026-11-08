@@ -32,6 +32,8 @@ final readonly class CollectionCacheInvalidator implements CollectionChangeHandl
         $this->memo->reset();
         if ($change->entity === 'collection') {
             $this->codes->invalidate();
+            // A collection is looked up before its id is known, so that entry is not under its tag.
+            $this->memo->invalidate();
         }
     }
 }

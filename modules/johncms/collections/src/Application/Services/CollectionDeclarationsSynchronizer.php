@@ -41,9 +41,9 @@ final readonly class CollectionDeclarationsSynchronizer implements DeclarationSy
     {
         foreach ($this->registry->all() as ['owner' => $owner, 'declaration' => $declaration]) {
             $this->transaction->run(function () use ($owner, $declaration): void {
-                // The synchronization writes past the change dispatcher, so it forgets what was read itself.
+                // The synchronization writes past the change dispatcher, so it forgets the structure itself.
                 if ($this->memo !== null) {
-                    $this->transaction->afterCommit($this->memo->reset(...));
+                    $this->transaction->afterCommit($this->memo->invalidate(...));
                 }
                 $collection = $this->collections->findByDeclaration($owner, $declaration->key);
                 $collision = $this->collections->findByCode($declaration->code);

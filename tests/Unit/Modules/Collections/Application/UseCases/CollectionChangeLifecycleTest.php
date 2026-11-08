@@ -33,6 +33,7 @@ use Tests\Support\Fixture;
 use Tests\Support\InMemoryCache;
 use Tests\Support\RecordingCollectionChangeHandler;
 use Tests\Support\RunsMigrations;
+use Johncms\System\i18n\Translator;
 
 final class CollectionChangeLifecycleTest extends TestCase
 {
@@ -189,7 +190,7 @@ final class CollectionChangeLifecycleTest extends TestCase
     {
         $cache = InMemoryCache::create();
         $codes = new CollectionCodeCache($cache, new ContentCollectionRepository());
-        $invalidator = new CollectionCacheInvalidator($cache, $codes, new CollectionStructureMemo());
+        $invalidator = new CollectionCacheInvalidator($cache, $codes, new CollectionStructureMemo($cache, new Translator()));
         $changes = new CollectionChangeDispatcher(handlers: [$invalidator], transaction: new CollectionTransaction());
         $cache->rememberForever('affected', static fn () => 'old', [CollectionCacheInvalidator::tag($this->collection)]);
         $cache->rememberForever('other', static fn () => 'unrelated', [CollectionCacheInvalidator::tag($this->collection + 1)]);

@@ -26,7 +26,7 @@ final readonly class CollectionSchemaApi implements CollectionSchemaApiInterface
 
     public function getFields(int $collectionId): array
     {
-        return $this->memo->remember('fields_' . $collectionId, fn (): array => $this->loadFields($collectionId));
+        return $this->memo->remember('fields_' . $collectionId, $collectionId, fn (): array => $this->loadFields($collectionId));
     }
 
     /** @return list<CollectionFieldDTO> */
