@@ -45,15 +45,16 @@ final class NewsCollectionReadTest extends FunctionalTestCase
         $child = $this->section('child', $top);
         $first = $this->item(name: 'First', section: $child, tags: [' PHP ', 'php']);
         $second = $this->item(name: 'Second', tags: ['phpstorm']);
-        $page = $this->news->page(new NewsQueryDTO(sectionId: $top));
-        self::assertSame(1, $page->total);
-        self::assertSame($first, $page->articles[0]->record->id);
-        self::assertSame('/news/top/child/first.html', $page->articles[0]->url);
-        self::assertSame(['php'], $page->articles[0]->tags);
+        $articles = $this->news->articles(new NewsQueryDTO(sectionId: $top));
+        self::assertCount(1, $articles);
+        self::assertSame(1, $this->news->count(new NewsQueryDTO(sectionId: $top)));
+        self::assertSame($first, $articles[0]->record->id);
+        self::assertSame('/news/top/child/first.html', $articles[0]->url);
+        self::assertSame(['php'], $articles[0]->tags);
         self::assertSame(2, $this->news->count());
         self::assertSame(0, $this->news->count(new NewsQueryDTO(sectionId: $top, includeSubsections: false)));
-        self::assertSame($first, $this->news->page(new NewsQueryDTO(tag: ' PHP '))->articles[0]->record->id);
-        self::assertSame(1, $this->news->page(new NewsQueryDTO(search: 'Body First'))->total);
+        self::assertSame($first, $this->news->articles(new NewsQueryDTO(tag: ' PHP '))[0]->record->id);
+        self::assertSame(1, $this->news->count(new NewsQueryDTO(search: 'Body First')));
         self::assertSame($first, $this->news->findByCode('top/child', 'first')->record->id);
         self::assertSame($second, $this->news->findByCode('', 'second')->record->id);
         self::assertSame(['top', 'child'], array_map(static fn ($section) => $section->record->code, $this->news->breadcrumbs($child)));
@@ -180,17 +181,17 @@ final class NewsCollectionReadTest extends FunctionalTestCase
         $connection->flushQueryLog();
         $connection->enableQueryLog();
         try {
-            $page = $this->news->page();
+            $articles = $this->news->articles();
             $queries = array_column($connection->getQueryLog(), 'query');
         } finally {
             $connection->disableQueryLog();
             $connection->flushQueryLog();
         }
-        self::assertCount(8, $page->articles);
+        self::assertCount(8, $articles);
         self::assertCount(1, array_filter($queries, static fn (string $query): bool => str_contains($query, 'news_comments')));
         self::assertCount(1, array_filter($queries, static fn (string $query): bool => str_contains($query, 'news_votes')));
         self::assertCount(1, array_filter($queries, static fn (string $query): bool => preg_match('/from [`"]?users[`"]? where/i', $query) === 1));
-        foreach ($page->articles as $article) {
+        foreach ($articles as $article) {
             self::assertSame($author->id, $article->author->id);
             self::assertSame(1, $article->stats->comments);
             self::assertSame(1, $article->stats->rating);
@@ -205,7 +206,7 @@ final class NewsCollectionReadTest extends FunctionalTestCase
             $this->item('Sectioned ' . $i, $parent);
         }
         // The identity of the visitor is loaded once, by the first read.
-        $this->news->page(new NewsQueryDTO(limit: 1));
+        $this->news->articles(new NewsQueryDTO(limit: 1));
         $connection = Capsule::connection();
         $count = function (callable $read) use ($connection): int {
             $connection->flushQueryLog();
@@ -219,8 +220,8 @@ final class NewsCollectionReadTest extends FunctionalTestCase
             }
         };
         self::assertSame(
-            $count(fn () => $this->news->page(new NewsQueryDTO(sectionId: $parent, limit: 2))),
-            $count(fn () => $this->news->page(new NewsQueryDTO(sectionId: $parent, limit: 12)))
+            $count(fn () => $this->news->articles(new NewsQueryDTO(sectionId: $parent, limit: 2))),
+            $count(fn () => $this->news->articles(new NewsQueryDTO(sectionId: $parent, limit: 12)))
         );
         self::assertCount(12, $this->news->sections($parent));
         self::assertLessThan(12, $count(fn () => $this->news->sections($parent)));

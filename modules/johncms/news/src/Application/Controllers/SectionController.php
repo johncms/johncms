@@ -43,10 +43,10 @@ final readonly class SectionController
         if ($redirect !== null) {
             redirect($redirect);
         }
-        $page = $this->news->page(new NewsQueryDTO(sectionId: $id, limit: $pagination->getPerPage(), offset: $pagination->getOffset()));
+        $articles = $this->news->articles(new NewsQueryDTO(sectionId: $id, limit: $pagination->getPerPage(), offset: $pagination->getOffset()));
         return new ViewResponse('@news/public/index.twig', ($section?->metadata() ?? $this->news->rootMetadata()) + [
             'sections' => array_map(static fn ($entry): array => $entry->toTemplate(), $this->news->sections($id)),
-            'articles' => array_map(static fn ($entry): array => $entry->toTemplate(), $page->articles),
+            'articles' => array_map(static fn ($entry): array => $entry->toTemplate(), $articles),
             'articles_total' => $total,
             'pagination' => $pagination->hasPages() ? $pagination->render() : null, 'current_section' => $section?->toTemplate(),
             'workspace_url' => '/admin/collections/' . $this->news->collection()->id . '/items',

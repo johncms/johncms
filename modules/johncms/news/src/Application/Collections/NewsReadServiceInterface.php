@@ -6,7 +6,6 @@ namespace Johncms\Modules\News\Application\Collections;
 
 use Johncms\Modules\Collections\Application\DTO\CollectionRecordDTO;
 use Johncms\Modules\News\Application\DTO\NewsQueryDTO;
-use Johncms\Modules\News\Application\DTO\NewsPageDTO;
 use Johncms\Modules\News\Application\DTO\NewsArticleViewDTO;
 use Johncms\Modules\News\Application\DTO\NewsSectionViewDTO;
 use Johncms\Sitemap\SitemapUrlEntry;
@@ -15,7 +14,13 @@ interface NewsReadServiceInterface
 {
     public function collection(): CollectionRecordDTO;
 
-    public function page(NewsQueryDTO $query = new NewsQueryDTO()): NewsPageDTO;
+    /**
+     * One page of the list, without counting the whole of it: a caller that pages through the
+     * list counts it once with count(), before it knows which page to read.
+     *
+     * @return list<NewsArticleViewDTO>
+     */
+    public function articles(NewsQueryDTO $query = new NewsQueryDTO()): array;
 
     public function count(NewsQueryDTO $query = new NewsQueryDTO()): int;
 

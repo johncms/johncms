@@ -49,8 +49,10 @@ final readonly class SearchController
             if ($redirect !== null) {
                 redirect($redirect);
             }
-            $page = $this->news->page(new NewsQueryDTO(search: $spec->search, tag: $spec->tag, limit: $pager->getPerPage(), offset: $pager->getOffset()));
-            $articles = array_map(static fn ($entry): array => $entry->toTemplate(), $page->articles);
+            $articles = array_map(
+                static fn ($entry): array => $entry->toTemplate(),
+                $this->news->articles(new NewsQueryDTO(search: $spec->search, tag: $spec->tag, limit: $pager->getPerPage(), offset: $pager->getOffset()))
+            );
             $pagination = $pager->hasPages() ? $pager->render() : null;
         }
         return new ViewResponse('@news/public/search.twig', array_replace($this->news->rootMetadata(), [

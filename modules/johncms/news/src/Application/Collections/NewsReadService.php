@@ -22,7 +22,6 @@ use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\Collections\Domain\Query\FieldFilterDTO;
 use Johncms\Modules\Collections\Domain\Query\OrderByDTO;
 use Johncms\Modules\News\Application\DTO\NewsArticleViewDTO;
-use Johncms\Modules\News\Application\DTO\NewsPageDTO;
 use Johncms\Modules\News\Application\DTO\NewsQueryDTO;
 use Johncms\Modules\News\Application\DTO\NewsSectionViewDTO;
 use Johncms\Modules\News\Application\Exceptions\NewsCollectionUnavailableException;
@@ -52,11 +51,10 @@ final readonly class NewsReadService implements NewsReadServiceInterface
             ?? throw new NewsCollectionUnavailableException(d__('news', 'The news collection is missing. Run system:update.'));
     }
 
-    public function page(NewsQueryDTO $query = new NewsQueryDTO()): NewsPageDTO
+    public function articles(NewsQueryDTO $query = new NewsQueryDTO()): array
     {
         $collection = $this->collection();
-        $page = $this->items->getPage($this->query($collection, $query));
-        return new NewsPageDTO($this->mapper->articles($collection, $page->items), $page->total, $page->limit, $page->offset);
+        return $this->mapper->articles($collection, $this->items->getItems($this->query($collection, $query)));
     }
 
     public function count(NewsQueryDTO $query = new NewsQueryDTO()): int
@@ -153,7 +151,7 @@ final readonly class NewsReadService implements NewsReadServiceInterface
         }
         $days = max(0, (int) ($settings['homepage_days'] ?? 0));
         $quantity = max(1, min(1000, (int) ($settings['homepage_quantity'] ?? 3)));
-        return $this->page(new NewsQueryDTO(limit: $quantity, publishedSince: $days > 0 ? $this->since($days) : null))->articles;
+        return $this->articles(new NewsQueryDTO(limit: $quantity, publishedSince: $days > 0 ? $this->since($days) : null));
     }
 
     public function countNew(int $days): int
@@ -271,7 +269,7 @@ final readonly class NewsReadService implements NewsReadServiceInterface
                 limit:          $limit + count($exclude),
                 popular:        $query->popular,
             );
-            foreach ($this->page($query)->articles as $article) {
+            foreach ($this->articles($query) as $article) {
                 if (! in_array($article->record->id, $exclude, true)) {
                     $picked[] = $article;
                     $exclude[] = $article->record->id;
