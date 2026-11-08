@@ -1,6 +1,7 @@
 {# @var action string @var field string @var placeholder string @var value string #}
 <form action="{{ action }}" method="get" class="site-news-search" role="search">
-    {% include '@theme/components/icon.twig' with {name: 'search', size: 16} only %}
     <input name="{{ field }}" type="search" placeholder="{{ placeholder }}" aria-label="{{ placeholder }}" value="{{ value|default('') }}">
-    <button type="submit" class="btn btn-sm btn-outline-secondary">{{ __('Search') }}</button>
+    <button type="submit" class="btn" aria-label="{{ __('Search') }}" title="{{ __('Search') }}">
+        {% include '@theme/components/icon.twig' with {name: 'search', size: 16} only %}
+    </button>
 </form>
