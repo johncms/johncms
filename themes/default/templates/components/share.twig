@@ -1,0 +1,44 @@
+{#
+    The "Share" button of a page: a popover with "Copy link" and the share pages of the social
+    networks, plain links that load nothing of the networks themselves. On a touch screen with the
+    Web Share API the button opens the share sheet of the system instead (src/js/share.js).
+    Without JavaScript the popover still opens, and only "Copy link" is missing.
+
+    @param string url   Absolute address of the page being shared.
+    @param string title Title of the page, the text that goes with the link.
+#}
+{% set share_url = url|url_encode %}
+{% set share_title = title|url_encode %}
+{% set networks = [
+    {name: 'Telegram', href: 'https://t.me/share/url?url=' ~ share_url ~ '&text=' ~ share_title},
+    {name: 'VK', href: 'https://vk.com/share.php?url=' ~ share_url ~ '&title=' ~ share_title},
+    {name: 'WhatsApp', href: 'https://wa.me/?text=' ~ (title ~ ' ' ~ url)|url_encode},
+    {name: d__('system', 'Odnoklassniki'), href: 'https://connect.ok.ru/offer?url=' ~ share_url ~ '&title=' ~ share_title},
+    {name: 'X', href: 'https://x.com/intent/post?url=' ~ share_url ~ '&text=' ~ share_title},
+] %}
+<details class="site-popover site-share" data-site-popover data-share
+         data-share-url="{{ url }}" data-share-title="{{ title }}"
+         data-share-copied="{{ d__('system', 'Link copied') }}"
+         data-share-error="{{ d__('system', 'Could not copy the link.') }}">
+    <summary class="btn btn-sm btn-outline-secondary site-share__toggle">
+        {% include '@theme/components/icon.twig' with {name: 'share-2', size: 14} only %}
+        <span>{{ d__('system', 'Share') }}</span>
+    </summary>
+    <ul class="site-popover__panel">
+        <li data-share-copy-item hidden>
+            <button type="button" class="site-popover__item" data-share-copy>
+                {% include '@theme/components/icon.twig' with {name: 'copy', size: 14} only %}
+                <span data-share-copy-label>{{ d__('system', 'Copy link') }}</span>
+            </button>
+        </li>
+        <li data-share-copy-item hidden><hr class="site-popover__divider"></li>
+        {% for network in networks %}
+            <li>
+                <a class="site-popover__item" href="{{ network.href }}" target="_blank" rel="noopener noreferrer">
+                    <span>{{ network.name }}</span>
+                    {% include '@theme/components/icon.twig' with {name: 'external-link', size: 12} only %}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</details>

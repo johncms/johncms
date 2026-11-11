@@ -73,14 +73,8 @@
                             <span class="visually-hidden">{{ __('Views') }}: </span>{{ article.view_count|format_number }}
                         </span>
                         {% include '@news/public/components/comments-stat.twig' with {count: comments_total} only %}
-                        <div class="site-news-share" data-news-share data-url="{{ article.url }}" data-copied="{{ __('Link copied') }}" data-error="{{ __('Could not copy the link.') }}">
-                            <a class="btn btn-outline-secondary btn-sm" href="https://t.me/share/url?url={{ article_url|url_encode }}&amp;text={{ article.name|url_encode }}" target="_blank" rel="noopener noreferrer">
-                                {% include '@theme/components/icon.twig' with {name: 'send', size: 14} only %} Telegram
-                            </a>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" data-news-copy hidden>
-                                {% include '@theme/components/icon.twig' with {name: 'copy', size: 14} only %} {{ __('Copy link') }}
-                            </button>
-                            <span class="site-news-share__status" role="status"></span>
+                        <div class="site-news-article__share">
+                            {% include '@theme/components/share.twig' with {url: article_url, title: article.name} only %}
                         </div>
                     </footer>
                 </article>

@@ -448,6 +448,11 @@ The number is shown so that support for the old scheme is not removed while it i
       'Link to name' => 'Связать с названием',
       'Generate code from name' => 'Сформировать код из названия',
       'Close' => 'Закрыть',
+      'Share' => 'Поделиться',
+      'Copy link' => 'Скопировать ссылку',
+      'Link copied' => 'Ссылка скопирована',
+      'Could not copy the link.' => 'Не удалось скопировать ссылку.',
+      'Odnoklassniki' => 'Одноклассники',
     ),
   ),
 );

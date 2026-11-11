@@ -1,27 +1,5 @@
 import { clearEditor, focusEditor, insertAddressee, whenEditorReady } from './editor';
 
-// Copy the canonical article address; keep feedback beside the action.
-for (const share of document.querySelectorAll('[data-news-share]')) {
-    if (!navigator.clipboard?.writeText) continue;
-    const button = share.querySelector('[data-news-copy]');
-    const status = share.querySelector('[role="status"]');
-    button.hidden = false;
-    button.addEventListener('click', async () => {
-        button.disabled = true;
-        try {
-            await navigator.clipboard.writeText(new URL(share.dataset.url, window.location.href).href);
-            status.classList.remove('text-danger');
-            status.textContent = share.dataset.copied;
-        } catch (error) {
-            status.classList.add('text-danger');
-            status.textContent = share.dataset.error;
-            console.error('Could not copy the article link.', error);
-        } finally {
-            button.disabled = false;
-        }
-    });
-}
-
 // Replies and quotes need the editor of the comment form, so they appear once it is ready. The
 // comments are swapped by the live list, so the clicks are taken on the whole discussion.
 const discussion = document.querySelector('#article-comments');

@@ -1617,3 +1617,18 @@ msgstr "Сформировать код из названия"
 
 msgid "Close"
 msgstr "Закрыть"
+
+msgid "Share"
+msgstr "Поделиться"
+
+msgid "Copy link"
+msgstr "Скопировать ссылку"
+
+msgid "Link copied"
+msgstr "Ссылка скопирована"
+
+msgid "Could not copy the link."
+msgstr "Не удалось скопировать ссылку."
+
+msgid "Odnoklassniki"
+msgstr "Одноклассники"

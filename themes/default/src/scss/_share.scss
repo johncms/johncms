@@ -1,0 +1,14 @@
+// The "Share" button of @theme/components/share.twig: a popover whose trigger is a small button.
+.site-share {
+  > summary {
+    display: inline-flex;
+    align-items: center;
+    gap: .375rem;
+    list-style: none;
+    &::-webkit-details-marker { display: none; }
+  }
+
+  // Above the content that follows the button: the panel opens over it.
+  .site-popover__panel { z-index: 20; min-inline-size: 11rem; }
+  .site-popover__item .site-icon { color: var(--fg-dim); }
+}

@@ -131,6 +131,7 @@ msgstr ""
 #: themes/default/templates/admin/components/topbar.twig:58
 #: themes/default/templates/admin/components/topbar.twig:59
 #: themes/default/templates/admin/components/topbar.twig:74
+#: themes/default/templates/admin/components/ui/toasts.twig:7
 #: themes/default/templates/components/site-topbar.twig:13
 #: themes/default/templates/components/site-topbar.twig:39
 #: themes/default/templates/components/style-guide/examples/dropdown-menu.twig:20
@@ -159,6 +160,7 @@ msgid "Save"
 msgstr ""
 
 #: modules/johncms/notifications/templates/public/settings.twig:32
+#: themes/default/templates/components/confirm-dialog.twig:16
 #: themes/default/templates/pages/comments-delete.twig:18
 msgid "Cancel"
 msgstr ""
@@ -827,6 +829,8 @@ msgstr ""
 #: system/src/Comments.php:418
 #: system/src/Comments.php:419
 #: themes/default/templates/components/style-guide/examples/button-states.twig:22
+#: themes/default/templates/components/style-guide/examples/confirm.twig:2
+#: themes/default/templates/components/style-guide/examples/confirm.twig:3
 #: themes/default/templates/pages/comments-delete.twig:16
 #: themes/default/templates/pages/comments-list.twig:121
 msgid "Delete"
@@ -1232,22 +1236,22 @@ msgid "Please wait..."
 msgstr ""
 
 #: themes/default/templates/admin/components/ui/editor.twig:17
-#: themes/default/templates/components/editor.twig:19
+#: themes/default/templates/components/editor.twig:20
 msgid "Wait for the image upload to finish."
 msgstr ""
 
 #: themes/default/templates/admin/components/ui/editor.twig:18
-#: themes/default/templates/components/editor.twig:20
+#: themes/default/templates/components/editor.twig:21
 msgid "The uploaded image could not be attached. Remove it and upload it again."
 msgstr ""
 
 #: themes/default/templates/admin/components/ui/editor.twig:19
-#: themes/default/templates/components/editor.twig:21
+#: themes/default/templates/components/editor.twig:22
 msgid "Could not load the editor. You can edit the HTML below."
 msgstr ""
 
 #: themes/default/templates/admin/components/ui/editor.twig:25
-#: themes/default/templates/components/editor.twig:27
+#: themes/default/templates/components/editor.twig:28
 msgid "Text"
 msgstr ""
 
@@ -1292,6 +1296,12 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
+#: themes/default/templates/components/confirm-dialog.twig:8
+#: themes/default/templates/emails/confirm-email-change.twig:22
+#: themes/default/templates/emails/registration.twig:27
+msgid "Confirm"
+msgstr ""
+
 #: themes/default/templates/components/debug.twig:18
 msgid "Sql query log"
 msgstr ""
@@ -1328,6 +1338,26 @@ msgstr ""
 #: themes/default/templates/components/pagination.twig:28
 #: themes/default/templates/components/pagination.twig:31
 msgid "Next page"
+msgstr ""
+
+#: themes/default/templates/components/share.twig:16
+msgid "Odnoklassniki"
+msgstr ""
+
+#: themes/default/templates/components/share.twig:21
+msgid "Link copied"
+msgstr ""
+
+#: themes/default/templates/components/share.twig:22
+msgid "Could not copy the link."
+msgstr ""
+
+#: themes/default/templates/components/share.twig:25
+msgid "Share"
+msgstr ""
+
+#: themes/default/templates/components/share.twig:31
+msgid "Copy link"
 msgstr ""
 
 #: themes/default/templates/components/sidebar-main-menu.twig:10
@@ -1422,7 +1452,7 @@ msgstr ""
 #: themes/default/templates/components/style-guide/examples/cards.twig:2
 #: themes/default/templates/components/style-guide/examples/content-card.twig:2
 #: themes/default/templates/pages/style-guide.twig:17
-#: themes/default/templates/pages/style-guide.twig:53
+#: themes/default/templates/pages/style-guide.twig:54
 msgid "Cards"
 msgstr ""
 
@@ -1446,6 +1476,11 @@ msgstr ""
 
 #: themes/default/templates/components/style-guide/examples/cards.twig:8
 msgid "Additional information"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/confirm.twig:2
+#: themes/default/templates/pages/comments-delete.twig:13
+msgid "Do you really want to delete?"
 msgstr ""
 
 #: themes/default/templates/components/style-guide/examples/content-card.twig:2
@@ -1583,11 +1618,6 @@ msgstr ""
 msgid "To continue please click the confirm button"
 msgstr ""
 
-#: themes/default/templates/emails/confirm-email-change.twig:22
-#: themes/default/templates/emails/registration.twig:27
-msgid "Confirm"
-msgstr ""
-
 #: themes/default/templates/emails/confirm-email-change.twig:26
 #: themes/default/templates/emails/confirm-email-change.txt.twig:20
 msgid "If you have not registered on our site, please ignore this email."
@@ -1715,10 +1745,6 @@ msgstr ""
 msgid "Scroll page"
 msgstr ""
 
-#: themes/default/templates/pages/comments-delete.twig:13
-msgid "Do you really want to delete?"
-msgstr ""
-
 #: themes/default/templates/pages/comments-delete.twig:17
 msgid "Clear"
 msgstr ""
@@ -1776,21 +1802,21 @@ msgid "Messages"
 msgstr ""
 
 #: themes/default/templates/pages/style-guide.twig:16
-#: themes/default/templates/pages/style-guide.twig:49
+#: themes/default/templates/pages/style-guide.twig:50
 msgid "Badges"
 msgstr ""
 
 #: themes/default/templates/pages/style-guide.twig:18
-#: themes/default/templates/pages/style-guide.twig:58
+#: themes/default/templates/pages/style-guide.twig:59
 msgid "Tables"
 msgstr ""
 
 #: themes/default/templates/pages/style-guide.twig:19
-#: themes/default/templates/pages/style-guide.twig:62
+#: themes/default/templates/pages/style-guide.twig:63
 msgid "Pagination"
 msgstr ""
 
 #: themes/default/templates/pages/style-guide.twig:20
-#: themes/default/templates/pages/style-guide.twig:66
+#: themes/default/templates/pages/style-guide.twig:67
 msgid "Dropdown menus"
 msgstr ""

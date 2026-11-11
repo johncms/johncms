@@ -22,6 +22,7 @@ import './toast';
 import './confirm';
 import './editor';
 import './live-list';
+import './share';
 import './news';
 
 if (document.querySelector('[data-site-icon-gallery]')) {
