@@ -290,23 +290,46 @@
 }
 
 .site-news-compose {
-  margin-block-start: 1rem;
-  padding: 1.125rem;
-  border: 1px solid var(--border);
-  border-radius: .75rem;
-  background: var(--bg-elev);
+  margin-block-start: 2rem;
   scroll-margin-block-start: 5rem;
-  &__head { display: flex; align-items: center; gap: .625rem; margin-block-end: .875rem; }
-  &__avatar { inline-size: 2rem; block-size: 2rem; border-radius: .5rem; object-fit: cover; }
-  &__title { margin: 0; font-size: .875rem; font-weight: 700; }
-  &__actions { display: flex; justify-content: flex-end; }
+  &__form {
+    border: 1px solid var(--border-strong);
+    border-radius: .75rem;
+    background: var(--bg-elev);
+  }
+  &__actions { display: flex; justify-content: flex-end; padding: .75rem; border-block-start: 1px solid var(--border); }
   &__actions .btn { display: inline-flex; align-items: center; gap: .375rem; }
+
+  // The editor draws no frame of its own here: the form around it is the frame,
+  // and only the area of the text is shaded, so it still reads as a field.
+  .site-editor {
+    --ck-color-engine-placeholder-text: var(--fg-muted);
+    margin-block-end: 0;
+    .ck.ck-editor__top .ck-sticky-panel .ck-sticky-panel__content,
+    .ck.ck-editor__top .ck-toolbar {
+      border-color: transparent;
+      border-radius: .75rem .75rem 0 0;
+      background: var(--bg-elev);
+    }
+    .ck.ck-editor__top .ck-toolbar { border-block-end: 1px solid var(--border); }
+    .ck.ck-editor__main > .ck-editor__editable,
+    .ck.ck-editor__main > .ck-editor__editable.ck-focused {
+      min-block-size: 6rem;
+      padding-inline: 1rem;
+      border-color: transparent;
+      border-radius: 0;
+      background: var(--bg-inset);
+      box-shadow: none;
+      transition: border-color .15s;
+    }
+    // Only the field shows the focus, as an ordinary input would; the frame stays as it is.
+    .ck.ck-editor__main > .ck-editor__editable.ck-focused { border-color: var(--accent); }
+  }
 }
 
 @media (max-width: 520px) {
   .site-news-comment { grid-template-columns: minmax(0, 1fr); gap: .5rem; padding: .875rem 1rem; }
   .site-news-comment__avatar { display: none; }
-  .site-news-compose { padding: 1rem; }
 }
 
 @media (max-width: 700px) {

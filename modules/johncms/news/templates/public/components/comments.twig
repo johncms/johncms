@@ -31,18 +31,17 @@
 
     {% if can_write %}
         <section class="site-news-compose" id="comment-form" aria-labelledby="comment-form-title">
-            <div class="site-news-compose__head">
-                <img class="site-news-compose__avatar" src="{{ avatar(app.user.id) }}" alt="" width="32" height="32">
-                <h3 class="site-news-compose__title" id="comment-form-title">{{ __('Write a comment') }}</h3>
-            </div>
+            <h3 class="visually-hidden" id="comment-form-title">{{ __('Write a comment') }}</h3>
             {% include '@news/public/components/comment-error.twig' with {error: error} only %}
-            <form id="news-comment-form-{{ article_id }}" method="post" action="/news/comments/add/{{ article_id }}/" data-live-list-form data-comment-form>
+            {# The form is the frame of the editor: the toolbar, the text and the button share one border. #}
+            <form class="site-news-compose__form" id="news-comment-form-{{ article_id }}" method="post" action="/news/comments/add/{{ article_id }}/" data-live-list-form data-comment-form>
                 <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                 {% include '@theme/components/editor.twig' with {
                     name: 'text',
                     id: 'comment-text',
                     label: __('Write a comment'),
                     label_hidden: true,
+                    placeholder: __('Write a comment'),
                     value: text,
                     upload_url: '/news/comments/upload_file/',
                     allow_upload: true,

@@ -6,6 +6,7 @@
     @param string label
     @param bool   label_hidden Keep the label for screen readers only.
     @param string value
+    @param string placeholder  Hint inside the empty field; the editor takes it from the textarea.
     @param string id           Id of the field, the name by default.
     @param string errors       Messages of the field, already joined into one line.
     @param string upload_url   Where the editor uploads to; empty when it uploads nothing.
@@ -25,6 +26,7 @@
     <textarea class="form-control{{ errors|default('') ? ' is-invalid' : '' }}"
               name="{{ name }}" id="{{ field_id }}" rows="6"
               aria-label="{{ label|default('') ?: d__('system', 'Text') }}"
+              {% if placeholder|default('') %}placeholder="{{ placeholder }}"{% endif %}
               {% if required|default(false) %}required{% endif %}
               {% if errors|default('') %}aria-invalid="true" aria-describedby="{{ field_id }}-errors"{% endif %}>{{ value|default('') }}</textarea>
     {% if errors|default('') %}
