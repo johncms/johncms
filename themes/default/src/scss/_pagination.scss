@@ -68,3 +68,15 @@
     margin-bottom: 0;
   }
 }
+
+// The links with the records of the page beside them: the range on the start, the links on the end.
+.site-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem 1rem;
+
+  &__range { margin: 0; color: var(--fg-dim); font-family: var(--bs-font-monospace); font-size: .75rem; }
+  .pagination { margin: 0; }
+}

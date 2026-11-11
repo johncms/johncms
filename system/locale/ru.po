@@ -1632,3 +1632,6 @@ msgstr "Не удалось скопировать ссылку."
 
 msgid "Odnoklassniki"
 msgstr "Одноклассники"
+
+msgid "Showing %1$s–%2$s of %3$s"
+msgstr "Показаны %1$s–%2$s из %3$s"

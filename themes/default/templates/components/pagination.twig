@@ -4,9 +4,14 @@
     Item shape (Johncms\Http\Pagination\Pagination):
       {type: prev|page|ellipsis|next, page: int|null, url: string|null, active: bool}
 
-    @param array items
+    @param array      items
+    @param array|null range {from: int, to: int, total: int}: which records the page shows, said beside the links.
 #}
 {% if items is not empty %}
+    {% if range|default(null) %}
+        <div class="site-pagination">
+            <p class="site-pagination__range">{{ d__('system', 'Showing %1$s–%2$s of %3$s')|format(range.from|format_number, range.to|format_number, range.total|format_number) }}</p>
+    {% endif %}
     <nav>
         <ul class="pagination">
             {% for item in items %}
@@ -42,4 +47,7 @@
             {% endfor %}
         </ul>
     </nav>
+    {% if range|default(null) %}
+        </div>
+    {% endif %}
 {% endif %}

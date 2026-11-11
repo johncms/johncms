@@ -11,3 +11,13 @@
         {type: 'next', page: 2, url: '#pagination', active: false},
     ]} only %}
 </div>
+{# A long list says which records the page shows: $pagination->render(withRange: true). #}
+<div class="pagination-no-padding mt-3">
+    {% include '@theme/components/pagination.twig' with {items: [
+        {type: 'prev', page: 1, url: '#pagination', active: false},
+        {type: 'page', page: 1, url: '#pagination', active: false},
+        {type: 'page', page: 2, url: null, active: true},
+        {type: 'page', page: 3, url: '#pagination', active: false},
+        {type: 'next', page: 3, url: '#pagination', active: false},
+    ], range: {from: 21, to: 40, total: 55}} only %}
+</div>

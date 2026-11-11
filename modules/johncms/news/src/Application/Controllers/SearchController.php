@@ -53,7 +53,7 @@ final readonly class SearchController
                 static fn ($entry): array => $entry->toTemplate(),
                 $this->news->articles(new NewsQueryDTO(search: $spec->search, tag: $spec->tag, limit: $pager->getPerPage(), offset: $pager->getOffset()))
             );
-            $pagination = $pager->hasPages() ? $pager->render() : null;
+            $pagination = $pager->hasPages() ? $pager->render(withRange: true) : null;
         }
         return new ViewResponse('@news/public/search.twig', array_replace($this->news->rootMetadata(), [
             'title' => $title, 'page_title' => $title, 'query' => $query, 'articles' => $articles, 'pagination' => $pagination,

@@ -140,7 +140,7 @@ final class PaginationTest extends TestCase
         $renderer
             ->expects(self::once())
             ->method('render')
-            ->with('@theme/components/pagination.twig', ['items' => $pagination->getItems()])
+            ->with('@theme/components/pagination.twig', ['items' => $pagination->getItems(), 'range' => null])
             ->willReturn('<nav></nav>');
 
         $rendered = $pagination->render();
@@ -149,6 +149,20 @@ final class PaginationTest extends TestCase
         // is echoed or concatenated.
         self::assertInstanceOf(Markup::class, $rendered);
         self::assertSame('<nav></nav>', (string) $rendered);
+    }
+
+    public function testRangeOfTheLastPageEndsAtTheTotal(): void
+    {
+        $renderer = $this->createMock(RendererInterface::class);
+        $pagination = $this->makePagination(total: 45, currentPage: 5, renderer: $renderer);
+
+        $renderer
+            ->expects(self::once())
+            ->method('render')
+            ->with('@theme/components/pagination.twig', ['items' => $pagination->getItems(), 'range' => ['from' => 41, 'to' => 45, 'total' => 45]])
+            ->willReturn('<nav></nav>');
+
+        $pagination->render(withRange: true);
     }
 
     private function makePagination(

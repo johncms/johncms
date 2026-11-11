@@ -1330,13 +1330,17 @@ msgstr ""
 msgid "Return to my account"
 msgstr ""
 
-#: themes/default/templates/components/pagination.twig:18
-#: themes/default/templates/components/pagination.twig:21
+#: themes/default/templates/components/pagination.twig:13
+msgid "Showing %1$s–%2$s of %3$s"
+msgstr ""
+
+#: themes/default/templates/components/pagination.twig:23
+#: themes/default/templates/components/pagination.twig:26
 msgid "Previous page"
 msgstr ""
 
-#: themes/default/templates/components/pagination.twig:28
-#: themes/default/templates/components/pagination.twig:31
+#: themes/default/templates/components/pagination.twig:33
+#: themes/default/templates/components/pagination.twig:36
 msgid "Next page"
 msgstr ""
 

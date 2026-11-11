@@ -125,13 +125,31 @@ final class Pagination
     /**
      * A finished block of navigation links. It is markup by contract, so a template prints it
      * with {{ pagination }} and needs no raw filter.
+     *
+     * @param bool $withRange Also say which records the page shows out of how many ("Showing 21–40 of 151"),
+     *                        for a list whose total is not in sight at its end.
      */
-    public function render(): Markup
+    public function render(bool $withRange = false): Markup
     {
         return new Markup(
-            $this->renderer->render('@theme/components/pagination.twig', ['items' => $this->getItems()]),
+            $this->renderer->render('@theme/components/pagination.twig', [
+                'items' => $this->getItems(),
+                'range' => $withRange && $this->hasPages() ? $this->range() : null,
+            ]),
             'UTF-8'
         );
+    }
+
+    /**
+     * @return array{from: int, to: int, total: int}
+     */
+    private function range(): array
+    {
+        return [
+            'from'  => $this->getOffset() + 1,
+            'to'    => min($this->getOffset() + $this->perPage, $this->total),
+            'total' => $this->total,
+        ];
     }
 
     /**

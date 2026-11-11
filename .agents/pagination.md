@@ -88,4 +88,7 @@ Repositories take explicit `limit`/`offset` and return `Collection`; never call 
 * `render()` returns `Twig\Markup`, so a template prints it with `{{ pagination }}` and needs no
   `|raw`. Render in the controller/template (or use `getItems()` for custom markup / JSON
   endpoints), never inside the use case.
+* `render(withRange: true)` also says which records the page shows out of how many ("Showing 21–40
+  of 151") beside the links. Use it for a long list whose total is not in sight at its end (the news
+  of a section); a short list or one that shows its total next to the links leaves it off.
 * Redirect statuses are 302 for now (matching the old fork); the canonical strip may become 301 later if `redirect()` gains a status parameter.
