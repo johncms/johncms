@@ -26,6 +26,7 @@ final class AdminNewsSettingsTest extends FunctionalTestCase
                 'homepage_quantity'     => 7,
                 'homepage_days'         => 14,
                 'title'                 => 'Our news',
+                'summary'               => 'Announcements & guides',
                 'meta_keywords'         => 'news, cms',
                 'meta_description'      => 'What happens',
                 'section_title'         => 'Section #section_name#',
@@ -40,6 +41,7 @@ final class AdminNewsSettingsTest extends FunctionalTestCase
         self::assertStringContainsString('value="Our news"', $content);
         self::assertStringContainsString('value="news, cms"', $content);
         self::assertStringContainsString('>What happens</textarea>', $content);
+        self::assertStringContainsString('>Announcements &amp; guides</textarea>', $content);
         self::assertStringContainsString('value="Section #section_name#"', $content);
         self::assertStringContainsString('value="#article_name#, news"', $content);
     }

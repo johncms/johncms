@@ -27,6 +27,7 @@ final readonly class GetNewsSettingsUseCase
             homepageQuantity: (int) ($settings['homepage_quantity'] ?? 3),
             homepageDays: (int) ($settings['homepage_days'] ?? 0),
             title: $text('title'),
+            summary: $text('summary'),
             metaKeywords: $text('meta_keywords'),
             metaDescription: $text('meta_description'),
             sectionTitle: $text('section_title'),

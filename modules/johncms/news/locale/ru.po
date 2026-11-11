@@ -857,3 +857,12 @@ msgstr "Популярное"
 
 msgid "No comments yet. Be the first."
 msgstr "Комментариев пока нет. Будьте первым."
+
+msgid "The main page of the news"
+msgstr "Главная страница новостей"
+
+msgid "Short description"
+msgstr "Краткое описание"
+
+msgid "Plain text of a sentence or two under the heading of the news on their main page."
+msgstr "Простой текст в одно-два предложения под заголовком на главной странице новостей."

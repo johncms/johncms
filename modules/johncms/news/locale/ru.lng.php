@@ -260,6 +260,9 @@
       ),
       'Popular' => 'Популярное',
       'No comments yet. Be the first.' => 'Комментариев пока нет. Будьте первым.',
+      'The main page of the news' => 'Главная страница новостей',
+      'Short description' => 'Краткое описание',
+      'Plain text of a sentence or two under the heading of the news on their main page.' => 'Простой текст в одно-два предложения под заголовком на главной странице новостей.',
     ),
   ),
 );

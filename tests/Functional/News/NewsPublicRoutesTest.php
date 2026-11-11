@@ -100,6 +100,16 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         self::assertStringNotContainsString('Every version', $document->querySelector('.site-news__description')->textContent);
     }
 
+    public function testMainPageShowsTheShortDescriptionOfTheSettings(): void
+    {
+        $document = $this->withConfig(
+            ['news' => ['summary' => 'Announcements & guides', 'meta_description' => '']],
+            fn (): HTMLDocument => HTMLDocument::createFromString((string) $this->handleRequest('/news/')->getContent(), LIBXML_NOERROR)
+        );
+        self::assertStringContainsString('Announcements & guides', $document->querySelector('.site-page-heading__subtitle')->textContent);
+        self::assertSame('Announcements & guides', $document->querySelector('meta[name="description"]')?->getAttribute('content'), 'Without a description of its own the main page is described by its short description.');
+    }
+
     public function testSectionWithoutShortDescriptionShowsNoSummary(): void
     {
         $sections = $this->container()->get(CollectionSectionsApiInterface::class);

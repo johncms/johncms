@@ -119,9 +119,14 @@ final readonly class NewsViewMapper implements NewsViewMapperInterface
         $title = $this->content->toPlainText($this->setting($settings, 'title')) ?: d__('news', 'News');
         return [
             'title' => $title, 'page_title' => $title,
-            'description' => $this->content->toPlainText($this->setting($settings, 'meta_description')) ?: $title,
+            'description' => $this->content->toPlainText($this->setting($settings, 'meta_description')) ?: ($this->rootSummary() ?: $title),
             'keywords' => $this->content->toPlainText($this->setting($settings, 'meta_keywords')),
         ];
+    }
+
+    public function rootSummary(): string
+    {
+        return trim($this->setting($this->settings->getSettings(), 'summary'));
     }
 
     /** @param array<string, mixed> $settings */

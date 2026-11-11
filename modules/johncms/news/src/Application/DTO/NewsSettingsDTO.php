@@ -15,6 +15,7 @@ final readonly class NewsSettingsDTO
         public int $homepageQuantity,
         public int $homepageDays,
         public string $title = '',
+        public string $summary = '',
         public string $metaKeywords = '',
         public string $metaDescription = '',
         public string $sectionTitle = '',

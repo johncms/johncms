@@ -8,6 +8,7 @@
     @var string list_url
     @var int    max_quantity
     @var int    max_days
+    @var int    max_summary
     @var string error_message   Empty unless the configuration could not be written.
     @var string success_message Empty unless a save has just succeeded.
 #}
@@ -82,10 +83,16 @@
                 <div class="card">
                     <div class="card-header">
                         {% include '@admin/components/ui/icon.twig' with {name: 'newspaper', size: 15, class: 'text-body-tertiary'} only %}
-                        {{ __('Meta tags for the main page') }}
+                        {{ __('The main page of the news') }}
                     </div>
                     <div class="card-body d-flex flex-column gap-3">
                         <div>{{ form.text('title', __('Module name'), settings.title, errors, 250, '') }}</div>
+                        <div>
+                            <label class="form-label" for="news-summary">{{ __('Short description') }}</label>
+                            <textarea class="form-control{{ errors.summary is defined ? ' is-invalid' }}" id="news-summary" name="summary" rows="2" maxlength="{{ max_summary }}" aria-describedby="news-summary-help">{{ settings.summary }}</textarea>
+                            {% include '@theme/components/field-errors.twig' with {errors: errors.summary|default([])} only %}
+                            <div class="form-text" id="news-summary-help">{{ __('Plain text of a sentence or two under the heading of the news on their main page.') }}</div>
+                        </div>
                         <div>{{ form.text('meta_keywords', __('Keywords'), settings.metaKeywords, errors, 500, '') }}</div>
                         <div>{{ form.textarea('meta_description', __('Description'), settings.metaDescription, errors) }}</div>
                     </div>

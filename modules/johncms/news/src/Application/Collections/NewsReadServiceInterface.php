@@ -69,4 +69,7 @@ interface NewsReadServiceInterface
 
     /** @return array{title: string, page_title: string, description: string, keywords: string} */
     public function rootMetadata(): array;
+
+    /** The short description of the main page of the news, plain text; empty when none is set. */
+    public function rootSummary(): string;
 }

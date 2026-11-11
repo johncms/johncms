@@ -3,6 +3,7 @@
     @var articles_total int             Published articles of the section with its subsections, or of all news.
     @var sections       iterable<array> Child sections of the current one.
     @var current_section array|null
+    @var summary        string          Short description of the section, or of the news on their main page.
     @var pagination     \Twig\Markup|null
     @var workspace_url  string
 #}
@@ -12,7 +13,7 @@
 
 {% block page_subtitle %}
     <p class="site-page-heading__subtitle">
-        {% if current_section and current_section.summary %}<span>{{ current_section.summary }}</span>{% endif %}
+        {% if summary %}<span>{{ summary }}</span>{% endif %}
         <span class="site-page-stat">
             <span class="site-page-stat__dot" aria-hidden="true"></span>
             {% if not current_section and sections|length > 0 %}

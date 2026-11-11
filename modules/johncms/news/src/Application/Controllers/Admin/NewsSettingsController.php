@@ -44,6 +44,7 @@ final readonly class NewsSettingsController
             homepageQuantity: $request->bodyInt('homepage_quantity'),
             homepageDays: $request->bodyInt('homepage_days'),
             title: $request->body('title'),
+            summary: $request->body('summary'),
             metaKeywords: $request->body('meta_keywords'),
             metaDescription: $request->body('meta_description'),
             sectionTitle: $request->body('section_title'),
@@ -87,6 +88,7 @@ final readonly class NewsSettingsController
             'list_url'        => $workspace,
             'max_quantity'    => UpdateNewsSettingsUseCase::MAX_QUANTITY,
             'max_days'        => UpdateNewsSettingsUseCase::MAX_DAYS,
+            'max_summary'     => UpdateNewsSettingsUseCase::MAX_SUMMARY,
             'error_message'   => $errorMessage,
             'success_message' => (string) $this->session->getFlash('success_message'),
         ]);

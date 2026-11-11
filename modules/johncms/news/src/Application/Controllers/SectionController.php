@@ -48,6 +48,7 @@ final readonly class SectionController
             'sections' => array_map(static fn ($entry): array => $entry->toTemplate(), $this->news->sections($id)),
             'articles' => array_map(static fn ($entry): array => $entry->toTemplate(), $articles),
             'articles_total' => $total,
+            'summary' => $section !== null ? $section->summary : $this->news->rootSummary(),
             'pagination' => $pagination->hasPages() ? $pagination->render(withRange: true) : null, 'current_section' => $section?->toTemplate(),
             'workspace_url' => '/admin/collections/' . $this->news->collection()->id . '/items',
         ]);

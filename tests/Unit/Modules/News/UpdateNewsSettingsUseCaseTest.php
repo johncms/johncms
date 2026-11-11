@@ -38,6 +38,7 @@ final class UpdateNewsSettingsUseCaseTest extends TestCase
             homepageQuantity: 5,
             homepageDays: 30,
             title: ' Our news ',
+            summary: ' Announcements & guides ',
             metaKeywords: 'news',
             metaDescription: 'What <happens>',
             sectionTitle: '#section_name# — news',
@@ -53,6 +54,7 @@ final class UpdateNewsSettingsUseCaseTest extends TestCase
             'homepage_quantity'        => 5,
             'homepage_days'            => 30,
             'title'                    => 'Our news',
+            'summary'                  => 'Announcements & guides',
             'meta_keywords'            => 'news',
             'meta_description'         => 'What <happens>',
             'section_title'            => '#section_name# — news',
@@ -85,6 +87,18 @@ final class UpdateNewsSettingsUseCaseTest extends TestCase
         $this->expectException(NewsSettingsException::class);
 
         $this->useCase($this->config())->execute(new NewsSettingsDTO(homepageShow: true, homepageQuantity: 3, homepageDays: 0, title: str_repeat('a', 251)));
+    }
+
+    public function testATooLongShortDescriptionIsRefused(): void
+    {
+        $this->expectException(NewsSettingsException::class);
+
+        $this->useCase($this->config())->execute(new NewsSettingsDTO(
+            homepageShow: true,
+            homepageQuantity: 3,
+            homepageDays: 0,
+            summary: str_repeat('я', UpdateNewsSettingsUseCase::MAX_SUMMARY + 1),
+        ));
     }
 
     private function useCase(NewsConfigRepositoryInterface $config): UpdateNewsSettingsUseCase

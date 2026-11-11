@@ -211,6 +211,11 @@ final readonly class NewsReadService implements NewsReadServiceInterface
         return $this->mapper->rootMetadata();
     }
 
+    public function rootSummary(): string
+    {
+        return $this->mapper->rootSummary();
+    }
+
     private function query(CollectionRecordDTO $collection, NewsQueryDTO $query): ContentCollectionItemQuery
     {
         if ($query->sectionId !== null && ! isset($this->visibleSections($collection)[$query->sectionId])) {
