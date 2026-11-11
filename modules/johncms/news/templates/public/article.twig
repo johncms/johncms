@@ -103,7 +103,7 @@
             <aside class="site-news-layout__side">
                 {% if article.author %}
                     {% set author_url = profile_url(article.author.id) %}
-                    <section class="site-news-panel" aria-labelledby="news-author-title">
+                    <section class="site-news-panel site-news-layout__author" aria-labelledby="news-author-title">
                         <h2 class="site-news-panel__title" id="news-author-title">{{ __('Author') }}</h2>
                         <div class="site-news-author">
                             <img class="site-news-author__avatar" src="{{ avatar(article.author.id) }}" alt="" width="44" height="44" loading="lazy">
@@ -131,16 +131,20 @@
                     </section>
                 {% endif %}
 
-                {% if related is not empty %}
-                    {% include '@news/public/components/side-list.twig' with {
-                        id: 'news-related-title', title: __('Read also'), items: related
-                    } only %}
-                {% endif %}
+                {% if related is not empty or popular is not empty %}
+                    <div class="site-news-layout__lists">
+                        {% if related is not empty %}
+                            {% include '@news/public/components/side-list.twig' with {
+                                id: 'news-related-title', title: __('Read also'), items: related
+                            } only %}
+                        {% endif %}
 
-                {% if popular is not empty %}
-                    {% include '@news/public/components/side-list.twig' with {
-                        id: 'news-popular-title', title: __('Popular'), items: popular
-                    } only %}
+                        {% if popular is not empty %}
+                            {% include '@news/public/components/side-list.twig' with {
+                                id: 'news-popular-title', title: __('Popular'), items: popular
+                            } only %}
+                        {% endif %}
+                    </div>
                 {% endif %}
             </aside>
         </div>

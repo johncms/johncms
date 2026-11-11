@@ -126,12 +126,20 @@
   gap: 1.5rem;
   align-items: start;
   &__main { display: flex; flex-direction: column; gap: 1.5rem; min-inline-size: 0; }
-  &__side { display: flex; flex-direction: column; gap: .875rem; min-inline-size: 0; }
+  &__side,
+  &__lists { display: flex; flex-direction: column; gap: .875rem; min-inline-size: 0; }
 }
 
+// One column: the article, its author, the comments, then the other news.
+// Both columns dissolve into the grid so the author can stand between the article and the comments.
 @media (max-width: 1080px) {
   .site-news-layout { grid-template-columns: minmax(0, 1fr); }
-  .site-news-layout__side { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); align-items: start; }
+  .site-news-layout__main,
+  .site-news-layout__side { display: contents; }
+  .site-news-layout .site-news-article { order: 1; }
+  .site-news-layout__author { order: 2; }
+  .site-news-layout .site-news-comments { order: 3; }
+  .site-news-layout__lists { order: 4; display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); align-items: start; }
 }
 
 .site-news-panel {
