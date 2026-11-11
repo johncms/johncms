@@ -12,6 +12,7 @@
 
 {% block page_subtitle %}
     <p class="site-page-heading__subtitle">
+        {% if current_section and current_section.summary %}<span>{{ current_section.summary }}</span>{% endif %}
         <span class="site-page-stat">
             <span class="site-page-stat__dot" aria-hidden="true"></span>
             {% if not current_section and sections|length > 0 %}
@@ -74,7 +75,7 @@
         {% if current_section %}{{ sections_block }}{% endif %}
 
         {% if current_section and current_section.text_safe %}
-            <div class="site-news__description">{{ current_section.text_safe }}</div>
+            <div class="site-news__description ck-content">{{ current_section.text_safe }}</div>
         {% endif %}
     </div>
 {% endblock %}

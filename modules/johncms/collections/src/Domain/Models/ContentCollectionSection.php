@@ -21,6 +21,7 @@ use Johncms\Casts\FormattedDate;
  * @property string $name
  * @property string $code
  * @property string|null $description
+ * @property string|null $summary
  * @property bool $active
  * @property array<string, mixed>|null $metadata
  * @property int $sort
@@ -41,6 +42,7 @@ final class ContentCollectionSection extends Model
         'name',
         'code',
         'description',
+        'summary',
         'metadata',
         'active',
         'sort',

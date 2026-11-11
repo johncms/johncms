@@ -25,6 +25,9 @@ use JsonException;
 
 final readonly class SaveCollectionSectionUseCase
 {
+    /** Characters of the short description of a section. */
+    public const int SUMMARY_LENGTH = 500;
+
     public function __construct(
         private ContentCollectionSectionRepositoryInterface $repository,
         private ContentCollectionRepositoryInterface $collections,
@@ -76,6 +79,9 @@ final readonly class SaveCollectionSectionUseCase
             if ($sort === false || $sort < -2147483648 || $sort > 2147483647) {
                 $result = $result->withError('sort', d__('collections', 'Enter an integer between -2147483648 and 2147483647.'));
             }
+            if ($dto->summary !== null && mb_strlen($dto->summary) > self::SUMMARY_LENGTH) {
+                $result = $result->withError('summary', sprintf(d__('collections', 'The short description must not exceed %d characters.'), self::SUMMARY_LENGTH));
+            }
             if ($dto->description !== null && strlen($dto->description) > 65535) {
                 $result = $result->withError('description', d__('collections', 'The section description must not exceed 65535 bytes.'));
             }
@@ -95,6 +101,7 @@ final readonly class SaveCollectionSectionUseCase
             $attributes = [
                 'collection_id' => $dto->collectionId, 'parent' => $dto->parent,
                 'name' => trim($dto->name), 'code' => trim($dto->code), 'description' => $dto->description,
+                'summary' => $dto->summary,
                 'active' => $dto->active, 'sort' => $sort, 'metadata' => $dto->metadata,
             ];
             if ($id !== null) {

@@ -536,6 +536,9 @@
       'Deletion is not possible:' => 'Удаление невозможно:',
       'These items cannot be deleted, only moved:' => 'Эти записи нельзя удалить, только переместить:',
       'The field «%1$s» of the collection «%2$s» links to this collection.' => 'На эту коллекцию ссылается поле «%1$s» коллекции «%2$s».',
+      'Short description' => 'Краткое описание',
+      'Plain text of a sentence or two, under the heading of the section and on its card in the list.' => 'Простой текст в одно-два предложения: под заголовком раздела и в его карточке в списке.',
+      'The short description must not exceed %d characters.' => 'Краткое описание должно быть не длиннее %d символов.',
     ),
   ),
 );

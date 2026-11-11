@@ -9,6 +9,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSectionCodeAlreadyExistsException;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionSectionFormException;
+use Johncms\Modules\Collections\Application\UseCases\SaveCollectionSectionUseCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
@@ -51,6 +52,24 @@ final class SaveCollectionSectionUseCaseTest extends TestCase
         self::assertSame('Raw <b>description</b>', $section->description);
         self::assertSame(['seo' => ['title' => 'A & B']], $section->metadata);
         self::assertInstanceOf(DateTimeImmutable::class, $section->createdAt);
+    }
+
+    public function testShortDescriptionIsKeptApartFromTheDescription(): void
+    {
+        $id = CollectionItemWriterFactory::sectionWriter()->execute(null, new CollectionSectionFormDTO(
+            $this->collection, null, 'tech', 'Technology', '<p>Long text</p>', true, 100, [], 'Gadgets & code'
+        ));
+        $section = CollectionItemWriterFactory::sectionsApi()->findSection($this->collection, $id);
+        self::assertSame('Gadgets & code', $section->summary);
+        self::assertSame('<p>Long text</p>', $section->description);
+    }
+
+    public function testTooLongShortDescriptionIsRejected(): void
+    {
+        $this->expectException(CollectionSectionFormException::class);
+        CollectionItemWriterFactory::sectionWriter()->execute(null, new CollectionSectionFormDTO(
+            $this->collection, null, 'tech', 'Technology', null, true, 100, [], str_repeat('я', SaveCollectionSectionUseCase::SUMMARY_LENGTH + 1)
+        ));
     }
 
     public function testDuplicateSiblingCodeIsRejected(): void

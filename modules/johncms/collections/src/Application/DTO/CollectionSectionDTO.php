@@ -8,7 +8,10 @@ use DateTimeImmutable;
 
 final readonly class CollectionSectionDTO
 {
-    /** @param array<string, mixed> $metadata */
+    /**
+     * @param string|null $summary A short plain text about the section, for its heading and its card.
+     * @param array<string, mixed> $metadata
+     */
     public function __construct(
         public int $id,
         public int $collectionId,
@@ -16,6 +19,7 @@ final readonly class CollectionSectionDTO
         public string $code,
         public string $name,
         public ?string $description,
+        public ?string $summary,
         public bool $active,
         public int $sort,
         public array $metadata,

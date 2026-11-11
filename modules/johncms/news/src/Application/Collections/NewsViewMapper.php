@@ -22,9 +22,6 @@ use Johncms\Utils\DateFormatterInterface;
 
 final readonly class NewsViewMapper implements NewsViewMapperInterface
 {
-    /** Characters of the section description shown on its card. */
-    private const int SUMMARY_LENGTH = 160;
-
     public function __construct(
         private ContentRendererInterface $content,
         private CollectionSchemaApiInterface $schema,
@@ -99,7 +96,7 @@ final readonly class NewsViewMapper implements NewsViewMapperInterface
     /** @param array<string, mixed> $settings */
     private function sectionView(CollectionSectionDTO $section, array $settings, string $url, ?CollectionSectionStatsDTO $stats): NewsSectionViewDTO
     {
-        $summary = $this->content->toPlainText($section->description ?? '');
+        $summary = trim($section->summary ?? '');
         $text = static fn (string $key): string => is_string($section->metadata[$key] ?? null) ? $section->metadata[$key] : '';
         $template = fn (string $key): string => $this->setting($settings, $key, '#section_name#', $section->name);
         return new NewsSectionViewDTO(
@@ -107,9 +104,10 @@ final readonly class NewsViewMapper implements NewsViewMapperInterface
             $url,
             $this->content->renderOrNull($section->description ?? ''),
             $this->content->toPlainText($text('meta_title') ?: ($template('section_title') ?: $section->name)),
-            $this->content->toPlainText($text('meta_description') ?: $template('section_meta_description')) ?: $this->content->toPlainText($section->description ?? ''),
+            $this->content->toPlainText($text('meta_description') ?: $template('section_meta_description'))
+                ?: ($summary ?: $this->content->toPlainText($section->description ?? '')),
             $this->content->toPlainText($text('meta_keywords') ?: $template('section_meta_keywords')),
-            mb_strlen($summary) > self::SUMMARY_LENGTH ? rtrim(mb_substr($summary, 0, self::SUMMARY_LENGTH)) . '…' : $summary,
+            $summary,
             $stats->items ?? 0,
             $stats?->lastPublishedAt !== null ? $this->dates->day($stats->lastPublishedAt->getTimestamp()) : '',
         );

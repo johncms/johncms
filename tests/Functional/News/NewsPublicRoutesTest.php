@@ -68,7 +68,7 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
     public function testArchiveKeepsSectionDescriptionsPreviewLinksAndDiscussionAnchors(): void
     {
         $sections = $this->container()->get(CollectionSectionsApiInterface::class);
-        $section = $sections->addSection(new CollectionSectionFormDTO($this->collection, null, 'releases', 'Releases', '<p>Release notes</p>', true, 100));
+        $section = $sections->addSection(new CollectionSectionFormDTO($this->collection, null, 'releases', 'Releases', '<p>Release notes</p>', true, 100, [], 'Every version & patch'));
         $this->api->addItem(new CollectionItemFormDTO(
             collectionId: $this->collection,
             sectionId: $section,
@@ -86,7 +86,7 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         $card = $document->querySelector('a.site-news-section[href="/news/releases/"]');
         self::assertNotNull($card, 'The whole section card leads to the section.');
         self::assertSame('Releases', trim($card->querySelector('.site-news-section__title')->textContent));
-        self::assertSame('Release notes', trim($card->querySelector('.site-news-section__summary')->textContent));
+        self::assertSame('Every version & patch', trim($card->querySelector('.site-news-section__summary')->textContent), 'The card shows the short description, not the long text.');
         self::assertSame('1', trim($card->querySelector('.site-news__count')->textContent));
         self::assertNotNull($card->querySelector('.site-news-section__last'), 'The card tells when the section was last updated.');
         self::assertStringContainsString(sprintf(dn__('news', '%d publication', '%d publications', 1), 1), $document->querySelector('.site-page-stat')->textContent);
@@ -95,7 +95,19 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         self::assertNull($document->querySelector('.site-news-card > a'), 'Rich previews must not be wrapped in an article link.');
         self::assertNotNull($document->querySelector('.site-news-card__title a.stretched-link[href="/news/releases/release.html"]'), 'The title link makes the whole card clickable.');
         $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/releases/')->getContent(), LIBXML_NOERROR);
+        self::assertStringContainsString('Every version & patch', $document->querySelector('.site-page-heading__subtitle')->textContent);
         self::assertStringContainsString('Release notes', $document->querySelector('.site-news__description')->textContent);
+        self::assertStringNotContainsString('Every version', $document->querySelector('.site-news__description')->textContent);
+    }
+
+    public function testSectionWithoutShortDescriptionShowsNoSummary(): void
+    {
+        $sections = $this->container()->get(CollectionSectionsApiInterface::class);
+        $sections->addSection(new CollectionSectionFormDTO($this->collection, null, 'long', 'Long', '<p>Only the long text</p>', true, 100));
+        $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/')->getContent(), LIBXML_NOERROR);
+        $card = $document->querySelector('a.site-news-section[href="/news/long/"]');
+        self::assertNotNull($card);
+        self::assertNull($card->querySelector('.site-news-section__summary'), 'The long text is never cut down into a card.');
     }
 
     public function testArticleHasOneHeadingTagsAndAnEditLinkOnlyForEditors(): void

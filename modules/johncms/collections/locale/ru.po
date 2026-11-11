@@ -1787,3 +1787,12 @@ msgstr "Эти записи нельзя удалить, только перем
 
 msgid "The field «%1$s» of the collection «%2$s» links to this collection."
 msgstr "На эту коллекцию ссылается поле «%1$s» коллекции «%2$s»."
+
+msgid "Short description"
+msgstr "Краткое описание"
+
+msgid "Plain text of a sentence or two, under the heading of the section and on its card in the list."
+msgstr "Простой текст в одно-два предложения: под заголовком раздела и в его карточке в списке."
+
+msgid "The short description must not exceed %d characters."
+msgstr "Краткое описание должно быть не длиннее %d символов."

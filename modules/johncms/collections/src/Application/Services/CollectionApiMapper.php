@@ -59,6 +59,7 @@ final class CollectionApiMapper
             $section->code,
             $section->name,
             $section->description,
+            $section->summary,
             $section->active,
             $section->sort,
             $section->metadata ?? [],

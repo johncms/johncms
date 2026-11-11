@@ -26,6 +26,12 @@ final class CollectionStructureMemo implements ResetInterface
     /** Tag of every entry, whichever collection it describes */
     private const string CACHE_TAG = 'collections_structure';
 
+    /**
+     * Shape of the cached DTOs. Raise it when a property is added to or removed from one of them:
+     * an entry written by the code before an upgrade is then never read back into the new class.
+     */
+    private const int SHAPE = 2;
+
     /** @var array<string, mixed> */
     private array $values = [];
 
@@ -55,7 +61,7 @@ final class CollectionStructureMemo implements ResetInterface
                 $tags[] = CollectionCacheInvalidator::tag($collectionId);
             }
             // The key may carry an owner like "johncms/news", which the cache does not accept.
-            $this->values[$key] = $this->cache->rememberForever('collections_structure_' . hash('xxh128', $key), $load, $tags);
+            $this->values[$key] = $this->cache->rememberForever('collections_structure_' . self::SHAPE . '_' . hash('xxh128', $key), $load, $tags);
         }
         return $this->values[$key];
     }

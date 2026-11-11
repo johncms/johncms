@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Collections;
 
+use Dom\HTMLDocument;
 use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
 use Symfony\Component\HttpFoundation\Response;
@@ -81,21 +82,25 @@ final class CollectionSectionsAdminTreeTest extends FunctionalTestCase
         $form = $this->handleRequest('/admin/collections/' . $this->collection . '/sections/' . $id . '/edit', cookies: $this->actingAs($user));
         $html = (string) $form->getContent();
         self::assertStringContainsString('name="parent"', $html);
+        $page = HTMLDocument::createFromString($html, LIBXML_NOERROR);
+        self::assertNotNull($page->querySelector('[data-admin-editor][data-upload-url=""] textarea[name="description"]'), 'The description is edited as rich text, with nothing uploaded.');
         self::assertStringContainsString('<option value="' . $root . '"', $html);
         self::assertStringNotContainsString('<option value="' . $id . '"', $html);
         self::assertStringNotContainsString('<option value="' . $child . '"', $html);
         $response = $this->postForm('/admin/collections/' . $this->collection . '/sections', [
             'id' => $id, 'parent' => $root, 'code' => 'child', 'name' => 'A & B',
-            'description' => 'Raw <b>text</b>', 'sort' => '50', 'active' => '1',
+            'description' => 'Raw <b>text</b>', 'summary' => ' Short <i>one</i> ', 'sort' => '50', 'active' => '1',
             'metadata' => '{"seo":{"title":"<script>alert(1)</script>"}}',
         ], $user);
         self::assertSame(302, $response->getStatusCode());
         $section = ContentCollectionSection::query()->find($id);
         self::assertSame($root, $section->parent);
         self::assertSame('Raw <b>text</b>', $section->description);
+        self::assertSame('Short <i>one</i>', $section->summary);
         self::assertSame('<script>alert(1)</script>', $section->metadata['seo']['title']);
         $form = $this->handleRequest('/admin/collections/' . $this->collection . '/sections/' . $id . '/edit', cookies: $this->actingAs($user));
         self::assertStringContainsString('&lt;script&gt;', (string) $form->getContent());
+        self::assertStringContainsString('>Short &lt;i&gt;one&lt;/i&gt;</textarea>', (string) $form->getContent());
         self::assertStringNotContainsString('<script>alert(1)</script>', (string) $form->getContent());
     }
 

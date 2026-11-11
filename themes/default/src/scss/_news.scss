@@ -23,6 +23,31 @@
   &__list { display: flex; flex-direction: column; gap: .5rem; }
   &__list--tight { gap: .25rem; }
   &__pagination { margin-block-start: 1.25rem; }
+
+  // The long text of a section under its news: rich text from the editor, quieter than an article.
+  &__description {
+    min-inline-size: 0;
+    padding: 1.5rem 1.625rem;
+    border: 1px solid var(--border);
+    border-radius: .75rem;
+    background: var(--bg-elev);
+    color: var(--fg-muted);
+    font-size: .84375rem;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+    overflow: auto;
+    :is(h2, h3, h4) { margin-block: 1.25rem .625rem; color: var(--fg); font-weight: 700; letter-spacing: -.01em; line-height: 1.3; }
+    h2 { font-size: 1.125rem; }
+    h3 { font-size: 1rem; }
+    h4 { font-size: .90625rem; }
+    p { margin-block: 0 .625rem; }
+    img { max-inline-size: 100%; block-size: auto; }
+    blockquote { margin-block: .25rem .625rem; padding: .625rem .875rem; border-inline-start: 3px solid var(--accent); border-radius: 0 .375rem .375rem 0; background: var(--bg-inset); }
+    blockquote > :last-child { margin-block-end: 0; }
+    // After the rules of the elements, which are as specific as these.
+    > :first-child { margin-block-start: 0; }
+    > :last-child { margin-block-end: 0; }
+  }
   &__back { font-size: .8125rem; }
   &__description { padding: 1.25rem; border: 1px solid var(--border); border-radius: .75rem; background: var(--bg-elev); overflow-wrap: anywhere; overflow: auto; }
   &__description > :last-child { margin-block-end: 0; }
@@ -78,13 +103,15 @@
   &__head { display: flex; align-items: center; gap: .5rem; min-inline-size: 0; }
   &__title { font-size: .90625rem; font-weight: 700; color: var(--fg); overflow-wrap: anywhere; }
   &:hover &__title, &:focus-visible &__title { color: var(--accent); }
-  &__summary { color: var(--fg-muted); font-size: .78125rem; overflow-wrap: anywhere; }
+  // The full short description is on the page of the section; the card keeps two lines of it.
+  &__summary { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; color: var(--fg-muted); font-size: .78125rem; overflow-wrap: anywhere; }
   &__last { color: var(--fg-dim); font-family: var(--bs-font-monospace); font-size: .6875rem; white-space: nowrap; }
 }
 
 @media (max-width: 520px) {
   .site-news-section__body { grid-template-columns: auto minmax(0, 1fr); gap: .625rem; }
   .site-news-section__last { grid-column: 1 / -1; padding-inline-start: 2.75rem; }
+  .site-news__description { padding: 1.25rem 1rem; }
 }
 
 // The title link stretches over the card; interactive content of the card is lifted above that layer.

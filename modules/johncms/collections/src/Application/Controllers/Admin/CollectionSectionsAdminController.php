@@ -17,6 +17,7 @@ use Johncms\Modules\Collections\Application\Services\CollectionDeletionPlanner;
 use Johncms\Modules\Collections\Application\Services\CollectionWorkspaceMapper;
 use Johncms\Modules\Collections\Application\UseCases\EnsureCollectionContentAccessUseCase;
 use Johncms\Modules\Collections\Application\UseCases\ListCollectionSectionsUseCase;
+use Johncms\Modules\Collections\Application\UseCases\SaveCollectionSectionUseCase;
 use Johncms\Modules\Collections\Domain\Enums\SectionDeletionMode;
 use Johncms\Modules\Collections\Domain\Exceptions\CollectionWriteConflictException;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
@@ -286,6 +287,7 @@ final readonly class CollectionSectionsAdminController
             'can_move' => $this->access->allowsAction($collection, 'publish') || ! $fields['active'],
             'id'          => $id,
             'fields'      => $fields,
+            'summary_length' => SaveCollectionSectionUseCase::SUMMARY_LENGTH,
             'section_options' => $this->sectionOptions($collection->id, $id),
             'errors'      => $errors,
         ]);
@@ -302,6 +304,7 @@ final readonly class CollectionSectionsAdminController
             'code'        => trim($request->body('code', '')),
             'name'        => trim($request->body('name', '')),
             'description' => trim($request->body('description', '')),
+            'summary'     => trim($request->body('summary', '')),
             'active'      => $request->hasBody('active') ? 1 : 0,
             'sort'        => $request->body('sort', '100'),
             'metadata'    => $request->body('metadata', '{}'),
@@ -323,6 +326,7 @@ final readonly class CollectionSectionsAdminController
             'code'        => $section->code,
             'name'        => $section->name,
             'description' => (string) $section->description,
+            'summary'     => (string) $section->summary,
             'active'      => $section->active ? 1 : 0,
             'sort'        => $section->sort,
             'seo' => array_filter($section->metadata ?? [], static fn ($value): bool => is_string($value)),
@@ -340,6 +344,7 @@ final readonly class CollectionSectionsAdminController
             'code'        => '',
             'name'        => '',
             'description' => '',
+            'summary'     => '',
             'active'      => 1,
             'sort'        => 100,
             'metadata'    => '{}',
@@ -361,6 +366,7 @@ final readonly class CollectionSectionsAdminController
             active: (bool) $fields['active'],
             sort: $fields['sort'],
             metadata: array_replace($this->metadataFromJson($fields['metadata']), $fields['seo'] ?? []),
+            summary: $fields['summary'] !== '' ? (string) $fields['summary'] : null,
         );
     }
 

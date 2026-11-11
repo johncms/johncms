@@ -9,7 +9,10 @@ namespace Johncms\Modules\Collections\Application\DTO;
  */
 final readonly class CollectionSectionFormDTO
 {
-    /** @param array<string, mixed> $metadata */
+    /**
+     * @param array<string, mixed> $metadata
+     * @param string|null $summary A short plain text about the section, for its heading and its card.
+     */
     public function __construct(
         public int $collectionId,
         public ?int $parent,
@@ -19,6 +22,7 @@ final readonly class CollectionSectionFormDTO
         public bool $active,
         public int|string $sort,
         public array $metadata = [],
+        public ?string $summary = null,
     ) {
     }
 }

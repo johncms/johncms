@@ -5,6 +5,7 @@
     @var string back_url
     @var int    id          Null when a new section is being added.
     @var array  fields      Values of the form, keyed by field name.
+    @var int    summary_length Characters the short description may hold.
     @var array  section_options Allowed parents with root-to-section labels.
     @var array  errors      Validation messages, empty on the first render.
 #}
@@ -38,8 +39,13 @@
                             } only %}
                         </div>
                         <div class="col-12">
-                            <label class="form-label" for="description">{{ __('Description') }}</label>
-                            <textarea name="description" class="form-control" id="description" rows="3">{{ fields.description }}</textarea>
+                            <label class="form-label" for="summary">{{ __('Short description') }}</label>
+                            <textarea name="summary" class="form-control" id="summary" rows="2" maxlength="{{ summary_length }}" aria-describedby="summary-hint">{{ fields.summary }}</textarea>
+                            <div class="form-text" id="summary-hint">{{ __('Plain text of a sentence or two, under the heading of the section and on its card in the list.') }}</div>
+                        </div>
+                        <div class="col-12">
+                            {# Rich text without uploads: images may still be inserted by their address. #}
+                            {% include '@admin/components/ui/editor.twig' with {name: 'description', label: __('Description'), value: fields.description, allow_upload: false} only %}
                         </div>
                         <div class="col-12">
                             {% for key, label in {meta_title: __('Meta title'), meta_description: __('Meta description'), meta_keywords: __('Meta keywords')} %}
