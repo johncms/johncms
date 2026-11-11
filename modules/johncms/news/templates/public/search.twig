@@ -1,6 +1,7 @@
 {#
     @var articles iterable<array>|null
     @var pagination \Twig\Markup|null
+    @var total    int|null Articles found; null before anything is searched for.
     @var query string
     @var form_action string
     @var form_field string
@@ -10,23 +11,46 @@
 
 {% block content_class %}site-content--news{% endblock %}
 
+{% block page_subtitle %}
+    {% if total is not null %}
+        <p class="site-page-heading__subtitle">
+            <span class="site-page-stat">
+                <span class="site-page-stat__dot" aria-hidden="true"></span>
+                {{ n__('%d publication', '%d publications', total)|format(total) }}
+            </span>
+        </p>
+    {% endif %}
+{% endblock %}
+
 {% block content %}
+    {% set back_link %}
+        <a href="/news/" class="btn btn-outline-secondary btn-sm site-news__back">
+            {% include '@theme/components/icon.twig' with {name: 'chevron-left', size: 14} only %}
+            {{ __('All news') }}
+        </a>
+    {% endset %}
     <div class="site-news">
         <div class="site-news__toolbar">
             {% include '@news/public/components/search-form.twig' with {
                 action: form_action, field: form_field, placeholder: form_placeholder, value: query
             } only %}
-            <a href="/news/" class="site-news__back">{{ __('All news') }}</a>
+            {{ back_link }}
         </div>
-        <div class="site-news__list">
-            {% for article in articles %}
-                {% include '@news/public/components/article-row.twig' with {article: article} only %}
-            {% else %}
-                {% include '@theme/components/empty-state.twig' with {
-                    icon: 'search', title: __('The search didn\'t yield any results.'), description: ''
-                } only %}
-            {% endfor %}
+        <div>
+            <div class="site-news__list">
+                {% for article in articles %}
+                    {% include '@news/public/components/article-row.twig' with {article: article} only %}
+                {% else %}
+                    {% include '@theme/components/empty-state.twig' with {
+                        icon: 'search', title: __('The search didn\'t yield any results.'), description: ''
+                    } only %}
+                {% endfor %}
+            </div>
+            {% if pagination %}<div class="site-news__pagination">{{ pagination }}</div>{% endif %}
         </div>
-        {% if pagination %}<div class="site-news__pagination">{{ pagination }}</div>{% endif %}
+        {# A long list ends far from the toolbar: the way back is repeated under it. #}
+        {% if articles is not empty %}
+            <div class="site-news__footer">{{ back_link }}</div>
+        {% endif %}
     </div>
 {% endblock %}

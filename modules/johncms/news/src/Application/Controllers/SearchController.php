@@ -42,9 +42,11 @@ final readonly class SearchController
         $term = $tags ? $query : CollectionTextSearchDTO::normalizeTerm($query);
         $articles = [];
         $pagination = null;
+        $total = null;
         if ($term !== '') {
             $spec = new NewsQueryDTO(search: $tags ? '' : $term, tag: $tags ? $term : null);
-            $pager = $this->paginationFactory->create($this->news->count($spec));
+            $total = $this->news->count($spec);
+            $pager = $this->paginationFactory->create($total);
             $redirect = $this->paginationGuard->redirectUrl($pager);
             if ($redirect !== null) {
                 redirect($redirect);
@@ -56,7 +58,7 @@ final readonly class SearchController
             $pagination = $pager->hasPages() ? $pager->render(withRange: true) : null;
         }
         return new ViewResponse('@news/public/search.twig', array_replace($this->news->rootMetadata(), [
-            'title' => $title, 'page_title' => $title, 'query' => $query, 'articles' => $articles, 'pagination' => $pagination,
+            'title' => $title, 'page_title' => $title, 'query' => $query, 'articles' => $articles, 'pagination' => $pagination, 'total' => $total,
             'form_action' => $tags ? '/news/search_tags/' : '/news/search/', 'form_field' => $tags ? 'tag' : 'query',
             'form_placeholder' => $tags ? d__('news', 'Enter a tag') : d__('news', 'Search query'),
         ]));

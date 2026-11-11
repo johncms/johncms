@@ -17,7 +17,9 @@
   min-inline-size: 0;
 
   &__toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; padding-block-end: 1.125rem; border-block-end: 1px solid var(--border); }
-  &__toolbar > .btn { display: inline-flex; align-items: center; gap: .375rem; }
+  &__toolbar > .btn,
+  &__back { display: inline-flex; align-items: center; gap: .375rem; }
+  &__footer { padding-block-start: 1.125rem; border-block-start: 1px solid var(--border); }
   &__heading { display: flex; align-items: center; gap: .625rem; margin-block-end: .75rem; font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
   &__count { padding: .125rem .4375rem; border: 1px solid var(--border); border-radius: .25rem; background: var(--bg-inset); color: var(--fg-dim); font-family: var(--bs-font-monospace); font-size: .6875rem; font-weight: 400; letter-spacing: 0; text-transform: none; }
   &__list { display: flex; flex-direction: column; gap: .5rem; }

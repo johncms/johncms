@@ -308,6 +308,20 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         self::assertStringContainsString('/news/matching.html', (string) $this->handleRequest('/news/search?query=matching')->getContent());
     }
 
+    public function testSearchResultsCountWhatWasFoundAndLeadBackFromTheirEnd(): void
+    {
+        $this->item(body: 'Matching body', code: 'matching');
+        $this->container()->get(CollectionSearchIndexer::class)->rebuildCollection($this->collection);
+        $found = HTMLDocument::createFromString((string) $this->handleRequest('/news/search?query=matching')->getContent(), LIBXML_NOERROR);
+        self::assertStringContainsString(sprintf(dn__('news', '%d publication', '%d publications', 1), 1), $found->querySelector('.site-page-stat')->textContent);
+        self::assertNotNull($found->querySelector('.site-news__footer a[href="/news/"]'), 'A long list of results leads back from its end too.');
+
+        $nothing = HTMLDocument::createFromString((string) $this->handleRequest('/news/search?query=absent')->getContent(), LIBXML_NOERROR);
+        self::assertNull($nothing->querySelector('.site-news__footer'), 'An empty result has the way back right above it.');
+        $blank = HTMLDocument::createFromString((string) $this->handleRequest('/news/search')->getContent(), LIBXML_NOERROR);
+        self::assertNull($blank->querySelector('.site-page-stat'), 'Nothing is counted before anything is searched for.');
+    }
+
     public function testPendingUpdateBlocksPublicRoutesUploadsAndAllCollectionWrites(): void
     {
         $id = $this->item('Public body');
