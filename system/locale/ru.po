@@ -1635,3 +1635,18 @@ msgstr "Одноклассники"
 
 msgid "Showing %1$s–%2$s of %3$s"
 msgstr "Показаны %1$s–%2$s из %3$s"
+
+msgid "Technical data"
+msgstr "Служебные данные"
+
+msgid "Through a proxy"
+msgstr "Через прокси"
+
+msgid "Browser"
+msgstr "Браузер"
+
+msgid "Search by IP"
+msgstr "Поиск по IP"
+
+msgid "IP Whois"
+msgstr "Whois по IP"

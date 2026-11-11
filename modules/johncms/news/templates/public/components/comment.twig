@@ -26,11 +26,8 @@
             <a class="site-news-comment__anchor" href="#comment-{{ comment.id }}">#{{ number }}</a>
         </header>
         <div class="site-news-comment__body ck-content" data-comment-body>{{ comment.text }}</div>
-        {% if comment.moderatorData.ip|default('') or comment.canReply or comment.canDelete %}
+        {% if comment.moderatorData is not empty or comment.canReply or comment.canDelete %}
             <footer class="site-news-comment__footer">
-                {% if comment.moderatorData.ip|default('') %}
-                    <a class="site-news-comment__ip" href="/admin/ip-search?ip={{ comment.moderatorData.ip|url_encode }}" title="{{ comment.moderatorData.user_agent|default('') }}">{{ comment.moderatorData.ip }}</a>
-                {% endif %}
                 <div class="site-news-comment__actions">
                     {% if comment.canReply %}
                         <button type="button" class="btn btn-outline-secondary btn-xs" data-comment-reply hidden>
@@ -50,6 +47,13 @@
                                 {% include '@theme/components/icon.twig' with {name: 'trash-2', size: 12} only %}
                             </button>
                         </form>
+                    {% endif %}
+                    {% if comment.moderatorData is not empty %}
+                        {% include '@theme/components/moderator-meta.twig' with {
+                            ip: comment.moderatorData.ip|default(''),
+                            ip_via_proxy: comment.moderatorData.ip_via_proxy|default(''),
+                            user_agent: comment.moderatorData.user_agent|default(''),
+                        } only %}
                     {% endif %}
                 </div>
             </footer>

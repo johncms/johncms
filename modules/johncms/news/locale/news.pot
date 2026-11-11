@@ -142,11 +142,11 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/SearchController.php:61
+#: modules/johncms/news/src/Application/Controllers/SearchController.php:63
 msgid "Enter a tag"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/SearchController.php:61
+#: modules/johncms/news/src/Application/Controllers/SearchController.php:63
 msgid "Search query"
 msgstr ""
 
@@ -341,7 +341,7 @@ msgstr ""
 
 #: modules/johncms/news/templates/homepage/latest.twig:3
 #: modules/johncms/news/templates/public/index.twig:60
-#: modules/johncms/news/templates/public/search.twig:19
+#: modules/johncms/news/templates/public/search.twig:29
 msgid "All news"
 msgstr ""
 
@@ -434,20 +434,20 @@ msgstr ""
 msgid "Unknown user"
 msgstr ""
 
-#: modules/johncms/news/templates/public/components/comment.twig:37
+#: modules/johncms/news/templates/public/components/comment.twig:34
 msgid "Reply"
 msgstr ""
 
-#: modules/johncms/news/templates/public/components/comment.twig:40
+#: modules/johncms/news/templates/public/components/comment.twig:37
 msgid "Quote"
 msgstr ""
 
-#: modules/johncms/news/templates/public/components/comment.twig:44
+#: modules/johncms/news/templates/public/components/comment.twig:48
 msgid "Delete this comment?"
 msgstr ""
 
-#: modules/johncms/news/templates/public/components/comment.twig:44
-#: modules/johncms/news/templates/public/components/comment.twig:49
+#: modules/johncms/news/templates/public/components/comment.twig:48
+#: modules/johncms/news/templates/public/components/comment.twig:53
 msgid "Delete"
 msgstr ""
 
@@ -483,6 +483,7 @@ msgid_plural "%d sections"
 msgstr[0] ""
 
 #: modules/johncms/news/templates/public/index.twig:21
+#: modules/johncms/news/templates/public/search.twig:19
 msgid "%d publication"
 msgid_plural "%d publications"
 msgstr[0] ""
@@ -507,6 +508,6 @@ msgstr ""
 msgid "Section news"
 msgstr ""
 
-#: modules/johncms/news/templates/public/search.twig:26
+#: modules/johncms/news/templates/public/search.twig:45
 msgid "The search didn't yield any results."
 msgstr ""

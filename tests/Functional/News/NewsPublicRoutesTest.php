@@ -160,10 +160,13 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         self::assertNotNull($rendered, 'Comments are part of the page, not loaded afterwards.');
         self::assertSame('Comment', trim($rendered->querySelector('.site-news-comment__body')->textContent));
         self::assertSame('#1', trim($rendered->querySelector('.site-news-comment__anchor')->textContent));
-        self::assertNull($rendered->querySelector('.site-news-comment__ip'), 'Only moderators see the address.');
+        self::assertNull($rendered->querySelector('.site-meta'), 'Only moderators see the address.');
         self::assertNull($rendered->querySelector('form[action="/news/comments/del/"]'), 'A guest cannot delete.');
         $moderated = HTMLDocument::createFromString((string) $this->handleRequest('/news/entry.html', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()))->getContent(), LIBXML_NOERROR);
-        self::assertNotNull($moderated->querySelector('#comment-' . $comment . ' .site-news-comment__ip'));
+        $meta = $moderated->querySelector('#comment-' . $comment . ' details.site-meta[data-hover-popover]');
+        self::assertNotNull($meta, 'A moderator gets the address in a popover, not in the row.');
+        self::assertNotNull($meta->querySelector('a[href^="/admin/ip-search?ip="]'));
+        self::assertNotNull($meta->querySelector('a[href^="/admin/ip-whois?ip="]'));
 
         $empty = $this->postForm('/news/comments/add/' . $id, ['text' => '  '], $user);
         self::assertSame('/news/entry.html#comment-form', $empty->headers->get('Location'), 'A rejected comment goes back to the form.');

@@ -48,7 +48,7 @@ final class PublicStyleGuideTest extends FunctionalTestCase
         self::assertNotNull($page->querySelector('#typography'));
         self::assertNotNull($page->querySelector('#buttons .btn-primary[disabled]'));
         self::assertSame('noindex,follow', $page->querySelector('meta[name="robots"]')?->getAttribute('content'));
-        self::assertCount(17, $page->querySelectorAll('.site-guide__code'));
+        self::assertCount(18, $page->querySelectorAll('.site-guide__code'));
         self::assertNotNull($page->querySelector('#messages form[data-confirm]'));
         self::assertNotNull($page->querySelector('[data-confirm-dialog] [data-confirm-accept]'), 'The dialog that asks before a form is sent is on every public page.');
         self::assertCount(4, $page->querySelectorAll('#messages [data-toast-show]'));

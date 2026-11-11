@@ -454,6 +454,11 @@ The number is shown so that support for the old scheme is not removed while it i
       'Could not copy the link.' => 'Не удалось скопировать ссылку.',
       'Odnoklassniki' => 'Одноклассники',
       'Showing %1$s–%2$s of %3$s' => 'Показаны %1$s–%2$s из %3$s',
+      'Technical data' => 'Служебные данные',
+      'Through a proxy' => 'Через прокси',
+      'Browser' => 'Браузер',
+      'Search by IP' => 'Поиск по IP',
+      'IP Whois' => 'Whois по IP',
     ),
   ),
 );

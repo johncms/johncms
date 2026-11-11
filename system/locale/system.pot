@@ -1330,6 +1330,26 @@ msgstr ""
 msgid "Return to my account"
 msgstr ""
 
+#: themes/default/templates/components/moderator-meta.twig:15
+msgid "Technical data"
+msgstr ""
+
+#: themes/default/templates/components/moderator-meta.twig:25
+msgid "Through a proxy"
+msgstr ""
+
+#: themes/default/templates/components/moderator-meta.twig:29
+msgid "Browser"
+msgstr ""
+
+#: themes/default/templates/components/moderator-meta.twig:37
+msgid "Search by IP"
+msgstr ""
+
+#: themes/default/templates/components/moderator-meta.twig:41
+msgid "IP Whois"
+msgstr ""
+
 #: themes/default/templates/components/pagination.twig:13
 msgid "Showing %1$s–%2$s of %3$s"
 msgstr ""

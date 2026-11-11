@@ -1,0 +1,47 @@
+{#
+    What a moderator may see about where a post came from: the address, the address behind a proxy
+    and the browser, with the ways to look the address up. A small button opens it; with a mouse it
+    also opens on hover (src/js/hover-popover.js). Show it only to those who may see it, and at the
+    end of its row: the panel opens towards the start from the end of the button.
+
+    @param string ip
+    @param string ip_via_proxy Empty when the post came without a proxy.
+    @param string user_agent
+#}
+{% set ip = ip|default('') %}
+{% set ip_via_proxy = ip_via_proxy|default('') %}
+{% set user_agent = user_agent|default('') %}
+{% if ip or ip_via_proxy or user_agent %}
+    <details class="site-popover site-meta" data-site-popover data-hover-popover>
+        <summary class="btn btn-outline-secondary btn-xs btn-icon" title="{{ d__('system', 'Technical data') }}" aria-label="{{ d__('system', 'Technical data') }}">
+            {% include '@theme/components/icon.twig' with {name: 'shield', size: 12} only %}
+        </summary>
+        <div class="site-popover__panel site-meta__panel">
+            <dl class="site-meta__list">
+                {% if ip %}
+                    <dt>IP</dt>
+                    <dd dir="ltr">{{ ip }}</dd>
+                {% endif %}
+                {% if ip_via_proxy %}
+                    <dt>{{ d__('system', 'Through a proxy') }}</dt>
+                    <dd dir="ltr">{{ ip_via_proxy }}</dd>
+                {% endif %}
+                {% if user_agent %}
+                    <dt>{{ d__('system', 'Browser') }}</dt>
+                    <dd class="site-meta__agent">{{ user_agent }}</dd>
+                {% endif %}
+            </dl>
+            {% if ip %}
+                <hr class="site-popover__divider">
+                <a class="site-popover__item" href="/admin/ip-search?ip={{ ip|url_encode }}">
+                    {% include '@theme/components/icon.twig' with {name: 'search', size: 14} only %}
+                    <span>{{ d__('system', 'Search by IP') }}</span>
+                </a>
+                <a class="site-popover__item" href="/admin/ip-whois?ip={{ ip|url_encode }}">
+                    {% include '@theme/components/icon.twig' with {name: 'info', size: 14} only %}
+                    <span>{{ d__('system', 'IP Whois') }}</span>
+                </a>
+            {% endif %}
+        </div>
+    </details>
+{% endif %}
