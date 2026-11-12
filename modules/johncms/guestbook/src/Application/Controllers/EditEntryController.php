@@ -12,6 +12,7 @@ use Johncms\Modules\Guestbook\Application\UseCases\GetGuestbookEntryContextUseCa
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
+use Johncms\NavChain;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\Validator\Rules\StringLength;
 use Johncms\Validator\ValidatorInterface;
@@ -21,6 +22,7 @@ final readonly class EditEntryController
 {
     public function __construct(
         private Session $session,
+        private NavChain $navChain,
         private EditorContentNormalizer $editorContentNormalizer,
         private GetGuestbookEntryContextUseCase $contextUseCase,
         private EnsureGuestbookEntryManageAccessUseCase $manageAccessUseCase,
@@ -71,6 +73,9 @@ final readonly class EditEntryController
 
             $errors = $result->getErrors();
         }
+
+        $this->navChain->add($entry->adm ? __('Admin Club') : __('Guestbook'), $baseUrl);
+        $this->navChain->add(__('Edit message'));
 
         return new ViewResponse(
             '@guestbook/public/edit.twig',

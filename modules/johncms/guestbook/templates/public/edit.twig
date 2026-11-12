@@ -1,31 +1,45 @@
 {#
-    @param int    id
-    @param string author
-    @param string text   Raw text of the entry, for editing.
-    @param array  errors
+    @var id int
+    @var author string
+    @var text string Raw text of the entry, for editing.
+    @var errors array
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
 {% block content %}
-    <h4>{{ __('Edit message') }}</h4>
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors._form|default([])} only %}
-    <form action="/guestbook/edit?id={{ id }}" method="post">
-        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}"/>
-        <p>
-            <b>{{ __('Author') }}:</b> {{ author }}
-        </p>
-        {% include '@theme/components/editor.twig' with {
-            name: 'message',
-            id: 'message2',
-            label: __('Message'),
-            errors: errors.message|default([])|join(', '),
-            value: text,
-            upload_url: '/guestbook/upload_file/',
-            allow_upload: true
-        } only %}
-        <div>
-            <button type="submit" name="submit" value="submit" class="btn btn-primary me-2">{{ __('Save') }}</button>
-            <a href="/guestbook/" class="btn btn-outline-primary">{{ __('Back') }}</a>
-        </div>
-    </form>
+    <section class="site-compose mt-0" aria-label="{{ __('Message') }}">
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors._form|default([])} only %}
+        <form class="site-compose__form" action="/guestbook/edit?id={{ id }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}"/>
+            <div class="p-3 border-bottom">
+                <div class="site-comment__header mb-0">
+                    <span class="site-comment__name">{{ author }}</span>
+                    <a class="site-comment__anchor" href="/guestbook/#guestbook-entry-{{ id }}">#{{ id }}</a>
+                </div>
+            </div>
+            {% include '@theme/components/editor.twig' with {
+                name: 'message',
+                id: 'message2',
+                label: __('Message'),
+                label_hidden: true,
+                placeholder: __('Message'),
+                errors: errors.message|default([])|join(', '),
+                value: text,
+                upload_url: '/guestbook/upload_file/',
+                allow_upload: true
+            } only %}
+            <div class="site-compose__actions flex-wrap gap-2 justify-content-between">
+                <a href="/guestbook/#guestbook-entry-{{ id }}" class="btn btn-outline-secondary">
+                    {% include '@theme/components/icon.twig' with {name: 'chevron-left', size: 14, class: 'site-icon--directional'} only %}
+                    {{ __('Back') }}
+                </a>
+                <button type="submit" name="submit" value="submit" class="btn btn-primary">
+                    {% include '@theme/components/icon.twig' with {name: 'check', size: 14} only %}
+                    {{ __('Save') }}
+                </button>
+            </div>
+        </form>
+    </section>
 {% endblock %}
