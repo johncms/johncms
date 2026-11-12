@@ -252,3 +252,16 @@ msgstr "Админ Чат"
 
 msgid "guestbook entries today"
 msgstr "записей в гостевой сегодня"
+
+msgid "Public project chat. Be kind to each other and avoid flooding."
+msgstr "Публичный чат проекта. Будьте добры друг к другу и не флудите."
+
+msgid "Project team chat. Discuss work-related matters here."
+msgstr "Чат команды проекта. Обсуждаем рабочие вопросы."
+
+msgid "%d message"
+msgid_plural "%d messages"
+msgstr[0] "%d сообщение"
+msgstr[1] "%d сообщения"
+msgstr[2] "%d сообщений"
+msgstr[3] "%d сообщения"

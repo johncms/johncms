@@ -1,14 +1,3 @@
-// Keep the heading, ads and news content on the same column as the reference.
-.site-content.site-content--news {
-  max-inline-size: 60rem;
-  padding: 2.5rem 3rem 3.5rem;
-
-  .site-page-heading { margin-block-end: 1.75rem; }
-  .site-page-heading h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.05; letter-spacing: -.03em; }
-  .site-page-heading__subtitle { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin: .75rem 0 0; color: var(--fg-muted); font-size: .90625rem; }
-  .site-ads--content { margin-block: 0 1.375rem; font-size: .75rem; }
-}
-
 // Public news pages share the public palette and keep rich content independent of card links.
 .site-news {
   display: flex;
@@ -147,8 +136,6 @@
   .site-news-card__date { flex-basis: 100%; margin-inline-start: 0; }
 }
 
-.site-content.site-content--news-article { max-inline-size: 76rem; }
-
 .site-news-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 17.5rem;
@@ -263,9 +250,4 @@
   &__feed { display: flex; flex-direction: column; gap: .75rem; }
   &__pagination { margin-block-start: 1rem; }
   &__login { margin-block-start: 1rem; padding: 1rem 1.125rem; border: 1px dashed var(--border-strong); border-radius: .75rem; color: var(--fg-muted); font-size: .875rem; }
-}
-
-@media (max-width: 700px) {
-  .site-content.site-content--news { padding: 1.5rem 1rem 2.5rem; }
-  .site-content.site-content--news .site-page-heading h1 { font-size: 1.875rem; }
 }

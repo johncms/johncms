@@ -56,15 +56,23 @@ msgstr ""
 msgid "Guestbook is closed"
 msgstr ""
 
-#: modules/johncms/guestbook/src/Application/Controllers/GuestbookController.php:78
+#: modules/johncms/guestbook/src/Application/Controllers/GuestbookController.php:79
 msgid "Your message was added successfully"
+msgstr ""
+
+#: modules/johncms/guestbook/src/Application/Controllers/GuestbookController.php:113
+msgid "Project team chat. Discuss work-related matters here."
+msgstr ""
+
+#: modules/johncms/guestbook/src/Application/Controllers/GuestbookController.php:114
+msgid "Public project chat. Be kind to each other and avoid flooding."
 msgstr ""
 
 #: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:49
 #: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:80
 #: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:81
-#: modules/johncms/guestbook/templates/public/components/entry.twig:87
-#: modules/johncms/guestbook/templates/public/components/entry.twig:99
+#: modules/johncms/guestbook/templates/public/components/entry.twig:51
+#: modules/johncms/guestbook/templates/public/components/entry.twig:63
 #: modules/johncms/guestbook/templates/public/reply.twig:11
 #: modules/johncms/guestbook/templates/public/reply.twig:22
 msgid "Reply"
@@ -154,7 +162,7 @@ msgid "Clear all"
 msgstr ""
 
 #: modules/johncms/guestbook/templates/public/clear.twig:26
-#: modules/johncms/guestbook/templates/public/index.twig:79
+#: modules/johncms/guestbook/templates/public/index.twig:71
 msgid "Clear"
 msgstr ""
 
@@ -163,26 +171,36 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: modules/johncms/guestbook/templates/public/components/entry.twig:41
+#: modules/johncms/guestbook/templates/public/components/entry.twig:17
 msgid "Guest"
 msgstr ""
 
-#: modules/johncms/guestbook/templates/public/components/entry.twig:49
+#: modules/johncms/guestbook/templates/public/components/entry.twig:22
 msgid "Edited:"
 msgstr ""
 
-#: modules/johncms/guestbook/templates/public/components/entry.twig:50
+#: modules/johncms/guestbook/templates/public/components/entry.twig:22
 msgid "Edited"
 msgstr ""
 
-#: modules/johncms/guestbook/templates/public/components/entry.twig:101
+#: modules/johncms/guestbook/templates/public/components/entry.twig:56
+#: modules/johncms/guestbook/templates/public/components/entry.twig:68
 msgid "Edit"
 msgstr ""
 
-#: modules/johncms/guestbook/templates/public/components/entry.twig:102
+#: modules/johncms/guestbook/templates/public/components/entry.twig:72
 #: modules/johncms/guestbook/templates/public/confirm-delete.twig:19
 msgid "Delete"
 msgstr ""
+
+#: modules/johncms/guestbook/templates/public/components/feed.twig:8
+msgid "The guestbook is empty.<br><strong>Be the first! :)</strong>"
+msgstr ""
+
+#: modules/johncms/guestbook/templates/public/components/subtitle.twig:9
+msgid "%d message"
+msgid_plural "%d messages"
+msgstr[0] ""
 
 #: modules/johncms/guestbook/templates/public/confirm-delete.twig:16
 msgid "Do you really want to delete?"
@@ -194,7 +212,8 @@ msgid "Author"
 msgstr ""
 
 #: modules/johncms/guestbook/templates/public/edit.twig:20
-#: modules/johncms/guestbook/templates/public/index.twig:43
+#: modules/johncms/guestbook/templates/public/index.twig:48
+#: modules/johncms/guestbook/templates/public/index.twig:50
 msgid "Message"
 msgstr ""
 
@@ -208,19 +227,15 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: modules/johncms/guestbook/templates/public/index.twig:26
-#: modules/johncms/guestbook/templates/public/index.twig:34
+#: modules/johncms/guestbook/templates/public/index.twig:32
+#: modules/johncms/guestbook/templates/public/index.twig:40
 msgid "Name"
 msgstr ""
 
-#: modules/johncms/guestbook/templates/public/index.twig:54
+#: modules/johncms/guestbook/templates/public/index.twig:58
 msgid "Write"
 msgstr ""
 
-#: modules/johncms/guestbook/templates/public/index.twig:59
+#: modules/johncms/guestbook/templates/public/index.twig:63
 msgid "For registered users only"
-msgstr ""
-
-#: modules/johncms/guestbook/templates/public/index.twig:66
-msgid "The guestbook is empty.<br><strong>Be the first! :)</strong>"
 msgstr ""

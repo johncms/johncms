@@ -108,8 +108,12 @@ final readonly class GuestbookController
                 'page_title'       => $pageTitle,
                 'description'      => $meta->description,
                 'posts'            => $posts,
+                'messages_total'   => $pagination->getTotal(),
+                'summary'          => $this->mode->isAdminClub()
+                    ? __('Project team chat. Discuss work-related matters here.')
+                    : __('Public project chat. Be kind to each other and avoid flooding.'),
                 'page'             => $pagination->getCurrentPage(),
-                'pagination'       => $pagination->hasPages() ? $pagination->render() : null,
+                'pagination'       => $pagination->hasPages() ? $pagination->render(withRange: true) : null,
                 'can_write'        => $this->access->canWrite(),
                 'can_clear'        => $this->access->canClear(),
                 'errors'           => $errors,

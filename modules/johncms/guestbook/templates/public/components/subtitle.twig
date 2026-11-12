@@ -1,0 +1,11 @@
+{#
+    @var messages_total int Total messages in the current chat.
+    @var summary string Description of the current chat.
+#}
+<p class="site-page-heading__subtitle" data-live-list-region="guestbook-subtitle">
+    <span>{{ summary }}</span>
+    <span class="site-page-stat">
+        <span class="site-page-stat__dot" aria-hidden="true"></span>
+        {{ n__('%d message', '%d messages', messages_total)|format(messages_total) }}
+    </span>
+</p>

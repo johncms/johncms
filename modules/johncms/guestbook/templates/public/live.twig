@@ -1,5 +1,6 @@
 {# The changing regions; the editor and the name field remain on the page. #}
 <title>{% include '@theme/components/document-title.twig' with {title: title} only %}</title>
+{% include '@guestbook/public/components/subtitle.twig' with {messages_total: messages_total, summary: summary} only %}
 {% include '@guestbook/public/components/feed.twig' with {posts: posts, pagination: pagination, can_write: can_write, message: message, added: added} only %}
 {% include '@guestbook/public/components/feedback.twig' with {errors: errors} only %}
 {% if refresh_captcha %}

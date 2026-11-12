@@ -1,4 +1,6 @@
 {#
+    @var int messages_total Total messages in the current chat.
+    @var summary string Description of the current chat.
     @param list<GuestbookEntryDTO> posts
     @param ?Markup                 pagination
     @param bool                    can_write
@@ -9,6 +11,12 @@
     @param string                  message    Flash message about the last action.
 #}
 {% extends '@theme/layouts/default.twig' %}
+
+{% block content_class %}site-content--contained{% endblock %}
+
+{% block page_subtitle %}
+    {% include '@guestbook/public/components/subtitle.twig' with {messages_total: messages_total, summary: summary} only %}
+{% endblock %}
 
 {% block content %}
     <div class="site-guestbook" id="guestbook" data-live-list>

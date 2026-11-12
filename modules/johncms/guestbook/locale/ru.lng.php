@@ -75,6 +75,15 @@ Inserting links: <a href="https://johncms.com">https://johncms.com</a>, images, 
       'Leave an entry in the guestbook' => 'Оставлять записи в гостевой книге',
       'Admin Chat' => 'Админ Чат',
       'guestbook entries today' => 'записей в гостевой сегодня',
+      'Public project chat. Be kind to each other and avoid flooding.' => 'Публичный чат проекта. Будьте добры друг к другу и не флудите.',
+      'Project team chat. Discuss work-related matters here.' => 'Чат команды проекта. Обсуждаем рабочие вопросы.',
+      '%d message' => 
+      array (
+        0 => '%d сообщение',
+        1 => '%d сообщения',
+        2 => '%d сообщений',
+        3 => '%d сообщения',
+      ),
     ),
   ),
 );

@@ -57,9 +57,20 @@
                                 {% include '@theme/components/icon.twig' with {name: 'chevron-down', size: 12} only %}
                             </summary>
                             <div class="site-popover__panel">
-                                {% if post.meta.replyUrl %}<a class="site-popover__item" href="{{ post.meta.replyUrl }}">{{ __('Reply') }}</a>{% endif %}
-                                <a class="site-popover__item" href="{{ post.meta.editUrl }}">{{ __('Edit') }}</a>
-                                <a class="site-popover__item" href="{{ post.meta.deleteUrl }}" data-url="{{ post.meta.deleteUrl }}" data-bs-toggle="modal" data-bs-target=".ajax_modal">{{ __('Delete') }}</a>
+                                {% if post.meta.replyUrl %}
+                                    <a class="site-popover__item" href="{{ post.meta.replyUrl }}">
+                                        {% include '@theme/components/icon.twig' with {name: 'message-square', size: 14} only %}
+                                        <span>{{ __('Reply') }}</span>
+                                    </a>
+                                {% endif %}
+                                <a class="site-popover__item" href="{{ post.meta.editUrl }}">
+                                    {% include '@theme/components/icon.twig' with {name: 'pencil', size: 14} only %}
+                                    <span>{{ __('Edit') }}</span>
+                                </a>
+                                <a class="site-popover__item" href="{{ post.meta.deleteUrl }}" data-url="{{ post.meta.deleteUrl }}" data-bs-toggle="modal" data-bs-target=".ajax_modal">
+                                    {% include '@theme/components/icon.twig' with {name: 'trash-2', size: 14} only %}
+                                    <span>{{ __('Delete') }}</span>
+                                </a>
                             </div>
                         </details>
                     {% endif %}

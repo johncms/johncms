@@ -421,6 +421,24 @@
   h1 { font-size: 1.75rem; font-weight: 700; line-height: 1.2; margin: 0; overflow-wrap: anywhere; }
 }
 
+// Shared content column for public pages.
+.site-content.site-content--contained {
+  max-inline-size: 60rem;
+  padding: 2.5rem 3rem 3.5rem;
+
+  .site-page-heading { margin-block-end: 1.75rem; }
+  .site-page-heading h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.05; letter-spacing: -.03em; }
+  .site-page-heading__subtitle { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin: .75rem 0 0; color: var(--fg-muted); font-size: .90625rem; }
+  .site-ads--content { margin-block: 0 1.375rem; font-size: .75rem; }
+}
+
+.site-content.site-content--wide { max-inline-size: 76rem; }
+
+@media (max-width: 700px) {
+  .site-content.site-content--contained { padding: 1.5rem 1rem 2.5rem; }
+  .site-content.site-content--contained .site-page-heading h1 { font-size: 1.875rem; }
+}
+
 .site-breadcrumbs {
   .breadcrumb {
     display: flex;
