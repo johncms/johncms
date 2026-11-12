@@ -25,6 +25,7 @@ import './live-list';
 import './share';
 import './hover-popover';
 import './news';
+import './guestbook';
 
 if (document.querySelector('[data-site-icon-gallery]')) {
     import('./icon-gallery');

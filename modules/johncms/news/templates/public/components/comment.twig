@@ -9,26 +9,26 @@
 #}
 {% set author = comment.author %}
 {% set author_url = author ? profile_url(author.id) : null %}
-<article class="site-news-comment" id="comment-{{ comment.id }}" data-comment{% if added|default(false) %} data-live-list-target{% endif %}>
-    <div class="site-news-comment__avatar">
+<article class="site-comment" id="comment-{{ comment.id }}" data-comment{% if added|default(false) %} data-live-list-target{% endif %}>
+    <div class="site-comment__avatar">
         <img src="{{ avatar(author ? author.id : 0) }}" alt="" width="40" height="40" loading="lazy">
-        {% if author and author.online %}<span class="site-news-comment__online" title="{{ __('Online') }}"></span>{% endif %}
+        {% if author and author.online %}<span class="site-comment__online" title="{{ __('Online') }}"></span>{% endif %}
     </div>
-    <div class="site-news-comment__main">
-        <header class="site-news-comment__header">
+    <div class="site-comment__main">
+        <header class="site-comment__header">
             {% if author_url %}
-                <a class="site-news-comment__name" href="{{ author_url }}" data-comment-author>{{ author.name }}</a>
+                <a class="site-comment__name" href="{{ author_url }}" data-comment-author>{{ author.name }}</a>
             {% else %}
-                <span class="site-news-comment__name" data-comment-author>{{ author ? author.name : __('Unknown user') }}</span>
+                <span class="site-comment__name" data-comment-author>{{ author ? author.name : __('Unknown user') }}</span>
             {% endif %}
-            {% if author and author.rightsName %}<span class="site-news-comment__role">{{ author.rightsName }}</span>{% endif %}
-            <time class="site-news-comment__date" data-comment-date>{{ comment.createdAt }}</time>
-            <a class="site-news-comment__anchor" href="#comment-{{ comment.id }}">#{{ number }}</a>
+            {% if author and author.rightsName %}<span class="site-comment__role">{{ author.rightsName }}</span>{% endif %}
+            <time class="site-comment__date" data-comment-date>{{ comment.createdAt }}</time>
+            <a class="site-comment__anchor" href="#comment-{{ comment.id }}">#{{ number }}</a>
         </header>
-        <div class="site-news-comment__body ck-content" data-comment-body>{{ comment.text }}</div>
+        <div class="site-comment__body ck-content" data-comment-body>{{ comment.text }}</div>
         {% if comment.moderatorData is not empty or comment.canReply or comment.canDelete %}
-            <footer class="site-news-comment__footer">
-                <div class="site-news-comment__actions">
+            <footer class="site-comment__footer">
+                <div class="site-comment__actions">
                     {% if comment.canReply %}
                         <button type="button" class="btn btn-outline-secondary btn-xs" data-comment-reply hidden>
                             {% include '@theme/components/icon.twig' with {name: 'message-square', size: 12} only %} {{ __('Reply') }}
@@ -43,7 +43,7 @@
                             <input type="hidden" name="comment_id" value="{{ comment.id }}">
                             <input type="hidden" name="article_id" value="{{ article_id }}">
                             <input type="hidden" name="page" value="{{ page }}">
-                            <button type="submit" class="btn btn-outline-secondary btn-xs btn-icon site-news-comment__delete" title="{{ __('Delete') }}" aria-label="{{ __('Delete') }}">
+                            <button type="submit" class="btn btn-outline-secondary btn-xs btn-icon site-comment__delete" title="{{ __('Delete') }}" aria-label="{{ __('Delete') }}">
                                 {% include '@theme/components/icon.twig' with {name: 'trash-2', size: 12} only %}
                             </button>
                         </form>

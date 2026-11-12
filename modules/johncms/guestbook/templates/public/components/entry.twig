@@ -1,108 +1,70 @@
 {#
-    One entry of the guestbook.
-
-    @param GuestbookEntryDTO post
-    @param bool              can_write Whether the visitor may reply in the form above.
+    @var post \Johncms\Modules\Guestbook\Application\DTO\GuestbookEntryDTO
+    @var can_write bool
 #}
-<div class="new_post-item">
-    <div class="new_post-header d-flex justify-content-between">
-        <div class="post-user">
-            {% if post.user.profileUrl|default('') %}
-                <a href="{{ post.user.profileUrl }}">
-                    <div class="avatar">
-                        <img src="{{ avatar(post.user.id) }}" class="img-fluid" alt=".">
-                    </div>
-                </a>
-            {% else %}
-                <div class="avatar">
-                    <img src="{{ avatar(post.user.id|default(0)) }}" class="img-fluid" alt=".">
-                </div>
-            {% endif %}
-            <span class="user-status {{ post.isOnline ? 'online' : 'offline' }} shadow"></span>
-            {% if post.user.rightsName|default('') %}
-                <div class="post-of-user"
-                     data-bs-toggle="tooltip"
-                     data-bs-placement="top"
-                     data-bs-html="true"
-                     data-bs-title="{{ post.user.rightsName }}">
-                    <svg class="icon-post">
-                        <use xlink:href="{{ asset('icons/sprite.svg') }}?4#check"/>
-                    </svg>
-                </div>
-            {% endif %}
-        </div>
-        <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
-            <div class="w-100">
-                {% if post.user.profileUrl|default('') %}
-                    <a href="{{ post.user.profileUrl }}">
-                        <div class="user-name d-inline me-2">{{ post.name }}</div>
-                    </a>
-                {% else %}
-                    <div class="user-name d-inline me-2">{{ post.user ? post.name : __('Guest') ~ ': ' ~ post.name }}</div>
-                {% endif %}
-                <span class="post-meta d-inline me-2">{{ post.createdAt }}</span>
-                {% if post.editCount %}
-                    <div class="post-meta d-inline me-2"
-                         data-bs-toggle="tooltip"
-                         data-bs-placement="top"
-                         data-bs-html="true"
-                         data-bs-title="{{ __('Edited:') }} {{ post.updatedBy }} <br> ({{ post.updateAt }}) [{{ post.editCount }}]">
-                        {{ __('Edited') }}
-                    </div>
-                {% endif %}
-            </div>
-            {% if post.user.status|default('') %}
-                <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
-                    <span class="fw-bold">{{ post.user.status }}</span>
-                </div>
-            {% endif %}
-        </div>
+<article class="site-comment" id="guestbook-entry-{{ post.id }}"{% if added|default(false) %} data-live-list-target{% endif %}>
+    <div class="site-comment__avatar">
+        {% if post.user and post.user.profileUrl %}<a href="{{ post.user.profileUrl }}">{% endif %}
+        <img src="{{ avatar(post.user ? post.user.id : 0) }}" alt="" width="40" height="40" loading="lazy">
+        {% if post.user and post.user.profileUrl %}</a>{% endif %}
+        {% if post.isOnline %}<span class="site-comment__online"></span>{% endif %}
     </div>
-    <div class="post-body last-p-no-margin pt-2">
-        {# Sanitized by the text formatter of the module, so both stay markup. #}
-        {{ post.text }}
-        {% if post.replyText %}
-            <div class="alert alert-warning mt-2 mb-n2">
-                <b>{{ post.repliedBy }}</b> {{ post.repliedAt }}<br>
-                {{ post.replyText }}
-            </div>
+    <div class="site-comment__main">
+        <header class="site-comment__header">
+            {% if post.user and post.user.profileUrl %}
+                <a class="site-comment__name" href="{{ post.user.profileUrl }}">{{ post.name }}</a>
+            {% else %}
+                <span class="site-comment__name">{{ post.user ? post.name : __('Guest') ~ ': ' ~ post.name }}</span>
+            {% endif %}
+            {% if post.user and post.user.rightsName %}<span class="site-comment__role">{{ post.user.rightsName }}</span>{% endif %}
+            <time class="site-comment__date">{{ post.createdAt }}</time>
+            {% if post.editCount %}
+                <span class="site-comment__date" title="{{ __('Edited:') }} {{ post.updatedBy }} ({{ post.updateAt }}) [{{ post.editCount }}]">{{ __('Edited') }}</span>
+            {% endif %}
+            <a class="site-comment__anchor" href="#guestbook-entry-{{ post.id }}">#{{ post.id }}</a>
+        </header>
+        {% if post.user and post.user.status %}<div class="site-comment__status">{{ post.user.status }}</div>{% endif %}
+        <div class="site-comment__body ck-content">
+            {{ post.text }}
+            {% if post.replyText %}
+                <div class="site-comment__reply">
+                    <div class="site-comment__header"><b class="site-comment__name">{{ post.repliedBy }}</b><time class="site-comment__date">{{ post.repliedAt }}</time></div>
+                    {{ post.replyText }}
+                </div>
+            {% endif %}
+        </div>
+        {% if can_write or post.meta %}
+            <footer class="site-comment__footer">
+                {% if post.meta and (post.meta.ip or post.meta.userAgent) %}
+                    <div class="site-guestbook__meta">
+                        {% if post.meta.ip %}
+                            <a class="site-guestbook__ip" href="{{ post.meta.searchIpUrl }}" dir="ltr">{{ post.meta.ip }}</a>
+                        {% endif %}
+                        {% if post.meta.userAgent %}
+                            <span class="site-guestbook__agent" dir="ltr" title="{{ post.meta.userAgent }}">{{ post.meta.userAgent }}</span>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                <div class="site-comment__actions">
+                    {% if can_write and post.userId != (app.user.isValid ? app.user.id : 0) %}
+                        <a class="btn btn-outline-secondary btn-xs" href="#message2" data-editor-reply="{{ post.name }}">
+                            {% include '@theme/components/icon.twig' with {name: 'message-square', size: 12} only %} {{ __('Reply') }}
+                        </a>
+                    {% endif %}
+                    {% if post.meta and post.meta.canManage %}
+                        <details class="site-popover" data-site-popover>
+                            <summary class="btn btn-outline-secondary btn-xs btn-icon" aria-label="{{ __('Edit') }}">
+                                {% include '@theme/components/icon.twig' with {name: 'chevron-down', size: 12} only %}
+                            </summary>
+                            <div class="site-popover__panel">
+                                {% if post.meta.replyUrl %}<a class="site-popover__item" href="{{ post.meta.replyUrl }}">{{ __('Reply') }}</a>{% endif %}
+                                <a class="site-popover__item" href="{{ post.meta.editUrl }}">{{ __('Edit') }}</a>
+                                <a class="site-popover__item" href="{{ post.meta.deleteUrl }}" data-url="{{ post.meta.deleteUrl }}" data-bs-toggle="modal" data-bs-target=".ajax_modal">{{ __('Delete') }}</a>
+                            </div>
+                        </details>
+                    {% endif %}
+                </div>
+            </footer>
         {% endif %}
     </div>
-    <div class="post-footer d-flex justify-content-between mt-2">
-        <div class="overflow-hidden">
-            {% if post.meta and post.meta.ip %}
-                <div class="post-meta d-flex">
-                    <div class="user-ip me-2">
-                        <a href="{{ post.meta.searchIpUrl }}">{{ post.meta.ip }}</a>
-                    </div>
-                    <div class="useragent">
-                        <span>{{ post.meta.userAgent }}</span>
-                    </div>
-                </div>
-            {% endif %}
-        </div>
-        <div class="d-flex">
-            {% if can_write and post.user.id|default(0) != (app.user.isValid ? app.user.id : 0) %}
-                <div class="ms-3">
-                    <a href="#message2" data-editor-reply="{{ post.name }}">{{ __('Reply') }}</a>
-                </div>
-            {% endif %}
-            {% if post.meta and post.meta.canManage %}
-                <div class="dropdown ms-3">
-                    <div class="cursor-pointer" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <svg class="icon text-primary">
-                            <use xlink:href="{{ asset('icons/sprite.svg') }}?1#more_horizontal"/>
-                        </svg>
-                    </div>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        {% if post.meta.replyUrl %}
-                            <a href="{{ post.meta.replyUrl }}" class="dropdown-item">{{ __('Reply') }}</a>
-                        {% endif %}
-                        <a href="{{ post.meta.editUrl }}" class="dropdown-item">{{ __('Edit') }}</a>
-                        <a href="#" data-url="{{ post.meta.deleteUrl }}" data-bs-toggle="modal" data-bs-target=".ajax_modal" class="dropdown-item">{{ __('Delete') }}</a>
-                    </div>
-                </div>
-            {% endif %}
-        </div>
-    </div>
-</div>
+</article>

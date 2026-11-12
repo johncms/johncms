@@ -168,8 +168,8 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/entry.html')->getContent(), LIBXML_NOERROR);
         $rendered = $document->querySelector('#comment-' . $comment);
         self::assertNotNull($rendered, 'Comments are part of the page, not loaded afterwards.');
-        self::assertSame('Comment', trim($rendered->querySelector('.site-news-comment__body')->textContent));
-        self::assertSame('#1', trim($rendered->querySelector('.site-news-comment__anchor')->textContent));
+        self::assertSame('Comment', trim($rendered->querySelector('.site-comment__body')->textContent));
+        self::assertSame('#1', trim($rendered->querySelector('.site-comment__anchor')->textContent));
         self::assertNull($rendered->querySelector('.site-meta'), 'Only moderators see the address.');
         self::assertNull($rendered->querySelector('form[action="/news/comments/del/"]'), 'A guest cannot delete.');
         $moderated = HTMLDocument::createFromString((string) $this->handleRequest('/news/entry.html', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()))->getContent(), LIBXML_NOERROR);
@@ -211,7 +211,7 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         $document = HTMLDocument::createFromString('<!doctype html><body>' . $fragment->getContent(), LIBXML_NOERROR);
         $region = $document->querySelector('[data-live-list-region="comments"]');
         self::assertNotNull($region, 'The live list gets the region of the discussion.');
-        self::assertSame('#11', trim($region->querySelector('.site-news-comment__anchor')->textContent));
+        self::assertSame('#11', trim($region->querySelector('.site-comment__anchor')->textContent));
         self::assertNull($document->querySelector('.site-news-article__body'), 'The fragment holds the discussion only.');
         self::assertStringStartsWith('Long body — ' . d__('system', 'Page') . ' 2 | ', (string) $document->querySelector('title')?->textContent, 'The title follows the page of comments.');
         self::assertSame('11', trim((string) $document->querySelector('[data-live-list-region="comments-stat"]')?->textContent), 'The count in the header of the article follows the discussion.');
@@ -224,7 +224,7 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         self::assertSame('/news/entry.html?page=2#comment-form', $response->headers->get('Location'));
         $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/entry.html?page=2', cookies: $this->actingAs($user))->getContent(), LIBXML_NOERROR);
         self::assertNotNull($document->querySelector('#comment-form .alert-danger'));
-        self::assertSame('#11', trim($document->querySelector('.site-news-comment__anchor')->textContent));
+        self::assertSame('#11', trim($document->querySelector('.site-comment__anchor')->textContent));
         self::assertNotNull($document->querySelector('form#news-comment-form-' . $id));
 
         $this->postForm('/news/comments/add/' . $id, ['text' => '<p>&nbsp;</p>', 'page' => '2'], $user);

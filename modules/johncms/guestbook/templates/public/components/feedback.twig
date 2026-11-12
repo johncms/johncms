@@ -1,0 +1,6 @@
+{# @var errors array #}
+<div data-live-list-region="guestbook-feedback" role="status">
+    {% for messages in errors %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: messages} only %}
+    {% endfor %}
+</div>

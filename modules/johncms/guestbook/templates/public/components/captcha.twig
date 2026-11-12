@@ -1,0 +1,8 @@
+{# @var captcha \Johncms\Captcha\CaptchaChallenge|null #}
+<div data-live-list-region="guestbook-captcha">
+    {% if captcha %}
+        <div class="site-guestbook__field">
+            {% include '@theme/components/captcha.twig' with {captcha: captcha, errors: []} only %}
+        </div>
+    {% endif %}
+</div>

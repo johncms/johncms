@@ -30,11 +30,11 @@
     } only %}
 
     {% if can_write %}
-        <section class="site-news-compose" id="comment-form" aria-labelledby="comment-form-title">
+        <section class="site-compose" id="comment-form" aria-labelledby="comment-form-title">
             <h3 class="visually-hidden" id="comment-form-title">{{ __('Write a comment') }}</h3>
             {% include '@news/public/components/comment-error.twig' with {error: error} only %}
             {# The form is the frame of the editor: the toolbar, the text and the button share one border. #}
-            <form class="site-news-compose__form" id="news-comment-form-{{ article_id }}" method="post" action="/news/comments/add/{{ article_id }}/" data-live-list-form data-comment-form>
+            <form class="site-compose__form" id="news-comment-form-{{ article_id }}" method="post" action="/news/comments/add/{{ article_id }}/" data-live-list-form data-comment-form>
                 <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                 {% include '@theme/components/editor.twig' with {
                     name: 'text',
@@ -47,7 +47,7 @@
                     allow_upload: true,
                     required: true,
                 } only %}
-                <div class="site-news-compose__actions">
+                <div class="site-compose__actions">
                     <button type="submit" class="btn btn-primary">
                         {% include '@theme/components/icon.twig' with {name: 'send', size: 14} only %} {{ __('Send') }}
                     </button>

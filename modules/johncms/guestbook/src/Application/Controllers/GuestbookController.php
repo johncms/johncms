@@ -65,7 +65,7 @@ final readonly class GuestbookController
             $formData = $this->form->getFormData($request);
             $result = $this->validator->validate($formData, $this->form->getValidationRules());
             if ($result->isValid()) {
-                $this->createEntry->execute(
+                $entry = $this->createEntry->execute(
                     new CreateGuestbookEntryDTO(
                         adminClub:     $this->mode->isAdminClub(),
                         name:          $this->currentUser->isValid() ? $this->currentUser->user()->name : $formData['name'],
@@ -75,13 +75,14 @@ final readonly class GuestbookController
                         attachedFiles: $formData['attached_files'],
                     )
                 );
+                $this->session->flash('guestbook_added', $entry->id);
                 $this->session->flash('message', __('Your message was added successfully'));
                 redirect($baseUrl);
             }
             $errors = $result->getErrors();
         }
 
-        $pagination = $this->paginationFactory->create($this->guestbookEntries->count());
+        $pagination = $this->paginationFactory->create(total: $this->guestbookEntries->count(), fragment: 'guestbook-feed');
 
         if ($request->getMethod() !== 'POST') {
             $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
@@ -94,21 +95,29 @@ final readonly class GuestbookController
 
         $posts = $this->guestbookEntries->getPage($pagination->getPerPage(), $pagination->getOffset());
         $showCaptcha = $this->access->canWrite() && ! $this->currentUser->isValid();
+        $message = $this->session->getFlash('message');
+        $refreshCaptcha = $request->getMethod() === 'POST' || $message !== null;
+        $challenge = $showCaptcha && (! $request->isXmlHttpRequest() || $refreshCaptcha)
+            ? $this->captcha->challenge(GuestbookForm::CAPTCHA_SCOPE)
+            : null;
 
         return new ViewResponse(
-            '@guestbook/public/index.twig',
+            $request->isXmlHttpRequest() ? '@guestbook/public/live.twig' : '@guestbook/public/index.twig',
             [
-                'title'       => $meta->title,
-                'page_title'  => $pageTitle,
-                'description' => $meta->description,
-                'posts'       => $posts,
-                'pagination'  => $pagination->hasPages() ? $pagination->render() : null,
-                'can_write'   => $this->access->canWrite(),
-                'can_clear'   => $this->access->canClear(),
-                'errors'      => $errors,
-                'form_data'   => $this->form->getFormData($request),
-                'captcha'     => $showCaptcha ? $this->captcha->challenge(GuestbookForm::CAPTCHA_SCOPE) : null,
-                'message'     => $this->session->getFlash('message'),
+                'title'            => $meta->title,
+                'page_title'       => $pageTitle,
+                'description'      => $meta->description,
+                'posts'            => $posts,
+                'page'             => $pagination->getCurrentPage(),
+                'pagination'       => $pagination->hasPages() ? $pagination->render() : null,
+                'can_write'        => $this->access->canWrite(),
+                'can_clear'        => $this->access->canClear(),
+                'errors'           => $errors,
+                'form_data'        => $this->form->getFormData($request),
+                'captcha'          => $challenge,
+                'message'          => $message,
+                'added'            => $this->session->getFlash('guestbook_added'),
+                'refresh_captcha'  => $refreshCaptcha && ($challenge === null || $challenge->provider === 'image'),
             ]
         );
     }

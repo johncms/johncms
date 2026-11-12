@@ -1,0 +1,21 @@
+{# @var posts array @var pagination \Twig\Markup|null @var can_write bool @var message string|null @var added int|null #}
+<div class="site-guestbook__region" id="guestbook-feed" tabindex="-1" data-live-list-region="guestbook-feed" data-live-list-focus{% if added %} data-guestbook-added{% endif %}>
+    {% if message %}
+        {% include '@theme/components/toast.twig' with {type: 'success', message: message, announce: added is not null} only %}
+    {% endif %}
+    {% if posts is empty %}
+        {# The emphasis is part of the translated string. #}
+        <div class="alert alert-info mt-3">{{ __('The guestbook is empty.<br><strong>Be the first! :)</strong>')|raw }}</div>
+    {% else %}
+        <div class="site-guestbook__feed">
+        {% for post in posts %}
+            {% include '@guestbook/public/components/entry.twig' with {post: post, can_write: can_write, added: post.id == added} only %}
+        {% endfor %}
+        </div>
+
+        {% if pagination %}
+            <div class="mt-4">{{ pagination }}</div>
+        {% endif %}
+    {% endif %}
+
+</div>

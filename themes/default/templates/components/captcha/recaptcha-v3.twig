@@ -34,6 +34,7 @@
                     // submit() would drop it, and several forms here tell their actions apart by it.
                     if (form.requestSubmit) {
                         form.requestSubmit(event.submitter);
+                        sending = false;
                     } else {
                         form.submit();
                     }
