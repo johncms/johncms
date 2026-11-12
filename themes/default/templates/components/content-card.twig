@@ -4,7 +4,7 @@
     @var icon string Public icon name.
     @var class string Optional card modifier.
     @var marker bool Whether to use an accent dot instead of the icon.
-    @var url string Link to the full section.
+    @var url string Optional link to the full section.
     @var link_label string Accessible text of the section link.
 #}
 <section{% if id|default('') %} id="{{ id }}"{% endif %} class="site-content-card{{ class|default('') ? ' ' ~ class : '' }}" aria-label="{{ title }}">
@@ -17,7 +17,9 @@
             {% endif %}
             {{ title }}
         </h2>
-        <a href="{{ url }}">{{ link_label }}{% include '@theme/components/icon.twig' with {name: 'chevron-right', size: 12, class: 'site-icon--directional'} only %}</a>
+        {% if url|default('') %}
+            <a href="{{ url }}">{{ link_label }}{% include '@theme/components/icon.twig' with {name: 'chevron-right', size: 12, class: 'site-icon--directional'} only %}</a>
+        {% endif %}
     </header>
     <div class="site-content-card__body">{% block body %}{% endblock %}</div>
 </section>
