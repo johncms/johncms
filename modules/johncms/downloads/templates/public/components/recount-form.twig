@@ -1,0 +1,11 @@
+{#
+    Recounting the files of every category. Like the cleaning, it covers the whole downloads.
+
+    @var id    int    Category to come back to, 0 for the main page.
+    @var class string Classes of the button.
+#}
+<form method="post" action="/downloads/recount">
+    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+    <input type="hidden" name="id" value="{{ id }}">
+    <button type="submit" class="{{ class }}">{{ __('Update counters') }}</button>
+</form>

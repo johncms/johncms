@@ -43,8 +43,9 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/NewFilesController.php:49
 #: modules/johncms/downloads/src/Application/Controllers/NewFilesController.php:59
 #: modules/johncms/downloads/src/Application/Controllers/NewFilesController.php:63
-#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:38
-#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:137
+#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:41
+#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:57
+#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:147
 #: modules/johncms/downloads/src/Application/Controllers/SearchController.php:32
 #: modules/johncms/downloads/src/Application/Controllers/SearchController.php:43
 #: modules/johncms/downloads/src/Application/Controllers/SearchController.php:50
@@ -72,7 +73,7 @@ msgstr ""
 #: modules/johncms/downloads/templates/public/index.twig:144
 #: modules/johncms/downloads/templates/public/moderation.twig:39
 #: modules/johncms/downloads/templates/public/new-files.twig:30
-#: modules/johncms/downloads/templates/public/scan-dir.twig:46
+#: modules/johncms/downloads/templates/public/scan-dir.twig:37
 #: modules/johncms/downloads/templates/public/search.twig:58
 #: modules/johncms/downloads/templates/public/top-files.twig:30
 #: modules/johncms/downloads/templates/public/top-users.twig:25
@@ -146,7 +147,7 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/EditScreenController.php:145
 #: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:244
 #: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:103
-#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:109
+#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:119
 #: modules/johncms/downloads/templates/public/import-result.twig:25
 #: modules/johncms/downloads/templates/public/view.twig:153
 msgid "Back"
@@ -154,7 +155,7 @@ msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php:271
 #: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php:45
-#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:133
+#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:143
 #: modules/johncms/downloads/src/Application/Controllers/SearchController.php:39
 msgid "Error"
 msgstr ""
@@ -223,7 +224,7 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:53
 #: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php:47
 #: modules/johncms/downloads/src/Application/Controllers/NewFilesController.php:47
-#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:135
+#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:145
 msgid "The directory does not exist"
 msgstr ""
 
@@ -392,8 +393,7 @@ msgid "The file has been moved"
 msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:115
-#: modules/johncms/downloads/templates/public/index.twig:133
-#: modules/johncms/downloads/templates/public/scan-dir.twig:42
+#: modules/johncms/downloads/templates/public/components/recount-form.twig:10
 msgid "Update counters"
 msgstr ""
 
@@ -404,23 +404,23 @@ msgstr ""
 msgid "New Files"
 msgstr ""
 
-#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:39
-#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:158
-#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:159
+#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:42
+#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:58
+#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:168
+#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:169
 msgid "Update"
 msgstr ""
 
-#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:105
-#: modules/johncms/downloads/templates/public/index.twig:132
-#: modules/johncms/downloads/templates/public/scan-dir.twig:39
+#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:115
+#: modules/johncms/downloads/templates/public/components/clean-form.twig:13
 msgid "Remove missing files"
 msgstr ""
 
-#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:107
+#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:117
 msgid "Database successfully updated"
 msgstr ""
 
-#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:266
+#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:276
 #: modules/johncms/downloads/templates/public/import.twig:36
 #: modules/johncms/downloads/templates/public/upload.twig:40
 msgid "Download"
@@ -854,6 +854,18 @@ msgstr ""
 msgid "Edited"
 msgstr ""
 
+#: modules/johncms/downloads/templates/public/components/clean-form.twig:8
+msgid "Remove missing files?"
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/components/clean-form.twig:9
+msgid "The records of all files and folders missing on disk are deleted throughout Downloads, together with their comments and bookmarks. This cannot be undone."
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/components/clean-form.twig:10
+msgid "Remove"
+msgstr ""
+
 #: modules/johncms/downloads/templates/public/components/file-row.twig:21
 msgid "Accept"
 msgstr ""
@@ -1002,32 +1014,32 @@ msgstr ""
 msgid "Move file here"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/scan-dir.twig:16
+#: modules/johncms/downloads/templates/public/scan-dir.twig:15
 msgid "Current folder"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/scan-dir.twig:19
+#: modules/johncms/downloads/templates/public/scan-dir.twig:16
 msgid "Current folder and all subfolders"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/scan-dir.twig:23
-#: modules/johncms/downloads/templates/public/scan-dir.twig:44
+#: modules/johncms/downloads/templates/public/scan-dir.twig:18
+#: modules/johncms/downloads/templates/public/scan-dir.twig:34
 msgid "Entire Downloads"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/scan-dir.twig:30
+#: modules/johncms/downloads/templates/public/scan-dir.twig:24
 msgid "Added"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/scan-dir.twig:31
+#: modules/johncms/downloads/templates/public/scan-dir.twig:25
 msgid "Categories"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/scan-dir.twig:32
+#: modules/johncms/downloads/templates/public/scan-dir.twig:26
 msgid "Files"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/scan-dir.twig:33
+#: modules/johncms/downloads/templates/public/scan-dir.twig:27
 #: modules/johncms/downloads/templates/public/view.twig:132
 msgid "Additional Files"
 msgstr ""

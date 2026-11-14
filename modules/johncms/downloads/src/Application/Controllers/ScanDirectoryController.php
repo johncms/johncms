@@ -28,25 +28,35 @@ final readonly class ScanDirectoryController
     ) {
     }
 
+    /**
+     * GET shows the choice of the scope; POST scans it, since a scan renames files on disk and
+     * adds records.
+     */
     public function __invoke(Request $request): ViewResponse
     {
         set_time_limit(99999);
 
-        $id = max(0, $request->queryInt('id', 0));
-        $do = $request->queryParam('do') ?? '';
+        $id = max(0, $request->isPost() ? $request->bodyInt('id') : $request->queryInt('id', 0));
 
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add(__('Update'));
 
-        if ($do === 'clean') {
-            return $this->handleClean($id);
-        }
-
         return $this->handleScan($request, $id);
     }
 
-    private function handleClean(int $id): ViewResponse
+    /**
+     * Deletes the records of files and folders missing on disk. The pass covers the whole
+     * downloads whatever the category it was started from: the id only leads back there.
+     */
+    public function clean(Request $request): ViewResponse
     {
+        set_time_limit(99999);
+
+        $id = max(0, $request->bodyInt('id'));
+
+        $this->navChain->add(__('Downloads'), '/downloads/');
+        $this->navChain->add(__('Update'));
+
         $seenRealFiles = [];
         DownloadFile::query()->orderBy('id')->each(function (DownloadFile $file) use (&$seenRealFiles): void {
             $realFile = realpath($file->dir . '/' . $file->name);
@@ -123,8 +133,8 @@ final readonly class ScanDirectoryController
 
     private function handleScan(Request $request, int $id): ViewResponse
     {
-        $yes = $request->query->has('yes');
-        $mod = $request->queryInt('mod', 0);
+        $yes = $request->isPost();
+        $mod = $request->bodyInt('mod');
 
         if ($id > 0) {
             $category = DownloadCategory::query()->find($id);

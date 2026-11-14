@@ -424,6 +424,15 @@ msgstr "Обновить"
 msgid "Remove missing files"
 msgstr "Удалить отсутствующие файлы"
 
+msgid "Remove missing files?"
+msgstr "Удалить отсутствующие файлы?"
+
+msgid "The records of all files and folders missing on disk are deleted throughout Downloads, together with their comments and bookmarks. This cannot be undone."
+msgstr "Во всех загрузках удаляются записи о файлах и папках, которых нет на диске, вместе с их комментариями и закладками. Отменить это нельзя."
+
+msgid "Remove"
+msgstr "Удалить"
+
 #: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:116
 msgid "Database successfully updated"
 msgstr "База данных успешно обновлена"

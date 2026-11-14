@@ -12,16 +12,10 @@
     {% if select_mode %}
         <div>
             {% if id %}
-                <div>
-                    <a href="/downloads/scan-dir?yes&amp;id={{ id }}&amp;mod=1" class="btn btn-outline-primary btn-sm mb-2">{{ __('Current folder') }}</a>
-                </div>
-                <div>
-                    <a href="/downloads/scan-dir?yes&amp;id={{ id }}" class="btn btn-outline-primary btn-sm mb-2">{{ __('Current folder and all subfolders') }}</a>
-                </div>
+                {% include '@downloads/public/components/scan-form.twig' with {id: id, mod: 1, label: __('Current folder')} only %}
+                {% include '@downloads/public/components/scan-form.twig' with {id: id, mod: 0, label: __('Current folder and all subfolders')} only %}
             {% endif %}
-            <div>
-                <a href="/downloads/scan-dir?yes" class="btn btn-outline-primary btn-sm mb-2">{{ __('Entire Downloads') }}</a>
-            </div>
+            {% include '@downloads/public/components/scan-form.twig' with {id: 0, mod: 0, label: __('Entire Downloads')} only %}
         </div>
     {% else %}
         <div class="row">
@@ -34,17 +28,13 @@
                 </div>
             </div>
         </div>
-        <div>
-            <div>
-                <a href="/downloads/scan-dir?do=clean{{ id ? '&id=' ~ id : '' }}">{{ __('Remove missing files') }}</a>
-            </div>
-            <div>
-                <a href="/downloads/recount{{ id ? '?id=' ~ id : '' }}">{{ __('Update counters') }}</a>
-            </div>
-            <a href="/downloads/scan-dir?yes">{{ __('Entire Downloads') }}</a>
-            <div class="mt-2">
-                <a href="{{ urls.downloads }}">{{ __('Downloads') }}</a>
-            </div>
+        <div class="d-flex flex-wrap gap-2 align-items-start">
+            {% include '@downloads/public/components/clean-form.twig' with {id: id, class: 'btn btn-outline-danger btn-sm'} only %}
+            {% include '@downloads/public/components/recount-form.twig' with {id: id, class: 'btn btn-outline-secondary btn-sm'} only %}
+            {% include '@downloads/public/components/scan-form.twig' with {id: 0, mod: 0, label: __('Entire Downloads')} only %}
+        </div>
+        <div class="mt-2">
+            <a href="{{ urls.downloads }}">{{ __('Downloads') }}</a>
         </div>
     {% endif %}
 {% endblock %}

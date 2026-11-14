@@ -13,7 +13,7 @@ final readonly class RecountController
 {
     public function __invoke(Request $request): RedirectResponse
     {
-        $id = max(0, $request->queryInt('id', 0));
+        $id = max(0, $request->bodyInt('id'));
 
         DownloadCategory::query()->each(function (DownloadCategory $category): void {
             $count = DownloadFile::query()

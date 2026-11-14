@@ -1,0 +1,13 @@
+{#
+    Starting a scan of the directories.
+
+    @var id    int    Category to scan, 0 for the whole downloads.
+    @var mod   int    1 also takes the screenshots and descriptions lying next to the files.
+    @var label string Text of the button.
+#}
+<form method="post" action="/downloads/scan-dir" class="mb-2">
+    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+    <input type="hidden" name="id" value="{{ id }}">
+    <input type="hidden" name="mod" value="{{ mod }}">
+    <button type="submit" class="btn btn-outline-primary btn-sm">{{ label }}</button>
+</form>

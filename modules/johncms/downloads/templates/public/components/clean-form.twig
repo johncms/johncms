@@ -1,0 +1,14 @@
+{#
+    Deleting the records of files and folders missing on disk. The pass covers the whole downloads
+    whatever the category it starts from, which is what the question says.
+
+    @var id    int    Category to come back to, 0 for the main page.
+    @var class string Classes of the button.
+#}
+<form method="post" action="/downloads/scan-dir/clean" data-confirm="{{ __('Remove missing files?') }}"
+    data-confirm-text="{{ __('The records of all files and folders missing on disk are deleted throughout Downloads, together with their comments and bookmarks. This cannot be undone.') }}"
+    data-confirm-button="{{ __('Remove') }}">
+    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+    <input type="hidden" name="id" value="{{ id }}">
+    <button type="submit" class="{{ class }}">{{ __('Remove missing files') }}</button>
+</form>

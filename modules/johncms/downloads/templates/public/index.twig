@@ -129,8 +129,8 @@
                         {% if id %}
                             <a class="dropdown-item" href="/downloads/categories/{{ id }}/edit">{{ __('Change Folder') }}</a>
                             <a class="dropdown-item" href="/downloads/categories/{{ id }}/delete">{{ __('Delete Folder') }}</a>
-                            <a class="dropdown-item" href="/downloads/scan-dir?do=clean&amp;id={{ id }}">{{ __('Remove missing files') }}</a>
-                            <a class="dropdown-item" href="/downloads/recount?id={{ id }}">{{ __('Update counters') }}</a>
+                            {% include '@downloads/public/components/clean-form.twig' with {id: id, class: 'dropdown-item'} only %}
+                            {% include '@downloads/public/components/recount-form.twig' with {id: id, class: 'dropdown-item'} only %}
                         {% endif %}
                     </div>
                 </div>

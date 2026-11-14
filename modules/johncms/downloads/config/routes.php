@@ -27,6 +27,7 @@ use Johncms\Modules\Downloads\Application\Controllers\SearchController;
 use Johncms\Modules\Downloads\Application\Controllers\TopFilesController;
 use Johncms\Modules\Downloads\Application\Controllers\TopUsersController;
 use Johncms\Modules\Downloads\Application\Controllers\UserFilesController;
+use Johncms\Http\Middleware\RequireConfirmationMiddleware;
 use Johncms\Modules\Downloads\Application\Middlewares\DownloadsAccessMiddleware;
 use Johncms\Modules\Downloads\Application\Middlewares\DownloadsAdminMiddleware;
 use Johncms\Router\RouteCollection;
@@ -66,8 +67,12 @@ return static function (RouteCollection $router): void {
         $r->map(['GET', 'POST'], '/downloads/categories/create', CreateCategoryController::class)->name('downloads.create_category');
         $r->map(['GET', 'POST'], '/downloads/categories/{id:number}/edit', EditCategoryController::class)->name('downloads.edit_category');
         $r->map(['GET', 'POST'], '/downloads/categories/{id:number}/delete', DeleteCategoryController::class)->name('downloads.delete_category');
-        $r->get('/downloads/recount', RecountController::class)->name('downloads.recount');
-        $r->get('/downloads/scan-dir', ScanDirectoryController::class)->name('downloads.scan_dir');
+        $r->post('/downloads/recount', RecountController::class)->name('downloads.recount');
+        $r->map(['GET', 'POST'], '/downloads/scan-dir', ScanDirectoryController::class)->name('downloads.scan_dir');
+        // Deletes the records of every file and folder missing on disk, in the whole downloads.
+        $r->post('/downloads/scan-dir/clean', [ScanDirectoryController::class, 'clean'])
+            ->name('downloads.scan_dir.clean')
+            ->addMiddleware(RequireConfirmationMiddleware::class);
     })
         ->addMiddleware(DownloadsAccessMiddleware::class)
         ->addMiddleware(DownloadsAdminMiddleware::class);
