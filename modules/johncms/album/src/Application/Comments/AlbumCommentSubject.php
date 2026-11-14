@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\Comments;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Comments\CommentSubjectDTO;
 use Johncms\Comments\CommentSubjectInterface;
 use Johncms\Modules\Album\Application\Exceptions\AlbumAccessDeniedException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumPasswordRequiredException;
+use Johncms\Modules\Album\Application\Services\AlbumPermissions;
 use Johncms\Modules\Album\Application\UseCases\EnsureAlbumAccessUseCase;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
 
@@ -27,6 +29,7 @@ final readonly class AlbumCommentSubject implements CommentSubjectInterface
         private AlbumPhotoRepositoryInterface $photos,
         private EnsureAlbumAccessUseCase $ensureAccess,
         private CurrentUser $currentUser,
+        private AccessCheckerInterface $access,
     ) {
     }
 
@@ -70,6 +73,11 @@ final readonly class AlbumCommentSubject implements CommentSubjectInterface
                 ['name' => d__('album', 'Photo'), 'url' => $url],
             ],
         );
+    }
+
+    public function hiddenIds(): array
+    {
+        return $this->access->allows(AlbumPermissions::MODERATE) ? [] : $this->photos->getIdsClosedTo($this->currentUser->id());
     }
 
     public function commentsChanged(int $id, int $delta): void

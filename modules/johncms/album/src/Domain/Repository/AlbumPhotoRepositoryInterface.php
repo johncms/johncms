@@ -191,4 +191,11 @@ interface AlbumPhotoRepositoryInterface
      * @return list<int> One number per day, oldest first.
      */
     public function countAddedByDay(int $start, int $days): array;
+
+    /**
+     * The photos of the private and the password-protected albums of everybody but the viewer.
+     *
+     * @return list<int>
+     */
+    public function getIdsClosedTo(int $viewerId): array;
 }

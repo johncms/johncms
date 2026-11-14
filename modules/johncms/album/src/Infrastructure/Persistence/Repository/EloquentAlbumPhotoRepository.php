@@ -353,4 +353,14 @@ final class EloquentAlbumPhotoRepository implements AlbumPhotoRepositoryInterfac
     {
         return DailyCounts::count(AlbumPhoto::query(), 'time', $start, $days);
     }
+
+    public function getIdsClosedTo(int $viewerId): array
+    {
+        return array_map('intval', AlbumPhoto::query()
+            ->join('cms_album_cat', 'cms_album_cat.id', '=', 'cms_album_files.album_id')
+            ->whereIn('cms_album_cat.access', [AlbumAccess::Private->value, AlbumAccess::Password->value])
+            ->where('cms_album_cat.user_id', '!=', $viewerId)
+            ->pluck('cms_album_files.id')
+            ->all());
+    }
 }

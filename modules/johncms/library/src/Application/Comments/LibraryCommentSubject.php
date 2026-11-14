@@ -69,6 +69,11 @@ final readonly class LibraryCommentSubject implements CommentSubjectInterface
         );
     }
 
+    public function hiddenIds(): array
+    {
+        return $this->access->allows(LibraryPermissions::MODERATE) ? [] : $this->articles->getUnpublishedIds();
+    }
+
     public function commentsChanged(int $id, int $delta): void
     {
         $this->articles->changeCommentCount($id, $delta);

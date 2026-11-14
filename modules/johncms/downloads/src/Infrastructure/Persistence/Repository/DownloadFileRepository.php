@@ -237,4 +237,9 @@ final class DownloadFileRepository implements DownloadFileRepositoryInterface
     {
         return DailyCounts::count(DownloadFile::query()->where('type', 2), 'time', $start, $days);
     }
+
+    public function getIdsAwaitingModeration(): array
+    {
+        return array_map('intval', DownloadFile::query()->where('type', 3)->pluck('id')->all());
+    }
 }

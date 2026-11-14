@@ -101,15 +101,17 @@ final readonly class CommentsService
     public function latest(string $subjectType, int $limit, int $offset): array
     {
         $kind = $this->subjects->get($subjectType);
-        if ($kind === null) {
+        $hidden = $kind?->hiddenIds();
+        if ($hidden === null) {
             return [];
         }
 
-        $rows = $this->comments->getLatest($subjectType, $limit, $offset);
+        $rows = $this->comments->getLatest($subjectType, $hidden, $limit, $offset);
         $subjects = [];
         $latest = [];
         foreach ($this->views($rows) as $index => $view) {
             $row = $rows[$index];
+            // What the query cannot know — a file gone from the disk — is still left out here.
             $subject = $subjects[$row->subject_id] ??= $kind->find($row->subject_id);
             if ($subject === null) {
                 continue;
@@ -126,9 +128,12 @@ final readonly class CommentsService
         return $latest;
     }
 
+    /** What latest() pages through: the comments of the objects the visitor may see. */
     public function countOfType(string $subjectType): int
     {
-        return $this->comments->countOfType($subjectType);
+        $hidden = $this->subjects->get($subjectType)?->hiddenIds();
+
+        return $hidden === null ? 0 : $this->comments->countOfType($subjectType, $hidden);
     }
 
     /**
@@ -281,8 +286,14 @@ final readonly class CommentsService
         $this->access->ensureCanDelete($subject);
 
         $this->transactions->run(function () use ($subject, $comment): void {
-            $this->remove([$comment->id => $comment->user_id]);
-            $this->subjects->get($subject->type)?->commentsChanged($subject->id, -1);
+            // Read again under a lock: a request deleting the same comment at the same moment
+            // finds it gone and changes no counter a second time.
+            $removed = $this->comments->getLocked($subject->type, $subject->id, [$comment->id]);
+            if ($removed === []) {
+                return;
+            }
+            $this->remove($removed);
+            $this->subjects->get($subject->type)?->commentsChanged($subject->id, -count($removed));
         });
     }
 

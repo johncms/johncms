@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Comments;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\CurrentUser;
 use Johncms\Comments\CommentSubjectDTO;
 use Johncms\Comments\CommentSubjectInterface;
@@ -27,6 +29,7 @@ final readonly class ProfileGuestbookCommentSubject implements CommentSubjectInt
         private ProfileUserRepositoryInterface $users,
         private GuestbookReadRepositoryInterface $reads,
         private CurrentUser $currentUser,
+        private AccessCheckerInterface $access,
     ) {
     }
 
@@ -58,6 +61,11 @@ final readonly class ProfileGuestbookCommentSubject implements CommentSubjectInt
             ],
             heading: d__('profile', 'Guestbook'),
         );
+    }
+
+    public function hiddenIds(): array
+    {
+        return $this->access->allows(CorePermissions::USERS_UNCONFIRMED_VIEW) ? [] : $this->users->getUnconfirmedIds();
     }
 
     public function commentsChanged(int $id, int $delta): void

@@ -62,11 +62,10 @@ final readonly class EloquentCommentRepository implements CommentRepositoryInter
         return $comment;
     }
 
-    public function getLatest(string $subjectType, int $limit, int $offset): array
+    public function getLatest(string $subjectType, array $excludedSubjectIds, int $limit, int $offset): array
     {
         /** @var list<Comment> $comments */
-        $comments = Comment::query()
-            ->where('subject_type', $subjectType)
+        $comments = $this->ofType($subjectType, $excludedSubjectIds)
             ->orderByDesc('created_at')
             ->orderByDesc('id')
             ->limit($limit)
@@ -77,9 +76,23 @@ final readonly class EloquentCommentRepository implements CommentRepositoryInter
         return $comments;
     }
 
-    public function countOfType(string $subjectType): int
+    public function countOfType(string $subjectType, array $excludedSubjectIds = []): int
     {
-        return Comment::query()->where('subject_type', $subjectType)->count();
+        return $this->ofType($subjectType, $excludedSubjectIds)->count();
+    }
+
+    /**
+     * @param list<int> $excludedSubjectIds
+     * @return Builder<Comment>
+     */
+    private function ofType(string $subjectType, array $excludedSubjectIds): Builder
+    {
+        $query = Comment::query()->where('subject_type', $subjectType);
+        foreach (array_chunk($excludedSubjectIds, 1000) as $chunk) {
+            $query->whereNotIn('subject_id', $chunk);
+        }
+
+        return $query;
     }
 
     public function countByAuthors(string $subjectType, int $subjectId, array $userIds): array
@@ -110,6 +123,18 @@ final readonly class EloquentCommentRepository implements CommentRepositoryInter
     public function update(Comment $comment, array $attributes): void
     {
         $comment->update($attributes);
+    }
+
+    public function getLocked(string $subjectType, int $subjectId, array $ids): array
+    {
+        if ($ids === []) {
+            return [];
+        }
+
+        /** @var Builder<Comment> $query */
+        $query = $this->ofSubject($subjectType, $subjectId)->whereIn('id', $ids);
+
+        return $this->authorsById($query);
     }
 
     public function getOfAuthor(string $subjectType, int $subjectId, int $userId): array

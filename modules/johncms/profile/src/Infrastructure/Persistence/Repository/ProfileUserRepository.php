@@ -92,4 +92,9 @@ final class ProfileUserRepository implements ProfileUserRepositoryInterface
             'karma_minus' => 0,
         ]);
     }
+
+    public function getUnconfirmedIds(): array
+    {
+        return array_map('intval', User::query()->where('preg', 0)->pluck('id')->all());
+    }
 }

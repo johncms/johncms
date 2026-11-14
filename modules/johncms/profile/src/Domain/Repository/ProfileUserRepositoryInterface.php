@@ -68,4 +68,11 @@ interface ProfileUserRepositoryInterface
      * Reset both karma counters (karma_plus/karma_minus) to zero.
      */
     public function resetKarmaTotals(int $id): void;
+
+    /**
+     * The accounts waiting for confirmation.
+     *
+     * @return list<int>
+     */
+    public function getUnconfirmedIds(): array;
 }

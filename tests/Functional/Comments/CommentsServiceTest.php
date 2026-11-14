@@ -38,6 +38,7 @@ use Tests\Functional\FunctionalTestCase;
 use Tests\Support\Fixture;
 use Tests\Support\FunctionalUserFactory;
 use Tests\Support\TestCommentSubject;
+use Tests\Support\VanishingCommentRepository;
 
 /**
  * The comments of the core against the real database, on a subject of the test.
@@ -262,6 +263,33 @@ final class CommentsServiceTest extends FunctionalTestCase
         self::assertSame(0, $this->komm($author->id));
     }
 
+    public function testACommentDeletedMeanwhileByAnotherRequestIsNotUncountedTwice(): void
+    {
+        $author = FunctionalUserFactory::create(['komm' => 5]);
+        $id = $this->insertComment($author->id);
+        $this->build(new VanishingCommentRepository($this->container()->get(CommentRepositoryInterface::class)));
+        $this->signIn(FunctionalUserFactory::createSupervisor());
+
+        $this->comments->delete($this->object(), $id);
+
+        self::assertSame(5, $this->komm($author->id));
+        self::assertSame([], $this->subject->changes);
+    }
+
+    public function testTheLatestFeedLeavesHiddenObjectsOutBeforePaging(): void
+    {
+        $author = FunctionalUserFactory::create()->id;
+        $visible = $this->insertComment($author, '2026-01-01 10:00:00');
+        for ($i = 0; $i < 5; $i++) {
+            $this->insertComment($author, '2026-01-02 10:00:0' . $i, subjectId: TestCommentSubject::HIDDEN);
+        }
+
+        $latest = $this->comments->latest('test_subject', 3, 0);
+
+        self::assertSame([$visible], array_map(static fn($item): int => $item->comment->id, $latest));
+        self::assertSame(1, $this->comments->countOfType('test_subject'));
+    }
+
     public function testAnOrdinaryUserCannotDelete(): void
     {
         $id = $this->insertComment(FunctionalUserFactory::create()->id);
@@ -332,7 +360,7 @@ final class CommentsServiceTest extends FunctionalTestCase
         self::assertSame([], $this->subject->changes);
     }
 
-    private function build(): void
+    private function build(?CommentRepositoryInterface $repository = null): void
     {
         $container = $this->container();
         $subjects = new CommentSubjects([$this->subject]);
@@ -356,7 +384,7 @@ final class CommentsServiceTest extends FunctionalTestCase
             imageSources: $container->get(ImageSources::class),
         );
         $this->comments = new CommentsService(
-            comments: $container->get(CommentRepositoryInterface::class),
+            comments: $repository ?? $container->get(CommentRepositoryInterface::class),
             subjects: $subjects,
             access: new CommentAccess(
                 subjects: $subjects,

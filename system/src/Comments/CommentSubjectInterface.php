@@ -20,6 +20,15 @@ interface CommentSubjectInterface
     public function find(int $id): ?CommentSubjectDTO;
 
     /**
+     * The objects of the kind the current visitor may not see, for the feeds of the latest
+     * comments: they are left out by the query, before it is paginated and counted. Null when the
+     * visitor sees none of them.
+     *
+     * @return list<int>|null
+     */
+    public function hiddenIds(): ?array;
+
+    /**
      * The number of comments under the object changed by the delta. Called inside the
      * transaction that changed them; an atomic `UPDATE … SET count = count + ?`, never a total
      * counted beforehand.

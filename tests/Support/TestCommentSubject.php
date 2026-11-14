@@ -11,6 +11,9 @@ use RuntimeException;
 /** A subject of the test: every object exists, and the changes of its counter are recorded. */
 final class TestCommentSubject implements CommentSubjectInterface
 {
+    /** An object the visitor may not see. */
+    public const int HIDDEN = 666;
+
     /** @var list<array{int, int}> */
     public array $changes = [];
 
@@ -24,9 +27,18 @@ final class TestCommentSubject implements CommentSubjectInterface
         return 'test_subject';
     }
 
-    public function find(int $id): CommentSubjectDTO
+    public function find(int $id): ?CommentSubjectDTO
     {
+        if ($id === self::HIDDEN) {
+            return null;
+        }
+
         return new CommentSubjectDTO(type: 'test_subject', id: $id, title: 'An object', url: '/test/' . $id, discussionUrl: '/test/' . $id . '/comments');
+    }
+
+    public function hiddenIds(): array
+    {
+        return [self::HIDDEN];
     }
 
     public function commentsChanged(int $id, int $delta): void

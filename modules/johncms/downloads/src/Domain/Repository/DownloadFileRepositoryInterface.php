@@ -69,4 +69,11 @@ interface DownloadFileRepositoryInterface
      * @return list<int> One number per day, oldest first.
      */
     public function countAddedByDay(int $start, int $days): array;
+
+    /**
+     * The files waiting for a moderator.
+     *
+     * @return list<int>
+     */
+    public function getIdsAwaitingModeration(): array;
 }

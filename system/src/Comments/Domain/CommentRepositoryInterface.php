@@ -24,13 +24,17 @@ interface CommentRepositoryInterface
     public function findLatestOfUser(string $subjectType, int $userId): ?Comment;
 
     /**
-     * The comments of every object of the kind, newest first.
+     * The comments of every object of the kind but the excluded ones, newest first.
      *
+     * @param list<int> $excludedSubjectIds
      * @return list<Comment>
      */
-    public function getLatest(string $subjectType, int $limit, int $offset): array;
+    public function getLatest(string $subjectType, array $excludedSubjectIds, int $limit, int $offset): array;
 
-    public function countOfType(string $subjectType): int;
+    /**
+     * @param list<int> $excludedSubjectIds
+     */
+    public function countOfType(string $subjectType, array $excludedSubjectIds = []): int;
 
     /**
      * How many comments each of the authors left under the subject.
@@ -49,6 +53,14 @@ interface CommentRepositoryInterface
      * @param array<string, mixed> $attributes
      */
     public function update(Comment $comment, array $attributes): void;
+
+    /**
+     * Those of the comments that are still there, locked until the transaction ends: id => author.
+     *
+     * @param list<int> $ids
+     * @return array<int, int>
+     */
+    public function getLocked(string $subjectType, int $subjectId, array $ids): array;
 
     /**
      * The comments of the author under the subject: id => author.

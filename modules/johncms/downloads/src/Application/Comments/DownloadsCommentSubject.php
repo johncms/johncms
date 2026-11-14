@@ -38,7 +38,7 @@ final readonly class DownloadsCommentSubject implements CommentSubjectInterface
 
     public function find(int $id): ?CommentSubjectDTO
     {
-        if (! config('johncms.mod_down_comm') && ! $this->access->allows(DownloadsPermissions::COMMENTS_ALWAYS_VIEW)) {
+        if (! $this->commentsShown()) {
             return null;
         }
 
@@ -66,6 +66,15 @@ final readonly class DownloadsCommentSubject implements CommentSubjectInterface
         );
     }
 
+    public function hiddenIds(): ?array
+    {
+        if (! $this->commentsShown()) {
+            return null;
+        }
+
+        return $this->access->allows(DownloadsPermissions::MODERATE) ? [] : $this->files->getIdsAwaitingModeration();
+    }
+
     public function commentsChanged(int $id, int $delta): void
     {
         $this->files->changeCommentCount($id, $delta);
@@ -74,5 +83,10 @@ final readonly class DownloadsCommentSubject implements CommentSubjectInterface
     public function discussionViewed(CommentSubjectDTO $subject): void
     {
         // Nothing is marked as unread for the owner of a file.
+    }
+
+    private function commentsShown(): bool
+    {
+        return (bool) config('johncms.mod_down_comm') || $this->access->allows(DownloadsPermissions::COMMENTS_ALWAYS_VIEW);
     }
 }

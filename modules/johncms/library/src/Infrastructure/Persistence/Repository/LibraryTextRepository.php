@@ -111,4 +111,9 @@ class LibraryTextRepository implements LibraryTextRepositoryInterface
             'CASE WHEN comm_count > ' . -$delta . ' THEN comm_count - ' . -$delta . ' ELSE 0 END'
         )]);
     }
+
+    public function getUnpublishedIds(): array
+    {
+        return array_map('intval', LibraryText::query()->where('premod', 0)->pluck('id')->all());
+    }
 }

@@ -43,4 +43,11 @@ interface LibraryTextRepositoryInterface
 
     /** Change the number of comments of the article by the delta, never below zero, in one statement. */
     public function changeCommentCount(int $id, int $delta): void;
+
+    /**
+     * The articles waiting for a moderator.
+     *
+     * @return list<int>
+     */
+    public function getUnpublishedIds(): array;
 }
