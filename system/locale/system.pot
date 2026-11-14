@@ -47,12 +47,6 @@ msgid "Users List"
 msgstr ""
 
 #: config/places.global.php:16
-#: system/src/Comments.php:212
-#: system/src/Comments.php:249
-#: system/src/Comments.php:278
-#: system/src/Comments.php:302
-#: system/src/Comments.php:343
-#: system/src/Comments.php:370
 msgid "Downloads"
 msgstr ""
 
@@ -185,16 +179,7 @@ msgid "Go to Link"
 msgstr ""
 
 #: modules/johncms/redirect/templates/public/index.twig:31
-#: system/src/Comments.php:216
-#: system/src/Comments.php:253
-#: system/src/Comments.php:270
-#: system/src/Comments.php:282
-#: system/src/Comments.php:306
-#: system/src/Comments.php:347
-#: system/src/Comments.php:362
-#: system/src/Comments.php:374
 #: themes/default/templates/admin/pages/result.twig:21
-#: themes/default/templates/pages/comments-list.twig:146
 #: themes/default/templates/pages/result.twig:19
 msgid "Back"
 msgstr ""
@@ -780,65 +765,6 @@ msgstr ""
 msgid "The check could not be completed. See the application log for details and run the check again."
 msgstr ""
 
-#: system/src/Comments.php:201
-#: system/src/Comments.php:266
-#: system/src/Comments.php:267
-#: themes/default/templates/components/comments/comment.twig:40
-#: themes/default/templates/components/style-guide/examples/button-states.twig:20
-#: themes/default/templates/pages/comments-list.twig:106
-msgid "Reply"
-msgstr ""
-
-#: system/src/Comments.php:214
-msgid "Administrator already replied to this message"
-msgstr ""
-
-#: system/src/Comments.php:280
-#: system/src/Comments.php:372
-#: system/src/Http/EditorImageUploadResponder.php:91
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionBulkAdminController.php:42
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFilesController.php:24
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:410
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:422
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionRelationsController.php:23
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionTagsController.php:23
-#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:37
-msgid "Wrong data"
-msgstr ""
-
-#: system/src/Comments.php:292
-#: system/src/Comments.php:358
-#: system/src/Comments.php:359
-#: system/src/Comments/Controllers/CommentsController.php:168
-#: themes/default/templates/components/comments/comment.twig:45
-#: themes/default/templates/components/style-guide/examples/button-states.twig:11
-#: themes/default/templates/components/style-guide/examples/button-states.twig:13
-#: themes/default/templates/components/style-guide/examples/controls.twig:12
-#: themes/default/templates/pages/comments-list.twig:118
-msgid "Edit"
-msgstr ""
-
-#: system/src/Comments.php:304
-msgid "You cannot edit posts of higher administration"
-msgstr ""
-
-#: system/src/Comments.php:672
-msgid "Text is too short"
-msgstr ""
-
-#: system/src/Comments.php:678
-msgid "You cannot add the message so often<br>Please, wait"
-msgstr ""
-
-#: system/src/Comments.php:678
-msgid "seconds"
-msgstr ""
-
-#: system/src/Comments.php:686
-#: system/src/Comments/Application/CommentsService.php:225
-msgid "Message already exists"
-msgstr ""
-
 #: system/src/Comments/Application/CommentAccess.php:55
 msgid "Sign in to write a comment."
 msgstr ""
@@ -855,16 +781,20 @@ msgstr ""
 msgid "The owner has added you to the ignore list."
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:218
+#: system/src/Comments/Application/CommentsService.php:223
 #, php-format
 msgid "You cannot write so often. Wait %d seconds."
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:368
+#: system/src/Comments/Application/CommentsService.php:230
+msgid "Message already exists"
+msgstr ""
+
+#: system/src/Comments/Application/CommentsService.php:379
 msgid "Enter the comment text"
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:372
+#: system/src/Comments/Application/CommentsService.php:383
 #, php-format
 msgid "The comment is too long: at most %d characters."
 msgstr ""
@@ -883,6 +813,14 @@ msgstr ""
 
 #: system/src/Comments/Controllers/CommentsController.php:161
 msgid "The comment was saved"
+msgstr ""
+
+#: system/src/Comments/Controllers/CommentsController.php:168
+#: themes/default/templates/components/comments/comment.twig:45
+#: themes/default/templates/components/style-guide/examples/button-states.twig:11
+#: themes/default/templates/components/style-guide/examples/button-states.twig:13
+#: themes/default/templates/components/style-guide/examples/controls.twig:12
+msgid "Edit"
 msgstr ""
 
 #: system/src/Comments/Controllers/CommentsController.php:171
@@ -1012,12 +950,12 @@ msgstr ""
 msgid "Too many uploaded pictures are waiting to be sent. Send the text you uploaded them for, or try again tomorrow."
 msgstr ""
 
-#: system/src/EditorUploads/EditorUploads.php:122
+#: system/src/EditorUploads/EditorUploads.php:130
 #, php-format
 msgid "A text can show at most %d uploaded pictures."
 msgstr ""
 
-#: system/src/EditorUploads/EditorUploads.php:129
+#: system/src/EditorUploads/EditorUploads.php:137
 msgid "One of the pictures is no longer available. Upload it again."
 msgstr ""
 
@@ -1066,6 +1004,17 @@ msgstr ""
 #: system/src/Http/EditorImageUploadResponder.php:90
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:37
 msgid "The file is too large for the server to accept"
+msgstr ""
+
+#: system/src/Http/EditorImageUploadResponder.php:91
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionBulkAdminController.php:42
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFilesController.php:24
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:410
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:422
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionRelationsController.php:23
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionTagsController.php:23
+#: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:37
+msgid "Wrong data"
 msgstr ""
 
 #: system/src/Http/EditorImageUploadResponder.php:105
@@ -1364,15 +1313,6 @@ msgstr ""
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
 msgstr ""
 
-#: themes/default/templates/components/comments-form.twig:21
-msgid "Message"
-msgstr ""
-
-#: themes/default/templates/components/comments-form.twig:25
-#: themes/default/templates/pages/comments.twig:64
-msgid "Send"
-msgstr ""
-
 #: themes/default/templates/components/comments/comment.twig:11
 msgid "Unknown author"
 msgstr ""
@@ -1386,6 +1326,11 @@ msgstr ""
 msgid "Edited by %s, %s"
 msgstr ""
 
+#: themes/default/templates/components/comments/comment.twig:40
+#: themes/default/templates/components/style-guide/examples/button-states.twig:20
+msgid "Reply"
+msgstr ""
+
 #: themes/default/templates/components/comments/comment.twig:50
 msgid "Delete this comment?"
 msgstr ""
@@ -1397,9 +1342,6 @@ msgstr ""
 #: themes/default/templates/components/style-guide/examples/confirm.twig:3
 #: themes/default/templates/components/style-guide/examples/confirm.twig:4
 #: themes/default/templates/components/style-guide/examples/controls.twig:13
-#: themes/default/templates/pages/comments-list.twig:121
-#: themes/default/templates/pages/comments-list.twig:123
-#: themes/default/templates/pages/comments-list.twig:125
 msgid "Delete"
 msgstr ""
 
@@ -1628,7 +1570,6 @@ msgid "Additional information"
 msgstr ""
 
 #: themes/default/templates/components/style-guide/examples/confirm.twig:3
-#: themes/default/templates/pages/comments-list.twig:121
 msgid "Do you really want to delete?"
 msgstr ""
 
@@ -1931,30 +1872,14 @@ msgstr ""
 msgid "Scroll page"
 msgstr ""
 
-#: themes/default/templates/pages/comments-list.twig:21
-msgid "The list is empty"
-msgstr ""
-
-#: themes/default/templates/pages/comments-list.twig:66
-msgid "Edited:"
-msgstr ""
-
-#: themes/default/templates/pages/comments-list.twig:67
-msgid "Edited"
-msgstr ""
-
-#: themes/default/templates/pages/comments-list.twig:125
-msgid "Delete all comments of the author here?"
-msgstr ""
-
-#: themes/default/templates/pages/comments-list.twig:128
-msgid "Delete all comments of the author"
-msgstr ""
-
 #: themes/default/templates/pages/comments.twig:47
 #: themes/default/templates/pages/comments.twig:54
 #: themes/default/templates/pages/comments.twig:56
 msgid "Write a comment"
+msgstr ""
+
+#: themes/default/templates/pages/comments.twig:64
+msgid "Send"
 msgstr ""
 
 #: themes/default/templates/pages/comments.twig:74
