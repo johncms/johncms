@@ -13,7 +13,6 @@ use Johncms\Image\ImageProcessorInterface;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +23,6 @@ final readonly class EditScreenController
     private const int SCREENSHOT_HEIGHT = 1080;
 
     public function __construct(
-        private Session $session,
         private NavChain $navChain,
         private ImageProcessorInterface $imageProcessor,
         private CategoryNavService $categoryNavService,
@@ -32,7 +30,7 @@ final readonly class EditScreenController
     ) {
     }
 
-    public function __invoke(Request $request, int $id): RedirectResponse|ViewResponse
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         $file = DownloadFile::query()
             ->where('id', $id)
@@ -44,16 +42,8 @@ final readonly class EditScreenController
         }
 
         if ($request->getMethod() === 'POST') {
-            $doParam = $request->queryParam('do');
-            if ($doParam !== '') {
-                return $this->handleDelete($request, $id, $doParam);
-            }
-
             return $this->handleUpload($request, $id);
         }
-
-        $deleteToken = uniqid('', true);
-        $this->session->set('delete_token', $deleteToken);
 
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->categoryNavService->buildForFileDir($file->dir);
@@ -64,27 +54,20 @@ final readonly class EditScreenController
             'title'        => $file->rus_name,
             'page_title'   => $file->rus_name,
             'screens'      => ScreenService::getScreens($id),
-            'delete_token' => $deleteToken,
             'action_url'   => '/downloads/edit-screen/' . $id . '/',
             'file_url'     => $this->filePathService->getFileUrl($file),
         ]);
     }
 
-    private function handleDelete(Request $request, int $id, string $filename): RedirectResponse
+    /** Deletes one screenshot. Carried out only from a confirmed form (RequireConfirmationMiddleware). */
+    public function delete(Request $request, int $id): RedirectResponse
     {
-        $post = $request->request->all();
-        $sessionToken = $this->session->get('delete_token');
+        $screensDir = \UPLOAD_PATH . 'downloads' . \DS . 'screen' . \DS . $id . \DS;
+        // Only the name is taken from the form, so the path cannot leave the folder of the file.
+        $fileInfo = new FileInfo($screensDir . basename(trim($request->body('screen'))));
 
-        if (
-            isset($post['delete_token']) &&
-            $sessionToken !== null &&
-            $sessionToken === $post['delete_token']
-        ) {
-            $screensDir = \UPLOAD_PATH . 'downloads' . \DS . 'screen' . \DS . $id . \DS;
-            $fileInfo = new FileInfo($screensDir . trim($filename));
-            if ($fileInfo->isFile()) {
-                unlink($screensDir . $fileInfo->getFilename());
-            }
+        if ($fileInfo->isFile()) {
+            unlink($screensDir . $fileInfo->getFilename());
         }
 
         return new RedirectResponse('/downloads/edit-screen/' . $id . '/');

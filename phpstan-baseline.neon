@@ -291,19 +291,19 @@ parameters:
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$dir\.$#'
 			identifier: property.notFound
-			count: 6
+			count: 4
 			path: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$rus_name\.$#'
 			identifier: property.notFound
-			count: 4
+			count: 3
 			path: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadMoreFile\:\:\$id\.$#'
 			identifier: property.notFound
-			count: 3
+			count: 2
 			path: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
@@ -355,12 +355,6 @@ parameters:
 			path: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
-			message: '#^Parameter \#3 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\AdditionalFilesController\:\:handleDelete\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
-			identifier: argument.type
-			count: 1
-			path: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php
-
-		-
 			message: '#^Parameter \#3 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\AdditionalFilesController\:\:handleEdit\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
@@ -389,12 +383,6 @@ parameters:
 			identifier: property.notFound
 			count: 1
 			path: modules/johncms/downloads/src/Application/Controllers/DeleteCategoryController.php
-
-		-
-			message: '#^Parameter \#1 \$file of method Johncms\\Modules\\Downloads\\Application\\Services\\DownloadFilePathService\:\:getFileUrl\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
-			identifier: argument.type
-			count: 2
-			path: modules/johncms/downloads/src/Application/Controllers/DeleteFileController.php
 
 		-
 			message: '#^Using nullsafe property access "\?\-\>refid" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'

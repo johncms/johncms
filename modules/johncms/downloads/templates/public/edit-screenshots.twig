@@ -4,7 +4,6 @@
     @var screens      array  url, file_name
     @var action_url   string
     @var file_url     string
-    @var delete_token string One-time token of the delete form, checked against the session.
 #}
 {% extends '@theme/layouts/default.twig' %}
 
@@ -19,11 +18,14 @@
                     </a>
                     <div class="media-body">
                         <h5 class="fw-bold mt-0">{{ screen.file_name }}</h5>
-                        <form action="{{ action_url }}?do={{ screen.file_name|url_encode }}" method="post">
-                            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                            <input type="hidden" name="delete_token" value="{{ delete_token }}">
-                            <button type="submit" class="btn btn-danger btn-sm">{{ __('Delete') }}</button>
-                        </form>
+                        {% include '@downloads/public/components/delete-form.twig' with {
+                            action: action_url ~ 'delete',
+                            fields: {screen: screen.file_name},
+                            question: __('Delete the screenshot “%s”?')|format(screen.file_name),
+                            text: '',
+                            label: __('Delete'),
+                            class: 'btn btn-danger btn-sm',
+                        } only %}
                     </div>
                 </div>
             {% endfor %}

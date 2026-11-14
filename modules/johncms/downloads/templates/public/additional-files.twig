@@ -19,9 +19,16 @@
                         <small class="text-muted">{{ file.display_date }}</small>
                     </div>
                     <p class="mb-1">{{ file.name }} ({{ file.display_size }})</p>
-                    <div>
+                    <div class="d-flex gap-2">
                         <a href="{{ file.edit_url }}" class="btn btn-primary btn-sm">{{ __('Edit') }}</a>
-                        <a href="{{ file.delete_url }}" class="btn btn-danger btn-sm">{{ __('Delete') }}</a>
+                        {% include '@downloads/public/components/delete-form.twig' with {
+                            action: file.delete_url,
+                            fields: {more_id: file.id},
+                            question: __('Delete the additional file “%s”?')|format(file.rus_name),
+                            text: '',
+                            label: __('Delete'),
+                            class: 'btn btn-danger btn-sm',
+                        } only %}
                     </div>
                 </div>
             {% endfor %}

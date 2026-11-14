@@ -109,6 +109,18 @@ msgstr "Редактировать файл"
 msgid "Delete File"
 msgstr "Удалить файл"
 
+msgid "Delete the file “%s”?"
+msgstr "Удалить файл «%s»?"
+
+msgid "Its additional files, screenshots, comments and bookmarks are deleted with it. This cannot be undone."
+msgstr "Вместе с ним удаляются дополнительные файлы, скриншоты, комментарии и закладки. Отменить это нельзя."
+
+msgid "Delete the additional file “%s”?"
+msgstr "Удалить дополнительный файл «%s»?"
+
+msgid "Delete the screenshot “%s”?"
+msgstr "Удалить скриншот «%s»?"
+
 #: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:201
 #: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:208
 #: modules/downloads/src/Application/Controllers/ImportFileController.php:84

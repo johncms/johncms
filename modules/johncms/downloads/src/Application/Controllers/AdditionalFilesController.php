@@ -12,7 +12,6 @@ use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Modules\Downloads\Domain\Models\DownloadMoreFile;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Utils\DateFormatterInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -29,12 +28,32 @@ final readonly class AdditionalFilesController
     ];
 
     public function __construct(
-        private Session $session,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
         private CategoryNavService $categoryNavService,
         private DownloadFilePathService $filePathService,
     ) {
+    }
+
+    /**
+     * Deletes one additional file of the file. Carried out only from a confirmed form
+     * (RequireConfirmationMiddleware), and only for an attachment of this very file.
+     */
+    public function delete(Request $request, int $id): RedirectResponse|ViewResponse
+    {
+        $file = DownloadFile::query()->whereKey($id)->whereIn('type', [2, 3])->first();
+        $moreFile = DownloadMoreFile::query()->whereKey($request->bodyInt('more_id'))->where('refid', $id)->first();
+
+        if ($file === null || $moreFile === null) {
+            return $this->notFound();
+        }
+
+        if (is_file($file->dir . '/' . $moreFile->name)) {
+            unlink($file->dir . '/' . $moreFile->name);
+        }
+        $moreFile->delete();
+
+        return new RedirectResponse('/downloads/additional-files/' . $id . '/');
     }
 
     public function __invoke(Request $request, int $id): RedirectResponse|ViewResponse
@@ -56,14 +75,9 @@ final readonly class AdditionalFilesController
         $baseUrl = '/downloads/additional-files/' . $id . '/';
 
         $editId = $request->query->has('edit') ? (int) $request->queryParam('edit') : null;
-        $delId = $request->query->has('del') ? (int) $request->queryParam('del') : null;
 
         if ($editId !== null) {
             return $this->handleEdit($request, $id, $file, $editId, $baseUrl);
-        }
-
-        if ($delId !== null) {
-            return $this->handleDelete($request, $id, $file, $delId, $baseUrl);
         }
 
         if ($request->getMethod() === 'POST') {
@@ -83,7 +97,7 @@ final readonly class AdditionalFilesController
                 'display_date' => $this->dateFormatter->format($more->time),
                 'display_size' => FilePresenter::formatFileSize($more->size),
                 'edit_url'     => $baseUrl . '?edit=' . $more->id,
-                'delete_url'   => $baseUrl . '?del=' . $more->id,
+                'delete_url'   => $baseUrl . 'delete',
             ];
         })->all();
 
@@ -122,41 +136,6 @@ final readonly class AdditionalFilesController
             'file_name'  => $moreFile->rus_name,
             'action_url' => $baseUrl . '?edit=' . $editId,
             'back_url'   => $baseUrl,
-        ]);
-    }
-
-    private function handleDelete(Request $request, int $id, DownloadFile $file, int $delId, string $baseUrl): RedirectResponse|ViewResponse
-    {
-        $moreFile = DownloadMoreFile::query()->find($delId);
-
-        if ($moreFile === null) {
-            return $this->notFound();
-        }
-
-        $hasYes = $request->query->has('yes');
-        if ($hasYes && $request->getMethod() === 'POST') {
-            $post = $request->request->all();
-            $sessionToken = $this->session->get('delete_token');
-
-            if (isset($post['delete_token']) && $sessionToken !== null && $sessionToken === $post['delete_token']) {
-                if (is_file($file->dir . '/' . $moreFile->name)) {
-                    unlink($file->dir . '/' . $moreFile->name);
-                }
-                $moreFile->delete();
-            }
-
-            return new RedirectResponse($baseUrl);
-        }
-
-        $deleteToken = uniqid('', true);
-        $this->session->set('delete_token', $deleteToken);
-
-        return new ViewResponse('@downloads/public/confirm-delete.twig', [
-            'title'        => __('Delete File'),
-            'page_title'   => $file->rus_name,
-            'delete_token' => $deleteToken,
-            'action_url'   => $baseUrl . '?del=' . $delId . '&yes',
-            'back_url'     => $baseUrl,
         ]);
     }
 

@@ -57,10 +57,18 @@ return static function (RouteCollection $router): void {
         ->addMiddleware(DownloadsAccessMiddleware::class);
 
     $router->group('', function (RouteCollection $r): void {
-        $r->map(['GET', 'POST'], '/downloads/delete-file/{id:number}', DeleteFileController::class)->name('downloads.delete_file');
+        $r->post('/downloads/delete-file/{id:number}', DeleteFileController::class)
+            ->name('downloads.delete_file')
+            ->addMiddleware(RequireConfirmationMiddleware::class);
         $r->map(['GET', 'POST'], '/downloads/edit-file/{id:number}', EditFileController::class)->name('downloads.edit_file');
         $r->map(['GET', 'POST'], '/downloads/edit-screen/{id:number}', EditScreenController::class)->name('downloads.edit_screen');
+        $r->post('/downloads/edit-screen/{id:number}/delete', [EditScreenController::class, 'delete'])
+            ->name('downloads.delete_screen')
+            ->addMiddleware(RequireConfirmationMiddleware::class);
         $r->map(['GET', 'POST'], '/downloads/additional-files/{id:number}', AdditionalFilesController::class)->name('downloads.additional_files');
+        $r->post('/downloads/additional-files/{id:number}/delete', [AdditionalFilesController::class, 'delete'])
+            ->name('downloads.delete_additional_file')
+            ->addMiddleware(RequireConfirmationMiddleware::class);
         $r->map(['GET', 'POST'], '/downloads/move-file/{id:number}', MoveFileController::class)
             ->name('downloads.move_file')
             ->addMiddleware(RequireConfirmationMiddleware::class);

@@ -1,0 +1,18 @@
+{#
+    Deleting something of the downloads, after a question in the dialog of the page. The route
+    takes RequireConfirmationMiddleware, so without the script nothing is deleted.
+
+    @var action   string Where the deletion is posted.
+    @var fields   array  Hidden fields, name => value.
+    @var question string
+    @var text     string What else goes with it; may be empty.
+    @var label    string Text of the button.
+    @var class    string Classes of the button.
+#}
+<form method="post" action="{{ action }}" data-confirm="{{ question }}"{% if text %} data-confirm-text="{{ text }}"{% endif %} data-confirm-button="{{ __('Delete') }}">
+    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+    {% for name, value in fields %}
+        <input type="hidden" name="{{ name }}" value="{{ value }}">
+    {% endfor %}
+    <button type="submit" class="{{ class }}">{{ label }}</button>
+</form>

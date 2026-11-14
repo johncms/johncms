@@ -23,7 +23,14 @@
                 <input type="hidden" name="accept" value="{{ file.id }}">
                 <button type="submit" class="btn btn-success btn-sm">{{ __('Accept') }}</button>
             </form>
-            <a href="{{ file.delete_url }}" class="btn btn-danger btn-sm">{{ __('Delete') }}</a>
+            {% include '@downloads/public/components/delete-form.twig' with {
+                action: file.delete_url,
+                fields: {},
+                question: __('Delete the file “%s”?')|format(file.rus_name),
+                text: __('Its additional files, screenshots, comments and bookmarks are deleted with it. This cannot be undone.'),
+                label: __('Delete'),
+                class: 'btn btn-danger btn-sm',
+            } only %}
         </div>
     {% endif %}
 </div>
