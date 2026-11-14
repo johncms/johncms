@@ -118,7 +118,15 @@
                                         <a href="{{ item.edit_url }}" class="dropdown-item">{{ d__('system', 'Edit') }}</a>
                                     {% endif %}
                                     {% if item.delete_url %}
-                                        <a href="{{ item.delete_url }}" class="dropdown-item">{{ d__('system', 'Delete') }}</a>
+                                        <form method="post" action="{{ item.delete_url }}" data-confirm="{{ d__('system', 'Do you really want to delete?') }}" data-confirm-button="{{ d__('system', 'Delete') }}">
+                                            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                                            <button type="submit" class="dropdown-item">{{ d__('system', 'Delete') }}</button>
+                                        </form>
+                                        <form method="post" action="{{ item.delete_url }}" data-confirm="{{ d__('system', 'Delete all comments of the author here?') }}" data-confirm-button="{{ d__('system', 'Delete') }}">
+                                            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                                            <input type="hidden" name="all" value="1">
+                                            <button type="submit" class="dropdown-item">{{ d__('system', 'Delete all comments of the author') }}</button>
+                                        </form>
                                     {% endif %}
                                 </div>
                             </div>

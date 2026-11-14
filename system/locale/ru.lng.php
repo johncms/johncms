@@ -470,6 +470,8 @@ The number is shown so that support for the old scheme is not removed while it i
       'Browser' => 'Браузер',
       'Search by IP' => 'Поиск по IP',
       'IP Whois' => 'Whois по IP',
+      'Delete all comments of the author here?' => 'Удалить все комментарии этого автора здесь?',
+      'Delete all comments of the author' => 'Удалить все комментарии автора',
     ),
   ),
 );

@@ -47,7 +47,7 @@ msgstr ""
 #: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:49
 #: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:67
 #: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:71
-#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:95
+#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:97
 msgid "Comments"
 msgstr ""
 

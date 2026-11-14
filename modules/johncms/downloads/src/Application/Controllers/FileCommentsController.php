@@ -124,23 +124,28 @@ final readonly class FileCommentsController
         $meta = new PageMeta($documentTitle, $page);
 
         // Comments renders a complete page (including layout) internally, so capture and return as-is.
+        // The redirect after an action is an exception thrown from inside the buffer, so close it either way.
         ob_start();
-        new Comments([
-            'mod'                 => $mod,
-            'start'               => $start,
-            'object_comm_count'   => 'total',
-            'comments_table'      => 'download__comments',
-            'object_table'        => 'download__files',
-            'script'              => '/downloads/comments/' . $id,
-            'sub_id'              => $id,
-            'owner'               => false,
-            'owner_delete'        => false,
-            'owner_reply'         => false,
-            'owner_edit'          => false,
-            'title'               => $meta->title,
-            'page_title'          => __('Comments'),
-            'back_url'            => $this->filePathService->getFileUrl($file),
-        ]);
-        return new Response((string) ob_get_clean());
+        try {
+            new Comments([
+                'mod'                 => $mod,
+                'start'               => $start,
+                'object_comm_count'   => 'total',
+                'comments_table'      => 'download__comments',
+                'object_table'        => 'download__files',
+                'script'              => '/downloads/comments/' . $id,
+                'sub_id'              => $id,
+                'owner'               => false,
+                'owner_delete'        => false,
+                'owner_reply'         => false,
+                'owner_edit'          => false,
+                'title'               => $meta->title,
+                'page_title'          => __('Comments'),
+                'back_url'            => $this->filePathService->getFileUrl($file),
+            ]);
+        } finally {
+            $output = (string) ob_get_clean();
+        }
+        return new Response($output);
     }
 }

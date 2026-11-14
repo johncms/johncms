@@ -59,21 +59,26 @@ final readonly class GuestbookController
         $meta = new PageMeta(__('Guestbook') . ': ' . $profileUser->name, $page);
 
         // Comments renders a complete page (including layout) internally, so capture and return as-is.
+        // The redirect after an action is an exception thrown from inside the buffer, so close it either way.
         ob_start();
-        new Comments([
-            'mod'                 => $mod,
-            'start'               => $start,
-            'comments_table'      => 'cms_users_guestbook',
-            'object_table'        => 'users',
-            'script'              => '/profile/' . $profileUser->id . '/guestbook',
-            'sub_id'              => $profileUser->id,
-            'owner'               => $profileUser->id,
-            'owner_delete'        => true,
-            'owner_reply'         => true,
-            'title'               => $meta->title,
-            'page_title'          => __('Guestbook'),
-            'back_url'            => '/profile/' . $profileUser->id,
-        ]);
-        return (string) ob_get_clean();
+        try {
+            new Comments([
+                'mod'                 => $mod,
+                'start'               => $start,
+                'comments_table'      => 'cms_users_guestbook',
+                'object_table'        => 'users',
+                'script'              => '/profile/' . $profileUser->id . '/guestbook',
+                'sub_id'              => $profileUser->id,
+                'owner'               => $profileUser->id,
+                'owner_delete'        => true,
+                'owner_reply'         => true,
+                'title'               => $meta->title,
+                'page_title'          => __('Guestbook'),
+                'back_url'            => '/profile/' . $profileUser->id,
+            ]);
+        } finally {
+            $output = (string) ob_get_clean();
+        }
+        return $output;
     }
 }

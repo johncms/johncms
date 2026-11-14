@@ -151,7 +151,6 @@ msgstr ""
 
 #: modules/johncms/notifications/templates/public/settings.twig:32
 #: themes/default/templates/components/confirm-dialog.twig:21
-#: themes/default/templates/pages/comments-delete.twig:18
 msgid "Cancel"
 msgstr ""
 
@@ -193,7 +192,7 @@ msgstr ""
 #: system/src/Comments.php:362
 #: system/src/Comments.php:374
 #: themes/default/templates/admin/pages/result.twig:21
-#: themes/default/templates/pages/comments-list.twig:138
+#: themes/default/templates/pages/comments-list.twig:146
 #: themes/default/templates/pages/result.twig:19
 msgid "Back"
 msgstr ""
@@ -816,31 +815,19 @@ msgstr ""
 msgid "You cannot edit posts of higher administration"
 msgstr ""
 
-#: system/src/Comments.php:384
-#: system/src/Comments.php:418
-#: system/src/Comments.php:419
-#: themes/default/templates/components/style-guide/examples/button-states.twig:22
-#: themes/default/templates/components/style-guide/examples/confirm.twig:3
-#: themes/default/templates/components/style-guide/examples/confirm.twig:4
-#: themes/default/templates/components/style-guide/examples/controls.twig:13
-#: themes/default/templates/pages/comments-delete.twig:16
-#: themes/default/templates/pages/comments-list.twig:121
-msgid "Delete"
-msgstr ""
-
-#: system/src/Comments.php:682
+#: system/src/Comments.php:671
 msgid "Text is too short"
 msgstr ""
 
-#: system/src/Comments.php:688
+#: system/src/Comments.php:677
 msgid "You cannot add the message so often<br>Please, wait"
 msgstr ""
 
-#: system/src/Comments.php:688
+#: system/src/Comments.php:677
 msgid "seconds"
 msgstr ""
 
-#: system/src/Comments.php:696
+#: system/src/Comments.php:685
 msgid "Message already exists"
 msgstr ""
 
@@ -1479,6 +1466,16 @@ msgstr ""
 msgid "Warning"
 msgstr ""
 
+#: themes/default/templates/components/style-guide/examples/button-states.twig:22
+#: themes/default/templates/components/style-guide/examples/confirm.twig:3
+#: themes/default/templates/components/style-guide/examples/confirm.twig:4
+#: themes/default/templates/components/style-guide/examples/controls.twig:13
+#: themes/default/templates/pages/comments-list.twig:121
+#: themes/default/templates/pages/comments-list.twig:123
+#: themes/default/templates/pages/comments-list.twig:125
+msgid "Delete"
+msgstr ""
+
 #: themes/default/templates/components/style-guide/examples/cards.twig:2
 #: themes/default/templates/components/style-guide/examples/content-card.twig:2
 #: themes/default/templates/pages/style-guide.twig:17
@@ -1509,7 +1506,7 @@ msgid "Additional information"
 msgstr ""
 
 #: themes/default/templates/components/style-guide/examples/confirm.twig:3
-#: themes/default/templates/pages/comments-delete.twig:13
+#: themes/default/templates/pages/comments-list.twig:121
 msgid "Do you really want to delete?"
 msgstr ""
 
@@ -1519,7 +1516,6 @@ msgstr ""
 
 #: themes/default/templates/components/style-guide/examples/confirm.twig:8
 #: themes/default/templates/components/style-guide/examples/confirm.twig:9
-#: themes/default/templates/pages/comments-delete.twig:17
 msgid "Clear"
 msgstr ""
 
@@ -1827,6 +1823,14 @@ msgstr ""
 
 #: themes/default/templates/pages/comments-list.twig:67
 msgid "Edited"
+msgstr ""
+
+#: themes/default/templates/pages/comments-list.twig:125
+msgid "Delete all comments of the author here?"
+msgstr ""
+
+#: themes/default/templates/pages/comments-list.twig:128
+msgid "Delete all comments of the author"
 msgstr ""
 
 #: themes/default/templates/pages/external-auth-profile.twig:18

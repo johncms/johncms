@@ -381,14 +381,16 @@ class Comments
             case 'del':
                 // Удаляем комментарий
                 if ($this->systemUser->isValid() && $this->item && $this->access_delete && ! $this->ban) {
-                    $this->nav_chain->add(d__('system', 'Delete'));
-                    if (isset($_GET['yes'])) {
+                    // Only a confirmed POST deletes: the form carries the CSRF token, which the kernel
+                    // checks, and the confirmed field, which only the dialog of the page sets. Any
+                    // other request, an old link with &yes included, goes back to the list.
+                    if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && ($_POST['confirmed'] ?? '') === '1') {
                         $req = $this->db->query('SELECT * FROM `' . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
 
-                        if ($req->rowCount()) {
-                            $res = $req->fetch();
-
-                            if (isset($_GET['all'])) {
+                        // fetch(), not rowCount(): SQLite counts no rows for a SELECT.
+                        $res = $req->fetch();
+                        if ($res !== false) {
+                            if (($_POST['all'] ?? '') === '1') {
                                 // Удаляем все комментарии выбранного пользователя
                                 $count = $this->db->query('SELECT COUNT(*) FROM `' . $this->comments_table . "` WHERE `sub_id` = '" . $this->sub_id . "' AND `user_id` = '" . $res['user_id'] . "'")->fetchColumn();
                                 $this->db->exec('DELETE FROM `' . $this->comments_table . "` WHERE `sub_id` = '" . $this->sub_id . "' AND `user_id` = '" . $res['user_id'] . "'");
@@ -399,10 +401,9 @@ class Comments
                             }
 
                             // Вычитаем баллы из статистики пользователя
-                            $req_u = $this->db->query("SELECT * FROM `users` WHERE `id` = '" . $res['user_id'] . "'");
+                            $res_u = $this->db->query("SELECT * FROM `users` WHERE `id` = '" . $res['user_id'] . "'")->fetch();
 
-                            if ($req_u->rowCount()) {
-                                $res_u = $req_u->fetch();
+                            if ($res_u !== false) {
                                 $count = $res_u['komm'] > $count ? $res_u['komm'] - $count : 0;
                                 $this->db->exec("UPDATE `users` SET `komm` = '$count' WHERE `id` = '" . $res['user_id'] . "'");
                             }
@@ -410,21 +411,10 @@ class Comments
                             // Обновляем счетчик комментариев
                             $this->msgTotal(1);
                         }
-                        redirect($this->url);
-                    } else {
-                        echo $this->view->render(
-                            '@theme/pages/comments-delete.twig',
-                            [
-                                'title'      => d__('system', 'Delete'),
-                                'page_title' => d__('system', 'Delete'),
-                                'delete_url' => $this->buildUrl('&mod=del&item=' . $this->item . '&yes'),
-                                'clear_url'  => $this->buildUrl('&mod=del&item=' . $this->item . '&yes&all'),
-                                'back_url'   => $this->url,
-                            ]
-                        );
                     }
                 }
-                break;
+                redirect($this->url);
+                // no break: redirect() never returns
 
             default:
                 $data = [];

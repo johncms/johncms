@@ -78,24 +78,28 @@ final readonly class ArticleCommentsController
 
         $meta = new PageMeta($documentTitle, $page);
 
+        // The redirect after an action is an exception thrown from inside the buffer, so close it either way.
         ob_start();
-        $comments = new Comments([
-            'mod'            => $mod,
-            'start'          => $start,
-            'comments_table' => 'cms_library_comments',
-            'bans'           => [1, 10, 15],
-            'object_table'   => 'library_texts',
-            'script'         => '/library/article/' . $id . '/comments',
-            'sub_id'         => $id,
-            'owner'          => $article->uploader_id,
-            'owner_delete'   => true,
-            'owner_reply'    => true,
-            'owner_edit'     => false,
-            'title'          => $meta->title,
-            'page_title'     => __('Comments'),
-            'back_url'       => $articleUrl,
-        ]);
-        $output = (string) ob_get_clean();
+        try {
+            $comments = new Comments([
+                'mod'            => $mod,
+                'start'          => $start,
+                'comments_table' => 'cms_library_comments',
+                'bans'           => [1, 10, 15],
+                'object_table'   => 'library_texts',
+                'script'         => '/library/article/' . $id . '/comments',
+                'sub_id'         => $id,
+                'owner'          => $article->uploader_id,
+                'owner_delete'   => true,
+                'owner_reply'    => true,
+                'owner_edit'     => false,
+                'title'          => $meta->title,
+                'page_title'     => __('Comments'),
+                'back_url'       => $articleUrl,
+            ]);
+        } finally {
+            $output = (string) ob_get_clean();
+        }
 
         if ($comments->added) {
             $article->increment('comm_count');

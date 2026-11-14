@@ -1683,3 +1683,9 @@ msgstr "Поиск по IP"
 
 msgid "IP Whois"
 msgstr "Whois по IP"
+
+msgid "Delete all comments of the author here?"
+msgstr "Удалить все комментарии этого автора здесь?"
+
+msgid "Delete all comments of the author"
+msgstr "Удалить все комментарии автора"

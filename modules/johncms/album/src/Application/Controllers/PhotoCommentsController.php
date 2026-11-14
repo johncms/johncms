@@ -60,23 +60,27 @@ final readonly class PhotoCommentsController
         $meta = new PageMeta(__('Comments'), $page);
 
         // Comments renders a complete page (including layout) internally, so capture and return as-is.
+        // The redirect after an action is an exception thrown from inside the buffer, so close it either way.
         ob_start();
-        $comm = new Comments([
-            'mod'                 => $mod,
-            'start'               => $start,
-            'comments_table'      => 'cms_album_comments',
-            'object_table'        => 'cms_album_files',
-            'script'              => '/album/photo/' . $img . '/comments',
-            'sub_id'              => $img,
-            'owner'               => $context->ownerId,
-            'owner_delete'        => true,
-            'owner_reply'         => true,
-            'owner_edit'          => false,
-            'title'               => $meta->title,
-            'page_title'          => __('Comments'),
-            'back_url'            => '/album/' . $context->albumId,
-        ]);
-        $html = (string) ob_get_clean();
+        try {
+            $comm = new Comments([
+                'mod'                 => $mod,
+                'start'               => $start,
+                'comments_table'      => 'cms_album_comments',
+                'object_table'        => 'cms_album_files',
+                'script'              => '/album/photo/' . $img . '/comments',
+                'sub_id'              => $img,
+                'owner'               => $context->ownerId,
+                'owner_delete'        => true,
+                'owner_reply'         => true,
+                'owner_edit'          => false,
+                'title'               => $meta->title,
+                'page_title'          => __('Comments'),
+                'back_url'            => '/album/' . $context->albumId,
+            ]);
+        } finally {
+            $html = (string) ob_get_clean();
+        }
 
         // Flag unread comments for the owner when someone else adds one.
         if ($comm->added && $this->currentUser->id() !== $context->ownerId) {

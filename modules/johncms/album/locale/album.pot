@@ -169,14 +169,14 @@ msgstr ""
 
 #: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:51
 #: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:60
-#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:76
-#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:94
+#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:78
+#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:98
 #: modules/johncms/album/src/Application/Notifications/UnreadCommentsNotificationProvider.php:28
 #: modules/johncms/album/templates/public/show-one.twig:65
 msgid "Comments"
 msgstr ""
 
-#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:98
+#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:102
 #: modules/johncms/album/src/Application/Controllers/ShowAlbumController.php:55
 #: modules/johncms/album/src/Application/Controllers/ShowPhotoController.php:41
 #: modules/johncms/album/templates/public/show-one.twig:102
