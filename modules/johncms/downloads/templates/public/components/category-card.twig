@@ -1,0 +1,43 @@
+{#
+    A category in the catalogue. The title link stretches over the card; the buttons of a
+    moderator stay above it.
+
+    @var category    array See CatalogPresenter::categories().
+    @var can_manage  bool
+    @var can_reorder bool  More than one category on the level.
+#}
+<article class="card site-dl-card">
+    <div class="card-body site-dl-card__body">
+        <span class="site-dl-card__icon" aria-hidden="true">{% include '@theme/components/icon.twig' with {name: 'archive', size: 18} only %}</span>
+        <div class="site-dl-card__main">
+            <h3 class="site-dl-card__head">
+                <a class="site-dl-card__title stretched-link" href="{{ category.url }}">{{ category.rus_name }}</a>
+                <span class="site-downloads__count" title="{{ __('Files') }}">{{ category.total|format_number }}</span>
+            </h3>
+            {% if category.desc %}<p class="site-dl-card__desc">{{ category.desc }}</p>{% endif %}
+            {% if category.last_date %}<p class="site-dl-card__meta">{{ __('updated %s')|format(category.last_date) }}</p>{% endif %}
+        </div>
+        {% if can_manage %}
+            <div class="site-dl-card__actions">
+                {% if can_reorder %}
+                    {% for direction in ['up', 'down'] %}
+                        {% set edge = direction == 'up' ? category.is_first : category.is_last %}
+                        <form method="post" action="{{ category.sort_url }}">
+                            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                            <input type="hidden" name="direction" value="{{ direction }}">
+                            <button type="submit" class="site-icon-button" title="{{ direction == 'up' ? __('Up') : __('Down') }}" aria-label="{{ direction == 'up' ? __('Up') : __('Down') }}"{% if edge %} disabled{% endif %}>
+                                {% include '@theme/components/icon.twig' with {name: 'chevron-' ~ direction, size: 13} only %}
+                            </button>
+                        </form>
+                    {% endfor %}
+                {% endif %}
+                <a class="site-icon-button" href="{{ category.edit_url }}" title="{{ __('Edit') }}" aria-label="{{ __('Edit') }}">
+                    {% include '@theme/components/icon.twig' with {name: 'pencil', size: 13} only %}
+                </a>
+                <a class="site-icon-button site-icon-button--danger" href="{{ category.delete_url }}" title="{{ __('Delete') }}" aria-label="{{ __('Delete') }}">
+                    {% include '@theme/components/icon.twig' with {name: 'trash-2', size: 13} only %}
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</article>

@@ -9,6 +9,36 @@
       'Additional files' => 'Дополнительные файлы',
       'Edit File' => 'Редактировать файл',
       'Delete File' => 'Удалить файл',
+      '%d file' => 
+      array (
+        0 => '%d файл',
+        1 => '%d файла',
+        2 => '%d файлов',
+        3 => '%d файлов',
+      ),
+      '%d section' => 
+      array (
+        0 => '%d раздел',
+        1 => '%d раздела',
+        2 => '%d разделов',
+        3 => '%d разделов',
+      ),
+      '%d subsection' => 
+      array (
+        0 => '%d подраздел',
+        1 => '%d подраздела',
+        2 => '%d подразделов',
+        3 => '%d подразделов',
+      ),
+      'Collections' => 'Подборки',
+      'Sections' => 'Разделы',
+      'Subsections' => 'Подразделы',
+      'New' => 'Новое',
+      'updated %s' => 'обновлён %s',
+      'Sort in ascending order' => 'Сортировать по возрастанию',
+      'Sort in descending order' => 'Сортировать по убыванию',
+      'The section is empty' => 'Раздел пуст',
+      'Files of the section will appear here.' => 'Здесь появятся файлы раздела.',
       'Delete the file “%s”?' => 'Удалить файл «%s»?',
       'Its additional files, screenshots, comments and bookmarks are deleted with it. This cannot be undone.' => 'Вместе с ним удаляются дополнительные файлы, скриншоты, комментарии и закладки. Отменить это нельзя.',
       'Delete the additional file “%s”?' => 'Удалить дополнительный файл «%s»?',

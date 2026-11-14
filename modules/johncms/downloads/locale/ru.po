@@ -109,6 +109,54 @@ msgstr "Редактировать файл"
 msgid "Delete File"
 msgstr "Удалить файл"
 
+msgid "%d file"
+msgid_plural "%d files"
+msgstr[0] "%d файл"
+msgstr[1] "%d файла"
+msgstr[2] "%d файлов"
+msgstr[3] "%d файлов"
+
+msgid "%d section"
+msgid_plural "%d sections"
+msgstr[0] "%d раздел"
+msgstr[1] "%d раздела"
+msgstr[2] "%d разделов"
+msgstr[3] "%d разделов"
+
+msgid "%d subsection"
+msgid_plural "%d subsections"
+msgstr[0] "%d подраздел"
+msgstr[1] "%d подраздела"
+msgstr[2] "%d подразделов"
+msgstr[3] "%d подразделов"
+
+msgid "Collections"
+msgstr "Подборки"
+
+msgid "Sections"
+msgstr "Разделы"
+
+msgid "Subsections"
+msgstr "Подразделы"
+
+msgid "New"
+msgstr "Новое"
+
+msgid "updated %s"
+msgstr "обновлён %s"
+
+msgid "Sort in ascending order"
+msgstr "Сортировать по возрастанию"
+
+msgid "Sort in descending order"
+msgstr "Сортировать по убыванию"
+
+msgid "The section is empty"
+msgstr "Раздел пуст"
+
+msgid "Files of the section will appear here."
+msgstr "Здесь появятся файлы раздела."
+
 msgid "Delete the file “%s”?"
 msgstr "Удалить файл «%s»?"
 

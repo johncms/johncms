@@ -1,0 +1,29 @@
+{#
+    The menu of a moderator: adding files and managing the category, or the whole downloads on the
+    main page.
+
+    @var id int Current category, 0 on the main page.
+#}
+<details class="site-popover" data-site-popover>
+    <summary class="btn btn-outline-secondary btn-sm">
+        {% include '@theme/components/icon.twig' with {name: 'settings', size: 14} only %} {{ __('Section actions') }}
+    </summary>
+    <div class="site-popover__panel">
+        {% if id %}
+            <a class="site-popover__item" href="/downloads/upload/{{ id }}/">{% include '@theme/components/icon.twig' with {name: 'upload', size: 14} only %}<span>{{ __('Upload File') }}</span></a>
+            <a class="site-popover__item" href="/downloads/import/{{ id }}/">{% include '@theme/components/icon.twig' with {name: 'download', size: 14} only %}<span>{{ __('Import File') }}</span></a>
+            <hr class="site-popover__divider">
+        {% endif %}
+        <a class="site-popover__item" href="/downloads/categories/create{{ id ? '?refid=' ~ id : '' }}">{% include '@theme/components/icon.twig' with {name: 'plus', size: 14} only %}<span>{{ __('Create Folder') }}</span></a>
+        {% if id %}
+            <a class="site-popover__item" href="/downloads/categories/{{ id }}/edit">{% include '@theme/components/icon.twig' with {name: 'pencil', size: 14} only %}<span>{{ __('Change Folder') }}</span></a>
+        {% endif %}
+        <a class="site-popover__item" href="/downloads/scan-dir{{ id ? '?id=' ~ id : '' }}">{% include '@theme/components/icon.twig' with {name: 'folder', size: 14} only %}<span>{{ __('Update Files') }}</span></a>
+        {% include '@downloads/public/components/recount-form.twig' with {id: id, class: 'site-popover__item', with_icon: true} only %}
+        <hr class="site-popover__divider">
+        {% include '@downloads/public/components/clean-form.twig' with {id: id, class: 'site-popover__item site-popover__item--danger', with_icon: true} only %}
+        {% if id %}
+            <a class="site-popover__item site-popover__item--danger" href="/downloads/categories/{{ id }}/delete">{% include '@theme/components/icon.twig' with {name: 'trash-2', size: 14} only %}<span>{{ __('Delete Folder') }}</span></a>
+        {% endif %}
+    </div>
+</details>

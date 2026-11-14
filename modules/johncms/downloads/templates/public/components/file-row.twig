@@ -1,36 +1,53 @@
 {#
-    One file in a listing.
+    One file in a listing. The title link stretches over the row; the download button, the
+    comments and the buttons of a moderator stay above it.
 
-    @var file array Presented file, see FilePresenter::present().
+    @var file array Presented file, see FilePresenter::present(); accept_url and delete_url turn on
+                    the buttons of the moderation queue.
 #}
-<div class="forum-section post-item mb-2">
-    <div class="section-header d-flex justify-content-between {{ file.preview_text ? '' : 'border-0 pb-0' }}">
-        <div class="d-flex align-items-center">
-            <span class="me-2"><img src="{{ file.icon }}" alt="icon"></span>
-            <a href="{{ file.detail_url }}" class="text-dark-brown">{{ file.rus_name }}</a>
-            <span class="badge rounded-pill counter-badge border ms-3">{{ file.field }}</span>
+<article class="card site-dl-file">
+    <div class="card-body site-dl-file__body">
+        <span class="site-dl-file__icon" aria-hidden="true">{% include '@theme/components/icon.twig' with {name: file.type_icon, size: 16} only %}</span>
+        <div class="site-dl-file__main">
+            <div class="site-dl-file__head">
+                <h3 class="site-dl-file__name"><a class="stretched-link" href="{{ file.detail_url }}">{{ file.rus_name }}</a></h3>
+                {% if file.is_new %}<span class="site-dl-file__tag">{{ __('New') }}</span>{% endif %}
+            </div>
+            {% if file.preview_text %}<p class="site-dl-file__desc">{{ file.preview_text }}</p>{% endif %}
+            <div class="site-dl-file__meta">
+                <span title="{{ __('Downloads') }}">
+                    {% include '@theme/components/icon.twig' with {name: 'download', size: 11} only %}
+                    <span class="visually-hidden">{{ __('Downloads') }}: </span>{{ file.field|format_number }}
+                </span>
+                {% if file.comments_url %}
+                    <a href="{{ file.comments_url }}" title="{{ __('Comments') }}" aria-label="{{ __('Comments') }}: {{ file.comm_count|format_number }}">
+                        {% include '@theme/components/icon.twig' with {name: 'message-square', size: 11} only %} {{ file.comm_count|format_number }}
+                    </a>
+                {% endif %}
+                {% if file.display_size %}<span>{{ file.display_size }}</span>{% endif %}
+                <span>{{ file.display_date }}</span>
+            </div>
         </div>
+        {% if file.accept_url|default('') %}
+            <div class="site-dl-file__actions">
+                <form method="post" action="{{ file.accept_url }}">
+                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                    <input type="hidden" name="accept" value="{{ file.id }}">
+                    <button type="submit" class="btn btn-success btn-sm">{{ __('Accept') }}</button>
+                </form>
+                {% include '@downloads/public/components/delete-form.twig' with {
+                    action: file.delete_url,
+                    fields: {},
+                    question: __('Delete the file “%s”?')|format(file.rus_name),
+                    text: __('Its additional files, screenshots, comments and bookmarks are deleted with it. This cannot be undone.'),
+                    label: __('Delete'),
+                    class: 'btn btn-outline-danger btn-sm',
+                } only %}
+            </div>
+        {% else %}
+            <a class="btn btn-outline-secondary btn-sm site-dl-file__download" href="/downloads/load/{{ file.id }}" title="{{ __('Download') }} {{ file.rus_name }}">
+                {% include '@theme/components/icon.twig' with {name: 'download', size: 13} only %} <span>{{ __('Download') }}</span>
+            </a>
+        {% endif %}
     </div>
-    {% if file.preview_text %}
-        <div class="small pt-2 text-muted">
-            <div>{{ file.preview_text }}</div>
-        </div>
-    {% endif %}
-    {% if file.accept_url|default('') %}
-        <div class="mt-2 d-flex gap-2">
-            <form method="post" action="{{ file.accept_url }}">
-                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                <input type="hidden" name="accept" value="{{ file.id }}">
-                <button type="submit" class="btn btn-success btn-sm">{{ __('Accept') }}</button>
-            </form>
-            {% include '@downloads/public/components/delete-form.twig' with {
-                action: file.delete_url,
-                fields: {},
-                question: __('Delete the file “%s”?')|format(file.rus_name),
-                text: __('Its additional files, screenshots, comments and bookmarks are deleted with it. This cannot be undone.'),
-                label: __('Delete'),
-                class: 'btn btn-danger btn-sm',
-            } only %}
-        </div>
-    {% endif %}
-</div>
+</article>

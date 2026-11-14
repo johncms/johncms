@@ -6,8 +6,13 @@ namespace Johncms\Modules\Downloads\Application\Services;
 
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Repository\DownloadCategoryRepositoryInterface;
+use Symfony\Contracts\Service\ResetInterface;
 
-final class DownloadCategoryPathService
+/**
+ * The paths of the categories of the downloads, remembered for the rest of the request. Reset
+ * before every request, since a category may be renamed or moved between two of them.
+ */
+final class DownloadCategoryPathService implements ResetInterface
 {
     /** @var array<int, string> */
     private array $pathCache = [];
@@ -90,5 +95,11 @@ final class DownloadCategoryPathService
         }
 
         return $this->getCategoryUrl($category);
+    }
+
+    public function reset(): void
+    {
+        $this->pathCache = [];
+        $this->categoryByPathCache = [];
     }
 }

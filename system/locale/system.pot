@@ -807,6 +807,7 @@ msgstr ""
 #: system/src/Comments.php:359
 #: themes/default/templates/components/style-guide/examples/button-states.twig:11
 #: themes/default/templates/components/style-guide/examples/button-states.twig:13
+#: themes/default/templates/components/style-guide/examples/controls.twig:12
 #: themes/default/templates/pages/comments-list.twig:118
 msgid "Edit"
 msgstr ""
@@ -821,6 +822,7 @@ msgstr ""
 #: themes/default/templates/components/style-guide/examples/button-states.twig:22
 #: themes/default/templates/components/style-guide/examples/confirm.twig:3
 #: themes/default/templates/components/style-guide/examples/confirm.twig:4
+#: themes/default/templates/components/style-guide/examples/controls.twig:13
 #: themes/default/templates/pages/comments-delete.twig:16
 #: themes/default/templates/pages/comments-list.twig:121
 msgid "Delete"
@@ -1480,7 +1482,7 @@ msgstr ""
 #: themes/default/templates/components/style-guide/examples/cards.twig:2
 #: themes/default/templates/components/style-guide/examples/content-card.twig:2
 #: themes/default/templates/pages/style-guide.twig:17
-#: themes/default/templates/pages/style-guide.twig:54
+#: themes/default/templates/pages/style-guide.twig:55
 msgid "Cards"
 msgstr ""
 
@@ -1535,6 +1537,30 @@ msgstr ""
 
 #: themes/default/templates/components/style-guide/examples/content-card.twig:6
 msgid "Nothing to display yet."
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/controls.twig:4
+msgid "Search"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/controls.twig:5
+msgid "Favorites"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/controls.twig:7
+msgid "Sorting"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/controls.twig:8
+msgid "by time"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/controls.twig:9
+msgid "by name"
+msgstr ""
+
+#: themes/default/templates/components/style-guide/examples/controls.twig:14
+msgid "Up"
 msgstr ""
 
 #: themes/default/templates/components/style-guide/examples/forms.twig:3
@@ -1829,36 +1855,36 @@ msgid "Colors"
 msgstr ""
 
 #: themes/default/templates/pages/style-guide.twig:13
-#: themes/default/templates/pages/style-guide.twig:36
+#: themes/default/templates/pages/style-guide.twig:37
 msgid "Icons"
 msgstr ""
 
 #: themes/default/templates/pages/style-guide.twig:14
-#: themes/default/templates/pages/style-guide.twig:40
+#: themes/default/templates/pages/style-guide.twig:41
 msgid "Forms"
 msgstr ""
 
 #: themes/default/templates/pages/style-guide.twig:15
-#: themes/default/templates/pages/style-guide.twig:44
+#: themes/default/templates/pages/style-guide.twig:45
 msgid "Messages"
 msgstr ""
 
 #: themes/default/templates/pages/style-guide.twig:16
-#: themes/default/templates/pages/style-guide.twig:50
+#: themes/default/templates/pages/style-guide.twig:51
 msgid "Badges"
 msgstr ""
 
 #: themes/default/templates/pages/style-guide.twig:18
-#: themes/default/templates/pages/style-guide.twig:59
+#: themes/default/templates/pages/style-guide.twig:60
 msgid "Tables"
 msgstr ""
 
 #: themes/default/templates/pages/style-guide.twig:19
-#: themes/default/templates/pages/style-guide.twig:63
+#: themes/default/templates/pages/style-guide.twig:64
 msgid "Pagination"
 msgstr ""
 
 #: themes/default/templates/pages/style-guide.twig:20
-#: themes/default/templates/pages/style-guide.twig:67
+#: themes/default/templates/pages/style-guide.twig:68
 msgid "Dropdown menus"
 msgstr ""

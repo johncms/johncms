@@ -8,34 +8,49 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
-use Johncms\View\Asset\AssetResolver;
+use Johncms\Utils\DateFormatterInterface;
 
 final class FilePresenter
 {
     /** How long a file keeps the "new" mark, in seconds. */
     public const NEW_FILE_PERIOD = 259200;
 
-    private const EXTENSIONS = [
-        'mp3'  => 8,
-        'png'  => 5,
-        'jpg'  => 5,
-        'gif'  => 5,
-        'rar'  => 5,
-        'zip'  => 6,
-        '3gp'  => 7,
-        'mp4'  => 7,
-        'txt'  => 4,
-        'jar'  => 2,
-        'sis'  => 1,
-        'sisx' => 1,
-        'thm'  => 10,
-        'nth'  => 11,
+    /** The icon of a file by its extension; anything else is a plain file. */
+    private const array TYPE_ICONS = [
+        'zip'  => 'file-archive',
+        'rar'  => 'file-archive',
+        '7z'   => 'file-archive',
+        'tar'  => 'file-archive',
+        'gz'   => 'file-archive',
+        'jar'  => 'file-archive',
+        'apk'  => 'file-archive',
+        'png'  => 'file-image',
+        'jpg'  => 'file-image',
+        'jpeg' => 'file-image',
+        'gif'  => 'file-image',
+        'bmp'  => 'file-image',
+        'webp' => 'file-image',
+        'mp3'  => 'file-music',
+        'aac'  => 'file-music',
+        'm4a'  => 'file-music',
+        'ogg'  => 'file-music',
+        'wav'  => 'file-music',
+        'mp4'  => 'file-video-camera',
+        '3gp'  => 'file-video-camera',
+        'webm' => 'file-video-camera',
+        'avi'  => 'file-video-camera',
+        'mov'  => 'file-video-camera',
+        'mpg'  => 'file-video-camera',
+        'txt'  => 'file-text',
+        'pdf'  => 'file-text',
+        'fb2'  => 'file-text',
+        'djvu' => 'file-text',
     ];
 
     public function __construct(
         private AccessCheckerInterface $accessChecker,
-        private AssetResolver $assets,
         private DownloadFilePathService $filePathService,
+        private DateFormatterInterface $dateFormatter,
     ) {
     }
 
@@ -43,11 +58,13 @@ final class FilePresenter
     {
         $old = time() - self::NEW_FILE_PERIOD;
         $config = config('johncms');
-        $extension = pathinfo($file->name, PATHINFO_EXTENSION);
-        $iconId = self::EXTENSIONS[$extension] ?? 9;
+        $extension = strtolower(pathinfo($file->name, PATHINFO_EXTENSION));
+        $path = $file->dir . '/' . $file->name;
 
         $data = $file->toArray();
-        $data['icon'] = $this->assets->url('images/old/system/' . $iconId . '.png');
+        $data['type_icon'] = self::TYPE_ICONS[$extension] ?? 'file';
+        $data['display_size'] = is_file($path) ? self::formatFileSize((int) filesize($path)) : '';
+        $data['display_date'] = $this->dateFormatter->day((int) $file->time);
         $data['detail_url'] = $this->filePathService->getFileUrl($file);
         $data['is_new'] = $file->time > $old;
 

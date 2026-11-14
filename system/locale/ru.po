@@ -845,6 +845,24 @@ msgstr "После входа в систему вы можете сменить
 msgid "Do you really want to delete?"
 msgstr "Действительно хотите удалить?"
 
+msgid "Search"
+msgstr "Поиск"
+
+msgid "Favorites"
+msgstr "Избранное"
+
+msgid "Sorting"
+msgstr "Сортировка"
+
+msgid "Up"
+msgstr "Вверх"
+
+msgid "by time"
+msgstr "по времени"
+
+msgid "by name"
+msgstr "по имени"
+
 msgid "Which messages to clear?"
 msgstr "Какие сообщения очистить?"
 

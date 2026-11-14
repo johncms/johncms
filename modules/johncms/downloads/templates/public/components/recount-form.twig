@@ -1,11 +1,12 @@
 {#
     Recounting the files of every category. Like the cleaning, it covers the whole downloads.
 
-    @var id    int    Category to come back to, 0 for the main page.
-    @var class string Classes of the button.
+    @var id        int    Category to come back to, 0 for the main page.
+    @var class     string Classes of the button.
+    @var with_icon bool   Show the icon before the text, as the items of a menu do.
 #}
 <form method="post" action="/downloads/recount">
     <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
     <input type="hidden" name="id" value="{{ id }}">
-    <button type="submit" class="{{ class }}">{{ __('Update counters') }}</button>
+    <button type="submit" class="{{ class }}">{% if with_icon|default(false) %}{% include '@theme/components/icon.twig' with {name: 'list-checks', size: 14} only %}{% endif %}<span>{{ __('Update counters') }}</span></button>
 </form>

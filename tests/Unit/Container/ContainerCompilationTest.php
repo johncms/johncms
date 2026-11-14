@@ -13,6 +13,7 @@ use Johncms\Container\PSRContainerFactory;
 use Johncms\Http\CookieQueue;
 use Johncms\Modules\Admin\Application\Services\AdminPermissions;
 use Johncms\Modules\Consent\Application\View\CookieBannerExtension;
+use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Collections\Application\Services\CollectionStructureMemo;
 use Johncms\Modules\Forum\Application\Console\CleanupOrphanFilesCommand;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
@@ -88,6 +89,8 @@ final class ContainerCompilationTest extends TestCase
                 Session::class,
                 // Remembers what one request has read about the structure of collections.
                 CollectionStructureMemo::class,
+                // Remembers the paths of the categories of the downloads for one request.
+                DownloadCategoryPathService::class,
                 // Remembers the paths of the sections of the forum for one request.
                 ForumSectionPathService::class,
                 NavChain::class,
