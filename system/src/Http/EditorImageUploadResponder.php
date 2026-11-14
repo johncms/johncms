@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\Http;
 
+use Johncms\EditorUploads\EditorUploads;
+use Johncms\Files\StoredFileDTO;
 use Johncms\Image\EditorImageUploadException;
 use Johncms\Image\StoreEditorImageUseCase;
 use Psr\Log\LoggerInterface;
@@ -37,6 +39,7 @@ final readonly class EditorImageUploadResponder
 
     public function __construct(
         private StoreEditorImageUseCase $storeEditorImage,
+        private EditorUploads $editorUploads,
         private UploadedFileMapper $uploadedFileMapper,
         private UploadLimits $uploadLimits,
         private LoggerInterface $logger,
@@ -48,6 +51,34 @@ final readonly class EditorImageUploadResponder
      * @param string $module Name of the module, for the log of a failure.
      */
     public function store(Request $request, string $directory, string $module): JsonResponse
+    {
+        return $this->respond(
+            $request,
+            fn(UploadedFileDTO $upload): StoredFileDTO => $this->storeEditorImage->execute($upload, $directory),
+            ['module' => $module, 'directory' => $directory]
+        );
+    }
+
+    /**
+     * The same for a record whose pictures EditorUploads tracks: the upload is registered as the
+     * user's, counted against their limit, and taken by the record when its form is sent.
+     *
+     * @param string $ownerType The type an EditorUploadConsumerInterface declared, e.g. `comment`.
+     */
+    public function storeTracked(Request $request, string $ownerType, int $userId): JsonResponse
+    {
+        return $this->respond(
+            $request,
+            fn(UploadedFileDTO $upload): StoredFileDTO => $this->editorUploads->store($upload, $ownerType, $userId),
+            ['owner_type' => $ownerType]
+        );
+    }
+
+    /**
+     * @param callable(UploadedFileDTO): StoredFileDTO $store
+     * @param array<string, string> $context What the log of a failure says about the upload.
+     */
+    private function respond(Request $request, callable $store, array $context): JsonResponse
     {
         $upload = $request->files->get(self::FIELD);
         if (! $upload instanceof UploadedFile) {
@@ -62,16 +93,13 @@ final readonly class EditorImageUploadResponder
         }
 
         try {
-            $file = $this->storeEditorImage->execute(
-                $this->uploadedFileMapper->fromUploadedFile($upload),
-                $directory
-            );
+            $file = $store($this->uploadedFileMapper->fromUploadedFile($upload));
         } catch (EditorImageUploadException $exception) {
             return $this->error($exception->getMessage());
         } catch (Throwable $exception) {
             $this->logger->error(
                 'Could not store a picture uploaded from the editor.',
-                ['exception' => $exception, 'module' => $module, 'directory' => $directory]
+                ['exception' => $exception] + $context
             );
 
             return $this->error(d__('system', 'Error uploading file'), JsonResponse::HTTP_INTERNAL_SERVER_ERROR);

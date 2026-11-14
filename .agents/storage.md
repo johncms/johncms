@@ -94,6 +94,26 @@ Decided in `FileStore`, and the two halves are ordered on purpose:
 `Capsule::transaction()` stays on the disk — in this CMS an attachment exists before the post
 does anyway, which is what `CleanupOrphanForumFilesUseCase` is for.
 
+## Pictures of the text editor
+
+A picture uploaded from an editor exists before the record that shows it, so it needs an owner
+nobody can forge. `Johncms\EditorUploads\EditorUploads` keeps one: the `editor_uploads` table
+says who uploaded each file and which record holds it.
+
+* A record type joins by implementing `EditorUploadConsumerInterface` (`ownerType()`,
+  `directory()`); the container tags it. The upload route answers with
+  `EditorImageUploadResponder::storeTracked($request, $ownerType, $userId)` — the route itself
+  decides who may upload there.
+* Saving the record calls `bind($ownerType, $id, $userId, $html)` inside its transaction. The
+  `<img src>` of the text decide; the `attached_files[]` the editor posts are not read. Only the
+  user's own unsent uploads and the pictures the record already holds are taken; a picture the
+  edited text no longer shows is deleted after the commit.
+* Deleting records calls `detach($ownerType, $ids)`, deleting an account `detachUser($id)`; the
+  files go after the outermost commit (`TransactionManagerInterface::afterCommit()`).
+* `editor-uploads:cleanup` removes, in the declared directories only, uploads never sent and
+  files no row knows. A module therefore declares the consumer in the same change that moves its
+  existing pictures into the table — before that, the cleanup would take them for strays.
+
 ## Disks
 
 Configured in `config/autoload/filesystem.*.php`; a disk that is not listed, or a driver that is

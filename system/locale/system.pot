@@ -422,7 +422,7 @@ msgid "This is the only way to sign in to the account. Set a password first."
 msgstr ""
 
 #: system/src/Auth/Impersonation/ImpersonationManager.php:162
-#: system/src/Http/EditorImageUploadResponder.php:92
+#: system/src/Http/EditorImageUploadResponder.php:120
 #: system/src/Http/ExceptionResponseFactory.php:128
 #: themes/default/templates/components/style-guide/examples/messages.twig:11
 #: themes/default/templates/components/style-guide/examples/toasts.twig:6
@@ -790,7 +790,7 @@ msgstr ""
 
 #: system/src/Comments.php:280
 #: system/src/Comments.php:372
-#: system/src/Http/EditorImageUploadResponder.php:60
+#: system/src/Http/EditorImageUploadResponder.php:91
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionBulkAdminController.php:42
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFilesController.php:24
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:410
@@ -815,19 +815,19 @@ msgstr ""
 msgid "You cannot edit posts of higher administration"
 msgstr ""
 
-#: system/src/Comments.php:671
+#: system/src/Comments.php:672
 msgid "Text is too short"
 msgstr ""
 
-#: system/src/Comments.php:677
+#: system/src/Comments.php:678
 msgid "You cannot add the message so often<br>Please, wait"
 msgstr ""
 
-#: system/src/Comments.php:677
+#: system/src/Comments.php:678
 msgid "seconds"
 msgstr ""
 
-#: system/src/Comments.php:685
+#: system/src/Comments.php:686
 msgid "Message already exists"
 msgstr ""
 
@@ -935,6 +935,19 @@ msgstr ""
 msgid "Applies migrations, synchronizes declarations and completes module updates."
 msgstr ""
 
+#: system/src/EditorUploads/EditorUploads.php:71
+msgid "Too many uploaded pictures are waiting to be sent. Send the text you uploaded them for, or try again tomorrow."
+msgstr ""
+
+#: system/src/EditorUploads/EditorUploads.php:122
+#, php-format
+msgid "A text can show at most %d uploaded pictures."
+msgstr ""
+
+#: system/src/EditorUploads/EditorUploads.php:129
+msgid "One of the pictures is no longer available. Upload it again."
+msgstr ""
+
 #: system/src/Http/Controller/ExternalAuthController.php:74
 #: system/src/Http/Controller/ExternalAuthController.php:94
 msgid "This sign-in service is not available"
@@ -977,12 +990,12 @@ msgstr ""
 msgid "Style guide"
 msgstr ""
 
-#: system/src/Http/EditorImageUploadResponder.php:59
+#: system/src/Http/EditorImageUploadResponder.php:90
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:37
 msgid "The file is too large for the server to accept"
 msgstr ""
 
-#: system/src/Http/EditorImageUploadResponder.php:77
+#: system/src/Http/EditorImageUploadResponder.php:105
 #: system/src/Image/StoreEditorImageUseCase.php:118
 #: system/src/Image/StoreEditorImageUseCase.php:139
 #: system/src/Image/StoreEditorImageUseCase.php:191

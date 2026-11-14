@@ -1689,3 +1689,12 @@ msgstr "Удалить все комментарии этого автора з�
 
 msgid "Delete all comments of the author"
 msgstr "Удалить все комментарии автора"
+
+msgid "Too many uploaded pictures are waiting to be sent. Send the text you uploaded them for, or try again tomorrow."
+msgstr "Слишком много загруженных картинок ждут отправки. Отправьте текст, для которого вы их загрузили, или попробуйте завтра."
+
+msgid "A text can show at most %d uploaded pictures."
+msgstr "В тексте может быть не больше %d загруженных картинок."
+
+msgid "One of the pictures is no longer available. Upload it again."
+msgstr "Одна из картинок больше недоступна. Загрузите её заново."

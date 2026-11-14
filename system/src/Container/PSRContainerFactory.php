@@ -20,6 +20,7 @@ use Johncms\Validator\RuleConstraintFactoryInterface;
 use Johncms\View\CommentFeed\CommentFeedSourceInterface;
 use Johncms\View\Dashboard\DashboardAttentionProviderInterface;
 use Johncms\View\Dashboard\DashboardMetricProviderInterface;
+use Johncms\EditorUploads\EditorUploadConsumerInterface;
 use Johncms\View\Homepage\HomepageBlockProviderInterface;
 use Johncms\View\Menu\MenuItemProviderInterface;
 use Johncms\Security\HtmlPolicyProviderInterface;
@@ -96,7 +97,7 @@ class PSRContainerFactory
      * become players — a directory of migrations the database is taken through, a line the module
      * puts into a menu, a console command, a group of addresses in the sitemap, the name of a page
      * of its own when the site says where a visitor is, something of the module waiting for a
-     * signed-in visitor, a block of the home page, a line or a number on the dashboard of the panel, the comments its visitors leave, a function
+     * signed-in visitor, a block of the home page, a line or a number on the dashboard of the panel, the comments its visitors leave, a record whose editor pictures are tracked, a function
      * its templates call, a service the kernel clears between requests and a rule the validator can
      * be asked for.
      *
@@ -130,6 +131,7 @@ class PSRContainerFactory
             DashboardAttentionProviderInterface::class => 'johncms.dashboard_attention_provider',
             DashboardMetricProviderInterface::class    => 'johncms.dashboard_metric_provider',
             CommentFeedSourceInterface::class          => 'johncms.comment_feed_source',
+            EditorUploadConsumerInterface::class       => 'johncms.editor_upload_consumer',
             // The web environment. A template of mail or of the installer is served by an
             // environment of its own, and what belongs there is tagged by hand — see the
             // extensions at the end of services.php.

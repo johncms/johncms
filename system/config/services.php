@@ -66,6 +66,11 @@ use Johncms\Database\Schema\Adapters\IlluminateSchema;
 use Johncms\Database\Schema\SchemaInterface;
 use Johncms\Database\SchemaBuilderFactory;
 use Johncms\Files\FileRepositoryInterface;
+use Johncms\Database\EloquentTransactionManager;
+use Johncms\Database\TransactionManagerInterface;
+use Johncms\EditorUploads\EditorUploadConsumers;
+use Johncms\EditorUploads\EditorUploadRepositoryInterface;
+use Johncms\EditorUploads\Infrastructure\EloquentEditorUploadRepository;
 use Johncms\Files\FilePathLockInterface;
 use Johncms\Files\FileStore;
 use Johncms\Files\Infrastructure\LocalFilePathLock;
@@ -229,6 +234,9 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Image/EditorImageFormat.php',
                 ROOT_PATH . 'system/src/Image/EditorImageInfo.php',
                 ROOT_PATH . 'system/src/Image/EditorImageUploadException.php',
+                // The row of an editor upload and the refusal to attach one are not services.
+                ROOT_PATH . 'system/src/EditorUploads/EditorUpload.php',
+                ROOT_PATH . 'system/src/EditorUploads/EditorUploadBindException.php',
                 ROOT_PATH . 'system/src/Files',
                 // The manifest and the state of a module are value objects, and the two
                 // remaining pieces of the old installer take the name of a module as a string.
@@ -370,6 +378,10 @@ return static function (ContainerConfigurator $container): void {
     // nothing in the application needs the Symfony-specific part of the contract.
     $services->set(ContainerInterface::class)->synthetic();
     $services->set(FileRepositoryInterface::class, EloquentFileRepository::class);
+    $services->alias(TransactionManagerInterface::class, EloquentTransactionManager::class);
+    $services->alias(EditorUploadRepositoryInterface::class, EloquentEditorUploadRepository::class);
+    $services->set(EditorUploadConsumers::class)
+        ->arg('$consumers', tagged_iterator('johncms.editor_upload_consumer'));
     $services->set(FilePathLockInterface::class, LocalFilePathLock::class);
     $services->set(FileStore::class, FileStore::class);
     $services->set(LoggerInterface::class)->factory(service(LoggerFactory::class));

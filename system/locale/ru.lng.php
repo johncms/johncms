@@ -472,6 +472,9 @@ The number is shown so that support for the old scheme is not removed while it i
       'IP Whois' => 'Whois по IP',
       'Delete all comments of the author here?' => 'Удалить все комментарии этого автора здесь?',
       'Delete all comments of the author' => 'Удалить все комментарии автора',
+      'Too many uploaded pictures are waiting to be sent. Send the text you uploaded them for, or try again tomorrow.' => 'Слишком много загруженных картинок ждут отправки. Отправьте текст, для которого вы их загрузили, или попробуйте завтра.',
+      'A text can show at most %d uploaded pictures.' => 'В тексте может быть не больше %d загруженных картинок.',
+      'One of the pictures is no longer available. Upload it again.' => 'Одна из картинок больше недоступна. Загрузите её заново.',
     ),
   ),
 );
