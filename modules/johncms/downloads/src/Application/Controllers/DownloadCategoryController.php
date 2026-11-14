@@ -59,7 +59,7 @@ final readonly class DownloadCategoryController
 
         $urls = [
             'downloads'   => '/downloads/',
-            'new'         => $totalNew > 0 ? '/downloads/new/?dir=' . urlencode($category->dir) : '',
+            'new'         => $totalNew > 0 ? '/downloads/new/?id=' . $category->id : '',
             'sort_action' => $categoryUrl,
         ];
 

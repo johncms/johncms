@@ -411,13 +411,13 @@ parameters:
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$dir\.$#'
 			identifier: property.notFound
-			count: 2
+			count: 1
 			path: modules/johncms/downloads/src/Application/Controllers/DownloadCategoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$id\.$#'
 			identifier: property.notFound
-			count: 9
+			count: 10
 			path: modules/johncms/downloads/src/Application/Controllers/DownloadCategoryController.php
 
 		-
