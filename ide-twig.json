@@ -57,10 +57,6 @@
             "path": "modules/johncms/homepage/templates"
         },
         {
-            "namespace": "language",
-            "path": "modules/johncms/language/templates"
-        },
-        {
             "namespace": "library",
             "path": "modules/johncms/library/templates"
         },

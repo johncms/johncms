@@ -7,7 +7,8 @@ namespace Tests\Functional\Http;
 use Tests\Functional\FunctionalTestCase;
 
 /**
- * The language modal: what the visitor picks there is the language of the pages that follow.
+ * The language links of the top bar: what the visitor picks there is the language of the pages
+ * that follow.
  */
 final class LanguageSwitchTest extends FunctionalTestCase
 {
@@ -16,10 +17,10 @@ final class LanguageSwitchTest extends FunctionalTestCase
         'ru' => ['name' => 'Русский', 'version' => 1.0],
     ];
 
-    public function testTheLanguagePickedInTheModalIsRemembered(): void
+    public function testTheLanguagePickedByALinkIsRemembered(): void
     {
         $this->withConfig(['johncms' => ['lng' => 'en', 'lng_list' => self::LANGUAGES]], function (): void {
-            $this->handleRequest('/language/', 'POST', $this->withCsrfToken(['setlng' => 'ru']));
+            $this->handleRequest('/?setlng=ru');
 
             self::assertStringContainsString('<html lang="ru"', (string) $this->handleRequest('/')->getContent());
         });
@@ -28,8 +29,8 @@ final class LanguageSwitchTest extends FunctionalTestCase
     public function testALanguageTheSiteDoesNotHaveKeepsThePreviousChoice(): void
     {
         $this->withConfig(['johncms' => ['lng' => 'en', 'lng_list' => self::LANGUAGES]], function (): void {
-            $this->handleRequest('/language/', 'POST', $this->withCsrfToken(['setlng' => 'ru']));
-            $this->handleRequest('/language/', 'POST', $this->withCsrfToken(['setlng' => 'klingon']));
+            $this->handleRequest('/?setlng=ru');
+            $this->handleRequest('/?setlng=klingon');
 
             self::assertStringContainsString('<html lang="ru"', (string) $this->handleRequest('/')->getContent());
         });

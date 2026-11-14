@@ -6,7 +6,6 @@
     <domain>
         <name>system</name>
         <target>system/locale</target>
-        <sourceDir>modules/johncms/language</sourceDir>
         <sourceDir>modules/johncms/notifications</sourceDir>
         <sourceDir>modules/johncms/redirect</sourceDir>
         <sourceDir>system/src</sourceDir>

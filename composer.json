@@ -100,7 +100,6 @@
             "Johncms\\Modules\\Mail\\": "modules/johncms/mail/src/",
             "Johncms\\Modules\\Profile\\": "modules/johncms/profile/src/",
             "Johncms\\Modules\\Notifications\\": "modules/johncms/notifications/src/",
-            "Johncms\\Modules\\Language\\": "modules/johncms/language/src/",
             "Johncms\\Modules\\Redirect\\": "modules/johncms/redirect/src/"
         }
     },

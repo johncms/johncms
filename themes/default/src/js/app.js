@@ -36,7 +36,6 @@ if (document.querySelector('[data-site-palette]')) {
 
 import './prism';
 import './forum';
-import './modals';
 import './slider';
 import './progress';
 import './main';

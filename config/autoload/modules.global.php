@@ -33,7 +33,6 @@ return [
             'johncms/guestbook',
             'johncms/help',
             'johncms/homepage',
-            'johncms/language',
             'johncms/library',
             'johncms/mail',
             'johncms/news',

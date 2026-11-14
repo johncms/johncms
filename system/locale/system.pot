@@ -112,16 +112,6 @@ msgstr ""
 msgid "Who is online?"
 msgstr ""
 
-#: modules/johncms/language/templates/public/index.twig:8
-#: themes/default/templates/admin/components/topbar.twig:24
-#: themes/default/templates/components/site-preferences.twig:5
-msgid "Select language"
-msgstr ""
-
-#: modules/johncms/language/templates/public/index.twig:27
-msgid "Apply"
-msgstr ""
-
 #: modules/johncms/notifications/src/Application/Controllers/SettingsController.php:28
 #: modules/johncms/notifications/templates/public/index.twig:72
 msgid "Settings"
@@ -1228,6 +1218,11 @@ msgstr ""
 #: themes/default/templates/admin/components/topbar.twig:9
 #: themes/default/templates/admin/components/topbar.twig:49
 msgid "Set Dark Theme"
+msgstr ""
+
+#: themes/default/templates/admin/components/topbar.twig:24
+#: themes/default/templates/components/site-preferences.twig:5
+msgid "Select language"
 msgstr ""
 
 #: themes/default/templates/admin/components/topbar.twig:94
