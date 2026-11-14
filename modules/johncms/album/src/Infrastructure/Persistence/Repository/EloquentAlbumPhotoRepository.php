@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Infrastructure\Persistence\Repository;
 
+use Johncms\Modules\Album\Application\Comments\AlbumCommentSubject;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -189,6 +190,21 @@ final class EloquentAlbumPhotoRepository implements AlbumPhotoRepositoryInterfac
         AlbumPhoto::query()->where('id', $photoId)->update(['unread_comments' => $unread]);
     }
 
+    public function changeCommentCount(int $photoId, int $delta): void
+    {
+        $photos = AlbumPhoto::query()->where('id', $photoId);
+        if ($delta >= 0) {
+            $photos->increment('comm_count', $delta);
+
+            return;
+        }
+
+        // Spelled out: the column is unsigned, and SQLite has no GREATEST().
+        $photos->update(['comm_count' => Capsule::connection()->raw(
+            'CASE WHEN comm_count > ' . -$delta . ' THEN comm_count - ' . -$delta . ' ELSE 0 END'
+        )]);
+    }
+
     public function countWithUnreadComments(int $userId): int
     {
         return AlbumPhoto::query()->where('user_id', $userId)->where('unread_comments', 1)->count();
@@ -281,19 +297,19 @@ final class EloquentAlbumPhotoRepository implements AlbumPhotoRepositoryInterfac
 
     private function applyRecentCommentsFilter(Builder $query): void
     {
-        $since = time() - self::RECENT_COMMENTS_PERIOD;
+        $since = gmdate('Y-m-d H:i:s', time() - self::RECENT_COMMENTS_PERIOD);
 
-        $latestComments = Capsule::table('cms_album_comments')
-            ->select('sub_id')
-            ->selectRaw('MAX(time) AS mtime')
-            ->where('time', '>', $since)
-            ->groupBy('sub_id');
+        // The comments of the photos are the comments of the core, kept in UTC.
+        $latestComments = Capsule::table('comments')
+            ->select('subject_id')
+            ->selectRaw('MAX(created_at) AS mtime')
+            ->where('subject_type', AlbumCommentSubject::TYPE)
+            ->where('created_at', '>', $since)
+            ->groupBy('subject_id');
 
         $query
-            ->join('cms_album_comments as comm', 'cms_album_files.id', '=', 'comm.sub_id')
             ->joinSub($latestComments, 'comm2', static function (JoinClause $join): void {
-                $join->on('comm.sub_id', '=', 'comm2.sub_id')
-                    ->on('comm.time', '=', 'comm2.mtime');
+                $join->on('cms_album_files.id', '=', 'comm2.subject_id');
             })
             ->orderByDesc('comm2.mtime');
     }
@@ -304,9 +320,10 @@ final class EloquentAlbumPhotoRepository implements AlbumPhotoRepositoryInterfac
             ->where('cms_album_files.user_id', $currentUserId)
             ->where('cms_album_files.unread_comments', 1)
             ->orderByDesc(
-                Capsule::table('cms_album_comments')
-                    ->selectRaw('MAX(time)')
-                    ->whereColumn('cms_album_comments.sub_id', 'cms_album_files.id')
+                Capsule::table('comments')
+                    ->selectRaw('MAX(created_at)')
+                    ->where('subject_type', AlbumCommentSubject::TYPE)
+                    ->whereColumn('comments.subject_id', 'cms_album_files.id')
             );
     }
 

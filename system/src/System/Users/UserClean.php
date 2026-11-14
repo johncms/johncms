@@ -61,14 +61,13 @@ class UserClean
         di(StorageInterface::class)->deleteDirectory('users/album/' . $cleanId);
 
         // Чистим таблицы
-        $req = $this->db->query("SELECT `id` FROM `cms_album_files` WHERE `user_id` = '" . $cleanId . "'");
-        if ($req->rowCount()) {
-            while ($res = $req->fetch()) {
-                $this->db->exec("DELETE FROM `cms_album_comments` WHERE `sub_id` = '" . $res['id'] . "'");
-                $this->db->exec("DELETE FROM `cms_album_downloads` WHERE `file_id` = '" . $res['id'] . "'");
-                $this->db->exec("DELETE FROM `cms_album_views` WHERE `file_id` = '" . $res['id'] . "'");
-                $this->db->exec("DELETE FROM `cms_album_votes` WHERE `file_id` = '" . $res['id'] . "'");
-            }
+        $photoIds = array_map('intval', $this->db->query("SELECT `id` FROM `cms_album_files` WHERE `user_id` = '" . $cleanId . "'")->fetchAll(PDO::FETCH_COLUMN));
+        // The comments of the photos are the comments of the core, of the kind the album declares.
+        $this->comments->deleteForSubjects('album', $photoIds);
+        foreach ($photoIds as $photoId) {
+            $this->db->exec("DELETE FROM `cms_album_downloads` WHERE `file_id` = '" . $photoId . "'");
+            $this->db->exec("DELETE FROM `cms_album_views` WHERE `file_id` = '" . $photoId . "'");
+            $this->db->exec("DELETE FROM `cms_album_votes` WHERE `file_id` = '" . $photoId . "'");
         }
 
         $this->db->exec("DELETE FROM `cms_album_cat` WHERE `user_id` = '" . $cleanId . "'");
@@ -151,8 +150,6 @@ class UserClean
         $this->comments->deleteForUser($cleanId);
         // Удаляем комментарии из личных гостевых
         $this->db->exec("DELETE FROM `cms_users_guestbook` WHERE `user_id` = '" . $cleanId . "'");
-        // Удаляем комментарии из личных фотоальбомов
-        $this->db->exec("DELETE FROM `cms_album_comments` WHERE `user_id` = '" . $cleanId . "'");
         // Удаляем посты из гостевой
         $this->db->exec("DELETE FROM `guest` WHERE `user_id` = '" . $cleanId . "'");
     }

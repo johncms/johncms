@@ -2,11 +2,21 @@ msgid ""
 msgstr ""
 "X-Domain: album\n"
 
-#: modules/johncms/album/src/Application/CommentFeed/AlbumCommentFeedSource.php:51
+#: modules/johncms/album/src/Application/CommentFeed/AlbumCommentFeedSource.php:49
 #: modules/johncms/album/src/Application/Services/AlbumPermissions.php:29
 msgid "Photo albums"
 msgstr ""
 
+#: modules/johncms/album/src/Application/Comments/AlbumCommentSubject.php:57
+#: modules/johncms/album/src/Application/Comments/AlbumCommentSubject.php:70
+#: modules/johncms/album/src/Application/Controllers/DeletePhotoController.php:41
+#: modules/johncms/album/src/Application/Controllers/EditPhotoController.php:69
+#: modules/johncms/album/src/Application/Controllers/MovePhotoController.php:65
+#: modules/johncms/album/templates/public/show-one.twig:24
+msgid "Photo"
+msgstr ""
+
+#: modules/johncms/album/src/Application/Comments/AlbumCommentSubject.php:64
 #: modules/johncms/album/src/Application/Controllers/AlbumIndexController.php:25
 #: modules/johncms/album/src/Application/Controllers/DeleteAlbumController.php:38
 #: modules/johncms/album/src/Application/Controllers/DeleteAlbumController.php:98
@@ -17,7 +27,6 @@ msgstr ""
 #: modules/johncms/album/src/Application/Controllers/EditAlbumController.php:195
 #: modules/johncms/album/src/Application/Controllers/EditPhotoController.php:65
 #: modules/johncms/album/src/Application/Controllers/MovePhotoController.php:61
-#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:46
 #: modules/johncms/album/src/Application/Controllers/ShowAlbumController.php:61
 #: modules/johncms/album/src/Application/Controllers/ShowAlbumController.php:83
 #: modules/johncms/album/src/Application/Controllers/ShowAlbumController.php:101
@@ -34,16 +43,12 @@ msgstr ""
 msgid "Albums"
 msgstr ""
 
-#: modules/johncms/album/src/Application/Controllers/DeleteAlbumController.php:36
-msgid "Delete album:"
-msgstr ""
-
+#: modules/johncms/album/src/Application/Comments/AlbumCommentSubject.php:66
 #: modules/johncms/album/src/Application/Controllers/DeleteAlbumController.php:39
 #: modules/johncms/album/src/Application/Controllers/DeletePhotoController.php:38
 #: modules/johncms/album/src/Application/Controllers/EditAlbumController.php:164
 #: modules/johncms/album/src/Application/Controllers/EditPhotoController.php:66
 #: modules/johncms/album/src/Application/Controllers/MovePhotoController.php:62
-#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:47
 #: modules/johncms/album/src/Application/Controllers/ShowAlbumController.php:63
 #: modules/johncms/album/src/Application/Controllers/ShowPhotoController.php:49
 #: modules/johncms/album/src/Application/Controllers/UploadPhotoController.php:81
@@ -52,17 +57,21 @@ msgstr ""
 msgid "Your albums"
 msgstr ""
 
+#: modules/johncms/album/src/Application/Comments/AlbumCommentSubject.php:66
 #: modules/johncms/album/src/Application/Controllers/DeleteAlbumController.php:39
 #: modules/johncms/album/src/Application/Controllers/DeletePhotoController.php:38
 #: modules/johncms/album/src/Application/Controllers/EditAlbumController.php:164
 #: modules/johncms/album/src/Application/Controllers/EditPhotoController.php:66
 #: modules/johncms/album/src/Application/Controllers/MovePhotoController.php:62
-#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:47
 #: modules/johncms/album/src/Application/Controllers/ShowAlbumController.php:63
 #: modules/johncms/album/src/Application/Controllers/ShowPhotoController.php:49
 #: modules/johncms/album/src/Application/Controllers/UploadPhotoController.php:81
 #: modules/johncms/album/src/Application/Controllers/UserAlbumsController.php:71
 msgid "User albums"
+msgstr ""
+
+#: modules/johncms/album/src/Application/Controllers/DeleteAlbumController.php:36
+msgid "Delete album:"
 msgstr ""
 
 #: modules/johncms/album/src/Application/Controllers/DeleteAlbumController.php:49
@@ -83,14 +92,6 @@ msgstr ""
 msgid "Delete image"
 msgstr ""
 
-#: modules/johncms/album/src/Application/Controllers/DeletePhotoController.php:41
-#: modules/johncms/album/src/Application/Controllers/EditPhotoController.php:69
-#: modules/johncms/album/src/Application/Controllers/MovePhotoController.php:65
-#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:50
-#: modules/johncms/album/templates/public/show-one.twig:24
-msgid "Photo"
-msgstr ""
-
 #: modules/johncms/album/src/Application/Controllers/DeletePhotoController.php:49
 msgid "Are you sure you want to delete this image?"
 msgstr ""
@@ -100,7 +101,6 @@ msgid "Image successfully deleted"
 msgstr ""
 
 #: modules/johncms/album/src/Application/Controllers/DownloadPhotoController.php:28
-#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:36
 #: modules/johncms/album/src/Application/Controllers/ShowAlbumController.php:50
 #: modules/johncms/album/src/Application/Controllers/ShowPhotoController.php:36
 #: modules/johncms/album/src/Application/Controllers/VotePhotoController.php:29
@@ -110,7 +110,6 @@ msgid "Wrong data"
 msgstr ""
 
 #: modules/johncms/album/src/Application/Controllers/DownloadPhotoController.php:30
-#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:38
 msgid "Access forbidden"
 msgstr ""
 
@@ -167,25 +166,15 @@ msgstr ""
 msgid "Image successfully moved to the selected album"
 msgstr ""
 
-#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:51
-#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:60
-#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:78
-#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:98
-#: modules/johncms/album/src/Application/Notifications/UnreadCommentsNotificationProvider.php:28
-#: modules/johncms/album/templates/public/show-one.twig:65
-msgid "Comments"
+#: modules/johncms/album/src/Application/Controllers/ShowAlbumController.php:53
+#: modules/johncms/album/src/Application/Controllers/ShowPhotoController.php:39
+msgid "Access denied"
 msgstr ""
 
-#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:102
 #: modules/johncms/album/src/Application/Controllers/ShowAlbumController.php:55
 #: modules/johncms/album/src/Application/Controllers/ShowPhotoController.php:41
 #: modules/johncms/album/templates/public/show-one.twig:102
 msgid "Album List"
-msgstr ""
-
-#: modules/johncms/album/src/Application/Controllers/ShowAlbumController.php:53
-#: modules/johncms/album/src/Application/Controllers/ShowPhotoController.php:39
-msgid "Access denied"
 msgstr ""
 
 #: modules/johncms/album/src/Application/Controllers/ShowAlbumController.php:91
@@ -240,6 +229,11 @@ msgstr ""
 
 #: modules/johncms/album/src/Application/Menu/AlbumMenuItemProvider.php:41
 msgid "Photo Albums"
+msgstr ""
+
+#: modules/johncms/album/src/Application/Notifications/UnreadCommentsNotificationProvider.php:28
+#: modules/johncms/album/templates/public/show-one.twig:65
+msgid "Comments"
 msgstr ""
 
 #: modules/johncms/album/src/Application/Services/AlbumPermissions.php:35

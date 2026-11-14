@@ -28,6 +28,8 @@ final class CommentFeedTest extends FunctionalTestCase
 
     private string $libraryComment = '';
 
+    private string $albumComment = '';
+
     protected function tearDown(): void
     {
         if ($this->storedFile !== null) {
@@ -46,7 +48,7 @@ final class CommentFeedTest extends FunctionalTestCase
         $page = $this->pageOf('/admin/comments', FunctionalUserFactory::createSupervisor());
 
         self::assertSame(
-            ['/news/opening.html#article-comments', '/album/photo/3/comments', $this->libraryComment, $this->downloadComment],
+            ['/news/opening.html#article-comments', $this->albumComment, $this->libraryComment, $this->downloadComment],
             $this->listed($page)
         );
     }
@@ -85,7 +87,7 @@ final class CommentFeedTest extends FunctionalTestCase
         $page = $this->pageOf('/admin', FunctionalUserFactory::createSupervisor());
 
         self::assertSame(
-            ['/news/opening.html#article-comments', '/album/photo/3/comments', $this->libraryComment, $this->downloadComment],
+            ['/news/opening.html#article-comments', $this->albumComment, $this->libraryComment, $this->downloadComment],
             $this->listed($page)
         );
         self::assertNotNull($page->querySelector('a[href="/admin/comments"]'));
@@ -131,7 +133,18 @@ final class CommentFeedTest extends FunctionalTestCase
             'created_at'   => gmdate('Y-m-d H:i:s', $now - 3 * 3600),
         ]);
         $this->libraryComment = '/library/article/' . $articleId . '/comments/comment/' . $libraryComment;
-        Fixture::insert('cms_album_comments', $legacy(3, $now - 2 * 3600));
+        $owner = FunctionalUserFactory::create()->id;
+        $albumId = Fixture::insert('cms_album_cat', ['user_id' => $owner, 'name' => 'An album', 'access' => 4]);
+        $photoId = Fixture::insert('cms_album_files', ['user_id' => $owner, 'album_id' => $albumId, 'img_name' => 'photo.jpg', 'access' => 4]);
+        $albumComment = Fixture::insert('comments', [
+            'subject_type' => 'album',
+            'subject_id'   => $photoId,
+            'user_id'      => 0,
+            'text'         => 'A comment',
+            'author_name'  => 'Guest',
+            'created_at'   => gmdate('Y-m-d H:i:s', $now - 2 * 3600),
+        ]);
+        $this->albumComment = '/album/photo/' . $photoId . '/comments/comment/' . $albumComment;
         $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer::class)->synchronize();
         $collection = $this->container()->get(\Johncms\Modules\News\Application\Collections\NewsReadServiceInterface::class)->collection()->id;
         $article = Fixture::insert('collection_items', ['collection_id' => $collection, 'name' => 'Opening', 'code' => 'opening']);

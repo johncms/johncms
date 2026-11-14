@@ -16,6 +16,9 @@ final class TestCommentSubject implements CommentSubjectInterface
 
     public bool $failing = false;
 
+    /** @var list<int> */
+    public array $viewed = [];
+
     public function type(): string
     {
         return 'test_subject';
@@ -32,5 +35,10 @@ final class TestCommentSubject implements CommentSubjectInterface
             throw new RuntimeException('The counter failed.');
         }
         $this->changes[] = [$id, $delta];
+    }
+
+    public function discussionViewed(CommentSubjectDTO $subject): void
+    {
+        $this->viewed[] = $subject->id;
     }
 }

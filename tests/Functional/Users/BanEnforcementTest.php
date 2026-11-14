@@ -234,7 +234,7 @@ final class BanEnforcementTest extends FunctionalTestCase
                 'form [name="announce"]',
             ],
             'library comment' => ['/library/article/' . $this->article() . '/comments', 'form[data-comment-form]'],
-            'photo comment' => ['/album/photo/' . $this->photoOf($member) . '/comments', 'form [name="code"]'],
+            'photo comment' => ['/album/photo/' . $this->photoOf($member) . '/comments', 'form[data-comment-form]'],
             'downloads file' => [
                 '/downloads/upload/' . Fixture::insert(
                     'download__category',

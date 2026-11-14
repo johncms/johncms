@@ -74,6 +74,11 @@ final readonly class LibraryCommentSubject implements CommentSubjectInterface
         $this->articles->changeCommentCount($id, $delta);
     }
 
+    public function discussionViewed(CommentSubjectDTO $subject): void
+    {
+        // Nothing is marked as unread for the uploader of an article.
+    }
+
     /**
      * @return list<array{name: string, url: string}>
      */

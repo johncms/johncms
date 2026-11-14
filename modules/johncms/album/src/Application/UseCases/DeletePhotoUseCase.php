@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Album\Application\UseCases;
 
 use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
-use Johncms\Modules\Album\Domain\Repository\AlbumCommentRepositoryInterface;
+use Johncms\Comments\Application\CommentsService;
+use Johncms\Modules\Album\Application\Comments\AlbumCommentSubject;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
 use Johncms\Modules\Album\Domain\Repository\AlbumVoteRepositoryInterface;
 use Johncms\Modules\Album\Infrastructure\Storage\AlbumPhotoStorage;
@@ -15,7 +16,7 @@ final readonly class DeletePhotoUseCase
     public function __construct(
         private AlbumPhotoRepositoryInterface $photoRepository,
         private AlbumVoteRepositoryInterface $voteRepository,
-        private AlbumCommentRepositoryInterface $commentRepository,
+        private CommentsService $comments,
         private AlbumPhotoStorage $photos,
     ) {
     }
@@ -27,7 +28,7 @@ final readonly class DeletePhotoUseCase
         $this->photos->delete($photo->user_id, (string) $photo->tmb_name);
 
         $this->voteRepository->deleteByPhotoIds([$photo->id]);
-        $this->commentRepository->deleteByPhotoIds([$photo->id]);
+        $this->comments->deleteForSubjects(AlbumCommentSubject::TYPE, [$photo->id]);
         $this->photoRepository->deleteById($photo->id);
     }
 }

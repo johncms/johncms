@@ -12,14 +12,14 @@ use Tests\Support\Fixture;
 use Tests\Support\FunctionalUserFactory;
 
 /**
- * Deleting through the legacy Johncms\Comments class, on the comments of a photo of an album.
+ * Deleting through the legacy Johncms\Comments class, on the guestbook of a profile.
  *
  * Only a POST that carries the CSRF token and the confirmed field of the dialog deletes. A link,
  * the old one with &yes included, and a form sent without the answer change nothing.
  */
 final class LegacyCommentsDeleteTest extends FunctionalTestCase
 {
-    private int $photoId;
+    private int $ownerId;
 
     private User $moderator;
 
@@ -27,9 +27,7 @@ final class LegacyCommentsDeleteTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        $owner = FunctionalUserFactory::create();
-        $albumId = Fixture::insert('cms_album_cat', ['user_id' => $owner->id, 'name' => 'An album', 'access' => 3]);
-        $this->photoId = Fixture::insert('cms_album_files', ['user_id' => $owner->id, 'album_id' => $albumId, 'img_name' => 'photo.jpg', 'access' => 3]);
+        $this->ownerId = FunctionalUserFactory::create()->id;
         $this->moderator = FunctionalUserFactory::createSupervisor();
     }
 
@@ -86,17 +84,17 @@ final class LegacyCommentsDeleteTest extends FunctionalTestCase
         self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
         self::assertFalse($this->commentExists($deleted));
         self::assertTrue($this->commentExists($kept));
-        self::assertSame(1, $this->photoCommentCount());
+        self::assertSame(1, $this->guestbookCommentCount());
     }
 
-    public function testConfirmedPostWithAllDeletesEveryCommentOfTheAuthorUnderThePhoto(): void
+    public function testConfirmedPostWithAllDeletesEveryCommentOfTheAuthorInTheGuestbook(): void
     {
         $authorId = FunctionalUserFactory::create()->id;
         $first = $this->insertComment($authorId);
         $second = $this->insertComment($authorId);
         $ofSomeoneElse = $this->insertComment(FunctionalUserFactory::create()->id);
-        $otherPhotoId = Fixture::insert('cms_album_files', ['user_id' => $authorId, 'album_id' => 0, 'img_name' => 'other.jpg', 'access' => 3]);
-        $underOtherPhoto = $this->insertComment($authorId, $otherPhotoId);
+        $otherOwnerId = FunctionalUserFactory::create()->id;
+        $inOtherGuestbook = $this->insertComment($authorId, $otherOwnerId);
 
         $this->postForm(
             $this->url() . '?mod=del&item=' . $first,
@@ -107,8 +105,8 @@ final class LegacyCommentsDeleteTest extends FunctionalTestCase
         self::assertFalse($this->commentExists($first));
         self::assertFalse($this->commentExists($second));
         self::assertTrue($this->commentExists($ofSomeoneElse));
-        self::assertTrue($this->commentExists($underOtherPhoto));
-        self::assertSame(1, $this->photoCommentCount());
+        self::assertTrue($this->commentExists($inOtherGuestbook));
+        self::assertSame(1, $this->guestbookCommentCount());
     }
 
     public function testListOffersDeletionOnlyAsConfirmedForms(): void
@@ -126,13 +124,13 @@ final class LegacyCommentsDeleteTest extends FunctionalTestCase
 
     private function url(): string
     {
-        return '/album/photo/' . $this->photoId . '/comments';
+        return '/profile/' . $this->ownerId . '/guestbook';
     }
 
-    private function insertComment(int $userId, ?int $photoId = null): int
+    private function insertComment(int $userId, ?int $ownerId = null): int
     {
-        return Fixture::insert('cms_album_comments', [
-            'sub_id'     => $photoId ?? $this->photoId,
+        return Fixture::insert('cms_users_guestbook', [
+            'sub_id'     => $ownerId ?? $this->ownerId,
             'user_id'    => $userId,
             'time'       => time(),
             'text'       => 'A comment',
@@ -143,11 +141,11 @@ final class LegacyCommentsDeleteTest extends FunctionalTestCase
 
     private function commentExists(int $id): bool
     {
-        return Capsule::table('cms_album_comments')->where('id', $id)->exists();
+        return Capsule::table('cms_users_guestbook')->where('id', $id)->exists();
     }
 
-    private function photoCommentCount(): int
+    private function guestbookCommentCount(): int
     {
-        return (int) Capsule::table('cms_album_files')->where('id', $this->photoId)->value('comm_count');
+        return (int) Capsule::table('users')->where('id', $this->ownerId)->value('comm_count');
     }
 }

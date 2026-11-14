@@ -25,4 +25,10 @@ interface CommentSubjectInterface
      * counted beforehand.
      */
     public function commentsChanged(int $id, int $delta): void;
+
+    /**
+     * The current visitor opened the discussion of the object: what the module marks as read for
+     * the owner is read now. Called on every page of the discussion shown.
+     */
+    public function discussionViewed(CommentSubjectDTO $subject): void;
 }

@@ -9,7 +9,6 @@ use Johncms\Modules\Album\Application\Controllers\DownloadPhotoController;
 use Johncms\Modules\Album\Application\Controllers\EditAlbumController;
 use Johncms\Modules\Album\Application\Controllers\EditPhotoController;
 use Johncms\Modules\Album\Application\Controllers\MovePhotoController;
-use Johncms\Modules\Album\Application\Controllers\PhotoCommentsController;
 use Johncms\Modules\Album\Application\Controllers\ShowAlbumController;
 use Johncms\Modules\Album\Application\Controllers\ShowPhotoController;
 use Johncms\Modules\Album\Application\Controllers\SortAlbumController;
@@ -20,6 +19,8 @@ use Johncms\Modules\Album\Application\Controllers\UsersListController;
 use Johncms\Modules\Album\Application\Controllers\VotePhotoController;
 use Johncms\Modules\Album\Application\Middlewares\AuthorizedUserMiddleware;
 use Johncms\Router\RouteCollection;
+use Johncms\Comments\CommentRoutes;
+use Johncms\Modules\Album\Application\Comments\AlbumCommentSubject;
 
 return static function (RouteCollection $router): void {
     // The whole module requires an authenticated user. Routes are kept in
@@ -80,8 +81,8 @@ return static function (RouteCollection $router): void {
         // Photo file download (counts a unique download and redirects to the file).
         $r->get('/album/photo/{img:number}/download', DownloadPhotoController::class)->name('album.photo.download');
 
-        // Photo comments (POST handles adding/replying/deleting comments).
-        $r->map(['GET', 'POST'], '/album/photo/{img:number}/comments', PhotoCommentsController::class)->name('album.photo.comments');
+        // The discussion of a photo: the comments of the core, under the address it always had.
+        CommentRoutes::register($r, '/album/photo/{id:number}/comments', AlbumCommentSubject::TYPE, 'album.photo.comments');
 
         // Single photo viewer (POST handles the password form for protected albums).
         $r->map(['GET', 'POST'], '/album/photo/{img:number}', ShowPhotoController::class)->name('album.photo');

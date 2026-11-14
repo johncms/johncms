@@ -70,4 +70,9 @@ final readonly class DownloadsCommentSubject implements CommentSubjectInterface
     {
         $this->files->changeCommentCount($id, $delta);
     }
+
+    public function discussionViewed(CommentSubjectDTO $subject): void
+    {
+        // Nothing is marked as unread for the owner of a file.
+    }
 }

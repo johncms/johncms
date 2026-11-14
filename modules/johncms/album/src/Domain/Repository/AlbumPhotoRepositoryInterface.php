@@ -134,6 +134,9 @@ interface AlbumPhotoRepositoryInterface
      */
     public function setUnreadComments(int $photoId, bool $unread): void;
 
+    /** Change the number of comments of the photo by the delta, never below zero, in one statement. */
+    public function changeCommentCount(int $photoId, int $delta): void;
+
     /**
      * The photos of a user that have comments their owner has not read.
      */

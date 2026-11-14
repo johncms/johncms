@@ -82,6 +82,7 @@ final readonly class CommentsController
         }
 
         $page = $this->comments->page($object, $pagination->getPerPage(), $pagination->getOffset());
+        $this->comments->viewed($object);
         $meta = new PageMeta(
             sprintf(d__('system', 'Comments: %s'), $object->title),
             $pagination->getCurrentPage(),

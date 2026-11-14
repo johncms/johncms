@@ -86,6 +86,12 @@ final readonly class CommentsService
         return new CommentPageDTO(comments: $comments, canWrite: $refusal === null, refusal: $refusal ?? '');
     }
 
+    /** The current visitor opened the discussion; the module marks what was unread as read. */
+    public function viewed(CommentSubjectDTO $subject): void
+    {
+        $this->subjects->get($subject->type)?->discussionViewed($subject);
+    }
+
     /**
      * The newest comments on every object of the kind the visitor may see, for a feed or a
      * review of the moderator. An object hidden from the visitor leaves its comments out.

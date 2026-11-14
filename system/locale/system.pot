@@ -809,7 +809,7 @@ msgstr ""
 #: system/src/Comments.php:292
 #: system/src/Comments.php:358
 #: system/src/Comments.php:359
-#: system/src/Comments/Controllers/CommentsController.php:167
+#: system/src/Comments/Controllers/CommentsController.php:168
 #: themes/default/templates/components/comments/comment.twig:45
 #: themes/default/templates/components/style-guide/examples/button-states.twig:11
 #: themes/default/templates/components/style-guide/examples/button-states.twig:13
@@ -835,7 +835,7 @@ msgid "seconds"
 msgstr ""
 
 #: system/src/Comments.php:686
-#: system/src/Comments/Application/CommentsService.php:219
+#: system/src/Comments/Application/CommentsService.php:225
 msgid "Message already exists"
 msgstr ""
 
@@ -855,52 +855,52 @@ msgstr ""
 msgid "The owner has added you to the ignore list."
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:212
+#: system/src/Comments/Application/CommentsService.php:218
 #, php-format
 msgid "You cannot write so often. Wait %d seconds."
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:362
+#: system/src/Comments/Application/CommentsService.php:368
 msgid "Enter the comment text"
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:366
+#: system/src/Comments/Application/CommentsService.php:372
 #, php-format
 msgid "The comment is too long: at most %d characters."
 msgstr ""
 
-#: system/src/Comments/Controllers/CommentsController.php:86
+#: system/src/Comments/Controllers/CommentsController.php:87
 #, php-format
 msgid "Comments: %s"
 msgstr ""
 
-#: system/src/Comments/Controllers/CommentsController.php:116
-#: system/src/Comments/Controllers/CommentsController.php:288
+#: system/src/Comments/Controllers/CommentsController.php:117
+#: system/src/Comments/Controllers/CommentsController.php:289
 #: system/src/Users/Bans/BanKind.php:33
 #: themes/default/templates/pages/comments.twig:33
 msgid "Comments"
 msgstr ""
 
-#: system/src/Comments/Controllers/CommentsController.php:160
+#: system/src/Comments/Controllers/CommentsController.php:161
 msgid "The comment was saved"
 msgstr ""
 
-#: system/src/Comments/Controllers/CommentsController.php:170
 #: system/src/Comments/Controllers/CommentsController.php:171
+#: system/src/Comments/Controllers/CommentsController.php:172
 msgid "Edit comment"
 msgstr ""
 
-#: system/src/Comments/Controllers/CommentsController.php:193
+#: system/src/Comments/Controllers/CommentsController.php:194
 msgid "The comment was deleted"
 msgstr ""
 
-#: system/src/Comments/Controllers/CommentsController.php:210
+#: system/src/Comments/Controllers/CommentsController.php:211
 #, php-format
 msgid "%d comment was deleted"
 msgid_plural "%d comments were deleted"
 msgstr[0] ""
 
-#: system/src/Comments/Controllers/CommentsController.php:258
+#: system/src/Comments/Controllers/CommentsController.php:259
 msgid "The comment was added"
 msgstr ""
 
