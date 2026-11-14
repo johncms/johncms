@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Collections;
 
+use Johncms\Comments\Domain\CommentRepositoryInterface;
+use Johncms\Modules\News\Application\Comments\NewsCommentSubject;
 use Johncms\Auth\CurrentUser;
 use Johncms\Content\ContentRendererInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface;
@@ -28,6 +30,9 @@ final readonly class NewsViewMapper implements NewsViewMapperInterface
         private NewsCollectionOwnerUrls $urls,
         private NewsConfigRepositoryInterface $settings,
         private NewsDiscussionRepositoryInterface $discussion,
+        // The repository, not the service: the service knows the subjects, and the subject of the
+        // news reads its articles through this mapper.
+        private CommentRepositoryInterface $comments,
         private UserRepositoryInterface $users,
         private CurrentUser $user,
         private DateFormatterInterface $dates,
@@ -49,6 +54,8 @@ final readonly class NewsViewMapper implements NewsViewMapperInterface
         $urls = $this->urls->itemUrls($collection, $items);
         $authors = $this->users->findMany(array_values(array_unique(array_filter(array_map(static fn (CollectionItemDTO $item): ?int => $item->createdBy, $items)))));
         $stats = $this->discussion->stats($ids, $this->user->id());
+        $commentCounts = $this->comments->countBySubjects(NewsCommentSubject::TYPE, $ids);
+        $noVotes = new NewsDiscussionStats();
         $settings = $this->settings->getSettings();
         $result = [];
         foreach ($items as $item) {
@@ -70,7 +77,11 @@ final readonly class NewsViewMapper implements NewsViewMapperInterface
                     rightsName: $author->rights_name,
                     joinedAt:   $author->datereg,
                 ) : null,
-                $stats[$item->id] ?? new NewsDiscussionStats(),
+                new NewsDiscussionStats(
+                    comments:    $commentCounts[$item->id] ?? 0,
+                    rating:      ($stats[$item->id] ?? $noVotes)->rating,
+                    currentVote: ($stats[$item->id] ?? $noVotes)->currentVote,
+                ),
                 $this->content->toPlainText($text('meta_title') ?: ($template('article_title') ?: $item->name)),
                 $this->content->toPlainText($text('meta_description') ?: $template('article_meta_description'))
                     ?: ($this->content->toPlainText($item->previewText ?? '') ?: $this->content->toPlainText($item->detailText ?? '')),

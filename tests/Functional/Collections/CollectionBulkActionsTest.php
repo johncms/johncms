@@ -300,12 +300,12 @@ final class CollectionBulkActionsTest extends FunctionalTestCase
         foreach (['first', 'second'] as $code) {
             $id = $this->items->addItem(new CollectionItemFormDTO($news->id, null, $code, $code, false, null, null, 100, null, null, []));
             $ids[] = $id;
-            Fixture::insert('news_comments', ['article_id' => null, 'item_id' => $id, 'text' => 'Comment', 'user_data' => '{}', 'created_at' => '2026-01-01 12:00:00']);
+            Fixture::insert('comments', ['subject_type' => 'news', 'subject_id' => $id, 'user_id' => 0, 'text' => 'Comment', 'author_name' => '', 'created_at' => '2026-01-01 12:00:00']);
             Fixture::insert('news_votes', ['article_id' => null, 'item_id' => $id, 'user_id' => 100, 'vote' => 1]);
         }
         $preview = $this->bulk->preview($news->id, $ids, 'delete');
         self::assertSame(2, $this->bulk->execute($news->id, $ids, 'delete', $preview->revision));
-        self::assertSame(0, Capsule::table('news_comments')->whereIn('item_id', $ids)->count());
+        self::assertSame(0, Capsule::table('comments')->where('subject_type', 'news')->whereIn('subject_id', $ids)->count());
         self::assertSame(0, Capsule::table('news_votes')->whereIn('item_id', $ids)->count());
     }
 

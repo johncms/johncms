@@ -10,7 +10,7 @@
                     <div class="site-content-card__preview">{{ article.preview_text_safe }}</div>
                 {% endif %}
                 <div class="site-news-meta">
-                    <a class="site-news-meta__item" href="{{ article.url }}#article-comments" aria-label="{{ d__('news', 'Comments') }}: {{ article.comments_count|format_number }}" title="{{ d__('news', 'Comments') }}">
+                    <a class="site-news-meta__item" href="{{ article.url }}#comments" aria-label="{{ d__('news', 'Comments') }}: {{ article.comments_count|format_number }}" title="{{ d__('news', 'Comments') }}">
                         {% include '@theme/components/icon.twig' with {name: 'message-square', size: 11} only %}
                         {{ article.comments_count|format_number }}
                     </a>

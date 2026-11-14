@@ -6,27 +6,32 @@ namespace Johncms\Comments;
 
 /**
  * The kinds of object the modules let visitors discuss, collected from what they tagged.
+ *
+ * The subjects are built on the first question, not with this service: a subject may itself
+ * depend, through its module, on a service that deletes comments.
  */
-final readonly class CommentSubjects
+final class CommentSubjects
 {
-    /** @var array<string, CommentSubjectInterface> */
-    private array $subjects;
+    /** @var array<string, CommentSubjectInterface>|null */
+    private ?array $subjects = null;
 
     /**
-     * @param iterable<CommentSubjectInterface> $subjects
+     * @param iterable<CommentSubjectInterface> $tagged
      */
-    public function __construct(iterable $subjects)
+    public function __construct(private readonly iterable $tagged)
     {
-        $byType = [];
-        foreach ($subjects as $subject) {
-            $byType[$subject->type()] = $subject;
-        }
-        $this->subjects = $byType;
     }
 
     /** Null when no module that is switched on declares the kind. */
     public function get(string $type): ?CommentSubjectInterface
     {
+        if ($this->subjects === null) {
+            $this->subjects = [];
+            foreach ($this->tagged as $subject) {
+                $this->subjects[$subject->type()] = $subject;
+            }
+        }
+
         return $this->subjects[$type] ?? null;
     }
 }

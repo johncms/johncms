@@ -22,7 +22,6 @@ use Johncms\Modules\Collections\Application\Exceptions\CollectionSectionFormExce
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\News\Application\DTO\NewsLegacyImportReportDTO;
 use Johncms\Modules\News\Application\Exceptions\NewsLegacyImportException;
-use Johncms\Modules\News\Domain\Repository\NewsDiscussionRepositoryInterface;
 use Johncms\Modules\News\Domain\Repository\NewsLegacyRepositoryInterface;
 use Johncms\Updates\SystemOperationContext;
 use JsonException;
@@ -39,7 +38,6 @@ final readonly class NewsLegacyImporter
         private CollectionItemRelationsApiInterface $relations,
         private CollectionFileReferencesApiInterface $itemFiles,
         private FileStore $files,
-        private NewsDiscussionRepositoryInterface $discussion,
         private NewsCollectionOwnerUrls $urls,
         private SystemOperationContext $context,
     ) {
@@ -172,7 +170,7 @@ final readonly class NewsLegacyImporter
                             }
                             $expectedFiles[] = $fileId;
                             $owned = $this->files->filterIdsInDirectory([$fileId], 'news') !== [] || $this->files->filterIdsInDirectory([$fileId], 'news_comments') !== [];
-                            $this->itemFiles->registerExisting($collection->id, $id, [$fileId], $owned && ! $this->discussion->referencesFile($fileId));
+                            $this->itemFiles->registerExisting($collection->id, $id, [$fileId], $owned && ! $this->legacy->commentsReferenceFile($fileId));
                         }
                         sort($expectedFiles);
                         if ($this->itemFiles->registeredFileIds($collection->id, $id) !== $expectedFiles) {

@@ -18,7 +18,7 @@ final readonly class NewsStorageUpdater
         private NewsLegacyImporter $importer,
         private NewsLegacyStorageRepositoryInterface $legacy,
         private ConnectionInterface $db,
-        private NewsDiscussionFiles $files,
+        private NewsLegacyFileCleanup $files,
         private CollectionLookupApiInterface $lookup,
         private CollectionsImportApiInterface $import,
         private SystemOperationContext $context,
@@ -47,12 +47,13 @@ final readonly class NewsStorageUpdater
                 $this->context->report($line);
             }
         }
+        $this->legacy->moveDiscussionsToCore();
         $this->legacy->removeOrphanDiscussions();
         $collection = $this->lookup->findDeclared(NewsCollectionDeclaration::OWNER, NewsCollectionDeclaration::KEY)
             ?? throw new LogicException('Synchronize the news declaration before updating storage.');
         while (($ids = $this->legacy->pendingFiles()) !== []) {
             foreach ($ids as $id) {
-                $this->files->cleanup([$id], $collection->id);
+                $this->files->cleanup($id, $collection->id);
                 $this->legacy->acknowledgeFile($id);
             }
         }

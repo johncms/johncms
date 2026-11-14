@@ -15,7 +15,6 @@ namespace Johncms\Http;
 use Johncms\EditorUploads\EditorUploads;
 use Johncms\Files\StoredFileDTO;
 use Johncms\Image\EditorImageUploadException;
-use Johncms\Image\StoreEditorImageUseCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,9 +24,7 @@ use Throwable;
  * The HTTP half of an upload from the text editor: reading the file out of the request and
  * answering in the shape the editor expects.
  *
- * A controller is left with what is its own — who may upload here, and into which directory.
- * The four editors of the site used to carry a copy of this each, and they had drifted: one of
- * them checked the ban of the visitor, another swallowed the reason an upload failed.
+ * A controller is left with what is its own: who may upload here, and for which kind of record.
  *
  * The failure of an upload is answered with 200 and an `error.message` on purpose: that is the
  * field the editor puts in front of the visitor, and a status of its own would only lose it.
@@ -38,7 +35,6 @@ final readonly class EditorImageUploadResponder
     private const string FIELD = 'upload';
 
     public function __construct(
-        private StoreEditorImageUseCase $storeEditorImage,
         private EditorUploads $editorUploads,
         private UploadedFileMapper $uploadedFileMapper,
         private UploadLimits $uploadLimits,
@@ -47,21 +43,8 @@ final readonly class EditorImageUploadResponder
     }
 
     /**
-     * @param string $directory Directory of the disk to store under, e.g. `forum_files`.
-     * @param string $module Name of the module, for the log of a failure.
-     */
-    public function store(Request $request, string $directory, string $module): JsonResponse
-    {
-        return $this->respond(
-            $request,
-            fn(UploadedFileDTO $upload): StoredFileDTO => $this->storeEditorImage->execute($upload, $directory),
-            ['module' => $module, 'directory' => $directory]
-        );
-    }
-
-    /**
-     * The same for a record whose pictures EditorUploads tracks: the upload is registered as the
-     * user's, counted against their limit, and taken by the record when its form is sent.
+     * Store the picture for a record whose pictures EditorUploads tracks: the upload is registered
+     * as the user's, counted against their limit, and taken by the record when its form is sent.
      *
      * @param string $ownerType The type an EditorUploadConsumerInterface declared, e.g. `comment`.
      */

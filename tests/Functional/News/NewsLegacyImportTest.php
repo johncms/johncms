@@ -9,7 +9,7 @@ use Johncms\Files\FileStore;
 use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer;
 use Johncms\Modules\Collections\Application\Services\CollectionItemFiles;
-use Johncms\Modules\News\Application\Collections\NewsDiscussionFiles;
+use Johncms\Modules\News\Application\Collections\NewsLegacyFileCleanup;
 use Johncms\Modules\News\Application\Collections\NewsLegacyImporter;
 use Johncms\Modules\News\Application\Collections\NewsReadServiceInterface;
 use Johncms\Modules\News\Application\DTO\NewsLegacyImportReportDTO;
@@ -140,7 +140,7 @@ final class NewsLegacyImportTest extends FunctionalTestCase
         $this->article(code: 'Kept', attributes: ['text' => '<img src="' . $url . '">']);
         $report = $this->runImport();
         self::assertSame([$file], array_map(intval(...), Capsule::table('news_legacy_cleanup_files')->pluck('file_id')->all()));
-        $this->container()->get(NewsDiscussionFiles::class)->cleanup([$file], $this->container()->get(NewsReadServiceInterface::class)->collection()->id);
+        $this->container()->get(NewsLegacyFileCleanup::class)->cleanup($file, $this->container()->get(NewsReadServiceInterface::class)->collection()->id);
         self::assertSame(1, Capsule::table('files')->where('id', $file)->count());
         self::assertSame(array_values($report->articles), array_map(intval(...), Capsule::table('collection_file_links')->where('file_id', $file)->pluck('item_id')->all()));
     }
@@ -197,7 +197,7 @@ final class NewsLegacyImportTest extends FunctionalTestCase
         self::assertSame(0, (int) Capsule::table('collection_file_assets')->where('file_id', $file)->value('managed'));
         Capsule::table('news_comments')->where('id', $comment)->delete();
         $collection = $this->container()->get(CollectionsApiInterface::class)->getItem($report->articles[$article])->collectionId;
-        $this->container()->get(NewsDiscussionFiles::class)->cleanup([$file], $collection);
+        $this->container()->get(NewsLegacyFileCleanup::class)->cleanup($file, $collection);
         self::assertSame(1, (int) Capsule::table('collection_file_assets')->where('file_id', $file)->value('managed'));
         self::assertSame(1, Capsule::table('files')->where('id', $file)->count());
     }

@@ -1776,3 +1776,6 @@ msgstr "Написать комментарий"
 
 msgid "You are not logged in. You must be <a href=\"/login/\">logged in</a> to comment."
 msgstr "Вы не авторизованы. Чтобы комментировать, нужно <a href=\"/login/\">войти</a>."
+
+msgid "Quote"
+msgstr "Цитата"

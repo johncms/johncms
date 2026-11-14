@@ -122,8 +122,15 @@ final class BanEnforcementTest extends FunctionalTestCase
     public function testAMemberBannedFromTheCommentsUploadsNoPictureForOne(): void
     {
         $member = FunctionalUserFactory::create();
+        $article = Fixture::insert('library_texts', [
+            'cat_id'      => Fixture::insert('library_cats', ['name' => 'A shelf']),
+            'name'        => 'An article',
+            'text'        => 'Body',
+            'premod'      => 1,
+            'comments'    => 1,
+        ]);
         $upload = fn (): int => $this->handleRequest(
-            '/news/comments/upload_file',
+            '/library/article/' . $article . '/comments/upload',
             'POST',
             $this->withCsrfToken(),
             cookies: $this->actingAs($member)

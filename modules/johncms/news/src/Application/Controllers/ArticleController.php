@@ -5,16 +5,14 @@ declare(strict_types=1);
 namespace Johncms\Modules\News\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Comments\Application\CommentDiscussionView;
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Http\PageMeta;
-use Johncms\Http\Pagination\PaginationFactory;
-use Johncms\Http\Pagination\Pagination;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Http\Request;
-use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Modules\News\Application\Collections\NewsDiscussionServiceInterface;
 use Johncms\Modules\News\Application\Collections\NewsReadServiceInterface;
+use Johncms\Modules\News\Application\Comments\NewsCommentSubject;
 use Johncms\Modules\News\Application\DTO\NewsArticleViewDTO;
 use Johncms\Modules\News\Application\DTO\NewsQueryDTO;
 use Johncms\Modules\News\Application\Exceptions\NewsItemNotFoundException;
@@ -34,10 +32,9 @@ final readonly class ArticleController
         private NewsReadServiceInterface $news,
         private NavChain $navChain,
         private AccessCheckerInterface $access,
-        private NewsDiscussionServiceInterface $discussion,
-        private PaginationFactory $paginationFactory,
+        private NewsCommentSubject $commentSubject,
+        private CommentDiscussionView $discussion,
         private PaginationGuard $paginationGuard,
-        private Session $session,
     ) {
     }
 
@@ -48,16 +45,18 @@ final readonly class ArticleController
         } catch (NewsItemNotFoundException) {
             throw new PageNotFoundException();
         }
-        $pagination = $this->paginationFactory->create(total: $article->stats->comments, fragment: 'article-comments');
+        $subject = $this->commentSubject->forArticle($article);
+        $pagination = $this->discussion->pagination($subject);
         $redirect = $this->paginationGuard->redirectUrl($pagination);
         if ($redirect !== null) {
             redirect($redirect);
         }
         $metadata = $article->metadata();
         $meta = new PageMeta($metadata['title'], $pagination->getCurrentPage(), $metadata['description']);
+        $discussion = $this->discussion->data($subject, $pagination) + ['titled' => true];
         // The live list asks for a page of the discussion: the article is not viewed again.
         if ($request->isXmlHttpRequest()) {
-            return new ViewResponse('@news/public/comments-live.twig', ['title' => $meta->title] + $this->discussionData($article, $pagination));
+            return new ViewResponse('@news/public/comments-live.twig', ['title' => $meta->title, 'discussion' => $discussion]);
         }
 
         $this->navChain->add(d__('news', 'News'), '/news/');
@@ -82,34 +81,7 @@ final readonly class ArticleController
             'edit_url' => $this->access->allows(NewsPermissions::MANAGE)
                 ? '/admin/collections/' . $article->record->collectionId . '/items/' . $article->record->id . '/edit'
                 : null,
-            'can_write' => $this->access->allows(NewsPermissions::COMMENTS_POST),
-        ] + $this->discussionData($article, $pagination));
-    }
-
-    /**
-     * The comments of the requested page and the result of the last action on them: the article
-     * renders them, the live list swaps them.
-     *
-     * @return array<string, mixed>
-     */
-    private function discussionData(NewsArticleViewDTO $article, Pagination $pagination): array
-    {
-        return [
-            'article_id' => $article->record->id,
-            'comments' => $article->stats->comments > 0
-                ? $this->discussion->articleComments($article, $pagination->getPerPage(), $pagination->getOffset())
-                : [],
-            'comments_total' => $article->stats->comments,
-            'comments_offset' => $pagination->getOffset(),
-            'comments_page' => $pagination->getCurrentPage(),
-            'comments_pagination' => $pagination->hasPages() ? $pagination->render() : null,
-            'comment_message' => $this->session->getFlash(CommentsController::MESSAGE),
-            'comment_error' => $this->session->getFlash(CommentsController::ERROR),
-            'comment_delete_error' => $this->session->getFlash(CommentsController::DELETE_ERROR),
-            'comment_added' => $this->session->getFlash(CommentsController::ADDED),
-            // The live list keeps the text in the editor, yet the flash is read so that it is not
-            // put back into the form of the next page.
-            'comment_text' => $this->session->getFlash(CommentsController::TEXT) ?? '',
-        ];
+            'discussion' => $discussion,
+        ]);
     }
 }

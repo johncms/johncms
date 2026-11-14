@@ -1,31 +1,10 @@
 {#
-    The regions of the discussion, as the live list asks for them: each replaces the region of the
-    same name on the article page, and the title follows the page of comments. A fragment, so it
-    extends nothing.
+    The regions of the discussion, as the live list asks for them: those of the core, and the
+    number of comments in the header of the article, which follows a comment added or deleted.
+    A fragment, so it extends nothing.
 
-    @var title               string Title of the page, without the site name.
-    @var article_id          int
-    @var comments            list<NewsCommentViewDTO>
-    @var comments_total      int
-    @var comments_offset     int
-    @var comments_page       int
-    @var comments_pagination \Twig\Markup|null
-    @var comment_message     string|null
-    @var comment_error       string|null
-    @var comment_added       int|null
-    @var comment_delete_error string|null
+    @var title      string Title of the page, without the site name.
+    @var discussion array  The variables of the discussion (CommentDiscussionView).
 #}
-<title>{% include '@theme/components/document-title.twig' with {title: title} only %}</title>
-{% include '@news/public/components/comments-feed.twig' with {
-    article_id: article_id,
-    comments: comments,
-    total: comments_total,
-    offset: comments_offset,
-    page: comments_page,
-    pagination: comments_pagination,
-    message: comment_message,
-    added: comment_added,
-    delete_error: comment_delete_error,
-} only %}
-{% include '@news/public/components/comment-error.twig' with {error: comment_error} only %}
-{% include '@news/public/components/comments-stat.twig' with {count: comments_total} only %}
+{% include '@theme/pages/comments-live.twig' with discussion|merge({title: title}) only %}
+{% include '@news/public/components/comments-stat.twig' with {count: discussion.total} only %}

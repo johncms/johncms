@@ -30,6 +30,8 @@ final class CommentFeedTest extends FunctionalTestCase
 
     private string $albumComment = '';
 
+    private string $newsComment = '';
+
     protected function tearDown(): void
     {
         if ($this->storedFile !== null) {
@@ -48,7 +50,7 @@ final class CommentFeedTest extends FunctionalTestCase
         $page = $this->pageOf('/admin/comments', FunctionalUserFactory::createSupervisor());
 
         self::assertSame(
-            ['/news/opening.html#article-comments', $this->albumComment, $this->libraryComment, $this->downloadComment],
+            [$this->newsComment, $this->albumComment, $this->libraryComment, $this->downloadComment],
             $this->listed($page)
         );
     }
@@ -87,7 +89,7 @@ final class CommentFeedTest extends FunctionalTestCase
         $page = $this->pageOf('/admin', FunctionalUserFactory::createSupervisor());
 
         self::assertSame(
-            ['/news/opening.html#article-comments', $this->albumComment, $this->libraryComment, $this->downloadComment],
+            [$this->newsComment, $this->albumComment, $this->libraryComment, $this->downloadComment],
             $this->listed($page)
         );
         self::assertNotNull($page->querySelector('a[href="/admin/comments"]'));
@@ -148,12 +150,15 @@ final class CommentFeedTest extends FunctionalTestCase
         $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer::class)->synchronize();
         $collection = $this->container()->get(\Johncms\Modules\News\Application\Collections\NewsReadServiceInterface::class)->collection()->id;
         $article = Fixture::insert('collection_items', ['collection_id' => $collection, 'name' => 'Opening', 'code' => 'opening']);
-        Fixture::insert('news_comments', [
-            'item_id' => $article,
-            'user_id'    => 0,
-            'text'       => 'A comment',
-            'created_at' => date('Y-m-d H:i:s', $now - 3600),
+        $newsComment = Fixture::insert('comments', [
+            'subject_type' => 'news',
+            'subject_id'   => $article,
+            'user_id'      => 0,
+            'text'         => 'A comment',
+            'author_name'  => 'Guest',
+            'created_at'   => gmdate('Y-m-d H:i:s', $now - 3600),
         ]);
+        $this->newsComment = '/news/comments/' . $article . '/comment/' . $newsComment;
     }
 
     /** A published article of the library: its comments are listed while it can be seen. */

@@ -409,9 +409,10 @@ msgid "This is the only way to sign in to the account. Set a password first."
 msgstr ""
 
 #: system/src/Auth/Impersonation/ImpersonationManager.php:162
-#: system/src/Comments/Application/CommentAccess.php:102
-#: system/src/Comments/Application/CommentAccess.php:121
-#: system/src/Http/EditorImageUploadResponder.php:120
+#: system/src/Comments/Application/CommentAccess.php:105
+#: system/src/Comments/Application/CommentAccess.php:137
+#: system/src/Comments/Application/CommentAccess.php:147
+#: system/src/Http/EditorImageUploadResponder.php:103
 #: system/src/Http/ExceptionResponseFactory.php:128
 #: themes/default/templates/components/style-guide/examples/messages.twig:11
 #: themes/default/templates/components/style-guide/examples/toasts.twig:6
@@ -765,80 +766,81 @@ msgstr ""
 msgid "The check could not be completed. See the application log for details and run the check again."
 msgstr ""
 
-#: system/src/Comments/Application/CommentAccess.php:55
+#: system/src/Comments/Application/CommentAccess.php:58
 msgid "Sign in to write a comment."
 msgstr ""
 
-#: system/src/Comments/Application/CommentAccess.php:58
+#: system/src/Comments/Application/CommentAccess.php:61
 msgid "The comments are closed."
 msgstr ""
 
-#: system/src/Comments/Application/CommentAccess.php:61
+#: system/src/Comments/Application/CommentAccess.php:64
 msgid "You are banned and cannot write comments here."
 msgstr ""
 
-#: system/src/Comments/Application/CommentAccess.php:64
+#: system/src/Comments/Application/CommentAccess.php:67
 msgid "The owner has added you to the ignore list."
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:223
+#: system/src/Comments/Application/CommentsService.php:234
 #, php-format
 msgid "You cannot write so often. Wait %d seconds."
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:230
+#: system/src/Comments/Application/CommentsService.php:241
 msgid "Message already exists"
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:379
+#: system/src/Comments/Application/CommentsService.php:394
 msgid "Enter the comment text"
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:383
+#: system/src/Comments/Application/CommentsService.php:398
 #, php-format
 msgid "The comment is too long: at most %d characters."
 msgstr ""
 
-#: system/src/Comments/Controllers/CommentsController.php:87
+#: system/src/Comments/Controllers/CommentsController.php:86
 #, php-format
 msgid "Comments: %s"
 msgstr ""
 
-#: system/src/Comments/Controllers/CommentsController.php:117
-#: system/src/Comments/Controllers/CommentsController.php:289
+#: system/src/Comments/Controllers/CommentsController.php:102
+#: system/src/Comments/Controllers/CommentsController.php:277
 #: system/src/Users/Bans/BanKind.php:33
-#: themes/default/templates/pages/comments.twig:33
+#: themes/default/templates/components/comments/discussion.twig:21
+#: themes/default/templates/components/comments/feed.twig:20
 msgid "Comments"
 msgstr ""
 
-#: system/src/Comments/Controllers/CommentsController.php:161
+#: system/src/Comments/Controllers/CommentsController.php:149
 msgid "The comment was saved"
 msgstr ""
 
-#: system/src/Comments/Controllers/CommentsController.php:168
-#: themes/default/templates/components/comments/comment.twig:45
+#: system/src/Comments/Controllers/CommentsController.php:156
+#: themes/default/templates/components/comments/comment.twig:51
 #: themes/default/templates/components/style-guide/examples/button-states.twig:11
 #: themes/default/templates/components/style-guide/examples/button-states.twig:13
 #: themes/default/templates/components/style-guide/examples/controls.twig:12
 msgid "Edit"
 msgstr ""
 
-#: system/src/Comments/Controllers/CommentsController.php:171
-#: system/src/Comments/Controllers/CommentsController.php:172
+#: system/src/Comments/Controllers/CommentsController.php:159
+#: system/src/Comments/Controllers/CommentsController.php:160
 msgid "Edit comment"
 msgstr ""
 
-#: system/src/Comments/Controllers/CommentsController.php:194
+#: system/src/Comments/Controllers/CommentsController.php:182
 msgid "The comment was deleted"
 msgstr ""
 
-#: system/src/Comments/Controllers/CommentsController.php:211
+#: system/src/Comments/Controllers/CommentsController.php:199
 #, php-format
 msgid "%d comment was deleted"
 msgid_plural "%d comments were deleted"
 msgstr[0] ""
 
-#: system/src/Comments/Controllers/CommentsController.php:259
+#: system/src/Comments/Controllers/CommentsController.php:247
 msgid "The comment was added"
 msgstr ""
 
@@ -1001,12 +1003,12 @@ msgstr ""
 msgid "Style guide"
 msgstr ""
 
-#: system/src/Http/EditorImageUploadResponder.php:90
+#: system/src/Http/EditorImageUploadResponder.php:73
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionUploadController.php:37
 msgid "The file is too large for the server to accept"
 msgstr ""
 
-#: system/src/Http/EditorImageUploadResponder.php:91
+#: system/src/Http/EditorImageUploadResponder.php:74
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionBulkAdminController.php:42
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionFilesController.php:24
 #: modules/johncms/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:410
@@ -1017,7 +1019,7 @@ msgstr ""
 msgid "Wrong data"
 msgstr ""
 
-#: system/src/Http/EditorImageUploadResponder.php:105
+#: system/src/Http/EditorImageUploadResponder.php:88
 #: system/src/Image/StoreEditorImageUseCase.php:118
 #: system/src/Image/StoreEditorImageUseCase.php:139
 #: system/src/Image/StoreEditorImageUseCase.php:191
@@ -1331,13 +1333,17 @@ msgstr ""
 msgid "Reply"
 msgstr ""
 
-#: themes/default/templates/components/comments/comment.twig:50
+#: themes/default/templates/components/comments/comment.twig:46
+msgid "Quote"
+msgstr ""
+
+#: themes/default/templates/components/comments/comment.twig:56
 msgid "Delete this comment?"
 msgstr ""
 
-#: themes/default/templates/components/comments/comment.twig:50
-#: themes/default/templates/components/comments/comment.twig:54
-#: themes/default/templates/components/comments/comment.twig:61
+#: themes/default/templates/components/comments/comment.twig:56
+#: themes/default/templates/components/comments/comment.twig:60
+#: themes/default/templates/components/comments/comment.twig:67
 #: themes/default/templates/components/style-guide/examples/button-states.twig:22
 #: themes/default/templates/components/style-guide/examples/confirm.twig:3
 #: themes/default/templates/components/style-guide/examples/confirm.twig:4
@@ -1345,21 +1351,35 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: themes/default/templates/components/comments/comment.twig:60
+#: themes/default/templates/components/comments/comment.twig:66
 msgid "Delete %d comment of %s here?"
 msgid_plural "Delete all %d comments of %s here?"
 msgstr[0] ""
 
-#: themes/default/templates/components/comments/comment.twig:66
+#: themes/default/templates/components/comments/comment.twig:72
 msgid "All of the author"
 msgstr ""
 
-#: themes/default/templates/components/comments/feed.twig:18
+#: themes/default/templates/components/comments/discussion.twig:36
+#: themes/default/templates/components/comments/discussion.twig:43
+#: themes/default/templates/components/comments/discussion.twig:45
+msgid "Write a comment"
+msgstr ""
+
+#: themes/default/templates/components/comments/discussion.twig:53
+msgid "Send"
+msgstr ""
+
+#: themes/default/templates/components/comments/discussion.twig:63
+msgid "You are not logged in. You must be <a href=\"/login/\">logged in</a> to comment."
+msgstr ""
+
+#: themes/default/templates/components/comments/feed.twig:25
 msgid "%d comment"
 msgid_plural "%d comments"
 msgstr[0] ""
 
-#: themes/default/templates/components/comments/feed.twig:24
+#: themes/default/templates/components/comments/feed.twig:32
 msgid "No comments yet. Be the first."
 msgstr ""
 
@@ -1870,20 +1890,6 @@ msgstr ""
 
 #: themes/default/templates/layouts/default.twig:66
 msgid "Scroll page"
-msgstr ""
-
-#: themes/default/templates/pages/comments.twig:47
-#: themes/default/templates/pages/comments.twig:54
-#: themes/default/templates/pages/comments.twig:56
-msgid "Write a comment"
-msgstr ""
-
-#: themes/default/templates/pages/comments.twig:64
-msgid "Send"
-msgstr ""
-
-#: themes/default/templates/pages/comments.twig:74
-msgid "You are not logged in. You must be <a href=\"/login/\">logged in</a> to comment."
 msgstr ""
 
 #: themes/default/templates/pages/external-auth-profile.twig:18

@@ -13,8 +13,24 @@ use Johncms\Modules\News\Domain\Repository\NewsLegacyStorageRepositoryInterface;
 
 final readonly class SqlNewsLegacyStorageRepository implements NewsLegacyStorageRepositoryInterface
 {
-    public function __construct(private ConnectionInterface $db, private SchemaInterface $schema, private NewsLegacyRepositoryInterface $legacy)
+    public function __construct(
+        private ConnectionInterface $db,
+        private SchemaInterface $schema,
+        private NewsLegacyRepositoryInterface $legacy,
+        private SqlNewsCommentsToCore $commentsToCore,
+    ) {
+    }
+
+    public function moveDiscussionsToCore(): void
     {
+        if ($this->schema->hasTable('news_comments')) {
+            $this->db->transaction(fn() => $this->commentsToCore->move());
+        }
+    }
+
+    public function isHeldByComment(int $fileId): bool
+    {
+        return $this->db->selectOne("SELECT id FROM editor_uploads WHERE file_id = ? AND owner_type = 'comment'", [$fileId]) !== null;
     }
 
     public function prepare(): void
@@ -47,6 +63,11 @@ final readonly class SqlNewsLegacyStorageRepository implements NewsLegacyStorage
 
     public function removeOrphanDiscussions(): void
     {
+        if (! $this->schema->hasTable('news_comments')) {
+            $this->db->execute('DELETE FROM news_votes WHERE item_id IS NULL');
+
+            return;
+        }
         $this->db->transaction(function (): void {
             $files = [];
             foreach ($this->db->select('SELECT attached_files FROM news_comments WHERE item_id IS NULL') as $row) {
@@ -81,18 +102,17 @@ final readonly class SqlNewsLegacyStorageRepository implements NewsLegacyStorage
 
     public function dropLegacySchema(): void
     {
-        foreach (['news_comments', 'news_votes'] as $table) {
-            if (! $this->schema->hasColumn($table, 'article_id')) {
-                continue;
-            }
-            $hasUnique = $table === 'news_votes' && $this->schema->hasIndex($table, 'article_user');
-            $hasIndex = $this->schema->hasIndex($table, $table . '_article_id_index');
-            $this->schema->alter($table, static function (TableDefinition $definition) use ($table, $hasUnique, $hasIndex): void {
+        // Its comments are in the core by now, the ones of no article removed.
+        $this->schema->dropIfExists('news_comments');
+        if ($this->schema->hasColumn('news_votes', 'article_id')) {
+            $hasUnique = $this->schema->hasIndex('news_votes', 'article_user');
+            $hasIndex = $this->schema->hasIndex('news_votes', 'news_votes_article_id_index');
+            $this->schema->alter('news_votes', static function (TableDefinition $definition) use ($hasUnique, $hasIndex): void {
                 if ($hasUnique) {
                     $definition->dropUnique('article_user');
                 }
                 if ($hasIndex) {
-                    $definition->dropIndex($table . '_article_id_index');
+                    $definition->dropIndex('news_votes_article_id_index');
                 }
                 $definition->dropColumn('article_id');
             });

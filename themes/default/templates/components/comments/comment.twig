@@ -17,16 +17,16 @@
     <div class="site-comment__main">
         <header class="site-comment__header">
             {% if author %}
-                <a class="site-comment__name" href="{{ profile_url(author.id) }}">{{ name }}</a>
+                <a class="site-comment__name" href="{{ profile_url(author.id) }}" data-comment-author>{{ name }}</a>
             {% else %}
-                <span class="site-comment__name">{{ name }}</span>
+                <span class="site-comment__name" data-comment-author>{{ name }}</span>
             {% endif %}
             {% if author and author.rightsName %}<span class="site-comment__role">{{ author.rightsName }}</span>{% endif %}
-            <time class="site-comment__date">{{ comment.createdAt }}</time>
+            <time class="site-comment__date" data-comment-date>{{ comment.createdAt }}</time>
             {# A feed of the latest comments knows no position: the link still leads to the comment. #}
             <a class="site-comment__anchor" href="{{ subject.discussionUrl }}/comment/{{ comment.id }}">#{{ comment.number ?: '' }}</a>
         </header>
-        <div class="site-comment__body ck-content">{{ comment.text }}</div>
+        <div class="site-comment__body ck-content" data-comment-body>{{ comment.text }}</div>
         {% if comment.editCount > 0 %}
             <div class="site-comment__status">
                 {{ d__('system', 'Edited by %s, %s')|format(comment.editorName, comment.editedAt) }}{% if comment.editCount > 1 %} [{{ comment.editCount }}]{% endif %}
@@ -39,6 +39,12 @@
                         <a class="btn btn-outline-secondary btn-xs" href="#comment-form" data-editor-reply="{{ name }}">
                             {% include '@theme/components/icon.twig' with {name: 'message-square', size: 12} only %} {{ d__('system', 'Reply') }}
                         </a>
+                    {% endif %}
+                    {% if can_reply %}
+                        {# Shown by the script once the editor of the form is ready. #}
+                        <button type="button" class="btn btn-outline-secondary btn-xs" data-comment-quote hidden>
+                            {% include '@theme/components/icon.twig' with {name: 'quote', size: 12} only %} {{ d__('system', 'Quote') }}
+                        </button>
                     {% endif %}
                     {% if comment.canEdit %}
                         <a class="btn btn-outline-secondary btn-xs" href="{{ subject.discussionUrl }}/edit/{{ comment.id }}">

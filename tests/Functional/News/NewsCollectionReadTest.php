@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional\News;
 
+use Johncms\Modules\News\Application\Comments\NewsCommentSubject;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Auth\CurrentUser;
 use Johncms\Http\Session;
@@ -79,18 +80,23 @@ final class NewsCollectionReadTest extends FunctionalTestCase
             'current_section' => null,
             'related' => [],
             'popular' => [],
-            'comments' => [],
-            'comments_total' => 0,
-            'comments_offset' => 0,
-            'comments_page' => 1,
-            'comments_pagination' => null,
-            'comment_error' => null,
-            'comment_message' => null,
-            'comment_added' => null,
-            'comment_delete_error' => null,
+            'discussion' => [
+                'subject'    => $this->container()->get(NewsCommentSubject::class)->forArticle($article),
+                'comments'   => [],
+                'total'      => 0,
+                'page'       => 1,
+                'pagination' => null,
+                'can_write'  => false,
+                'refusal'    => '',
+                'upload_url' => '',
+                'message'    => null,
+                'error'      => null,
+                'added'      => null,
+                'text'       => '',
+                'titled'     => true,
+            ],
             'comment_text' => '',
             'author_articles' => 0,
-            'can_write' => false,
             'edit_url' => null,
         ]);
         self::assertStringContainsString('Body No author', $html);
@@ -98,7 +104,7 @@ final class NewsCollectionReadTest extends FunctionalTestCase
         self::assertStringContainsString('name="description" content="SEO description"', $html);
         self::assertStringContainsString(':article_id="' . $id . '"', $html);
         $list = $this->container()->get(RendererInterface::class)->render('@news/homepage/latest.twig', ['news' => [$article->toTemplate()]]);
-        self::assertStringContainsString('/news/no-author.html#article-comments', $list);
+        self::assertStringContainsString('/news/no-author.html#comments', $list);
     }
 
     public function testVisibilityIsSharedByDetailsSearchSitemapAndSections(): void
@@ -179,7 +185,7 @@ final class NewsCollectionReadTest extends FunctionalTestCase
         $author = FunctionalUserFactory::create();
         for ($i = 0; $i < 8; ++$i) {
             $id = $this->item(name: 'Batch ' . $i, author: $author->id);
-            Fixture::insert('news_comments', ['article_id' => null, 'item_id' => $id, 'user_id' => $author->id, 'text' => 'Comment', 'user_data' => '{}', 'created_at' => gmdate('Y-m-d H:i:s')]);
+            Fixture::insert('comments', ['subject_type' => 'news', 'subject_id' => $id, 'user_id' => $author->id, 'text' => 'Comment', 'author_name' => 'Author', 'created_at' => gmdate('Y-m-d H:i:s')]);
             Fixture::insert('news_votes', ['article_id' => null, 'item_id' => $id, 'user_id' => $author->id, 'vote' => 1]);
         }
         $connection = Capsule::connection();
@@ -193,7 +199,7 @@ final class NewsCollectionReadTest extends FunctionalTestCase
             $connection->flushQueryLog();
         }
         self::assertCount(8, $articles);
-        self::assertCount(1, array_filter($queries, static fn (string $query): bool => str_contains($query, 'news_comments')));
+        self::assertCount(1, array_filter($queries, static fn (string $query): bool => preg_match('/from [`"]?comments[`"]?/i', $query) === 1));
         self::assertCount(1, array_filter($queries, static fn (string $query): bool => str_contains($query, 'news_votes')));
         self::assertCount(1, array_filter($queries, static fn (string $query): bool => preg_match('/from [`"]?users[`"]? where/i', $query) === 1));
         foreach ($articles as $article) {

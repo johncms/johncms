@@ -515,6 +515,7 @@ The number is shown so that support for the old scheme is not removed while it i
       'No comments yet. Be the first.' => 'Комментариев пока нет. Будьте первым.',
       'Write a comment' => 'Написать комментарий',
       'You are not logged in. You must be <a href="/login/">logged in</a> to comment.' => 'Вы не авторизованы. Чтобы комментировать, нужно <a href="/login/">войти</a>.',
+      'Quote' => 'Цитата',
     ),
   ),
 );

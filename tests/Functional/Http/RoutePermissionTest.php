@@ -66,18 +66,6 @@ final class RoutePermissionTest extends FunctionalTestCase
     }
 
     /**
-     * Uploading a picture for a comment is worth what writing one is worth, and a guest holds
-     * neither.
-     */
-    public function testAnEndpointBehindAPermissionRefusesAGuest(): void
-    {
-        $response = $this->handleRequest('/news/comments/upload_file', 'POST', $this->withCsrfToken([]));
-
-        self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
-        self::assertSame('/login', $response->headers->get('Location'));
-    }
-
-    /**
      * A route that only asks for a session behaves the same way, without naming a permission.
      */
     public function testARouteRequiringOnlyASessionSendsAGuestToSignIn(): void

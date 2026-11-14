@@ -394,7 +394,7 @@ return static function (ContainerConfigurator $container): void {
         ->arg('$consumers', tagged_iterator('johncms.editor_upload_consumer'));
     $services->alias(CommentRepositoryInterface::class, EloquentCommentRepository::class);
     $services->set(CommentSubjects::class)
-        ->arg('$subjects', tagged_iterator('johncms.comment_subject'));
+        ->arg('$tagged', tagged_iterator('johncms.comment_subject'));
     $services->set(FilePathLockInterface::class, LocalFilePathLock::class);
     $services->set(FileStore::class, FileStore::class);
     $services->set(LoggerInterface::class)->factory(service(LoggerFactory::class));

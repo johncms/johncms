@@ -16,6 +16,9 @@ interface NewsLegacyRepositoryInterface
 
     public function verifyDiscussions(int $articleId, int $itemId): void;
 
+    /** Whether a comment not yet carried into the core names the file among its attachments. */
+    public function commentsReferenceFile(int $fileId): bool;
+
     /** @param list<int> $fileIds */
     public function queueFiles(array $fileIds): void;
 }

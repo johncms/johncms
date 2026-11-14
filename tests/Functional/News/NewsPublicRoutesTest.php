@@ -91,7 +91,7 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         self::assertNotNull($card->querySelector('.site-news-section__last'), 'The card tells when the section was last updated.');
         self::assertStringContainsString(sprintf(dn__('news', '%d publication', '%d publications', 1), 1), $document->querySelector('.site-page-stat')->textContent);
         self::assertNotNull($document->querySelector('.site-news-card__preview a[href="https://example.com/notes"]'));
-        self::assertNotNull($document->querySelector('.site-news-card a[href="/news/releases/release.html#article-comments"]'));
+        self::assertNotNull($document->querySelector('.site-news-card a[href="/news/releases/release.html#comments"]'));
         self::assertNull($document->querySelector('.site-news-card > a'), 'Rich previews must not be wrapped in an article link.');
         self::assertNotNull($document->querySelector('.site-news-card__title a.stretched-link[href="/news/releases/release.html"]'), 'The title link makes the whole card clickable.');
         $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/releases/')->getContent(), LIBXML_NOERROR);
@@ -128,7 +128,7 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         self::assertSame('Article body', $document->querySelector('.site-breadcrumbs [aria-current="page"]')->textContent);
         self::assertNotNull($document->querySelector('.site-breadcrumbs a[href="/news/"]'));
         self::assertNotNull($document->querySelector('.site-news-article__tags a[href="/news/search_tags/?tag=cms"]'));
-        self::assertNotNull($document->querySelector('a[href="#article-comments"]'));
+        self::assertNotNull($document->querySelector('a[href="#comments"]'));
         self::assertNull($document->querySelector('.site-news-article__edit'));
         self::assertNull($document->querySelector('[data-editor]'), 'A guest gets no comment form.');
         $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/entry.html', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()))->getContent(), LIBXML_NOERROR);
@@ -159,11 +159,11 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
     {
         $id = $this->item('Public body');
         $user = FunctionalUserFactory::create();
-        $response = $this->postForm('/news/comments/add/' . $id, ['text' => '<b>Comment</b>', 'user_id' => '999', 'user_data' => ['ip' => 'fake']], $user);
-        $comment = (int) Capsule::table('news_comments')->where('item_id', $id)->value('id');
+        $response = $this->postForm('/news/comments/' . $id, ['text' => '<b>Comment</b>', 'user_id' => '999', 'user_data' => ['ip' => 'fake']], $user);
+        $comment = (int) Capsule::table('comments')->where('subject_type', 'news')->where('subject_id', $id)->value('id');
         self::assertSame(302, $response->getStatusCode());
         self::assertSame('/news/entry.html#comment-' . $comment, $response->headers->get('Location'));
-        self::assertSame($user->id, (int) Capsule::table('news_comments')->where('id', $comment)->value('user_id'), 'The author is the signed-in user, never a posted field.');
+        self::assertSame($user->id, (int) Capsule::table('comments')->where('id', $comment)->value('user_id'), 'The author is the signed-in user, never a posted field.');
 
         $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/entry.html')->getContent(), LIBXML_NOERROR);
         $rendered = $document->querySelector('#comment-' . $comment);
@@ -171,23 +171,23 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         self::assertSame('Comment', trim($rendered->querySelector('.site-comment__body')->textContent));
         self::assertSame('#1', trim($rendered->querySelector('.site-comment__anchor')->textContent));
         self::assertNull($rendered->querySelector('.site-meta'), 'Only moderators see the address.');
-        self::assertNull($rendered->querySelector('form[action="/news/comments/del/"]'), 'A guest cannot delete.');
+        self::assertNull($rendered->querySelector('form[action="/news/comments/' . $id . '/delete"]'), 'A guest cannot delete.');
         $moderated = HTMLDocument::createFromString((string) $this->handleRequest('/news/entry.html', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()))->getContent(), LIBXML_NOERROR);
         $meta = $moderated->querySelector('#comment-' . $comment . ' details.site-meta[data-hover-popover]');
         self::assertNotNull($meta, 'A moderator gets the address in a popover, not in the row.');
         self::assertNotNull($meta->querySelector('a[href^="/admin/ip-search?ip="]'));
         self::assertNotNull($meta->querySelector('a[href^="/admin/ip-whois?ip="]'));
 
-        $empty = $this->postForm('/news/comments/add/' . $id, ['text' => '  '], $user);
+        $empty = $this->postForm('/news/comments/' . $id, ['text' => '  '], $user);
         self::assertSame('/news/entry.html#comment-form', $empty->headers->get('Location'), 'A rejected comment goes back to the form.');
-        self::assertSame(1, Capsule::table('news_comments')->count());
+        self::assertSame(1, Capsule::table('comments')->count());
 
-        $unconfirmed = $this->postForm('/news/comments/del/', ['comment_id' => (string) $comment, 'article_id' => (string) $id, 'page' => '1'], $user);
+        $unconfirmed = $this->postForm('/news/comments/' . $id . '/delete', ['comment_id' => (string) $comment, 'page' => '1'], $user);
         self::assertSame(409, $unconfirmed->getStatusCode(), 'Without the answer of the dialog nothing is deleted.');
-        self::assertSame(1, Capsule::table('news_comments')->whereNull('deleted_at')->count());
-        $deleted = $this->postForm('/news/comments/del/', ['comment_id' => (string) $comment, 'article_id' => (string) $id, 'page' => '1', 'confirmed' => '1'], $user);
-        self::assertSame('/news/entry.html#article-comments', $deleted->headers->get('Location'));
-        self::assertSame(0, Capsule::table('news_comments')->whereNull('deleted_at')->count());
+        self::assertSame(1, Capsule::table('comments')->count());
+        $deleted = $this->postForm('/news/comments/' . $id . '/delete', ['comment_id' => (string) $comment, 'page' => '1', 'confirmed' => '1'], $user);
+        self::assertSame('/news/entry.html#comments', $deleted->headers->get('Location'));
+        self::assertSame(0, Capsule::table('comments')->count());
         Capsule::table('collection_items')->where('id', $id)->update(['active' => false]);
         self::assertSame(404, $this->handleRequest('/news/entry.html')->getStatusCode());
     }
@@ -196,16 +196,17 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
     {
         $id = $this->item('Long body');
         $user = FunctionalUserFactory::create();
+        // Put in place: the antiflood would let one user write only one of them.
         for ($i = 1; $i <= 11; $i++) {
-            $this->postForm('/news/comments/add/' . $id, ['text' => 'Comment ' . $i], $user);
+            Fixture::insert('comments', ['subject_type' => 'news', 'subject_id' => $id, 'user_id' => $user->id, 'text' => '<p>Comment ' . $i . '</p>', 'author_name' => $user->name, 'created_at' => gmdate('Y-m-d H:i:s', time() - 100 + $i)]);
         }
 
         $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/entry.html')->getContent(), LIBXML_NOERROR);
         self::assertNotNull(
-            $document->querySelector('.site-news-comments__pagination a[href="/news/entry.html?page=2#article-comments"]'),
+            $document->querySelector('.site-discussion__pagination a[href="/news/entry.html?page=2#comments"]'),
             'A page of comments opens on the discussion, not on the top of the article.',
         );
-        self::assertSame('/news/entry.html?page=2#article-comments', $this->handleRequest('/news/entry.html?page=9')->headers->get('Location'));
+        self::assertSame('/news/entry.html?page=2#comments', $this->handleRequest('/news/entry.html?page=9')->headers->get('Location'));
 
         $views = $this->api->getItem($id)->viewCount;
         // A view is counted once per session: forget it, so that only the kind of request decides.
@@ -221,16 +222,16 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         self::assertSame($views, $this->api->getItem($id)->viewCount, 'Another page of comments is not another view of the article.');
         $pageField = $region->querySelector('input[name="page"]');
         self::assertSame('2', $pageField?->getAttribute('value'));
-        self::assertSame('news-comment-form-' . $id, $pageField->getAttribute('form'));
+        self::assertSame('comment-form-news-' . $id, $pageField->getAttribute('form'));
 
-        $response = $this->postForm('/news/comments/add/' . $id, ['text' => '<p>&nbsp;</p>', 'page' => '2'], $user);
+        $response = $this->postForm('/news/comments/' . $id, ['text' => '<p>&nbsp;</p>', 'page' => '2'], $user);
         self::assertSame('/news/entry.html?page=2#comment-form', $response->headers->get('Location'));
         $document = HTMLDocument::createFromString((string) $this->handleRequest('/news/entry.html?page=2', cookies: $this->actingAs($user))->getContent(), LIBXML_NOERROR);
         self::assertNotNull($document->querySelector('#comment-form .alert-danger'));
         self::assertSame('#11', trim($document->querySelector('.site-comment__anchor')->textContent));
-        self::assertNotNull($document->querySelector('form#news-comment-form-' . $id));
+        self::assertNotNull($document->querySelector('form#comment-form-news-' . $id));
 
-        $this->postForm('/news/comments/add/' . $id, ['text' => '<p>&nbsp;</p>', 'page' => '2'], $user);
+        $this->postForm('/news/comments/' . $id, ['text' => '<p>&nbsp;</p>', 'page' => '2'], $user);
         $fragment = $this->fragment('/news/entry.html?page=2', ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest']);
         self::assertNotNull($fragment->querySelector('[data-live-list-region="comment-error"] .alert-danger'));
         self::assertSame('2', $fragment->querySelector('[data-live-list-region="comments"] input[name="page"]')?->getAttribute('value'));
@@ -243,24 +244,22 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         $user = FunctionalUserFactory::create();
         $live = ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'];
 
-        $this->postForm('/news/comments/add/' . $id, ['text' => 'Live comment'], $user);
-        $comment = (int) Capsule::table('news_comments')->where('item_id', $id)->value('id');
+        $this->postForm('/news/comments/' . $id, ['text' => 'Live comment'], $user);
+        $comment = (int) Capsule::table('comments')->where('subject_type', 'news')->where('subject_id', $id)->value('id');
         $fragment = $this->fragment('/news/entry.html', $live);
         self::assertSame('comment-' . $comment, $fragment->querySelector('[data-live-list-target]')?->getAttribute('id'), 'The comment just added is the one to bring into view.');
         self::assertNull($fragment->querySelector('[data-live-list-region="comment-error"] .alert'));
         self::assertNotNull($fragment->querySelector('[data-toast="success"][data-toast-announce]'), 'The comment shows itself: the message is only read out.');
         self::assertNull($this->fragment('/news/entry.html', $live)->querySelector('[data-live-list-target]'), 'Only the page right after the form marks it.');
 
-        $this->postForm('/news/comments/del/', ['comment_id' => (string) $comment, 'article_id' => (string) $id, 'page' => '1', 'confirmed' => '1'], FunctionalUserFactory::create());
-        $fragment = $this->fragment('/news/entry.html', $live);
-        self::assertNotNull($fragment->querySelector('[data-toast="error"]'), 'A refused deletion is a toast: whoever deletes may have no form.');
-        self::assertNull($fragment->querySelector('[data-live-list-region="comment-error"] .alert'));
-        $this->postForm('/news/comments/del/', ['comment_id' => (string) $comment, 'article_id' => (string) $id, 'page' => '1', 'confirmed' => '1'], $user);
+        $refused = $this->postForm('/news/comments/' . $id . '/delete', ['comment_id' => (string) $comment, 'page' => '1', 'confirmed' => '1'], FunctionalUserFactory::create());
+        self::assertSame(403, $refused->getStatusCode(), 'Somebody else may not delete the comment.');
+        $this->postForm('/news/comments/' . $id . '/delete', ['comment_id' => (string) $comment, 'page' => '1', 'confirmed' => '1'], $user);
         $toast = $this->fragment('/news/entry.html', $live)->querySelector('[data-toast="success"]');
         self::assertNotNull($toast);
         self::assertFalse($toast->hasAttribute('data-toast-announce'), 'A deleted comment leaves nothing to show the result: the toast does.');
 
-        $this->postForm('/news/comments/add/' . $id, ['text' => '  '], $user);
+        $this->postForm('/news/comments/' . $id, ['text' => '  '], $user);
         $fragment = $this->fragment('/news/entry.html', $live);
         self::assertNotNull($fragment->querySelector('[data-live-list-region="comment-error"] .alert-danger'), 'A rejected comment is reported beside the form.');
         self::assertNull($fragment->querySelector('[data-live-list-target]'));

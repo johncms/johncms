@@ -10,8 +10,8 @@
  * A part of a public page that follows its own links and sends its own forms without reloading
  * the page: the discussion below an article, for instance.
  *
- *     <section id="article-comments" data-live-list>
- *         <div data-live-list-region="comments">… <a href="?page=2#article-comments">2</a> …</div>
+ *     <section id="comments" data-live-list>
+ *         <div data-live-list-region="comments">… <a href="?page=2#comments">2</a> …</div>
  *         <form method="post" action="…" data-live-list-form>…</form>
  *     </section>
  *

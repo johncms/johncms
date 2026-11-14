@@ -29,7 +29,6 @@ $discussion = new EloquentNewsDiscussionRepository();
 try {
     $relations->withItemLock(collectionId: $collection, itemId: $item, operation: static function () use ($mode, $item, $collection, $discussion): void {
         match ($mode) {
-            'comment' => $discussion->addComment($item, 11, 'Comment', [], [321]),
             'vote' => $discussion->vote($item, 11, 1),
             'hide-item' => Capsule::table('collection_items')->where('id', $item)->update(['active' => false]),
             'hide-section' => Capsule::table('collection_sections')->where('collection_id', $collection)->update(['active' => false]),

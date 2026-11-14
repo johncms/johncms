@@ -58,19 +58,13 @@ function initialize(field) {
         if (failedUploads.size === 0) status.hidden = true;
       });
       if (field.dataset.uploadUrl) {
-        // An uploaded picture is posted with the text so that it changes owner.
+        // The server takes the pictures the text shows; an answer without a file is a failed upload.
         editor.plugins.get('ImageUploadEditing').on('uploadComplete', (_event, { data, imageElement }) => {
           if (!Number.isInteger(data.id) || data.id <= 0) {
             failedUploads.add(imageElement);
             show(field.dataset.uploadErrorMessage);
             console.error('The image upload response must contain a positive integer file id.');
-            return;
           }
-          const input = document.createElement('input');
-          input.type = 'hidden';
-          input.name = 'attached_files[]';
-          input.value = data.id;
-          field.append(input);
         });
       }
       return editor;
@@ -83,9 +77,8 @@ function initialize(field) {
     });
 }
 
-/** Empties the field once its text was sent without leaving the page: the text and its pictures. */
+/** Empties the field once its text was sent without leaving the page. */
 export function clearEditor(field) {
-  field.querySelectorAll('input[name="attached_files[]"]').forEach(input => input.remove());
   field.querySelector('textarea').value = '';
   return whenEditorReady(field).then(editor => editor?.setData(''));
 }

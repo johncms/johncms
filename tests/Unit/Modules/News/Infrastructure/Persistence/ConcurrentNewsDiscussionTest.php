@@ -66,10 +66,10 @@ final class ConcurrentNewsDiscussionTest extends TestCase
         [$process, $output] = $this->start($mode);
         self::assertSame(0, $this->finish($process, $output));
         try {
-            $this->relations->withItemLock(collectionId: $this->collection, itemId: $this->item, operation: fn () => $this->discussion->addComment($this->item, 11, 'Forbidden', [], []), publishedOnly: true);
-            self::fail('An old snapshot must not admit a comment after publication was revoked.');
+            $this->relations->withItemLock(collectionId: $this->collection, itemId: $this->item, operation: fn () => $this->discussion->vote($this->item, 11, 1), publishedOnly: true);
+            self::fail('An old snapshot must not admit a vote after publication was revoked.');
         } catch (CollectionItemFormException | CollectionWriteConflictException) {
-            self::assertSame(0, Capsule::table('news_comments')->count());
+            self::assertSame(0, Capsule::table('news_votes')->count());
         } finally {
             Capsule::connection()->rollBack();
         }
@@ -80,17 +80,6 @@ final class ConcurrentNewsDiscussionTest extends TestCase
         yield 'hidden item' => ['hide-item'];
         yield 'hidden ancestor' => ['hide-section'];
         yield 'hidden collection' => ['hide-collection'];
-    }
-
-    public function testCommentCannotOutliveTheItemDeletedByAnotherConnection(): void
-    {
-        Capsule::connection()->beginTransaction();
-        CollectionItemWriterFactory::itemDeleter()->execute($this->item);
-        [$process, $output] = $this->start('comment');
-        $this->connected($output);
-        Capsule::connection()->commit();
-        self::assertSame(2, $this->finish($process, $output));
-        self::assertSame(0, Capsule::table('news_comments')->count());
     }
 
     public function testVoteUpsertUsesCurrentRowsAndDoesNotDuplicateInsideAnOldSnapshot(): void
@@ -113,22 +102,6 @@ final class ConcurrentNewsDiscussionTest extends TestCase
         self::assertSame(1, Capsule::table('news_votes')->count());
     }
 
-    public function testDeletionCapturesFilesFromCommentsCommittedAfterAnOldSnapshot(): void
-    {
-        Capsule::connection()->beginTransaction();
-        Capsule::table('news_comments')->count();
-        [$process, $output] = $this->start('comment');
-        self::assertSame(0, $this->finish($process, $output));
-        try {
-            $ids = $this->relations->withItemLock($this->collection, $this->item, fn () => $this->discussion->deleteForItem($this->item));
-            self::assertSame([321], $ids);
-        } catch (CollectionWriteConflictException) {
-            self::assertTrue($this->snapshotIsolation());
-        } finally {
-            Capsule::connection()->rollBack();
-        }
-    }
-
     private function snapshotIsolation(): bool
     {
         $rows = Capsule::connection()->select("SHOW VARIABLES LIKE 'innodb_snapshot_isolation'");
@@ -144,21 +117,6 @@ final class ConcurrentNewsDiscussionTest extends TestCase
         self::assertIsResource($process);
         fclose($pipes[0]);
         return [$process, $output];
-    }
-
-    /** @param resource $output */
-    private function connected($output): void
-    {
-        $deadline = microtime(true) + 10;
-        do {
-            rewind($output);
-            $line = fgets($output);
-            if ($line !== false && ctype_digit(trim($line))) {
-                return;
-            }
-            usleep(10000);
-        } while (microtime(true) < $deadline);
-        self::fail('The discussion writer did not connect.');
     }
 
     /** @param resource $process

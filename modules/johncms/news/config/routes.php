@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Johncms\Http\Middleware\RequireConfirmationMiddleware;
+use Johncms\Comments\CommentRoutes;
+use Johncms\Modules\News\Application\Comments\NewsCommentSubject;
 use Johncms\Modules\News\Application\Controllers\Admin\NewsSettingsController;
 use Johncms\Modules\News\Application\Controllers\ArticleController;
-use Johncms\Modules\News\Application\Controllers\CommentsController;
 use Johncms\Modules\News\Application\Controllers\SearchController;
 use Johncms\Modules\News\Application\Controllers\SectionController;
 use Johncms\Modules\News\Application\Controllers\VoteController;
@@ -18,15 +18,8 @@ return static function (RouteCollection $router): void {
         $router->map(['GET', 'POST'], '/news/search', [SearchController::class, 'index'])->name('news.search');
         $router->map(['GET', 'POST'], '/news/search_tags', [SearchController::class, 'byTags'])->name('news.search_tags');
         $router->post('/news/add_vote/{article_id:number}/{type_vote:number}', [VoteController::class, 'add'])->name('news.add_vote');
-        $router->post('/news/comments/add/{article_id:number}', [CommentsController::class, 'add'])->name('news.comments_add');
-        $router->post('/news/comments/del', [CommentsController::class, 'del'])
-            ->name('news.comments_delete')
-            ->addMiddleware(RequireConfirmationMiddleware::class);
-    // Signing in is not enough: the permission is what a ban takes away, and uploading a picture
-    // for a comment is worth exactly as much as writing one.
-        $router->post('/news/comments/upload_file', [CommentsController::class, 'loadFile'])
-        ->name('news.comments_upload_file')
-        ->permission(NewsPermissions::COMMENTS_POST);
+        // Before the sections: their codes would take `comments/…` for a path of sections.
+        CommentRoutes::register($router, '/news/comments/{id:number}', NewsCommentSubject::TYPE, 'news.comments');
 
         // Section codes may contain dots, so the addresses of articles have to be tried first.
         $sectionPath = ['category' => '[\w/.+-]+'];

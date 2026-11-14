@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Tests\Functional\News;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\Query\Builder;
 use Johncms\Database\ConnectionInterface;
 use Johncms\Database\Schema\SchemaInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionLookupApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsImportApiInterface;
 use Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer;
-use Johncms\Modules\News\Application\Collections\NewsDiscussionFiles;
+use Johncms\Modules\News\Application\Collections\NewsLegacyFileCleanup;
 use Johncms\Modules\News\Application\Collections\NewsLegacyImporter;
 use Johncms\Modules\News\Application\Collections\NewsReadServiceInterface;
 use Johncms\Modules\News\Application\Collections\NewsStorageUpdater;
@@ -60,7 +61,7 @@ final class NewsStorageUpdateTest extends FunctionalTestCase
         self::assertSame(0, Capsule::table('collection_items')->count());
         (new Installer('news'))->installDemoData();
         self::assertSame(4, Capsule::table('collection_items')->count());
-        self::assertSame(4, Capsule::table('news_comments')->whereNotNull('item_id')->count());
+        self::assertSame(4, $this->comments()->count());
         self::assertSame(4, Capsule::table('news_votes')->whereNotNull('item_id')->count());
         $this->update();
         (new Installer('news'))->installDemoData();
@@ -72,7 +73,7 @@ final class NewsStorageUpdateTest extends FunctionalTestCase
         $section = Fixture::insert('news_sections', ['code' => 'Original', 'name' => 'Original']);
         $article = $this->article('Release.V10+', $section);
         $removed = $this->article('Removed', $section, ['deleted_at' => '2001-01-01 00:00:00']);
-        $comment = $this->comment($article);
+        $this->comment($article);
         $this->comment($removed);
         Fixture::insert('news_votes', ['article_id' => $article, 'user_id' => 10, 'vote' => 1]);
         Fixture::insert('news_votes', ['article_id' => $removed, 'user_id' => 10, 'vote' => 1]);
@@ -83,8 +84,9 @@ final class NewsStorageUpdateTest extends FunctionalTestCase
         $item = $news->findByCode('Original', 'Release.V10+');
         self::assertNotNull($item);
         self::assertSame('/news/Original/Release.V10+.html', $item->url);
-        self::assertSame($item->record->id, (int) Capsule::table('news_comments')->where('id', $comment)->value('item_id'));
-        self::assertSame(1, Capsule::table('news_comments')->count());
+        self::assertSame([$item->record->id], $this->comments()->pluck('subject_id')->map(intval(...))->all());
+        self::assertSame(['Comment'], $this->comments()->pluck('text')->all());
+        self::assertSame(1, $item->stats->comments);
         self::assertSame(1, Capsule::table('news_votes')->count());
         self::assertSame(1, $item->stats->rating);
         self::assertSame(1, $news->count(new NewsQueryDTO(search: 'Original body')));
@@ -114,14 +116,14 @@ final class NewsStorageUpdateTest extends FunctionalTestCase
         $this->update();
         $this->assertLegacyRemoved();
         self::assertSame(2, Capsule::table('collection_items')->count());
-        self::assertNotNull(Capsule::table('news_comments')->where('id', $comment)->value('item_id'));
+        self::assertSame(1, $this->comments()->count(), 'The comment of the article is carried into the core on the retry.');
     }
 
     public function testCleanupFailureKeepsCommittedMappingsAndDurableFileQueueForRetry(): void
     {
         $article = $this->article('Keep', Fixture::insert('news_sections', ['code' => 'section', 'name' => 'Section']));
         $this->article('Exclude', 0, ['deleted_at' => '2001-01-01 00:00:00', 'attached_files' => '[999999]']);
-        $comment = $this->comment($article);
+        $this->comment($article);
         $inner = $this->container()->get(NewsLegacyStorageRepositoryInterface::class);
         $storage = new class ($inner) implements NewsLegacyStorageRepositoryInterface {
             private bool $fail = true;
@@ -129,7 +131,9 @@ final class NewsStorageUpdateTest extends FunctionalTestCase
             public function prepare(): void { $this->inner->prepare(); }
             public function hasData(): bool { return $this->inner->hasData(); }
             public function clearLegacyRows(): void { $this->inner->clearLegacyRows(); }
+            public function moveDiscussionsToCore(): void { $this->inner->moveDiscussionsToCore(); }
             public function removeOrphanDiscussions(): void { $this->inner->removeOrphanDiscussions(); }
+            public function isHeldByComment(int $fileId): bool { return $this->inner->isHeldByComment($fileId); }
             public function pendingFiles(): array {
                 if ($this->fail) {
                     $this->fail = false;
@@ -144,7 +148,7 @@ final class NewsStorageUpdateTest extends FunctionalTestCase
         $updater = new NewsStorageUpdater(
             $this->container()->get(NewsLegacyImporter::class), $storage,
             $this->container()->get(ConnectionInterface::class),
-            $this->container()->get(NewsDiscussionFiles::class),
+            $this->container()->get(NewsLegacyFileCleanup::class),
             $this->container()->get(CollectionLookupApiInterface::class),
             $this->container()->get(CollectionsImportApiInterface::class),
             $this->container()->get(SystemOperationContext::class), $this->container()->get(LoggerInterface::class)
@@ -158,13 +162,12 @@ final class NewsStorageUpdateTest extends FunctionalTestCase
         self::assertSame(0, Capsule::table('news_articles')->count());
         self::assertSame(1, Capsule::table('collection_items')->count());
         self::assertSame(1, Capsule::table('news_legacy_cleanup_files')->count());
-        $mapped = Capsule::table('news_comments')->where('id', $comment)->value('item_id');
-        self::assertNotNull($mapped);
+        self::assertSame(1, $this->comments()->count(), 'The comments are carried before the files are cleaned up.');
         $this->container()->get(SystemOperationContext::class)->runTrusted($updater->update(...));
         $this->assertLegacyRemoved();
         self::assertSame(1, Capsule::table('collection_items')->count());
         self::assertSame(0, Capsule::table('news_legacy_cleanup_files')->count());
-        self::assertSame($mapped, Capsule::table('news_comments')->where('id', $comment)->value('item_id'));
+        self::assertSame(1, $this->comments()->count());
     }
 
     private function update(): void
@@ -178,16 +181,20 @@ final class NewsStorageUpdateTest extends FunctionalTestCase
         foreach (['news_articles', 'news_sections', 'news_search_index'] as $table) {
             self::assertFalse($schema->hasTable($table));
         }
-        foreach (['news_comments', 'news_votes'] as $table) {
-            self::assertFalse($schema->hasColumn($table, 'article_id'));
-            self::assertFalse($schema->hasForeignKeyForColumns($table, ['item_id']));
-        }
+        self::assertFalse($schema->hasTable('news_comments'));
+        self::assertFalse($schema->hasColumn('news_votes', 'article_id'));
+        self::assertFalse($schema->hasForeignKeyForColumns('news_votes', ['item_id']));
     }
 
     /** @param array<string, mixed> $attributes */
     private function article(string $code, int $section, array $attributes = []): int
     {
         return Fixture::insert('news_articles', $attributes + ['name' => $code, 'code' => $code, 'section_id' => $section, 'active' => true, 'text' => 'Original body', 'created_at' => '2001-01-01 00:00:00']);
+    }
+
+    private function comments(): Builder
+    {
+        return Capsule::table('comments')->where('subject_type', 'news');
     }
 
     private function comment(int $article): int

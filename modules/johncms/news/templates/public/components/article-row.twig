@@ -19,7 +19,7 @@
                 {% include '@theme/components/icon.twig' with {name: 'eye', size: 12} only %}
                 <span class="visually-hidden">{{ __('Views') }}: </span>{{ article.view_count|format_number }}
             </span>
-            <a class="site-news-card__stat" href="{{ article.url }}#article-comments" aria-label="{{ __('Comments') }}: {{ article.comments_count|format_number }}" title="{{ __('Comments') }}">
+            <a class="site-news-card__stat" href="{{ article.url }}#comments" aria-label="{{ __('Comments') }}: {{ article.comments_count|format_number }}" title="{{ __('Comments') }}">
                 {% include '@theme/components/icon.twig' with {name: 'message-square', size: 12} only %}
                 {{ article.comments_count|format_number }}
             </a>

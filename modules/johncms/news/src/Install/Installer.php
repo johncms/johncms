@@ -6,6 +6,7 @@ namespace Johncms\Modules\News\Install;
 
 use Gettext\TranslatorFunctions;
 use Illuminate\Support\Str;
+use Johncms\Comments\Domain\CommentRepositoryInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionSchemaApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
@@ -14,9 +15,11 @@ use Johncms\Modules\Collections\Application\DTO\CollectionSectionFormDTO;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\Installer as ModuleInstaller;
 use Johncms\Modules\News\Application\Collections\NewsCollectionDeclaration;
+use Johncms\Modules\News\Application\Comments\NewsCommentSubject;
 use Johncms\Modules\News\Application\Collections\NewsStorageUpdater;
 use Johncms\Modules\News\Domain\Repository\NewsDiscussionRepositoryInterface;
 use Johncms\System\i18n\Translator;
+use Johncms\Users\Repository\UserRepositoryInterface;
 use Johncms\Updates\SystemOperationContext;
 use LogicException;
 
@@ -43,6 +46,8 @@ class Installer extends ModuleInstaller
             }
             $apiSections = di(CollectionSectionsApiInterface::class);
             $discussion = di(NewsDiscussionRepositoryInterface::class);
+            $comments = di(CommentRepositoryInterface::class);
+            $authorName = di(UserRepositoryInterface::class)->findMany([1])[1]->name ?? '';
             $sections = [];
             foreach ([1 => d__('news', 'Site news'), 2 => d__('news', 'Announcements')] as $key => $name) {
                 $sections[$key] = $apiSections->addSection(new CollectionSectionFormDTO($collection->id, null, Str::slug($name), $name, null, true, 100));
@@ -91,13 +96,17 @@ class Installer extends ModuleInstaller
                     $article['text'],
                     []
                 ), actorId: 1);
-                $discussion->addComment(
-                    $id,
-                    1,
-                    d__('news', '<p>Great news! Glad to see the site up and running.</p>'),
-                    ['user_agent' => 'JohnCMS demo installer', 'ip' => '127.0.0.1', 'ip_via_proxy' => ''],
-                    []
-                );
+                $comments->create([
+                    'subject_type'      => NewsCommentSubject::TYPE,
+                    'subject_id'        => $id,
+                    'user_id'           => 1,
+                    'text'              => d__('news', '<p>Great news! Glad to see the site up and running.</p>'),
+                    'author_name'       => $authorName,
+                    'author_ip'         => '127.0.0.1',
+                    'author_user_agent' => 'JohnCMS demo installer',
+                    'created_at'        => gmdate('Y-m-d H:i:s'),
+                ]);
+                $comments->changeUserCommentCount(1, 1);
                 $discussion->vote($id, 1, 1);
             }
         });

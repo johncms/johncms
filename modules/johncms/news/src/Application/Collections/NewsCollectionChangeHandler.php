@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Collections;
 
-use Johncms\Modules\Collections\Application\Api\CollectionItemRelationsApiInterface;
+use Johncms\Comments\Application\CommentsService;
+use Johncms\Modules\News\Application\Comments\NewsCommentSubject;
 use Johncms\Modules\Collections\Application\Api\CollectionLookupApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionChangeDTO;
 use Johncms\Modules\Collections\Application\Extension\CollectionChangeHandlerInterface;
@@ -15,8 +16,7 @@ final readonly class NewsCollectionChangeHandler implements CollectionChangeHand
     public function __construct(
         private CollectionLookupApiInterface $lookup,
         private NewsDiscussionRepositoryInterface $discussion,
-        private CollectionItemRelationsApiInterface $relations,
-        private NewsDiscussionFiles $files,
+        private CommentsService $comments,
         private ?NewsCollectionAvailability $availability = null,
     ) {
     }
@@ -31,8 +31,8 @@ final readonly class NewsCollectionChangeHandler implements CollectionChangeHand
         if ($collection?->id !== $change->collectionId) {
             return;
         }
-        $files = $this->discussion->deleteForItem($change->id);
-        $this->relations->afterCommit(fn () => $this->files->cleanup($files, $change->collectionId));
+        $this->comments->deleteForSubjects(NewsCommentSubject::TYPE, [$change->id]);
+        $this->discussion->deleteVotesForItem($change->id);
     }
 
     public function afterCommit(CollectionChangeDTO $change): void

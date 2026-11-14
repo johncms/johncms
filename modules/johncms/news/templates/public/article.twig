@@ -4,17 +4,7 @@
     @var related         list<array> Other news of the section topped up with the latest news, the latest first.
     @var popular         list<array> The most viewed news, none of them shown above.
     @var author_articles int   Published news of the author.
-    @var can_write       bool
-    @var comments        list<NewsCommentViewDTO> Comments of the current page of the discussion.
-    @var comments_total  int
-    @var comments_offset int
-    @var comments_page   int
-    @var comments_pagination \Twig\Markup|null
-    @var comment_error   string|null
-    @var comment_message string|null
-    @var comment_added   int|null
-    @var comment_delete_error string|null
-    @var comment_text    string
+    @var discussion      array The variables of the discussion (CommentDiscussionView), shown under the article.
     @var edit_url        string|null
 #}
 {% extends '@theme/layouts/default.twig' %}
@@ -72,26 +62,13 @@
                             {% include '@theme/components/icon.twig' with {name: 'eye', size: 14} only %}
                             <span class="visually-hidden">{{ __('Views') }}: </span>{{ article.view_count|format_number }}
                         </span>
-                        {% include '@news/public/components/comments-stat.twig' with {count: comments_total} only %}
+                        {% include '@news/public/components/comments-stat.twig' with {count: discussion.total} only %}
                         <div class="site-news-article__share">
                             {% include '@theme/components/share.twig' with {url: article_url, title: article.name} only %}
                         </div>
                     </footer>
                 </article>
-                {% include '@news/public/components/comments.twig' with {
-                    article_id: article.id,
-                    comments: comments,
-                    total: comments_total,
-                    offset: comments_offset,
-                    page: comments_page,
-                    pagination: comments_pagination,
-                    can_write: can_write,
-                    error: comment_error,
-                    message: comment_message,
-                    added: comment_added,
-                    delete_error: comment_delete_error,
-                    text: comment_text,
-                } only %}
+                {% include '@theme/components/comments/discussion.twig' with discussion only %}
             </div>
 
             <aside class="site-news-layout__side">
