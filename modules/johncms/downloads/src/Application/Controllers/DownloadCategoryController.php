@@ -70,8 +70,9 @@ final readonly class DownloadCategoryController
             'summary'     => (string) $category->desc,
             'stat'        => [
                 'sections' => count($categories),
-                'files'    => (int) $category->total,
+                'files'    => $totalFiles,
             ],
+            'files_inside' => DownloadFile::query()->where('refid', $category->id)->count(),
             'total_new'   => $totalNew,
             'new_url'     => '/downloads/new/?id=' . $category->id,
             'categories'  => $categories,

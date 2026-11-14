@@ -57,6 +57,15 @@ final readonly class CatalogPresenter
             ->map(static fn (mixed $id): int => (int) $id)
             ->all();
 
+        // Deleting a category deletes every file in it, the ones waiting for a moderator too, so
+        // its question counts them all rather than the published total of the card.
+        $filesInside = DownloadFile::query()
+            ->whereIn('refid', $categories->pluck('id')->all())
+            ->groupBy('refid')
+            ->selectRaw('refid, COUNT(*) AS files')
+            ->pluck('files', 'refid')
+            ->all();
+
         $cards = [];
         $last = count($categories) - 1;
 
@@ -75,6 +84,7 @@ final readonly class CatalogPresenter
                 'is_first'    => $position === 0,
                 'is_last'     => $position === $last,
                 'has_children' => in_array($category->id, $withChildren, true),
+                'files_inside' => (int) ($filesInside[$category->id] ?? 0),
             ];
         }
 

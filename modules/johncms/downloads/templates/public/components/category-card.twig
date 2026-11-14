@@ -43,8 +43,8 @@
                         action: category.delete_url,
                         fields: {},
                         question: __('Delete the section “%s”?')|format(category.rus_name),
-                        text: category.total > 0
-                            ? n__('Its %d file is deleted with it, together with the comments and screenshots. This cannot be undone.', 'Its %d files are deleted with it, together with the comments and screenshots. This cannot be undone.', category.total)|format(category.total)
+                        text: category.files_inside > 0
+                            ? n__('Its %d file is deleted with it, together with the comments and screenshots. This cannot be undone.', 'Its %d files are deleted with it, together with the comments and screenshots. This cannot be undone.', category.files_inside)|format(category.files_inside)
                             : __('The section is empty. This cannot be undone.'),
                         label: __('Delete'),
                         class: 'site-icon-button site-icon-button--danger',

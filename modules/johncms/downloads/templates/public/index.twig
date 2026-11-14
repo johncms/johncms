@@ -4,7 +4,8 @@
 
     @var id          int          Current category, 0 on the main page.
     @var summary     string       Description of the category, empty on the main page.
-    @var stat        array        sections, files — what the heading says the section holds.
+    @var stat        array        sections, files — what the heading says the level holds: its subsections and its own published files.
+    @var files_inside int         Files of the category, those waiting for a moderator included, for the question before deleting it.
     @var total_new   int          New files here and below, for the chip.
     @var new_url     string
     @var categories  array        Cards, see CatalogPresenter::categories().
@@ -47,7 +48,7 @@
                         </a>
                     {% endif %}
                     {% if can_manage %}
-                        {% include '@downloads/public/components/section-actions.twig' with {id: id, name: page_title, files: stat.files, has_children: categories is not empty} only %}
+                        {% include '@downloads/public/components/section-actions.twig' with {id: id, name: page_title, files: files_inside, has_children: categories is not empty} only %}
                     {% endif %}
                 </div>
             {% endif %}

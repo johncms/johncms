@@ -62,6 +62,7 @@ final readonly class IndexController
                 'sections' => count($categories),
                 'files'    => DownloadFile::query()->where('type', 2)->count(),
             ],
+            'files_inside' => 0,
             'total_new'   => DownloadFile::query()->where('type', 2)->where('time', '>', time() - FilePresenter::NEW_FILE_PERIOD)->count(),
             'new_url'     => '/downloads/new/',
             'categories'  => $categories,

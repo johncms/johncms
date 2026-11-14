@@ -73,6 +73,32 @@ final class DownloadsCatalogTest extends FunctionalTestCase
         self::assertSame('/downloads/docs/?sort=name&order=asc#downloads-files', $page->querySelector('.site-downloads__order')?->getAttribute('href'));
     }
 
+    public function testTheHeadingOfACategoryCountsItsOwnFiles(): void
+    {
+        $docs = Fixture::insert('download__category', ['name' => 'docs', 'slug' => 'docs', 'dir' => $this->directory . '/docs', 'rus_name' => 'Documents', 'total' => 3]);
+        Fixture::insert('download__category', ['refid' => $docs, 'name' => 'old', 'slug' => 'old', 'dir' => $this->directory . '/docs/old', 'rus_name' => 'Old', 'total' => 2]);
+        Fixture::insert('download__files', ['type' => 2, 'refid' => $docs, 'name' => 'a.zip', 'dir' => $this->directory . '/docs', 'rus_name' => 'A']);
+
+        $stat = trim((string) $this->page('/downloads/docs/')->querySelector('.site-page-stat')?->textContent);
+
+        // The language of the page depends on the session, so the numbers are what is checked.
+        self::assertSame(['1', '1'], preg_match_all('/\d+/', $stat, $numbers) ? $numbers[0] : [], 'One subsection and one file of its own: the files of the subsections are counted on their cards.');
+    }
+
+    public function testDeletingASectionWarnsAboutTheFilesWaitingForAModerator(): void
+    {
+        $docs = Fixture::insert('download__category', ['name' => 'docs', 'slug' => 'docs', 'dir' => $this->directory . '/docs', 'rus_name' => 'Documents', 'total' => 0]);
+        Fixture::insert('download__files', ['type' => 3, 'refid' => $docs, 'name' => 'a.zip', 'dir' => $this->directory . '/docs', 'rus_name' => 'Pending']);
+        $moderator = FunctionalUserFactory::createSupervisor();
+
+        $card = $this->page('/downloads/', $moderator)->querySelector('.site-dl-card__actions form[action$="/delete"]');
+        $menu = $this->page('/downloads/docs/', $moderator)->querySelector('.site-popover__panel form[action$="/delete"]');
+
+        foreach ([$card, $menu] as $form) {
+            self::assertMatchesRegularExpression('/\b1\b/u', (string) $form?->getAttribute('data-confirm-text'), 'A pending file is deleted with the section, so the question counts it.');
+        }
+    }
+
     private function page(string $uri, mixed $user = null): HTMLDocument
     {
         $cookies = $user === null ? [] : $this->actingAs($user);

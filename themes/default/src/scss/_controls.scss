@@ -22,6 +22,8 @@
 
 .site-segmented {
   display: inline-flex;
+  flex-wrap: wrap;
+  max-inline-size: 100%;
   padding: .125rem;
   border: 1px solid var(--border);
   border-radius: .4375rem;
