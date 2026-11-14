@@ -70,8 +70,7 @@ final readonly class FavoritesController
                 'description' => $meta->description,
                 'files'       => $files,
                 'total_files' => $pagination->getTotal(),
-                'pagination'  => $pagination->hasPages() ? $pagination->render() : null,
-                'urls'        => ['downloads' => '/downloads/'],
+                'pagination'  => $pagination->hasPages() ? $pagination->render(withRange: true) : null,
             ]
         );
     }

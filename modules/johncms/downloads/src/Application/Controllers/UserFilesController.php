@@ -88,8 +88,7 @@ final readonly class UserFilesController
                 'show_user'   => $showUser,
                 'files'       => $files,
                 'total'       => $pagination->getTotal(),
-                'pagination'  => $pagination->hasPages() ? $pagination->render() : null,
-                'urls'        => ['downloads' => '/downloads/'],
+                'pagination'  => $pagination->hasPages() ? $pagination->render(withRange: true) : null,
             ]
         );
     }

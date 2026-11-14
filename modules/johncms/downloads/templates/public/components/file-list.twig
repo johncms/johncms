@@ -1,0 +1,25 @@
+{#
+    A list of files under a heading, with its empty state and pagination.
+
+    @var heading     string
+    @var count       int|null     Shown beside the heading; null hides it.
+    @var files       array        Presented files, see FilePresenter::present().
+    @var pagination  \Twig\Markup|null
+    @var empty_icon  string
+    @var empty_title string
+    @var empty_text  string
+#}
+<section aria-labelledby="downloads-list-title">
+    <h2 class="site-downloads__heading" id="downloads-list-title">
+        {{ heading }}
+        {% if count is not null %}<span class="site-downloads__count">{{ count|format_number }}</span>{% endif %}
+    </h2>
+    <div class="site-downloads__list">
+        {% for file in files %}
+            {% include '@downloads/public/components/file-row.twig' with {file: file} only %}
+        {% else %}
+            {% include '@theme/components/empty-state.twig' with {icon: empty_icon, title: empty_title, description: empty_text} only %}
+        {% endfor %}
+    </div>
+    {% if pagination %}<div class="site-downloads__pagination">{{ pagination }}</div>{% endif %}
+</section>

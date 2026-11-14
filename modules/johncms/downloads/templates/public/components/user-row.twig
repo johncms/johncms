@@ -1,49 +1,34 @@
 {#
     One user in the top of uploaders and in the header of their file list.
 
-    @var item array id, name, user_is_online, user_profile_link, files_url, files_count,
-                    search_ip_url, ip, search_ip_via_proxy_url, ip_via_proxy, browser
+    @var item array id, name, user_is_online, user_profile_link, files_url (empty on their own
+                    list), files_count, ip, ip_via_proxy, browser
 #}
-<div class="user-row card shadow border-0 mb-2">
-    <div class="card-body">
-        <div class="d-flex align-items-start">
-            <div class="user-avatar me-2 me-md-4">
-                <div class="avatar-image rounded-circle overflow-hidden">
-                    <img src="{{ avatar(item.id) }}" class="img-fluid" alt=".">
-                </div>
-                <div class="user-status {{ item.user_is_online ? 'online' : 'offline' }} shadow"></div>
-            </div>
-            <div class="overflow-auto flex-grow-1">
-                <div class="user-name">
-                    {% if item.user_profile_link %}
-                        <a href="{{ item.user_profile_link }}" class="user-login me-2">{{ item.name }}</a>
-                    {% else %}
-                        <a class="user-login me-2">{{ item.name }}</a>
-                    {% endif %}
-                </div>
+<article class="card site-dl-user">
+    <div class="card-body site-dl-user__body">
+        <span class="site-dl-user__avatar">
+            <img src="{{ avatar(item.id) }}" alt="" width="40" height="40" loading="lazy">
+            {% if item.user_is_online %}<span class="site-dl-user__online" title="{{ __('Online') }}"></span>{% endif %}
+        </span>
+        <div class="site-dl-user__main">
+            {% if item.user_profile_link %}
+                <a class="site-dl-user__name" href="{{ item.user_profile_link }}">{{ item.name }}</a>
+            {% else %}
+                <span class="site-dl-user__name">{{ item.name }}</span>
+            {% endif %}
+            {% if item.files_count is defined %}
+                {% set count_label = n__('%d file', '%d files', item.files_count)|format(item.files_count) %}
                 {% if item.files_url|default('') %}
-                    <div class="text">
-                        <a href="{{ item.files_url }}">{{ __('User Files') }}: {{ item.files_count }}</a>
-                    </div>
+                    <a class="site-dl-user__files" href="{{ item.files_url }}">{{ count_label }}</a>
+                {% else %}
+                    <span class="site-dl-user__files">{{ count_label }}</span>
                 {% endif %}
-            </div>
+            {% endif %}
         </div>
         {% if can('users.origin.view') %}
-            <div class="post-footer d-flex justify-content-between border-top pt-2 mt-2">
-                <div class="post-user-info d-flex overflow-hidden small align-items-center">
-                    <div class="user-ip me-2">
-                        <a href="{{ item.search_ip_url }}">{{ item.ip }}</a>
-                        {% if item.ip_via_proxy %}
-                            / <a href="{{ item.search_ip_via_proxy_url }}">{{ item.ip_via_proxy }}</a>
-                        {% endif %}
-                    </div>
-                    <div class="useragent">
-                        <span>User-Agent:</span>
-                        <span>{{ item.browser }}</span>
-                    </div>
-                </div>
-            </div>
+            {% include '@theme/components/moderator-meta.twig' with {
+                ip: item.ip|default(''), ip_via_proxy: item.ip_via_proxy|default(''), user_agent: item.browser|default('')
+            } only %}
         {% endif %}
     </div>
-    <div class="footer"></div>
-</div>
+</article>

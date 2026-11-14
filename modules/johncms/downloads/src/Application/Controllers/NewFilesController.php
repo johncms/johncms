@@ -9,7 +9,9 @@ use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\Exceptions\DownloadNotFoundException;
+use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\UseCases\ViewNewFilesUseCase;
+use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
@@ -22,6 +24,7 @@ final readonly class NewFilesController
         private FilePresenter $filePresenter,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
+        private DownloadCategoryPathService $categoryPathService,
     ) {
     }
 
@@ -70,11 +73,25 @@ final readonly class NewFilesController
                 'title'       => $meta->title,
                 'page_title'  => $pageTitle,
                 'description' => $meta->description,
-                'pagination'  => $pagination->hasPages() ? $pagination->render() : null,
+                'pagination'  => $pagination->hasPages() ? $pagination->render(withRange: true) : null,
                 'files'       => $files,
                 'total'       => $pagination->getTotal(),
-                'urls'        => ['downloads' => '/downloads/'],
+                'category'    => $this->category($categoryId),
             ]
         );
+    }
+
+    /**
+     * The category the list is narrowed to, for the line under the heading.
+     *
+     * @return array{name: string, url: string}|null
+     */
+    private function category(int $categoryId): ?array
+    {
+        $category = $categoryId > 0 ? DownloadCategory::query()->find($categoryId) : null;
+
+        return $category === null
+            ? null
+            : ['name' => $category->rus_name, 'url' => $this->categoryPathService->getCategoryUrl($category)];
     }
 }

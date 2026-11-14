@@ -1,32 +1,34 @@
 {#
-    The top of files: the most popular, downloaded or commented ones.
+    The top of the files: the popular ones, the most downloaded, the most commented.
 
     @var files   array Presented files, see FilePresenter::present().
-    @var buttons array Switches of the sorting: url, name, active.
-    @var urls    array downloads
+    @var buttons array Switches of the top: url, name, active.
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
 {% block content %}
-    <div class="mb-3 mt-n1">
-        {% for button in buttons %}
-            <a href="{{ button.url }}" class="btn btn-outline-primary btn-sm me-1 mt-1 {{ button.active ? 'active' : '' }}">{{ button.name }}</a>
-        {% endfor %}
-    </div>
-
-    {% if files is empty %}
-        <div class="row">
-            <div class="col-md-6">
-                <div class="alert alert-info">{{ __('List is empty') }}</div>
-            </div>
+    <div class="site-downloads">
+        <div class="site-downloads__toolbar">
+            {% include '@downloads/public/components/collections-nav.twig' with {current: 'top'} only %}
         </div>
-    {% endif %}
-
-    {% for file in files %}
-        {% include '@downloads/public/components/file-row.twig' with {file: file} only %}
-    {% endfor %}
-
-    <div class="mt-3">
-        <a href="{{ urls.downloads }}">{{ __('Downloads') }}</a>
+        <section aria-labelledby="downloads-list-title">
+            <div class="site-downloads__heading-row">
+                <h2 class="site-downloads__heading" id="downloads-list-title">{{ __('Files') }} <span class="site-downloads__count">{{ files|length }}</span></h2>
+                <div class="site-segmented site-downloads__sort" role="group" aria-label="{{ __('Top Files') }}">
+                    {% for button in buttons %}
+                        <a class="site-segmented__item" href="{{ button.url }}"{% if button.active %} aria-current="page"{% endif %}>{{ button.name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="site-downloads__list">
+                {% for file in files %}
+                    {% include '@downloads/public/components/file-row.twig' with {file: file} only %}
+                {% else %}
+                    {% include '@theme/components/empty-state.twig' with {icon: 'trophy', title: __('List is empty'), description: __('The top fills up as files are downloaded.')} only %}
+                {% endfor %}
+            </div>
+        </section>
     </div>
 {% endblock %}

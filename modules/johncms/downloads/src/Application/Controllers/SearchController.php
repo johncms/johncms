@@ -32,20 +32,11 @@ final readonly class SearchController
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add(__('Search'), '/downloads/search/');
 
-        if (! empty($rawQuery) && mb_strlen($rawQuery) < 2 || mb_strlen($rawQuery) > 64) {
-            return new ViewResponse(
-                '@theme/pages/result.twig',
-                [
-                    'title'         => __('Error'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Invalid file name length. Allowed a minimum of 3 and a maximum of 64 characters.'),
-                    'back_url'      => '/downloads/',
-                    'back_url_name' => __('Downloads'),
-                ]
-            );
-        }
+        $length = mb_strlen($rawQuery);
 
-        if (empty($rawQuery)) {
+        // Nothing searched yet, or a query the search does not take: the form alone, with the
+        // reason beside it in the second case.
+        if ($length < 2 || $length > 64) {
             $pageTitle = __('Search');
             $documentTitle = $pageTitle . ' — ' . __('Downloads');
 
@@ -58,10 +49,10 @@ final readonly class SearchController
                     'files'                 => [],
                     'total'                 => 0,
                     'pagination'            => null,
-                    'search_query'          => '',
-                    'search_in_description' => false,
-                    'show_empty_info'       => false,
-                    'urls'                  => ['downloads' => '/downloads/'],
+                    'search_query'          => $rawQuery,
+                    'search_in_description' => $searchInDescription,
+                    'searched'              => false,
+                    'error'                 => $length > 0 ? __('The query has to be from 2 to 64 characters long.') : '',
                 ]
             );
         }
@@ -93,11 +84,11 @@ final readonly class SearchController
                 'description'           => $meta->description,
                 'files'                 => $files,
                 'total'                 => $pagination->getTotal(),
-                'pagination'            => $pagination->hasPages() ? $pagination->render() : null,
+                'pagination'            => $pagination->hasPages() ? $pagination->render(withRange: true) : null,
                 'search_query'          => $result->searchQuery,
                 'search_in_description' => $result->searchInDescription,
-                'show_empty_info'       => true,
-                'urls'                  => ['downloads' => '/downloads/'],
+                'searched'              => true,
+                'error'                 => '',
             ]
         );
     }

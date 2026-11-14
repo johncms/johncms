@@ -53,7 +53,6 @@ final readonly class TopFilesController
                 'description' => $pageTitle . ' — ' . __('Downloads'),
                 'files'       => $files,
                 'buttons'     => $result->buttons,
-                'urls'        => ['downloads' => '/downloads/'],
             ]
         );
     }

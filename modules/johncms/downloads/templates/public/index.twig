@@ -36,23 +36,9 @@
 {% block content %}
     <div class="site-downloads">
         <div class="site-downloads__toolbar">
-            <nav class="site-downloads__chips" aria-label="{{ __('Collections') }}">
-                {% if total_new > 0 %}
-                    <a class="site-chip" href="{{ new_url }}">
-                        {% include '@theme/components/icon.twig' with {name: 'sparkles', size: 12} only %}
-                        {{ __('New Files') }} <span class="site-chip__count">{{ total_new|format_number }}</span>
-                    </a>
-                {% endif %}
-                <a class="site-chip" href="/downloads/search/">{% include '@theme/components/icon.twig' with {name: 'search', size: 12} only %} {{ __('Search') }}</a>
-                <a class="site-chip" href="/downloads/top/">{% include '@theme/components/icon.twig' with {name: 'trophy', size: 12} only %} {{ __('Top Files') }}</a>
-                <a class="site-chip" href="/downloads/top-users/">{% include '@theme/components/icon.twig' with {name: 'users', size: 12} only %} {{ __('Top Users') }}</a>
-                {% if app.user.isValid %}
-                    <a class="site-chip" href="/downloads/favorites/">{% include '@theme/components/icon.twig' with {name: 'star', size: 12} only %} {{ __('Favorites') }}</a>
-                {% endif %}
-                {% if can_review %}
-                    <a class="site-chip" href="/downloads/comments-review/">{% include '@theme/components/icon.twig' with {name: 'messages-square', size: 12} only %} {{ __('Review comments') }}</a>
-                {% endif %}
-            </nav>
+            {% include '@downloads/public/components/collections-nav.twig' with {
+                total_new: total_new, new_url: new_url, can_review: can_review
+            } only %}
             {% if can_upload or can_manage %}
                 <div class="site-downloads__actions">
                     {% if can_upload and id %}

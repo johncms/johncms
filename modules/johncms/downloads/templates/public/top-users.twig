@@ -4,24 +4,26 @@
     @var users      array        See the component of a user row for the keys.
     @var total      int
     @var pagination \Twig\Markup Null when everything fits on one page.
-    @var urls       array        downloads
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
 {% block content %}
-    {% if users is empty %}
-        <div class="alert alert-info">{{ __('List is empty') }}</div>
-    {% endif %}
-
-    {% for list_user in users %}
-        {% include '@downloads/public/components/user-row.twig' with {item: list_user} only %}
-    {% endfor %}
-
-    {% if pagination %}
-        <div class="mt-2">{{ pagination }}</div>
-    {% endif %}
-
-    <div class="mt-3">
-        <a href="{{ urls.downloads }}">{{ __('Downloads') }}</a>
+    <div class="site-downloads">
+        <div class="site-downloads__toolbar">
+            {% include '@downloads/public/components/collections-nav.twig' with {current: 'top-users'} only %}
+        </div>
+        <section aria-labelledby="downloads-list-title">
+            <h2 class="site-downloads__heading" id="downloads-list-title">{{ __('Users') }} <span class="site-downloads__count">{{ total|format_number }}</span></h2>
+            <div class="site-downloads__list">
+                {% for list_user in users %}
+                    {% include '@downloads/public/components/user-row.twig' with {item: list_user} only %}
+                {% else %}
+                    {% include '@theme/components/empty-state.twig' with {icon: 'users', title: __('List is empty'), description: __('Users who upload files appear here.')} only %}
+                {% endfor %}
+            </div>
+            {% if pagination %}<div class="site-downloads__pagination">{{ pagination }}</div>{% endif %}
+        </section>
     </div>
 {% endblock %}

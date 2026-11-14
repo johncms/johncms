@@ -109,6 +109,54 @@ msgstr "Редактировать файл"
 msgid "Delete File"
 msgstr "Удалить файл"
 
+msgid "Add a file from its page to find it here."
+msgstr "Добавьте файл со страницы файла, чтобы найти его здесь."
+
+msgid "By the name of a file, without regard to case; from 2 to 64 characters."
+msgstr "По названию файла, без учёта регистра; от 2 до 64 символов."
+
+msgid "Files added in the last three days appear here."
+msgstr "Здесь появляются файлы, добавленные за последние три дня."
+
+msgid "Files this user uploads appear here."
+msgstr "Здесь появятся файлы, которые загрузит пользователь."
+
+msgid "Found"
+msgstr "Найдено"
+
+msgid "No files yet"
+msgstr "Файлов пока нет"
+
+msgid "No new files"
+msgstr "Новых файлов нет"
+
+msgid "Nothing found"
+msgstr "Ничего не найдено"
+
+msgid "Online"
+msgstr "В сети"
+
+msgid "Search the files"
+msgstr "Поиск файлов"
+
+msgid "The favorites are empty"
+msgstr "В избранном пусто"
+
+msgid "The query has to be from 2 to 64 characters long."
+msgstr "Запрос должен быть длиной от 2 до 64 символов."
+
+msgid "The top fills up as files are downloaded."
+msgstr "Топ заполнится, когда файлы начнут скачивать."
+
+msgid "Try another word or search in the descriptions too."
+msgstr "Попробуйте другое слово или включите поиск в описаниях."
+
+msgid "Users"
+msgstr "Пользователи"
+
+msgid "Users who upload files appear here."
+msgstr "Здесь появятся пользователи, загружающие файлы."
+
 msgid "%d%% approve"
 msgstr "%d%% одобряют"
 

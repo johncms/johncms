@@ -1,39 +1,24 @@
 {#
-    Files uploaded by one user.
+    The files one user has uploaded, under a card of the user.
 
     @var show_user  array        Author of the files, see the component of a user row.
     @var files      array        Presented files, see FilePresenter::present().
     @var total      int
     @var pagination \Twig\Markup Null when everything fits on one page.
-    @var urls       array        downloads
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
 {% block content %}
-    {% include '@downloads/public/components/user-row.twig' with {item: show_user} only %}
-
-    {% if files is empty %}
-        <div class="row">
-            <div class="col-md-6">
-                <div class="alert alert-info">{{ __('The list is empty') }}</div>
-            </div>
+    <div class="site-downloads">
+        <div class="site-downloads__toolbar">
+            {% include '@downloads/public/components/collections-nav.twig' only %}
         </div>
-    {% else %}
-        {% for file in files %}
-            {% include '@downloads/public/components/file-row.twig' with {file: file} only %}
-        {% endfor %}
-    {% endif %}
-
-    {% if total %}
-        <div>
-            <div>{{ __('Total') }}: {{ total }}</div>
-            {% if pagination %}
-                <div class="mt-1">{{ pagination }}</div>
-            {% endif %}
-        </div>
-    {% endif %}
-
-    <div class="mt-3">
-        <a href="{{ urls.downloads }}">{{ __('Downloads') }}</a>
+        {% include '@downloads/public/components/user-row.twig' with {item: show_user|merge({files_count: total})} only %}
+        {% include '@downloads/public/components/file-list.twig' with {
+            heading: __('Files'), count: total, files: files, pagination: pagination,
+            empty_icon: 'upload', empty_title: __('No files yet'), empty_text: __('Files this user uploads appear here.'),
+        } only %}
     </div>
 {% endblock %}

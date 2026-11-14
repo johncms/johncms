@@ -176,3 +176,30 @@
   .site-dlf__prop:last-child { border-block-end: 0; }
   .site-dlf__section { padding: 1rem; }
 }
+
+// The collections: the search form and the rows of users.
+.site-dl-search {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem 1rem;
+  &__field { flex: 1 1 20rem; max-inline-size: 28rem; }
+  &__field.is-invalid { border-color: var(--danger); }
+  &__option { margin: 0; font-size: .8125rem; }
+  &__error { flex-basis: 100%; margin: 0; color: var(--danger); font-size: .8125rem; }
+}
+
+.site-dl-user {
+  --bs-card-spacer-y: .75rem;
+  --bs-card-spacer-x: .875rem;
+  --bs-card-border-radius: .625rem;
+  &__body { display: flex; align-items: center; gap: .75rem; }
+  &__avatar { position: relative; flex-shrink: 0; }
+  &__avatar img { display: block; inline-size: 2.5rem; block-size: 2.5rem; border-radius: 50%; object-fit: cover; }
+  &__online { position: absolute; inset-block-end: 0; inset-inline-end: 0; inline-size: .625rem; block-size: .625rem; border: 2px solid var(--bg-elev); border-radius: 50%; background: var(--accent); }
+  &__main { display: flex; flex: 1; flex-direction: column; gap: .125rem; min-inline-size: 0; }
+  &__name { color: var(--fg); font-size: .875rem; font-weight: 600; text-decoration: none; overflow-wrap: anywhere; }
+  a.site-dl-user__name:hover { color: var(--accent); }
+  &__files { color: var(--fg-dim); font-family: var(--bs-font-monospace); font-size: .6875rem; text-decoration: none; }
+  a.site-dl-user__files:hover { color: var(--accent); }
+}

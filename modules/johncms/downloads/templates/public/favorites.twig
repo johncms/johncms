@@ -1,32 +1,22 @@
 {#
-    Files the visitor put into their favorites.
+    The files the visitor keeps in the favorites.
 
     @var files       array        Presented files, see FilePresenter::present().
     @var total_files int
     @var pagination  \Twig\Markup Null when everything fits on one page.
-    @var urls        array        downloads
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
 {% block content %}
-    {% if files is empty %}
-        <div class="alert alert-info">{{ __('List is empty') }}</div>
-    {% endif %}
-
-    {% for file in files %}
-        {% include '@downloads/public/components/file-row.twig' with {file: file} only %}
-    {% endfor %}
-
-    {% if total_files %}
-        <div>
-            <div>{{ __('Total') }}: {{ total_files }}</div>
-            {% if pagination %}
-                <div class="mt-1">{{ pagination }}</div>
-            {% endif %}
+    <div class="site-downloads">
+        <div class="site-downloads__toolbar">
+            {% include '@downloads/public/components/collections-nav.twig' with {current: 'favorites'} only %}
         </div>
-    {% endif %}
-
-    <div class="mt-2">
-        <a href="{{ urls.downloads }}">{{ __('Downloads') }}</a>
+        {% include '@downloads/public/components/file-list.twig' with {
+            heading: __('Files'), count: total_files, files: files, pagination: pagination,
+            empty_icon: 'star', empty_title: __('The favorites are empty'), empty_text: __('Add a file from its page to find it here.'),
+        } only %}
     </div>
 {% endblock %}

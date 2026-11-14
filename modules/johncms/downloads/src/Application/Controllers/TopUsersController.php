@@ -67,8 +67,7 @@ final readonly class TopUsersController
                 'description' => $meta->description,
                 'users'       => $users,
                 'total'       => $pagination->getTotal(),
-                'pagination'  => $pagination->hasPages() ? $pagination->render() : null,
-                'urls'        => ['downloads' => '/downloads/'],
+                'pagination'  => $pagination->hasPages() ? $pagination->render(withRange: true) : null,
             ]
         );
     }

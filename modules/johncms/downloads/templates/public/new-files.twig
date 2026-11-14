@@ -1,32 +1,29 @@
 {#
-    Files added over the last few days.
+    Files added in the last days, everywhere or in one category and below it.
 
     @var files      array        Presented files, see FilePresenter::present().
     @var total      int
     @var pagination \Twig\Markup Null when everything fits on one page.
-    @var urls       array        downloads
+    @var category   array|null   name, url of the category the list is narrowed to.
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
+{% block page_subtitle %}
+    {% if category %}
+        <p class="site-page-heading__subtitle"><span>{{ __('In the section') }} <a href="{{ category.url }}">{{ category.name }}</a></span></p>
+    {% endif %}
+{% endblock %}
+
 {% block content %}
-    {% if files is empty %}
-        <div class="alert alert-info">{{ __('The list is empty') }}</div>
-    {% else %}
-        {% for file in files %}
-            {% include '@downloads/public/components/file-row.twig' with {file: file} only %}
-        {% endfor %}
-    {% endif %}
-
-    {% if total %}
-        <div class="mt-2">
-            <div>{{ __('Total') }}: {{ total }}</div>
-            {% if pagination %}
-                <div class="mt-2">{{ pagination }}</div>
-            {% endif %}
+    <div class="site-downloads">
+        <div class="site-downloads__toolbar">
+            {% include '@downloads/public/components/collections-nav.twig' with {current: 'new'} only %}
         </div>
-    {% endif %}
-
-    <div class="mt-3">
-        <a href="{{ urls.downloads }}">{{ __('Downloads') }}</a>
+        {% include '@downloads/public/components/file-list.twig' with {
+            heading: __('Files'), count: total, files: files, pagination: pagination,
+            empty_icon: 'sparkles', empty_title: __('No new files'), empty_text: __('Files added in the last three days appear here.'),
+        } only %}
     </div>
 {% endblock %}

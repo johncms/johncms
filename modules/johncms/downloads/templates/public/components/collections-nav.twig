@@ -1,0 +1,28 @@
+{#
+    The chips of the collections of the downloads, on the catalogue and on every collection.
+
+    @var current    string Key of the page the visitor is on: new, search, top, top-users, favorites; empty elsewhere.
+    @var total_new  int    New files, for the count of the first chip; 0 shows the chip without it.
+    @var new_url    string Where the first chip leads, narrowed to a category or not.
+    @var can_review bool   The visitor may open the review of comments.
+#}
+{% set current = current|default('') %}
+{% macro chip(key, current, url, icon, label, count) %}
+    <a class="site-chip" href="{{ url }}"{% if key == current %} aria-current="page"{% endif %}>
+        {% include '@theme/components/icon.twig' with {name: icon, size: 12} only %} {{ label }}
+        {% if count %}<span class="site-chip__count">{{ count|format_number }}</span>{% endif %}
+    </a>
+{% endmacro %}
+{% import _self as nav %}
+<nav class="site-downloads__chips" aria-label="{{ __('Collections') }}">
+    {{ nav.chip('new', current, new_url|default('/downloads/new/'), 'sparkles', __('New Files'), total_new|default(0)) }}
+    {{ nav.chip('search', current, '/downloads/search/', 'search', __('Search'), 0) }}
+    {{ nav.chip('top', current, '/downloads/top/', 'trophy', __('Top Files'), 0) }}
+    {{ nav.chip('top-users', current, '/downloads/top-users/', 'users', __('Top Users'), 0) }}
+    {% if app.user.isValid %}
+        {{ nav.chip('favorites', current, '/downloads/favorites/', 'star', __('Favorites'), 0) }}
+    {% endif %}
+    {% if can_review|default(false) %}
+        {{ nav.chip('review', current, '/downloads/comments-review/', 'messages-square', __('Review comments'), 0) }}
+    {% endif %}
+</nav>
