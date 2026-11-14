@@ -109,13 +109,21 @@ final readonly class EditorUploads
         $unbound = $this->uploads->getUnboundFileIds($userId);
         $shown = array_flip($this->imageSources->in($html));
 
-        $kept = [];
+        // One file for each picture shown. Identical uploads share a path, so one address may
+        // stand for several of them: the one the record already holds is kept, otherwise the
+        // first of the user's, and the rest stay unsent for the cleanup.
+        $byKey = [];
+        $ownedSet = array_flip($owned);
         foreach ($this->files->getByIds(array_values(array_unique([...$owned, ...$unbound]))) as $file) {
             $key = $this->imageSources->key($file->url);
-            if ($key !== null && isset($shown[$key])) {
-                $kept[] = $file->id;
+            if ($key === null || ! isset($shown[$key])) {
+                continue;
+            }
+            if (! isset($byKey[$key]) || (isset($ownedSet[$file->id]) && ! isset($ownedSet[$byKey[$key]]))) {
+                $byKey[$key] = $file->id;
             }
         }
+        $kept = array_values($byKey);
 
         if (count($kept) > self::MAX_PER_OWNER) {
             throw new EditorUploadBindException(

@@ -184,6 +184,29 @@ final class EditorUploadsTest extends FunctionalTestCase
         $this->uploads->bind(self::OWNER, 7, $userId, $html);
     }
 
+    public function testIdenticalUploadsOfOnePictureCountOnce(): void
+    {
+        $userId = FunctionalUserFactory::create()->id;
+        $original = $this->picture();
+        $files = [];
+        for ($i = 0; $i <= EditorUploads::MAX_PER_OWNER; $i++) {
+            // Each upload is a copy of the same bytes: the store gives them one path, so one address.
+            $copy = $this->temporaryFile('png');
+            copy($original, $copy);
+            $files[] = $this->uploads->store(new UploadedFileDTO('photo.png', 'image/png', (int) filesize($copy), $copy, UPLOAD_ERR_OK), self::OWNER, $userId);
+        }
+        $this->storedFiles = [...$this->storedFiles, ...array_map(static fn(StoredFileDTO $file): int => $file->id, $files)];
+        self::assertSame($files[0]->url, $files[EditorUploads::MAX_PER_OWNER]->url);
+
+        $this->uploads->bind(self::OWNER, 7, $userId, '<img src="' . $files[0]->url . '">');
+        self::assertCount(1, $this->owned(7));
+
+        // Shown again on an edit, the picture the record holds is the one it keeps.
+        $held = $this->owned(7);
+        $this->uploads->bind(self::OWNER, 7, $userId, '<p>Edited</p><img src="' . $files[0]->url . '">');
+        self::assertSame($held, $this->owned(7));
+    }
+
     public function testAnEditKeepsThePicturesStillShownAndDeletesTheOthers(): void
     {
         $userId = FunctionalUserFactory::create()->id;
