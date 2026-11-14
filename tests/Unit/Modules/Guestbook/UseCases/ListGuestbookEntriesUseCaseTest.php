@@ -152,7 +152,7 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
         self::assertNotNull($dto->meta);
         self::assertTrue($dto->meta->canManage);
         self::assertSame('/guestbook/edit?id=10', $dto->meta->editUrl);
-        self::assertSame('/guestbook/delpost?id=10', $dto->meta->deleteUrl);
+        self::assertSame('/guestbook/delpost', $dto->meta->deleteUrl);
         self::assertSame('/guestbook/otvet?id=10', $dto->meta->replyUrl);
     }
 

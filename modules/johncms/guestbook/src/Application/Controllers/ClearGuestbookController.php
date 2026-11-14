@@ -8,7 +8,6 @@ use Johncms\Modules\Guestbook\Application\Access\GuestbookMode;
 use Johncms\Modules\Guestbook\Application\UseCases\ClearGuestbookUseCase;
 use Johncms\Modules\Guestbook\Domain\Enums\ClearGuestbookPeriod;
 use Johncms\Http\Request;
-use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
 
 final readonly class ClearGuestbookController
@@ -20,25 +19,18 @@ final readonly class ClearGuestbookController
     ) {
     }
 
-    public function __invoke(Request $request): ViewResponse
+    public function __invoke(Request $request): never
     {
-        $baseUrl = '/guestbook/';
+        $period = ClearGuestbookPeriod::tryFrom($request->bodyInt('cl'))
+            ?? ClearGuestbookPeriod::OlderThanWeek;
 
-        if ($request->getMethod() === 'POST') {
-            $period = ClearGuestbookPeriod::tryFrom($request->bodyInt('cl'))
-                ?? ClearGuestbookPeriod::OlderThanWeek;
+        $this->clearUseCase->execute($this->mode->isAdminClub(), $period);
 
-            $this->clearUseCase->execute($this->mode->isAdminClub(), $period);
-
-            $this->session->flash('message', match ($period) {
-                ClearGuestbookPeriod::OlderThanWeek => __('All messages older than 1 week were deleted'),
-                ClearGuestbookPeriod::OlderThanDay  => __('All messages older than 1 day were deleted'),
-                ClearGuestbookPeriod::All           => __('Full clearing is finished'),
-            });
-            redirect($baseUrl);
-        }
-
-        // Request cleaning options
-        return new ViewResponse('@guestbook/public/clear.twig');
+        $this->session->flash('message', match ($period) {
+            ClearGuestbookPeriod::OlderThanWeek => __('All messages older than 1 week were deleted'),
+            ClearGuestbookPeriod::OlderThanDay  => __('All messages older than 1 day were deleted'),
+            ClearGuestbookPeriod::All           => __('Full clearing is finished'),
+        });
+        redirect('/guestbook/');
     }
 }

@@ -67,10 +67,14 @@
                                     {% include '@theme/components/icon.twig' with {name: 'pencil', size: 14} only %}
                                     <span>{{ __('Edit') }}</span>
                                 </a>
-                                <a class="site-popover__item" href="{{ post.meta.deleteUrl }}" data-url="{{ post.meta.deleteUrl }}" data-bs-toggle="modal" data-bs-target=".ajax_modal">
-                                    {% include '@theme/components/icon.twig' with {name: 'trash-2', size: 14} only %}
-                                    <span>{{ __('Delete') }}</span>
-                                </a>
+                                <form method="post" action="{{ post.meta.deleteUrl }}" data-live-list-form data-confirm="{{ __('Delete this message?') }}" data-confirm-button="{{ __('Delete') }}">
+                                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                                    <input type="hidden" name="id" value="{{ post.id }}">
+                                    <button type="submit" class="site-popover__item">
+                                        {% include '@theme/components/icon.twig' with {name: 'trash-2', size: 14} only %}
+                                        <span>{{ __('Delete') }}</span>
+                                    </button>
+                                </form>
                             </div>
                         </details>
                     {% endif %}

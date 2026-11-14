@@ -9,6 +9,7 @@
       'All messages older than 1 day were deleted' => 'Удалены все сообщения, старше 1 дня',
       'Full clearing is finished' => 'Проведена полная очистка',
       'Delete message' => 'Удалить сообщение',
+      'Delete this message?' => 'Удалить это сообщение?',
       'Wrong data' => 'Неверные данные',
       'The message was deleted' => 'Сообщение удалено',
       'Edit message' => 'Изменить сообщение',

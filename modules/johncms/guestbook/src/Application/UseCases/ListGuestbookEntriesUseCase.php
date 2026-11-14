@@ -109,7 +109,7 @@ final readonly class ListGuestbookEntriesUseCase
             userAgent:   $canSeeOrigin ? $entry->browser : null,
             canManage:   $canManage,
             editUrl:     $canManage ? '/guestbook/edit?id=' . $entry->id : null,
-            deleteUrl:   $canManage ? '/guestbook/delpost?id=' . $entry->id : null,
+            deleteUrl:   $canManage ? '/guestbook/delpost' : null,
             // The reply of the staff is a permission of its own, and the screen behind the link
             // asks for it.
             replyUrl:    $canManage && $this->accessChecker->allows(GuestbookPermissions::ENTRY_REPLY)

@@ -1,5 +1,5 @@
 // The dialog that asks before a form is sent (components/confirm-dialog.twig): a question, an
-// optional line under it and the two answers, with nothing else around them.
+// optional line and fields under it and the two answers, with nothing else around them.
 
 .site-confirm {
   --bs-modal-width: 25rem;
@@ -13,4 +13,5 @@
 
   &__title { margin: 0; font-size: 1.0625rem; font-weight: 700; line-height: 1.4; overflow-wrap: anywhere; }
   &__text { margin: .5rem 0 0; color: var(--fg-muted); font-size: .875rem; line-height: 1.55; }
+  &__fields { display: grid; gap: .5rem; margin-block-start: 1rem; }
 }

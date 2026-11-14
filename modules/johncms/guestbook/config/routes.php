@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Johncms\Http\Middleware\RequireAuthMiddleware;
+use Johncms\Http\Middleware\RequireConfirmationMiddleware;
 use Johncms\Modules\Guestbook\Application\Controllers\ClearGuestbookController;
 use Johncms\Modules\Guestbook\Application\Controllers\DeleteEntryController;
 use Johncms\Modules\Guestbook\Application\Controllers\EditEntryController;
@@ -23,17 +24,19 @@ return static function (RouteCollection $router): void {
         ->name('guestbook.edit')
         ->addMiddleware(GuestbookEditAccessMiddleware::class);
     $router
-        ->map(['GET', 'POST'], '/guestbook/delpost', DeleteEntryController::class)
+        ->post('/guestbook/delpost', DeleteEntryController::class)
         ->name('guestbook.delete')
-        ->addMiddleware(GuestbookEditAccessMiddleware::class);
+        ->addMiddleware(GuestbookEditAccessMiddleware::class)
+        ->addMiddleware(RequireConfirmationMiddleware::class);
     $router
         ->map(['GET', 'POST'], '/guestbook/otvet', ReplyController::class)
         ->name('guestbook.reply')
         ->addMiddleware(GuestbookReplyAccessMiddleware::class);
     $router
-        ->map(['GET', 'POST'], '/guestbook/clean', ClearGuestbookController::class)
+        ->post('/guestbook/clean', ClearGuestbookController::class)
         ->name('guestbook.clean')
-        ->addMiddleware(GuestbookCleanAccessMiddleware::class);
+        ->addMiddleware(GuestbookCleanAccessMiddleware::class)
+        ->addMiddleware(RequireConfirmationMiddleware::class);
     $router->map(['GET', 'POST'], '/guestbook/upload_file', UploadFileController::class)
         ->name('guestbook.upload_file')
         ->addMiddleware(RequireAuthMiddleware::class);

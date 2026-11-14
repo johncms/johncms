@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Router;
 
+use Johncms\Http\Middleware\RequireConfirmationMiddleware;
 use Johncms\Modules\FilesystemModuleRepository;
+use Johncms\Modules\Guestbook\Application\Middlewares\GuestbookCleanAccessMiddleware;
 use Johncms\Modules\ModuleRegistry;
 use Johncms\Modules\ModuleStateRecord;
 use Johncms\Modules\ModuleStateStore;
@@ -39,7 +41,7 @@ final class RouteCollectorFactoryTest extends TestCase
         $guestbookCleanRoute = $this->findRouteByPath($routes, '/guestbook/clean');
         self::assertNotNull($guestbookCleanRoute, 'Guestbook route should be loaded from module config');
         self::assertSame(
-            [\Johncms\Modules\Guestbook\Application\Middlewares\GuestbookCleanAccessMiddleware::class],
+            [GuestbookCleanAccessMiddleware::class, RequireConfirmationMiddleware::class],
             $guestbookCleanRoute->getDefault('_middlewares')
         );
     }

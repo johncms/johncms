@@ -2,7 +2,9 @@
     The dialog that asks before a form is sent: one per page, filled by src/js/confirm.js from the
     form that asks. A form opts in with data-confirm="<question>"; data-confirm-text adds a line
     under the question, data-confirm-button names the button that goes ahead, and
-    data-confirm-tone="primary" paints it as a plain action instead of a destructive one.
+    data-confirm-tone="primary" paints it as a plain action instead of a destructive one;
+    data-confirm-fields="<id>" shows the fields of that <template> under the question and sends
+    their values with the form.
     The answer is sent as the confirmed field; a route that removes something takes
     RequireConfirmationMiddleware, so the form does nothing when the script did not run.
 #}
@@ -13,6 +15,7 @@
             <div class="modal-body">
                 <h2 class="site-confirm__title" id="site-confirm-title" data-confirm-title></h2>
                 <p class="site-confirm__text" data-confirm-text hidden></p>
+                <form class="site-confirm__fields" data-confirm-fields hidden></form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" data-confirm-cancel>{{ d__('system', 'Cancel') }}</button>

@@ -25,6 +25,11 @@ import { Modal } from 'bootstrap';
  * other handler of the form: a live list sends only a form that was let through. The cancel
  * button has the focus, so Enter does not go ahead by mistake; the focus goes back to the button
  * that asked once the dialog closes.
+ *
+ * A question that needs an answer beyond yes, the period to clear for instance, names a <template>
+ * with the fields: data-confirm-fields="<id of the template>". They are shown under the question
+ * and go into the form with the answer, so without the script there is nothing to choose and
+ * nothing is sent.
  */
 const element = document.querySelector('[data-confirm-dialog]');
 const approved = new WeakSet();
@@ -32,7 +37,7 @@ const FIELD = 'confirmed';
 let modal = null;
 
 /** Resolves to true when the user goes ahead, to false when the dialog is closed otherwise. */
-export function confirmAction({title, text = '', button = '', tone = 'danger'}) {
+export function confirmAction({title, text = '', button = '', tone = 'danger', fields = null}) {
   if (!element) {
     return Promise.resolve(window.confirm(title));
   }
@@ -45,6 +50,9 @@ export function confirmAction({title, text = '', button = '', tone = 'danger'}) 
   description.hidden = text === '';
   accept.textContent = button || element.dataset.defaultButton;
   accept.className = 'btn btn-' + (tone === 'primary' ? 'primary' : 'danger');
+  const fieldset = element.querySelector('[data-confirm-fields]');
+  fieldset.replaceChildren(...(fields ? [fields.content.cloneNode(true)] : []));
+  fieldset.hidden = fields === null;
 
   return new Promise(resolve => {
     let answer = false;
@@ -54,10 +62,18 @@ export function confirmAction({title, text = '', button = '', tone = 'danger'}) 
     };
     const onShown = () => element.querySelector('[data-confirm-cancel]').focus();
 
+    // Enter in a field of the dialog goes ahead, as the button would.
+    const onSubmit = event => {
+      event.preventDefault();
+      onAccept();
+    };
+
     accept.addEventListener('click', onAccept);
+    fieldset.addEventListener('submit', onSubmit);
     element.addEventListener('shown.bs.modal', onShown, {once: true});
     element.addEventListener('hidden.bs.modal', () => {
       accept.removeEventListener('click', onAccept);
+      fieldset.removeEventListener('submit', onSubmit);
       resolve(answer);
     }, {once: true});
     modal.show();
@@ -77,9 +93,11 @@ document.addEventListener('submit', async event => {
   }
 
   event.preventDefault();
-  setConfirmed(form, false);
+  setAnswer(form, null);
   const submitter = event.submitter;
+  const fields = form.dataset.confirmFields ? document.getElementById(form.dataset.confirmFields) : null;
   const yes = await confirmAction({
+    fields: fields instanceof HTMLTemplateElement ? fields : null,
     title: form.dataset.confirm,
     text: form.dataset.confirmText ?? '',
     button: form.dataset.confirmButton ?? '',
@@ -92,24 +110,31 @@ document.addEventListener('submit', async event => {
   }
 
   if (yes && form.isConnected) {
-    setConfirmed(form, true);
+    setAnswer(form, new FormData(element.querySelector('[data-confirm-fields]')));
     approved.add(form);
     form.requestSubmit(submitter?.isConnected ? submitter : null);
   }
 }, true);
 
-/** Puts the answer into the form as the field the server checks, or takes it out. */
-function setConfirmed(form, confirmed) {
+/**
+ * Puts the answer into the form — the field the server checks and the values chosen in the
+ * dialog — or, given null, takes the previous one out.
+ */
+function setAnswer(form, values) {
   form.querySelectorAll(':scope > input[data-confirm-answer]').forEach(input => input.remove());
 
-  if (!confirmed) {
+  if (values === null) {
     return;
   }
 
-  const input = document.createElement('input');
-  input.type = 'hidden';
-  input.name = FIELD;
-  input.value = '1';
-  input.dataset.confirmAnswer = '';
-  form.append(input);
+  values.set(FIELD, '1');
+
+  for (const [name, value] of values) {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = name;
+    input.value = value;
+    input.dataset.confirmAnswer = '';
+    form.append(input);
+  }
 }

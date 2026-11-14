@@ -845,6 +845,15 @@ msgstr "После входа в систему вы можете сменить
 msgid "Do you really want to delete?"
 msgstr "Действительно хотите удалить?"
 
+msgid "Which messages to clear?"
+msgstr "Какие сообщения очистить?"
+
+msgid "Older than a week"
+msgstr "Старше недели"
+
+msgid "All of them"
+msgstr "Все"
+
 #: themes/default/templates/system/pages/comments_delete.phtml:25
 msgid "Clear"
 msgstr "Очистить"

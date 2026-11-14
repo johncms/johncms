@@ -69,7 +69,18 @@
 
     {% if can_clear %}
         <div class="d-flex mt-4 pb-2">
-            <a href="/guestbook/clean" class="btn btn-outline-danger btn-sm" data-url="/guestbook/clean" data-bs-toggle="modal" data-bs-target=".ajax_modal">{{ __('Clear') }}</a>
+            <form method="post" action="/guestbook/clean" data-live-list-form data-confirm="{{ __('Clear guestbook') }}" data-confirm-button="{{ __('Clear') }}" data-confirm-fields="guestbook-clear-fields">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                <button type="submit" class="btn btn-outline-danger btn-sm">{{ __('Clear') }}</button>
+            </form>
+            <template id="guestbook-clear-fields">
+                {% for value, label in {0: __('Older than 1 week'), 1: __('Older than 1 day'), 2: __('Clear all')} %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="cl" value="{{ value }}" id="guestbook-clear-{{ value }}"{% if loop.first %} checked{% endif %}>
+                        <label class="form-check-label" for="guestbook-clear-{{ value }}">{{ label }}</label>
+                    </div>
+                {% endfor %}
+            </template>
         </div>
     {% endif %}
     </div>

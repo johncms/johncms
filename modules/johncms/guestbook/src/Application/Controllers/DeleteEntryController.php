@@ -27,12 +27,6 @@ final readonly class DeleteEntryController
     public function __invoke(Request $request): ViewResponse
     {
         $baseUrl = '/guestbook/';
-
-        if ($request->getMethod() !== 'POST') {
-            $id = $request->queryInt('id');
-            return new ViewResponse('@guestbook/public/confirm-delete.twig', ['id' => $id]);
-        }
-
         $id = $request->bodyInt('id');
 
         try {

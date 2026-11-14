@@ -2,54 +2,57 @@ msgid ""
 msgstr ""
 "X-Domain: guestbook\n"
 
-#: modules/johncms/guestbook/src/Application/Controllers/ClearGuestbookController.php:34
+#: modules/johncms/guestbook/src/Application/Controllers/ClearGuestbookController.php:30
 msgid "All messages older than 1 week were deleted"
 msgstr ""
 
-#: modules/johncms/guestbook/src/Application/Controllers/ClearGuestbookController.php:35
+#: modules/johncms/guestbook/src/Application/Controllers/ClearGuestbookController.php:31
 msgid "All messages older than 1 day were deleted"
 msgstr ""
 
-#: modules/johncms/guestbook/src/Application/Controllers/ClearGuestbookController.php:36
+#: modules/johncms/guestbook/src/Application/Controllers/ClearGuestbookController.php:32
 msgid "Full clearing is finished"
 msgstr ""
 
-#: modules/johncms/guestbook/src/Application/Controllers/DeleteEntryController.php:45
-#: modules/johncms/guestbook/src/Application/Controllers/DeleteEntryController.php:55
-#: modules/johncms/guestbook/templates/public/confirm-delete.twig:11
+#: modules/johncms/guestbook/src/Application/Controllers/DeleteEntryController.php:39
+#: modules/johncms/guestbook/src/Application/Controllers/DeleteEntryController.php:49
 msgid "Delete message"
 msgstr ""
 
-#: modules/johncms/guestbook/src/Application/Controllers/DeleteEntryController.php:46
-#: modules/johncms/guestbook/src/Application/Controllers/DeleteEntryController.php:56
-#: modules/johncms/guestbook/src/Application/Controllers/EditEntryController.php:48
-#: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:50
+#: modules/johncms/guestbook/src/Application/Controllers/DeleteEntryController.php:40
+#: modules/johncms/guestbook/src/Application/Controllers/DeleteEntryController.php:50
+#: modules/johncms/guestbook/src/Application/Controllers/EditEntryController.php:50
+#: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:52
 msgid "Wrong data"
 msgstr ""
 
-#: modules/johncms/guestbook/src/Application/Controllers/DeleteEntryController.php:65
+#: modules/johncms/guestbook/src/Application/Controllers/DeleteEntryController.php:59
 msgid "The message was deleted"
 msgstr ""
 
-#: modules/johncms/guestbook/src/Application/Controllers/EditEntryController.php:47
+#: modules/johncms/guestbook/src/Application/Controllers/EditEntryController.php:49
 #: modules/johncms/guestbook/src/Application/Controllers/EditEntryController.php:78
-#: modules/johncms/guestbook/src/Application/Controllers/EditEntryController.php:79
-#: modules/johncms/guestbook/templates/public/edit.twig:10
+#: modules/johncms/guestbook/src/Application/Controllers/EditEntryController.php:83
+#: modules/johncms/guestbook/src/Application/Controllers/EditEntryController.php:84
 msgid "Edit message"
 msgstr ""
 
-#: modules/johncms/guestbook/src/Application/Controllers/EditEntryController.php:68
+#: modules/johncms/guestbook/src/Application/Controllers/EditEntryController.php:70
 msgid "The message was saved"
 msgstr ""
 
+#: modules/johncms/guestbook/src/Application/Controllers/EditEntryController.php:77
 #: modules/johncms/guestbook/src/Application/Controllers/GuestbookController.php:46
+#: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:79
+msgid "Admin Club"
+msgstr ""
+
+#: modules/johncms/guestbook/src/Application/Controllers/EditEntryController.php:77
+#: modules/johncms/guestbook/src/Application/Controllers/GuestbookController.php:46
+#: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:79
 #: modules/johncms/guestbook/src/Application/Menu/GuestbookMenuItemProvider.php:29
 #: modules/johncms/guestbook/src/Application/Services/GuestbookPermissions.php:38
 msgid "Guestbook"
-msgstr ""
-
-#: modules/johncms/guestbook/src/Application/Controllers/GuestbookController.php:46
-msgid "Admin Club"
 msgstr ""
 
 #: modules/johncms/guestbook/src/Application/Controllers/GuestbookController.php:55
@@ -68,17 +71,19 @@ msgstr ""
 msgid "Public project chat. Be kind to each other and avoid flooding."
 msgstr ""
 
-#: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:49
+#: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:51
 #: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:80
-#: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:81
+#: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:85
+#: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:86
 #: modules/johncms/guestbook/templates/public/components/entry.twig:51
 #: modules/johncms/guestbook/templates/public/components/entry.twig:63
-#: modules/johncms/guestbook/templates/public/reply.twig:11
-#: modules/johncms/guestbook/templates/public/reply.twig:22
+#: modules/johncms/guestbook/templates/public/reply.twig:34
+#: modules/johncms/guestbook/templates/public/reply.twig:38
+#: modules/johncms/guestbook/templates/public/reply.twig:40
 msgid "Reply"
 msgstr ""
 
-#: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:70
+#: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:72
 msgid "Your reply to the message was saved"
 msgstr ""
 
@@ -141,36 +146,6 @@ msgstr ""
 msgid "A sample reply from the Administrator"
 msgstr ""
 
-#: modules/johncms/guestbook/templates/public/clear.twig:6
-msgid "Clear guestbook"
-msgstr ""
-
-#: modules/johncms/guestbook/templates/public/clear.twig:11
-msgid "Clearing parameters"
-msgstr ""
-
-#: modules/johncms/guestbook/templates/public/clear.twig:14
-msgid "Older than 1 week"
-msgstr ""
-
-#: modules/johncms/guestbook/templates/public/clear.twig:18
-msgid "Older than 1 day"
-msgstr ""
-
-#: modules/johncms/guestbook/templates/public/clear.twig:22
-msgid "Clear all"
-msgstr ""
-
-#: modules/johncms/guestbook/templates/public/clear.twig:26
-#: modules/johncms/guestbook/templates/public/index.twig:71
-msgid "Clear"
-msgstr ""
-
-#: modules/johncms/guestbook/templates/public/clear.twig:27
-#: modules/johncms/guestbook/templates/public/confirm-delete.twig:20
-msgid "Cancel"
-msgstr ""
-
 #: modules/johncms/guestbook/templates/public/components/entry.twig:17
 msgid "Guest"
 msgstr ""
@@ -188,8 +163,12 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: modules/johncms/guestbook/templates/public/components/entry.twig:72
-#: modules/johncms/guestbook/templates/public/confirm-delete.twig:19
+#: modules/johncms/guestbook/templates/public/components/entry.twig:70
+msgid "Delete this message?"
+msgstr ""
+
+#: modules/johncms/guestbook/templates/public/components/entry.twig:70
+#: modules/johncms/guestbook/templates/public/components/entry.twig:75
 msgid "Delete"
 msgstr ""
 
@@ -202,40 +181,55 @@ msgid "%d message"
 msgid_plural "%d messages"
 msgstr[0] ""
 
-#: modules/johncms/guestbook/templates/public/confirm-delete.twig:16
-msgid "Do you really want to delete?"
-msgstr ""
-
-#: modules/johncms/guestbook/templates/public/edit.twig:15
-#: modules/johncms/guestbook/templates/public/reply.twig:16
-msgid "Author"
-msgstr ""
-
-#: modules/johncms/guestbook/templates/public/edit.twig:20
-#: modules/johncms/guestbook/templates/public/index.twig:48
-#: modules/johncms/guestbook/templates/public/index.twig:50
+#: modules/johncms/guestbook/templates/public/edit.twig:12
+#: modules/johncms/guestbook/templates/public/edit.twig:25
+#: modules/johncms/guestbook/templates/public/edit.twig:27
+#: modules/johncms/guestbook/templates/public/index.twig:49
+#: modules/johncms/guestbook/templates/public/index.twig:51
+#: modules/johncms/guestbook/templates/public/reply.twig:15
 msgid "Message"
 msgstr ""
 
-#: modules/johncms/guestbook/templates/public/edit.twig:27
-#: modules/johncms/guestbook/templates/public/reply.twig:29
-msgid "Save"
-msgstr ""
-
-#: modules/johncms/guestbook/templates/public/edit.twig:28
-#: modules/johncms/guestbook/templates/public/reply.twig:30
+#: modules/johncms/guestbook/templates/public/edit.twig:36
+#: modules/johncms/guestbook/templates/public/reply.twig:49
 msgid "Back"
 msgstr ""
 
-#: modules/johncms/guestbook/templates/public/index.twig:32
-#: modules/johncms/guestbook/templates/public/index.twig:40
+#: modules/johncms/guestbook/templates/public/edit.twig:40
+#: modules/johncms/guestbook/templates/public/reply.twig:53
+msgid "Save"
+msgstr ""
+
+#: modules/johncms/guestbook/templates/public/index.twig:33
+#: modules/johncms/guestbook/templates/public/index.twig:41
 msgid "Name"
 msgstr ""
 
-#: modules/johncms/guestbook/templates/public/index.twig:58
+#: modules/johncms/guestbook/templates/public/index.twig:59
 msgid "Write"
 msgstr ""
 
-#: modules/johncms/guestbook/templates/public/index.twig:63
+#: modules/johncms/guestbook/templates/public/index.twig:64
 msgid "For registered users only"
+msgstr ""
+
+#: modules/johncms/guestbook/templates/public/index.twig:72
+msgid "Clear guestbook"
+msgstr ""
+
+#: modules/johncms/guestbook/templates/public/index.twig:72
+#: modules/johncms/guestbook/templates/public/index.twig:74
+msgid "Clear"
+msgstr ""
+
+#: modules/johncms/guestbook/templates/public/index.twig:77
+msgid "Older than 1 week"
+msgstr ""
+
+#: modules/johncms/guestbook/templates/public/index.twig:77
+msgid "Older than 1 day"
+msgstr ""
+
+#: modules/johncms/guestbook/templates/public/index.twig:77
+msgid "Clear all"
 msgstr ""

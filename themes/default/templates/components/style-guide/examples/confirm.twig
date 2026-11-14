@@ -1,4 +1,21 @@
 {# A form that asks first: data-confirm on it. From a script: confirmAction() of src/js/confirm.js. #}
-<form method="get" action="#messages" data-confirm="{{ d__('system', 'Do you really want to delete?') }}" data-confirm-button="{{ d__('system', 'Delete') }}">
-    <button type="submit" class="btn btn-outline-danger">{{ d__('system', 'Delete') }}</button>
-</form>
+<div class="d-flex flex-wrap gap-2">
+    <form method="get" action="#messages" data-confirm="{{ d__('system', 'Do you really want to delete?') }}" data-confirm-button="{{ d__('system', 'Delete') }}">
+        <button type="submit" class="btn btn-outline-danger">{{ d__('system', 'Delete') }}</button>
+    </form>
+
+    {# A choice inside the question: the fields of the template go into the form with the answer. #}
+    <form method="get" action="#messages" data-confirm="{{ d__('system', 'Which messages to clear?') }}" data-confirm-button="{{ d__('system', 'Clear') }}" data-confirm-fields="style-guide-clear-fields">
+        <button type="submit" class="btn btn-outline-danger">{{ d__('system', 'Clear') }}</button>
+    </form>
+    <template id="style-guide-clear-fields">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="period" value="week" id="style-guide-clear-week" checked>
+            <label class="form-check-label" for="style-guide-clear-week">{{ d__('system', 'Older than a week') }}</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="period" value="all" id="style-guide-clear-all">
+            <label class="form-check-label" for="style-guide-clear-all">{{ d__('system', 'All of them') }}</label>
+        </div>
+    </template>
+</div>
