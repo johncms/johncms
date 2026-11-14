@@ -7,18 +7,23 @@
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
 {% block content %}
-    <form name="file_edit_form" action="{{ action_url }}" method="post">
+    <form class="site-dl-form site-dlf__section" name="file_edit_form" action="{{ action_url }}" method="post">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-        <div class="form-group">
-            <label for="name_link">{{ __('Link to download file') }}</label>
+        <div class="mb-3">
+            <label class="form-label" for="name_link">{{ __('Link to download file') }}</label>
             <input type="text" class="form-control" id="name_link" placeholder="{{ __('Link to download file') }}"
                    name="name_link" value="{{ file_name }}" maxlength="200" required>
         </div>
-
-        <div class="mt-3">
-            <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Save') }}</button>
-            <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+        <div class="site-dl-form__actions">
+            <a href="{{ back_url }}" class="btn btn-outline-secondary">
+                {% include '@theme/components/icon.twig' with {name: 'chevron-left', size: 14, class: 'site-icon--directional'} only %} {{ __('Cancel') }}
+            </a>
+            <button type="submit" name="submit" value="1" class="btn btn-primary">
+                {% include '@theme/components/icon.twig' with {name: 'check', size: 14} only %} {{ __('Save') }}
+            </button>
         </div>
     </form>
 {% endblock %}

@@ -8,20 +8,31 @@
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
 {% block content %}
-    <div class="alert alert-success">
-        <div>{{ __('File attached') }}</div>
-        {% if screen_attached is same as(true) %}
-            <div>{{ __('Screenshot is attached') }}</div>
-        {% elseif screen_attached is same as(false) %}
-            <div>{{ __('Screenshot not attached') }} {{ screen_attached_error }}</div>
-        {% endif %}
-    </div>
-    <div class="mb-3">
-        <a href="{{ urls.view_file_url }}" class="btn btn-outline-primary btn-sm">{{ __('Continue') }}</a>
-    </div>
-    <div>
-        <a href="/downloads/import/{{ id }}/" class="btn btn-primary">{{ __('Import more') }}</a>
-        <a href="{{ urls.category_url }}" class="btn btn-secondary">{{ __('Back') }}</a>
+    <section class="site-dlf__section site-dl-result">
+        <span class="site-dl-result__icon" aria-hidden="true">{% include '@theme/components/icon.twig' with {name: 'circle-check', size: 22} only %}</span>
+        <div class="site-dl-result__main">
+            <h2 class="site-dlf__h2">{{ __('File attached') }}</h2>
+            {% if screen_attached is not null %}
+                <ul class="site-dl-result__list">
+                    {% if screen_attached is same as(true) %}
+                        <li>{{ __('Screenshot is attached') }}</li>
+                    {% else %}
+                        <li class="site-dl-result__warning">{{ __('Screenshot not attached') }} {{ screen_attached_error }}</li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        </div>
+    </section>
+    <div class="site-dl-form__actions">
+        <a href="{{ urls.category_url }}" class="btn btn-outline-secondary">
+            {% include '@theme/components/icon.twig' with {name: 'chevron-left', size: 14, class: 'site-icon--directional'} only %} {{ __('Back') }}
+        </a>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="/downloads/import/{{ id }}/" class="btn btn-outline-secondary">{{ __('Import more') }}</a>
+            <a href="{{ urls.view_file_url }}" class="btn btn-primary">{{ __('Open the file') }}</a>
+        </div>
     </div>
 {% endblock %}

@@ -6,6 +6,7 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
+use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadSlugService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
@@ -29,6 +30,7 @@ final readonly class EditCategoryController
         private NavChain $navChain,
         private DownloadSlugService $slugService,
         private DownloadCategoryPathService $categoryPathService,
+        private CategoryNavService $categoryNavService,
     ) {
     }
 
@@ -47,6 +49,7 @@ final readonly class EditCategoryController
         }
 
         $this->navChain->add(__('Downloads'), '/downloads/');
+        $this->categoryNavService->buildForFileDir($category->dir);
         $this->navChain->add(__('Edit Folder'));
 
         if ($request->getMethod() === 'POST') {

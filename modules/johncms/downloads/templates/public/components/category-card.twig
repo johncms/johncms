@@ -34,9 +34,24 @@
                 <a class="site-icon-button" href="{{ category.edit_url }}" title="{{ __('Edit') }}" aria-label="{{ __('Edit') }}">
                     {% include '@theme/components/icon.twig' with {name: 'pencil', size: 13} only %}
                 </a>
-                <a class="site-icon-button site-icon-button--danger" href="{{ category.delete_url }}" title="{{ __('Delete') }}" aria-label="{{ __('Delete') }}">
-                    {% include '@theme/components/icon.twig' with {name: 'trash-2', size: 13} only %}
-                </a>
+                {% if category.has_children %}
+                    <button type="button" class="site-icon-button" disabled title="{{ __('Delete the subsections first') }}" aria-label="{{ __('Delete the subsections first') }}">
+                        {% include '@theme/components/icon.twig' with {name: 'trash-2', size: 13} only %}
+                    </button>
+                {% else %}
+                    {% include '@downloads/public/components/delete-form.twig' with {
+                        action: category.delete_url,
+                        fields: {},
+                        question: __('Delete the section “%s”?')|format(category.rus_name),
+                        text: category.total > 0
+                            ? n__('Its %d file is deleted with it, together with the comments and screenshots. This cannot be undone.', 'Its %d files are deleted with it, together with the comments and screenshots. This cannot be undone.', category.total)|format(category.total)
+                            : __('The section is empty. This cannot be undone.'),
+                        label: __('Delete'),
+                        class: 'site-icon-button site-icon-button--danger',
+                        icon: 'trash-2',
+                        icon_only: true,
+                    } only %}
+                {% endif %}
             </div>
         {% endif %}
     </div>

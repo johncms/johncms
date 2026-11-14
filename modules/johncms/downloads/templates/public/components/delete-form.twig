@@ -8,11 +8,19 @@
     @var text     string What else goes with it; may be empty.
     @var label    string Text of the button.
     @var class    string Classes of the button.
+    @var icon      string Icon before the text, optional.
+    @var icon_only bool   Show the icon alone and leave the text to screen readers.
 #}
 <form method="post" action="{{ action }}" data-confirm="{{ question }}"{% if text %} data-confirm-text="{{ text }}"{% endif %} data-confirm-button="{{ __('Delete') }}">
     <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
     {% for name, value in fields %}
         <input type="hidden" name="{{ name }}" value="{{ value }}">
     {% endfor %}
-    <button type="submit" class="{{ class }}">{{ label }}</button>
+    {% if icon|default('') and icon_only|default(false) %}
+        <button type="submit" class="{{ class }}" title="{{ label }}" aria-label="{{ label }}">{% include '@theme/components/icon.twig' with {name: icon, size: 13} only %}</button>
+    {% elseif icon|default('') %}
+        <button type="submit" class="{{ class }}">{% include '@theme/components/icon.twig' with {name: icon, size: 14} only %}<span>{{ label }}</span></button>
+    {% else %}
+        <button type="submit" class="{{ class }}">{{ label }}</button>
+    {% endif %}
 </form>

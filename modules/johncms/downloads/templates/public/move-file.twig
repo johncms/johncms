@@ -9,6 +9,8 @@
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
 {% block content %}
     {% if sections %}
         <div class="h4 fw-bold">{{ __('Select a section to move') }}</div>

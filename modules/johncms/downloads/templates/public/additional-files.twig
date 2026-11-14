@@ -8,14 +8,17 @@
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
 {% block content %}
     {% if additional_files %}
-        <div class="h4 fw-bold">{{ __('Current files') }}</div>
-        <div class="mt-3 mb-4">
+        <section class="site-dlf__section mb-3">
+        <h2 class="site-dlf__h2 site-dl-form__title">{{ __('Current files') }}</h2>
+        <div>
             {% for file in additional_files %}
-                <div class="border-bottom pb-3 mb-3">
+                <div class="border-bottom pb-3 mb-3 site-dl-form__item">
                     <div class="d-flex w-100 justify-content-between">
-                        <h5 class="fw-bold mb-1">{{ file.rus_name }}</h5>
+                        <h3 class="h6 fw-bold mb-1">{{ file.rus_name }}</h3>
                         <small class="text-muted">{{ file.display_date }}</small>
                     </div>
                     <p class="mb-1">{{ file.name }} ({{ file.display_size }})</p>
@@ -33,45 +36,46 @@
                 </div>
             {% endfor %}
         </div>
+        </section>
     {% endif %}
 
-    <div class="h4 fw-bold">{{ __('Add file') }}</div>
-    <form name="file_upload_form" action="{{ action_url }}" method="post" enctype="multipart/form-data">
+    <form class="site-dl-form site-dlf__section" name="file_upload_form" action="{{ action_url }}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-        <div class="form-group">
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="fail" name="fail" aria-describedby="file_label">
-                <label class="custom-file-label" for="fail">{{ __('Choose file') }}</label>
-            </div>
-            <div class="text-muted mb-3 small">
+        <h2 class="site-dlf__h2 site-dl-form__title">{{ __('Add file') }}</h2>
+        <div class="mb-3">
+            <label class="form-label" for="fail">{{ __('Choose file') }}</label>
+            <input type="file" class="form-control" id="fail" name="fail">
+            <div class="form-text">
                 {{ __('Max. Size') }}: {{ config('johncms.flsz') }} kb.
             </div>
         </div>
-        <div class="form-group">
-            <label for="link_file">{{ __('Or link to it') }}</label>
+        <div class="mb-3">
+            <label class="form-label" for="link_file">{{ __('Or link to it') }}</label>
             <input type="text" class="form-control" id="link_file" placeholder="{{ __('Link to file') }}"
                    name="link_file" value="">
         </div>
-        <div class="form-group">
-            <label for="new_file">{{ __('Save as') }}</label>
+        <div class="mb-3">
+            <label class="form-label" for="new_file">{{ __('Save as') }}</label>
             <input type="text" class="form-control" id="new_file" placeholder="{{ __('Save as') }}"
                    name="new_file" value="" maxlength="100">
-            <div class="text-muted small">{{ __('max. 100 characters') }}</div>
+            <div class="form-text">{{ __('max. 100 characters') }}</div>
         </div>
 
-        <div class="form-group">
-            <label for="name_link">{{ __('Link to download file') }}</label>
+        <div class="mb-3">
+            <label class="form-label" for="name_link">{{ __('Link to download file') }}</label>
             <input type="text" class="form-control" id="name_link" placeholder="{{ __('Link to download file') }}"
                    name="name_link" value="{{ __('Download the additional file') }}" maxlength="200" required>
         </div>
 
-        <div class="alert alert-warning mt-3">
-            {{ __('Allowed extensions') }}: {{ extensions }}
-        </div>
+        <div class="form-text">{{ __('Allowed extensions') }}: {{ extensions }}</div>
 
-        <div>
-            <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Save') }}</button>
-            <a href="{{ file_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+        <div class="site-dl-form__actions">
+            <a href="{{ file_url }}" class="btn btn-outline-secondary">
+                {% include '@theme/components/icon.twig' with {name: 'chevron-left', size: 14, class: 'site-icon--directional'} only %} {{ __('Cancel') }}
+            </a>
+            <button type="submit" name="submit" value="1" class="btn btn-primary">
+                {% include '@theme/components/icon.twig' with {name: 'check', size: 14} only %} {{ __('Save') }}
+            </button>
         </div>
     </form>
 {% endblock %}

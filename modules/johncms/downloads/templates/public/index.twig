@@ -47,7 +47,7 @@
                         </a>
                     {% endif %}
                     {% if can_manage %}
-                        {% include '@downloads/public/components/section-actions.twig' with {id: id} only %}
+                        {% include '@downloads/public/components/section-actions.twig' with {id: id, name: page_title, files: stat.files, has_children: categories is not empty} only %}
                     {% endif %}
                 </div>
             {% endif %}

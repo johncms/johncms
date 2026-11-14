@@ -6,6 +6,7 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
+use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadSlugService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
@@ -28,6 +29,7 @@ final readonly class CreateCategoryController
         private NavChain $navChain,
         private DownloadSlugService $slugService,
         private DownloadCategoryPathService $categoryPathService,
+        private CategoryNavService $categoryNavService,
     ) {
     }
 
@@ -36,11 +38,13 @@ final readonly class CreateCategoryController
         $refid = max(0, $request->queryInt('refid', 0));
 
         $this->navChain->add(__('Downloads'), '/downloads/');
-        $this->navChain->add(__('Create Folder'));
 
         $parentCategory = null;
         if ($refid > 0) {
             $parentCategory = DownloadCategory::query()->find($refid);
+            if ($parentCategory !== null) {
+                $this->categoryNavService->buildForFileDir($parentCategory->dir);
+            }
             if ($parentCategory === null || ! is_dir($parentCategory->dir)) {
                 return new ViewResponse('@theme/pages/result.twig', [
                     'title'         => __('Create Folder'),
@@ -54,6 +58,8 @@ final readonly class CreateCategoryController
         } else {
             $baseDir = 'upload/downloads/files';
         }
+
+        $this->navChain->add(__('Create Folder'));
 
         $cancelUrl = $parentCategory !== null
             ? $this->categoryPathService->getCategoryUrl($parentCategory)

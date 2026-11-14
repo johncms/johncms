@@ -7,11 +7,13 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 use Johncms\Auth\CurrentUser;
 use Johncms\Image\ImageProcessingException;
 use Johncms\Image\ImageProcessorInterface;
+use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Http\Request;
+use Johncms\NavChain;
 use Johncms\Http\View\ViewResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Markup;
@@ -33,6 +35,8 @@ final readonly class ImportFileController
         private ImageProcessorInterface $imageProcessor,
         private DownloadFilePathService $filePathService,
         private DownloadCategoryPathService $categoryPathService,
+        private CategoryNavService $categoryNavService,
+        private NavChain $navChain,
     ) {
     }
 
@@ -51,6 +55,10 @@ final readonly class ImportFileController
         }
 
         $allowedExtensions = $category->field ? explode(', ', $category->text) : self::DEFAULT_EXTENSIONS;
+
+        $this->navChain->add(__('Downloads'), '/downloads/');
+        $this->categoryNavService->buildForFileDir($category->dir);
+        $this->navChain->add(__('File import'));
 
         $baseUrl = '/downloads/import/' . $id . '/';
 

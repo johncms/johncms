@@ -8,26 +8,28 @@
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
 {% block content %}
     {% if select_mode %}
-        <div>
+        <section class="site-dlf__section">
+            <h2 class="site-dlf__h2 site-dl-form__title">{{ __('What to scan') }}</h2>
+            <p class="text-body-secondary small">{{ __('New files and folders found on disk are added to the downloads. Every option goes into the subfolders too.') }}</p>
             {% if id %}
-                {% include '@downloads/public/components/scan-form.twig' with {id: id, mod: 1, label: __('Current folder')} only %}
-                {% include '@downloads/public/components/scan-form.twig' with {id: id, mod: 0, label: __('Current folder and all subfolders')} only %}
+                {% include '@downloads/public/components/scan-form.twig' with {id: id, mod: 0, label: __('This folder')} only %}
+                {% include '@downloads/public/components/scan-form.twig' with {id: id, mod: 1, label: __('This folder, with the screenshots and descriptions lying next to the files')} only %}
             {% endif %}
             {% include '@downloads/public/components/scan-form.twig' with {id: 0, mod: 0, label: __('Entire Downloads')} only %}
-        </div>
+        </section>
     {% else %}
-        <div class="row">
-            <div class="col-md-5">
-                <div class="alert alert-info">
-                    <b>{{ __('Added') }}:</b><br>
-                    {{ __('Categories') }}: {{ updated_info.categories }}<br>
-                    {{ __('Files') }}: {{ updated_info.files }}<br>
-                    {{ __('Additional Files') }}: {{ updated_info.additional_files }}
-                </div>
-            </div>
-        </div>
+        <section class="site-dlf__section mb-3">
+            <h2 class="site-dlf__h2 site-dl-form__title">{{ __('Added') }}</h2>
+            <dl class="site-dlf__props">
+                <div class="site-dlf__prop"><dt>{{ __('Categories') }}</dt><dd>{{ updated_info.categories }}</dd></div>
+                <div class="site-dlf__prop"><dt>{{ __('Files') }}</dt><dd>{{ updated_info.files }}</dd></div>
+                <div class="site-dlf__prop"><dt>{{ __('Additional Files') }}</dt><dd>{{ updated_info.additional_files }}</dd></div>
+            </dl>
+        </section>
         <div class="d-flex flex-wrap gap-2 align-items-start">
             {% include '@downloads/public/components/clean-form.twig' with {id: id, class: 'btn btn-outline-danger btn-sm'} only %}
             {% include '@downloads/public/components/recount-form.twig' with {id: id, class: 'btn btn-outline-secondary btn-sm'} only %}

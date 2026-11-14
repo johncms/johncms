@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Downloads;
 
+use Dom\HTMLDocument;
+use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Modules\Downloads\Domain\Models\DownloadMoreFile;
 use Tests\Functional\FunctionalTestCase;
@@ -95,5 +97,26 @@ final class DownloadsDeletionTest extends FunctionalTestCase
             @unlink($screens . '/shot.png');
             @rmdir($screens);
         }
+    }
+
+    public function testASectionIsDeletedOnlyByAConfirmedFormAndOnlyWithoutSubsections(): void
+    {
+        $moderator = FunctionalUserFactory::createSupervisor();
+        $parent = Fixture::insert('download__category', ['name' => 'parent', 'slug' => 'parent', 'dir' => $this->directory . '/parent', 'rus_name' => 'Parent']);
+        $child = Fixture::insert('download__category', ['refid' => $parent, 'name' => 'child', 'slug' => 'child', 'dir' => $this->directory . '/parent/child', 'rus_name' => 'Child']);
+
+        $this->handleRequest('/downloads/categories/' . $child . '/delete', cookies: $this->actingAs($moderator));
+        self::assertTrue(DownloadCategory::query()->whereKey($child)->exists(), 'Opening the address deletes nothing.');
+
+        self::assertSame(409, $this->postForm('/downloads/categories/' . $child . '/delete', [], $moderator)->getStatusCode());
+
+        $this->postForm('/downloads/categories/' . $parent . '/delete', ['confirmed' => '1'], $moderator);
+        self::assertTrue(DownloadCategory::query()->whereKey($parent)->exists(), 'A section with subsections is not deleted.');
+
+        $page = HTMLDocument::createFromString((string) $this->handleRequest('/downloads/', cookies: $this->actingAs($moderator))->getContent(), LIBXML_NOERROR);
+        self::assertNotNull($page->querySelector('.site-dl-card__actions button[disabled]'), 'Its button says why instead.');
+
+        $this->postForm('/downloads/categories/' . $child . '/delete', ['confirmed' => '1'], $moderator);
+        self::assertFalse(DownloadCategory::query()->whereKey($child)->exists());
     }
 }

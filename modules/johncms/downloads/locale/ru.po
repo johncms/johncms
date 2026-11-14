@@ -109,6 +109,37 @@ msgstr "Редактировать файл"
 msgid "Delete File"
 msgstr "Удалить файл"
 
+msgid "Its %d file is deleted with it, together with the comments and screenshots. This cannot be undone."
+msgid_plural "Its %d files are deleted with it, together with the comments and screenshots. This cannot be undone."
+msgstr[0] "Вместе с ним удаляется %d файл с комментариями и скриншотами. Отменить это нельзя."
+msgstr[1] "Вместе с ним удаляются %d файла с комментариями и скриншотами. Отменить это нельзя."
+msgstr[2] "Вместе с ним удаляются %d файлов с комментариями и скриншотами. Отменить это нельзя."
+msgstr[3] "Вместе с ним удаляются %d файлов с комментариями и скриншотами. Отменить это нельзя."
+
+msgid "Delete the section “%s”?"
+msgstr "Удалить раздел «%s»?"
+
+msgid "Delete the subsections first"
+msgstr "Сначала удалите подразделы"
+
+msgid "New files and folders found on disk are added to the downloads. Every option goes into the subfolders too."
+msgstr "Новые файлы и папки, найденные на диске, добавляются в загрузки. Каждый вариант заходит и в подпапки."
+
+msgid "The section is empty. This cannot be undone."
+msgstr "Раздел пуст. Отменить это нельзя."
+
+msgid "This folder"
+msgstr "Эта папка"
+
+msgid "This folder, with the screenshots and descriptions lying next to the files"
+msgstr "Эта папка, со скриншотами и описаниями, лежащими рядом с файлами"
+
+msgid "What to scan"
+msgstr "Что сканировать"
+
+msgid "delete the subsections first"
+msgstr "сначала удалите подразделы"
+
 msgid "A moderator checks the file before it appears in the downloads."
 msgstr "Файл появится в загрузках после проверки модератором."
 

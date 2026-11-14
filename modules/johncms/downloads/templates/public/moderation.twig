@@ -8,6 +8,8 @@
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
 {% block content %}
     {% if files is empty %}
         <div class="row">
@@ -16,9 +18,11 @@
             </div>
         </div>
     {% else %}
-        {% for file in files %}
-            {% include '@downloads/public/components/file-row.twig' with {file: file} only %}
-        {% endfor %}
+        <div class="site-downloads__list">
+            {% for file in files %}
+                {% include '@downloads/public/components/file-row.twig' with {file: file} only %}
+            {% endfor %}
+        </div>
     {% endif %}
 
     {% if total %}

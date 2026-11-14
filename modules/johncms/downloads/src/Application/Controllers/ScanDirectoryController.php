@@ -6,6 +6,7 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Auth\CurrentUser;
 use Johncms\FileInfo;
+use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadBookmark;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
@@ -25,6 +26,7 @@ final readonly class ScanDirectoryController
         private NavChain $navChain,
         private CurrentUser $currentUser,
         private DownloadCategoryPathService $categoryPathService,
+        private CategoryNavService $categoryNavService,
     ) {
     }
 
@@ -39,6 +41,10 @@ final readonly class ScanDirectoryController
         $id = max(0, $request->isPost() ? $request->bodyInt('id') : $request->queryInt('id', 0));
 
         $this->navChain->add(__('Downloads'), '/downloads/');
+        $category = $id > 0 ? DownloadCategory::query()->find($id) : null;
+        if ($category !== null) {
+            $this->categoryNavService->buildForFileDir($category->dir);
+        }
         $this->navChain->add(__('Update'));
 
         return $this->handleScan($request, $id);

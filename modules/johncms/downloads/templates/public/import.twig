@@ -7,43 +7,43 @@
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
 {% block content %}
-    <form name="file_import_form" action="{{ action_url }}" method="post" enctype="multipart/form-data">
+    <form class="site-dl-form site-dlf__section" name="file_import_form" action="{{ action_url }}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-        <div class="form-group">
-            <label for="url">{{ __('Link to file') }}</label>
+        <div class="mb-3">
+            <label class="form-label" for="url">{{ __('Link to file') }}</label>
             <input type="text" class="form-control" id="url" placeholder="{{ __('Link to file') }}"
                    name="url" value="" required>
         </div>
 
-        <div class="form-group">
-            <label for="new_file">{{ __('Save as') }}</label>
+        <div class="mb-3">
+            <label class="form-label" for="new_file">{{ __('Save as') }}</label>
             <input type="text" class="form-control" id="new_file" placeholder="{{ __('Save as') }}"
                    name="filename" value="" maxlength="100">
-            <div class="text-muted small">{{ __('max. 100 characters') }}</div>
+            <div class="form-text">{{ __('max. 100 characters') }}</div>
         </div>
 
-        <div class="form-group">
-            <label for="text">{{ __('File Name') }}</label>
+        <div class="mb-3">
+            <label class="form-label" for="text">{{ __('File Name') }}</label>
             <input type="text" class="form-control" id="text" placeholder="{{ __('File Name') }}"
                    name="text" value="" maxlength="200">
-            <div class="text-muted small">{{ __('max. 200 characters') }}</div>
+            <div class="form-text">{{ __('max. 200 characters') }}</div>
         </div>
 
-        <div class="form-group">
-            <label for="name_link">{{ __('Link to download file') }}</label>
+        <div class="mb-3">
+            <label class="form-label" for="name_link">{{ __('Link to download file') }}</label>
             <input type="text" class="form-control" id="name_link" placeholder="{{ __('Link to download file') }}"
                    name="link_text" value="{{ __('Download') }}" maxlength="200" required>
         </div>
 
-        <div class="form-group">
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="screen" name="screen" aria-describedby="screen">
-                <label class="custom-file-label" for="screen">{{ __('Choose screenshot') }}</label>
-            </div>
+        <div class="mb-3">
+            <label class="form-label" for="screen">{{ __('Choose screenshot') }}</label>
+            <input type="file" class="form-control" id="screen" name="screen">
         </div>
 
-        <div class="form-group">
+        <div class="mb-3">
             {% include '@theme/components/editor.twig' with {
                 label: __('Description'),
                 name: 'description',
@@ -51,13 +51,15 @@
             } only %}
         </div>
 
-        <div class="alert alert-warning mt-3">
-            {{ __('Allowed extensions') }}: {{ extensions }}
-        </div>
+        <div class="form-text">{{ __('Allowed extensions') }}: {{ extensions }}</div>
 
-        <div>
-            <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Save') }}</button>
-            <a href="{{ cancel_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+        <div class="site-dl-form__actions">
+            <a href="{{ cancel_url }}" class="btn btn-outline-secondary">
+                {% include '@theme/components/icon.twig' with {name: 'chevron-left', size: 14, class: 'site-icon--directional'} only %} {{ __('Cancel') }}
+            </a>
+            <button type="submit" name="submit" value="1" class="btn btn-primary">
+                {% include '@theme/components/icon.twig' with {name: 'check', size: 14} only %} {{ __('Save') }}
+            </button>
         </div>
     </form>
 {% endblock %}

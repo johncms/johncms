@@ -1,23 +1,26 @@
 {#
     Screenshots of a file: the current ones and the form that adds one more.
 
-    @var screens      array  url, file_name
+    @var screens      array  url, preview, file_name
     @var action_url   string
     @var file_url     string
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
 {% block content %}
     {% if screens %}
-        <div class="h4 fw-bold">{{ __('Current screenshots') }}</div>
-        <div class="mt-3 mb-4">
+        <section class="site-dlf__section mb-3">
+        <h2 class="site-dlf__h2 site-dl-form__title">{{ __('Current screenshots') }}</h2>
+        <div>
             {% for screen in screens %}
-                <div class="media align-items-end mb-3 border-bottom pb-3">
+                <div class="d-flex align-items-center gap-3 mb-3 border-bottom pb-3">
                     <a href="{{ screen.url }}" title="{{ screen.file_name }}" data-source="{{ screen.url }}" class="image-preview">
-                        <img src="{{ screen.url }}" class="me-3" style="width: 64px;" alt="{{ screen.file_name }}">
+                        <img src="{{ screen.preview }}" width="96" height="60" class="rounded object-fit-cover" alt="{{ screen.file_name }}">
                     </a>
-                    <div class="media-body">
-                        <h5 class="fw-bold mt-0">{{ screen.file_name }}</h5>
+                    <div class="flex-grow-1 min-w-0">
+                        <h3 class="h6 fw-bold text-break">{{ screen.file_name }}</h3>
                         {% include '@downloads/public/components/delete-form.twig' with {
                             action: action_url ~ 'delete',
                             fields: {screen: screen.file_name},
@@ -30,24 +33,27 @@
                 </div>
             {% endfor %}
         </div>
+        </section>
     {% endif %}
 
-    <div class="h4 fw-bold">{{ __('Add screenshot') }}</div>
-    <form name="file_upload_form" action="{{ action_url }}" method="post" enctype="multipart/form-data">
+    <form class="site-dl-form site-dlf__section" name="file_upload_form" action="{{ action_url }}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-        <div class="form-group">
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="fail" name="screen" aria-describedby="file_label">
-                <label class="custom-file-label" for="fail">{{ __('Choose file') }}</label>
-            </div>
-            <div class="text-muted mb-3 small">
+        <h2 class="site-dlf__h2 site-dl-form__title">{{ __('Add screenshot') }}</h2>
+        <div class="mb-3">
+            <label class="form-label" for="fail">{{ __('Choose file') }}</label>
+            <input type="file" class="form-control" id="fail" name="screen">
+            <div class="form-text">
                 {{ __('Max. Size') }}: {{ config('johncms.flsz') }} kb.
             </div>
         </div>
 
-        <div>
-            <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Save') }}</button>
-            <a href="{{ file_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+        <div class="site-dl-form__actions">
+            <a href="{{ file_url }}" class="btn btn-outline-secondary">
+                {% include '@theme/components/icon.twig' with {name: 'chevron-left', size: 14, class: 'site-icon--directional'} only %} {{ __('Cancel') }}
+            </a>
+            <button type="submit" name="submit" value="1" class="btn btn-primary">
+                {% include '@theme/components/icon.twig' with {name: 'check', size: 14} only %} {{ __('Save') }}
+            </button>
         </div>
     </form>
 {% endblock %}

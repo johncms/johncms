@@ -8,7 +8,6 @@ use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\UseCases\DeleteCategoryUseCase;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\NavChain;
-use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +21,8 @@ final readonly class DeleteCategoryController
     ) {
     }
 
-    public function __invoke(Request $request, int $id): RedirectResponse|ViewResponse
+    /** Carried out only from a confirmed form (RequireConfirmationMiddleware). */
+    public function __invoke(int $id): RedirectResponse|ViewResponse
     {
         $subcategoryCount = DownloadCategory::query()->where('refid', $id)->count();
         $category = DownloadCategory::query()->find($id);
@@ -50,22 +50,12 @@ final readonly class DeleteCategoryController
             ], Response::HTTP_NOT_FOUND);
         }
 
-        if ($request->getMethod() === 'POST') {
-            $refid = (int) $category->refid;
-            $this->deleteCategoryUseCase->execute($category);
-            $redirectUrl = $refid > 0
-                ? ($this->categoryPathService->getCategoryUrlById($refid) ?? '/downloads/')
-                : '/downloads/';
+        $refid = (int) $category->refid;
+        $this->deleteCategoryUseCase->execute($category);
+        $redirectUrl = $refid > 0
+            ? ($this->categoryPathService->getCategoryUrlById($refid) ?? '/downloads/')
+            : '/downloads/';
 
-            return new RedirectResponse($redirectUrl);
-        }
-
-        return new ViewResponse('@downloads/public/delete-category.twig', [
-            'title'       => __('Delete Folder'),
-            'page_title'  => __('Delete Folder'),
-            'folder_name' => $category->rus_name,
-            'action_url'  => '/downloads/categories/' . $id . '/delete',
-            'back_url'    => $this->categoryPathService->getCategoryUrl($category),
-        ]);
+        return new RedirectResponse($redirectUrl);
     }
 }

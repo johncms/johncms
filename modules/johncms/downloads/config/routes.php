@@ -80,7 +80,9 @@ return static function (RouteCollection $router): void {
         $r->map(['GET', 'POST'], '/downloads/categories/create', CreateCategoryController::class)->name('downloads.create_category');
         $r->map(['GET', 'POST'], '/downloads/categories/{id:number}/edit', EditCategoryController::class)->name('downloads.edit_category');
         $r->post('/downloads/categories/{id:number}/sort', [EditCategoryController::class, 'sort'])->name('downloads.sort_category');
-        $r->map(['GET', 'POST'], '/downloads/categories/{id:number}/delete', DeleteCategoryController::class)->name('downloads.delete_category');
+        $r->post('/downloads/categories/{id:number}/delete', DeleteCategoryController::class)
+            ->name('downloads.delete_category')
+            ->addMiddleware(RequireConfirmationMiddleware::class);
         $r->post('/downloads/recount', RecountController::class)->name('downloads.recount');
         $r->map(['GET', 'POST'], '/downloads/scan-dir', ScanDirectoryController::class)->name('downloads.scan_dir');
         // Deletes the records of every file and folder missing on disk, in the whole downloads.

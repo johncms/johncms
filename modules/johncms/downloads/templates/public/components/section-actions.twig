@@ -2,7 +2,10 @@
     The menu of a moderator: adding files and managing the category, or the whole downloads on the
     main page.
 
-    @var id int Current category, 0 on the main page.
+    @var id           int    Current category, 0 on the main page.
+    @var name         string Title of the category.
+    @var files        int    Files in it, for the question before deleting it.
+    @var has_children bool   It has subcategories, so it cannot be deleted.
 #}
 <details class="site-popover" data-site-popover>
     <summary class="btn btn-outline-secondary btn-sm">
@@ -23,7 +26,21 @@
         <hr class="site-popover__divider">
         {% include '@downloads/public/components/clean-form.twig' with {id: id, class: 'site-popover__item site-popover__item--danger', with_icon: true} only %}
         {% if id %}
-            <a class="site-popover__item site-popover__item--danger" href="/downloads/categories/{{ id }}/delete">{% include '@theme/components/icon.twig' with {name: 'trash-2', size: 14} only %}<span>{{ __('Delete Folder') }}</span></a>
+            {% if has_children %}
+                <span class="site-popover__item" aria-disabled="true">{% include '@theme/components/icon.twig' with {name: 'trash-2', size: 14} only %}<span>{{ __('Delete Folder') }} — {{ __('delete the subsections first') }}</span></span>
+            {% else %}
+                {% include '@downloads/public/components/delete-form.twig' with {
+                    action: '/downloads/categories/' ~ id ~ '/delete',
+                    fields: {},
+                    question: __('Delete the section “%s”?')|format(name),
+                    text: files > 0
+                        ? n__('Its %d file is deleted with it, together with the comments and screenshots. This cannot be undone.', 'Its %d files are deleted with it, together with the comments and screenshots. This cannot be undone.', files)|format(files)
+                        : __('The section is empty. This cannot be undone.'),
+                    label: __('Delete Folder'),
+                    class: 'site-popover__item site-popover__item--danger',
+                    icon: 'trash-2',
+                } only %}
+            {% endif %}
         {% endif %}
     </div>
 </details>

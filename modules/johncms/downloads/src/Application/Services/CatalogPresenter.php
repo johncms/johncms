@@ -49,6 +49,14 @@ final readonly class CatalogPresenter
             ->pluck('last_time', 'dir')
             ->all();
 
+        // A category with subcategories cannot be deleted; one query tells which ones have them.
+        $withChildren = DownloadCategory::query()
+            ->whereIn('refid', $categories->pluck('id')->all())
+            ->distinct()
+            ->pluck('refid')
+            ->map(static fn (mixed $id): int => (int) $id)
+            ->all();
+
         $cards = [];
         $last = count($categories) - 1;
 
@@ -66,6 +74,7 @@ final readonly class CatalogPresenter
                 'delete_url'  => '/downloads/categories/' . $category->id . '/delete',
                 'is_first'    => $position === 0,
                 'is_last'     => $position === $last,
+                'has_children' => in_array($category->id, $withChildren, true),
             ];
         }
 

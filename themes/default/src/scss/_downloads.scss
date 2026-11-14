@@ -227,3 +227,8 @@
   &__list { margin: .5rem 0 0; padding-inline-start: 1.125rem; color: var(--fg-muted); font-size: .875rem; }
   &__warning { color: var(--danger); }
 }
+
+// The service screens keep their forms in one card; the MP3 tags fold away.
+.site-dl-form__group > summary { color: var(--accent); cursor: pointer; font-size: .875rem; }
+.site-dl-form__group[open] > summary { margin-block-end: .5rem; }
+.site-dlf__section > .site-dl-form__actions { margin-block-start: 1.25rem; }
