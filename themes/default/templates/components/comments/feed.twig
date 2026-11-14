@@ -11,12 +11,20 @@
     @var message    string|null What happened to the last comment.
     @var added      int|null    The comment just added: it shows the result itself, so the message
                                 is only read out.
+    @var titled     bool        The count is the heading of the discussion within a page about something else.
 #}
 <div class="site-discussion__region" data-live-list-region="comments">
     <input type="hidden" name="page" value="{{ page }}" form="comment-form-{{ subject.type }}-{{ subject.id }}">
-    <p class="site-discussion__count" tabindex="-1" data-live-list-focus>
-        {{ dn__('system', '%d comment', '%d comments', total)|format(total) }}
-    </p>
+    {% if titled|default(false) %}
+        <h2 class="site-discussion__title" tabindex="-1" data-live-list-focus>
+            {{ d__('system', 'Comments') }}
+            <span class="site-discussion__title-count">{{ total|format_number }}</span>
+        </h2>
+    {% else %}
+        <p class="site-discussion__count" tabindex="-1" data-live-list-focus>
+            {{ dn__('system', '%d comment', '%d comments', total)|format(total) }}
+        </p>
+    {% endif %}
     {% if message %}
         {% include '@theme/components/toast.twig' with {message: message, announce: added is not null} only %}
     {% endif %}

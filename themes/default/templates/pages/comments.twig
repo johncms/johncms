@@ -1,7 +1,5 @@
 {#
-    The discussion of an object of a module, on a page of its own. The feed is a live list: its
-    pages are swapped in place and the forms are sent without leaving the page, while the editor
-    keeps what is in it.
+    The discussion of an object of a module, on a page of its own.
 
     @var subject    \Johncms\Comments\CommentSubjectDTO
     @var comments   list<\Johncms\Comments\Application\DTO\CommentViewDTO>
@@ -30,49 +28,18 @@
 {% endblock %}
 
 {% block content %}
-    <section class="site-discussion" id="comments" aria-label="{{ d__('system', 'Comments') }}" data-live-list data-comments>
-        {% include '@theme/components/comments/feed.twig' with {
-            subject: subject,
-            comments: comments,
-            total: total,
-            page: page,
-            pagination: pagination,
-            can_write: can_write,
-            message: message,
-            added: added,
-        } only %}
-
-        {% if can_write %}
-            <section class="site-compose" id="comment-form" aria-labelledby="comment-form-title">
-                <h2 class="visually-hidden" id="comment-form-title">{{ d__('system', 'Write a comment') }}</h2>
-                {% include '@theme/components/comments/error.twig' with {error: error} only %}
-                <form class="site-compose__form" id="comment-form-{{ subject.type }}-{{ subject.id }}" method="post" action="{{ subject.discussionUrl }}" data-live-list-form data-comment-form>
-                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                    {% include '@theme/components/editor.twig' with {
-                        name: 'text',
-                        id: 'comment-text',
-                        label: d__('system', 'Write a comment'),
-                        label_hidden: true,
-                        placeholder: d__('system', 'Write a comment'),
-                        value: text,
-                        upload_url: upload_url,
-                        allow_upload: true,
-                        required: true,
-                    } only %}
-                    <div class="site-compose__actions">
-                        <button type="submit" class="btn btn-primary">
-                            {% include '@theme/components/icon.twig' with {name: 'send', size: 14} only %} {{ d__('system', 'Send') }}
-                        </button>
-                    </div>
-                </form>
-            </section>
-        {% elseif refusal %}
-            <div class="site-discussion__notice">{{ refusal }}</div>
-        {% elseif not app.user.isValid %}
-            <div class="site-discussion__notice">
-                {# The link to the login page is part of the translated string. #}
-                {{ d__('system', 'You are not logged in. You must be <a href="/login/">logged in</a> to comment.')|raw }}
-            </div>
-        {% endif %}
-    </section>
+    {% include '@theme/components/comments/discussion.twig' with {
+        subject: subject,
+        comments: comments,
+        total: total,
+        page: page,
+        pagination: pagination,
+        can_write: can_write,
+        refusal: refusal,
+        upload_url: upload_url,
+        message: message,
+        error: error,
+        added: added,
+        text: text,
+    } only %}
 {% endblock %}

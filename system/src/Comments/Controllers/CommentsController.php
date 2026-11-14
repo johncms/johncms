@@ -6,6 +6,7 @@ namespace Johncms\Comments\Controllers;
 
 use Johncms\Auth\CurrentUser;
 use Johncms\Comments\Application\CommentAccess;
+use Johncms\Comments\Application\CommentDiscussionView;
 use Johncms\Comments\Application\CommentsService;
 use Johncms\Comments\Application\Exceptions\CommentAccessDeniedException;
 use Johncms\Comments\Application\Exceptions\CommentNotFoundException;
@@ -18,7 +19,6 @@ use Johncms\Http\EditorImageUploadResponder;
 use Johncms\Http\Environment;
 use Johncms\Http\ExceptionResponseFactory;
 use Johncms\Http\PageMeta;
-use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
@@ -35,21 +35,16 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * A page of the discussion is a live list: the pages of comments and the forms are sent without
  * leaving the page, and the same addresses work as ordinary pages without the script.
+ *
+ * A subject shown within a page of its module (`embeddedIn`) has no discussion page here: the
+ * address of the discussion leads to that page, and the forms come back to it.
  */
 final readonly class CommentsController
 {
-    public const string FLASH_MESSAGE = 'comments.message';
-    public const string FLASH_ERROR = 'comments.error';
-    public const string FLASH_TEXT = 'comments.text';
-    public const string FLASH_ADDED = 'comments.added';
-
-    /** Id of the discussion on the page; the links of the pagination lead to it. */
-    private const string ANCHOR = 'comments';
-
     public function __construct(
         private CommentsService $comments,
         private CommentAccess $access,
-        private PaginationFactory $paginationFactory,
+        private CommentDiscussionView $view,
         private PaginationGuard $paginationGuard,
         private Session $session,
         private NavChain $navChain,
@@ -74,38 +69,28 @@ final readonly class CommentsController
             return $this->add($request, $object);
         }
 
-        $total = $this->comments->count($object);
-        $pagination = $this->paginationFactory->create(total: $total, fragment: self::ANCHOR);
+        if ($object->embeddedIn !== '') {
+            $page = $request->queryInt('page', 1);
+
+            return new RedirectResponse($this->pageUrl($object, $page) . '#' . CommentDiscussionView::ANCHOR, Response::HTTP_MOVED_PERMANENTLY);
+        }
+
+        $pagination = $this->view->pagination($object);
         $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
         if ($redirectUrl !== null) {
             return new RedirectResponse($redirectUrl);
         }
 
-        $page = $this->comments->page($object, $pagination->getPerPage(), $pagination->getOffset());
-        $this->comments->viewed($object);
+        $total = $pagination->getTotal();
         $meta = new PageMeta(
             $object->heading === '' ? sprintf(d__('system', 'Comments: %s'), $object->title) : $object->heading . ': ' . $object->title,
             $pagination->getCurrentPage(),
             $object->description
         );
         $data = [
-            'title'          => $meta->title,
-            'description'    => $meta->description,
-            'subject'        => $object,
-            'comments'       => $page->comments,
-            'total'          => $total,
-            'page'           => $pagination->getCurrentPage(),
-            'pagination'     => $pagination->hasPages() ? $pagination->render() : null,
-            'can_write'      => $page->canWrite,
-            'refusal'        => $this->currentUser->isValid() ? $page->refusal : '',
-            'upload_url'     => $object->discussionUrl . '/upload',
-            'message'        => $this->session->getFlash(self::FLASH_MESSAGE),
-            'error'          => $this->session->getFlash(self::FLASH_ERROR),
-            'added'          => $this->session->getFlash(self::FLASH_ADDED),
-            // The live list keeps the text in the editor; the flash is still read so that it does
-            // not come back on the next page shown.
-            'text'           => $this->session->getFlash(self::FLASH_TEXT) ?? '',
-        ];
+            'title'       => $meta->title,
+            'description' => $meta->description,
+        ] + $this->view->data($object, $pagination);
 
         if ($request->isXmlHttpRequest()) {
             return new ViewResponse('@theme/pages/comments-live.twig', $data);
@@ -161,7 +146,7 @@ final readonly class CommentsController
             }
 
             if ($error === null) {
-                $this->session->flash(self::FLASH_MESSAGE, d__('system', 'The comment was saved'));
+                $this->session->flash(CommentDiscussionView::FLASH_MESSAGE, d__('system', 'The comment was saved'));
 
                 return new RedirectResponse($this->permalinkUrl($object, $comment));
             }
@@ -194,7 +179,7 @@ final readonly class CommentsController
         } catch (CommentAccessDeniedException $exception) {
             return $this->exceptionResponses->forbidden(message: $exception->getMessage());
         }
-        $this->session->flash(self::FLASH_MESSAGE, d__('system', 'The comment was deleted'));
+        $this->session->flash(CommentDiscussionView::FLASH_MESSAGE, d__('system', 'The comment was deleted'));
 
         return $this->backToPage($object, $request->bodyInt('page'));
     }
@@ -210,7 +195,7 @@ final readonly class CommentsController
             return $this->exceptionResponses->forbidden(message: $exception->getMessage());
         }
         $this->session->flash(
-            self::FLASH_MESSAGE,
+            CommentDiscussionView::FLASH_MESSAGE,
             sprintf(dn__('system', '%d comment was deleted', '%d comments were deleted', $count), $count)
         );
 
@@ -253,23 +238,23 @@ final readonly class CommentsController
         try {
             $commentId = $this->comments->add($object, $text, $this->environment->getClientInfo());
         } catch (CommentAccessDeniedException | CommentValidationException $exception) {
-            $this->session->flash(self::FLASH_ERROR, $exception->getMessage());
-            $this->session->flash(self::FLASH_TEXT, $text);
+            $this->session->flash(CommentDiscussionView::FLASH_ERROR, $exception->getMessage());
+            $this->session->flash(CommentDiscussionView::FLASH_TEXT, $text);
 
             return new RedirectResponse($this->pageUrl($object, max(1, $request->bodyInt('page'))) . '#comment-form');
         }
 
-        $this->session->flash(self::FLASH_MESSAGE, d__('system', 'The comment was added'));
+        $this->session->flash(CommentDiscussionView::FLASH_MESSAGE, d__('system', 'The comment was added'));
         // The anchor of the redirect does not reach the server, so the live list learns the
         // comment to scroll to from here.
-        $this->session->flash(self::FLASH_ADDED, $commentId);
+        $this->session->flash(CommentDiscussionView::FLASH_ADDED, $commentId);
 
         return new RedirectResponse($this->pageUrl($object, $this->lastPage($object)) . '#comment-' . $commentId);
     }
 
     private function backToPage(CommentSubjectDTO $object, int $page): RedirectResponse
     {
-        return new RedirectResponse($this->pageUrl($object, min(max(1, $page), $this->lastPage($object))) . '#' . self::ANCHOR);
+        return new RedirectResponse($this->pageUrl($object, min(max(1, $page), $this->lastPage($object))) . '#' . CommentDiscussionView::ANCHOR);
     }
 
     /**
@@ -307,8 +292,11 @@ final readonly class CommentsController
         return max(1, (int) $this->currentUser->user()->config->kmess);
     }
 
+    /** A page of the comments: on the page of the discussion, or on the page that shows it within itself. */
     private function pageUrl(CommentSubjectDTO $object, int $page): string
     {
-        return $page > 1 ? $object->discussionUrl . '?page=' . $page : $object->discussionUrl;
+        $url = $object->embeddedIn !== '' ? $object->embeddedIn : $object->discussionUrl;
+
+        return $page > 1 ? $url . '?page=' . $page : $url;
     }
 }

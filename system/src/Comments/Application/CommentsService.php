@@ -69,10 +69,21 @@ final readonly class CommentsService
         return $this->comments->count($subject->type, $subject->id);
     }
 
+    /**
+     * How many comments each of the objects has, for a list of them that shows the numbers.
+     *
+     * @param list<int> $subjectIds
+     * @return array<int, int> By the id of the object; an object without comments is missing.
+     */
+    public function countForSubjects(string $subjectType, array $subjectIds): array
+    {
+        return $subjectIds === [] ? [] : $this->comments->countBySubjects($subjectType, $subjectIds);
+    }
+
     public function page(CommentSubjectDTO $subject, int $limit, int $offset): CommentPageDTO
     {
         $rows = $this->comments->getPage($subject->type, $subject->id, $limit, $offset);
-        $authorCounts = $this->access->canDelete($subject)
+        $authorCounts = $this->access->canModerate($subject)
             ? $this->comments->countByAuthors($subject->type, $subject->id, $this->authorIds($rows))
             : [];
 
@@ -168,7 +179,7 @@ final readonly class CommentsService
                 editorName: $row->editor_name ?? '',
                 editCount: $row->edit_count,
                 canEdit: $this->access->canEdit($subject, $row),
-                canDelete: $this->access->canDelete($subject),
+                canDelete: $this->access->canDelete($subject, $row),
                 authorCommentCount: $authorCounts[$row->user_id] ?? 1,
                 origin: $canSeeOrigin ? [
                     'ip'           => $row->author_ip ?? '',
@@ -287,7 +298,7 @@ final readonly class CommentsService
     public function delete(CommentSubjectDTO $subject, int $commentId): void
     {
         $comment = $this->find($subject, $commentId);
-        $this->access->ensureCanDelete($subject);
+        $this->access->ensureCanDelete($subject, $comment);
 
         $this->transactions->run(function () use ($subject, $comment): void {
             // Read again under a lock: a request deleting the same comment at the same moment
@@ -311,7 +322,7 @@ final readonly class CommentsService
     public function deleteAuthor(CommentSubjectDTO $subject, int $commentId): int
     {
         $comment = $this->find($subject, $commentId);
-        $this->access->ensureCanDelete($subject);
+        $this->access->ensureCanModerate($subject);
 
         return $this->transactions->run(function () use ($subject, $comment): int {
             $removed = $this->comments->getOfAuthor($subject->type, $subject->id, $comment->user_id);

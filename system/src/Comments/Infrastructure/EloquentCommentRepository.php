@@ -16,6 +16,24 @@ final readonly class EloquentCommentRepository implements CommentRepositoryInter
         return $this->ofSubject($subjectType, $subjectId)->count();
     }
 
+    public function countBySubjects(string $subjectType, array $subjectIds): array
+    {
+        $counts = Comment::query()
+            ->where('subject_type', $subjectType)
+            ->whereIn('subject_id', $subjectIds)
+            ->groupBy('subject_id')
+            ->selectRaw('subject_id, COUNT(*) AS aggregate')
+            ->pluck('aggregate', 'subject_id')
+            ->all();
+
+        $result = [];
+        foreach ($counts as $subjectId => $count) {
+            $result[(int) $subjectId] = (int) $count;
+        }
+
+        return $result;
+    }
+
     public function getPage(string $subjectType, int $subjectId, int $limit, int $offset): array
     {
         /** @var list<Comment> $comments */

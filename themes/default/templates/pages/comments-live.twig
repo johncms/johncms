@@ -13,6 +13,7 @@
     @var message    string|null
     @var error      string|null
     @var added      int|null
+    @var titled     bool        The discussion is a part of a page about something else.
 #}
 <title>{% include '@theme/components/document-title.twig' with {title: title} only %}</title>
 {% include '@theme/components/comments/feed.twig' with {
@@ -24,5 +25,6 @@
     can_write: can_write,
     message: message,
     added: added,
+    titled: titled|default(false),
 } only %}
 {% include '@theme/components/comments/error.twig' with {error: error} only %}

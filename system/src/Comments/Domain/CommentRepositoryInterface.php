@@ -9,6 +9,12 @@ interface CommentRepositoryInterface
     public function count(string $subjectType, int $subjectId): int;
 
     /**
+     * @param list<int> $subjectIds
+     * @return array<int, int> Comments by the id of the object; an object without comments is missing.
+     */
+    public function countBySubjects(string $subjectType, array $subjectIds): array;
+
+    /**
      * Oldest first.
      *
      * @return list<Comment>

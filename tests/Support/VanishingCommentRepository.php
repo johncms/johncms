@@ -32,6 +32,11 @@ final readonly class VanishingCommentRepository implements CommentRepositoryInte
         return $this->inner->count($subjectType, $subjectId);
     }
 
+    public function countBySubjects(string $subjectType, array $subjectIds): array
+    {
+        return $this->inner->countBySubjects($subjectType, $subjectIds);
+    }
+
     public function getPage(string $subjectType, int $subjectId, int $limit, int $offset): array
     {
         return $this->inner->getPage($subjectType, $subjectId, $limit, $offset);

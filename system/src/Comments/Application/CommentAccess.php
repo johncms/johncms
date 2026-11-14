@@ -23,7 +23,10 @@ use Johncms\Users\IgnoreListCheckerInterface;
  *   blocked by the owner of the object.
  * - Editing: the moderator always, the owner where the subject lets them, the author for five
  *   minutes after writing while they may still write here.
- * - Deleting: the moderator, and the owner where the subject lets them.
+ * - Deleting: the moderator, the owner where the subject lets them, and the author of the
+ *   comment where the subject lets them. Deleting all the comments of an author is for the
+ *   moderator and the owner.
+ * - The moderator: the one of all comments, or the one the subject names by its own permission.
  *
  * A ban of the subject's kinds closes everything to its holder, the moderator included.
  */
@@ -83,7 +86,7 @@ final readonly class CommentAccess
         if (! $this->currentUser->isValid() || $this->isBanned($subject)) {
             return false;
         }
-        if ($this->isModerator() || ($subject->ownerCanEdit && $this->isOwner($subject))) {
+        if ($this->isModerator($subject) || ($subject->ownerCanEdit && $this->isOwner($subject))) {
             return true;
         }
 
@@ -103,21 +106,44 @@ final readonly class CommentAccess
         }
     }
 
-    public function canDelete(CommentSubjectDTO $subject): bool
+    /** Whether the visitor removes any comment under the subject, all of an author at once included. */
+    public function canModerate(CommentSubjectDTO $subject): bool
     {
         if (! $this->currentUser->isValid() || $this->isBanned($subject)) {
             return false;
         }
 
-        return $this->isModerator() || ($subject->ownerCanDelete && $this->isOwner($subject));
+        return $this->isModerator($subject) || ($subject->ownerCanDelete && $this->isOwner($subject));
+    }
+
+    public function canDelete(CommentSubjectDTO $subject, Comment $comment): bool
+    {
+        if ($this->canModerate($subject)) {
+            return true;
+        }
+
+        return $subject->authorCanDelete
+            && $comment->user_id !== 0
+            && $comment->user_id === $this->currentUser->id()
+            && ! $this->isBanned($subject);
     }
 
     /**
      * @throws CommentAccessDeniedException
      */
-    public function ensureCanDelete(CommentSubjectDTO $subject): void
+    public function ensureCanDelete(CommentSubjectDTO $subject, Comment $comment): void
     {
-        if (! $this->canDelete($subject)) {
+        if (! $this->canDelete($subject, $comment)) {
+            throw new CommentAccessDeniedException(d__('system', 'Access denied'));
+        }
+    }
+
+    /**
+     * @throws CommentAccessDeniedException
+     */
+    public function ensureCanModerate(CommentSubjectDTO $subject): void
+    {
+        if (! $this->canModerate($subject)) {
             throw new CommentAccessDeniedException(d__('system', 'Access denied'));
         }
     }
@@ -128,9 +154,9 @@ final readonly class CommentAccess
         return $this->access->allows(CorePermissions::USERS_ORIGIN_VIEW);
     }
 
-    private function isModerator(): bool
+    private function isModerator(CommentSubjectDTO $subject): bool
     {
-        return $this->access->allows(CorePermissions::COMMENTS_MODERATE);
+        return $subject->moderator || $this->access->allows(CorePermissions::COMMENTS_MODERATE);
     }
 
     private function isOwner(CommentSubjectDTO $subject): bool

@@ -21,6 +21,9 @@ final readonly class CommentSubjectDTO
      * @param list<array{name: string, url: string}>  $breadcrumbs   The way to the object, the object included, as plain text; the discussion adds itself.
      * @param string                                  $description   For the meta description of the discussion.
      * @param string                                  $heading       What the discussion is called on its page; empty for "Comments".
+     * @param string                                  $embeddedIn    Address of the page of the module that shows the discussion within itself; empty when the discussion has a page of its own.
+     * @param bool                                    $moderator     Whether the current visitor moderates this discussion by a permission of the module, besides the moderators of all comments.
+     * @param bool                                    $authorCanDelete Whether the author removes their own comment.
      */
     public function __construct(
         public string $type,
@@ -36,6 +39,9 @@ final readonly class CommentSubjectDTO
         public array $breadcrumbs = [],
         public string $description = '',
         public string $heading = '',
+        public string $embeddedIn = '',
+        public bool $moderator = false,
+        public bool $authorCanDelete = false,
     ) {
     }
 }

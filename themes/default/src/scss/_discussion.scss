@@ -85,7 +85,10 @@
   &__region { transition: opacity .15s; }
   &[aria-busy="true"] &__region { opacity: .6; }
   &__count { margin-block-end: .75rem; color: var(--fg-muted); font-size: .875rem; }
-  &__count:focus:not(:focus-visible) { outline: none; }
+  &__count:focus:not(:focus-visible),
+  &__title:focus:not(:focus-visible) { outline: none; }
+  &__title { display: flex; align-items: center; gap: .625rem; margin-block-end: .75rem; font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  &__title-count { padding: .125rem .4375rem; border: 1px solid var(--border); border-radius: .25rem; background: var(--bg-inset); color: var(--fg-dim); font-family: var(--bs-font-monospace); font-size: .6875rem; font-weight: 400; letter-spacing: 0; text-transform: none; }
   &__empty { padding: 1.5rem; border: 1px dashed var(--border-strong); border-radius: .75rem; text-align: center; color: var(--fg-muted); }
   &__feed { display: flex; flex-direction: column; gap: .75rem; }
   &__pagination { margin-block-start: 1rem; }
