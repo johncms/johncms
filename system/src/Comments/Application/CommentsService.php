@@ -11,6 +11,7 @@ use Johncms\Auth\CurrentUser;
 use Johncms\Comments\Application\DTO\CommentAuthorDTO;
 use Johncms\Comments\Application\DTO\CommentPageDTO;
 use Johncms\Comments\Application\DTO\CommentViewDTO;
+use Johncms\Comments\Application\DTO\LatestCommentDTO;
 use Johncms\Comments\Application\Exceptions\CommentAccessDeniedException;
 use Johncms\Comments\Application\Exceptions\CommentNotFoundException;
 use Johncms\Comments\Application\Exceptions\CommentValidationException;
@@ -71,19 +72,78 @@ final readonly class CommentsService
     public function page(CommentSubjectDTO $subject, int $limit, int $offset): CommentPageDTO
     {
         $rows = $this->comments->getPage($subject->type, $subject->id, $limit, $offset);
-        $authorIds = array_values(array_unique(array_filter(array_map(static fn(Comment $row): int => $row->user_id, $rows))));
-        $users = $this->users->findMany($authorIds);
-        $this->staff->preload(array_keys($users));
-        $canDelete = $this->access->canDelete($subject);
-        $authorCounts = $canDelete ? $this->comments->countByAuthors($subject->type, $subject->id, $authorIds) : [];
-        $canSeeOrigin = $this->access->canSeeOrigin();
+        $authorCounts = $this->access->canDelete($subject)
+            ? $this->comments->countByAuthors($subject->type, $subject->id, $this->authorIds($rows))
+            : [];
 
         $comments = [];
-        foreach ($rows as $index => $row) {
+        foreach ($this->views($rows) as $index => $view) {
+            $comments[] = $view($subject, $offset + $index + 1, $authorCounts);
+        }
+
+        $refusal = $this->access->writeRefusal($subject);
+
+        return new CommentPageDTO(comments: $comments, canWrite: $refusal === null, refusal: $refusal ?? '');
+    }
+
+    /**
+     * The newest comments on every object of the kind the visitor may see, for a feed or a
+     * review of the moderator. An object hidden from the visitor leaves its comments out.
+     *
+     * @return list<LatestCommentDTO>
+     */
+    public function latest(string $subjectType, int $limit, int $offset): array
+    {
+        $kind = $this->subjects->get($subjectType);
+        if ($kind === null) {
+            return [];
+        }
+
+        $rows = $this->comments->getLatest($subjectType, $limit, $offset);
+        $subjects = [];
+        $latest = [];
+        foreach ($this->views($rows) as $index => $view) {
+            $row = $rows[$index];
+            $subject = $subjects[$row->subject_id] ??= $kind->find($row->subject_id);
+            if ($subject === null) {
+                continue;
+            }
+            $latest[] = new LatestCommentDTO(
+                subject: $subject,
+                comment: $view($subject, 0, []),
+                authorId: $row->user_id,
+                html: $row->text,
+                writtenAt: $this->timestamp($row->created_at),
+            );
+        }
+
+        return $latest;
+    }
+
+    public function countOfType(string $subjectType): int
+    {
+        return $this->comments->countOfType($subjectType);
+    }
+
+    /**
+     * What a comment shows, for each row: a function of the subject it is shown under, its
+     * position, and how many comments each author left there.
+     *
+     * @param list<Comment> $rows
+     * @return list<callable(CommentSubjectDTO, int, array<int, int>): CommentViewDTO>
+     */
+    private function views(array $rows): array
+    {
+        $users = $this->users->findMany($this->authorIds($rows));
+        $this->staff->preload(array_keys($users));
+        $canSeeOrigin = $this->access->canSeeOrigin();
+
+        $views = [];
+        foreach ($rows as $row) {
             $user = $users[$row->user_id] ?? null;
-            $comments[] = new CommentViewDTO(
+            $views[] = fn(CommentSubjectDTO $subject, int $number, array $authorCounts): CommentViewDTO => new CommentViewDTO(
                 id: $row->id,
-                number: $offset + $index + 1,
+                number: $number,
                 text: $this->content->render($row->text, new ContentContext(adminSmilies: $row->staff_smilies)),
                 createdAt: $this->dates->format($this->timestamp($row->created_at)),
                 author: $user === null ? null : new CommentAuthorDTO(
@@ -97,7 +157,7 @@ final readonly class CommentsService
                 editorName: $row->editor_name ?? '',
                 editCount: $row->edit_count,
                 canEdit: $this->access->canEdit($subject, $row),
-                canDelete: $canDelete,
+                canDelete: $this->access->canDelete($subject),
                 authorCommentCount: $authorCounts[$row->user_id] ?? 1,
                 origin: $canSeeOrigin ? [
                     'ip'           => $row->author_ip ?? '',
@@ -107,9 +167,16 @@ final readonly class CommentsService
             );
         }
 
-        $refusal = $this->access->writeRefusal($subject);
+        return $views;
+    }
 
-        return new CommentPageDTO(comments: $comments, canWrite: $refusal === null, refusal: $refusal ?? '');
+    /**
+     * @param list<Comment> $rows
+     * @return list<int>
+     */
+    private function authorIds(array $rows): array
+    {
+        return array_values(array_unique(array_filter(array_map(static fn(Comment $row): int => $row->user_id, $rows))));
     }
 
     /**

@@ -18,7 +18,6 @@ use Johncms\Modules\Downloads\Application\Controllers\EditFileController;
 use Johncms\Modules\Downloads\Application\Controllers\MoveFileController;
 use Johncms\Modules\Downloads\Application\Controllers\EditScreenController;
 use Johncms\Modules\Downloads\Application\Controllers\FavoritesController;
-use Johncms\Modules\Downloads\Application\Controllers\FileCommentsController;
 use Johncms\Modules\Downloads\Application\Controllers\FilePreviewController;
 use Johncms\Modules\Downloads\Application\Controllers\FilesUploadController;
 use Johncms\Modules\Downloads\Application\Controllers\LoadFileController;
@@ -27,7 +26,9 @@ use Johncms\Modules\Downloads\Application\Controllers\SearchController;
 use Johncms\Modules\Downloads\Application\Controllers\TopFilesController;
 use Johncms\Modules\Downloads\Application\Controllers\TopUsersController;
 use Johncms\Modules\Downloads\Application\Controllers\UserFilesController;
+use Johncms\Comments\CommentRoutes;
 use Johncms\Http\Middleware\RequireConfirmationMiddleware;
+use Johncms\Modules\Downloads\Application\Comments\DownloadsCommentSubject;
 use Johncms\Modules\Downloads\Application\Middlewares\DownloadsAccessMiddleware;
 use Johncms\Modules\Downloads\Application\Middlewares\DownloadsAdminMiddleware;
 use Johncms\Router\RouteCollection;
@@ -49,7 +50,8 @@ return static function (RouteCollection $router): void {
         $r->get('/downloads/preview/{id:number}/{name}', [FilePreviewController::class, 'screen'])
             ->name('downloads.screen_preview')
             ->requirements(['name' => '[A-Za-z0-9_.\-]+']);
-        $r->map(['GET', 'POST'], '/downloads/comments/{id:number}', FileCommentsController::class)->name('downloads.file_comments');
+        // The discussion of a file: the comments of the core, under the address it always had.
+        CommentRoutes::register($r, '/downloads/comments/{id:number}', DownloadsCommentSubject::TYPE, 'downloads.file_comments');
         $r->map(['GET', 'POST'], '/downloads/upload/{id:number}', FilesUploadController::class)->name('downloads.upload');
 
         $r->map(['GET', 'POST'], '/downloads', IndexController::class)->name('downloads.index');

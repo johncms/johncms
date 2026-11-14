@@ -12,17 +12,14 @@ use Tests\Support\Fixture;
 use Tests\Support\FunctionalUserFactory;
 
 /**
- * Deleting through the legacy Johncms\Comments class, on the comments of a download.
+ * Deleting through the legacy Johncms\Comments class, on the comments of an article of the library.
  *
  * Only a POST that carries the CSRF token and the confirmed field of the dialog deletes. A link,
  * the old one with &yes included, and a form sent without the answer change nothing.
  */
 final class LegacyCommentsDeleteTest extends FunctionalTestCase
 {
-    /** @var string|null The file a download points at; removed again in tearDown(). */
-    private ?string $storedFile = null;
-
-    private int $fileId;
+    private int $articleId;
 
     private User $moderator;
 
@@ -30,28 +27,9 @@ final class LegacyCommentsDeleteTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        $directory = sys_get_temp_dir() . '/johncms-functional-' . bin2hex(random_bytes(4));
-        mkdir($directory);
-        $this->storedFile = $directory . '/file.zip';
-        file_put_contents($this->storedFile, 'a download');
-
-        // type 2 is a file of the catalogue; 0 and 1 are the categories.
-        $this->fileId = Fixture::insert(
-            'download__files',
-            ['type' => 2, 'name' => 'file.zip', 'dir' => $directory, 'rus_name' => 'A file']
-        );
+        $categoryId = Fixture::insert('library_cats', ['name' => 'A shelf']);
+        $this->articleId = Fixture::insert('library_texts', ['cat_id' => $categoryId, 'name' => 'An article', 'text' => 'Body']);
         $this->moderator = FunctionalUserFactory::createSupervisor();
-    }
-
-    protected function tearDown(): void
-    {
-        if ($this->storedFile !== null) {
-            unlink($this->storedFile);
-            rmdir(dirname($this->storedFile));
-            $this->storedFile = null;
-        }
-
-        parent::tearDown();
     }
 
     public function testOldLinkWithYesDeletesNothing(): void
@@ -107,17 +85,17 @@ final class LegacyCommentsDeleteTest extends FunctionalTestCase
         self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
         self::assertFalse($this->commentExists($deleted));
         self::assertTrue($this->commentExists($kept));
-        self::assertSame(1, $this->fileCommentCount());
+        self::assertSame(1, $this->articleCommentCount());
     }
 
-    public function testConfirmedPostWithAllDeletesEveryCommentOfTheAuthorUnderTheFile(): void
+    public function testConfirmedPostWithAllDeletesEveryCommentOfTheAuthorUnderTheArticle(): void
     {
         $authorId = FunctionalUserFactory::create()->id;
         $first = $this->insertComment($authorId);
         $second = $this->insertComment($authorId);
         $ofSomeoneElse = $this->insertComment(FunctionalUserFactory::create()->id);
-        $otherFileId = Fixture::insert('download__files', ['type' => 2, 'name' => 'other.zip', 'rus_name' => 'Other']);
-        $underOtherFile = $this->insertComment($authorId, $otherFileId);
+        $otherArticleId = Fixture::insert('library_texts', ['cat_id' => 0, 'name' => 'Other', 'text' => 'Body']);
+        $underOtherArticle = $this->insertComment($authorId, $otherArticleId);
 
         $this->postForm(
             $this->url() . '?mod=del&item=' . $first,
@@ -128,8 +106,8 @@ final class LegacyCommentsDeleteTest extends FunctionalTestCase
         self::assertFalse($this->commentExists($first));
         self::assertFalse($this->commentExists($second));
         self::assertTrue($this->commentExists($ofSomeoneElse));
-        self::assertTrue($this->commentExists($underOtherFile));
-        self::assertSame(1, $this->fileCommentCount());
+        self::assertTrue($this->commentExists($underOtherArticle));
+        self::assertSame(1, $this->articleCommentCount());
     }
 
     public function testListOffersDeletionOnlyAsConfirmedForms(): void
@@ -147,13 +125,13 @@ final class LegacyCommentsDeleteTest extends FunctionalTestCase
 
     private function url(): string
     {
-        return '/downloads/comments/' . $this->fileId;
+        return '/library/article/' . $this->articleId . '/comments';
     }
 
-    private function insertComment(int $userId, ?int $fileId = null): int
+    private function insertComment(int $userId, ?int $articleId = null): int
     {
-        return Fixture::insert('download__comments', [
-            'sub_id'     => $fileId ?? $this->fileId,
+        return Fixture::insert('cms_library_comments', [
+            'sub_id'     => $articleId ?? $this->articleId,
             'user_id'    => $userId,
             'time'       => time(),
             'text'       => 'A comment',
@@ -164,11 +142,11 @@ final class LegacyCommentsDeleteTest extends FunctionalTestCase
 
     private function commentExists(int $id): bool
     {
-        return Capsule::table('download__comments')->where('id', $id)->exists();
+        return Capsule::table('cms_library_comments')->where('id', $id)->exists();
     }
 
-    private function fileCommentCount(): int
+    private function articleCommentCount(): int
     {
-        return (int) Capsule::table('download__files')->where('id', $this->fileId)->value('comm_count');
+        return (int) Capsule::table('library_texts')->where('id', $this->articleId)->value('comm_count');
     }
 }

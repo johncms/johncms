@@ -23,7 +23,8 @@
             {% endif %}
             {% if author and author.rightsName %}<span class="site-comment__role">{{ author.rightsName }}</span>{% endif %}
             <time class="site-comment__date">{{ comment.createdAt }}</time>
-            <a class="site-comment__anchor" href="{{ subject.discussionUrl }}/comment/{{ comment.id }}">#{{ comment.number }}</a>
+            {# A feed of the latest comments knows no position: the link still leads to the comment. #}
+            <a class="site-comment__anchor" href="{{ subject.discussionUrl }}/comment/{{ comment.id }}">#{{ comment.number ?: '' }}</a>
         </header>
         <div class="site-comment__body ck-content">{{ comment.text }}</div>
         {% if comment.editCount > 0 %}

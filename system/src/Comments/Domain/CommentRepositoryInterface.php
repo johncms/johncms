@@ -24,6 +24,15 @@ interface CommentRepositoryInterface
     public function findLatestOfUser(string $subjectType, int $userId): ?Comment;
 
     /**
+     * The comments of every object of the kind, newest first.
+     *
+     * @return list<Comment>
+     */
+    public function getLatest(string $subjectType, int $limit, int $offset): array;
+
+    public function countOfType(string $subjectType): int;
+
+    /**
      * How many comments each of the authors left under the subject.
      *
      * @param list<int> $userIds

@@ -7,7 +7,6 @@ namespace Johncms\Modules\Downloads\Domain\Repository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as SupportCollection;
 use Johncms\Modules\Downloads\Domain\Enums\DownloadTopSort;
-use Johncms\Modules\Downloads\Domain\Models\DownloadComment;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Users\User as UserModel;
 
@@ -53,12 +52,8 @@ interface DownloadFileRepositoryInterface
      */
     public function getFavorites(int $userId, int $limit, int $offset): Collection;
 
-    public function countCommentsReview(): int;
-
-    /**
-     * @return Collection<int, DownloadComment>
-     */
-    public function getCommentsReview(int $limit, int $offset): Collection;
+    /** Change the number of comments of the file by the delta, never below zero, in one statement. */
+    public function changeCommentCount(int $id, int $delta): void;
 
     public function findFile(int $id): ?DownloadFile;
 

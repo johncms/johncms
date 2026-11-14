@@ -783,7 +783,7 @@ msgstr ""
 #: system/src/Comments.php:201
 #: system/src/Comments.php:266
 #: system/src/Comments.php:267
-#: themes/default/templates/components/comments/comment.twig:39
+#: themes/default/templates/components/comments/comment.twig:40
 #: themes/default/templates/components/style-guide/examples/button-states.twig:20
 #: themes/default/templates/pages/comments-list.twig:106
 msgid "Reply"
@@ -810,7 +810,7 @@ msgstr ""
 #: system/src/Comments.php:358
 #: system/src/Comments.php:359
 #: system/src/Comments/Controllers/CommentsController.php:167
-#: themes/default/templates/components/comments/comment.twig:44
+#: themes/default/templates/components/comments/comment.twig:45
 #: themes/default/templates/components/style-guide/examples/button-states.twig:11
 #: themes/default/templates/components/style-guide/examples/button-states.twig:13
 #: themes/default/templates/components/style-guide/examples/controls.twig:12
@@ -835,7 +835,7 @@ msgid "seconds"
 msgstr ""
 
 #: system/src/Comments.php:686
-#: system/src/Comments/Application/CommentsService.php:152
+#: system/src/Comments/Application/CommentsService.php:219
 msgid "Message already exists"
 msgstr ""
 
@@ -855,16 +855,16 @@ msgstr ""
 msgid "The owner has added you to the ignore list."
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:145
+#: system/src/Comments/Application/CommentsService.php:212
 #, php-format
 msgid "You cannot write so often. Wait %d seconds."
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:291
+#: system/src/Comments/Application/CommentsService.php:358
 msgid "Enter the comment text"
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:295
+#: system/src/Comments/Application/CommentsService.php:362
 #, php-format
 msgid "The comment is too long: at most %d characters."
 msgstr ""
@@ -1382,17 +1382,17 @@ msgstr ""
 msgid "Online"
 msgstr ""
 
-#: themes/default/templates/components/comments/comment.twig:31
+#: themes/default/templates/components/comments/comment.twig:32
 msgid "Edited by %s, %s"
 msgstr ""
 
-#: themes/default/templates/components/comments/comment.twig:49
+#: themes/default/templates/components/comments/comment.twig:50
 msgid "Delete this comment?"
 msgstr ""
 
-#: themes/default/templates/components/comments/comment.twig:49
-#: themes/default/templates/components/comments/comment.twig:53
-#: themes/default/templates/components/comments/comment.twig:60
+#: themes/default/templates/components/comments/comment.twig:50
+#: themes/default/templates/components/comments/comment.twig:54
+#: themes/default/templates/components/comments/comment.twig:61
 #: themes/default/templates/components/style-guide/examples/button-states.twig:22
 #: themes/default/templates/components/style-guide/examples/confirm.twig:3
 #: themes/default/templates/components/style-guide/examples/confirm.twig:4
@@ -1403,12 +1403,12 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: themes/default/templates/components/comments/comment.twig:59
+#: themes/default/templates/components/comments/comment.twig:60
 msgid "Delete %d comment of %s here?"
 msgid_plural "Delete all %d comments of %s here?"
 msgstr[0] ""
 
-#: themes/default/templates/components/comments/comment.twig:65
+#: themes/default/templates/components/comments/comment.twig:66
 msgid "All of the author"
 msgstr ""
 

@@ -62,6 +62,26 @@ final readonly class EloquentCommentRepository implements CommentRepositoryInter
         return $comment;
     }
 
+    public function getLatest(string $subjectType, int $limit, int $offset): array
+    {
+        /** @var list<Comment> $comments */
+        $comments = Comment::query()
+            ->where('subject_type', $subjectType)
+            ->orderByDesc('created_at')
+            ->orderByDesc('id')
+            ->limit($limit)
+            ->offset($offset)
+            ->get()
+            ->all();
+
+        return $comments;
+    }
+
+    public function countOfType(string $subjectType): int
+    {
+        return Comment::query()->where('subject_type', $subjectType)->count();
+    }
+
     public function countByAuthors(string $subjectType, int $subjectId, array $userIds): array
     {
         if ($userIds === []) {

@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
+use Johncms\Comments\Application\CommentsService;
+use Johncms\Modules\Downloads\Application\Comments\DownloadsCommentSubject;
 use Johncms\Auth\CurrentUser;
 use Johncms\FileInfo;
 use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadBookmark;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
-use Johncms\Modules\Downloads\Domain\Models\DownloadComment;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Modules\Downloads\Domain\Models\DownloadMoreFile;
 use Johncms\NavChain;
@@ -27,6 +28,7 @@ final readonly class ScanDirectoryController
         private CurrentUser $currentUser,
         private DownloadCategoryPathService $categoryPathService,
         private CategoryNavService $categoryNavService,
+        private CommentsService $comments,
     ) {
     }
 
@@ -74,7 +76,7 @@ final readonly class ScanDirectoryController
                 });
                 DownloadMoreFile::query()->where('refid', $file->id)->delete();
                 DownloadBookmark::query()->where('file_id', $file->id)->delete();
-                DownloadComment::query()->where('sub_id', $file->id)->delete();
+                $this->comments->deleteForSubjects(DownloadsCommentSubject::TYPE, [$file->id]);
                 $file->delete();
                 return;
             }
@@ -131,7 +133,7 @@ final readonly class ScanDirectoryController
         $fileIds = DownloadFile::query()->where('refid', $categoryId)->pluck('id')->all();
         if (! empty($fileIds)) {
             DownloadBookmark::query()->whereIn('file_id', $fileIds)->delete();
-            DownloadComment::query()->whereIn('sub_id', $fileIds)->delete();
+            $this->comments->deleteForSubjects(DownloadsCommentSubject::TYPE, array_map('intval', $fileIds));
             DownloadMoreFile::query()->whereIn('refid', $fileIds)->delete();
         }
         DownloadFile::query()->where('refid', $categoryId)->delete();

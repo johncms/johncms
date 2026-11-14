@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Application\CommentFeed;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Comments\Application\CommentsService;
+use Johncms\Comments\Application\DTO\LatestCommentDTO;
+use Johncms\Modules\Downloads\Application\Comments\DownloadsCommentSubject;
 use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
-use Johncms\Modules\Downloads\Domain\Models\DownloadComment;
-use Johncms\Modules\Downloads\Domain\Repository\DownloadFileRepositoryInterface;
 use Johncms\View\CommentFeed\CommentFeedSourceInterface;
 use Johncms\View\CommentFeed\FeedComment;
 
@@ -18,7 +19,7 @@ final readonly class DownloadsCommentFeedSource implements CommentFeedSourceInte
 {
     public function __construct(
         private AccessCheckerInterface $accessChecker,
-        private DownloadFileRepositoryInterface $files,
+        private CommentsService $comments,
     ) {
     }
 
@@ -28,12 +29,12 @@ final readonly class DownloadsCommentFeedSource implements CommentFeedSourceInte
             return [];
         }
 
-        return array_values($this->files->getCommentsReview($limit, 0)->map($this->toFeed(...))->all());
+        return array_map($this->toFeed(...), $this->comments->latest(DownloadsCommentSubject::TYPE, $limit, 0));
     }
 
     public function countComments(): int
     {
-        return $this->moderates() ? $this->files->countCommentsReview() : 0;
+        return $this->moderates() ? $this->comments->countOfType(DownloadsCommentSubject::TYPE) : 0;
     }
 
     private function moderates(): bool
@@ -41,19 +42,16 @@ final readonly class DownloadsCommentFeedSource implements CommentFeedSourceInte
         return $this->accessChecker->allows(DownloadsPermissions::MODERATE);
     }
 
-    private function toFeed(DownloadComment $comment): FeedComment
+    private function toFeed(LatestCommentDTO $latest): FeedComment
     {
-        // The name the author had when writing, kept with the comment by the legacy comments.
-        $attributes = unserialize((string) $comment->getAttribute('attributes'), ['allowed_classes' => false]);
-
         return new FeedComment(
-            d__('downloads', 'Downloads'),
-            (string) $comment->getAttribute('rus_name'),
-            '/downloads/comments/' . $comment->getAttribute('sub_id'),
-            (int) $comment->getAttribute('user_id'),
-            (string) ($attributes['author_name'] ?? ''),
-            (string) $comment->getAttribute('text'),
-            (int) $comment->getAttribute('time'),
+            section: d__('downloads', 'Downloads'),
+            subject: $latest->subject->title,
+            url: $latest->permalink(),
+            authorId: $latest->authorId,
+            authorName: $latest->comment->author->name ?? $latest->comment->authorName,
+            text: $latest->html,
+            time: $latest->writtenAt,
         );
     }
 }

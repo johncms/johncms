@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as SupportCollection;
 use Johncms\Database\Query\DailyCounts;
 use Johncms\Modules\Downloads\Domain\Enums\DownloadTopSort;
-use Johncms\Modules\Downloads\Domain\Models\DownloadComment;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Modules\Downloads\Domain\Models\DownloadMoreFile;
 use Johncms\Modules\Downloads\Domain\Repository\DownloadFileRepositoryInterface;
@@ -187,28 +186,19 @@ final class DownloadFileRepository implements DownloadFileRepositoryInterface
             ->get();
     }
 
-    public function countCommentsReview(): int
+    public function changeCommentCount(int $id, int $delta): void
     {
-        return DownloadComment::query()->count();
-    }
+        $files = DownloadFile::query()->where('id', $id);
+        if ($delta >= 0) {
+            $files->increment('comm_count', $delta);
 
-    /**
-     * @return Collection<int, DownloadComment>
-     */
-    public function getCommentsReview(int $limit, int $offset): Collection
-    {
-        return DownloadComment::query()
-            ->leftJoin('users', 'download__comments.user_id', '=', 'users.id')
-            ->leftJoin('download__files', 'download__comments.sub_id', '=', 'download__files.id')
-            ->select(
-                'download__comments.*',
-                'download__comments.id as cid',
-                'download__files.rus_name'
-            )
-            ->orderByDesc('download__comments.time')
-            ->offset($offset)
-            ->limit($limit)
-            ->get();
+            return;
+        }
+
+        // Spelled out: the column is unsigned, and SQLite has no GREATEST().
+        $files->update(['comm_count' => DownloadFile::query()->getConnection()->raw(
+            'CASE WHEN comm_count > ' . -$delta . ' THEN comm_count - ' . -$delta . ' ELSE 0 END'
+        )]);
     }
 
     public function findFile(int $id): ?DownloadFile

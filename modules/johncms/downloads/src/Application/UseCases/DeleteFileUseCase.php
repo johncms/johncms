@@ -4,16 +4,22 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\UseCases;
 
+use Johncms\Comments\Application\CommentsService;
+use Johncms\Modules\Downloads\Application\Comments\DownloadsCommentSubject;
 use Johncms\Modules\Downloads\Domain\Services\ScreenService;
 use Johncms\Modules\Downloads\Application\Exceptions\FileNotFoundException;
 use Johncms\Modules\Downloads\Domain\Models\DownloadBookmark;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
-use Johncms\Modules\Downloads\Domain\Models\DownloadComment;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Modules\Downloads\Domain\Models\DownloadMoreFile;
 
 final readonly class DeleteFileUseCase
 {
+    public function __construct(
+        private CommentsService $comments,
+    ) {
+    }
+
     /**
      * @throws FileNotFoundException
      */
@@ -41,7 +47,7 @@ final readonly class DeleteFileUseCase
         DownloadMoreFile::query()->where('refid', $id)->delete();
 
         DownloadBookmark::query()->where('file_id', $id)->delete();
-        DownloadComment::query()->where('sub_id', $id)->delete();
+        $this->comments->deleteForSubjects(DownloadsCommentSubject::TYPE, [$id]);
 
         @unlink($file->dir . '/' . $file->name);
 
