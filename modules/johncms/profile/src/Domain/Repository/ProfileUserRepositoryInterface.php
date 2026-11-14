@@ -13,7 +13,8 @@ interface ProfileUserRepositoryInterface
     /**
      * Mark the user's guestbook as read by syncing the seen counter with the current count.
      */
-    public function markGuestbookSeen(int $userId, int $commCount): void;
+    /** Change the number of entries of the guestbook of the user by the delta, never below zero, in one statement. */
+    public function changeGuestbookCount(int $userId, int $delta): void;
 
     /**
      * Store the already hashed password for the user.

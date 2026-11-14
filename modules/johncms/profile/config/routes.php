@@ -8,7 +8,6 @@ use Johncms\Modules\Profile\Application\Controllers\AvatarController;
 use Johncms\Modules\Profile\Application\Controllers\BanController;
 use Johncms\Modules\Profile\Application\Controllers\ChangePasswordController;
 use Johncms\Modules\Profile\Application\Controllers\EditProfileController;
-use Johncms\Modules\Profile\Application\Controllers\GuestbookController;
 use Johncms\Modules\Profile\Application\Controllers\IpHistoryController;
 use Johncms\Modules\Profile\Application\Controllers\KarmaController;
 use Johncms\Modules\Profile\Application\Controllers\PhotoController;
@@ -20,6 +19,8 @@ use Johncms\Modules\Profile\Application\Controllers\SettingsController;
 use Johncms\Modules\Profile\Application\Controllers\StatisticsController;
 use Johncms\Modules\Profile\Application\Middlewares\AuthorizedUserMiddleware;
 use Johncms\Router\RouteCollection;
+use Johncms\Comments\CommentRoutes;
+use Johncms\Modules\Profile\Application\Comments\ProfileGuestbookCommentSubject;
 
 return static function (RouteCollection $router): void {
     // Routes migrated to the new architecture (require an authenticated user)
@@ -43,7 +44,8 @@ return static function (RouteCollection $router): void {
         $r->get('/profile/{id:number}/ip-history', IpHistoryController::class)->name('profile.ip-history');
         $r->get('/profile/{id:number}/password', [ChangePasswordController::class, 'form'])->name('profile.password');
         $r->post('/profile/{id:number}/password', [ChangePasswordController::class, 'change'])->name('profile.password.change');
-        $r->map(['GET', 'POST'], '/profile/{id:number}/guestbook', GuestbookController::class)->name('profile.guestbook');
+        // The guestbook of a profile: the comments of the core, under the address it always had.
+        CommentRoutes::register($r, '/profile/{id:number}/guestbook', ProfileGuestbookCommentSubject::TYPE, 'profile.guestbook');
         $r->post('/profile/{id:number}/reset-settings', ResetSettingsController::class)->name('profile.reset-settings');
         $r->get('/profile/{id:number}/edit', [EditProfileController::class, 'form'])->name('profile.edit');
         $r->post('/profile/{id:number}/edit', [EditProfileController::class, 'save'])->name('profile.edit.save');

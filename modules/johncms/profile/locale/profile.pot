@@ -2,6 +2,24 @@ msgid ""
 msgstr ""
 "X-Domain: profile\n"
 
+#: modules/johncms/profile/src/Application/Comments/ProfileGuestbookCommentSubject.php:57
+#: modules/johncms/profile/src/Application/Controllers/AvatarController.php:83
+#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:167
+#: modules/johncms/profile/src/Application/Controllers/PhotoController.php:83
+#: modules/johncms/profile/templates/public/account.twig:13
+msgid "Profile"
+msgstr ""
+
+#: modules/johncms/profile/src/Application/Comments/ProfileGuestbookCommentSubject.php:59
+#: modules/johncms/profile/src/Application/Notifications/GuestbookNotificationProvider.php:34
+#: modules/johncms/profile/src/Application/UseCases/GetBanHistoryUseCase.php:47
+#: modules/johncms/profile/templates/public/account.twig:23
+#: modules/johncms/profile/templates/public/ban.twig:33
+#: modules/johncms/profile/templates/public/statistics.twig:36
+#: modules/johncms/profile/templates/public/view.twig:233
+msgid "Guestbook"
+msgstr ""
+
 #: modules/johncms/profile/src/Application/Controllers/AccountController.php:23
 #: modules/johncms/profile/src/Application/Controllers/SettingsController.php:162
 msgid "My Account"
@@ -64,14 +82,6 @@ msgstr ""
 #: modules/johncms/profile/src/Application/Controllers/PhotoController.php:83
 #: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:94
 msgid "My Profile"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/Controllers/AvatarController.php:83
-#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:167
-#: modules/johncms/profile/src/Application/Controllers/GuestbookController.php:44
-#: modules/johncms/profile/src/Application/Controllers/PhotoController.php:83
-#: modules/johncms/profile/templates/public/account.twig:13
-msgid "Profile"
 msgstr ""
 
 #: modules/johncms/profile/src/Application/Controllers/BanController.php:93
@@ -196,19 +206,6 @@ msgstr ""
 #: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:200
 #: modules/johncms/profile/templates/public/account.twig:67
 msgid "Edit Profile"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/Controllers/GuestbookController.php:37
-#: modules/johncms/profile/src/Application/Controllers/GuestbookController.php:45
-#: modules/johncms/profile/src/Application/Controllers/GuestbookController.php:59
-#: modules/johncms/profile/src/Application/Controllers/GuestbookController.php:74
-#: modules/johncms/profile/src/Application/Notifications/GuestbookNotificationProvider.php:28
-#: modules/johncms/profile/src/Application/UseCases/GetBanHistoryUseCase.php:47
-#: modules/johncms/profile/templates/public/account.twig:23
-#: modules/johncms/profile/templates/public/ban.twig:33
-#: modules/johncms/profile/templates/public/statistics.twig:36
-#: modules/johncms/profile/templates/public/view.twig:233
-msgid "Guestbook"
 msgstr ""
 
 #: modules/johncms/profile/src/Application/Controllers/IpHistoryController.php:29
@@ -417,17 +414,17 @@ msgstr ""
 msgid "You cannot edit profile of higher administration"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/GetKarmaListUseCase.php:67
+#: modules/johncms/profile/src/Application/UseCases/GetKarmaListUseCase.php:72
 msgid "All"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/GetKarmaListUseCase.php:68
+#: modules/johncms/profile/src/Application/UseCases/GetKarmaListUseCase.php:73
 #: modules/johncms/profile/templates/public/karma-vote.twig:24
 #: modules/johncms/profile/templates/public/view.twig:122
 msgid "Positive"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/GetKarmaListUseCase.php:69
+#: modules/johncms/profile/src/Application/UseCases/GetKarmaListUseCase.php:74
 #: modules/johncms/profile/templates/public/karma-vote.twig:28
 #: modules/johncms/profile/templates/public/view.twig:128
 msgid "Negative"

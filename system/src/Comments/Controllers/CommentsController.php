@@ -84,7 +84,7 @@ final readonly class CommentsController
         $page = $this->comments->page($object, $pagination->getPerPage(), $pagination->getOffset());
         $this->comments->viewed($object);
         $meta = new PageMeta(
-            sprintf(d__('system', 'Comments: %s'), $object->title),
+            $object->heading === '' ? sprintf(d__('system', 'Comments: %s'), $object->title) : $object->heading . ': ' . $object->title,
             $pagination->getCurrentPage(),
             $object->description
         );
@@ -114,7 +114,7 @@ final readonly class CommentsController
         $this->breadcrumbs($object);
 
         return new ViewResponse('@theme/pages/comments.twig', $data + [
-            'page_title' => d__('system', 'Comments'),
+            'page_title' => $object->heading ?: d__('system', 'Comments'),
             'canonical'  => $this->siteBaseUrl->resolve($request) . $this->pageUrl($object, $pagination->getCurrentPage()),
             // A discussion with nothing in it has no content of its own to index.
             'noindex'    => $total === 0,
@@ -286,7 +286,7 @@ final readonly class CommentsController
         foreach ($object->breadcrumbs as $crumb) {
             $this->navChain->add($crumb['name'], $crumb['url']);
         }
-        $this->navChain->add(d__('system', 'Comments'), $linkDiscussion ? $object->discussionUrl : '');
+        $this->navChain->add($object->heading ?: d__('system', 'Comments'), $linkDiscussion ? $object->discussionUrl : '');
     }
 
     private function permalinkUrl(CommentSubjectDTO $object, int $comment): string

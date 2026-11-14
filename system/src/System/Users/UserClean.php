@@ -136,7 +136,8 @@ class UserClean
      */
     public function removeGuestbook(int $cleanId): void
     {
-        $this->db->exec("DELETE FROM `cms_users_guestbook` WHERE `sub_id` = '" . $cleanId . "'");
+        // The guestbook of a profile is kept as the comments of the core under the account.
+        $this->comments->deleteForSubjects('profile_guestbook', [$cleanId]);
     }
 
     /**
@@ -148,8 +149,6 @@ class UserClean
     public function cleanComments(int $cleanId): void
     {
         $this->comments->deleteForUser($cleanId);
-        // Удаляем комментарии из личных гостевых
-        $this->db->exec("DELETE FROM `cms_users_guestbook` WHERE `user_id` = '" . $cleanId . "'");
         // Удаляем посты из гостевой
         $this->db->exec("DELETE FROM `guest` WHERE `user_id` = '" . $cleanId . "'");
     }

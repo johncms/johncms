@@ -10,13 +10,12 @@ use Tests\Support\Fixture;
 use Tests\Support\FunctionalUserFactory;
 
 /**
- * The four pages served by the legacy Johncms\Comments class. They are its only callers and the
- * only place its display parameters — the sub-action ('reply', 'edit', 'del') and the page offset
- * — are handed over, so nothing else covers that hand-off.
+ * The four discussions of the modules, served by the comments of the core under the addresses
+ * the modules always had.
  *
- * Each page sits behind a precondition of its own: three of them want a signed-in visitor, and
- * the file of a download has to exist on disk. The test creates what each one asks for, so the
- * page is really rendered and a broken hand-off to Comments cannot hide behind a 403 or a 404.
+ * Each page sits behind a precondition of its own: some want a signed-in visitor, and the file of
+ * a download has to exist on disk. The test creates what each one asks for, so the page is really
+ * rendered and a broken subject cannot hide behind a 403 or a 404.
  */
 final class CommentsPageTest extends FunctionalTestCase
 {

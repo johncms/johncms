@@ -20,6 +20,7 @@ final readonly class CommentSubjectDTO
      * @param list<int>                               $bans          Kinds of ban that close the discussion to the banned.
      * @param list<array{name: string, url: string}>  $breadcrumbs   The way to the object, the object included, as plain text; the discussion adds itself.
      * @param string                                  $description   For the meta description of the discussion.
+     * @param string                                  $heading       What the discussion is called on its page; empty for "Comments".
      */
     public function __construct(
         public string $type,
@@ -34,6 +35,7 @@ final readonly class CommentSubjectDTO
         public array $bans = [1, 10],
         public array $breadcrumbs = [],
         public string $description = '',
+        public string $heading = '',
     ) {
     }
 }

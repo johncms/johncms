@@ -79,7 +79,22 @@ final class SystemNotificationsTest extends FunctionalTestCase
 
     public function testTheNewEntriesInTheGuestbookOfAMemberAreCounted(): void
     {
-        $member = FunctionalUserFactory::create(['comm_count' => 3, 'comm_old' => 1]);
+        $member = FunctionalUserFactory::create();
+        $guest = FunctionalUserFactory::create()->id;
+        $entry = static fn(int $author): int => Fixture::insert('comments', [
+            'subject_type' => 'profile_guestbook',
+            'subject_id'   => $member->id,
+            'user_id'      => $author,
+            'text'         => '<p>Hello</p>',
+            'author_name'  => 'Somebody',
+            'created_at'   => gmdate('Y-m-d H:i:s'),
+        ]);
+        $seen = $entry($guest);
+        Fixture::insert('profile__guestbook_reads', ['user_id' => $member->id, 'seen_comment_id' => $seen]);
+        $entry($guest);
+        $entry($guest);
+        // The owner's own entry is never unread.
+        $entry($member->id);
 
         $page = $this->notificationsOf($member);
 

@@ -8,11 +8,13 @@ use Johncms\Modules\Profile\Domain\Repository\AlbumPhotoRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\IpHistoryRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\KarmaRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileActivityRepositoryInterface;
+use Johncms\Modules\Profile\Domain\Repository\GuestbookReadRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\Modules\Profile\Infrastructure\Persistence\Repository\EloquentAlbumPhotoRepository;
 use Johncms\Modules\Profile\Infrastructure\Persistence\Repository\EloquentIpHistoryRepository;
 use Johncms\Modules\Profile\Infrastructure\Persistence\Repository\EloquentKarmaRepository;
 use Johncms\Modules\Profile\Infrastructure\Persistence\Repository\EloquentProfileActivityRepository;
+use Johncms\Modules\Profile\Infrastructure\Persistence\Repository\EloquentGuestbookReadRepository;
 use Johncms\Modules\Profile\Infrastructure\Persistence\Repository\ProfileUserRepository;
 
 return static function (ContainerConfigurator $container): void {
@@ -41,6 +43,7 @@ return static function (ContainerConfigurator $container): void {
         ->autoconfigure();
 
     $services->set(ProfileUserRepositoryInterface::class, ProfileUserRepository::class)->public();
+    $services->set(GuestbookReadRepositoryInterface::class, EloquentGuestbookReadRepository::class)->public();
     $services->set(KarmaRepositoryInterface::class, EloquentKarmaRepository::class)->public();
     $services->set(IpHistoryRepositoryInterface::class, EloquentIpHistoryRepository::class)->public();
     $services->set(AlbumPhotoRepositoryInterface::class, EloquentAlbumPhotoRepository::class)->public();

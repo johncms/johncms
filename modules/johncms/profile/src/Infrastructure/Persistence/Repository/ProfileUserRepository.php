@@ -14,9 +14,19 @@ final class ProfileUserRepository implements ProfileUserRepositoryInterface
         return User::query()->find($id);
     }
 
-    public function markGuestbookSeen(int $userId, int $commCount): void
+    public function changeGuestbookCount(int $userId, int $delta): void
     {
-        User::query()->where('id', '=', $userId)->update(['comm_old' => $commCount]);
+        $users = User::query()->where('id', '=', $userId);
+        if ($delta >= 0) {
+            $users->increment('comm_count', $delta);
+
+            return;
+        }
+
+        // Spelled out: the column is unsigned, and SQLite has no GREATEST().
+        $users->update(['comm_count' => User::query()->getConnection()->raw(
+            'CASE WHEN comm_count > ' . -$delta . ' THEN comm_count - ' . -$delta . ' ELSE 0 END'
+        )]);
     }
 
     public function updatePassword(int $id, string $hashedPassword): void

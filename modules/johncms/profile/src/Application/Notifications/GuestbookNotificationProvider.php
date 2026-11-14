@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\Notifications;
 
 use Johncms\Auth\CurrentUser;
+use Johncms\Modules\Profile\Domain\Repository\GuestbookReadRepositoryInterface;
 use Johncms\Notifications\SystemNotification;
 use Johncms\Notifications\SystemNotificationProviderInterface;
 
@@ -13,14 +14,19 @@ use Johncms\Notifications\SystemNotificationProviderInterface;
  */
 final readonly class GuestbookNotificationProvider implements SystemNotificationProviderInterface
 {
-    public function __construct(private CurrentUser $currentUser)
-    {
+    public function __construct(
+        private CurrentUser $currentUser,
+        private GuestbookReadRepositoryInterface $reads,
+    ) {
     }
 
     public function notifications(): iterable
     {
-        $user = $this->currentUser->user();
-        $count = $user->comm_count - $user->comm_old;
+        if (! $this->currentUser->isValid()) {
+            return;
+        }
+
+        $count = $this->reads->countUnread($this->currentUser->id());
 
         if ($count > 0) {
             yield new SystemNotification(

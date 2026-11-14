@@ -18,8 +18,7 @@ final class EloquentUserDeletionRepository implements UserDeletionRepositoryInte
 
     public function countComments(int $id): int
     {
-        return $this->countByUser('comments', $id)
-            + $this->countByUser('cms_users_guestbook', $id);
+        return $this->countByUser('comments', $id);
     }
 
     public function countForumTopics(int $id): int
