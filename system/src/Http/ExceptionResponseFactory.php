@@ -146,6 +146,33 @@ final readonly class ExceptionResponseFactory
         return new Response($body, Response::HTTP_FORBIDDEN);
     }
 
+    /**
+     * An action that cannot be undone, sent without the answer of the confirmation dialog: the
+     * script of the page did not run. Nothing was changed, so the visitor is told to try again.
+     */
+    public function notConfirmed(bool $wantsJson): Response
+    {
+        $title = d__('system', 'The action was not confirmed');
+        $message = d__('system', 'Nothing was changed. Reload the page and try again.');
+
+        if ($wantsJson) {
+            return new JsonResponse(['message' => $title . ' ' . $message], Response::HTTP_CONFLICT);
+        }
+
+        try {
+            $body = $this->renderer->render(
+                '@theme/pages/errors/409.twig',
+                ['title' => $title, 'message' => $message]
+            );
+        } catch (Throwable $throwable) {
+            $this->logger->error('The 409 template failed to render', ['exception' => $throwable]);
+
+            $body = $this->plainTextPage($title, $message);
+        }
+
+        return new Response($body, Response::HTTP_CONFLICT);
+    }
+
     private function plainTextPage(string $title, string $message): string
     {
         return sprintf(

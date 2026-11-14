@@ -231,6 +231,8 @@ The number is shown so that support for the old scheme is not removed while it i
       'Use the smilies kept for the staff' => 'Использовать служебные смайлы',
       'Moderate the comments of the modules' => 'Модерировать комментарии модулей',
       'You are not allowed to open this page.' => 'У вас нет доступа к этой странице.',
+      'The action was not confirmed' => 'Действие не подтверждено',
+      'Nothing was changed. Reload the page and try again.' => 'Ничего не изменилось. Обновите страницу и повторите.',
       'Access denied' => 'Доступ запрещён',
       'Signed in' => 'Вход выполнен',
       'Sign-in failed' => 'Неудачная попытка входа',

@@ -1,0 +1,17 @@
+{#
+    An action that cannot be undone, sent without being confirmed: nothing was changed.
+
+    @var string title
+    @var string message
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 m-auto text-center">
+            <div class="fw-bold h1">{{ title }}</div>
+            <p class="h2">{{ message }}</p>
+            <a href="/" class="btn btn-primary mt-3">{{ d__('system', 'Home') }}</a>
+        </div>
+    </div>
+{% endblock %}

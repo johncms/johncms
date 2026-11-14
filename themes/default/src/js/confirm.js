@@ -18,13 +18,17 @@ import { Modal } from 'bootstrap';
  *     if (await confirmAction({title: '…', button: '…'})) { … }
  *
  * The form is held back while the dialog is open and sent again, with the same button, once the
- * answer is yes. The question is asked while the submit event goes down, so it comes before any
+ * answer is yes. The answer travels with it as the confirmed field: a route that removes something
+ * takes RequireConfirmationMiddleware, which refuses a form without it, so a page whose script did
+ * not run cannot delete anything. The field stays in the form until the next question, so a list
+ * that falls back to sending the form natively still carries it. The question is asked while the submit event goes down, so it comes before any
  * other handler of the form: a live list sends only a form that was let through. The cancel
  * button has the focus, so Enter does not go ahead by mistake; the focus goes back to the button
  * that asked once the dialog closes.
  */
 const element = document.querySelector('[data-confirm-dialog]');
 const approved = new WeakSet();
+const FIELD = 'confirmed';
 let modal = null;
 
 /** Resolves to true when the user goes ahead, to false when the dialog is closed otherwise. */
@@ -73,6 +77,7 @@ document.addEventListener('submit', async event => {
   }
 
   event.preventDefault();
+  setConfirmed(form, false);
   const submitter = event.submitter;
   const yes = await confirmAction({
     title: form.dataset.confirm,
@@ -87,7 +92,24 @@ document.addEventListener('submit', async event => {
   }
 
   if (yes && form.isConnected) {
+    setConfirmed(form, true);
     approved.add(form);
     form.requestSubmit(submitter?.isConnected ? submitter : null);
   }
 }, true);
+
+/** Puts the answer into the form as the field the server checks, or takes it out. */
+function setConfirmed(form, confirmed) {
+  form.querySelectorAll(':scope > input[data-confirm-answer]').forEach(input => input.remove());
+
+  if (!confirmed) {
+    return;
+  }
+
+  const input = document.createElement('input');
+  input.type = 'hidden';
+  input.name = FIELD;
+  input.value = '1';
+  input.dataset.confirmAnswer = '';
+  form.append(input);
+}

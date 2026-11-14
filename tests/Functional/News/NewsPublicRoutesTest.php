@@ -182,7 +182,10 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         self::assertSame('/news/entry.html#comment-form', $empty->headers->get('Location'), 'A rejected comment goes back to the form.');
         self::assertSame(1, Capsule::table('news_comments')->count());
 
-        $deleted = $this->postForm('/news/comments/del/', ['comment_id' => (string) $comment, 'article_id' => (string) $id, 'page' => '1'], $user);
+        $unconfirmed = $this->postForm('/news/comments/del/', ['comment_id' => (string) $comment, 'article_id' => (string) $id, 'page' => '1'], $user);
+        self::assertSame(409, $unconfirmed->getStatusCode(), 'Without the answer of the dialog nothing is deleted.');
+        self::assertSame(1, Capsule::table('news_comments')->whereNull('deleted_at')->count());
+        $deleted = $this->postForm('/news/comments/del/', ['comment_id' => (string) $comment, 'article_id' => (string) $id, 'page' => '1', 'confirmed' => '1'], $user);
         self::assertSame('/news/entry.html#article-comments', $deleted->headers->get('Location'));
         self::assertSame(0, Capsule::table('news_comments')->whereNull('deleted_at')->count());
         Capsule::table('collection_items')->where('id', $id)->update(['active' => false]);
@@ -248,11 +251,11 @@ final class NewsPublicRoutesTest extends FunctionalTestCase
         self::assertNotNull($fragment->querySelector('[data-toast="success"][data-toast-announce]'), 'The comment shows itself: the message is only read out.');
         self::assertNull($this->fragment('/news/entry.html', $live)->querySelector('[data-live-list-target]'), 'Only the page right after the form marks it.');
 
-        $this->postForm('/news/comments/del/', ['comment_id' => (string) $comment, 'article_id' => (string) $id, 'page' => '1'], FunctionalUserFactory::create());
+        $this->postForm('/news/comments/del/', ['comment_id' => (string) $comment, 'article_id' => (string) $id, 'page' => '1', 'confirmed' => '1'], FunctionalUserFactory::create());
         $fragment = $this->fragment('/news/entry.html', $live);
         self::assertNotNull($fragment->querySelector('[data-toast="error"]'), 'A refused deletion is a toast: whoever deletes may have no form.');
         self::assertNull($fragment->querySelector('[data-live-list-region="comment-error"] .alert'));
-        $this->postForm('/news/comments/del/', ['comment_id' => (string) $comment, 'article_id' => (string) $id, 'page' => '1'], $user);
+        $this->postForm('/news/comments/del/', ['comment_id' => (string) $comment, 'article_id' => (string) $id, 'page' => '1', 'confirmed' => '1'], $user);
         $toast = $this->fragment('/news/entry.html', $live)->querySelector('[data-toast="success"]');
         self::assertNotNull($toast);
         self::assertFalse($toast->hasAttribute('data-toast-announce'), 'A deleted comment leaves nothing to show the result: the toast does.');

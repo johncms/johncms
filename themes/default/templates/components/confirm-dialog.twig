@@ -3,6 +3,8 @@
     form that asks. A form opts in with data-confirm="<question>"; data-confirm-text adds a line
     under the question, data-confirm-button names the button that goes ahead, and
     data-confirm-tone="primary" paints it as a plain action instead of a destructive one.
+    The answer is sent as the confirmed field; a route that removes something takes
+    RequireConfirmationMiddleware, so the form does nothing when the script did not run.
 #}
 <div class="modal fade site-confirm" tabindex="-1" aria-labelledby="site-confirm-title" aria-hidden="true" data-confirm-dialog
     data-default-button="{{ d__('system', 'Confirm') }}">

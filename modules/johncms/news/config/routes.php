@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Johncms\Http\Middleware\RequireConfirmationMiddleware;
 use Johncms\Modules\News\Application\Controllers\Admin\NewsSettingsController;
 use Johncms\Modules\News\Application\Controllers\ArticleController;
 use Johncms\Modules\News\Application\Controllers\CommentsController;
@@ -18,7 +19,9 @@ return static function (RouteCollection $router): void {
         $router->map(['GET', 'POST'], '/news/search_tags', [SearchController::class, 'byTags'])->name('news.search_tags');
         $router->post('/news/add_vote/{article_id:number}/{type_vote:number}', [VoteController::class, 'add'])->name('news.add_vote');
         $router->post('/news/comments/add/{article_id:number}', [CommentsController::class, 'add'])->name('news.comments_add');
-        $router->post('/news/comments/del', [CommentsController::class, 'del'])->name('news.comments_delete');
+        $router->post('/news/comments/del', [CommentsController::class, 'del'])
+            ->name('news.comments_delete')
+            ->addMiddleware(RequireConfirmationMiddleware::class);
     // Signing in is not enough: the permission is what a ban takes away, and uploading a picture
     // for a comment is worth exactly as much as writing one.
         $router->post('/news/comments/upload_file', [CommentsController::class, 'loadFile'])

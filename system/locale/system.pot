@@ -160,7 +160,7 @@ msgid "Save"
 msgstr ""
 
 #: modules/johncms/notifications/templates/public/settings.twig:32
-#: themes/default/templates/components/confirm-dialog.twig:16
+#: themes/default/templates/components/confirm-dialog.twig:18
 #: themes/default/templates/pages/comments-delete.twig:18
 msgid "Cancel"
 msgstr ""
@@ -1035,11 +1035,19 @@ msgstr ""
 msgid "You are not allowed to open this page."
 msgstr ""
 
-#: system/src/Http/ExceptionResponseFactory.php:169
+#: system/src/Http/ExceptionResponseFactory.php:155
+msgid "The action was not confirmed"
+msgstr ""
+
+#: system/src/Http/ExceptionResponseFactory.php:156
+msgid "Nothing was changed. Reload the page and try again."
+msgstr ""
+
+#: system/src/Http/ExceptionResponseFactory.php:196
 msgid "Bad Request"
 msgstr ""
 
-#: system/src/Http/ExceptionResponseFactory.php:184
+#: system/src/Http/ExceptionResponseFactory.php:211
 msgid "The operation was committed, but follow-up actions failed. Check the logs and rebuild derived data; do not repeat the operation."
 msgstr ""
 
@@ -1063,6 +1071,7 @@ msgstr ""
 #: themes/default/templates/admin/pages/errors/403.twig:21
 #: themes/default/templates/components/sidebar-main-menu.twig:13
 #: themes/default/templates/pages/errors/403.twig:19
+#: themes/default/templates/pages/errors/409.twig:14
 msgid "Home"
 msgstr ""
 
@@ -1296,7 +1305,7 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
-#: themes/default/templates/components/confirm-dialog.twig:8
+#: themes/default/templates/components/confirm-dialog.twig:10
 #: themes/default/templates/emails/confirm-email-change.twig:22
 #: themes/default/templates/emails/registration.twig:27
 msgid "Confirm"
@@ -1330,23 +1339,23 @@ msgstr ""
 msgid "Return to my account"
 msgstr ""
 
-#: themes/default/templates/components/moderator-meta.twig:15
+#: themes/default/templates/components/moderator-meta.twig:16
 msgid "Technical data"
 msgstr ""
 
-#: themes/default/templates/components/moderator-meta.twig:25
+#: themes/default/templates/components/moderator-meta.twig:26
 msgid "Through a proxy"
 msgstr ""
 
-#: themes/default/templates/components/moderator-meta.twig:29
+#: themes/default/templates/components/moderator-meta.twig:30
 msgid "Browser"
 msgstr ""
 
-#: themes/default/templates/components/moderator-meta.twig:37
+#: themes/default/templates/components/moderator-meta.twig:38
 msgid "Search by IP"
 msgstr ""
 
-#: themes/default/templates/components/moderator-meta.twig:41
+#: themes/default/templates/components/moderator-meta.twig:42
 msgid "IP Whois"
 msgstr ""
 
@@ -1386,7 +1395,7 @@ msgstr ""
 
 #: themes/default/templates/components/sidebar-main-menu.twig:10
 #: themes/default/templates/components/site-topbar.twig:4
-#: themes/default/templates/layouts/default.twig:14
+#: themes/default/templates/layouts/default.twig:17
 msgid "Menu"
 msgstr ""
 
@@ -1752,20 +1761,20 @@ msgstr ""
 msgid "If you receive this mail by mistake, just ignore this letter"
 msgstr ""
 
-#: themes/default/templates/layouts/default.twig:12
+#: themes/default/templates/layouts/default.twig:15
 msgid "Skip to content"
 msgstr ""
 
-#: themes/default/templates/layouts/default.twig:17
-#: themes/default/templates/layouts/default.twig:36
+#: themes/default/templates/layouts/default.twig:20
+#: themes/default/templates/layouts/default.twig:39
 msgid "Close menu"
 msgstr ""
 
-#: themes/default/templates/layouts/default.twig:32
+#: themes/default/templates/layouts/default.twig:35
 msgid "Online"
 msgstr ""
 
-#: themes/default/templates/layouts/default.twig:63
+#: themes/default/templates/layouts/default.twig:66
 msgid "Scroll page"
 msgstr ""
 

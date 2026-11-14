@@ -966,6 +966,12 @@ msgstr "Модерировать комментарии модулей"
 msgid "You are not allowed to open this page."
 msgstr "У вас нет доступа к этой странице."
 
+msgid "The action was not confirmed"
+msgstr "Действие не подтверждено"
+
+msgid "Nothing was changed. Reload the page and try again."
+msgstr "Ничего не изменилось. Обновите страницу и повторите."
+
 msgid "Access denied"
 msgstr "Доступ запрещён"
 
