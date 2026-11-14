@@ -1,0 +1,46 @@
+{#
+    Editing one comment of a discussion.
+
+    @var subject    \Johncms\Comments\CommentSubjectDTO
+    @var comment_id int
+    @var text       string
+    @var error      string|null
+    @var action_url string
+    @var upload_url string
+    @var back_url   string
+    @var noindex    bool
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block meta %}
+    {% if noindex %}<meta name="robots" content="noindex,follow">{% endif %}
+{% endblock %}
+
+{% block content_class %}site-content--contained{% endblock %}
+
+{% block page_subtitle %}
+    <p class="site-page-heading__subtitle"><a href="{{ subject.url }}">{{ subject.title }}</a></p>
+{% endblock %}
+
+{% block content %}
+    <section class="site-compose site-discussion__edit">
+        {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% endif %}
+        <form class="site-compose__form" method="post" action="{{ action_url }}">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+            {% include '@theme/components/editor.twig' with {
+                name: 'text',
+                id: 'comment-text',
+                label: d__('system', 'Text'),
+                label_hidden: true,
+                value: text,
+                upload_url: upload_url,
+                allow_upload: true,
+                required: true,
+            } only %}
+            <div class="site-compose__actions">
+                <a class="btn btn-outline-secondary me-2" href="{{ back_url }}">{{ d__('system', 'Cancel') }}</a>
+                <button type="submit" class="btn btn-primary">{{ d__('system', 'Save') }}</button>
+            </div>
+        </form>
+    </section>
+{% endblock %}

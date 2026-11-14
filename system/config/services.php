@@ -68,6 +68,9 @@ use Johncms\Database\SchemaBuilderFactory;
 use Johncms\Files\FileRepositoryInterface;
 use Johncms\Database\EloquentTransactionManager;
 use Johncms\Database\TransactionManagerInterface;
+use Johncms\Comments\CommentSubjects;
+use Johncms\Comments\Domain\CommentRepositoryInterface;
+use Johncms\Comments\Infrastructure\EloquentCommentRepository;
 use Johncms\EditorUploads\EditorUploadConsumers;
 use Johncms\EditorUploads\EditorUploadRepositoryInterface;
 use Johncms\EditorUploads\Infrastructure\EloquentEditorUploadRepository;
@@ -237,6 +240,13 @@ return static function (ContainerConfigurator $container): void {
                 // The row of an editor upload and the refusal to attach one are not services.
                 ROOT_PATH . 'system/src/EditorUploads/EditorUpload.php',
                 ROOT_PATH . 'system/src/EditorUploads/EditorUploadBindException.php',
+                // A comment, what a module says about its object, what a page shows, and the
+                // refusals: rows, value objects and exceptions, never services.
+                ROOT_PATH . 'system/src/Comments/Domain/Comment.php',
+                ROOT_PATH . 'system/src/Comments/CommentSubjectDTO.php',
+                ROOT_PATH . 'system/src/Comments/CommentRoutes.php',
+                ROOT_PATH . 'system/src/Comments/Application/DTO',
+                ROOT_PATH . 'system/src/Comments/Application/Exceptions',
                 ROOT_PATH . 'system/src/Files',
                 // The manifest and the state of a module are value objects, and the two
                 // remaining pieces of the old installer take the name of a module as a string.
@@ -382,6 +392,9 @@ return static function (ContainerConfigurator $container): void {
     $services->alias(EditorUploadRepositoryInterface::class, EloquentEditorUploadRepository::class);
     $services->set(EditorUploadConsumers::class)
         ->arg('$consumers', tagged_iterator('johncms.editor_upload_consumer'));
+    $services->alias(CommentRepositoryInterface::class, EloquentCommentRepository::class);
+    $services->set(CommentSubjects::class)
+        ->arg('$subjects', tagged_iterator('johncms.comment_subject'));
     $services->set(FilePathLockInterface::class, LocalFilePathLock::class);
     $services->set(FileStore::class, FileStore::class);
     $services->set(LoggerInterface::class)->factory(service(LoggerFactory::class));

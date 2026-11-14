@@ -1,0 +1,81 @@
+{#
+    One comment of a discussion.
+
+    @var comment   \Johncms\Comments\Application\DTO\CommentViewDTO
+    @var subject   \Johncms\Comments\CommentSubjectDTO
+    @var page      int  Page of the discussion the comment is on.
+    @var added     bool The comment was just added: the live list scrolls to it.
+    @var can_reply bool Whether the visitor writes under the discussion.
+#}
+{% set author = comment.author %}
+{% set name = author ? author.name : (comment.authorName ?: d__('system', 'Unknown author')) %}
+<article class="site-comment" id="comment-{{ comment.id }}" data-comment{% if added %} data-live-list-target{% endif %}>
+    <div class="site-comment__avatar">
+        <img src="{{ avatar(author ? author.id : 0) }}" alt="" width="40" height="40" loading="lazy">
+        {% if author and author.online %}<span class="site-comment__online" title="{{ d__('system', 'Online') }}"></span>{% endif %}
+    </div>
+    <div class="site-comment__main">
+        <header class="site-comment__header">
+            {% if author %}
+                <a class="site-comment__name" href="{{ profile_url(author.id) }}">{{ name }}</a>
+            {% else %}
+                <span class="site-comment__name">{{ name }}</span>
+            {% endif %}
+            {% if author and author.rightsName %}<span class="site-comment__role">{{ author.rightsName }}</span>{% endif %}
+            <time class="site-comment__date">{{ comment.createdAt }}</time>
+            <a class="site-comment__anchor" href="{{ subject.discussionUrl }}/comment/{{ comment.id }}">#{{ comment.number }}</a>
+        </header>
+        <div class="site-comment__body ck-content">{{ comment.text }}</div>
+        {% if comment.editCount > 0 %}
+            <div class="site-comment__status">
+                {{ d__('system', 'Edited by %s, %s')|format(comment.editorName, comment.editedAt) }}{% if comment.editCount > 1 %} [{{ comment.editCount }}]{% endif %}
+            </div>
+        {% endif %}
+        {% if can_reply or comment.canEdit or comment.canDelete or comment.origin %}
+            <footer class="site-comment__footer">
+                <div class="site-comment__actions">
+                    {% if can_reply and author and author.id != app.user.id %}
+                        <a class="btn btn-outline-secondary btn-xs" href="#comment-form" data-editor-reply="{{ name }}">
+                            {% include '@theme/components/icon.twig' with {name: 'message-square', size: 12} only %} {{ d__('system', 'Reply') }}
+                        </a>
+                    {% endif %}
+                    {% if comment.canEdit %}
+                        <a class="btn btn-outline-secondary btn-xs" href="{{ subject.discussionUrl }}/edit/{{ comment.id }}">
+                            {% include '@theme/components/icon.twig' with {name: 'pencil', size: 12} only %} {{ d__('system', 'Edit') }}
+                        </a>
+                    {% endif %}
+                    {% if comment.canDelete %}
+                        <form method="post" action="{{ subject.discussionUrl }}/delete" data-live-list-form
+                              data-confirm="{{ d__('system', 'Delete this comment?') }}" data-confirm-button="{{ d__('system', 'Delete') }}">
+                            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                            <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                            <input type="hidden" name="page" value="{{ page }}">
+                            <button type="submit" class="btn btn-outline-secondary btn-xs btn-icon site-comment__delete" title="{{ d__('system', 'Delete') }}" aria-label="{{ d__('system', 'Delete') }}">
+                                {% include '@theme/components/icon.twig' with {name: 'trash-2', size: 12} only %}
+                            </button>
+                        </form>
+                        {% if comment.authorCommentCount > 1 %}
+                            <form method="post" action="{{ subject.discussionUrl }}/delete-author" data-live-list-form
+                                  data-confirm="{{ dn__('system', 'Delete %d comment of %s here?', 'Delete all %d comments of %s here?', comment.authorCommentCount)|format(comment.authorCommentCount, name) }}"
+                                  data-confirm-button="{{ d__('system', 'Delete') }}">
+                                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                                <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                                <input type="hidden" name="page" value="{{ page }}">
+                                <button type="submit" class="btn btn-outline-secondary btn-xs site-comment__delete">
+                                    {% include '@theme/components/icon.twig' with {name: 'trash-2', size: 12} only %} {{ d__('system', 'All of the author') }}
+                                </button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                    {% if comment.origin %}
+                        {% include '@theme/components/moderator-meta.twig' with {
+                            ip: comment.origin.ip,
+                            ip_via_proxy: comment.origin.ip_via_proxy,
+                            user_agent: comment.origin.user_agent,
+                        } only %}
+                    {% endif %}
+                </div>
+            </footer>
+        {% endif %}
+    </div>
+</article>

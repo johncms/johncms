@@ -78,6 +78,21 @@
   }
 }
 
+// The discussion of an object on a page of its own: the comments of the core.
+.site-discussion {
+  min-inline-size: 0;
+  scroll-margin-block-start: 5rem;
+  &__region { transition: opacity .15s; }
+  &[aria-busy="true"] &__region { opacity: .6; }
+  &__count { margin-block-end: .75rem; color: var(--fg-muted); font-size: .875rem; }
+  &__count:focus:not(:focus-visible) { outline: none; }
+  &__empty { padding: 1.5rem; border: 1px dashed var(--border-strong); border-radius: .75rem; text-align: center; color: var(--fg-muted); }
+  &__feed { display: flex; flex-direction: column; gap: .75rem; }
+  &__pagination { margin-block-start: 1rem; }
+  &__notice { margin-block-start: 1.5rem; padding: 1rem 1.125rem; border: 1px dashed var(--border-strong); border-radius: .75rem; color: var(--fg-muted); font-size: .875rem; }
+  &__edit { margin-block-start: 0; }
+}
+
 @media (max-width: 520px) {
   .site-comment { grid-template-columns: minmax(0, 1fr); gap: .5rem; padding: .875rem 1rem; }
   .site-comment__avatar { display: none; }

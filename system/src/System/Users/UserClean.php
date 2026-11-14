@@ -13,6 +13,8 @@ declare(strict_types=1);
 namespace Johncms\System\Users;
 
 use Johncms\Auth\AuthTables;
+use Johncms\Comments\Application\CommentsService;
+use Johncms\EditorUploads\EditorUploads;
 use Johncms\Storage\StorageInterface;
 use PDO;
 
@@ -23,8 +25,11 @@ class UserClean
      */
     private $db;
 
-    public function __construct(PDO $db)
-    {
+    public function __construct(
+        PDO $db,
+        private CommentsService $comments,
+        private EditorUploads $editorUploads,
+    ) {
         $this->db = $db;
     }
 
@@ -38,6 +43,8 @@ class UserClean
         foreach ([AuthTables::USER_ROLES, AuthTables::USER_IDENTITIES, AuthTables::AUTH_SESSIONS, AuthTables::PASSWORD_RESET_TOKENS] as $table) {
             $this->db->exec('DELETE FROM `' . $table . '` WHERE `user_id` = ' . $cleanId);
         }
+        // The pictures uploaded from an editor and never sent belong to nobody else.
+        $this->editorUploads->detachUser($cleanId);
         // Удаляем пользователя
         $this->db->exec("DELETE FROM `users` WHERE `id` = '" . $cleanId . "'");
     }
@@ -141,6 +148,7 @@ class UserClean
      */
     public function cleanComments(int $cleanId): void
     {
+        $this->comments->deleteForUser($cleanId);
         // Удаляем из Библиотеки
         $this->db->exec("DELETE FROM `cms_library_comments` WHERE `user_id` = '" . $cleanId . "'");
         // Удаляем из Загрузок

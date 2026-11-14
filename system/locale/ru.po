@@ -1698,3 +1698,81 @@ msgstr "В тексте может быть не больше %d загруже�
 
 msgid "One of the pictures is no longer available. Upload it again."
 msgstr "Одна из картинок больше недоступна. Загрузите её заново."
+
+msgid "Sign in to write a comment."
+msgstr "Войдите, чтобы написать комментарий."
+
+msgid "The comments are closed."
+msgstr "Комментарии закрыты."
+
+msgid "You are banned and cannot write comments here."
+msgstr "Вы забанены и не можете писать здесь комментарии."
+
+msgid "The owner has added you to the ignore list."
+msgstr "Владелец добавил вас в игнор-лист."
+
+msgid "You cannot write so often. Wait %d seconds."
+msgstr "Нельзя писать так часто. Подождите %d с."
+
+msgid "Enter the comment text"
+msgstr "Введите текст комментария"
+
+msgid "The comment is too long: at most %d characters."
+msgstr "Комментарий слишком длинный: не больше %d символов."
+
+msgid "Comments: %s"
+msgstr "Комментарии: %s"
+
+msgid "The comment was saved"
+msgstr "Комментарий сохранён"
+
+msgid "Edit comment"
+msgstr "Изменить комментарий"
+
+msgid "The comment was deleted"
+msgstr "Комментарий удалён"
+
+msgid "%d comment was deleted"
+msgid_plural "%d comments were deleted"
+msgstr[0] "Удалён %d комментарий"
+msgstr[1] "Удалено %d комментария"
+msgstr[2] "Удалено %d комментариев"
+msgstr[3] "Удалено %d комментариев"
+
+msgid "The comment was added"
+msgstr "Комментарий добавлен"
+
+msgid "Unknown author"
+msgstr "Неизвестный автор"
+
+msgid "Edited by %s, %s"
+msgstr "Изменил %s, %s"
+
+msgid "Delete this comment?"
+msgstr "Удалить этот комментарий?"
+
+msgid "Delete %d comment of %s here?"
+msgid_plural "Delete all %d comments of %s here?"
+msgstr[0] "Удалить все %d комментарий %s здесь?"
+msgstr[1] "Удалить все %d комментария %s здесь?"
+msgstr[2] "Удалить все %d комментариев %s здесь?"
+msgstr[3] "Удалить все %d комментариев %s здесь?"
+
+msgid "All of the author"
+msgstr "Все автора"
+
+msgid "%d comment"
+msgid_plural "%d comments"
+msgstr[0] "%d комментарий"
+msgstr[1] "%d комментария"
+msgstr[2] "%d комментариев"
+msgstr[3] "%d комментариев"
+
+msgid "No comments yet. Be the first."
+msgstr "Комментариев пока нет. Будьте первым."
+
+msgid "Write a comment"
+msgstr "Написать комментарий"
+
+msgid "You are not logged in. You must be <a href=\"/login/\">logged in</a> to comment."
+msgstr "Вы не авторизованы. Чтобы комментировать, нужно <a href=\"/login/\">войти</a>."

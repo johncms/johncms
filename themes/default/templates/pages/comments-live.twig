@@ -1,0 +1,28 @@
+{#
+    The regions of a discussion, as the live list asks for them: each replaces the region of the
+    same name on the page, and the title follows the page of comments. A fragment, so it extends
+    nothing.
+
+    @var title      string Title of the page, without the site name.
+    @var subject    \Johncms\Comments\CommentSubjectDTO
+    @var comments   list<\Johncms\Comments\Application\DTO\CommentViewDTO>
+    @var total      int
+    @var page       int
+    @var pagination \Twig\Markup|null
+    @var can_write  bool
+    @var message    string|null
+    @var error      string|null
+    @var added      int|null
+#}
+<title>{% include '@theme/components/document-title.twig' with {title: title} only %}</title>
+{% include '@theme/components/comments/feed.twig' with {
+    subject: subject,
+    comments: comments,
+    total: total,
+    page: page,
+    pagination: pagination,
+    can_write: can_write,
+    message: message,
+    added: added,
+} only %}
+{% include '@theme/components/comments/error.twig' with {error: error} only %}
