@@ -220,7 +220,6 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
             'edit_who'       => '',
             'edit_time'      => 0,
             'edit_count'     => 0,
-            'attached_files' => [],
         ], $attributes));
         $entry->id = 10;
         $entry->setRelation('user', $author);

@@ -37,10 +37,8 @@ class GuestbookForm
             // `code`, a remote service in a field of its own.
             'code'       => $request->body($this->captcha->fieldName(), ''),
         ];
-        $form_data = array_map('trim', $form_data);
-        $form_data['attached_files'] = (array) $request->bodyInts('attached_files');
 
-        return $form_data;
+        return array_map('trim', $form_data);
     }
 
     /**

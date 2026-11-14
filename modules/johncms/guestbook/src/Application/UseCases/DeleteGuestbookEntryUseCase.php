@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\UseCases;
 
-use Johncms\Files\FileStore;
+use Johncms\Database\TransactionManagerInterface;
+use Johncms\EditorUploads\EditorUploads;
+use Johncms\Modules\Guestbook\Application\Uploads\GuestbookEditorUploads;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Modules\Guestbook\Domain\Repository\GuestbookEntryRepositoryInterface;
 
@@ -12,16 +14,17 @@ final readonly class DeleteGuestbookEntryUseCase
 {
     public function __construct(
         private GuestbookEntryRepositoryInterface $repository,
-        private FileStore $files,
+        private EditorUploads $uploads,
+        private TransactionManagerInterface $transactions,
     ) {
     }
 
+    /** The entry goes with its pictures; the files are removed once the deletion commits. */
     public function execute(GuestbookEntry $entry): void
     {
-        if (! empty($entry->attached_files)) {
-            $this->files->deleteMany($entry->attached_files);
-        }
-
-        $this->repository->delete($entry);
+        $this->transactions->run(function () use ($entry): void {
+            $this->repository->delete($entry);
+            $this->uploads->detach(GuestbookEditorUploads::OWNER_TYPE, [$entry->id]);
+        });
     }
 }

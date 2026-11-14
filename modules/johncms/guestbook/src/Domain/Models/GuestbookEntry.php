@@ -40,7 +40,6 @@ use Johncms\Users\User;
  * @property string $edit_who
  * @property int $edit_time
  * @property int $edit_count
- * @property array $attached_files
  *
  * @property User|null $user
  * @property bool $is_online
@@ -60,7 +59,6 @@ class GuestbookEntry extends Model
         'name'           => SpecialChars::class,
         'edit_who'       => SpecialChars::class,
         'browser'        => SpecialChars::class,
-        'attached_files' => 'array',
     ];
 
     protected $fillable = [
@@ -77,7 +75,6 @@ class GuestbookEntry extends Model
         'edit_who',
         'edit_time',
         'edit_count',
-        'attached_files',
     ];
 
     public function user(): HasOne

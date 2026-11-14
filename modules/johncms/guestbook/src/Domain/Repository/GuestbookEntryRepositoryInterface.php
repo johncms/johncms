@@ -29,12 +29,18 @@ interface GuestbookEntryRepositoryInterface
 
     public function delete(GuestbookEntry $entry): void;
 
-    /**
-     * @return Collection<int, GuestbookEntry>
-     */
-    public function getEntriesToClear(bool $adminClub, ?int $olderThan = null): Collection;
+    /** The entry, its row held until the transaction ends; null when it is gone. */
+    public function findLocked(int $id): ?GuestbookEntry;
 
-    public function deleteEntries(bool $adminClub, ?int $olderThan = null): void;
+    /**
+     * @return list<int>
+     */
+    public function getIdsToClear(bool $adminClub, ?int $olderThan = null): array;
+
+    /**
+     * @param list<int> $ids
+     */
+    public function deleteByIds(array $ids): void;
 
     /**
      * The entries of the public guestbook written on each of the days starting at the given second.

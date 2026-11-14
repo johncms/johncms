@@ -6,6 +6,7 @@ namespace Johncms\Modules\Guestbook\Application\Controllers;
 
 use Johncms\Auth\CurrentUser;
 use Johncms\Captcha\CaptchaManager;
+use Johncms\EditorUploads\EditorUploadBindException;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -64,22 +65,25 @@ final readonly class GuestbookController
         if ($request->getMethod() === 'POST' && $this->access->canWrite()) {
             $formData = $this->form->getFormData($request);
             $result = $this->validator->validate($formData, $this->form->getValidationRules());
-            if ($result->isValid()) {
-                $entry = $this->createEntry->execute(
-                    new CreateGuestbookEntryDTO(
-                        adminClub:     $this->mode->isAdminClub(),
-                        name:          $this->currentUser->isValid() ? $this->currentUser->user()->name : $formData['name'],
-                        text:          $formData['message'],
-                        ip:            $this->environment->getIp(false),
-                        userAgent:     $this->environment->getUserAgent(),
-                        attachedFiles: $formData['attached_files'],
-                    )
-                );
-                $this->session->flash('guestbook_added', $entry->id);
-                $this->session->flash('message', __('Your message was added successfully'));
-                redirect($baseUrl);
-            }
             $errors = $result->getErrors();
+            if ($result->isValid()) {
+                try {
+                    $entry = $this->createEntry->execute(
+                        new CreateGuestbookEntryDTO(
+                            adminClub: $this->mode->isAdminClub(),
+                            name:      $this->currentUser->isValid() ? $this->currentUser->user()->name : $formData['name'],
+                            text:      $formData['message'],
+                            ip:        $this->environment->getIp(false),
+                            userAgent: $this->environment->getUserAgent(),
+                        )
+                    );
+                    $this->session->flash('guestbook_added', $entry->id);
+                    $this->session->flash('message', __('Your message was added successfully'));
+                    redirect($baseUrl);
+                } catch (EditorUploadBindException $exception) {
+                    $errors = ['message' => [$exception->getMessage()]];
+                }
+            }
         }
 
         $pagination = $this->paginationFactory->create(total: $this->guestbookEntries->count(), fragment: 'guestbook-feed');

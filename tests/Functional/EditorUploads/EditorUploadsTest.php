@@ -332,16 +332,15 @@ final class EditorUploadsTest extends FunctionalTestCase
         self::assertNotNull($this->files()->find($elsewhere->id));
     }
 
-    public function testTheSiteDeclaresNoConsumerYetSoTheCleanupTouchesNothing(): void
+    public function testTheCleanupOfTheSiteLeavesTheDirectoriesNobodyDeclared(): void
     {
         $old = (new DateTimeImmutable('-2 days'))->format('Y-m-d H:i:s');
-        $guestbook = $this->storeContents('guestbook');
-        Capsule::table('files')->where('id', $guestbook->id)->update(['created_at' => $old]);
+        $undeclared = $this->storeContents('test_editor_uploads_undeclared');
+        Capsule::table('files')->where('id', $undeclared->id)->update(['created_at' => $old]);
 
-        $result = $this->container()->get(CleanupEditorUploadsUseCase::class)->execute();
+        $this->container()->get(CleanupEditorUploadsUseCase::class)->execute();
 
-        self::assertSame(['abandoned' => 0, 'untracked' => 0], $result);
-        self::assertNotNull($this->files()->find($guestbook->id));
+        self::assertNotNull($this->files()->find($undeclared->id));
     }
 
     private function store(int $userId): StoredFileDTO

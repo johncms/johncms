@@ -58,14 +58,22 @@ class EloquentGuestbookEntryRepository implements GuestbookEntryRepositoryInterf
         $entry->delete();
     }
 
-    public function getEntriesToClear(bool $adminClub, ?int $olderThan = null): Collection
+    public function findLocked(int $id): ?GuestbookEntry
     {
-        return $this->entriesQuery($adminClub, $olderThan)->get();
+        $query = GuestbookEntry::query()->whereKey($id);
+        $query->getQuery()->lockForUpdate();
+
+        return $query->first();
     }
 
-    public function deleteEntries(bool $adminClub, ?int $olderThan = null): void
+    public function getIdsToClear(bool $adminClub, ?int $olderThan = null): array
     {
-        $this->entriesQuery($adminClub, $olderThan)->delete();
+        return array_map(intval(...), $this->entriesQuery($adminClub, $olderThan)->orderBy('id')->pluck('id')->all());
+    }
+
+    public function deleteByIds(array $ids): void
+    {
+        GuestbookEntry::query()->whereKey($ids)->delete();
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Controllers;
 
+use Johncms\EditorUploads\EditorUploadBindException;
 use Johncms\Modules\Guestbook\Application\Exceptions\GuestbookAccessDeniedException;
 use Johncms\Modules\Guestbook\Application\Exceptions\GuestbookEntryNotFoundException;
 use Johncms\Modules\Guestbook\Application\UseCases\EditGuestbookEntryUseCase;
@@ -58,20 +59,24 @@ final readonly class EditEntryController
         $text = $this->editorContentNormalizer->trimEdgeEmptyBlocks(
             $request->body('message', (string) $entry->text)
         );
-        $attachedFiles = (array) $request->bodyInts('attached_files');
 
         if ($request->getMethod() === 'POST') {
             $result = $this->validator->validate(
                 ['message' => $text],
                 ['message' => [new StringLength(min: 4, max: 16000)]]
             );
-            if ($result->isValid()) {
-                $this->editUseCase->execute($entry, $text, $attachedFiles);
-                $this->session->flash('message', __('The message was saved'));
-                redirect($baseUrl);
-            }
-
             $errors = $result->getErrors();
+            if ($result->isValid()) {
+                try {
+                    $this->editUseCase->execute($entry, $text);
+                    $this->session->flash('message', __('The message was saved'));
+                    redirect($baseUrl);
+                } catch (GuestbookEntryNotFoundException) {
+                    pageNotFound();
+                } catch (EditorUploadBindException $exception) {
+                    $errors = ['message' => [$exception->getMessage()]];
+                }
+            }
         }
 
         $this->navChain->add($entry->adm ? __('Admin Club') : __('Guestbook'), $baseUrl);

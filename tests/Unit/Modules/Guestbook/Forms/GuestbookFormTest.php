@@ -37,10 +37,9 @@ final class GuestbookFormTest extends TestCase
     public function testFormDataIsTrimmedAndNormalized(): void
     {
         $request = new Request([], [
-            'name'           => '  John  ',
-            'message'        => '<p>&nbsp;</p> Hello world ',
-            'code'           => ' 123 ',
-            'attached_files' => ['3', 7],
+            'name'    => '  John  ',
+            'message' => '<p>&nbsp;</p> Hello world ',
+            'code'    => ' 123 ',
         ]);
 
         $form = $this->makeForm(CurrentUserFactory::withProfile(UserFactory::make()));
@@ -49,7 +48,6 @@ final class GuestbookFormTest extends TestCase
         self::assertSame('John', $formData['name']);
         self::assertSame('Hello world', $formData['message']);
         self::assertSame('123', $formData['code']);
-        self::assertSame([3, 7], $formData['attached_files']);
     }
 
     public function testVideoOnlyMessageIsPreservedWithoutEmptyEdgeParagraphs(): void
