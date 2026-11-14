@@ -27,6 +27,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ViewFileController
 {
+    private const string VOTE_ACCEPTED = 'downloads_vote_accepted';
+
     public function __construct(
         private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
@@ -96,33 +98,19 @@ final readonly class ViewFileController
             );
         }
 
-        // Voting (session state is an HTTP concern, stays here)
+        // Voting and favourites are posted from the page and lead back to it, so a reload does not
+        // send them again. Session state is an HTTP concern, so it stays here.
         $sessionIndex = 'rate_file_' . $id;
-        $hasVoteAction = $request->query->has('plus') || $request->query->has('minus');
-        $isPlus = $request->query->has('plus');
 
-        $vote = $this->voteUseCase->execute(
-            $id,
-            $isPlus,
-            ! $this->currentUser->isValid() || $this->session->has($sessionIndex) || ! $hasVoteAction
-        );
-
-        if ($vote->wasAccepted) {
-            $this->session->set($sessionIndex, true);
+        if ($request->isPost()) {
+            $this->handleAction($request->body('action'), $id, $sessionIndex);
+            redirect($this->filePathService->getFileUrl($file));
         }
 
-        // Bookmarks
-        $bookmarkAction = null;
-        if ($this->currentUser->isValid()) {
-            if ($request->query->has('addBookmark')) {
-                $bookmarkAction = 'add';
-            } elseif ($request->query->has('delBookmark')) {
-                $bookmarkAction = 'remove';
-            }
-        }
+        $vote = $this->voteUseCase->execute($id, false, true);
 
         $inBookmarks = $this->currentUser->isValid()
-            ? $this->bookmarkUseCase->execute($id, $this->currentUser->id(), $bookmarkAction)
+            ? $this->bookmarkUseCase->execute($id, $this->currentUser->id(), null)
             : 0;
 
         // Breadcrumbs
@@ -153,7 +141,7 @@ final readonly class ViewFileController
                 ? ['id' => $result->uploadUser->id, 'name' => $result->uploadUser->name]
                 : ['id' => 0, 'name' => ''],
             'can_vote'         => ! $this->session->has($sessionIndex) && $this->currentUser->isValid(),
-            'vote_accepted'    => $vote->wasAccepted,
+            'vote_accepted'    => $this->session->getFlash(self::VOTE_ACCEPTED) === true,
             'rate'             => [$vote->plus, $vote->minus],
             'main_file'        => $this->buildDownloadLink($file->dir, $file->name, $file->rus_name, $file->size, $id),
             'additional_files' => [],
@@ -229,6 +217,34 @@ final readonly class ViewFileController
             $this->navChain->add($ancestor->rus_name, $this->categoryPathService->getCategoryUrl($ancestor));
         }
         $this->navChain->add($category->rus_name, $this->categoryPathService->getCategoryUrl($category));
+    }
+
+    private function handleAction(string $action, int $id, string $sessionIndex): void
+    {
+        if (! $this->currentUser->isValid()) {
+            return;
+        }
+
+        if ($action === 'plus' || $action === 'minus') {
+            $vote = $this->voteUseCase->execute($id, $action === 'plus', $this->session->has($sessionIndex));
+
+            if ($vote->wasAccepted) {
+                $this->session->set($sessionIndex, true);
+                $this->session->flash(self::VOTE_ACCEPTED, true);
+            }
+
+            return;
+        }
+
+        $bookmarkAction = match ($action) {
+            'addBookmark' => 'add',
+            'delBookmark' => 'remove',
+            default       => null,
+        };
+
+        if ($bookmarkAction !== null) {
+            $this->bookmarkUseCase->execute($id, $this->currentUser->id(), $bookmarkAction);
+        }
     }
 
     private function buildDownloadLink(

@@ -205,6 +205,8 @@
       'Actions' => 'Действия',
       'Remove from Favorites' => 'Удалить из избранного',
       'Add to Favorites' => 'В избранное',
+      'Like' => 'Нравится',
+      'Dislike' => 'Не нравится',
       'Manage folders and files' => 'Управлять папками и файлами',
       'Move a file to another folder' => 'Перемещать файл в другую папку',
       'Decide who may upload into a folder and in which formats' => 'Определять, кто может загружать в папку и в каких форматах',

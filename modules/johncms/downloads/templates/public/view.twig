@@ -80,19 +80,25 @@
         <div>{{ __('Downloads:') }} {{ file.field }}</div>
         <div>{{ __('Rating:') }}
             {% if file.can_vote %}
-                <a href="{{ file_url }}?plus" class="btn btn-sm btn-like">
-                    <svg class="icon download-button-icon me-1 mt-n1">
-                        <use xlink:href="{{ asset('icons/sprite.svg') }}#like"/>
-                    </svg>
-                </a>
+                <form method="post" action="{{ file_url }}" class="d-inline">
+                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                    <button type="submit" name="action" value="plus" class="btn btn-sm btn-like" aria-label="{{ __('Like') }}">
+                        <svg class="icon download-button-icon me-1 mt-n1">
+                            <use xlink:href="{{ asset('icons/sprite.svg') }}#like"/>
+                        </svg>
+                    </button>
+                </form>
             {% endif %}
             <span>{{ file.rate|join(' / ') }}</span>
             {% if file.can_vote %}
-                <a href="{{ file_url }}?minus" class="btn btn-sm btn-dislike">
-                    <svg class="icon download-button-icon me-1 mt-n1">
-                        <use xlink:href="{{ asset('icons/sprite.svg') }}#dislike"/>
-                    </svg>
-                </a>
+                <form method="post" action="{{ file_url }}" class="d-inline">
+                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                    <button type="submit" name="action" value="minus" class="btn btn-sm btn-dislike" aria-label="{{ __('Dislike') }}">
+                        <svg class="icon download-button-icon me-1 mt-n1">
+                            <use xlink:href="{{ asset('icons/sprite.svg') }}#dislike"/>
+                        </svg>
+                    </button>
+                </form>
             {% endif %}
         </div>
     </div>
@@ -140,11 +146,14 @@
         {% endif %}
         {% if app.user.isValid %}
             <div class="mt-3">
-                {% if in_bookmarks %}
-                    <a href="{{ file_url }}?delBookmark">{{ __('Remove from Favorites') }}</a>
-                {% else %}
-                    <a href="{{ file_url }}?addBookmark">{{ __('Add to Favorites') }}</a>
-                {% endif %}
+                <form method="post" action="{{ file_url }}">
+                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                    {% if in_bookmarks %}
+                        <button type="submit" name="action" value="delBookmark" class="btn btn-link p-0">{{ __('Remove from Favorites') }}</button>
+                    {% else %}
+                        <button type="submit" name="action" value="addBookmark" class="btn btn-link p-0">{{ __('Add to Favorites') }}</button>
+                    {% endif %}
+                </form>
             </div>
         {% endif %}
 

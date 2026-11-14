@@ -1106,6 +1106,12 @@ msgstr "Удалить из избранного"
 msgid "Add to Favorites"
 msgstr "В избранное"
 
+msgid "Like"
+msgstr "Нравится"
+
+msgid "Dislike"
+msgstr "Не нравится"
+
 
 msgid "Manage folders and files"
 msgstr "Управлять папками и файлами"
