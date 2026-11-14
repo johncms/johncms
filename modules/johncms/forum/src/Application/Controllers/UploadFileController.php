@@ -11,6 +11,7 @@ use Johncms\Http\Request;
 use Johncms\Modules\Forum\Application\Access\ForumAccess;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Modules\Forum\Application\Uploads\ForumEditorUploads;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -37,7 +38,7 @@ final readonly class UploadFileController
             return $this->responder->accessDenied();
         }
 
-        return $this->responder->store($request, 'forum_files', 'forum');
+        return $this->responder->storeTracked($request, ForumEditorUploads::OWNER_TYPE, $this->currentUser->id());
     }
 
     private function mayPost(): bool

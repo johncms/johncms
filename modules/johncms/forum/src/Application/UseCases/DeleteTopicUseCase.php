@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Johncms\Files\FileStore;
+use Johncms\Modules\Forum\Application\Uploads\ForumMessagePictures;
 use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
-use Johncms\Modules\Forum\Domain\Repository\ForumMessageFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumUnreadRepositoryInterface;
@@ -20,11 +19,10 @@ final readonly class DeleteTopicUseCase
     public function __construct(
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumFileRepositoryInterface $fileRepository,
-        private ForumMessageFileRepositoryInterface $messageFileRepository,
         private ForumMessageRepositoryInterface $messageRepository,
         private ForumVoteRepositoryInterface $voteRepository,
         private ForumUnreadRepositoryInterface $unreadRepository,
-        private FileStore $files,
+        private ForumMessagePictures $pictures,
         private ForumAttachmentStorage $attachments,
     ) {
     }
@@ -41,10 +39,9 @@ final readonly class DeleteTopicUseCase
     public function deleteTopic(int $topicId): void
     {
         $files = $this->fileRepository->getByTopicId($topicId);
-        $linkedFileIds = $this->messageFileRepository->getFileIdsByTopicId($topicId);
 
         Capsule::connection()->transaction(function () use ($topicId): void {
-            $this->messageFileRepository->deleteByTopicId($topicId);
+            $this->pictures->detach($this->messageRepository->getIdsByTopicIds([$topicId]));
             $this->fileRepository->deleteByTopicId($topicId);
             $this->messageRepository->deleteByTopicId($topicId);
             $this->voteRepository->deleteVotesByTopic($topicId);
@@ -56,7 +53,5 @@ final readonly class DeleteTopicUseCase
         foreach ($files as $file) {
             $this->attachments->delete((string) $file->filename);
         }
-
-        $this->files->deleteMany($this->messageFileRepository->getOrphanedFileIds($linkedFileIds));
     }
 }

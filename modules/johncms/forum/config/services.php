@@ -7,7 +7,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 use Johncms\Modules\Forum\Domain\Repository\ForumAdminRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumConfigRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
-use Johncms\Modules\Forum\Domain\Repository\ForumMessageFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumSearchHistoryRepositoryInterface;
@@ -21,7 +20,6 @@ use Johncms\Modules\Forum\Domain\Repository\HiddenForumRepositoryInterface;
 use Johncms\Modules\Forum\Infrastructure\Config\FileSystemForumConfigRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumAdminRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumFileRepository;
-use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumMessageFileRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumMessageRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumSectionRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumSearchHistoryRepository;
@@ -65,7 +63,6 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ForumAttachmentStorage::class)->autowire()->public();
 
     $services->set(ForumMessageRepositoryInterface::class, ForumMessageRepository::class)->public();
-    $services->set(ForumMessageFileRepositoryInterface::class, ForumMessageFileRepository::class)->public();
     $services->set(ForumFileRepositoryInterface::class, ForumFileRepository::class)->public();
     $services->set(ForumSectionRepositoryInterface::class, ForumSectionRepository::class)->public();
     $services->set(ForumSearchRepositoryInterface::class, ForumSearchRepository::class)->autowire()->public();

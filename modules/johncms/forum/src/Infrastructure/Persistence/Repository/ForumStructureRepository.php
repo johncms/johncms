@@ -118,12 +118,17 @@ final class ForumStructureRepository implements ForumStructureRepositoryInterfac
         return ForumFile::query()->withoutGlobalScope('access')->where('subcat', $sectionId)->pluck('filename')->all();
     }
 
-    public function deleteSectionCascade(int $id): void
+    public function deleteSectionCascade(int $id): array
     {
         ForumFile::query()->withoutGlobalScope('access')->where('subcat', $id)->delete();
 
+        $messageIds = [];
         $topicIds = ForumTopic::query()->withoutGlobalScope('access')->where('section_id', $id)->pluck('id')->all();
         if ($topicIds !== []) {
+            $messageIds = array_map(
+                intval(...),
+                ForumMessage::query()->withoutGlobalScope('access')->whereIn('topic_id', $topicIds)->pluck('id')->all()
+            );
             ForumMessage::query()->withoutGlobalScope('access')->whereIn('topic_id', $topicIds)->delete();
             ForumVote::query()->whereIn('topic', $topicIds)->delete();
             ForumVoteUser::query()->whereIn('topic', $topicIds)->delete();
@@ -132,5 +137,7 @@ final class ForumStructureRepository implements ForumStructureRepositoryInterfac
 
         ForumTopic::query()->withoutGlobalScope('access')->where('section_id', $id)->delete();
         $this->deleteSection($id);
+
+        return $messageIds;
     }
 }

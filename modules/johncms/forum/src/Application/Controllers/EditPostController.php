@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Database\TransactionManagerInterface;
+use Johncms\EditorUploads\EditorUploadBindException;
+use Johncms\Modules\Forum\Application\Uploads\ForumMessagePictures;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
-use Johncms\Modules\Forum\Application\UseCases\AttachUploadedFilesToMessageUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EditPostUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureEditPostAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetEditPostContextUseCase;
@@ -25,7 +27,8 @@ final readonly class EditPostController
         private GetEditPostContextUseCase $contextUseCase,
         private EnsureEditPostAccessUseCase $accessUseCase,
         private EditPostUseCase $editPostUseCase,
-        private AttachUploadedFilesToMessageUseCase $attachUploadedFilesUseCase,
+        private ForumMessagePictures $pictures,
+        private TransactionManagerInterface $transactions,
     ) {
     }
 
@@ -61,7 +64,6 @@ final readonly class EditPostController
         if ($request->hasBody('submit')) {
             $msg = $this->editorContentNormalizer->trimEdgeEmptyBlocks($request->body('msg', ''));
             $msg = trim($msg);
-            $attachedFiles = (array) $request->bodyInts('attached_files');
             if ($msg === '') {
                 return new ViewResponse(
                     '@theme/pages/result.twig',
@@ -75,11 +77,24 @@ final readonly class EditPostController
                 );
             }
 
-            $this->editPostUseCase->execute($context, $msg);
-            $this->attachUploadedFilesUseCase->execute(
-                messageId: $context->message->id,
-                attachedFileIds: $attachedFiles,
-            );
+            try {
+                $this->transactions->run(function () use ($context, $msg): void {
+                    $this->editPostUseCase->execute($context, $msg);
+                    $this->pictures->bind($context->message->id, $this->currentUser->id());
+                });
+            } catch (EditorUploadBindException $exception) {
+                return new ViewResponse(
+                    '@theme/pages/result.twig',
+                    [
+                        'title'         => __('Edit Message'),
+                        'type'          => 'alert-danger',
+                        'message'       => $exception->getMessage(),
+                        'back_url'      => '/forum/edit-post/' . $id . '/' . ($page > 1 ? '?page=' . $page : ''),
+                        'back_url_name' => __('Back'),
+                    ]
+                );
+            }
+
             redirect($context->topic->url . ($context->page > 1 ? '?page=' . $context->page : ''));
         }
 

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Database\TransactionManagerInterface;
+use Johncms\EditorUploads\EditorUploadBindException;
+use Johncms\Modules\Forum\Application\Uploads\ForumMessagePictures;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\CurrentUser;
@@ -15,7 +18,6 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
-use Johncms\Modules\Forum\Application\UseCases\AttachUploadedFilesToMessageUseCase;
 use Johncms\Modules\Forum\Application\UseCases\CreateTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetNewTopicContextUseCase;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
@@ -43,7 +45,8 @@ final readonly class NewTopicController
         private ForumErrorRenderer $forumErrorRenderer,
         private GetNewTopicContextUseCase $contextUseCase,
         private CreateTopicUseCase $createTopicUseCase,
-        private AttachUploadedFilesToMessageUseCase $attachUploadedFilesUseCase,
+        private ForumMessagePictures $pictures,
+        private TransactionManagerInterface $transactions,
         private ForumSectionPathService $sectionPathService,
         private ValidatorInterface $validator,
         private AccessCheckerInterface $accessChecker,
@@ -91,7 +94,6 @@ final readonly class NewTopicController
                 ForumUtils::topicLink($request->body('msg', ''), $request->server->getString('HTTP_HOST', ''))
             ),
             'add_files'  => $request->bodyInt('addfiles', 0),
-            'attached_files' => (array) $request->bodyInts('attached_files'),
         ];
 
         if ($this->accessChecker->allows(ForumPermissions::TOPIC_META_MANAGE)) {
@@ -128,28 +130,32 @@ final readonly class NewTopicController
             ];
 
             $validationResult = $this->validator->validate($data, $rules);
-            if ($validationResult->isValid()) {
-                $result = $this->createTopicUseCase->execute(
-                    section: $section,
-                    topicName: (string) $data['name'],
-                    messageText: (string) $data['message'],
-                    metaKeywords: $data['meta_keywords'] ?? null,
-                    metaDescription: $data['meta_description'] ?? null,
-                    clientInfo: $this->environment->getClientInfo(),
-                );
-                $this->attachUploadedFilesUseCase->execute(
-                    messageId: $result->messageId,
-                    attachedFileIds: $data['attached_files'],
-                );
-
-                if ($data['add_files'] === 1) {
-                    redirect('/forum/addfile/' . $result->messageId . '/');
-                }
-
-                redirect($result->topicUrl);
-            }
-
             $errors = $validationResult->getErrors();
+            if ($validationResult->isValid()) {
+                try {
+                    $result = $this->transactions->run(function () use ($section, $data) {
+                        $result = $this->createTopicUseCase->execute(
+                            section: $section,
+                            topicName: (string) $data['name'],
+                            messageText: (string) $data['message'],
+                            metaKeywords: $data['meta_keywords'] ?? null,
+                            metaDescription: $data['meta_description'] ?? null,
+                            clientInfo: $this->environment->getClientInfo(),
+                        );
+                        $this->pictures->bind($result->messageId, $this->currentUser->id());
+
+                        return $result;
+                    });
+
+                    if ($data['add_files'] === 1) {
+                        redirect('/forum/addfile/' . $result->messageId . '/');
+                    }
+
+                    redirect($result->topicUrl);
+                } catch (EditorUploadBindException $exception) {
+                    $errors = ['message' => [$exception->getMessage()]];
+                }
+            }
         }
 
         $msgPreview = $this->content->render(

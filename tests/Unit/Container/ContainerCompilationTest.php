@@ -15,7 +15,7 @@ use Johncms\Modules\Admin\Application\Services\AdminPermissions;
 use Johncms\Modules\Consent\Application\View\CookieBannerExtension;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Collections\Application\Services\CollectionStructureMemo;
-use Johncms\Modules\Forum\Application\Console\CleanupOrphanFilesCommand;
+use Johncms\Modules\Collections\Application\Console\RebuildCollectionSearchCommand;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\News\Application\Sitemap\NewsUrlsProvider;
 use Johncms\View\Twig\Extension\MailExtension;
@@ -162,7 +162,7 @@ final class ContainerCompilationTest extends TestCase
         self::assertInstanceOf(ContainerBuilder::class, $container);
 
         self::assertContains(
-            CleanupOrphanFilesCommand::class,
+            RebuildCollectionSearchCommand::class,
             array_keys($container->findTaggedServiceIds('console.command'))
         );
         self::assertContains(

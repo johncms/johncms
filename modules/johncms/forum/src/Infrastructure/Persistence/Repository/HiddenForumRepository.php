@@ -97,23 +97,29 @@ final class HiddenForumRepository implements HiddenForumRepositoryInterface
             ->all();
     }
 
-    public function delete(HiddenListFilter $filter): void
+    public function delete(HiddenListFilter $filter): array
     {
-        $ids = $this->query($filter)->pluck('id')->all();
+        $ids = array_map(intval(...), $this->query($filter)->pluck('id')->all());
         if ($ids === []) {
-            return;
+            return [];
         }
 
         if ($filter->tab === HiddenListTab::POSTS) {
             ForumFile::query()->withoutGlobalScope('access')->whereIn('post', $ids)->delete();
             ForumMessage::query()->withoutGlobalScope('access')->whereIn('id', $ids)->delete();
 
-            return;
+            return $ids;
         }
 
+        $messageIds = array_map(
+            intval(...),
+            ForumMessage::query()->withoutGlobalScope('access')->whereIn('topic_id', $ids)->pluck('id')->all()
+        );
         ForumFile::query()->withoutGlobalScope('access')->whereIn('topic', $ids)->delete();
         ForumMessage::query()->withoutGlobalScope('access')->whereIn('topic_id', $ids)->delete();
         ForumTopic::query()->withoutGlobalScope('access')->whereIn('id', $ids)->delete();
+
+        return $messageIds;
     }
 
     /**

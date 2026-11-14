@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Illuminate\Database\Eloquent\Collection;
+use Johncms\Database\TransactionManagerInterface;
+use Johncms\Modules\Forum\Application\Uploads\ForumMessagePictures;
 use Johncms\Modules\Forum\Domain\Enums\HiddenListTab;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
@@ -20,6 +22,8 @@ final readonly class ManageHiddenForumUseCase
     public function __construct(
         private HiddenForumRepositoryInterface $repository,
         private ForumAttachmentStorage $attachments,
+        private ForumMessagePictures $pictures,
+        private TransactionManagerInterface $transactions,
     ) {
     }
 
@@ -83,6 +87,8 @@ final readonly class ManageHiddenForumUseCase
             $this->attachments->delete($filename);
         }
 
-        $this->repository->delete($filter);
+        $this->transactions->run(function () use ($filter): void {
+            $this->pictures->detach($this->repository->delete($filter));
+        });
     }
 }

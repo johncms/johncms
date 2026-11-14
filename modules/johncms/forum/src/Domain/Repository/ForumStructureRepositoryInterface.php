@@ -61,6 +61,8 @@ interface ForumStructureRepositoryInterface
     /**
      * Deletes a section with everything in it: the file rows, the posts, the polls, the read
      * marks, the topics, and the section itself.
+     *
+     * @return list<int> The posts deleted.
      */
-    public function deleteSectionCascade(int $id): void;
+    public function deleteSectionCascade(int $id): array;
 }

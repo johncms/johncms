@@ -22,6 +22,27 @@ class ForumMessageRepository implements ForumMessageRepositoryInterface
             ->find($id);
     }
 
+    public function findTextLocked(int $id): ?string
+    {
+        $query = ForumMessage::query()->withoutGlobalScope('access')->whereKey($id);
+        $query->getQuery()->lockForUpdate();
+        $message = $query->first(['id', 'text']);
+
+        return $message === null ? null : (string) $message->getRawOriginal('text');
+    }
+
+    public function getIdsByTopicIds(array $topicIds): array
+    {
+        if ($topicIds === []) {
+            return [];
+        }
+
+        return array_map(
+            intval(...),
+            ForumMessage::query()->withoutGlobalScope('access')->whereIn('topic_id', $topicIds)->orderBy('id')->pluck('id')->all()
+        );
+    }
+
     public function deleteByTopicId(int $topicId): void
     {
         ForumMessage::query()

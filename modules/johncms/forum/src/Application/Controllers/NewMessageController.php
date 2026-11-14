@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Database\TransactionManagerInterface;
+use Johncms\EditorUploads\EditorUploadBindException;
+use Johncms\Modules\Forum\Application\Uploads\ForumMessagePictures;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
@@ -11,7 +14,6 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
-use Johncms\Modules\Forum\Application\UseCases\AttachUploadedFilesToMessageUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetNewMessageContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\PostMessageUseCase;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
@@ -35,7 +37,8 @@ final readonly class NewMessageController
         private ForumErrorRenderer $forumErrorRenderer,
         private GetNewMessageContextUseCase $contextUseCase,
         private PostMessageUseCase $postMessageUseCase,
-        private AttachUploadedFilesToMessageUseCase $attachUploadedFilesUseCase,
+        private ForumMessagePictures $pictures,
+        private TransactionManagerInterface $transactions,
         private ForumTopicPathService $topicPathService,
         private AccessCheckerInterface $accessChecker,
     ) {
@@ -97,7 +100,6 @@ final readonly class NewMessageController
         $msg = $this->editorContentNormalizer->trimEdgeEmptyBlocks($request->body('msg', ''));
         $msg = trim($msg);
         $addFiles = $request->hasBody('addfiles');
-        $attachedFiles = (array) $request->bodyInts('attached_files');
 
         if (
             $request->hasBody('submit')
@@ -137,17 +139,31 @@ final readonly class NewMessageController
 
             $this->session->remove('token');
 
-            $result = $this->postMessageUseCase->execute(
-                topic: $topic,
-                messageText: $msg,
-                addFiles: $addFiles,
-                forumSettings: $this->getForumSettings(),
-                clientInfo: $this->environment->getClientInfo(),
-            );
-            $this->attachUploadedFilesUseCase->execute(
-                messageId: $result->messageId,
-                attachedFileIds: $attachedFiles,
-            );
+            try {
+                $result = $this->transactions->run(function () use ($topic, $msg, $addFiles) {
+                    $result = $this->postMessageUseCase->execute(
+                        topic: $topic,
+                        messageText: $msg,
+                        addFiles: $addFiles,
+                        forumSettings: $this->getForumSettings(),
+                        clientInfo: $this->environment->getClientInfo(),
+                    );
+                    $this->pictures->bind($result->messageId, $this->currentUser->id());
+
+                    return $result;
+                });
+            } catch (EditorUploadBindException $exception) {
+                return new ViewResponse(
+                    '@theme/pages/result.twig',
+                    [
+                        'title'         => __('New message'),
+                        'type'          => 'alert-danger',
+                        'message'       => $exception->getMessage(),
+                        'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
+                        'back_url_name' => __('Back'),
+                    ]
+                );
+            }
 
             if ($addFiles) {
                 redirect('/forum/addfile/' . $result->messageId . '/');

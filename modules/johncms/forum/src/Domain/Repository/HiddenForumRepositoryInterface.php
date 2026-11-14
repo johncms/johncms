@@ -65,6 +65,8 @@ interface HiddenForumRepositoryInterface
     /**
      * Deletes what the filter lets through for good: a post with its files, a topic with its
      * posts and files.
+     *
+     * @return list<int> The posts deleted.
      */
-    public function delete(HiddenListFilter $filter): void;
+    public function delete(HiddenListFilter $filter): array;
 }

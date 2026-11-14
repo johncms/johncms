@@ -11,6 +11,17 @@ interface ForumMessageRepositoryInterface
 {
     public function findById(int $id): ?ForumMessage;
 
+    /** The raw text of the post, hidden or not, its row held until the transaction ends; null when it is gone. */
+    public function findTextLocked(int $id): ?string;
+
+    /**
+     * Posts of the topics, hidden ones included.
+     *
+     * @param list<int> $topicIds
+     * @return list<int>
+     */
+    public function getIdsByTopicIds(array $topicIds): array;
+
     public function deleteByTopicId(int $topicId): void;
 
     public function save(ForumMessage $message): void;

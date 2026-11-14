@@ -7,15 +7,14 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
-use Johncms\Files\FileStore;
 use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
 use Johncms\Modules\Forum\Application\DTO\DeletePostResultDTO;
 use Johncms\Modules\Forum\Application\DTO\EditPostContextDTO;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\Services\ForumTopicStatsRecalculator;
+use Johncms\Modules\Forum\Application\Uploads\ForumMessagePictures;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
-use Johncms\Modules\Forum\Domain\Repository\ForumMessageFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumUnreadRepositoryInterface;
@@ -29,13 +28,12 @@ final readonly class DeletePostUseCase
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumTopicStatsRecalculator $topicStatsRecalculator,
         private ForumFileRepositoryInterface $fileRepository,
-        private ForumMessageFileRepositoryInterface $messageFileRepository,
         private ForumVoteRepositoryInterface $voteRepository,
         private ForumUnreadRepositoryInterface $unreadRepository,
         private ForumSectionPathService $sectionPathService,
         private ForumTopicPathService $topicPathService,
         private CurrentUser $currentUser,
-        private FileStore $files,
+        private ForumMessagePictures $pictures,
         private AccessCheckerInterface $accessChecker,
         private ForumAttachmentStorage $attachments,
     ) {
@@ -57,16 +55,13 @@ final readonly class DeletePostUseCase
 
         $redirectUrl = $context->backUrl;
         if ($hardDelete && $this->accessChecker->allows(ForumPermissions::POST_DESTROY)) {
-            $linkedFileIds = $this->messageFileRepository->getFileIdsByMessageId((int) $message->id);
-            $this->messageFileRepository->deleteByMessageId((int) $message->id);
-
             $files = $this->fileRepository->getByPostId($message->id);
             foreach ($files as $file) {
                 $this->attachments->delete((string) $file->filename);
             }
 
             $this->fileRepository->deleteByPostId($message->id);
-            $this->deleteOrphanedMessageFiles($linkedFileIds);
+            $this->pictures->detach([$message->id]);
 
             $strictPageCount = $this->messageRepository->countByTopicIdWithComparison(
                 topicId: $topic->id,
@@ -110,17 +105,5 @@ final readonly class DeletePostUseCase
         }
 
         return new DeletePostResultDTO($redirectUrl);
-    }
-
-    /**
-     * @param int[] $fileIds
-     */
-    private function deleteOrphanedMessageFiles(array $fileIds): void
-    {
-        if ($fileIds === []) {
-            return;
-        }
-
-        $this->files->deleteMany($this->messageFileRepository->getOrphanedFileIds($fileIds));
     }
 }

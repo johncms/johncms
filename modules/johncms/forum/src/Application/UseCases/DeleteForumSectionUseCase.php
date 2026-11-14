@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Database\TransactionManagerInterface;
 use Johncms\Modules\Forum\Application\DTO\SectionDeletionContextDTO;
 use Johncms\Modules\Forum\Application\Exceptions\SectionDeletionException;
 use Johncms\Modules\Forum\Application\Services\ForumTreeOptions;
+use Johncms\Modules\Forum\Application\Uploads\ForumMessagePictures;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\Modules\Forum\Domain\Repository\ForumStructureRepositoryInterface;
 
@@ -22,6 +24,8 @@ final readonly class DeleteForumSectionUseCase
     public function __construct(
         private ForumStructureRepositoryInterface $repository,
         private ForumTreeOptions $treeOptions,
+        private ForumMessagePictures $pictures,
+        private TransactionManagerInterface $transactions,
     ) {
     }
 
@@ -66,7 +70,9 @@ final readonly class DeleteForumSectionUseCase
             }
 
             $filenames = $this->repository->attachedFilenames($section->id);
-            $this->repository->deleteSectionCascade($section->id);
+            $this->transactions->run(function () use ($section): void {
+                $this->pictures->detach($this->repository->deleteSectionCascade($section->id));
+            });
 
             return $filenames;
         }
