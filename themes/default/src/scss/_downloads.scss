@@ -203,3 +203,27 @@
   &__files { color: var(--fg-dim); font-family: var(--bs-font-monospace); font-size: .6875rem; text-decoration: none; }
   a.site-dl-user__files:hover { color: var(--accent); }
 }
+
+// The upload form and its result.
+.site-dl-form {
+  display: flex;
+  flex-direction: column;
+  gap: .625rem;
+  &__title { margin-block-end: 1rem; }
+  &__field + &__field { margin-block-start: 1rem; }
+  &__field + div { margin-block-start: 1rem; }
+  &__note { display: flex; align-items: center; gap: .375rem; margin: .875rem 0 0; color: var(--fg-muted); font-size: .8125rem; }
+  &__actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; margin-block-start: .625rem; }
+  &__actions .btn { display: inline-flex; align-items: center; gap: .375rem; }
+}
+
+.site-dl-result {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  &__icon { display: grid; flex-shrink: 0; place-items: center; inline-size: 2.75rem; block-size: 2.75rem; border-radius: 50%; background: var(--accent-soft); color: var(--accent); }
+  &__main { min-inline-size: 0; }
+  &__main .site-dlf__h2 { overflow-wrap: anywhere; }
+  &__list { margin: .5rem 0 0; padding-inline-start: 1.125rem; color: var(--fg-muted); font-size: .875rem; }
+  &__warning { color: var(--danger); }
+}

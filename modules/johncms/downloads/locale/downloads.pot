@@ -33,7 +33,7 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:27
 #: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:40
 #: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:50
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:67
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:77
 #: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php:49
 #: modules/johncms/downloads/src/Application/Controllers/IndexController.php:41
 #: modules/johncms/downloads/src/Application/Controllers/IndexController.php:52
@@ -100,8 +100,6 @@ msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php:177
 #: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php:245
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:88
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:148
 #: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php:138
 msgid "File not attached"
 msgstr ""
@@ -110,18 +108,15 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/CreateCategoryController.php:95
 #: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php:97
 #: modules/johncms/downloads/src/Application/Controllers/EditFileController.php:77
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:117
 #: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php:108
 msgid "The required fields are not filled"
 msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php:198
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:121
 msgid "The weight of the file exceeds"
 msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php:203
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:126
 #: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php:113
 msgid "Prohibited file type!<br>To upload allowed files that have the following extensions"
 msgstr ""
@@ -129,13 +124,12 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php:237
 #: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php:239
 #: modules/johncms/downloads/templates/public/import-result.twig:13
-#: modules/johncms/downloads/templates/public/upload-result.twig:14
 msgid "File attached"
 msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php:241
 #: modules/johncms/downloads/src/Application/Controllers/EditScreenController.php:128
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:244
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:273
 #: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:107
 #: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:119
 #: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:119
@@ -156,9 +150,6 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/EditFileController.php:79
 #: modules/johncms/downloads/src/Application/Controllers/EditScreenController.php:92
 #: modules/johncms/downloads/src/Application/Controllers/EditScreenController.php:119
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:88
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:137
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:148
 #: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php:140
 #: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php:220
 msgid "Repeat"
@@ -210,7 +201,7 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/CreateCategoryController.php:48
 #: modules/johncms/downloads/src/Application/Controllers/DeleteCategoryController.php:47
 #: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php:43
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:53
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:63
 #: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php:47
 #: modules/johncms/downloads/src/Application/Controllers/NewFilesController.php:50
 #: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:145
@@ -237,7 +228,6 @@ msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/CreateCategoryController.php:158
 #: modules/johncms/downloads/templates/public/import-result.twig:21
-#: modules/johncms/downloads/templates/public/upload-result.twig:28
 msgid "Continue"
 msgstr ""
 
@@ -276,13 +266,13 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/EditScreenController.php:90
 #: modules/johncms/downloads/src/Application/Controllers/EditScreenController.php:117
 #: modules/johncms/downloads/templates/public/import-result.twig:17
-#: modules/johncms/downloads/templates/public/upload-result.twig:18
+#: modules/johncms/downloads/templates/public/upload-result.twig:31
 msgid "Screenshot not attached"
 msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/EditScreenController.php:126
 #: modules/johncms/downloads/templates/public/import-result.twig:15
-#: modules/johncms/downloads/templates/public/upload-result.twig:16
+#: modules/johncms/downloads/templates/public/upload-result.twig:29
 msgid "Screenshot is attached"
 msgstr ""
 
@@ -331,21 +321,48 @@ msgstr ""
 msgid "File accepted"
 msgstr ""
 
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:60
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:70
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:74
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:75
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:209
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:210
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:80
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:99
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:100
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:118
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:119
 #: modules/johncms/downloads/templates/public/components/section-actions.twig:13
 #: modules/johncms/downloads/templates/public/index.twig:46
 msgid "Upload File"
 msgstr ""
 
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:133
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:240
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:107
+#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:276
+#: modules/johncms/downloads/templates/public/components/file-row.twig:48
+#: modules/johncms/downloads/templates/public/components/file-row.twig:49
+#: modules/johncms/downloads/templates/public/import.twig:36
+#: modules/johncms/downloads/templates/public/view.twig:132
+#: modules/johncms/downloads/templates/public/view.twig:136
+msgid "Download"
+msgstr ""
+
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:151
+msgid "Choose the file to upload."
+msgstr ""
+
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:157
+#, php-format
+msgid "The file is larger than %d KB."
+msgstr ""
+
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:161
+msgid "Files of this type cannot be uploaded here."
+msgstr ""
+
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:182
+msgid "The file could not be saved. Try again."
+msgstr ""
+
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:269
 msgid "Upload file"
 msgstr ""
 
@@ -404,16 +421,6 @@ msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:117
 msgid "Database successfully updated"
-msgstr ""
-
-#: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:276
-#: modules/johncms/downloads/templates/public/components/file-row.twig:48
-#: modules/johncms/downloads/templates/public/components/file-row.twig:49
-#: modules/johncms/downloads/templates/public/import.twig:36
-#: modules/johncms/downloads/templates/public/upload.twig:40
-#: modules/johncms/downloads/templates/public/view.twig:132
-#: modules/johncms/downloads/templates/public/view.twig:136
-msgid "Download"
 msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/SearchController.php:33
@@ -740,13 +747,12 @@ msgstr ""
 
 #: modules/johncms/downloads/templates/public/additional-files.twig:44
 #: modules/johncms/downloads/templates/public/edit-screenshots.twig:41
-#: modules/johncms/downloads/templates/public/upload.twig:16
+#: modules/johncms/downloads/templates/public/upload.twig:42
 msgid "Choose file"
 msgstr ""
 
 #: modules/johncms/downloads/templates/public/additional-files.twig:47
 #: modules/johncms/downloads/templates/public/edit-screenshots.twig:44
-#: modules/johncms/downloads/templates/public/upload.twig:19
 msgid "Max. Size"
 msgstr ""
 
@@ -764,14 +770,12 @@ msgstr ""
 #: modules/johncms/downloads/templates/public/additional-files.twig:57
 #: modules/johncms/downloads/templates/public/import.twig:20
 #: modules/johncms/downloads/templates/public/import.twig:21
-#: modules/johncms/downloads/templates/public/upload.twig:24
-#: modules/johncms/downloads/templates/public/upload.twig:25
+#: modules/johncms/downloads/templates/public/upload.twig:59
 msgid "Save as"
 msgstr ""
 
 #: modules/johncms/downloads/templates/public/additional-files.twig:59
 #: modules/johncms/downloads/templates/public/import.twig:23
-#: modules/johncms/downloads/templates/public/upload.twig:27
 msgid "max. 100 characters"
 msgstr ""
 
@@ -783,8 +787,7 @@ msgstr ""
 #: modules/johncms/downloads/templates/public/edit-file.twig:21
 #: modules/johncms/downloads/templates/public/import.twig:34
 #: modules/johncms/downloads/templates/public/import.twig:35
-#: modules/johncms/downloads/templates/public/upload.twig:38
-#: modules/johncms/downloads/templates/public/upload.twig:39
+#: modules/johncms/downloads/templates/public/upload.twig:60
 msgid "Link to download file"
 msgstr ""
 
@@ -796,7 +799,7 @@ msgstr ""
 #: modules/johncms/downloads/templates/public/category-form.twig:40
 #: modules/johncms/downloads/templates/public/category-form.twig:41
 #: modules/johncms/downloads/templates/public/import.twig:55
-#: modules/johncms/downloads/templates/public/upload.twig:59
+#: modules/johncms/downloads/templates/public/upload.twig:47
 msgid "Allowed extensions"
 msgstr ""
 
@@ -806,7 +809,6 @@ msgstr ""
 #: modules/johncms/downloads/templates/public/edit-file.twig:68
 #: modules/johncms/downloads/templates/public/edit-screenshots.twig:49
 #: modules/johncms/downloads/templates/public/import.twig:59
-#: modules/johncms/downloads/templates/public/upload.twig:63
 msgid "Save"
 msgstr ""
 
@@ -818,8 +820,7 @@ msgstr ""
 #: modules/johncms/downloads/templates/public/edit-screenshots.twig:50
 #: modules/johncms/downloads/templates/public/import.twig:60
 #: modules/johncms/downloads/templates/public/move-file.twig:50
-#: modules/johncms/downloads/templates/public/upload-result.twig:34
-#: modules/johncms/downloads/templates/public/upload.twig:64
+#: modules/johncms/downloads/templates/public/upload.twig:80
 msgid "Cancel"
 msgstr ""
 
@@ -840,7 +841,7 @@ msgstr ""
 #: modules/johncms/downloads/templates/public/category-form.twig:31
 #: modules/johncms/downloads/templates/public/edit-file.twig:26
 #: modules/johncms/downloads/templates/public/import.twig:48
-#: modules/johncms/downloads/templates/public/upload.twig:52
+#: modules/johncms/downloads/templates/public/upload.twig:71
 #: modules/johncms/downloads/templates/public/view.twig:59
 msgid "Description"
 msgstr ""
@@ -1013,18 +1014,16 @@ msgstr ""
 
 #: modules/johncms/downloads/templates/public/import.twig:27
 #: modules/johncms/downloads/templates/public/import.twig:28
-#: modules/johncms/downloads/templates/public/upload.twig:31
-#: modules/johncms/downloads/templates/public/upload.twig:32
+#: modules/johncms/downloads/templates/public/upload.twig:58
 msgid "File Name"
 msgstr ""
 
 #: modules/johncms/downloads/templates/public/import.twig:30
-#: modules/johncms/downloads/templates/public/upload.twig:34
 msgid "max. 200 characters"
 msgstr ""
 
 #: modules/johncms/downloads/templates/public/import.twig:42
-#: modules/johncms/downloads/templates/public/upload.twig:46
+#: modules/johncms/downloads/templates/public/upload.twig:66
 msgid "Choose screenshot"
 msgstr ""
 
@@ -1105,6 +1104,7 @@ msgid "Move file here"
 msgstr ""
 
 #: modules/johncms/downloads/templates/public/new-files.twig:15
+#: modules/johncms/downloads/templates/public/upload.twig:15
 #: modules/johncms/downloads/templates/public/view.twig:24
 msgid "In the section"
 msgstr ""
@@ -1192,12 +1192,68 @@ msgstr ""
 msgid "Users who upload files appear here."
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/upload-result.twig:24
-msgid "If you pass moderation, it will be added to the Downloads"
+#: modules/johncms/downloads/templates/public/upload-result.twig:21
+msgid "File “%s” is uploaded"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/upload-result.twig:33
+#: modules/johncms/downloads/templates/public/upload-result.twig:24
+msgid "It appears in the downloads once a moderator accepts it."
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/upload-result.twig:26
+msgid "It is already in the section “%s”."
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/upload-result.twig:42
 msgid "Upload more"
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/upload-result.twig:44
+msgid "Open the file"
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/upload.twig:33
+msgid "Choose the file again: the browser does not keep it after an error."
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/upload.twig:39
+msgid "File"
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/upload.twig:47
+msgid "Up to %d KB."
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/upload.twig:52
+msgid "A moderator checks the file before it appears in the downloads."
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/upload.twig:57
+msgid "Names"
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/upload.twig:58
+msgid "The title on the site; the name of the file if left empty. Up to 200 characters."
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/upload.twig:59
+msgid "The name of the file on disk, without the extension; the original name if left empty. Up to 100 characters."
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/upload.twig:60
+msgid "The text of the download link. Up to 200 characters."
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/upload.twig:64
+msgid "Screenshot and description"
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/upload.twig:68
+msgid "Optional. More screenshots can be added on the page of the file."
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/upload.twig:83
+msgid "Upload"
 msgstr ""
 
 #: modules/johncms/downloads/templates/public/user-files.twig:21

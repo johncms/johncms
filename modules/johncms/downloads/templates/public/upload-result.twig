@@ -1,36 +1,48 @@
 {#
-    What came out of uploading a file: whether the screenshot made it and where to go next.
+    What came out of an upload, shown once after the redirect: the file, its screenshot, and where
+    to go next. A screenshot that failed does not undo the file.
 
-    @var id                    int    Category the file went into.
-    @var urls                  array  view_file_url, category_url
-    @var moderation            bool   The file is waiting to be accepted, so there is nothing to open yet.
-    @var screen_attached       bool   Null when no screenshot was sent at all.
-    @var screen_attached_error string Message of the image library, when there is one.
+    @var id              int
+    @var category        array      name, url
+    @var file_name       string
+    @var file_url        string     Empty while the file waits for a moderator.
+    @var moderation      bool
+    @var screen_attached bool|null  Null when no screenshot was sent.
+    @var screen_error    string
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
 {% block content %}
-    <div class="alert alert-success">
-        <div>{{ __('File attached') }}</div>
-        {% if screen_attached is same as(true) %}
-            <div>{{ __('Screenshot is attached') }}</div>
-        {% elseif screen_attached is same as(false) %}
-            <div>{{ __('Screenshot not attached') }} {{ screen_attached_error }}</div>
-        {% endif %}
-    </div>
-
-    {% if moderation %}
-        <div class="alert alert-info">
-            {{ __('If you pass moderation, it will be added to the Downloads') }}
+    <section class="site-dlf__section site-dl-result">
+        <span class="site-dl-result__icon" aria-hidden="true">{% include '@theme/components/icon.twig' with {name: 'circle-check', size: 22} only %}</span>
+        <div class="site-dl-result__main">
+            <h2 class="site-dlf__h2">{{ __('File “%s” is uploaded')|format(file_name) }}</h2>
+            <ul class="site-dl-result__list">
+                {% if moderation %}
+                    <li>{{ __('It appears in the downloads once a moderator accepts it.') }}</li>
+                {% else %}
+                    <li>{{ __('It is already in the section “%s”.')|format(category.name) }}</li>
+                {% endif %}
+                {% if screen_attached is same as(true) %}
+                    <li>{{ __('Screenshot is attached') }}</li>
+                {% elseif screen_attached is same as(false) %}
+                    <li class="site-dl-result__warning">{{ __('Screenshot not attached') }}{% if screen_error %}: {{ screen_error }}{% endif %}</li>
+                {% endif %}
+            </ul>
         </div>
-    {% else %}
-        <div class="mb-3">
-            <a href="{{ urls.view_file_url }}" class="btn btn-outline-primary btn-sm">{{ __('Continue') }}</a>
-        </div>
-    {% endif %}
+    </section>
 
-    <div>
-        <a href="/downloads/upload/{{ id }}/" class="btn btn-primary">{{ __('Upload more') }}</a>
-        <a href="{{ urls.category_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+    <div class="site-dl-form__actions">
+        <a href="{{ category.url }}" class="btn btn-outline-secondary">
+            {% include '@theme/components/icon.twig' with {name: 'chevron-left', size: 14, class: 'site-icon--directional'} only %} {{ category.name }}
+        </a>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="/downloads/upload/{{ id }}/" class="btn btn-outline-secondary">{% include '@theme/components/icon.twig' with {name: 'upload', size: 14} only %} {{ __('Upload more') }}</a>
+            {% if file_url %}
+                <a href="{{ file_url }}" class="btn btn-primary">{{ __('Open the file') }}</a>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
