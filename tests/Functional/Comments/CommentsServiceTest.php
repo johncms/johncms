@@ -276,6 +276,23 @@ final class CommentsServiceTest extends FunctionalTestCase
         self::assertSame([], $this->subject->changes);
     }
 
+    public function testACommentDeletedMeanwhileTakesNoEditAndNoPicture(): void
+    {
+        $id = $this->insertComment(FunctionalUserFactory::create()->id);
+        $moderator = $this->signIn(FunctionalUserFactory::createSupervisor());
+        $picture = $this->upload($moderator->id);
+        $this->build(new VanishingCommentRepository($this->container()->get(CommentRepositoryInterface::class)));
+
+        try {
+            $this->comments->edit($this->object(), $id, '<p><img src="' . $picture . '"></p>');
+            self::fail('The edit of a comment deleted meanwhile must be refused.');
+        } catch (CommentNotFoundException) {
+        }
+
+        self::assertFalse(Capsule::table('editor_uploads')->where('owner_type', 'comment')->where('owner_id', $id)->exists());
+        self::assertTrue(Capsule::table('editor_uploads')->where('user_id', $moderator->id)->whereNull('owner_type')->exists());
+    }
+
     public function testTheLatestFeedLeavesHiddenObjectsOutBeforePaging(): void
     {
         $author = FunctionalUserFactory::create()->id;

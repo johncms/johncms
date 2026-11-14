@@ -265,6 +265,10 @@ final readonly class CommentsService
         $editor = $this->currentUser->user();
 
         $this->transactions->run(function () use ($comment, $html, $editor): void {
+            // Read again under a lock: a comment deleted meanwhile takes no text and no picture.
+            if ($this->comments->getLocked($comment->subject_type, $comment->subject_id, [$comment->id]) === []) {
+                throw new CommentNotFoundException();
+            }
             $this->comments->update($comment, [
                 'text'        => $html,
                 'edited_at'   => gmdate(self::DATE_FORMAT),

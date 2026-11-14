@@ -151,6 +151,9 @@ final readonly class CommentsController
             $text = $request->body('text');
             try {
                 $this->comments->edit($object, $comment, $text);
+            } catch (CommentNotFoundException) {
+                // Deleted by somebody else while it was being edited.
+                throw new PageNotFoundException();
             } catch (CommentAccessDeniedException $exception) {
                 return $this->exceptionResponses->forbidden(message: $exception->getMessage());
             } catch (CommentValidationException $exception) {
