@@ -15,6 +15,7 @@ use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class NewFilesController
 {
@@ -50,7 +51,8 @@ final readonly class NewFilesController
                     'message'       => __('The directory does not exist'),
                     'back_url'      => '/downloads/',
                     'back_url_name' => __('Downloads'),
-                ]
+                ],
+                Response::HTTP_NOT_FOUND
             );
         }
 

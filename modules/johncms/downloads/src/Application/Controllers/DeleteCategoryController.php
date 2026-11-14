@@ -37,7 +37,7 @@ final readonly class DeleteCategoryController
                 'message'       => __('Before removing, delete subdirectories'),
                 'back_url'      => '/downloads/',
                 'back_url_name' => __('Downloads'),
-            ]);
+            ], Response::HTTP_CONFLICT);
         }
 
         if ($category === null) {

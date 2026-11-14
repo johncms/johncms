@@ -88,4 +88,12 @@ final class DownloadsUploadTest extends FunctionalTestCase
         self::assertNotNull($reloaded->querySelector('form[name="file_upload_form"]'));
         self::assertSame(1, DownloadFile::query()->count());
     }
+
+    public function testAVisitorWhoMayNotUploadIsRefused(): void
+    {
+        $category = Fixture::insert('download__category', ['name' => 'docs', 'slug' => 'docs', 'dir' => $this->directory, 'rus_name' => 'Documents']);
+
+        self::assertSame(403, $this->handleRequest('/downloads/upload/' . $category . '/')->getStatusCode());
+        self::assertSame(404, $this->handleRequest('/downloads/upload/99999/')->getStatusCode());
+    }
 }

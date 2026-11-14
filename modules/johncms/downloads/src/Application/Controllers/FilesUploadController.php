@@ -60,14 +60,14 @@ final readonly class FilesUploadController
         $category = DownloadCategory::query()->find($id);
 
         if ($category === null || ! is_dir($category->dir)) {
-            return $this->error(__('The directory does not exist'), '/downloads/');
+            return $this->error(__('The directory does not exist'), '/downloads/', Response::HTTP_NOT_FOUND);
         }
 
         $isAdmin = $this->accessChecker->allows(DownloadsPermissions::MODERATE);
         $canUpload = $isAdmin || $this->downloadsAccess->mayUpload($category);
 
         if (! $canUpload) {
-            return $this->error(__('Access forbidden'), $this->categoryPathService->getCategoryUrl($category));
+            return $this->error(__('Access forbidden'), $this->categoryPathService->getCategoryUrl($category), Response::HTTP_FORBIDDEN);
         }
 
         $allowedExtensions = $category->field
@@ -263,14 +263,14 @@ final readonly class FilesUploadController
         }
     }
 
-    private function error(string $message, string $backUrl, ?string $backLabel = null): ViewResponse
+    private function error(string $message, string $backUrl, int $status): ViewResponse
     {
         return new ViewResponse('@theme/pages/result.twig', [
             'title'         => __('Upload file'),
             'type'          => 'alert-danger',
             'message'       => $message,
             'back_url'      => $backUrl,
-            'back_url_name' => $backLabel ?? __('Back'),
-        ]);
+            'back_url_name' => __('Back'),
+        ], $status);
     }
 }
