@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\CommentFeed;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Comments\Application\CommentsService;
+use Johncms\Comments\Application\DTO\LatestCommentDTO;
+use Johncms\Modules\Library\Application\Comments\LibraryCommentSubject;
 use Johncms\Modules\Library\Application\Services\LibraryPermissions;
-use Johncms\Modules\Library\Domain\Models\LibraryComment;
-use Johncms\Modules\Library\Domain\Repository\LibraryCommentRepositoryInterface;
 use Johncms\View\CommentFeed\CommentFeedSourceInterface;
 use Johncms\View\CommentFeed\FeedComment;
 
@@ -18,7 +19,7 @@ final readonly class LibraryCommentFeedSource implements CommentFeedSourceInterf
 {
     public function __construct(
         private AccessCheckerInterface $accessChecker,
-        private LibraryCommentRepositoryInterface $comments,
+        private CommentsService $comments,
     ) {
     }
 
@@ -28,12 +29,12 @@ final readonly class LibraryCommentFeedSource implements CommentFeedSourceInterf
             return [];
         }
 
-        return array_values($this->comments->getLatest($limit)->map($this->toFeed(...))->all());
+        return array_map($this->toFeed(...), $this->comments->latest(LibraryCommentSubject::TYPE, $limit, 0));
     }
 
     public function countComments(): int
     {
-        return $this->moderates() ? $this->comments->countAll() : 0;
+        return $this->moderates() ? $this->comments->countOfType(LibraryCommentSubject::TYPE) : 0;
     }
 
     private function moderates(): bool
@@ -41,19 +42,16 @@ final readonly class LibraryCommentFeedSource implements CommentFeedSourceInterf
         return $this->accessChecker->allows(LibraryPermissions::MODERATE);
     }
 
-    private function toFeed(LibraryComment $comment): FeedComment
+    private function toFeed(LatestCommentDTO $latest): FeedComment
     {
-        // The name the author had when writing, kept with the comment by the legacy comments.
-        $attributes = unserialize((string) $comment->getAttribute('attributes'), ['allowed_classes' => false]);
-
         return new FeedComment(
-            d__('library', 'Library'),
-            (string) $comment->getAttribute('article_name'),
-            '/library/article/' . $comment->sub_id . '/comments',
-            $comment->user_id,
-            (string) ($attributes['author_name'] ?? ''),
-            $comment->text,
-            $comment->time,
+            section: d__('library', 'Library'),
+            subject: $latest->subject->title,
+            url: $latest->permalink(),
+            authorId: $latest->authorId,
+            authorName: $latest->comment->author->name ?? $latest->comment->authorName,
+            text: $latest->html,
+            time: $latest->writtenAt,
         );
     }
 }

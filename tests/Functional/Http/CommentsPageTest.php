@@ -70,7 +70,7 @@ final class CommentsPageTest extends FunctionalTestCase
         $categoryId = Fixture::insert('library_cats', ['name' => 'A shelf']);
         $articleId = Fixture::insert(
             'library_texts',
-            ['cat_id' => $categoryId, 'name' => 'An article', 'text' => 'Body']
+            ['cat_id' => $categoryId, 'name' => 'An article', 'text' => 'Body', 'premod' => 1]
         );
 
         $this->assertCommentsPageIsRendered(

@@ -2,10 +2,8 @@ msgid ""
 msgstr ""
 "X-Domain: library\n"
 
-#: modules/johncms/library/src/Application/CommentFeed/LibraryCommentFeedSource.php:50
-#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:37
-#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:53
-#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:67
+#: modules/johncms/library/src/Application/CommentFeed/LibraryCommentFeedSource.php:48
+#: modules/johncms/library/src/Application/Comments/LibraryCommentSubject.php:64
 #: modules/johncms/library/src/Application/Controllers/ArticleController.php:60
 #: modules/johncms/library/src/Application/Controllers/ArticleController.php:90
 #: modules/johncms/library/src/Application/Controllers/ArticleController.php:97
@@ -13,12 +11,12 @@ msgstr ""
 #: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:58
 #: modules/johncms/library/src/Application/Controllers/CreateSectionController.php:39
 #: modules/johncms/library/src/Application/Controllers/CreateSectionController.php:48
-#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:49
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:52
 #: modules/johncms/library/src/Application/Controllers/DeleteArticleImageController.php:41
 #: modules/johncms/library/src/Application/Controllers/DeleteSectionController.php:49
 #: modules/johncms/library/src/Application/Controllers/EditArticleController.php:71
 #: modules/johncms/library/src/Application/Controllers/EditSectionController.php:60
-#: modules/johncms/library/src/Application/Controllers/LatestCommentsController.php:23
+#: modules/johncms/library/src/Application/Controllers/LatestCommentsController.php:27
 #: modules/johncms/library/src/Application/Controllers/LibraryIndexController.php:30
 #: modules/johncms/library/src/Application/Controllers/LibraryIndexController.php:54
 #: modules/johncms/library/src/Application/Controllers/LibraryIndexController.php:55
@@ -43,28 +41,8 @@ msgstr ""
 msgid "Library"
 msgstr ""
 
-#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:33
-#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:49
-#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:67
-#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:71
-#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:97
-msgid "Comments"
-msgstr ""
-
-#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:35
-#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:51
-#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:33
-#: modules/johncms/library/src/Application/Controllers/DeleteArticleImageController.php:33
-#: modules/johncms/library/src/Application/Controllers/DeleteSectionController.php:33
-#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:65
-#: modules/johncms/library/src/Application/Controllers/EditSectionController.php:40
-#: modules/johncms/library/src/Application/Controllers/PremodController.php:40
-#: modules/johncms/library/src/Application/Middlewares/LibraryAccessMiddleware.php:31
-msgid "Access forbidden"
-msgstr ""
-
 #: modules/johncms/library/src/Application/Controllers/ArticleController.php:62
-#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:45
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:48
 #: modules/johncms/library/src/Application/Controllers/EditArticleController.php:49
 msgid "Articles do not exist"
 msgstr ""
@@ -121,8 +99,8 @@ msgstr ""
 msgid "Repeat"
 msgstr ""
 
-#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:31
-#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:43
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:34
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:46
 #: modules/johncms/library/src/Application/Controllers/DeleteArticleImageController.php:31
 #: modules/johncms/library/src/Application/Controllers/DeleteSectionController.php:31
 #: modules/johncms/library/src/Application/Controllers/DeleteSectionController.php:43
@@ -134,9 +112,19 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:54
-#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:65
-#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:66
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:36
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleImageController.php:33
+#: modules/johncms/library/src/Application/Controllers/DeleteSectionController.php:33
+#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:65
+#: modules/johncms/library/src/Application/Controllers/EditSectionController.php:40
+#: modules/johncms/library/src/Application/Controllers/PremodController.php:40
+#: modules/johncms/library/src/Application/Middlewares/LibraryAccessMiddleware.php:31
+msgid "Access forbidden"
+msgstr ""
+
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:57
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:69
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:70
 msgid "Delete Article"
 msgstr ""
 
@@ -187,9 +175,9 @@ msgstr ""
 msgid "Edit Section"
 msgstr ""
 
-#: modules/johncms/library/src/Application/Controllers/LatestCommentsController.php:24
-#: modules/johncms/library/src/Application/Controllers/LatestCommentsController.php:60
-#: modules/johncms/library/src/Application/Controllers/LatestCommentsController.php:61
+#: modules/johncms/library/src/Application/Controllers/LatestCommentsController.php:28
+#: modules/johncms/library/src/Application/Controllers/LatestCommentsController.php:31
+#: modules/johncms/library/src/Application/Controllers/LatestCommentsController.php:32
 #: modules/johncms/library/templates/public/index.twig:21
 msgid "Latest comments"
 msgstr ""
@@ -233,7 +221,7 @@ msgstr ""
 #: modules/johncms/library/src/Application/Services/Hashtags.php:182
 #: modules/johncms/library/templates/public/articles.twig:38
 #: modules/johncms/library/templates/public/index.twig:51
-#: modules/johncms/library/templates/public/latest-comments.twig:28
+#: modules/johncms/library/templates/public/latest-comments.twig:13
 #: modules/johncms/library/templates/public/search.twig:55
 #: modules/johncms/library/templates/public/sections.twig:42
 #: modules/johncms/library/templates/public/top.twig:25
@@ -426,7 +414,6 @@ msgstr ""
 
 #: modules/johncms/library/templates/public/articles.twig:21
 #: modules/johncms/library/templates/public/components/article-row.twig:14
-#: modules/johncms/library/templates/public/latest-comments.twig:16
 #: modules/johncms/library/templates/public/premod.twig:28
 #: modules/johncms/library/templates/public/search.twig:34
 #: modules/johncms/library/templates/public/tags.twig:20
@@ -702,11 +689,6 @@ msgstr ""
 msgid "The ROOT"
 msgstr ""
 
-#: modules/johncms/library/templates/public/latest-comments.twig:33
-#: modules/johncms/library/templates/public/top.twig:29
-msgid "Back"
-msgstr ""
-
 #: modules/johncms/library/templates/public/new.twig:19
 #: modules/johncms/library/templates/public/premod.twig:51
 #: modules/johncms/library/templates/public/search.twig:70
@@ -757,4 +739,8 @@ msgstr ""
 
 #: modules/johncms/library/templates/public/top.twig:12
 msgid "Sort"
+msgstr ""
+
+#: modules/johncms/library/templates/public/top.twig:29
+msgid "Back"
 msgstr ""

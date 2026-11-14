@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Domain\Repository;
 
 use Illuminate\Database\Eloquent\Collection;
+use Johncms\Modules\Library\Domain\Models\LibraryText;
 
 interface LibraryTextRepositoryInterface
 {
@@ -37,4 +38,9 @@ interface LibraryTextRepositoryInterface
      * @return list<int> One number per day, oldest first.
      */
     public function countAddedByDay(int $start, int $days): array;
+
+    public function findById(int $id): ?LibraryText;
+
+    /** Change the number of comments of the article by the delta, never below zero, in one statement. */
+    public function changeCommentCount(int $id, int $delta): void;
 }

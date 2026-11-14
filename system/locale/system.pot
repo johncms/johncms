@@ -860,11 +860,11 @@ msgstr ""
 msgid "You cannot write so often. Wait %d seconds."
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:358
+#: system/src/Comments/Application/CommentsService.php:362
 msgid "Enter the comment text"
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:362
+#: system/src/Comments/Application/CommentsService.php:366
 #, php-format
 msgid "The comment is too long: at most %d characters."
 msgstr ""

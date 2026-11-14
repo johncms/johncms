@@ -233,7 +233,7 @@ final class BanEnforcementTest extends FunctionalTestCase
                 '/library/article/create?id=' . Fixture::insert('library_cats', ['name' => 'Shelf', 'dir' => 0, 'user_add' => 1]),
                 'form [name="announce"]',
             ],
-            'library comment' => ['/library/article/' . $this->article() . '/comments', 'form [name="code"]'],
+            'library comment' => ['/library/article/' . $this->article() . '/comments', 'form[data-comment-form]'],
             'photo comment' => ['/album/photo/' . $this->photoOf($member) . '/comments', 'form [name="code"]'],
             'downloads file' => [
                 '/downloads/upload/' . Fixture::insert(
@@ -274,6 +274,6 @@ final class BanEnforcementTest extends FunctionalTestCase
     {
         $shelf = Fixture::insert('library_cats', ['name' => 'Shelf']);
 
-        return Fixture::insert('library_texts', ['cat_id' => $shelf, 'name' => 'An article', 'text' => 'Body', 'comments' => 1]);
+        return Fixture::insert('library_texts', ['cat_id' => $shelf, 'name' => 'An article', 'text' => 'Body', 'comments' => 1, 'premod' => 1]);
     }
 }

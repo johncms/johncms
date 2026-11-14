@@ -862,30 +862,6 @@ parameters:
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$cat_id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php
-
-		-
-			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$name\.$#'
-			identifier: property.notFound
-			count: 4
-			path: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php
-
-		-
-			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$uploader_id\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php
-
-		-
-			message: '#^Call to protected method increment\(\) of class Illuminate\\Database\\Eloquent\\Model\.$#'
-			identifier: method.protected
-			count: 1
-			path: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php
-
-		-
-			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$cat_id\.$#'
-			identifier: property.notFound
-			count: 1
 			path: modules/johncms/library/src/Application/Controllers/ArticleController.php
 
 		-

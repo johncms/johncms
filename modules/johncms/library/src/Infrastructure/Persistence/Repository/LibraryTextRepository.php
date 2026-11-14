@@ -91,4 +91,24 @@ class LibraryTextRepository implements LibraryTextRepositoryInterface
     {
         return DailyCounts::count(LibraryText::query()->where('premod', 1), 'time', $start, $days);
     }
+
+    public function findById(int $id): ?LibraryText
+    {
+        return LibraryText::query()->find($id);
+    }
+
+    public function changeCommentCount(int $id, int $delta): void
+    {
+        $texts = LibraryText::query()->where('id', $id);
+        if ($delta >= 0) {
+            $texts->increment('comm_count', $delta);
+
+            return;
+        }
+
+        // Spelled out: the column is unsigned, and SQLite has no GREATEST().
+        $texts->update(['comm_count' => Capsule::connection()->raw(
+            'CASE WHEN comm_count > ' . -$delta . ' THEN comm_count - ' . -$delta . ' ELSE 0 END'
+        )]);
+    }
 }

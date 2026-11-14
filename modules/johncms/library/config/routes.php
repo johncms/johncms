@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Johncms\Modules\Library\Application\Controllers\ArticleCommentsController;
 use Johncms\Modules\Library\Application\Controllers\ArticleController;
 use Johncms\Modules\Library\Application\Controllers\LibraryIndexController;
 use Johncms\Modules\Library\Application\Controllers\LibraryPathController;
@@ -24,6 +23,8 @@ use Johncms\Modules\Library\Application\Controllers\SearchController;
 use Johncms\Modules\Library\Application\Controllers\TopController;
 use Johncms\Modules\Library\Application\Middlewares\LibraryAccessMiddleware;
 use Johncms\Router\RouteCollection;
+use Johncms\Comments\CommentRoutes;
+use Johncms\Modules\Library\Application\Comments\LibraryCommentSubject;
 
 return static function (RouteCollection $router): void {
     $router->group('', function (RouteCollection $r): void {
@@ -32,7 +33,8 @@ return static function (RouteCollection $router): void {
         $r->get('/library/search', SearchController::class)->name('library.search');
         $r->map(['GET', 'POST'], '/library/article/create', CreateArticleController::class)->name('library.article.create');
         $r->map(['GET', 'POST'], '/library/section/create', CreateSectionController::class)->name('library.section.create');
-        $r->map(['GET', 'POST'], '/library/article/{id:number}/comments', ArticleCommentsController::class)->name('library.article.comments');
+        // The discussion of an article: the comments of the core, under the address it always had.
+        CommentRoutes::register($r, '/library/article/{id:number}/comments', LibraryCommentSubject::TYPE, 'library.article.comments');
         $r->get('/library/premod', PremodController::class)->name('library.premod');
         $r->get('/library/tags', TagsController::class)->name('library.tags');
         $r->get('/library/latest-comments', LatestCommentsController::class)->name('library.latest-comments');

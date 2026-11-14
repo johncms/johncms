@@ -123,18 +123,15 @@ class Installer extends \Johncms\Modules\Installer
             if ($comment['user'] === null) {
                 continue;
             }
-            Capsule::table('cms_library_comments')->insert([
-                'sub_id'     => $comment['sub_id'],
-                'time'       => $now,
-                'user_id'    => $comment['user']->id,
-                'text'       => $comment['text'],
-                'reply'      => '',
-                'attributes' => serialize([
-                    'author_name'         => $comment['user']->name,
-                    'author_ip'           => 2130706433,
-                    'author_ip_via_proxy' => 0,
-                    'author_browser'      => $ua,
-                ]),
+            Capsule::table('comments')->insert([
+                'subject_type'      => 'library',
+                'subject_id'        => $comment['sub_id'],
+                'user_id'           => $comment['user']->id,
+                'text'              => $comment['text'],
+                'author_name'       => $comment['user']->name,
+                'author_ip'         => '127.0.0.1',
+                'author_user_agent' => $ua,
+                'created_at'        => gmdate('Y-m-d H:i:s', $now),
             ]);
             $commentCounts[$comment['sub_id']] = ($commentCounts[$comment['sub_id']] ?? 0) + 1;
         }

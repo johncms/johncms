@@ -149,8 +149,6 @@ class UserClean
     public function cleanComments(int $cleanId): void
     {
         $this->comments->deleteForUser($cleanId);
-        // Удаляем из Библиотеки
-        $this->db->exec("DELETE FROM `cms_library_comments` WHERE `user_id` = '" . $cleanId . "'");
         // Удаляем комментарии из личных гостевых
         $this->db->exec("DELETE FROM `cms_users_guestbook` WHERE `user_id` = '" . $cleanId . "'");
         // Удаляем комментарии из личных фотоальбомов

@@ -23,8 +23,10 @@ final class CommentFeedTest extends FunctionalTestCase
     /** @var string|null The file a download points at; removed again in tearDown(). */
     private ?string $storedFile = null;
 
-    /** The address of the comment on the download, which commentEverywhere() learns. */
+    /** The addresses of the comments on the download and on the article, which commentEverywhere() learns. */
     private string $downloadComment = '';
+
+    private string $libraryComment = '';
 
     protected function tearDown(): void
     {
@@ -44,7 +46,7 @@ final class CommentFeedTest extends FunctionalTestCase
         $page = $this->pageOf('/admin/comments', FunctionalUserFactory::createSupervisor());
 
         self::assertSame(
-            ['/news/opening.html#article-comments', '/album/photo/3/comments', '/library/article/2/comments', $this->downloadComment],
+            ['/news/opening.html#article-comments', '/album/photo/3/comments', $this->libraryComment, $this->downloadComment],
             $this->listed($page)
         );
     }
@@ -52,12 +54,13 @@ final class CommentFeedTest extends FunctionalTestCase
     public function testTheTextAndTheAuthorAreShown(): void
     {
         $author = FunctionalUserFactory::create(['name' => 'Frodo']);
-        Fixture::insert('cms_library_comments', [
-            'sub_id'     => 2,
-            'user_id'    => $author->id,
-            'time'       => time(),
-            'text'       => '<p>A <b>fine</b> article</p>',
-            'attributes' => serialize(['author_name' => 'Frodo']),
+        Fixture::insert('comments', [
+            'subject_type' => 'library',
+            'subject_id'   => $this->article(),
+            'user_id'      => $author->id,
+            'text'         => '<p>A <b>fine</b> article</p>',
+            'author_name'  => 'Frodo',
+            'created_at'   => gmdate('Y-m-d H:i:s'),
         ]);
 
         $page = $this->pageOf('/admin/comments', FunctionalUserFactory::createSupervisor());
@@ -72,7 +75,7 @@ final class CommentFeedTest extends FunctionalTestCase
 
         $moderator = FunctionalUserFactory::createWithPermissions([CorePermissions::ADMIN_ACCESS, LibraryPermissions::MODERATE]);
 
-        self::assertSame(['/library/article/2/comments'], $this->listed($this->pageOf('/admin/comments', $moderator)));
+        self::assertSame([$this->libraryComment], $this->listed($this->pageOf('/admin/comments', $moderator)));
     }
 
     public function testTheDashboardShowsTheLatestComments(): void
@@ -82,7 +85,7 @@ final class CommentFeedTest extends FunctionalTestCase
         $page = $this->pageOf('/admin', FunctionalUserFactory::createSupervisor());
 
         self::assertSame(
-            ['/news/opening.html#article-comments', '/album/photo/3/comments', '/library/article/2/comments', $this->downloadComment],
+            ['/news/opening.html#article-comments', '/album/photo/3/comments', $this->libraryComment, $this->downloadComment],
             $this->listed($page)
         );
         self::assertNotNull($page->querySelector('a[href="/admin/comments"]'));
@@ -118,7 +121,16 @@ final class CommentFeedTest extends FunctionalTestCase
             'created_at'   => gmdate('Y-m-d H:i:s', $now - 4 * 3600),
         ]);
         $this->downloadComment = '/downloads/comments/' . $fileId . '/comment/' . $commentId;
-        Fixture::insert('cms_library_comments', $legacy(2, $now - 3 * 3600));
+        $articleId = $this->article();
+        $libraryComment = Fixture::insert('comments', [
+            'subject_type' => 'library',
+            'subject_id'   => $articleId,
+            'user_id'      => 0,
+            'text'         => 'A comment',
+            'author_name'  => 'Guest',
+            'created_at'   => gmdate('Y-m-d H:i:s', $now - 3 * 3600),
+        ]);
+        $this->libraryComment = '/library/article/' . $articleId . '/comments/comment/' . $libraryComment;
         Fixture::insert('cms_album_comments', $legacy(3, $now - 2 * 3600));
         $this->container()->get(\Johncms\Modules\Collections\Application\Services\CollectionDeclarationsSynchronizer::class)->synchronize();
         $collection = $this->container()->get(\Johncms\Modules\News\Application\Collections\NewsReadServiceInterface::class)->collection()->id;
@@ -129,6 +141,12 @@ final class CommentFeedTest extends FunctionalTestCase
             'text'       => 'A comment',
             'created_at' => date('Y-m-d H:i:s', $now - 3600),
         ]);
+    }
+
+    /** A published article of the library: its comments are listed while it can be seen. */
+    private function article(): int
+    {
+        return Fixture::insert('library_texts', ['cat_id' => 0, 'name' => 'An article', 'text' => 'Body', 'premod' => 1, 'comments' => 1]);
     }
 
     private function pageOf(string $path, User $user): HTMLDocument

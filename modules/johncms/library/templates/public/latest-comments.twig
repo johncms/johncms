@@ -1,35 +1,31 @@
 {#
-    The most recent comment of every commented article.
+    The newest comments on the articles.
 
-    @param int     total
-    @param array[] comments
+    @var items list<\Johncms\Comments\Application\DTO\LatestCommentDTO>
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
 {% block content %}
-    {% if total %}
-        {% for comment in comments %}
-            <div class="new_post-item without_avatar">
-                <a href="/library/article/{{ comment.article_id }}/comments" class="card-title h3">{{ comment.article_name }}</a>
-                <div class="post-body">{{ comment.text }}</div>
-                <div class="me-2 post-meta">
-                    <span>{{ __('Author:') }}</span>
-                    {%- include '@library/public/components/uploader.twig' with {
-                        user_id: comment.user_id,
-                        name: comment.user_name,
-                        date: comment.date
-                    } only %}
-                </div>
+    <section class="site-discussion">
+        {% if items is empty %}
+            <div class="site-discussion__empty">{{ __('The list is empty') }}</div>
+        {% else %}
+            <div class="site-discussion__feed">
+                {% for item in items %}
+                    <div>
+                        <p class="site-discussion__count mb-1"><a href="{{ item.subject.url }}">{{ item.subject.title }}</a></p>
+                        {% include '@theme/components/comments/comment.twig' with {
+                            comment: item.comment,
+                            subject: item.subject,
+                            page: 1,
+                            added: false,
+                            can_reply: false,
+                        } only %}
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-    {% else %}
-        <div class="row">
-            <div class="col-md-6">
-                <div class="alert alert-info">{{ __('The list is empty') }}</div>
-            </div>
-        </div>
-    {% endif %}
-    <div class="mt-3">
-        <a href="/library/">{{ __('Back') }}</a>
-    </div>
+        {% endif %}
+    </section>
 {% endblock %}

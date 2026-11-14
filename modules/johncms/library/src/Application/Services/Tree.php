@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Services;
 
+use Johncms\Comments\Application\CommentsService;
+use Johncms\Modules\Library\Application\Comments\LibraryCommentSubject;
 use Johncms\NavChain;
 use PDO;
 use Johncms\Modules\Library\Infrastructure\Storage\LibraryCoverSize;
@@ -57,9 +59,7 @@ class Tree
     public function cleanTrash(mixed $data): array
     {
         if (! is_array($data)) {
-            $stmt = $this->db->prepare('DELETE FROM `cms_library_comments` WHERE `sub_id` = ?');
-            $stmt->execute([$data]);
-            $this->cleaned['comments'] += $stmt->rowCount();
+            $this->cleaned['comments'] += di(CommentsService::class)->deleteForSubjects(LibraryCommentSubject::TYPE, [(int) $data]);
 
             $obj = new Hashtags($data);
             $this->cleaned['tags'] += $obj->delTags();
@@ -95,7 +95,6 @@ class Tree
         $texts = $stmt->rowCount();
         if ($texts) {
             $this->db->exec('DELETE FROM `cms_library_rating` WHERE `st_id` NOT IN (SELECT `id` FROM `library_texts`)');
-            $this->db->exec('DELETE FROM `cms_library_comments` WHERE `sub_id` NOT IN (SELECT `id` FROM `library_texts`)');
         }
 
         return array_merge(['dirs' => $dirs, 'texts' => $texts], $trash);

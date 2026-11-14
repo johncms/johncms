@@ -306,11 +306,15 @@ final readonly class CommentsService
      * inside the transaction of that deletion; the counters of the objects are left alone.
      *
      * @param list<int> $subjectIds
+     * @return int How many comments were deleted.
      */
-    public function deleteForSubjects(string $subjectType, array $subjectIds): void
+    public function deleteForSubjects(string $subjectType, array $subjectIds): int
     {
-        $this->transactions->run(function () use ($subjectType, $subjectIds): void {
-            $this->remove($this->comments->getOfSubjects($subjectType, $subjectIds));
+        return $this->transactions->run(function () use ($subjectType, $subjectIds): int {
+            $removed = $this->comments->getOfSubjects($subjectType, $subjectIds);
+            $this->remove($removed);
+
+            return count($removed);
         });
     }
 

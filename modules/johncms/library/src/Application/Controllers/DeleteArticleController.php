@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Comments\Application\CommentsService;
+use Johncms\Modules\Library\Application\Comments\LibraryCommentSubject;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Library\Application\Services\LibraryPermissions;
@@ -19,6 +21,7 @@ final readonly class DeleteArticleController
     public function __construct(
         private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
+        private CommentsService $comments,
     ) {
     }
 
@@ -57,6 +60,7 @@ final readonly class DeleteArticleController
 
         if ($request->query->has('yes')) {
             Utils::unlinkImages($id);
+            $this->comments->deleteForSubjects(LibraryCommentSubject::TYPE, [$id]);
             $article->delete();
             $deleted = true;
         }
