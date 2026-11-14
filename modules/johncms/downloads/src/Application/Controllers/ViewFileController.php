@@ -20,6 +20,7 @@ use Johncms\Modules\Downloads\Application\UseCases\ToggleBookmarkUseCase;
 use Johncms\Modules\Downloads\Application\UseCases\ViewFileUseCase;
 use Johncms\Modules\Downloads\Application\UseCases\VoteOnFileUseCase;
 use Johncms\NavChain;
+use Johncms\Utils\DateFormatterInterface;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
@@ -27,7 +28,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ViewFileController
 {
-    private const string VOTE_ACCEPTED = 'downloads_vote_accepted';
+    /** The result of a vote or of a change of the favourites, shown as a toast after the redirect. */
+    private const string MESSAGE = 'downloads_file_message';
 
     public function __construct(
         private AccessCheckerInterface $accessChecker,
@@ -42,6 +44,7 @@ final readonly class ViewFileController
         private CategoryNavService $categoryNavService,
         private DownloadFilePathService $filePathService,
         private DownloadCategoryPathService $categoryPathService,
+        private DateFormatterInterface $dateFormatter,
     ) {
     }
 
@@ -126,7 +129,6 @@ final readonly class ViewFileController
         $extension = strtolower(pathinfo($file->name, PATHINFO_EXTENSION));
         $mediaInfo = $this->mediaInfoService->build(
             $file->dir . '/' . $file->name,
-            $id,
             $extension,
             ScreenService::getScreens($id)
         );
@@ -135,13 +137,14 @@ final readonly class ViewFileController
             'file_type'        => $mediaInfo->fileType,
             'file_properties'  => $mediaInfo->fileProperties,
             'screenshots'      => $mediaInfo->screenshots,
-            'image_info'       => $mediaInfo->imageInfo,
+            'image'            => $mediaInfo->image,
+            'extension'        => strtoupper($extension),
+            'display_date'     => $this->dateFormatter->day((int) $file->time),
             'description'      => $file->about_html,
             'upload_user'      => $result->uploadUser
                 ? ['id' => $result->uploadUser->id, 'name' => $result->uploadUser->name]
                 : ['id' => 0, 'name' => ''],
             'can_vote'         => ! $this->session->has($sessionIndex) && $this->currentUser->isValid(),
-            'vote_accepted'    => $this->session->getFlash(self::VOTE_ACCEPTED) === true,
             'rate'             => [$vote->plus, $vote->minus],
             'main_file'        => $this->buildDownloadLink($file->dir, $file->name, $file->rus_name, $file->size, $id),
             'additional_files' => [],
@@ -173,6 +176,10 @@ final readonly class ViewFileController
                 'file_url'         => $this->filePathService->getFileUrl($file),
                 'file'             => $fileData,
                 'in_bookmarks'     => (bool) $inBookmarks,
+                'message'          => (string) $this->session->getFlash(self::MESSAGE),
+                'category'         => $file->category !== null
+                    ? ['name' => $file->category->rus_name, 'url' => $this->categoryPathService->getCategoryUrl($file->category)]
+                    : null,
                 'urls'             => [
                     'downloads' => '/downloads/',
                     'back'      => $file->category !== null
@@ -230,7 +237,7 @@ final readonly class ViewFileController
 
             if ($vote->wasAccepted) {
                 $this->session->set($sessionIndex, true);
-                $this->session->flash(self::VOTE_ACCEPTED, true);
+                $this->session->flash(self::MESSAGE, __('Vote accepted'));
             }
 
             return;
@@ -244,6 +251,7 @@ final readonly class ViewFileController
 
         if ($bookmarkAction !== null) {
             $this->bookmarkUseCase->execute($id, $this->currentUser->id(), $bookmarkAction);
+            $this->session->flash(self::MESSAGE, $bookmarkAction === 'add' ? __('The file is added to the favorites') : __('The file is removed from the favorites'));
         }
     }
 

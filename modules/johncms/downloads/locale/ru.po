@@ -109,6 +109,48 @@ msgstr "Редактировать файл"
 msgid "Delete File"
 msgstr "Удалить файл"
 
+msgid "%d%% approve"
+msgstr "%d%% одобряют"
+
+msgid "Awaiting moderation"
+msgstr "На модерации"
+
+msgid "File properties"
+msgstr "Свойства файла"
+
+msgid "Format"
+msgstr "Формат"
+
+msgid "In the section"
+msgstr "В разделе"
+
+msgid "Manage"
+msgstr "Управление"
+
+msgid "No votes yet"
+msgstr "Голосов пока нет"
+
+msgid "Published"
+msgstr "Опубликован"
+
+msgid "Rating"
+msgstr "Рейтинг"
+
+msgid "Screenshots"
+msgstr "Скриншоты"
+
+msgid "The file is added to the favorites"
+msgstr "Файл добавлен в избранное"
+
+msgid "The file is removed from the favorites"
+msgstr "Файл удалён из избранного"
+
+msgid "There are no additional files."
+msgstr "Дополнительных файлов нет."
+
+msgid "Uploaded by"
+msgstr "Загрузил"
+
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d файл"

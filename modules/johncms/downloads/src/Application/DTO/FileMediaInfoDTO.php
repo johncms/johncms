@@ -10,7 +10,8 @@ final readonly class FileMediaInfoDTO
         public string $fileType,
         public array $fileProperties,
         public array $screenshots,
-        public ?array $imageInfo,
+        /** The picture itself (url) when the file is one. */
+        public ?array $image,
     ) {
     }
 }

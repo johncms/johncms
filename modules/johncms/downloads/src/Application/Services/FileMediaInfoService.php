@@ -8,12 +8,12 @@ use Johncms\Modules\Downloads\Application\DTO\FileMediaInfoDTO;
 
 final class FileMediaInfoService
 {
-    public function build(string $fsPath, int $fileId, string $extension, array $existingScreenshots): FileMediaInfoDTO
+    public function build(string $fsPath, string $extension, array $existingScreenshots): FileMediaInfoDTO
     {
         return match (true) {
             in_array($extension, ['mp3', 'aac', 'm4a'], true)          => $this->buildAudio($fsPath, $existingScreenshots),
             in_array($extension, ['avi', 'webm', 'mov', 'mp4'], true)  => $this->buildVideo($fsPath, $existingScreenshots),
-            in_array($extension, ['jpg', 'jpeg', 'gif', 'png'], true)  => $this->buildImage($fsPath, $fileId, $existingScreenshots),
+            in_array($extension, ['jpg', 'jpeg', 'gif', 'png'], true)  => $this->buildImage($fsPath, $existingScreenshots),
             default                                                      => new FileMediaInfoDTO('other', [], $existingScreenshots, null),
         };
     }
@@ -81,19 +81,17 @@ final class FileMediaInfoService
         return new FileMediaInfoDTO('video', $properties, $screenshots, null);
     }
 
-    private function buildImage(string $fsPath, int $fileId, array $screenshots): FileMediaInfoDTO
+    /**
+     * A picture is shown itself, at the top of its page; its screenshots, if any, stay apart.
+     */
+    private function buildImage(string $fsPath, array $screenshots): FileMediaInfoDTO
     {
-        $screen = [
-            'url'     => '/' . $fsPath,
-            'preview' => '/downloads/preview/' . $fileId,
-        ];
-
-        $imageInfo = null;
+        $properties = [];
         $info = @getimagesize($fsPath);
         if ($info !== false) {
-            $imageInfo = ['width' => $info[0], 'height' => $info[1]];
+            $properties[] = ['name' => __('Resolution'), 'value' => $info[0] . '×' . $info[1] . ' px'];
         }
 
-        return new FileMediaInfoDTO('image', [], array_merge($screenshots, [$screen]), $imageInfo);
+        return new FileMediaInfoDTO('image', $properties, $screenshots, ['url' => '/' . $fsPath]);
     }
 }

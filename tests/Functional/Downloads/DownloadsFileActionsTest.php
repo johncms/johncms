@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Downloads;
 
+use Dom\HTMLDocument;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Tests\Functional\FunctionalTestCase;
@@ -68,5 +69,28 @@ final class DownloadsFileActionsTest extends FunctionalTestCase
 
         $this->postForm($url, ['action' => 'delBookmark'], $user);
         self::assertSame(0, $bookmarks());
+    }
+
+    public function testThePageOfAFileShowsHowToGetItAndItsRating(): void
+    {
+        $user = FunctionalUserFactory::create();
+        $id = Fixture::insert('download__files', ['type' => 2, 'name' => 'file.zip', 'dir' => $this->directory, 'rus_name' => 'A file', 'slug' => 'a-file', 'rate' => '0|0', 'field' => 7, 'time' => time()]);
+        $url = '/downloads/a-file-' . $id . '/';
+
+        $guest = HTMLDocument::createFromString((string) $this->handleRequest($url)->getContent(), LIBXML_NOERROR);
+        self::assertSame('/downloads/load/' . $id . '/', $guest->querySelector('.site-dlf__download')?->getAttribute('href'));
+        self::assertStringContainsString('file.zip', (string) $guest->querySelector('.site-dlf__download')->textContent);
+        self::assertNull($guest->querySelector('.site-dlf__rating form'), 'A guest sees the votes and cannot vote.');
+        self::assertNull($guest->querySelector('.site-dlf__rating-bar'), 'Without votes there is no share to draw.');
+        self::assertNull($guest->querySelector('.site-dlf__favorite'));
+        self::assertNull($guest->querySelector('.site-dlf__actions'));
+
+        $cookies = $this->actingAs($user);
+        $this->handleRequest($url, 'POST', $this->withCsrfToken(['action' => 'plus']), cookies: $cookies);
+        $page = HTMLDocument::createFromString((string) $this->handleRequest($url, cookies: $cookies)->getContent(), LIBXML_NOERROR);
+        self::assertNotNull($page->querySelector('[data-toast="success"]'), 'The vote is confirmed by a toast.');
+        self::assertNotNull($page->querySelector('.site-dlf__rating-bar'));
+        self::assertNull($page->querySelector('.site-dlf__rating form'), 'One vote per session: the buttons are gone.');
+        self::assertNotNull($page->querySelector('.site-dlf__favorite[value="addBookmark"]'));
     }
 }

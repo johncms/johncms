@@ -1,176 +1,232 @@
 {#
-    The page of one file: the gallery, the description, the download links and the actions.
+    The page of one file: what it is in the main column — the player or the picture, the
+    description, the screenshots, the properties, the additional files, the discussion — and how to
+    get it in the side column: the download, the figures, the rating, the favorites and the menu of
+    a moderator. On a narrow screen the side column comes right after the heading.
 
     @var id               int
-    @var file_url         string       The page itself, the voting and the bookmarks link back to it.
+    @var file_url         string       The page itself; the vote and the favorites are posted to it.
     @var file             array        Attributes of the file plus what the controller has built.
+    @var category         array|null   name, url of the category the file is in.
     @var in_bookmarks     bool
-    @var urls             array        downloads, back
+    @var message          string       Result of the last vote or change of the favorites.
     @var can_manage       bool         The visitor may edit and delete the file.
     @var can_move         bool         The visitor may move the file to another folder.
     @var comments_enabled bool
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained site-content--wide{% endblock %}
+
+{% block page_subtitle %}
+    <p class="site-page-heading__subtitle">
+        {% if category %}
+            <span>{{ __('In the section') }} <a href="{{ category.url }}">{{ category.name }}</a></span>
+        {% endif %}
+        {% if file.type == 3 %}
+            <span class="badge text-bg-warning">{{ __('Awaiting moderation') }}</span>
+        {% endif %}
+    </p>
+{% endblock %}
+
 {% block content %}
-
-    {% if file.vote_accepted %}
-        <div class="row">
-            <div class="col-md-6">
-                <div class="alert alert-success border-0 shadow">
-                    {{ __('Vote accepted') }}
-                </div>
-            </div>
-        </div>
+    {% if message %}
+        {% include '@theme/components/toast.twig' with {message: message} only %}
     {% endif %}
 
-    {% if file.screenshots %}
-        <div class="{{ file.screenshots|length > 1 ? 'screenshots' : '' }} border-bottom mb-2 pb-3 swiper">
-            <div class="swiper-wrapper image-gallery">
-                {% for number, screenshot in file.screenshots %}
-                    <div class="swiper-slide {{ file.screenshots|length < 2 ? 'text-start' : '' }}">
-                        <a href="{{ screenshot.url }}"
-                           title="{{ __('Screenshot:') }} {{ number + 1 }}"
-                           data-source="{{ screenshot.url }}"
-                           class="gallery-item">
-                            <img src="{{ screenshot.preview }}" alt=".">
-                        </a>
+    {% set rate_total = file.rate[0] + file.rate[1] %}
+
+    <div class="site-dlf">
+        <div class="site-dlf__main">
+            {% if file.file_type == 'audio' %}
+                <div class="site-dlf__player site-dlf__player--audio">
+                    <span class="site-dlf__player-icon" aria-hidden="true">{% include '@theme/components/icon.twig' with {name: 'file-music', size: 22} only %}</span>
+                    <audio src="{{ file.main_file.source_url }}" controls preload="metadata" aria-label="{{ file.rus_name }}"></audio>
+                </div>
+            {% elseif file.file_type == 'video' %}
+                <div class="site-dlf__player site-dlf__player--video">
+                    <video src="{{ file.main_file.source_url }}" controls preload="metadata" aria-label="{{ file.rus_name }}"></video>
+                </div>
+            {% elseif file.file_type == 'image' and file.image %}
+                <div class="site-dlf__picture image-gallery">
+                    <a href="{{ file.image.url }}" class="gallery-item" title="{{ file.rus_name }}">
+                        <img src="{{ file.image.url }}" alt="{{ file.rus_name }}">
+                    </a>
+                </div>
+            {% endif %}
+
+            {% if file.description %}
+                <section class="site-dlf__section" aria-label="{{ __('Description') }}">
+                    <div class="site-dlf__description ck-content">{{ file.description }}</div>
+                </section>
+            {% endif %}
+
+            {% if file.screenshots %}
+                <section class="site-dlf__section" aria-labelledby="dlf-screens-title">
+                    <div class="site-dlf__section-head">
+                        <h2 class="site-dlf__h2" id="dlf-screens-title">{{ __('Screenshots') }} <span class="site-downloads__count">{{ file.screenshots|length }}</span></h2>
+                        {% if can_manage %}
+                            <a class="btn btn-outline-secondary btn-sm" href="/downloads/edit-screen/{{ id }}/">{% include '@theme/components/icon.twig' with {name: 'pencil', size: 13} only %} {{ __('Manage') }}</a>
+                        {% endif %}
                     </div>
-                {% endfor %}
-            </div>
-            <div class="swiper-pagination"></div>
-        </div>
-    {% endif %}
+                    <div class="site-dlf__shots image-gallery">
+                        {% for number, screenshot in file.screenshots %}
+                            <a href="{{ screenshot.url }}" class="site-dlf__shot gallery-item" title="{{ __('Screenshot:') }} {{ number + 1 }}">
+                                <img src="{{ screenshot.preview }}" alt="{{ __('Screenshot:') }} {{ number + 1 }}" loading="lazy">
+                            </a>
+                        {% endfor %}
+                    </div>
+                </section>
+            {% endif %}
 
-    {% if file.file_type == 'audio' %}
-        <div class="row">
-            <div class="col-xl-8">
-                <audio src="{{ file.main_file.source_url }}" controls></audio>
-            </div>
-        </div>
-    {% endif %}
+            {% if file.file_properties %}
+                <section class="site-dlf__section" aria-labelledby="dlf-props-title">
+                    <div class="site-dlf__section-head">
+                        <h2 class="site-dlf__h2" id="dlf-props-title">{{ __('File properties') }}</h2>
+                    </div>
+                    <dl class="site-dlf__props">
+                        {% for property in file.file_properties %}
+                            <div class="site-dlf__prop">
+                                <dt>{{ property.name }}</dt>
+                                <dd>{{ property.value }}</dd>
+                            </div>
+                        {% endfor %}
+                    </dl>
+                </section>
+            {% endif %}
 
-    {% if file.file_type == 'video' %}
-        <div class="row">
-            <div class="col-xl-8">
-                <div class="ratio ratio-16x9">
-                    <video src="{{ file.main_file.source_url }}" controls></video>
+            {% if file.additional_files or can_manage %}
+                <section class="site-dlf__section" aria-labelledby="dlf-files-title">
+                    <div class="site-dlf__section-head">
+                        <h2 class="site-dlf__h2" id="dlf-files-title">{{ __('Additional files') }} <span class="site-downloads__count">{{ file.additional_files|length }}</span></h2>
+                        {% if can_manage %}
+                            <a class="btn btn-outline-secondary btn-sm" href="/downloads/additional-files/{{ id }}/">{% include '@theme/components/icon.twig' with {name: 'pencil', size: 13} only %} {{ __('Manage') }}</a>
+                        {% endif %}
+                    </div>
+                    {% if file.additional_files %}
+                        <div class="site-dlf__files">
+                            {% for additional_file in file.additional_files %}
+                                <a class="site-dlf__file" href="{{ additional_file.url }}">
+                                    {% include '@theme/components/icon.twig' with {name: 'download', size: 15} only %}
+                                    <span class="site-dlf__file-name">{{ additional_file.name }}</span>
+                                    <span class="site-dlf__file-size">{{ additional_file.size }}</span>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="site-dlf__empty">{{ __('There are no additional files.') }}</p>
+                    {% endif %}
+                </section>
+            {% endif %}
+
+            {% if comments_enabled %}
+                <a class="site-dlf__comments" href="/downloads/comments/{{ id }}">
+                    {% include '@theme/components/icon.twig' with {name: 'message-square', size: 15} only %}
+                    <span>{{ __('Comments') }}</span>
+                    <span class="site-downloads__count">{{ file.comm_count|format_number }}</span>
+                    {% include '@theme/components/icon.twig' with {name: 'chevron-right', size: 13} only %}
+                </a>
+            {% endif %}
+        </div>
+
+        <aside class="site-dlf__side" aria-label="{{ __('Download') }}">
+            <a class="site-dlf__download" href="{{ file.main_file.url }}">
+                {% include '@theme/components/icon.twig' with {name: 'download', size: 18} only %}
+                <span class="site-dlf__download-text">
+                    <span class="site-dlf__download-label">{{ __('Download') }}</span>
+                    <span class="site-dlf__download-file">{{ file.name }}</span>
+                </span>
+                <span class="site-dlf__download-size">{{ file.main_file.size }}</span>
+            </a>
+
+            <dl class="site-dlf__stats">
+                <div class="site-dlf__stat">
+                    {% include '@theme/components/icon.twig' with {name: 'download', size: 12} only %}
+                    <dt>{{ __('Downloads') }}</dt>
+                    <dd>{{ file.field|format_number }}</dd>
                 </div>
+                {% if file.upload_user.id %}
+                    <div class="site-dlf__stat">
+                        {% include '@theme/components/icon.twig' with {name: 'user', size: 12} only %}
+                        <dt>{{ __('Uploaded by') }}</dt>
+                        <dd><a href="/downloads/user-files/{{ file.upload_user.id }}/">{{ file.upload_user.name }}</a></dd>
+                    </div>
+                {% endif %}
+                <div class="site-dlf__stat">
+                    {% include '@theme/components/icon.twig' with {name: 'archive', size: 12} only %}
+                    <dt>{{ __('Published') }}</dt>
+                    <dd>{{ file.display_date }}</dd>
+                </div>
+                {% if file.extension %}
+                    <div class="site-dlf__stat">
+                        {% include '@theme/components/icon.twig' with {name: 'file', size: 12} only %}
+                        <dt>{{ __('Format') }}</dt>
+                        <dd>{{ file.extension }}</dd>
+                    </div>
+                {% endif %}
+            </dl>
+
+            <div class="site-dlf__rating">
+                <div class="site-dlf__label">{{ __('Rating') }}</div>
+                {% if file.can_vote %}
+                    <form method="post" action="{{ file_url }}" class="site-dlf__votes">
+                        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                        <button type="submit" name="action" value="plus" class="site-dlf__vote site-dlf__vote--up" aria-label="{{ __('Like') }}">
+                            {% include '@theme/components/icon.twig' with {name: 'thumbs-up', size: 14} only %} {{ file.rate[0]|format_number }}
+                        </button>
+                        <button type="submit" name="action" value="minus" class="site-dlf__vote" aria-label="{{ __('Dislike') }}">
+                            {% include '@theme/components/icon.twig' with {name: 'thumbs-down', size: 14} only %} {{ file.rate[1]|format_number }}
+                        </button>
+                    </form>
+                {% else %}
+                    <div class="site-dlf__votes">
+                        <span class="site-dlf__vote site-dlf__vote--up" title="{{ __('Like') }}">{% include '@theme/components/icon.twig' with {name: 'thumbs-up', size: 14} only %} {{ file.rate[0]|format_number }}</span>
+                        <span class="site-dlf__vote" title="{{ __('Dislike') }}">{% include '@theme/components/icon.twig' with {name: 'thumbs-down', size: 14} only %} {{ file.rate[1]|format_number }}</span>
+                    </div>
+                {% endif %}
+                {% if rate_total > 0 %}
+                    {% set approval = (file.rate[0] * 100 / rate_total)|round %}
+                    <div class="site-dlf__rating-bar" aria-hidden="true"><span style="inline-size: {{ approval }}%"></span></div>
+                    <div class="site-dlf__rating-pct">{{ __('%d%% approve')|format(approval) }}</div>
+                {% else %}
+                    <div class="site-dlf__rating-pct">{{ __('No votes yet') }}</div>
+                {% endif %}
             </div>
-        </div>
-    {% endif %}
 
-    {% if file.description %}
-        <div class="border-bottom pb-2">
-            {{ file.description }}
-        </div>
-    {% endif %}
-
-    {% if file.file_properties %}
-        <div class="mt-2 mb-3 border-bottom pb-2">
-            {% for property in file.file_properties %}
-                <div>{{ property.name }}: {{ property.value }}</div>
-            {% endfor %}
-        </div>
-    {% endif %}
-
-    <div class="text-muted mt-2 mb-3 border-bottom pb-2">
-        <div>{{ __('File name:') }} {{ file.name }}</div>
-        <div>{{ __('Uploaded by:') }} {{ file.upload_user.name }}</div>
-        <div>{{ __('Downloads:') }} {{ file.field }}</div>
-        <div>{{ __('Rating:') }}
-            {% if file.can_vote %}
-                <form method="post" action="{{ file_url }}" class="d-inline">
+            {% if app.user.isValid %}
+                <form method="post" action="{{ file_url }}">
                     <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                    <button type="submit" name="action" value="plus" class="btn btn-sm btn-like" aria-label="{{ __('Like') }}">
-                        <svg class="icon download-button-icon me-1 mt-n1">
-                            <use xlink:href="{{ asset('icons/sprite.svg') }}#like"/>
-                        </svg>
+                    <button type="submit" name="action" value="{{ in_bookmarks ? 'delBookmark' : 'addBookmark' }}" class="site-dlf__favorite"{% if in_bookmarks %} aria-pressed="true"{% endif %}>
+                        {% include '@theme/components/icon.twig' with {name: 'star', size: 14} only %}
+                        {{ in_bookmarks ? __('Remove from Favorites') : __('Add to Favorites') }}
                     </button>
                 </form>
             {% endif %}
-            <span>{{ file.rate|join(' / ') }}</span>
-            {% if file.can_vote %}
-                <form method="post" action="{{ file_url }}" class="d-inline">
-                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                    <button type="submit" name="action" value="minus" class="btn btn-sm btn-dislike" aria-label="{{ __('Dislike') }}">
-                        <svg class="icon download-button-icon me-1 mt-n1">
-                            <use xlink:href="{{ asset('icons/sprite.svg') }}#dislike"/>
-                        </svg>
-                    </button>
-                </form>
-            {% endif %}
-        </div>
-    </div>
-    <div class="mb-1">
-        <svg class="icon download-button-icon me-1 mt-n1">
-            <use xlink:href="{{ asset('icons/sprite.svg') }}#download"/>
-        </svg>
-        <a href="{{ file.main_file.url }}">{{ file.main_file.name }}</a> ({{ file.main_file.size }})
-    </div>
-    {% for additional_file in file.additional_files %}
-        <div class="mb-1">
-            <svg class="icon download-button-icon me-1 mt-n1">
-                <use xlink:href="{{ asset('icons/sprite.svg') }}#download"/>
-            </svg>
-            <a href="{{ additional_file.url }}">{{ additional_file.name }}</a> ({{ additional_file.size }})
-        </div>
-    {% endfor %}
-    <div class="border-bottom mt-3"></div>
-    {% if comments_enabled %}
-        <div class="mt-3">
-            <svg class="icon download-button-icon me-1">
-                <use xlink:href="{{ asset('icons/sprite.svg') }}#forum"/>
-            </svg>
-            <a href="/downloads/comments/{{ id }}">{{ __('Comments') }}</a> ({{ file.comm_count }})
-        </div>
-    {% endif %}
-    <div class="mt-4">
-        {% if can_manage %}
-            <div class="btn-group">
-                <div class="dropdown">
-                    <button class="btn btn-danger dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ __('Actions') }}
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="/downloads/edit-file/{{ id }}/">{{ __('Edit File') }}</a>
-                        <a class="dropdown-item" href="/downloads/edit-screen/{{ id }}/">{{ __('Managing Screenshots') }}</a>
-                        <a class="dropdown-item" href="/downloads/additional-files/{{ id }}/">{{ __('Additional Files') }}</a>
+
+            {% if can_manage %}
+                <details class="site-popover site-dlf__actions" data-site-popover>
+                    <summary class="btn btn-outline-secondary">
+                        {% include '@theme/components/icon.twig' with {name: 'settings', size: 14} only %} {{ __('Actions') }}
+                    </summary>
+                    <div class="site-popover__panel">
+                        <a class="site-popover__item" href="/downloads/edit-file/{{ id }}/">{% include '@theme/components/icon.twig' with {name: 'pencil', size: 14} only %}<span>{{ __('Edit File') }}</span></a>
+                        <a class="site-popover__item" href="/downloads/edit-screen/{{ id }}/">{% include '@theme/components/icon.twig' with {name: 'images', size: 14} only %}<span>{{ __('Managing Screenshots') }}</span></a>
+                        <a class="site-popover__item" href="/downloads/additional-files/{{ id }}/">{% include '@theme/components/icon.twig' with {name: 'file-archive', size: 14} only %}<span>{{ __('Additional Files') }}</span></a>
+                        {% if can_move %}
+                            <a class="site-popover__item" href="/downloads/move-file/{{ id }}/">{% include '@theme/components/icon.twig' with {name: 'folder', size: 14} only %}<span>{{ __('Move File') }}</span></a>
+                        {% endif %}
+                        <hr class="site-popover__divider">
                         {% include '@downloads/public/components/delete-form.twig' with {
                             action: '/downloads/delete-file/' ~ id,
                             fields: {},
                             question: __('Delete the file “%s”?')|format(file.rus_name),
                             text: __('Its additional files, screenshots, comments and bookmarks are deleted with it. This cannot be undone.'),
                             label: __('Delete File'),
-                            class: 'dropdown-item',
+                            class: 'site-popover__item site-popover__item--danger',
                         } only %}
-                        {% if can_move %}
-                            <a class="dropdown-item" href="/downloads/move-file/{{ id }}/">{{ __('Move File') }}</a>
-                        {% endif %}
                     </div>
-                </div>
-            </div>
-        {% endif %}
-        {% if app.user.isValid %}
-            <div class="mt-3">
-                <form method="post" action="{{ file_url }}">
-                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                    {% if in_bookmarks %}
-                        <button type="submit" name="action" value="delBookmark" class="btn btn-link p-0">{{ __('Remove from Favorites') }}</button>
-                    {% else %}
-                        <button type="submit" name="action" value="addBookmark" class="btn btn-link p-0">{{ __('Add to Favorites') }}</button>
-                    {% endif %}
-                </form>
-            </div>
-        {% endif %}
-
-        <div class="mt-2">
-            <div>
-                <a href="{{ urls.back }}">{{ __('Back') }}</a>
-            </div>
-            <div>
-                <a href="{{ urls.downloads }}">{{ __('Downloads') }}</a>
-            </div>
-        </div>
+                </details>
+            {% endif %}
+        </aside>
     </div>
 {% endblock %}
