@@ -66,7 +66,6 @@ use Johncms\System\Users\UserConfig;
  * @property int $karma_time
  * @property bool $karma_off
  * @property int $comm_count
- * @property int $comm_old
  * @property array $smileys
  * @property array $notification_settings
  * @property bool $email_confirmed
@@ -173,7 +172,6 @@ class User extends Model
         'karma_time',
         'karma_off',
         'comm_count',
-        'comm_old',
         'smileys',
         'notification_settings',
         'email_confirmed',
