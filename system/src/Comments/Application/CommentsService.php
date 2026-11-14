@@ -226,7 +226,7 @@ final readonly class CommentsService
     public function add(CommentSubjectDTO $subject, string $text, ClientInfoDTO $client): int
     {
         $this->access->ensureCanWrite($subject);
-        $html = $this->prepare($text);
+        $html = $this->prepare($subject, $text);
 
         $flood = $this->antiflood->getRemainingSeconds();
         if ($flood > 0) {
@@ -272,7 +272,7 @@ final readonly class CommentsService
     {
         $comment = $this->find($subject, $commentId);
         $this->access->ensureCanEdit($subject, $comment);
-        $html = $this->prepare($text);
+        $html = $this->prepare($subject, $text);
         $editor = $this->currentUser->user();
 
         $this->transactions->run(function () use ($comment, $html, $editor): void {
@@ -385,13 +385,13 @@ final readonly class CommentsService
      *
      * @throws CommentValidationException
      */
-    private function prepare(string $text): string
+    private function prepare(CommentSubjectDTO $subject, string $text): string
     {
         $html = $this->sanitizer->sanitize($this->normalizer->trimEdgeEmptyBlocks(trim($text)));
 
         // A picture or a video alone is a comment; only a text that shows nothing is empty.
         if ($html === '' || $this->content->renderOrNull($html) === null) {
-            throw new CommentValidationException(d__('system', 'Enter the comment text'));
+            throw new CommentValidationException($subject->wording->emptyText);
         }
         if (mb_strlen($this->sanitizer->toPlainText($html)) > self::MAX_LENGTH) {
             throw new CommentValidationException(

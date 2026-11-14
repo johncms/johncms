@@ -1306,3 +1306,51 @@ msgstr "Привязать другой сервис"
 
 msgid "The password must contain at least 6 characters"
 msgstr "Пароль должен содержать не менее 6 символов"
+
+msgid "Guestbook: %s"
+msgstr "Гостевая: %s"
+
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "%d запись"
+msgstr[1] "%d записи"
+msgstr[2] "%d записей"
+
+msgid "No entries yet. Be the first."
+msgstr "Записей пока нет. Будьте первым."
+
+msgid "Write an entry"
+msgstr "Написать запись"
+
+msgid "You are not logged in. You must be <a href=\"/login/\">logged in</a> to write in the guestbook."
+msgstr "Вы не авторизованы. Чтобы писать в гостевую, нужно <a href=\"/login/\">войти</a>."
+
+msgid "The entry was added"
+msgstr "Запись добавлена"
+
+msgid "The entry was saved"
+msgstr "Запись сохранена"
+
+msgid "The entry was deleted"
+msgstr "Запись удалена"
+
+msgid "Delete this entry?"
+msgstr "Удалить эту запись?"
+
+msgid "Delete %d entry of %s here?"
+msgid_plural "Delete all %d entries of %s here?"
+msgstr[0] "Удалить %d запись %s здесь?"
+msgstr[1] "Удалить все %d записи %s здесь?"
+msgstr[2] "Удалить все %d записей %s здесь?"
+
+msgid "%d entry was deleted"
+msgid_plural "%d entries were deleted"
+msgstr[0] "Удалена %d запись"
+msgstr[1] "Удалено %d записи"
+msgstr[2] "Удалено %d записей"
+
+msgid "Edit entry"
+msgstr "Редактировать запись"
+
+msgid "Enter the text of the entry"
+msgstr "Введите текст записи"

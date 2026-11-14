@@ -83,7 +83,7 @@ final readonly class CommentsController
 
         $total = $pagination->getTotal();
         $meta = new PageMeta(
-            $object->heading === '' ? sprintf(d__('system', 'Comments: %s'), $object->title) : $object->heading . ': ' . $object->title,
+            sprintf($object->wording->titled, $object->title),
             $pagination->getCurrentPage(),
             $object->description
         );
@@ -99,7 +99,7 @@ final readonly class CommentsController
         $this->breadcrumbs($object);
 
         return new ViewResponse('@theme/pages/comments.twig', $data + [
-            'page_title' => $object->heading ?: d__('system', 'Comments'),
+            'page_title' => $object->wording->heading,
             'canonical'  => $this->siteBaseUrl->resolve($request) . $this->pageUrl($object, $pagination->getCurrentPage()),
             // A discussion with nothing in it has no content of its own to index.
             'noindex'    => $total === 0,
@@ -146,7 +146,7 @@ final readonly class CommentsController
             }
 
             if ($error === null) {
-                $this->session->flash(CommentDiscussionView::FLASH_MESSAGE, d__('system', 'The comment was saved'));
+                $this->session->flash(CommentDiscussionView::FLASH_MESSAGE, $object->wording->saved);
 
                 return new RedirectResponse($this->permalinkUrl($object, $comment));
             }
@@ -156,8 +156,8 @@ final readonly class CommentsController
         $this->navChain->add(d__('system', 'Edit'));
 
         return new ViewResponse('@theme/pages/comment-edit.twig', [
-            'title'      => d__('system', 'Edit comment'),
-            'page_title' => d__('system', 'Edit comment'),
+            'title'      => $object->wording->editTitle,
+            'page_title' => $object->wording->editTitle,
             'noindex'    => true,
             'subject'    => $object,
             'comment_id' => $comment,
@@ -179,7 +179,7 @@ final readonly class CommentsController
         } catch (CommentAccessDeniedException $exception) {
             return $this->exceptionResponses->forbidden(message: $exception->getMessage());
         }
-        $this->session->flash(CommentDiscussionView::FLASH_MESSAGE, d__('system', 'The comment was deleted'));
+        $this->session->flash(CommentDiscussionView::FLASH_MESSAGE, $object->wording->deleted);
 
         return $this->backToPage($object, $request->bodyInt('page'));
     }
@@ -196,7 +196,7 @@ final readonly class CommentsController
         }
         $this->session->flash(
             CommentDiscussionView::FLASH_MESSAGE,
-            sprintf(dn__('system', '%d comment was deleted', '%d comments were deleted', $count), $count)
+            $object->wording->deletedOfAuthor($count)
         );
 
         return $this->backToPage($object, $request->bodyInt('page'));
@@ -244,7 +244,7 @@ final readonly class CommentsController
             return new RedirectResponse($this->pageUrl($object, max(1, $request->bodyInt('page'))) . '#comment-form');
         }
 
-        $this->session->flash(CommentDiscussionView::FLASH_MESSAGE, d__('system', 'The comment was added'));
+        $this->session->flash(CommentDiscussionView::FLASH_MESSAGE, $object->wording->added);
         // The anchor of the redirect does not reach the server, so the live list learns the
         // comment to scroll to from here.
         $this->session->flash(CommentDiscussionView::FLASH_ADDED, $commentId);
@@ -274,7 +274,7 @@ final readonly class CommentsController
         foreach ($object->breadcrumbs as $crumb) {
             $this->navChain->add($crumb['name'], $crumb['url']);
         }
-        $this->navChain->add($object->heading ?: d__('system', 'Comments'), $linkDiscussion ? $object->discussionUrl : '');
+        $this->navChain->add($object->wording->heading, $linkDiscussion ? $object->discussionUrl : '');
     }
 
     private function permalinkUrl(CommentSubjectDTO $object, int $comment): string

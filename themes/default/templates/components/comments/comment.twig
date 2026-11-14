@@ -53,7 +53,7 @@
                     {% endif %}
                     {% if comment.canDelete %}
                         <form method="post" action="{{ subject.discussionUrl }}/delete" data-live-list-form
-                              data-confirm="{{ d__('system', 'Delete this comment?') }}" data-confirm-button="{{ d__('system', 'Delete') }}">
+                              data-confirm="{{ subject.wording.confirmDelete }}" data-confirm-button="{{ d__('system', 'Delete') }}">
                             <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                             <input type="hidden" name="comment_id" value="{{ comment.id }}">
                             <input type="hidden" name="page" value="{{ page }}">
@@ -63,7 +63,7 @@
                         </form>
                         {% if comment.authorCommentCount > 1 %}
                             <form method="post" action="{{ subject.discussionUrl }}/delete-author" data-live-list-form
-                                  data-confirm="{{ dn__('system', 'Delete %d comment of %s here?', 'Delete all %d comments of %s here?', comment.authorCommentCount)|format(comment.authorCommentCount, name) }}"
+                                  data-confirm="{{ subject.wording.confirmDeleteAuthor(comment.authorCommentCount, name) }}"
                                   data-confirm-button="{{ d__('system', 'Delete') }}">
                                 <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                                 <input type="hidden" name="comment_id" value="{{ comment.id }}">

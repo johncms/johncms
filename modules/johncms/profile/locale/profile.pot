@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "X-Domain: profile\n"
 
-#: modules/johncms/profile/src/Application/Comments/ProfileGuestbookCommentSubject.php:57
+#: modules/johncms/profile/src/Application/Comments/ProfileGuestbookCommentSubject.php:61
 #: modules/johncms/profile/src/Application/Controllers/AvatarController.php:83
 #: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:167
 #: modules/johncms/profile/src/Application/Controllers/PhotoController.php:83
@@ -10,7 +10,7 @@ msgstr ""
 msgid "Profile"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Comments/ProfileGuestbookCommentSubject.php:59
+#: modules/johncms/profile/src/Application/Comments/ProfileGuestbookCommentSubject.php:71
 #: modules/johncms/profile/src/Application/Notifications/GuestbookNotificationProvider.php:34
 #: modules/johncms/profile/src/Application/UseCases/GetBanHistoryUseCase.php:47
 #: modules/johncms/profile/templates/public/account.twig:23
@@ -18,6 +18,65 @@ msgstr ""
 #: modules/johncms/profile/templates/public/statistics.twig:36
 #: modules/johncms/profile/templates/public/view.twig:233
 msgid "Guestbook"
+msgstr ""
+
+#: modules/johncms/profile/src/Application/Comments/ProfileGuestbookCommentSubject.php:72
+#, php-format
+msgid "Guestbook: %s"
+msgstr ""
+
+#: modules/johncms/profile/src/Application/Comments/ProfileGuestbookCommentSubject.php:73
+#, php-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] ""
+
+#: modules/johncms/profile/src/Application/Comments/ProfileGuestbookCommentSubject.php:74
+msgid "No entries yet. Be the first."
+msgstr ""
+
+#: modules/johncms/profile/src/Application/Comments/ProfileGuestbookCommentSubject.php:75
+msgid "Write an entry"
+msgstr ""
+
+#: modules/johncms/profile/src/Application/Comments/ProfileGuestbookCommentSubject.php:76
+msgid "You are not logged in. You must be <a href=\"/login/\">logged in</a> to write in the guestbook."
+msgstr ""
+
+#: modules/johncms/profile/src/Application/Comments/ProfileGuestbookCommentSubject.php:77
+msgid "The entry was added"
+msgstr ""
+
+#: modules/johncms/profile/src/Application/Comments/ProfileGuestbookCommentSubject.php:78
+msgid "The entry was saved"
+msgstr ""
+
+#: modules/johncms/profile/src/Application/Comments/ProfileGuestbookCommentSubject.php:79
+msgid "The entry was deleted"
+msgstr ""
+
+#: modules/johncms/profile/src/Application/Comments/ProfileGuestbookCommentSubject.php:80
+msgid "Delete this entry?"
+msgstr ""
+
+#: modules/johncms/profile/src/Application/Comments/ProfileGuestbookCommentSubject.php:82
+#, php-format
+msgid "Delete %d entry of %s here?"
+msgid_plural "Delete all %d entries of %s here?"
+msgstr[0] ""
+
+#: modules/johncms/profile/src/Application/Comments/ProfileGuestbookCommentSubject.php:86
+#, php-format
+msgid "%d entry was deleted"
+msgid_plural "%d entries were deleted"
+msgstr[0] ""
+
+#: modules/johncms/profile/src/Application/Comments/ProfileGuestbookCommentSubject.php:87
+msgid "Edit entry"
+msgstr ""
+
+#: modules/johncms/profile/src/Application/Comments/ProfileGuestbookCommentSubject.php:88
+msgid "Enter the text of the entry"
 msgstr ""
 
 #: modules/johncms/profile/src/Application/Controllers/AccountController.php:23

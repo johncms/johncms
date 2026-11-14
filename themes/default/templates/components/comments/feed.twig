@@ -17,19 +17,19 @@
     <input type="hidden" name="page" value="{{ page }}" form="comment-form-{{ subject.type }}-{{ subject.id }}">
     {% if titled|default(false) %}
         <h2 class="site-discussion__title" tabindex="-1" data-live-list-focus>
-            {{ d__('system', 'Comments') }}
+            {{ subject.wording.heading }}
             <span class="site-discussion__title-count">{{ total|format_number }}</span>
         </h2>
     {% else %}
         <p class="site-discussion__count" tabindex="-1" data-live-list-focus>
-            {{ dn__('system', '%d comment', '%d comments', total)|format(total) }}
+            {{ subject.wording.count(total) }}
         </p>
     {% endif %}
     {% if message %}
         {% include '@theme/components/toast.twig' with {message: message, announce: added is not null} only %}
     {% endif %}
     {% if comments is empty %}
-        <div class="site-discussion__empty">{{ d__('system', 'No comments yet. Be the first.') }}</div>
+        <div class="site-discussion__empty">{{ subject.wording.empty }}</div>
     {% else %}
         <div class="site-discussion__feed">
             {% for comment in comments %}

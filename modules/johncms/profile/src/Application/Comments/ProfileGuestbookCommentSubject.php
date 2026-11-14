@@ -8,6 +8,7 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\CurrentUser;
 use Johncms\Comments\CommentSubjectDTO;
+use Johncms\Comments\CommentWordingDTO;
 use Johncms\Comments\CommentSubjectInterface;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Application\UseCases\GetGuestbookContextUseCase;
@@ -59,7 +60,32 @@ final readonly class ProfileGuestbookCommentSubject implements CommentSubjectInt
             breadcrumbs: [
                 ['name' => d__('profile', 'Profile') . ': ' . $owner->name, 'url' => $url],
             ],
+            wording: $this->wording(),
+        );
+    }
+
+    /** A guestbook keeps entries, not comments. */
+    private function wording(): CommentWordingDTO
+    {
+        return new CommentWordingDTO(
             heading: d__('profile', 'Guestbook'),
+            titled: d__('profile', 'Guestbook: %s'),
+            count: static fn(int $count): string => sprintf(dn__('profile', '%d entry', '%d entries', $count), $count),
+            empty: d__('profile', 'No entries yet. Be the first.'),
+            write: d__('profile', 'Write an entry'),
+            loginNotice: d__('profile', 'You are not logged in. You must be <a href="/login/">logged in</a> to write in the guestbook.'),
+            added: d__('profile', 'The entry was added'),
+            saved: d__('profile', 'The entry was saved'),
+            deleted: d__('profile', 'The entry was deleted'),
+            confirmDelete: d__('profile', 'Delete this entry?'),
+            confirmDeleteAuthor: static fn(int $count, string $name): string => sprintf(
+                dn__('profile', 'Delete %d entry of %s here?', 'Delete all %d entries of %s here?', $count),
+                $count,
+                $name
+            ),
+            deletedOfAuthor: static fn(int $count): string => sprintf(dn__('profile', '%d entry was deleted', '%d entries were deleted', $count), $count),
+            editTitle: d__('profile', 'Edit entry'),
+            emptyText: d__('profile', 'Enter the text of the entry'),
         );
     }
 

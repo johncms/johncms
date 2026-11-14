@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Comments;
 
+use Dom\HTMLDocument;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Database\ConnectionInterface;
 use Johncms\Database\Schema\SchemaInterface;
@@ -66,6 +67,19 @@ final class ProfileGuestbookTest extends FunctionalTestCase
         $this->entry($this->owner->id, $time);
 
         self::assertSame(2, $this->unread());
+    }
+
+    public function testTheGuestbookSpeaksOfEntries(): void
+    {
+        $this->entry(FunctionalUserFactory::create()->id);
+
+        $page = (string) $this->handleRequest($this->url(), cookies: $this->actingAs($this->owner))->getContent();
+
+        $document = HTMLDocument::createFromString($page, LIBXML_NOERROR);
+        self::assertSame(sprintf(dn__('profile', '%d entry', '%d entries', 1), 1), trim((string) $document->querySelector('.site-discussion__count')?->textContent));
+        self::assertSame(d__('profile', 'Write an entry'), $document->querySelector('#comment-form-title')?->textContent);
+        self::assertSame(d__('profile', 'Delete this entry?'), $document->querySelector('form[data-confirm]')?->getAttribute('data-confirm'));
+        self::assertStringStartsWith(sprintf(d__('profile', 'Guestbook: %s'), $this->owner->name), (string) $document->querySelector('title')?->textContent);
     }
 
     public function testAnEntryIsCountedOnTheAccount(): void

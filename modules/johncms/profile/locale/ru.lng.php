@@ -298,6 +298,37 @@
       'No services are linked to your account' => 'К вашему аккаунту не привязано ни одного сервиса',
       'Link another service' => 'Привязать другой сервис',
       'The password must contain at least 6 characters' => 'Пароль должен содержать не менее 6 символов',
+      'Guestbook: %s' => 'Гостевая: %s',
+      '%d entry' => 
+      array (
+        0 => '%d запись',
+        1 => '%d записи',
+        2 => '%d записей',
+        3 => '',
+      ),
+      'No entries yet. Be the first.' => 'Записей пока нет. Будьте первым.',
+      'Write an entry' => 'Написать запись',
+      'You are not logged in. You must be <a href="/login/">logged in</a> to write in the guestbook.' => 'Вы не авторизованы. Чтобы писать в гостевую, нужно <a href="/login/">войти</a>.',
+      'The entry was added' => 'Запись добавлена',
+      'The entry was saved' => 'Запись сохранена',
+      'The entry was deleted' => 'Запись удалена',
+      'Delete this entry?' => 'Удалить эту запись?',
+      'Delete %d entry of %s here?' => 
+      array (
+        0 => 'Удалить %d запись %s здесь?',
+        1 => 'Удалить все %d записи %s здесь?',
+        2 => 'Удалить все %d записей %s здесь?',
+        3 => '',
+      ),
+      '%d entry was deleted' => 
+      array (
+        0 => 'Удалена %d запись',
+        1 => 'Удалено %d записи',
+        2 => 'Удалено %d записей',
+        3 => '',
+      ),
+      'Edit entry' => 'Редактировать запись',
+      'Enter the text of the entry' => 'Введите текст записи',
     ),
   ),
 );

@@ -18,7 +18,7 @@
     @var text       string The text to put back into the form after an error.
     @var titled     bool   The discussion has a heading of its own: it is a part of a page about something else.
 #}
-<section class="site-discussion" id="comments" aria-label="{{ d__('system', 'Comments') }}" data-live-list data-comments>
+<section class="site-discussion" id="comments" aria-label="{{ subject.wording.heading }}" data-live-list data-comments>
     {% include '@theme/components/comments/feed.twig' with {
         subject: subject,
         comments: comments,
@@ -33,16 +33,16 @@
 
     {% if can_write %}
         <section class="site-compose" id="comment-form" aria-labelledby="comment-form-title">
-            <h2 class="visually-hidden" id="comment-form-title">{{ d__('system', 'Write a comment') }}</h2>
+            <h2 class="visually-hidden" id="comment-form-title">{{ subject.wording.write }}</h2>
             {% include '@theme/components/comments/error.twig' with {error: error} only %}
             <form class="site-compose__form" id="comment-form-{{ subject.type }}-{{ subject.id }}" method="post" action="{{ subject.discussionUrl }}" data-live-list-form data-comment-form>
                 <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                 {% include '@theme/components/editor.twig' with {
                     name: 'text',
                     id: 'comment-text',
-                    label: d__('system', 'Write a comment'),
+                    label: subject.wording.write,
                     label_hidden: true,
-                    placeholder: d__('system', 'Write a comment'),
+                    placeholder: subject.wording.write,
                     value: text,
                     upload_url: upload_url,
                     allow_upload: true,
@@ -60,7 +60,7 @@
     {% elseif not app.user.isValid %}
         <div class="site-discussion__notice">
             {# The link to the login page is part of the translated string. #}
-            {{ d__('system', 'You are not logged in. You must be <a href="/login/">logged in</a> to comment.')|raw }}
+            {{ subject.wording.loginNotice|raw }}
         </div>
     {% endif %}
 </section>

@@ -9,6 +9,8 @@ namespace Johncms\Comments;
  */
 final readonly class CommentSubjectDTO
 {
+    public CommentWordingDTO $wording;
+
     /**
      * @param string                                  $title         What is discussed, as plain text: the name of the file, of the article.
      * @param string                                  $url           Address of the object itself.
@@ -20,7 +22,7 @@ final readonly class CommentSubjectDTO
      * @param list<int>                               $bans          Kinds of ban that close the discussion to the banned.
      * @param list<array{name: string, url: string}>  $breadcrumbs   The way to the object, the object included, as plain text; the discussion adds itself.
      * @param string                                  $description   For the meta description of the discussion.
-     * @param string                                  $heading       What the discussion is called on its page; empty for "Comments".
+     * @param CommentWordingDTO|null                  $wording       What the discussion calls itself; null for comments.
      * @param string                                  $embeddedIn    Address of the page of the module that shows the discussion within itself; empty when the discussion has a page of its own.
      * @param bool                                    $moderator     Whether the current visitor moderates this discussion by a permission of the module, besides the moderators of all comments.
      * @param bool                                    $authorCanDelete Whether the author removes their own comment.
@@ -38,10 +40,11 @@ final readonly class CommentSubjectDTO
         public array $bans = [1, 10],
         public array $breadcrumbs = [],
         public string $description = '',
-        public string $heading = '',
+        ?CommentWordingDTO $wording = null,
         public string $embeddedIn = '',
         public bool $moderator = false,
         public bool $authorCanDelete = false,
     ) {
+        $this->wording = $wording ?? CommentWordingDTO::comments();
     }
 }

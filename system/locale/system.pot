@@ -791,30 +791,73 @@ msgstr ""
 msgid "Message already exists"
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:394
-msgid "Enter the comment text"
-msgstr ""
-
 #: system/src/Comments/Application/CommentsService.php:398
 #, php-format
 msgid "The comment is too long: at most %d characters."
 msgstr ""
 
-#: system/src/Comments/Controllers/CommentsController.php:86
+#: system/src/Comments/CommentWordingDTO.php:57
+#: system/src/Users/Bans/BanKind.php:33
+msgid "Comments"
+msgstr ""
+
+#: system/src/Comments/CommentWordingDTO.php:58
 #, php-format
 msgid "Comments: %s"
 msgstr ""
 
-#: system/src/Comments/Controllers/CommentsController.php:102
-#: system/src/Comments/Controllers/CommentsController.php:277
-#: system/src/Users/Bans/BanKind.php:33
-#: themes/default/templates/components/comments/discussion.twig:21
-#: themes/default/templates/components/comments/feed.twig:20
-msgid "Comments"
+#: system/src/Comments/CommentWordingDTO.php:59
+#, php-format
+msgid "%d comment"
+msgid_plural "%d comments"
+msgstr[0] ""
+
+#: system/src/Comments/CommentWordingDTO.php:60
+msgid "No comments yet. Be the first."
 msgstr ""
 
-#: system/src/Comments/Controllers/CommentsController.php:149
+#: system/src/Comments/CommentWordingDTO.php:61
+msgid "Write a comment"
+msgstr ""
+
+#: system/src/Comments/CommentWordingDTO.php:62
+msgid "You are not logged in. You must be <a href=\"/login/\">logged in</a> to comment."
+msgstr ""
+
+#: system/src/Comments/CommentWordingDTO.php:63
+msgid "The comment was added"
+msgstr ""
+
+#: system/src/Comments/CommentWordingDTO.php:64
 msgid "The comment was saved"
+msgstr ""
+
+#: system/src/Comments/CommentWordingDTO.php:65
+msgid "The comment was deleted"
+msgstr ""
+
+#: system/src/Comments/CommentWordingDTO.php:66
+msgid "Delete this comment?"
+msgstr ""
+
+#: system/src/Comments/CommentWordingDTO.php:68
+#, php-format
+msgid "Delete %d comment of %s here?"
+msgid_plural "Delete all %d comments of %s here?"
+msgstr[0] ""
+
+#: system/src/Comments/CommentWordingDTO.php:72
+#, php-format
+msgid "%d comment was deleted"
+msgid_plural "%d comments were deleted"
+msgstr[0] ""
+
+#: system/src/Comments/CommentWordingDTO.php:73
+msgid "Edit comment"
+msgstr ""
+
+#: system/src/Comments/CommentWordingDTO.php:74
+msgid "Enter the comment text"
 msgstr ""
 
 #: system/src/Comments/Controllers/CommentsController.php:156
@@ -823,25 +866,6 @@ msgstr ""
 #: themes/default/templates/components/style-guide/examples/button-states.twig:13
 #: themes/default/templates/components/style-guide/examples/controls.twig:12
 msgid "Edit"
-msgstr ""
-
-#: system/src/Comments/Controllers/CommentsController.php:159
-#: system/src/Comments/Controllers/CommentsController.php:160
-msgid "Edit comment"
-msgstr ""
-
-#: system/src/Comments/Controllers/CommentsController.php:182
-msgid "The comment was deleted"
-msgstr ""
-
-#: system/src/Comments/Controllers/CommentsController.php:199
-#, php-format
-msgid "%d comment was deleted"
-msgid_plural "%d comments were deleted"
-msgstr[0] ""
-
-#: system/src/Comments/Controllers/CommentsController.php:247
-msgid "The comment was added"
 msgstr ""
 
 #: system/src/Console/Commands/CacheClearCommand.php:20
@@ -1338,10 +1362,6 @@ msgid "Quote"
 msgstr ""
 
 #: themes/default/templates/components/comments/comment.twig:56
-msgid "Delete this comment?"
-msgstr ""
-
-#: themes/default/templates/components/comments/comment.twig:56
 #: themes/default/templates/components/comments/comment.twig:60
 #: themes/default/templates/components/comments/comment.twig:67
 #: themes/default/templates/components/style-guide/examples/button-states.twig:22
@@ -1351,36 +1371,12 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: themes/default/templates/components/comments/comment.twig:66
-msgid "Delete %d comment of %s here?"
-msgid_plural "Delete all %d comments of %s here?"
-msgstr[0] ""
-
 #: themes/default/templates/components/comments/comment.twig:72
 msgid "All of the author"
 msgstr ""
 
-#: themes/default/templates/components/comments/discussion.twig:36
-#: themes/default/templates/components/comments/discussion.twig:43
-#: themes/default/templates/components/comments/discussion.twig:45
-msgid "Write a comment"
-msgstr ""
-
 #: themes/default/templates/components/comments/discussion.twig:53
 msgid "Send"
-msgstr ""
-
-#: themes/default/templates/components/comments/discussion.twig:63
-msgid "You are not logged in. You must be <a href=\"/login/\">logged in</a> to comment."
-msgstr ""
-
-#: themes/default/templates/components/comments/feed.twig:25
-msgid "%d comment"
-msgid_plural "%d comments"
-msgstr[0] ""
-
-#: themes/default/templates/components/comments/feed.twig:32
-msgid "No comments yet. Be the first."
 msgstr ""
 
 #: themes/default/templates/components/confirm-dialog.twig:12

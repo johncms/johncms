@@ -244,6 +244,7 @@ return static function (ContainerConfigurator $container): void {
                 // refusals: rows, value objects and exceptions, never services.
                 ROOT_PATH . 'system/src/Comments/Domain/Comment.php',
                 ROOT_PATH . 'system/src/Comments/CommentSubjectDTO.php',
+                ROOT_PATH . 'system/src/Comments/CommentWordingDTO.php',
                 ROOT_PATH . 'system/src/Comments/CommentRoutes.php',
                 ROOT_PATH . 'system/src/Comments/Application/DTO',
                 ROOT_PATH . 'system/src/Comments/Application/Exceptions',
