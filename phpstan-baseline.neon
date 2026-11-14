@@ -429,7 +429,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$id\.$#'
 			identifier: property.notFound
-			count: 10
+			count: 9
 			path: modules/johncms/downloads/src/Application/Controllers/DownloadCategoryController.php
 
 		-
@@ -501,12 +501,6 @@ parameters:
 		-
 			message: '#^Cannot call method save\(\) on stdClass\.$#'
 			identifier: method.nonObject
-			count: 1
-			path: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php
-
-		-
-			message: '#^Expression on left side of \?\? is not nullable\.$#'
-			identifier: nullCoalesce.expr
 			count: 1
 			path: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php
 
@@ -627,7 +621,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$id\.$#'
 			identifier: property.notFound
-			count: 5
+			count: 4
 			path: modules/johncms/downloads/src/Application/Controllers/IndexController.php
 
 		-
@@ -679,9 +673,21 @@ parameters:
 			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
 
 		-
+			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$dir\.$#'
+			identifier: property.notFound
+			count: 2
+			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
+
+		-
+			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
+
+		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$refid\.$#'
 			identifier: property.notFound
-			count: 3
+			count: 2
 			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
 
 		-
@@ -691,46 +697,10 @@ parameters:
 			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
 
 		-
-			message: '#^Anonymous function has an unused use \$id\.$#'
-			identifier: closure.unusedUse
-			count: 1
-			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
-
-		-
-			message: '#^Expression on left side of \?\? is not nullable\.$#'
-			identifier: nullCoalesce.expr
-			count: 2
-			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
-
-		-
 			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\>\:\:map\(\) contains unresolvable type\.$#'
 			identifier: argument.unresolvableType
 			count: 1
 			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
-
-		-
-			message: '#^Parameter \#1 \$file of method Johncms\\Modules\\Downloads\\Application\\Services\\DownloadFilePathService\:\:getFileUrl\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
-			identifier: argument.type
-			count: 1
-			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
-
-		-
-			message: '#^Parameter \#2 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\MoveFileController\:\:showBrowser\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
-			identifier: argument.type
-			count: 1
-			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
-
-		-
-			message: '#^Parameter \#3 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\MoveFileController\:\:handleTransfer\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
-			identifier: argument.type
-			count: 1
-			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
-
-		-
-			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$dir\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/downloads/src/Application/Controllers/RecountController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Collection\<int, Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\>\|Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$dir\.$#'
@@ -1063,6 +1033,12 @@ parameters:
 			path: modules/johncms/downloads/src/Application/UseCases/MoveFileUseCase.php
 
 		-
+			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$dir\.$#'
+			identifier: property.notFound
+			count: 1
+			path: modules/johncms/downloads/src/Application/UseCases/RecountCategoriesUseCase.php
+
+		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$user_id\.$#'
 			identifier: property.notFound
 			count: 1
@@ -1343,9 +1319,6 @@ parameters:
 			identifier: method.notFound
 			count: 1
 			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumStructureRepository.php
-
-
-
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<Johncms\\Modules\\Forum\\Domain\\Models\\ForumTopic\>\:\:read\(\)\.$#'

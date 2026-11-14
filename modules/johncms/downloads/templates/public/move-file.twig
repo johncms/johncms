@@ -1,9 +1,11 @@
 {#
     Choosing the category to move a file into: one level of the tree at a time.
 
-    @var sections array  rus_name, section_open_url, section_move_url
-    @var urls     array  move_to_current_url, empty in the root and in the category of the file
-    @var back_url string
+    @var file_name  string
+    @var sections   array  id, rus_name, section_open_url, can_move
+    @var action_url string Where the move is posted.
+    @var current_id int    The category opened in the browser, 0 in the root and in the category of the file.
+    @var back_url   string
 #}
 {% extends '@theme/layouts/default.twig' %}
 
@@ -15,8 +17,15 @@
                 <div class="list-group-item">
                     <div class="d-flex w-100 justify-content-between">
                         <a href="{{ section.section_open_url }}" class="mb-1">{{ section.rus_name }}</a>
-                        {% if section.section_move_url %}
-                            <a href="{{ section.section_move_url }}" class="btn btn-primary btn-sm">{{ __('Move file to this section') }}</a>
+                        {% if section.can_move %}
+                            {% include '@downloads/public/components/move-form.twig' with {
+                                action_url: action_url,
+                                file_name: file_name,
+                                cat_id: section.id,
+                                cat_name: section.rus_name,
+                                label: __('Move file to this section'),
+                                class: 'btn btn-primary btn-sm',
+                            } only %}
                         {% endif %}
                     </div>
                 </div>
@@ -25,9 +34,16 @@
     {% else %}
         <div class="alert alert-info">{{ __('The list is empty') }}</div>
     {% endif %}
-    {% if urls.move_to_current_url %}
+    {% if current_id %}
         <div class="mt-3">
-            <a href="{{ urls.move_to_current_url }}" class="btn btn-primary">{{ __('Move file here') }}</a>
+            {% include '@downloads/public/components/move-form.twig' with {
+                action_url: action_url,
+                file_name: file_name,
+                cat_id: current_id,
+                cat_name: '',
+                label: __('Move file here'),
+                class: 'btn btn-primary',
+            } only %}
         </div>
     {% endif %}
     <div class="mt-3">

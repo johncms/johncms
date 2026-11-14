@@ -27,19 +27,28 @@ final readonly class FilesModerationController
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add(__('Files awaiting moderation'));
 
-        $acceptId = $request->queryInt('accept', 0);
-        if ($acceptId) {
-            return $this->handleAcceptOne($acceptId);
-        }
-
-        if ($request->getMethod() === 'POST') {
-            $post = $request->request->all();
-            if (isset($post['all_mod'])) {
-                return $this->handleAcceptAll();
-            }
+        if ($request->isPost()) {
+            return $this->handleAcceptOne($request->bodyInt('accept'));
         }
 
         return $this->showList();
+    }
+
+    /** Carried out only from the confirmed form of the list (RequireConfirmationMiddleware). */
+    public function acceptAll(): ViewResponse
+    {
+        $this->navChain->add(__('Downloads'), '/downloads/');
+        $this->navChain->add(__('Files awaiting moderation'));
+
+        DownloadFile::query()->where('type', 3)->update(['type' => 2]);
+
+        return new ViewResponse('@theme/pages/result.twig', [
+            'title'         => __('Files awaiting moderation'),
+            'type'          => 'alert-success',
+            'message'       => __('All files accepted'),
+            'back_url'      => '/downloads/',
+            'back_url_name' => __('Downloads'),
+        ]);
     }
 
     private function handleAcceptOne(int $id): ViewResponse
@@ -52,19 +61,6 @@ final readonly class FilesModerationController
             'message'       => __('File accepted'),
             'back_url'      => '/downloads/moderation',
             'back_url_name' => __('Files awaiting moderation'),
-        ]);
-    }
-
-    private function handleAcceptAll(): ViewResponse
-    {
-        DownloadFile::query()->where('type', 3)->update(['type' => 2]);
-
-        return new ViewResponse('@theme/pages/result.twig', [
-            'title'         => __('Files awaiting moderation'),
-            'type'          => 'alert-success',
-            'message'       => __('All files accepted'),
-            'back_url'      => '/downloads/',
-            'back_url_name' => __('Downloads'),
         ]);
     }
 
@@ -90,7 +86,7 @@ final readonly class FilesModerationController
 
             foreach ($rows as $file) {
                 $row = $this->filePresenter->present($file);
-                $row['accept_url'] = '/downloads/moderation?accept=' . $file->id;
+                $row['accept_url'] = '/downloads/moderation';
                 $row['delete_url'] = '/downloads/delete-file/' . $file->id . '/';
                 $files[] = $row;
             }

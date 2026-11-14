@@ -1,0 +1,18 @@
+{#
+    Moving the file into a category, after a question in the dialog of the page.
+
+    @var action_url string
+    @var file_name  string
+    @var cat_id     int
+    @var cat_name   string Empty for the category opened in the browser.
+    @var label      string
+    @var class      string Classes of the button.
+#}
+<form method="post" action="{{ action_url }}"
+    data-confirm="{{ __('Move the file?') }}"
+    data-confirm-text="{{ cat_name ? __('The file “%s” is moved to the section “%s”.')|format(file_name, cat_name) : __('The file “%s” is moved to the opened section.')|format(file_name) }}"
+    data-confirm-button="{{ __('Move file') }}" data-confirm-tone="primary">
+    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+    <input type="hidden" name="catId" value="{{ cat_id }}">
+    <button type="submit" class="{{ class }}">{{ label }}</button>
+</form>

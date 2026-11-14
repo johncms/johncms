@@ -49,12 +49,6 @@ final readonly class EditCategoryController
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add(__('Edit Folder'));
 
-        $do = $request->queryParam('do') ?? '';
-
-        if ($do === 'up' || $do === 'down') {
-            return $this->handleSort($category, $do);
-        }
-
         if ($request->getMethod() === 'POST') {
             return $this->handleSave($request, $id, $category);
         }
@@ -62,8 +56,17 @@ final readonly class EditCategoryController
         return $this->showForm($id, $category);
     }
 
-    private function handleSort(DownloadCategory $category, string $direction): RedirectResponse
+    /** Swaps the category with its neighbour above (direction=up) or below (direction=down). */
+    public function sort(Request $request, int $id): RedirectResponse
     {
+        $category = DownloadCategory::query()->find($id);
+
+        if ($category === null) {
+            return new RedirectResponse('/downloads/');
+        }
+
+        $direction = $request->body('direction') === 'up' ? 'up' : 'down';
+
         $sibling = DownloadCategory::query()
             ->where('refid', $category->refid)
             ->where('sort', $direction === 'up' ? '<' : '>', $category->sort)

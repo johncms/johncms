@@ -9,6 +9,7 @@ use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Application\UseCases\MoveFileUseCase;
+use Johncms\Modules\Downloads\Application\UseCases\RecountCategoriesUseCase;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
@@ -22,6 +23,7 @@ final readonly class MoveFileController
         private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
         private MoveFileUseCase $moveFileUseCase,
+        private RecountCategoriesUseCase $recount,
         private CategoryNavService $categoryNavService,
         private DownloadFilePathService $filePathService,
     ) {
@@ -33,8 +35,9 @@ final readonly class MoveFileController
             return $this->notFound();
         }
 
+        /** @var DownloadFile|null $file */
         $file = DownloadFile::query()
-            ->where('id', $id)
+            ->whereKey($id)
             ->whereIn('type', [2, 3])
             ->first();
 
@@ -48,52 +51,53 @@ final readonly class MoveFileController
         $this->navChain->add(__('Move File'));
 
         $baseUrl = '/downloads/move-file/' . $id . '/';
-        $catId = (int) ($request->queryParam('catId') ?? 0);
-        $do = $request->queryParam('do') ?? '';
 
-        $category = $catId ? DownloadCategory::query()->find($catId) : null;
-        if ($catId && $category === null) {
+        if ($request->isPost()) {
+            return $this->move($request->bodyInt('catId'), $file, $baseUrl);
+        }
+
+        $catId = $request->queryInt('catId');
+
+        if ($catId && ! DownloadCategory::query()->whereKey($catId)->exists()) {
             $catId = 0;
         }
 
-        if ($do === 'transfer' && $catId) {
-            return $this->handleTransfer($request, $id, $file, $catId, $category, $baseUrl);
-        }
-
-        return $this->showBrowser($id, $file, $catId, $baseUrl);
+        return $this->showBrowser($file, $catId, $baseUrl);
     }
 
-    private function showBrowser(int $id, DownloadFile $file, int $catId, string $baseUrl): ViewResponse
+    private function showBrowser(DownloadFile $file, int $catId, string $baseUrl): ViewResponse
     {
+        $currentId = (int) $file->refid;
         $sections = DownloadCategory::query()
             ->where('refid', $catId)
             ->get()
-            ->map(function (DownloadCategory $cat) use ($id, $file, $baseUrl): array {
-                return [
-                    'rus_name'         => $cat->rus_name,
-                    'section_open_url' => $baseUrl . '?catId=' . $cat->id,
-                    'section_move_url' => $cat->id !== (int) $file->refid
-                        ? $baseUrl . '?catId=' . $cat->id . '&do=transfer'
-                        : '',
-                ];
-            })->all();
-
-        $moveToCurrentUrl = '';
-        if ($catId && $catId !== (int) $file->refid) {
-            $moveToCurrentUrl = $baseUrl . '?catId=' . $catId . '&do=transfer';
-        }
+            ->map(static fn (DownloadCategory $cat): array => [
+                'id'               => $cat->id,
+                'rus_name'         => $cat->rus_name,
+                'section_open_url' => $baseUrl . '?catId=' . $cat->id,
+                'can_move'         => $cat->id !== $currentId,
+            ])->all();
 
         return new ViewResponse('@downloads/public/move-file.twig', [
             'title'      => __('Move File'),
             'page_title' => __('Move File'),
+            'file_name'  => $file->rus_name,
             'sections'   => $sections,
+            'action_url' => $baseUrl,
+            'current_id' => $catId !== $currentId ? $catId : 0,
             'back_url'   => $this->filePathService->getFileUrl($file),
-            'urls'       => ['move_to_current_url' => $moveToCurrentUrl],
         ]);
     }
 
-    private function handleTransfer(Request $request, int $id, DownloadFile $file, int $catId, DownloadCategory $category, string $baseUrl): ViewResponse
+    /** Carried out only from the confirmed form of the browser (RequireConfirmationMiddleware). */
+    private function move(int $catId, DownloadFile $file, string $baseUrl): ViewResponse
     {
+        $category = $catId ? DownloadCategory::query()->find($catId) : null;
+
+        if ($category === null) {
+            return $this->notFound();
+        }
+
         if ($catId === (int) $file->refid) {
             return new ViewResponse('@theme/pages/result.twig', [
                 'title'         => __('Move File'),
@@ -104,23 +108,15 @@ final readonly class MoveFileController
             ]);
         }
 
-        if ($request->query->has('yes')) {
-            $this->moveFileUseCase->execute($file, $category);
+        $this->moveFileUseCase->execute($file, $category);
+        $this->recount->execute();
 
-            return new ViewResponse('@theme/pages/result.twig', [
-                'title'         => __('Move File'),
-                'type'          => 'alert-success',
-                'message'       => __('The file has been moved'),
-                'back_url'      => '/downloads/recount',
-                'back_url_name' => __('Update counters'),
-            ]);
-        }
-
-        return new ViewResponse('@downloads/public/move-file-confirm.twig', [
-            'title'      => $file->rus_name,
-            'page_title' => $file->rus_name,
-            'action_url' => $baseUrl . '?catId=' . $catId . '&do=transfer&yes',
-            'back_url'   => $this->filePathService->getFileUrl($file),
+        return new ViewResponse('@theme/pages/result.twig', [
+            'title'         => __('Move File'),
+            'type'          => 'alert-success',
+            'message'       => __('The file has been moved'),
+            'back_url'      => $this->filePathService->getFileUrl($file->refresh()),
+            'back_url_name' => __('Back'),
         ]);
     }
 

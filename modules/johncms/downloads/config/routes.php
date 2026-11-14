@@ -61,11 +61,17 @@ return static function (RouteCollection $router): void {
         $r->map(['GET', 'POST'], '/downloads/edit-file/{id:number}', EditFileController::class)->name('downloads.edit_file');
         $r->map(['GET', 'POST'], '/downloads/edit-screen/{id:number}', EditScreenController::class)->name('downloads.edit_screen');
         $r->map(['GET', 'POST'], '/downloads/additional-files/{id:number}', AdditionalFilesController::class)->name('downloads.additional_files');
-        $r->get('/downloads/move-file/{id:number}', MoveFileController::class)->name('downloads.move_file');
+        $r->map(['GET', 'POST'], '/downloads/move-file/{id:number}', MoveFileController::class)
+            ->name('downloads.move_file')
+            ->addMiddleware(RequireConfirmationMiddleware::class);
         $r->map(['GET', 'POST'], '/downloads/import/{id:number}', ImportFileController::class)->name('downloads.import');
         $r->map(['GET', 'POST'], '/downloads/moderation', FilesModerationController::class)->name('downloads.moderation');
+        $r->post('/downloads/moderation/accept-all', [FilesModerationController::class, 'acceptAll'])
+            ->name('downloads.moderation.accept_all')
+            ->addMiddleware(RequireConfirmationMiddleware::class);
         $r->map(['GET', 'POST'], '/downloads/categories/create', CreateCategoryController::class)->name('downloads.create_category');
         $r->map(['GET', 'POST'], '/downloads/categories/{id:number}/edit', EditCategoryController::class)->name('downloads.edit_category');
+        $r->post('/downloads/categories/{id:number}/sort', [EditCategoryController::class, 'sort'])->name('downloads.sort_category');
         $r->map(['GET', 'POST'], '/downloads/categories/{id:number}/delete', DeleteCategoryController::class)->name('downloads.delete_category');
         $r->post('/downloads/recount', RecountController::class)->name('downloads.recount');
         $r->map(['GET', 'POST'], '/downloads/scan-dir', ScanDirectoryController::class)->name('downloads.scan_dir');

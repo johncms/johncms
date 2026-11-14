@@ -883,6 +883,16 @@ msgstr "Загрузить ещё"
 msgid "Accept all files"
 msgstr "Принять все файлы"
 
+msgid "Accept all files?"
+msgstr "Принять все файлы?"
+
+msgid "%d file awaiting moderation becomes visible to everyone."
+msgid_plural "%d files awaiting moderation become visible to everyone."
+msgstr[0] "%d файл, ожидающий модерации, станет виден всем."
+msgstr[1] "%d файла, ожидающих модерации, станут видны всем."
+msgstr[2] "%d файлов, ожидающих модерации, станут видны всем."
+msgstr[3] "%d файлов, ожидающих модерации, станут видны всем."
+
 #: modules/downloads/templates/files_more.phtml:23
 msgid "Current files"
 msgstr "Текущие файлы"
@@ -1003,6 +1013,15 @@ msgstr "Действительно хотите переместить файл?
 #: modules/downloads/templates/move_file_confirm.phtml:26
 msgid "Move file"
 msgstr "Переместить файл"
+
+msgid "Move the file?"
+msgstr "Переместить файл?"
+
+msgid "The file “%s” is moved to the section “%s”."
+msgstr "Файл «%s» будет перемещён в раздел «%s»."
+
+msgid "The file “%s” is moved to the opened section."
+msgstr "Файл «%s» будет перемещён в открытый раздел."
 
 #: modules/downloads/templates/scan_dir.phtml:31
 msgid "Current folder"

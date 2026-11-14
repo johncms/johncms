@@ -21,10 +21,15 @@
         {% endfor %}
     {% endif %}
 
-    <form action="/downloads/moderation" method="post" class="mb-2 mt-3">
-        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-        <input type="submit" name="all_mod" class="btn btn-primary" value="{{ __('Accept all files') }}"/>
-    </form>
+    {% if total %}
+        <form action="/downloads/moderation/accept-all" method="post" class="mb-2 mt-3"
+            data-confirm="{{ __('Accept all files?') }}"
+            data-confirm-text="{{ n__('%d file awaiting moderation becomes visible to everyone.', '%d files awaiting moderation become visible to everyone.', total)|format(total) }}"
+            data-confirm-button="{{ __('Accept all files') }}" data-confirm-tone="primary">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+            <button type="submit" class="btn btn-primary">{{ __('Accept all files') }}</button>
+        </form>
+    {% endif %}
 
     {% if total %}
         <div>

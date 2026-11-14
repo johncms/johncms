@@ -53,8 +53,13 @@
             {% if category.has_edit %}
                 <div class="pt-2 small">
                     {% if total_cat > 1 %}
-                        <a href="{{ category.up_url }}" class="me-2">{{ __('Up') }}</a>
-                        <a href="{{ category.down_url }}" class="me-2">{{ __('Down') }}</a>
+                        {% for direction, label in {up: __('Up'), down: __('Down')} %}
+                            <form method="post" action="{{ category.sort_url }}" class="d-inline">
+                                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                                <input type="hidden" name="direction" value="{{ direction }}">
+                                <button type="submit" class="btn btn-link btn-sm p-0 me-2 align-baseline">{{ label }}</button>
+                            </form>
+                        {% endfor %}
                     {% endif %}
                     <a href="{{ category.edit_url }}" class="me-2">{{ __('Edit') }}</a>
                     <a href="{{ category.delete_url }}">{{ __('Delete') }}</a>

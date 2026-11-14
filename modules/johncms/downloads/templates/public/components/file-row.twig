@@ -17,8 +17,12 @@
         </div>
     {% endif %}
     {% if file.accept_url|default('') %}
-        <div class="mt-2">
-            <a href="{{ file.accept_url }}" class="btn btn-success btn-sm">{{ __('Accept') }}</a>
+        <div class="mt-2 d-flex gap-2">
+            <form method="post" action="{{ file.accept_url }}">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                <input type="hidden" name="accept" value="{{ file.id }}">
+                <button type="submit" class="btn btn-success btn-sm">{{ __('Accept') }}</button>
+            </form>
             <a href="{{ file.delete_url }}" class="btn btn-danger btn-sm">{{ __('Delete') }}</a>
         </div>
     {% endif %}

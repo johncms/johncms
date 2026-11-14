@@ -32,14 +32,15 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/FileCommentsController.php:108
 #: modules/johncms/downloads/src/Application/Controllers/FileCommentsController.php:116
 #: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:27
-#: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:67
+#: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:40
+#: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:50
 #: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:67
 #: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php:49
 #: modules/johncms/downloads/src/Application/Controllers/IndexController.php:44
 #: modules/johncms/downloads/src/Application/Controllers/IndexController.php:46
 #: modules/johncms/downloads/src/Application/Controllers/LoadFileController.php:74
-#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:45
-#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:134
+#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:47
+#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:129
 #: modules/johncms/downloads/src/Application/Controllers/NewFilesController.php:49
 #: modules/johncms/downloads/src/Application/Controllers/NewFilesController.php:59
 #: modules/johncms/downloads/src/Application/Controllers/NewFilesController.php:63
@@ -70,8 +71,8 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Services/DownloadsPermissions.php:39
 #: modules/johncms/downloads/templates/public/comments-review.twig:119
 #: modules/johncms/downloads/templates/public/favorites.twig:30
-#: modules/johncms/downloads/templates/public/index.twig:144
-#: modules/johncms/downloads/templates/public/moderation.twig:39
+#: modules/johncms/downloads/templates/public/index.twig:149
+#: modules/johncms/downloads/templates/public/moderation.twig:44
 #: modules/johncms/downloads/templates/public/new-files.twig:30
 #: modules/johncms/downloads/templates/public/scan-dir.twig:37
 #: modules/johncms/downloads/templates/public/search.twig:58
@@ -118,7 +119,7 @@ msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php:215
 #: modules/johncms/downloads/src/Application/Controllers/CreateCategoryController.php:95
-#: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php:94
+#: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php:97
 #: modules/johncms/downloads/src/Application/Controllers/EditFileController.php:77
 #: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:117
 #: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php:108
@@ -146,7 +147,8 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php:262
 #: modules/johncms/downloads/src/Application/Controllers/EditScreenController.php:145
 #: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:244
-#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:103
+#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:106
+#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:118
 #: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:119
 #: modules/johncms/downloads/templates/public/import-result.twig:25
 #: modules/johncms/downloads/templates/public/view.twig:153
@@ -163,7 +165,7 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php:275
 #: modules/johncms/downloads/src/Application/Controllers/CreateCategoryController.php:117
 #: modules/johncms/downloads/src/Application/Controllers/CreateCategoryController.php:133
-#: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php:117
+#: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php:120
 #: modules/johncms/downloads/src/Application/Controllers/EditFileController.php:79
 #: modules/johncms/downloads/src/Application/Controllers/EditScreenController.php:109
 #: modules/johncms/downloads/src/Application/Controllers/EditScreenController.php:136
@@ -189,8 +191,8 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/FileCommentsController.php:82
 #: modules/johncms/downloads/src/Application/Controllers/LoadFileController.php:70
 #: modules/johncms/downloads/src/Application/Controllers/LoadFileController.php:72
-#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:130
-#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:132
+#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:125
+#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:127
 #: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php:206
 #: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php:208
 msgid "File not found"
@@ -203,7 +205,7 @@ msgid "Comments are disabled"
 msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/CommentsReviewController.php:115
-#: modules/johncms/downloads/templates/public/index.twig:147
+#: modules/johncms/downloads/templates/public/index.twig:152
 msgid "Review comments"
 msgstr ""
 
@@ -214,7 +216,7 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/CreateCategoryController.php:113
 #: modules/johncms/downloads/src/Application/Controllers/CreateCategoryController.php:129
 #: modules/johncms/downloads/src/Application/Controllers/CreateCategoryController.php:154
-#: modules/johncms/downloads/templates/public/index.twig:127
+#: modules/johncms/downloads/templates/public/index.twig:132
 msgid "Create Folder"
 msgstr ""
 
@@ -233,7 +235,7 @@ msgid "Invalid characters"
 msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/CreateCategoryController.php:105
-#: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php:105
+#: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php:108
 #: modules/johncms/downloads/templates/public/category-form.twig:43
 msgid "You can write only the following extensions"
 msgstr ""
@@ -257,7 +259,7 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/DeleteCategoryController.php:45
 #: modules/johncms/downloads/src/Application/Controllers/DeleteCategoryController.php:64
 #: modules/johncms/downloads/src/Application/Controllers/DeleteCategoryController.php:65
-#: modules/johncms/downloads/templates/public/index.twig:131
+#: modules/johncms/downloads/templates/public/index.twig:136
 msgid "Delete Folder"
 msgstr ""
 
@@ -267,9 +269,9 @@ msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php:41
 #: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php:50
-#: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php:113
-#: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php:137
-#: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php:138
+#: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php:116
+#: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php:140
+#: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php:141
 msgid "Edit Folder"
 msgstr ""
 
@@ -303,7 +305,7 @@ msgid "For registered users only"
 msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/FavoritesController.php:57
-#: modules/johncms/downloads/templates/public/index.twig:149
+#: modules/johncms/downloads/templates/public/index.twig:154
 msgid "Favorites"
 msgstr ""
 
@@ -324,20 +326,21 @@ msgid "The file is awaiting moderation"
 msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:28
-#: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:50
-#: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:54
+#: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:41
+#: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:46
+#: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:59
 #: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:63
-#: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:100
-#: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:101
+#: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:96
+#: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:97
 msgid "Files awaiting moderation"
 msgstr ""
 
-#: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:52
-msgid "File accepted"
+#: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:48
+msgid "All files accepted"
 msgstr ""
 
-#: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:65
-msgid "All files accepted"
+#: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:61
+msgid "File accepted"
 msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:60
@@ -348,8 +351,8 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:75
 #: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:209
 #: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:210
-#: modules/johncms/downloads/templates/public/index.twig:117
-#: modules/johncms/downloads/templates/public/index.twig:139
+#: modules/johncms/downloads/templates/public/index.twig:122
+#: modules/johncms/downloads/templates/public/index.twig:144
 msgid "Upload File"
 msgstr ""
 
@@ -375,26 +378,21 @@ msgstr ""
 msgid "The file name contains invalid characters"
 msgstr ""
 
-#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:48
-#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:87
-#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:88
-#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:99
-#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:111
+#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:50
+#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:81
+#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:82
+#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:102
+#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:114
 #: modules/johncms/downloads/templates/public/view.twig:135
 msgid "Move File"
 msgstr ""
 
-#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:101
+#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:104
 msgid "This is the current directory"
 msgstr ""
 
-#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:113
+#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:116
 msgid "The file has been moved"
-msgstr ""
-
-#: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:115
-#: modules/johncms/downloads/templates/public/components/recount-form.twig:10
-msgid "Update counters"
 msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/NewFilesController.php:45
@@ -706,22 +704,22 @@ msgstr ""
 
 #: modules/johncms/downloads/templates/public/additional-files.twig:23
 #: modules/johncms/downloads/templates/public/comments-review.twig:97
-#: modules/johncms/downloads/templates/public/index.twig:59
+#: modules/johncms/downloads/templates/public/index.twig:64
 msgid "Edit"
 msgstr ""
 
 #: modules/johncms/downloads/templates/public/additional-files.twig:24
 #: modules/johncms/downloads/templates/public/comments-review.twig:100
-#: modules/johncms/downloads/templates/public/components/file-row.twig:22
+#: modules/johncms/downloads/templates/public/components/file-row.twig:26
 #: modules/johncms/downloads/templates/public/confirm-delete.twig:19
 #: modules/johncms/downloads/templates/public/delete-category.twig:21
 #: modules/johncms/downloads/templates/public/edit-screenshots.twig:25
-#: modules/johncms/downloads/templates/public/index.twig:60
+#: modules/johncms/downloads/templates/public/index.twig:65
 msgid "Delete"
 msgstr ""
 
 #: modules/johncms/downloads/templates/public/additional-files.twig:31
-#: modules/johncms/downloads/templates/public/index.twig:114
+#: modules/johncms/downloads/templates/public/index.twig:119
 msgid "Add file"
 msgstr ""
 
@@ -806,8 +804,7 @@ msgstr ""
 #: modules/johncms/downloads/templates/public/edit-file.twig:69
 #: modules/johncms/downloads/templates/public/edit-screenshots.twig:48
 #: modules/johncms/downloads/templates/public/import.twig:60
-#: modules/johncms/downloads/templates/public/move-file-confirm.twig:16
-#: modules/johncms/downloads/templates/public/move-file.twig:34
+#: modules/johncms/downloads/templates/public/move-file.twig:50
 #: modules/johncms/downloads/templates/public/upload-result.twig:34
 #: modules/johncms/downloads/templates/public/upload.twig:64
 msgid "Cancel"
@@ -840,7 +837,7 @@ msgstr ""
 
 #: modules/johncms/downloads/templates/public/comments-review.twig:12
 #: modules/johncms/downloads/templates/public/moderation.twig:15
-#: modules/johncms/downloads/templates/public/move-file.twig:26
+#: modules/johncms/downloads/templates/public/move-file.twig:35
 #: modules/johncms/downloads/templates/public/new-files.twig:13
 #: modules/johncms/downloads/templates/public/user-files.twig:18
 msgid "The list is empty"
@@ -866,8 +863,28 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/components/file-row.twig:21
+#: modules/johncms/downloads/templates/public/components/file-row.twig:24
 msgid "Accept"
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/components/move-form.twig:12
+msgid "Move the file?"
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/components/move-form.twig:13
+msgid "The file “%s” is moved to the section “%s”."
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/components/move-form.twig:13
+msgid "The file “%s” is moved to the opened section."
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/components/move-form.twig:14
+msgid "Move file"
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/components/recount-form.twig:10
+msgid "Update counters"
 msgstr ""
 
 #: modules/johncms/downloads/templates/public/confirm-delete.twig:13
@@ -897,7 +914,7 @@ msgid "Add screenshot"
 msgstr ""
 
 #: modules/johncms/downloads/templates/public/favorites.twig:13
-#: modules/johncms/downloads/templates/public/index.twig:103
+#: modules/johncms/downloads/templates/public/index.twig:108
 #: modules/johncms/downloads/templates/public/search.twig:31
 #: modules/johncms/downloads/templates/public/top-files.twig:20
 #: modules/johncms/downloads/templates/public/top-users.twig:13
@@ -905,8 +922,8 @@ msgid "List is empty"
 msgstr ""
 
 #: modules/johncms/downloads/templates/public/favorites.twig:22
-#: modules/johncms/downloads/templates/public/index.twig:93
-#: modules/johncms/downloads/templates/public/moderation.twig:31
+#: modules/johncms/downloads/templates/public/index.twig:98
+#: modules/johncms/downloads/templates/public/moderation.twig:36
 #: modules/johncms/downloads/templates/public/new-files.twig:22
 #: modules/johncms/downloads/templates/public/search.twig:40
 #: modules/johncms/downloads/templates/public/user-files.twig:29
@@ -942,75 +959,77 @@ msgstr ""
 msgid "Up"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/index.twig:57
+#: modules/johncms/downloads/templates/public/index.twig:56
 msgid "Down"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/index.twig:67
+#: modules/johncms/downloads/templates/public/index.twig:72
 msgid "List of files"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/index.twig:73
+#: modules/johncms/downloads/templates/public/index.twig:78
 msgid "Sorting"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/index.twig:75
+#: modules/johncms/downloads/templates/public/index.twig:80
 msgid "by time"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/index.twig:76
+#: modules/johncms/downloads/templates/public/index.twig:81
 msgid "by name"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/index.twig:80
+#: modules/johncms/downloads/templates/public/index.twig:85
 msgid "descending"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/index.twig:81
+#: modules/johncms/downloads/templates/public/index.twig:86
 msgid "ascending"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/index.twig:83
+#: modules/johncms/downloads/templates/public/index.twig:88
 msgid "Sort"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/index.twig:118
+#: modules/johncms/downloads/templates/public/index.twig:123
 msgid "Import File"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/index.twig:124
+#: modules/johncms/downloads/templates/public/index.twig:129
 msgid "Section actions"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/index.twig:128
+#: modules/johncms/downloads/templates/public/index.twig:133
 msgid "Update Files"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/index.twig:130
+#: modules/johncms/downloads/templates/public/index.twig:135
 msgid "Change Folder"
 msgstr ""
 
 #: modules/johncms/downloads/templates/public/moderation.twig:26
+msgid "Accept all files?"
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/moderation.twig:27
+msgid "%d file awaiting moderation becomes visible to everyone."
+msgid_plural "%d files awaiting moderation become visible to everyone."
+msgstr[0] ""
+
+#: modules/johncms/downloads/templates/public/moderation.twig:28
+#: modules/johncms/downloads/templates/public/moderation.twig:30
 msgid "Accept all files"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/move-file-confirm.twig:12
-msgid "Are you sure you want to move the file?"
-msgstr ""
-
-#: modules/johncms/downloads/templates/public/move-file-confirm.twig:15
-msgid "Move file"
-msgstr ""
-
-#: modules/johncms/downloads/templates/public/move-file.twig:12
+#: modules/johncms/downloads/templates/public/move-file.twig:14
 msgid "Select a section to move"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/move-file.twig:19
+#: modules/johncms/downloads/templates/public/move-file.twig:26
 msgid "Move file to this section"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/move-file.twig:30
+#: modules/johncms/downloads/templates/public/move-file.twig:44
 msgid "Move file here"
 msgstr ""
 

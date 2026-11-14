@@ -12,8 +12,9 @@ use Tests\Support\Fixture;
 use Tests\Support\FunctionalUserFactory;
 
 /**
- * The maintenance of the downloads — the scan, the removal of missing files, the recount — is
- * started by a form; opening an address changes nothing.
+ * The maintenance of the downloads — the scan, the removal of missing files, the recount, moving
+ * and accepting files, the order of categories — is started by a form; opening an address changes
+ * nothing.
  */
 final class DownloadsMaintenanceTest extends FunctionalTestCase
 {
@@ -81,5 +82,70 @@ final class DownloadsMaintenanceTest extends FunctionalTestCase
 
         self::assertNull($page->querySelector('.alert-info'), 'Opening the old address does not scan.');
         self::assertNotNull($page->querySelector('form[method="post"][action="/downloads/scan-dir"] input[name="mod"]'));
+    }
+
+    public function testAFileIsMovedOnlyByAConfirmedForm(): void
+    {
+        $moderator = FunctionalUserFactory::createSupervisor();
+        $target = $this->directory . '/target';
+        mkdir($target);
+        file_put_contents($this->directory . '/moved.zip', 'a download');
+        $from = Fixture::insert('download__category', ['name' => 'from', 'dir' => $this->directory, 'rus_name' => 'From', 'total' => 0]);
+        $to = Fixture::insert('download__category', ['name' => 'target', 'dir' => $target, 'rus_name' => 'Target', 'total' => 0]);
+        $file = Fixture::insert('download__files', ['type' => 2, 'refid' => $from, 'name' => 'moved.zip', 'dir' => $this->directory, 'rus_name' => 'Moved']);
+
+        try {
+            $this->handleRequest('/downloads/move-file/' . $file . '/?catId=' . $to . '&do=transfer&yes', cookies: $this->actingAs($moderator));
+            self::assertSame($from, DownloadFile::query()->whereKey($file)->value('refid'), 'Opening the old address moves nothing.');
+
+            $unconfirmed = $this->postForm('/downloads/move-file/' . $file, ['catId' => (string) $to], $moderator);
+            self::assertSame(409, $unconfirmed->getStatusCode());
+            self::assertSame($from, DownloadFile::query()->whereKey($file)->value('refid'));
+
+            $moved = $this->postForm('/downloads/move-file/' . $file, ['catId' => (string) $to, 'confirmed' => '1'], $moderator);
+            self::assertSame(200, $moved->getStatusCode());
+            self::assertSame($to, DownloadFile::query()->whereKey($file)->value('refid'));
+            self::assertFileExists($target . '/moved.zip');
+            self::assertSame(1, DownloadCategory::query()->whereKey($to)->value('total'), 'The counters follow the move.');
+        } finally {
+            @unlink($target . '/moved.zip');
+            @unlink($this->directory . '/moved.zip');
+            rmdir($target);
+        }
+    }
+
+    public function testFilesAreAcceptedOnlyByAForm(): void
+    {
+        $moderator = FunctionalUserFactory::createSupervisor();
+        // type 3 waits for a moderator.
+        $first = Fixture::insert('download__files', ['type' => 3, 'name' => 'present.zip', 'dir' => $this->directory, 'rus_name' => 'First']);
+        $second = Fixture::insert('download__files', ['type' => 3, 'name' => 'present.zip', 'dir' => $this->directory, 'rus_name' => 'Second']);
+
+        $this->handleRequest('/downloads/moderation?accept=' . $first, cookies: $this->actingAs($moderator));
+        self::assertSame(3, DownloadFile::query()->whereKey($first)->value('type'), 'Opening the old address accepts nothing.');
+
+        $this->postForm('/downloads/moderation', ['accept' => (string) $first], $moderator);
+        self::assertSame(2, DownloadFile::query()->whereKey($first)->value('type'));
+        self::assertSame(3, DownloadFile::query()->whereKey($second)->value('type'));
+
+        self::assertSame(409, $this->postForm('/downloads/moderation/accept-all', [], $moderator)->getStatusCode());
+        self::assertSame(3, DownloadFile::query()->whereKey($second)->value('type'));
+        $this->postForm('/downloads/moderation/accept-all', ['confirmed' => '1'], $moderator);
+        self::assertSame(2, DownloadFile::query()->whereKey($second)->value('type'));
+    }
+
+    public function testCategoriesAreReorderedOnlyByAForm(): void
+    {
+        $moderator = FunctionalUserFactory::createSupervisor();
+        $upper = Fixture::insert('download__category', ['name' => 'upper', 'dir' => $this->directory, 'rus_name' => 'Upper', 'sort' => 1]);
+        $lower = Fixture::insert('download__category', ['name' => 'lower', 'dir' => $this->directory, 'rus_name' => 'Lower', 'sort' => 2]);
+
+        $this->handleRequest('/downloads/categories/' . $lower . '/edit?do=up', cookies: $this->actingAs($moderator));
+        self::assertSame(2, DownloadCategory::query()->whereKey($lower)->value('sort'), 'Opening the old address reorders nothing.');
+
+        $response = $this->postForm('/downloads/categories/' . $lower . '/sort', ['direction' => 'up'], $moderator);
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame(1, DownloadCategory::query()->whereKey($lower)->value('sort'));
+        self::assertSame(2, DownloadCategory::query()->whereKey($upper)->value('sort'));
     }
 }
