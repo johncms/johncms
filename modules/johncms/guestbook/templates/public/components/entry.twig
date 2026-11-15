@@ -17,8 +17,8 @@
                 <span class="site-comment__name">{{ post.user ? post.name : __('Guest') ~ ': ' ~ post.name }}</span>
             {% endif %}
             {% if post.user and post.user.rightsName %}<span class="site-comment__role">{{ post.user.rightsName }}</span>{% endif %}
-            {# The date leads to the entry: the number of an entry is its id, which says nothing to a reader. #}
-            <a class="site-comment__date" href="#guestbook-entry-{{ post.id }}"><time>{{ post.createdAt }}</time></a>
+            {# The date is the lasting link of the entry: the number of an entry is its id, which says nothing to a reader. #}
+            <a class="site-comment__date" href="/guestbook/entry/{{ post.id }}"><time>{{ post.createdAt }}</time></a>
             {% if post.editCount %}
                 <span class="site-comment__date" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Edited:') }} {{ post.updatedBy }} ({{ post.updateAt }}) [{{ post.editCount }}]">{{ __('Edited') }}</span>
             {% endif %}

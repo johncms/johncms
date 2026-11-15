@@ -7,6 +7,7 @@ use Johncms\Http\Middleware\RequireConfirmationMiddleware;
 use Johncms\Modules\Guestbook\Application\Controllers\ClearGuestbookController;
 use Johncms\Modules\Guestbook\Application\Controllers\DeleteEntryController;
 use Johncms\Modules\Guestbook\Application\Controllers\EditEntryController;
+use Johncms\Modules\Guestbook\Application\Controllers\EntryLinkController;
 use Johncms\Modules\Guestbook\Application\Controllers\GuestbookController;
 use Johncms\Modules\Guestbook\Application\Controllers\ReplyController;
 use Johncms\Modules\Guestbook\Application\Controllers\SwitchTypeController;
@@ -19,6 +20,7 @@ use Johncms\Router\RouteCollection;
 return static function (RouteCollection $router): void {
     $router->map(['GET', 'POST'], '/guestbook', GuestbookController::class)->name('guestbook.index');
     $router->map(['GET', 'POST'], '/guestbook/ga', SwitchTypeController::class)->name('guestbook.switch_type');
+    $router->get('/guestbook/entry/{id:number}', EntryLinkController::class)->name('guestbook.entry');
     $router
         ->map(['GET', 'POST'], '/guestbook/edit', EditEntryController::class)
         ->name('guestbook.edit')

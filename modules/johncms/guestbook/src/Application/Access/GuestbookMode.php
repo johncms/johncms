@@ -45,6 +45,22 @@ final readonly class GuestbookMode
         }
     }
 
+    /** Whether the visitor may read the entries of the given guestbook. */
+    public function canEnter(bool $adminClub): bool
+    {
+        return ! $adminClub || $this->hasAdminClubAccess();
+    }
+
+    /** Opens the given guestbook; the admin club only for those let into it. */
+    public function enter(bool $adminClub): void
+    {
+        if ($adminClub && $this->hasAdminClubAccess()) {
+            $this->session->set(self::SESSION_KEY, 1);
+        } elseif (! $adminClub) {
+            $this->session->remove(self::SESSION_KEY);
+        }
+    }
+
     private function hasAdminClubAccess(): bool
     {
         return $this->accessChecker->allows(GuestbookPermissions::ADMIN_CLUB_VIEW)

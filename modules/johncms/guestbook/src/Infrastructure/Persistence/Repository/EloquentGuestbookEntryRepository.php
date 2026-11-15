@@ -18,6 +18,7 @@ class EloquentGuestbookEntryRepository implements GuestbookEntryRepositoryInterf
             ->with('user')
             ->where('adm', $adminClub ? 1 : 0)
             ->orderByDesc('time')
+            ->orderByDesc('id')
             ->offset($offset)
             ->limit($limit)
             ->get();
@@ -35,6 +36,21 @@ class EloquentGuestbookEntryRepository implements GuestbookEntryRepositoryInterf
         return GuestbookEntry::query()
             ->where('adm', $adminClub ? 1 : 0)
             ->where('time', '>', $time)
+            ->count();
+    }
+
+    public function countEntriesAbove(GuestbookEntry $entry): int
+    {
+        // The feed puts the newer entries first, and of two written in the same second the later one.
+        $time = (int) $entry->getRawOriginal('time');
+
+        return GuestbookEntry::query()
+            ->where('adm', $entry->adm ? 1 : 0)
+            ->where(
+                fn (Builder $query) => $query
+                    ->where('time', '>', $time)
+                    ->orWhere(fn (Builder $same) => $same->where('time', $time)->where('id', '>', $entry->id))
+            )
             ->count();
     }
 

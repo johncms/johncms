@@ -18,6 +18,9 @@ interface GuestbookEntryRepositoryInterface
 
     public function countEntriesSince(bool $adminClub, int $time): int;
 
+    /** The entries shown above the given one in its guestbook: the newer ones. */
+    public function countEntriesAbove(GuestbookEntry $entry): int;
+
     public function find(int $id): ?GuestbookEntry;
 
     /**
