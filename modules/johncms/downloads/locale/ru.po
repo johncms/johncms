@@ -1371,3 +1371,10 @@ msgstr "Загрузки на модерации"
 
 msgid "files added today"
 msgstr "файлов добавлено сегодня"
+
+msgid "One more file"
+msgid_plural "%d more files"
+msgstr[0] "Ещё %d файл"
+msgstr[1] "Ещё %d файла"
+msgstr[2] "Ещё %d файлов"
+msgstr[3] "Ещё %d файлов"

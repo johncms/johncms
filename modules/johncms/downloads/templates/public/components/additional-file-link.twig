@@ -1,0 +1,10 @@
+{#
+    A link that downloads an additional file of a file.
+
+    @var file array{url: string, name: string, size: string}
+#}
+<a class="site-dlf__file" href="{{ file.url }}" title="{{ file.name }}">
+    {% include '@theme/components/icon.twig' with {name: 'download', size: 14} only %}
+    <span class="site-dlf__file-name">{{ file.name }}</span>
+    <span class="site-dlf__file-size">{{ file.size }}</span>
+</a>

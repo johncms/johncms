@@ -93,4 +93,20 @@ final class DownloadsFileActionsTest extends FunctionalTestCase
         self::assertNull($page->querySelector('.site-dlf__rating form'), 'One vote per session: the buttons are gone.');
         self::assertNotNull($page->querySelector('.site-dlf__favorite[value="addBookmark"]'));
     }
+
+    public function testTheAdditionalFilesStandUnderTheDownloadAndThoseAfterTheFourthAreFolded(): void
+    {
+        $id = Fixture::insert('download__files', ['type' => 2, 'name' => 'file.zip', 'dir' => $this->directory, 'rus_name' => 'A file', 'slug' => 'a-file', 'rate' => '0|0', 'time' => time()]);
+        for ($number = 1; $number <= 6; $number++) {
+            Fixture::insert('download__more', ['refid' => $id, 'name' => 'file.zip', 'rus_name' => 'Attachment ' . $number, 'time' => time(), 'size' => 13]);
+        }
+
+        $page = HTMLDocument::createFromString((string) $this->handleRequest('/downloads/a-file-' . $id . '/')->getContent(), LIBXML_NOERROR);
+
+        self::assertCount(6, $page->querySelectorAll('.site-dlf__get .site-dlf__file'));
+        self::assertCount(4, $page->querySelectorAll('.site-dlf__extra > .site-dlf__files > .site-dlf__file'));
+        self::assertCount(2, $page->querySelectorAll('.site-dlf__more .site-dlf__file'));
+        self::assertStringContainsString('2', (string) $page->querySelector('.site-dlf__more > summary')?->textContent);
+        self::assertNull($page->querySelector('.site-dlf__main .site-dlf__file'), 'The main column holds no download.');
+    }
 }

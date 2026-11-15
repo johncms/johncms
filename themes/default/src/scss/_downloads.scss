@@ -77,8 +77,15 @@
   .site-dl-file__desc { white-space: normal; }
 }
 
-// The page of a file: what it is on the left, how to get it on the right. On a narrow screen the
-// side column comes first, so the download is right under the heading.
+// The page of a file: what it is on the left, how to get it on the right. The layout follows the
+// width of the page rather than of the window, which the menu shares on a desktop:
+// - wide: the two columns, the side one sticky;
+// - medium: one column — what the file is (the description, the screenshots), then the side laid
+//   out in two columns of its own (the downloads and their numbers, the rating and the actions),
+//   then the properties and the comments;
+// - narrow: the same order with the side in one column.
+.site-dlf-container { container: site-dlf / inline-size; }
+
 .site-dlf {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 20rem;
@@ -87,6 +94,15 @@
 
   &__main { display: flex; flex-direction: column; gap: .5rem; min-inline-size: 0; }
   &__side { position: sticky; inset-block-start: 5rem; display: flex; flex-direction: column; gap: .625rem; min-inline-size: 0; }
+  &__side-col { display: flex; flex-direction: column; gap: .625rem; min-inline-size: 0; }
+  &__get { display: flex; flex-direction: column; gap: .375rem; }
+  &__extra { padding: .75rem; border: 1px solid var(--border); border-radius: .625rem; background: var(--bg-elev); }
+  &__extra .site-dlf__file { padding: .5rem .625rem; gap: .5rem; }
+  &__more > summary { display: inline-flex; margin-block-start: .375rem; color: var(--accent); font-size: .75rem; cursor: pointer; list-style: none; }
+  &__more > summary::-webkit-details-marker { display: none; }
+  &__more > summary:hover { text-decoration: underline; }
+  &__more[open] > summary { display: none; }
+  &__more > .site-dlf__files { margin-block-start: .25rem; }
 
   &__section { padding: 1.25rem; border: 1px solid var(--border); border-radius: .75rem; background: var(--bg-elev); min-inline-size: 0; }
   &__section-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; margin-block-end: .875rem; }
@@ -122,7 +138,7 @@
   &__file { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: .75rem; align-items: center; padding: .625rem .875rem; border: 1px solid var(--border); border-radius: .5rem; background: var(--bg-inset); color: var(--fg); font-size: .8125rem; text-decoration: none; transition: border-color .12s; }
   &__file:hover { border-color: var(--accent); color: var(--accent); }
   &__file > .site-icon { color: var(--accent); }
-  &__file-name { font-weight: 600; overflow-wrap: anywhere; }
+  &__file-name { overflow: hidden; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
   &__file-size { color: var(--fg-dim); font-family: var(--bs-font-monospace); font-size: .6875rem; }
 
   &__comments { display: flex; align-items: center; gap: .625rem; padding: .875rem 1.125rem; border: 1px solid var(--border); border-radius: .625rem; background: var(--bg-inset); color: var(--fg); font-size: .875rem; text-decoration: none; transition: border-color .12s; }
@@ -146,7 +162,7 @@
   &__stat dd { margin: 0; color: var(--fg); font-family: var(--bs-font-monospace); font-size: .75rem; text-align: end; overflow-wrap: anywhere; }
 
   &__rating { padding: .875rem; border: 1px solid var(--border); border-radius: .625rem; background: var(--bg-elev); }
-  &__label { margin-block-end: .5rem; color: var(--fg-dim); font-family: var(--bs-font-monospace); font-size: .65625rem; letter-spacing: .08em; text-transform: uppercase; }
+  &__label { margin-block: 0 .5rem; font-weight: 400; color: var(--fg-dim); font-family: var(--bs-font-monospace); font-size: .65625rem; letter-spacing: .08em; text-transform: uppercase; }
   &__votes { display: flex; gap: .375rem; margin-block-end: .625rem; }
   &__vote { display: inline-flex; flex: 1; align-items: center; justify-content: center; gap: .375rem; padding: .4375rem .625rem; border: 1px solid var(--border); border-radius: .4375rem; background: var(--bg-inset); color: var(--fg-muted); font: inherit; font-size: .75rem; }
   &__vote--up { border-color: color-mix(in oklab, var(--accent) 35%, var(--border)); color: var(--accent); }
@@ -164,12 +180,25 @@
   &__actions .site-popover__panel { inset-inline: 0; inline-size: auto; }
 }
 
-@media (max-width: 1000px) {
-  .site-dlf { grid-template-columns: minmax(0, 1fr); }
-  .site-dlf__side { position: static; order: -1; }
+// Two columns need room for the description and the screenshots beside a side column of 20rem.
+@container site-dlf (max-width: 52rem) {
+  // The main column gives its blocks to the page, so the side can stand between them: after
+  // what the file is, before its properties and comments.
+  .site-dlf { grid-template-columns: minmax(0, 1fr); gap: .625rem; }
+  .site-dlf__main { display: contents; }
+  .site-dlf__side {
+    position: static;
+    order: 1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: .625rem 1rem;
+  }
+  .site-dlf__after-side { order: 2; }
 }
 
-@media (max-width: 700px) {
+@container site-dlf (max-width: 34rem) {
+  .site-dlf__side { display: flex; align-items: stretch; gap: .625rem; }
   .site-dlf__props { grid-template-columns: minmax(0, 1fr); }
   .site-dlf__prop:nth-child(odd) { border-inline-end: 0; }
   .site-dlf__prop:nth-last-child(-n + 2):nth-child(odd) { border-block-end: 1px solid var(--border); }
