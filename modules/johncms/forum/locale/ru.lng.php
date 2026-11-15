@@ -436,6 +436,7 @@
       'Last reply' => 'Последний ответ',
       'No replies yet' => 'Нет ответов',
       'Every post of the topic was chosen, so the whole topic is deleted' => 'Выбраны все сообщения темы, поэтому удалена вся тема',
+      'Delete the chosen posts?' => 'Удалить выбранные сообщения?',
     ),
   ),
 );

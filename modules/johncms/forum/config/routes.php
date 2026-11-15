@@ -124,7 +124,7 @@ return static function (RouteCollection $router): void {
             $r->map(['GET', 'POST'], '/forum/addvote/{id:number}', AddVoteController::class)->name('forum.add_vote'),
             $r->map(['GET', 'POST'], '/forum/change-topic/{id:number}', ChangeTopicController::class)->name('forum.change_topic'),
             $r->map(['GET', 'POST'], '/forum/curators/{id:number}', CuratorsController::class)->name('forum.curators'),
-            $r->post('/forum/bulk-delete-posts/{id:number}', BulkDeletePostsController::class)->name('forum.bulk_delete_posts'),
+            $bulkDeletePosts = $r->post('/forum/bulk-delete-posts/{id:number}', BulkDeletePostsController::class)->name('forum.bulk_delete_posts'),
             $r->map(['GET', 'POST'], '/forum/editvote/{id:number}', EditVoteController::class)->name('forum.edit_vote'),
             $deleteVote = $r->post('/forum/delvote/{id:number}', DeleteVoteController::class)->name('forum.delete_vote'),
             $deleteVoteAnswer = $r->post('/forum/editvote/{id:number}/answers/{answer:number}/delete', DeleteVoteAnswerController::class)
@@ -150,7 +150,7 @@ return static function (RouteCollection $router): void {
         }
 
         // Asked in a dialog of the page, after the visitor is known to be allowed to write at all.
-        foreach ([$deleteVote, $deleteVoteAnswer] as $route) {
+        foreach ([$bulkDeletePosts, $deleteVote, $deleteVoteAnswer] as $route) {
             $route->addMiddleware(RequireConfirmationMiddleware::class);
         }
 

@@ -11,12 +11,14 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\BulkDeletePostsUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetBulkDeletePostsContextUseCase;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
 
 final readonly class BulkDeletePostsController
 {
     public function __construct(
         private CurrentUser $currentUser,
+        private Session $session,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetBulkDeletePostsContextUseCase $contextUseCase,
         private BulkDeletePostsUseCase $bulkDeletePostsUseCase,
@@ -38,35 +40,17 @@ final readonly class BulkDeletePostsController
         }
 
         $ids = $this->extractIds((array) $request->bodyList('post_ids'));
-        $confirmIds = $this->extractIds((array) $request->bodyList('ids'));
-
-        if ($request->hasBody('confirm')) {
-            if ($confirmIds === []) {
-                return $this->result('alert-danger', __('You did not choose something to delete'), $backUrl);
-            }
-
-            $result = $this->bulkDeletePostsUseCase->execute($id, $confirmIds, $this->currentUser->user()->name);
-            if ($result->topicHidden) {
-                return $this->result('alert-success', __('Every post of the topic was chosen, so the whole topic is deleted'), $result->sectionUrl);
-            }
-
-            return $this->result('alert-success', __('Marked posts are deleted'), $backUrl);
-        }
-
         if ($ids === []) {
             return $this->result('alert-danger', __('You did not choose something to delete'), $backUrl);
         }
 
-        return new ViewResponse(
-            '@forum/public/bulk-delete-posts.twig',
-            [
-                'title'       => __('Delete posts'),
-                'page_title'  => __('Delete posts'),
-                'back_url'    => $backUrl,
-                'form_action' => '/forum/bulk-delete-posts/' . $id . '/',
-                'ids'         => $ids,
-            ]
-        );
+        $result = $this->bulkDeletePostsUseCase->execute($id, $ids, $this->currentUser->user()->name);
+        if ($result->topicHidden) {
+            return $this->result('alert-success', __('Every post of the topic was chosen, so the whole topic is deleted'), $result->sectionUrl);
+        }
+
+        $this->session->flash(ForumTopicController::MESSAGE, __('Marked posts are deleted'));
+        redirect($backUrl);
     }
 
     private function result(string $type, string $message, string $backUrl): ViewResponse

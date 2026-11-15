@@ -1819,3 +1819,6 @@ msgstr "Нет ответов"
 
 msgid "Every post of the topic was chosen, so the whole topic is deleted"
 msgstr "Выбраны все сообщения темы, поэтому удалена вся тема"
+
+msgid "Delete the chosen posts?"
+msgstr "Удалить выбранные сообщения?"

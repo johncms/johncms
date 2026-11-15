@@ -202,18 +202,18 @@
         <div class="border-bottom full-mobile-width mt-4 mb-3"></div>
     {% endif %}
 
-    {% if can_moderate %}
-        <form action="/forum/bulk-delete-posts/{{ id }}/" method="post">
-            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-    {% endif %}
-
     {% for message in messages %}
         {% include '@forum/public/components/message.twig' with {message: message, can_moderate: can_moderate} only %}
     {% endfor %}
 
     {% if can_moderate %}
         <div class="d-flex align-items-center mt-3 mb-3">
-            <button type="submit" name="submit" value="submit" class="btn btn-danger btn-sm me-1">{{ __('Delete selected') }}</button>
+            {# The boxes of the posts belong to this form by its id: the posts hold forms of their own. #}
+            <form action="/forum/bulk-delete-posts/{{ id }}/" method="post" id="topic-bulk-delete"
+                  data-confirm="{{ __('Delete the chosen posts?') }}" data-confirm-button="{{ __('Delete') }}">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                <button type="submit" class="btn btn-danger btn-sm me-1">{{ __('Delete selected') }}</button>
+            </form>
 
             <div class="dropdown">
                 <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="actions" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -247,10 +247,8 @@
                 </div>
             </div>
         </div>
-        </form>
 
-        {# The actions of the menu change the topic, so each sends a form; they stand apart from the
-           form of the posts, which cannot hold them. #}
+        {# The actions of the menu change the topic, so each sends a form of its own. #}
         <form method="post" action="/forum/close/{{ id }}/" id="topic-close">
             <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
             <input type="hidden" name="closed" value="{{ topic.closed ? 0 : 1 }}">

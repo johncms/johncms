@@ -42,13 +42,22 @@ final class ForumBulkDeletePostsTest extends FunctionalTestCase
         ]);
     }
 
-    public function testTheChosenPostsAreHidden(): void
+    public function testTheChosenPostsAreHiddenOnlyByAConfirmedForm(): void
     {
         $first = $this->post('first');
         $second = $this->post('second');
 
-        $this->deleteChosen([$second]);
+        $unconfirmed = $this->postForm(
+            '/forum/bulk-delete-posts/' . $this->topic . '/',
+            ['post_ids' => [(string) $second]],
+            FunctionalUserFactory::createSupervisor(),
+        );
+        self::assertSame(409, $unconfirmed->getStatusCode());
+        self::assertFalse($this->isHidden($second));
 
+        $response = $this->deleteChosen([$second]);
+
+        self::assertSame(302, $response->getStatusCode(), 'Leads back to the topic.');
         self::assertFalse($this->isHidden($first));
         self::assertTrue($this->isHidden($second));
         self::assertFalse($this->topic()->deleted);
@@ -125,7 +134,7 @@ final class ForumBulkDeletePostsTest extends FunctionalTestCase
     {
         return $this->postForm(
             '/forum/bulk-delete-posts/' . $this->topic . '/',
-            ['confirm' => '1', 'ids' => array_map('strval', $ids)],
+            ['confirmed' => '1', 'post_ids' => array_map('strval', $ids)],
             FunctionalUserFactory::createSupervisor(),
         );
     }

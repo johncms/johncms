@@ -7,8 +7,8 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/AddFileController.php:81
 #: modules/johncms/forum/src/Application/Controllers/AddVoteController.php:35
 #: modules/johncms/forum/src/Application/Controllers/AddVoteController.php:46
-#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:35
-#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:82
+#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:37
+#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:66
 #: modules/johncms/forum/src/Application/Controllers/ChangeTopicController.php:41
 #: modules/johncms/forum/src/Application/Controllers/ClearFilterByAuthorController.php:37
 #: modules/johncms/forum/src/Application/Controllers/CloseTopicController.php:35
@@ -257,23 +257,20 @@ msgstr ""
 msgid "Edit Section"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:45
-#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:57
+#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:44
 msgid "You did not choose something to delete"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:50
+#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:49
 msgid "Every post of the topic was chosen, so the whole topic is deleted"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:53
+#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:52
 msgid "Marked posts are deleted"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:63
-#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:64
-#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:77
-#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:78
+#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:61
+#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:62
 msgid "Delete posts"
 msgstr ""
 
@@ -296,7 +293,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/SetFilterByAuthorController.php:34
 #: modules/johncms/forum/src/Application/Controllers/SetFilterByAuthorController.php:47
 #: modules/johncms/forum/src/Application/Controllers/SetFilterByAuthorController.php:48
-#: modules/johncms/forum/templates/public/topic.twig:304
+#: modules/johncms/forum/templates/public/topic.twig:302
 msgid "Filter by author"
 msgstr ""
 
@@ -315,7 +312,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/CuratorsController.php:87
 #: modules/johncms/forum/src/Application/Controllers/DeleteTopicController.php:52
 #: modules/johncms/forum/src/Application/Controllers/DeleteTopicController.php:53
-#: modules/johncms/forum/templates/public/topic.twig:289
+#: modules/johncms/forum/templates/public/topic.twig:287
 msgid "Curators"
 msgstr ""
 
@@ -667,14 +664,14 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Services/ForumStructureRowMapper.php:61
 #: modules/johncms/forum/templates/admin/delete-section-dialog.twig:86
 #: modules/johncms/forum/templates/admin/purge-hidden-dialog.twig:44
-#: modules/johncms/forum/templates/public/bulk-delete-posts.twig:22
 #: modules/johncms/forum/templates/public/components/message.twig:126
 #: modules/johncms/forum/templates/public/components/message.twig:171
 #: modules/johncms/forum/templates/public/delete-post-file.twig:17
 #: modules/johncms/forum/templates/public/delete-post.twig:24
 #: modules/johncms/forum/templates/public/delete-topic.twig:25
 #: modules/johncms/forum/templates/public/edit-poll.twig:61
-#: modules/johncms/forum/templates/public/topic.twig:270
+#: modules/johncms/forum/templates/public/topic.twig:213
+#: modules/johncms/forum/templates/public/topic.twig:268
 msgid "Delete"
 msgstr ""
 
@@ -1031,7 +1028,6 @@ msgstr ""
 
 #: modules/johncms/forum/templates/admin/delete-section-dialog.twig:83
 #: modules/johncms/forum/templates/admin/purge-hidden-dialog.twig:41
-#: modules/johncms/forum/templates/public/bulk-delete-posts.twig:23
 #: modules/johncms/forum/templates/public/clear-search-history.twig:17
 #: modules/johncms/forum/templates/public/delete-post-file.twig:18
 #: modules/johncms/forum/templates/public/delete-post.twig:28
@@ -1398,13 +1394,6 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/bulk-delete-posts.twig:13
-#: modules/johncms/forum/templates/public/delete-post-file.twig:12
-#: modules/johncms/forum/templates/public/delete-post.twig:19
-#: modules/johncms/forum/templates/public/delete-topic.twig:15
-msgid "Do you really want to delete?"
-msgstr ""
-
 #: modules/johncms/forum/templates/public/change-topic.twig:18
 #: modules/johncms/forum/templates/public/change-topic.twig:19
 msgid "Topic name"
@@ -1494,6 +1483,12 @@ msgstr ""
 msgid "Assign"
 msgstr ""
 
+#: modules/johncms/forum/templates/public/delete-post-file.twig:12
+#: modules/johncms/forum/templates/public/delete-post.twig:19
+#: modules/johncms/forum/templates/public/delete-topic.twig:15
+msgid "Do you really want to delete?"
+msgstr ""
+
 #: modules/johncms/forum/templates/public/delete-post-file.twig:22
 #: modules/johncms/forum/templates/public/delete-post.twig:32
 msgid "After deleting, one point will be subtracted from the counter of forum posts"
@@ -1541,7 +1536,7 @@ msgstr ""
 #: modules/johncms/forum/templates/public/poll-voters.twig:24
 #: modules/johncms/forum/templates/public/search.twig:71
 #: modules/johncms/forum/templates/public/topic-list.twig:86
-#: modules/johncms/forum/templates/public/topic.twig:281
+#: modules/johncms/forum/templates/public/topic.twig:279
 #: modules/johncms/forum/templates/public/topics.twig:95
 #: modules/johncms/forum/templates/public/visitors.twig:38
 msgid "Total"
@@ -1557,7 +1552,7 @@ msgstr ""
 
 #: modules/johncms/forum/templates/public/filter-by-author.twig:51
 #: modules/johncms/forum/templates/public/topic.twig:77
-#: modules/johncms/forum/templates/public/topic.twig:301
+#: modules/johncms/forum/templates/public/topic.twig:299
 msgid "Cancel Filter"
 msgstr ""
 
@@ -1690,7 +1685,11 @@ msgstr ""
 msgid "Total votes"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/topic.twig:216
+#: modules/johncms/forum/templates/public/topic.twig:213
+msgid "Delete the chosen posts?"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/topic.twig:215
 msgid "Delete selected"
 msgstr ""
 
@@ -1726,11 +1725,11 @@ msgstr ""
 msgid "Move Topic"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/topic.twig:269
+#: modules/johncms/forum/templates/public/topic.twig:267
 msgid "Do you really want to delete a poll?"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/topic.twig:312
+#: modules/johncms/forum/templates/public/topic.twig:310
 msgid "Who is here"
 msgstr ""
 

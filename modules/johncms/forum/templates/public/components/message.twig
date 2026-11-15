@@ -81,7 +81,7 @@
 
         {% if can_moderate %}
             <div class="custom-control custom-checkbox d-inline float-right">
-                <input type="checkbox" class="custom-control-input" name="post_ids[]" value="{{ message.id }}" id="check_{{ message.id }}">
+                <input type="checkbox" class="custom-control-input" name="post_ids[]" value="{{ message.id }}" id="check_{{ message.id }}" form="topic-bulk-delete">
                 <label class="custom-control-label" for="check_{{ message.id }}"></label>
             </div>
         {% endif %}
