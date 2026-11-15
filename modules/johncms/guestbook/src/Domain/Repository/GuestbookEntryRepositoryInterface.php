@@ -24,6 +24,14 @@ interface GuestbookEntryRepositoryInterface
     public function find(int $id): ?GuestbookEntry;
 
     /**
+     * The entries that still exist of the given ones, by id.
+     *
+     * @param list<int> $ids
+     * @return array<int, GuestbookEntry>
+     */
+    public function getByIds(array $ids): array;
+
+    /**
      * @param array<string, mixed> $attributes
      */
     public function create(array $attributes): GuestbookEntry;

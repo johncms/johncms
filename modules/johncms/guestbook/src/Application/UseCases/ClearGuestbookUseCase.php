@@ -6,6 +6,7 @@ namespace Johncms\Modules\Guestbook\Application\UseCases;
 
 use Johncms\Database\TransactionManagerInterface;
 use Johncms\EditorUploads\EditorUploads;
+use Johncms\Modules\Guestbook\Application\Services\GuestbookReplyNotifier;
 use Johncms\Modules\Guestbook\Application\Uploads\GuestbookEditorUploads;
 use Johncms\Modules\Guestbook\Domain\Enums\ClearGuestbookPeriod;
 use Johncms\Modules\Guestbook\Domain\Repository\GuestbookEntryRepositoryInterface;
@@ -16,10 +17,11 @@ final readonly class ClearGuestbookUseCase
         private GuestbookEntryRepositoryInterface $repository,
         private EditorUploads $uploads,
         private TransactionManagerInterface $transactions,
+        private GuestbookReplyNotifier $replyNotifier,
     ) {
     }
 
-    /** The entries of the period go with their pictures; the files are removed once the deletion commits. */
+    /** The entries of the period go with their pictures and the notifications they answered with; the files are removed once the deletion commits. */
     public function execute(bool $adminClub, ClearGuestbookPeriod $period): void
     {
         $maxAge = $period->maxAge();
@@ -30,6 +32,7 @@ final readonly class ClearGuestbookUseCase
             foreach (array_chunk($ids, 500) as $chunk) {
                 $this->repository->deleteByIds($chunk);
                 $this->uploads->detach(GuestbookEditorUploads::OWNER_TYPE, $chunk);
+                $this->replyNotifier->withdrawn($chunk);
             }
         });
     }

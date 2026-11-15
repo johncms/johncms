@@ -13,8 +13,10 @@ use Johncms\Auth\Authorization\PermissionResolver;
 use Johncms\Auth\Authorization\RoleLevels;
 use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\CurrentUser;
+use Johncms\Comments\Application\CommentExcerpt;
 use Johncms\Config\ConfigRepository;
 use Johncms\Content\ContentRendererInterface;
+use Johncms\Content\Html\HtmlFragment;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Modules\Guestbook\Application\Access\GuestbookMode;
@@ -182,6 +184,7 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
             new RoleLevels($this->roles),
             new StaffTitles($this->roles),
             new FakeProfileLinks(),
+            new CommentExcerpt(new HtmlFragment()),
         );
     }
 

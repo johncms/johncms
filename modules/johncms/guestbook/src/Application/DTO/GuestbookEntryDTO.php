@@ -22,7 +22,8 @@ final readonly class GuestbookEntryDTO
         public string $repliedAt,
         public int $userId,
         public ?GuestbookEntryUserDTO $user,
-        public ?GuestbookEntryMetaDTO $meta
+        public ?GuestbookEntryMetaDTO $meta,
+        public ?GuestbookEntryReplyDTO $replyTo = null,
     ) {
     }
 }

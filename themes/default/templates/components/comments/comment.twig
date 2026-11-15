@@ -9,7 +9,7 @@
 #}
 {% set author = comment.author %}
 {% set name = author ? author.name : (comment.authorName ?: d__('system', 'Unknown author')) %}
-<article class="site-comment" id="comment-{{ comment.id }}" data-comment{% if added %} data-live-list-target{% endif %}>
+<article class="site-comment" id="comment-{{ comment.id }}" data-comment data-comment-id="{{ comment.id }}"{% if added %} data-live-list-target{% endif %}>
     <div class="site-comment__avatar">
         <img src="{{ avatar(author ? author.id : 0) }}" alt="" width="40" height="40" loading="lazy">
         {% if author and author.online %}<span class="site-comment__online" title="{{ d__('system', 'Online') }}"></span>{% endif %}

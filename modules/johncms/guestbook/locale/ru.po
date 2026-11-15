@@ -268,3 +268,6 @@ msgstr[0] "%d сообщение"
 msgstr[1] "%d сообщения"
 msgstr[2] "%d сообщений"
 msgstr[3] "%d сообщения"
+
+msgid "Do not answer this entry"
+msgstr "Не отвечать на это сообщение"

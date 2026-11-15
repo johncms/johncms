@@ -32,15 +32,35 @@ msgstr ""
 msgid "<b>%s</b> answered your comment: %s"
 msgstr ""
 
-#: config/notifications.global.php:50
-msgid "Karma"
-msgstr ""
-
-#: config/notifications.global.php:53
-msgid "New vote in karma"
+#: config/notifications.global.php:51
+#: config/places.global.php:18
+#: system/src/Users/Bans/BanKind.php:35
+msgid "Guestbook"
 msgstr ""
 
 #: config/notifications.global.php:54
+msgid "An answer to your message in the guestbook"
+msgstr ""
+
+#: config/notifications.global.php:58
+#, php-format
+msgid "<b>%s</b> answered your message in the guestbook"
+msgstr ""
+
+#: config/notifications.global.php:59
+#, php-format
+msgid "<b>%s</b> answered your message in the admin club"
+msgstr ""
+
+#: config/notifications.global.php:68
+msgid "Karma"
+msgstr ""
+
+#: config/notifications.global.php:71
+msgid "New vote in karma"
+msgstr ""
+
+#: config/notifications.global.php:72
 msgid "User <b>#user_name#</b> voted in <a href=\"#karma_url#\">your karma</a>."
 msgstr ""
 
@@ -63,11 +83,6 @@ msgstr ""
 
 #: config/places.global.php:16
 msgid "Downloads"
-msgstr ""
-
-#: config/places.global.php:18
-#: system/src/Users/Bans/BanKind.php:35
-msgid "Guestbook"
 msgstr ""
 
 #: config/places.global.php:19
@@ -871,7 +886,7 @@ msgid "Enter the comment text"
 msgstr ""
 
 #: system/src/Comments/Controllers/CommentsController.php:156
-#: themes/default/templates/components/comments/comment.twig:62
+#: themes/default/templates/components/comments/comment.twig:60
 #: themes/default/templates/components/style-guide/examples/button-states.twig:11
 #: themes/default/templates/components/style-guide/examples/button-states.twig:13
 #: themes/default/templates/components/style-guide/examples/controls.twig:12
@@ -1350,7 +1365,7 @@ msgid "If you cannot see the image code, enable graphics in your browser and ref
 msgstr ""
 
 #: themes/default/templates/components/comments/comment.twig:11
-#: themes/default/templates/components/comments/comment.twig:35
+#: themes/default/templates/components/comments/comment.twig:38
 msgid "Unknown author"
 msgstr ""
 
@@ -1359,27 +1374,34 @@ msgstr ""
 msgid "Online"
 msgstr ""
 
-#: themes/default/templates/components/comments/comment.twig:34
-#: themes/default/templates/components/comments/discussion.twig:45
-msgid "In answer to:"
-msgstr ""
-
-#: themes/default/templates/components/comments/comment.twig:42
+#: themes/default/templates/components/comments/comment.twig:27
 msgid "Edited by %s, %s"
 msgstr ""
 
-#: themes/default/templates/components/comments/comment.twig:51
+#: themes/default/templates/components/comments/comment.twig:27
+msgid "Edited"
+msgstr ""
+
+#: themes/default/templates/components/comments/comment.twig:37
+#: themes/default/templates/components/comments/discussion.twig:47
+#: modules/johncms/guestbook/templates/public/components/entry.twig:32
+#: modules/johncms/guestbook/templates/public/index.twig:34
+msgid "In answer to:"
+msgstr ""
+
+#: themes/default/templates/components/comments/comment.twig:49
 #: themes/default/templates/components/style-guide/examples/button-states.twig:20
 msgid "Reply"
 msgstr ""
 
-#: themes/default/templates/components/comments/comment.twig:57
+#: themes/default/templates/components/comments/comment.twig:55
+#: modules/johncms/guestbook/templates/public/components/entry.twig:69
 msgid "Quote"
 msgstr ""
 
-#: themes/default/templates/components/comments/comment.twig:67
-#: themes/default/templates/components/comments/comment.twig:71
-#: themes/default/templates/components/comments/comment.twig:78
+#: themes/default/templates/components/comments/comment.twig:65
+#: themes/default/templates/components/comments/comment.twig:69
+#: themes/default/templates/components/comments/comment.twig:76
 #: themes/default/templates/components/style-guide/examples/button-states.twig:22
 #: themes/default/templates/components/style-guide/examples/confirm.twig:3
 #: themes/default/templates/components/style-guide/examples/confirm.twig:4
@@ -1387,15 +1409,15 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: themes/default/templates/components/comments/comment.twig:83
+#: themes/default/templates/components/comments/comment.twig:81
 msgid "All of the author"
 msgstr ""
 
-#: themes/default/templates/components/comments/discussion.twig:50
+#: themes/default/templates/components/comments/discussion.twig:52
 msgid "Do not answer this comment"
 msgstr ""
 
-#: themes/default/templates/components/comments/discussion.twig:65
+#: themes/default/templates/components/comments/discussion.twig:67
 msgid "Send"
 msgstr ""
 

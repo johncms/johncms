@@ -520,6 +520,9 @@ The number is shown so that support for the old scheme is not removed while it i
       '<b>%s</b> answered your comment: %s' => '<b>%s</b> ответил(а) на ваш комментарий: %s',
       'In answer to:' => 'В ответ:',
       'Do not answer this comment' => 'Не отвечать на этот комментарий',
+      'An answer to your message in the guestbook' => 'Ответ на ваше сообщение в гостевой',
+      '<b>%s</b> answered your message in the guestbook' => '<b>%s</b> ответил на ваше сообщение в гостевой',
+      '<b>%s</b> answered your message in the admin club' => '<b>%s</b> ответил на ваше сообщение в админ-клубе',
     ),
   ),
 );

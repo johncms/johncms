@@ -75,6 +75,7 @@ final readonly class GuestbookController
                             text:      $formData['message'],
                             ip:        $this->environment->getIp(false),
                             userAgent: $this->environment->getUserAgent(),
+                            replyTo:   $request->bodyInt('reply_to'),
                         )
                     );
                     $this->session->flash('guestbook_added', $entry->id);

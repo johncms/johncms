@@ -12,6 +12,8 @@ final readonly class CreateGuestbookEntryDTO
         public string $text,
         public string $ip,
         public string $userAgent,
+        /** The entry the text answers; 0 when it answers none. */
+        public int $replyTo = 0,
     ) {
     }
 }

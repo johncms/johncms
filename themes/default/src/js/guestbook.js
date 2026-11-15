@@ -12,4 +12,6 @@ guestbook?.addEventListener('live-list:update', event => {
     if (!guestbook.querySelector('[data-guestbook-added]')) return;
     const field = form.querySelector('[data-editor]');
     if (field) clearEditor(field);
+    // The entry is written: the next one answers nobody until told to.
+    form.querySelector('[data-comment-reply-cancel]')?.click();
 });

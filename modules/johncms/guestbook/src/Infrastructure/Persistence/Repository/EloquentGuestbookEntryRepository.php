@@ -59,6 +59,15 @@ class EloquentGuestbookEntryRepository implements GuestbookEntryRepositoryInterf
         return GuestbookEntry::query()->find($id);
     }
 
+    public function getByIds(array $ids): array
+    {
+        if ($ids === []) {
+            return [];
+        }
+
+        return GuestbookEntry::query()->with('user')->whereKey($ids)->get()->keyBy('id')->all();
+    }
+
     public function create(array $attributes): GuestbookEntry
     {
         return GuestbookEntry::query()->create($attributes);

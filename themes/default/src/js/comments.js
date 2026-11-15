@@ -9,10 +9,10 @@
 import { clearEditor, focusEditor, whenEditorReady } from './editor';
 
 // A discussion of the core (components/comments/discussion.twig), on a page of its own or within
-// the page of a module. The comments are swapped by the live list, so the clicks are taken on the
-// whole discussion.
+// the page of a module, and the guestbook, whose entries answer one another the same way. The
+// comments are swapped by the live list, so the clicks are taken on the whole discussion.
 document.querySelectorAll('[data-comments]').forEach(discussion => {
-  const field = discussion.querySelector('#comment-form [data-editor]');
+  const field = discussion.querySelector('[data-comment-reply-field]')?.form.querySelector('[data-editor]');
   const reply = replyLabel(discussion);
   if (field) {
     whenEditorReady(field).then(editor => {
@@ -33,7 +33,7 @@ document.querySelectorAll('[data-comments]').forEach(discussion => {
     // finds the page it is on otherwise.
     const recalled = event.target.closest('[data-comment-reply-to]');
     if (recalled && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
-      const target = document.getElementById('comment-' + recalled.dataset.commentReplyTo);
+      const target = discussion.querySelector('[data-comment-id="' + CSS.escape(recalled.dataset.commentReplyTo) + '"]');
       if (target) {
         event.preventDefault();
         location.hash = target.id;
@@ -67,7 +67,7 @@ function replyLabel(discussion) {
   return {
     set(comment) {
       // Built from text nodes: the name and the text are user content.
-      input.value = comment.id.replace('comment-', '');
+      input.value = comment.dataset.commentId;
       label.querySelector('[data-comment-reply-name]').textContent = comment.querySelector('[data-comment-author]').textContent.trim();
       label.querySelector('[data-comment-reply-excerpt]').textContent = ownWords(comment);
       label.hidden = false;

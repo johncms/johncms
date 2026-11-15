@@ -2,7 +2,7 @@
     @var post \Johncms\Modules\Guestbook\Application\DTO\GuestbookEntryDTO
     @var can_write bool
 #}
-<article class="site-comment" id="guestbook-entry-{{ post.id }}"{% if added|default(false) %} data-live-list-target{% endif %}>
+<article class="site-comment" id="guestbook-entry-{{ post.id }}" data-comment data-comment-id="{{ post.id }}"{% if added|default(false) %} data-live-list-target{% endif %}>
     <div class="site-comment__avatar">
         {% if post.user and post.user.profileUrl %}<a href="{{ post.user.profileUrl }}">{% endif %}
         <img src="{{ avatar(post.user ? post.user.id : 0) }}" alt="" width="40" height="40" loading="lazy">
@@ -12,19 +12,29 @@
     <div class="site-comment__main">
         <header class="site-comment__header">
             {% if post.user and post.user.profileUrl %}
-                <a class="site-comment__name" href="{{ post.user.profileUrl }}">{{ post.name }}</a>
+                <a class="site-comment__name" href="{{ post.user.profileUrl }}" data-comment-author>{{ post.name }}</a>
             {% else %}
-                <span class="site-comment__name">{{ post.user ? post.name : __('Guest') ~ ': ' ~ post.name }}</span>
+                <span class="site-comment__name" data-comment-author>{{ post.user ? post.name : __('Guest') ~ ': ' ~ post.name }}</span>
             {% endif %}
             {% if post.user and post.user.rightsName %}<span class="site-comment__role">{{ post.user.rightsName }}</span>{% endif %}
             {# The date is the lasting link of the entry: the number of an entry is its id, which says nothing to a reader. #}
-            <a class="site-comment__date" href="/guestbook/entry/{{ post.id }}"><time>{{ post.createdAt }}</time></a>
+            <a class="site-comment__date" href="/guestbook/entry/{{ post.id }}" data-comment-date><time>{{ post.createdAt }}</time></a>
             {% if post.editCount %}
                 <span class="site-comment__date" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Edited:') }} {{ post.updatedBy }} ({{ post.updateAt }}) [{{ post.editCount }}]">{{ __('Edited') }}</span>
             {% endif %}
         </header>
         {% if post.user and post.user.status %}<div class="site-comment__status">{{ post.user.status }}</div>{% endif %}
-        <div class="site-comment__body ck-content">
+        {% if post.replyTo %}
+            {% set answered = post.replyTo %}
+            {# The script scrolls to the entry when it is on the page; the address finds its page otherwise. #}
+            <a class="site-comment__reply-to" href="{{ answered.url }}" data-comment-reply-to="{{ answered.id }}">
+                {% include '@theme/components/icon.twig' with {name: 'reply', size: 12} only %}
+                <span class="visually-hidden">{{ d__('system', 'In answer to:') }}</span>
+                <span class="site-comment__reply-name">{{ answered.authorName }}</span>
+                {% if answered.excerpt %}<span class="site-comment__reply-excerpt">{{ answered.excerpt }}</span>{% endif %}
+            </a>
+        {% endif %}
+        <div class="site-comment__body ck-content" data-comment-body>
             {{ post.text }}
             {% if post.replyText %}
                 <div class="site-comment__reply">
@@ -46,10 +56,18 @@
                     </div>
                 {% endif %}
                 <div class="site-comment__actions">
-                    {% if can_write and post.userId != (app.user.isValid ? app.user.id : 0) %}
-                        <a class="btn btn-outline-secondary btn-xs" href="#message2" data-editor-reply="{{ post.name }}">
+                    {# A guest is answered too: whoever wrote the entry, the answer recalls it. #}
+                    {% if can_write and (post.userId == 0 or post.userId != (app.user.isValid ? app.user.id : 0)) %}
+                        {# Marks the form as an answer to this entry: the label above the form says to whom. #}
+                        <a class="btn btn-outline-secondary btn-xs" href="#message2" data-comment-reply>
                             {% include '@theme/components/icon.twig' with {name: 'message-square', size: 12} only %} {{ __('Reply') }}
                         </a>
+                    {% endif %}
+                    {% if can_write %}
+                        {# Shown by the script once the editor of the form is ready. #}
+                        <button type="button" class="btn btn-outline-secondary btn-xs" data-comment-quote hidden>
+                            {% include '@theme/components/icon.twig' with {name: 'quote', size: 12} only %} {{ d__('system', 'Quote') }}
+                        </button>
                     {% endif %}
                     {% if post.meta and post.meta.canManage %}
                         <details class="site-popover" data-site-popover>

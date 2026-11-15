@@ -40,6 +40,7 @@ use Johncms\Users\User;
  * @property string $edit_who
  * @property int $edit_time
  * @property int $edit_count
+ * @property int|null $reply_to_id
  *
  * @property User|null $user
  * @property bool $is_online
@@ -75,6 +76,7 @@ class GuestbookEntry extends Model
         'edit_who',
         'edit_time',
         'edit_count',
+        'reply_to_id',
     ];
 
     public function user(): HasOne

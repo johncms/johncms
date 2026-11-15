@@ -1792,3 +1792,12 @@ msgstr "В ответ:"
 
 msgid "Do not answer this comment"
 msgstr "Не отвечать на этот комментарий"
+
+msgid "An answer to your message in the guestbook"
+msgstr "Ответ на ваше сообщение в гостевой"
+
+msgid "<b>%s</b> answered your message in the guestbook"
+msgstr "<b>%s</b> ответил на ваше сообщение в гостевой"
+
+msgid "<b>%s</b> answered your message in the admin club"
+msgstr "<b>%s</b> ответил на ваше сообщение в админ-клубе"

@@ -9,9 +9,11 @@ use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\RoleLevels;
 use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\CurrentUser;
+use Johncms\Comments\Application\CommentExcerpt;
 use Johncms\Modules\Guestbook\Application\Access\GuestbookMode;
 use Johncms\Modules\Guestbook\Application\DTO\GuestbookEntryDTO;
 use Johncms\Modules\Guestbook\Application\DTO\GuestbookEntryMetaDTO;
+use Johncms\Modules\Guestbook\Application\DTO\GuestbookEntryReplyDTO;
 use Johncms\Modules\Guestbook\Application\DTO\GuestbookEntryUserDTO;
 use Johncms\Modules\Guestbook\Application\Services\GuestbookEntryTextFormatter;
 use Johncms\Modules\Guestbook\Application\Services\GuestbookPermissions;
@@ -31,6 +33,7 @@ final readonly class ListGuestbookEntriesUseCase
         private RoleLevels $roleLevels,
         private StaffTitles $staffTitles,
         private ProfileLinksInterface $profileLinks,
+        private CommentExcerpt $excerpt,
     ) {
     }
 
@@ -54,8 +57,11 @@ final readonly class ListGuestbookEntriesUseCase
             ->values()
             ->all();
         $authorLevels = $this->roleLevels->highestGrantedToMany($authorIds);
+        $answered = $this->repository->getByIds(array_values(array_unique(array_filter(
+            $entries->map(static fn (GuestbookEntry $entry): ?int => $entry->reply_to_id)->all()
+        ))));
 
-        return $entries->map(function (GuestbookEntry $entry) use ($authorLevels) {
+        return $entries->map(function (GuestbookEntry $entry) use ($authorLevels, $answered) {
             return new GuestbookEntryDTO(
                 id:        $entry->id,
                 name:      $entry->name,
@@ -71,8 +77,25 @@ final readonly class ListGuestbookEntriesUseCase
                 userId:    $entry->user_id,
                 user:      $this->getUser($entry),
                 meta:      $this->getMeta($entry, $authorLevels),
+                replyTo:   $this->getReplyTo($answered[$entry->reply_to_id ?? 0] ?? null),
             );
         })->all();
+    }
+
+    /** The entry answered, or null when the entry answers none or the one it answered is gone. */
+    private function getReplyTo(?GuestbookEntry $answered): ?GuestbookEntryReplyDTO
+    {
+        if ($answered === null) {
+            return null;
+        }
+
+        return new GuestbookEntryReplyDTO(
+            id:         $answered->id,
+            // The model hands the name out escaped; the template escapes the stored one.
+            authorName: $answered->user->name ?? (string) $answered->getRawOriginal('name'),
+            excerpt:    $this->excerpt->of($answered->text),
+            url:        '/guestbook/entry/' . $answered->id,
+        );
     }
 
     private function getUser(GuestbookEntry $entry): ?GuestbookEntryUserDTO

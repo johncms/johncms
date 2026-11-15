@@ -46,6 +46,24 @@ return [
             ],
         ],
     ],
+    // The fields of an answer are stored as plain text and escaped here.
+    'guestbook' => [
+        'name'   => d__('system', 'Guestbook'),
+        'events' => [
+            'reply' => [
+                'name'    => d__('system', 'An answer to your message in the guestbook'),
+                'message' => static function (array $fields = []): string {
+                    $escape = static fn(string $key): string => htmlspecialchars((string) ($fields[$key] ?? ''), ENT_QUOTES, 'UTF-8');
+                    $text = empty($fields['admin_club'])
+                        ? d__('system', '<b>%s</b> answered your message in the guestbook')
+                        : d__('system', '<b>%s</b> answered your message in the admin club');
+
+                    return '<a href="' . $escape('reply_url') . '">' . sprintf($text, $escape('user_name')) . '</a>'
+                        . ($escape('message') === '' ? '' : '<div class="text-muted small mt-1">' . $escape('message') . '</div>');
+                },
+            ],
+        ],
+    ],
     'karma' => [
         'name'   => d__('system', 'Karma'),
         'events' => [

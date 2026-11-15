@@ -85,6 +85,7 @@ Inserting links: <a href="https://johncms.com">https://johncms.com</a>, images, 
         2 => '%d сообщений',
         3 => '%d сообщения',
       ),
+      'Do not answer this entry' => 'Не отвечать на это сообщение',
     ),
   ),
 );
