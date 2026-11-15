@@ -7,6 +7,8 @@
     add site-content--wide when the page needs more room.
 
     Block page_subtitle: a line under the heading, e.g. what the page holds.
+
+    Block page_actions: the main action of the page, a button beside the heading.
 #}
 {% extends '@theme/layouts/base.twig' %}
 
@@ -45,7 +47,15 @@
                     {% block breadcrumbs %}
                         {% include '@theme/components/breadcrumbs.twig' only %}
                     {% endblock %}
-                    {% if page_title|default('') %}<h1>{{ page_title }}</h1>{% endif %}
+                    {% set layout_page_actions %}{% block page_actions %}{% endblock %}{% endset %}
+                    {% if layout_page_actions|trim %}
+                        <div class="site-page-heading__row">
+                            {% if page_title|default('') %}<h1>{{ page_title }}</h1>{% endif %}
+                            <div class="site-page-heading__actions">{{ layout_page_actions }}</div>
+                        </div>
+                    {% elseif page_title|default('') %}
+                        <h1>{{ page_title }}</h1>
+                    {% endif %}
                     {% block page_subtitle %}{% endblock %}
                 {% endset %}
                 {% if layout_page_heading|trim %}<div class="site-page-heading">{{ layout_page_heading }}</div>{% endif %}

@@ -419,6 +419,9 @@
 
   &:empty { display: none; }
   h1 { font-size: 1.75rem; font-weight: 700; line-height: 1.2; margin: 0; overflow-wrap: anywhere; }
+  &__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 1rem; }
+  &__row > h1 { min-inline-size: 0; }
+  &__actions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
 }
 
 // Shared content column for public pages.
