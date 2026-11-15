@@ -23,8 +23,15 @@
 
 {% block content_class %}site-content--contained{% endblock %}
 
+{# The way back to what is discussed, and how many comments it has. #}
 {% block page_subtitle %}
-    <p class="site-page-heading__subtitle"><a href="{{ subject.url }}">{{ subject.title }}</a></p>
+    <p class="site-page-heading__subtitle">
+        <a class="site-subject-link" href="{{ subject.url }}" title="{{ subject.title }}">
+            {% include '@theme/components/icon.twig' with {name: 'arrow-left', size: 13} only %}
+            <span class="site-subject-link__text">{{ subject.title }}</span>
+        </a>
+        {% include '@theme/components/comments/count.twig' with {subject: subject, total: total} only %}
+    </p>
 {% endblock %}
 
 {% block content %}
@@ -41,5 +48,6 @@
         error: error,
         added: added,
         text: text,
+        count_shown: true,
     } only %}
 {% endblock %}

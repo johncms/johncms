@@ -25,7 +25,8 @@
     <p class="site-page-heading__subtitle">
         {% if category %}
             <a class="site-dlf-section" href="{{ category.url }}" title="{{ __('In the section') }} {{ category.name }}">
-                {% include '@theme/components/icon.twig' with {name: 'folder', size: 13} only %} {{ category.name }}
+                {% include '@theme/components/icon.twig' with {name: 'folder', size: 13} only %}
+                <span class="site-dlf-section__text">{{ category.name }}</span>
             </a>
         {% endif %}
         <span class="site-page-stat">

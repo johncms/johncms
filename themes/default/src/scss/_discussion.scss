@@ -115,6 +115,28 @@
   }
 }
 
+// The way back to what a discussion page is about, under its heading. A long name takes two lines
+// at most and is cut there: the radius keeps one line a pill and two a rounded plate.
+.site-subject-link {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: .4375rem;
+  max-inline-size: 100%;
+  padding: .3125rem .75rem;
+  border: 1px solid var(--border);
+  border-radius: .875rem;
+  background: var(--bg-elev);
+  color: var(--fg);
+  font-size: .8125rem;
+  font-weight: 600;
+  line-height: 1.35;
+  text-decoration: none;
+  transition: border-color .12s, color .12s;
+  > .site-icon { flex-shrink: 0; margin-block-start: .125rem; color: var(--accent); }
+  &:hover { border-color: var(--accent); color: var(--accent); }
+  &__text { display: -webkit-box; overflow: hidden; overflow-wrap: anywhere; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; }
+}
+
 // The discussion of an object on a page of its own: the comments of the core.
 .site-discussion {
   min-inline-size: 0;

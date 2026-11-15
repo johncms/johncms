@@ -86,13 +86,15 @@
 // - narrow: the same order with the side in one column.
 .site-dlf-container { container: site-dlf / inline-size; }
 
-// The section of a file under its heading: a link like the section of a news article.
+// The section of a file under its heading: a link like the section of a news article. A long name
+// takes two lines at most, as the way back of a discussion page does.
 .site-dlf-section {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: .375rem;
+  max-inline-size: 100%;
   padding: .1875rem .625rem;
-  border-radius: 2rem;
+  border-radius: .875rem;
   background: color-mix(in oklab, var(--accent) 18%, transparent);
   color: var(--accent);
   font-family: var(--bs-font-monospace);
@@ -102,6 +104,8 @@
   text-decoration: none;
   text-transform: uppercase;
   &:hover { background: color-mix(in oklab, var(--accent) 26%, transparent); color: var(--accent); }
+  > .site-icon { flex-shrink: 0; margin-block-start: .125rem; }
+  &__text { display: -webkit-box; overflow: hidden; overflow-wrap: anywhere; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; }
 }
 
 .site-dlf {

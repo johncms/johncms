@@ -16,6 +16,7 @@
     @var titled     bool        The discussion is a part of a page about something else.
 #}
 <title>{% include '@theme/components/document-title.twig' with {title: title} only %}</title>
+{% include '@theme/components/comments/count.twig' with {subject: subject, total: total} only %}
 {% include '@theme/components/comments/feed.twig' with {
     subject: subject,
     comments: comments,
@@ -26,5 +27,6 @@
     message: message,
     added: added,
     titled: titled|default(false),
+    count_shown: true,
 } only %}
 {% include '@theme/components/comments/error.twig' with {error: error} only %}

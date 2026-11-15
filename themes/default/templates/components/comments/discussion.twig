@@ -17,6 +17,7 @@
     @var added      int|null
     @var text       string The text to put back into the form after an error.
     @var titled     bool   The discussion has a heading of its own: it is a part of a page about something else.
+    @var count_shown bool  The page shows the number of comments itself, under its heading.
 #}
 <section class="site-discussion" id="comments" aria-label="{{ subject.wording.heading }}" data-live-list data-comments>
     {% include '@theme/components/comments/feed.twig' with {
@@ -29,6 +30,7 @@
         message: message,
         added: added,
         titled: titled|default(false),
+        count_shown: count_shown|default(false),
     } only %}
 
     {% if can_write %}

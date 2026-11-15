@@ -12,6 +12,7 @@
     @var added      int|null    The comment just added: it shows the result itself, so the message
                                 is only read out.
     @var titled     bool        The count is the heading of the discussion within a page about something else.
+    @var count_shown bool       The page shows the count under its heading: here it is only read out.
 #}
 <div class="site-discussion__region" data-live-list-region="comments">
     <input type="hidden" name="page" value="{{ page }}" form="comment-form-{{ subject.type }}-{{ subject.id }}">
@@ -21,7 +22,8 @@
             <span class="site-discussion__title-count">{{ total|format_number }}</span>
         </h2>
     {% else %}
-        <p class="site-discussion__count" tabindex="-1" data-live-list-focus>
+        {# Where the focus goes when the page of comments changes. #}
+        <p class="site-discussion__count{% if count_shown|default(false) %} visually-hidden{% endif %}" tabindex="-1" data-live-list-focus>
             {{ subject.wording.count(total) }}
         </p>
     {% endif %}

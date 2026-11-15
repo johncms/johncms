@@ -107,6 +107,18 @@ final class LibraryDiscussionTest extends FunctionalTestCase
         self::assertStringContainsString('An answer', $notifications);
     }
 
+    public function testThePageLeadsBackToTheArticleAndTheLiveListFollowsTheCount(): void
+    {
+        $this->comment(FunctionalUserFactory::create()->id);
+
+        $page = (string) $this->handleRequest($this->url())->getContent();
+        $live = (string) $this->handleRequest($this->url(), server: ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'])->getContent();
+
+        self::assertMatchesRegularExpression('#<a class="site-subject-link" href="/library/[^"]*' . $this->articleId . '[^"]*"#', $page);
+        self::assertStringContainsString('data-live-list-region="comments-count"', $page);
+        self::assertStringContainsString('data-live-list-region="comments-count"', $live);
+    }
+
     public function testTheOldCommentsMoveIntoTheCore(): void
     {
         $db = $this->container()->get(ConnectionInterface::class);

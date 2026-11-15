@@ -1,0 +1,11 @@
+{#
+    The number of comments under the heading of a discussion page. A region of the live list, so it
+    follows a comment added or deleted below.
+
+    @var subject \Johncms\Comments\CommentSubjectDTO
+    @var total   int
+#}
+<span class="site-page-stat" data-live-list-region="comments-count">
+    {% include '@theme/components/icon.twig' with {name: 'message-square', size: 12} only %}
+    {{ subject.wording.count(total) }}
+</span>
