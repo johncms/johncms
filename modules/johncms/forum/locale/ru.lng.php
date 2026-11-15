@@ -437,6 +437,8 @@
       'No replies yet' => 'Нет ответов',
       'Every post of the topic was chosen, so the whole topic is deleted' => 'Выбраны все сообщения темы, поэтому удалена вся тема',
       'Delete the chosen posts?' => 'Удалить выбранные сообщения?',
+      'This is the last post of the topic: the topic is deleted with it.' => 'Это последнее сообщение темы: тема удалится вместе с ним.',
+      'Its files go too. This cannot be undone.' => 'Его файлы удалятся тоже. Отменить это нельзя.',
     ),
   ),
 );

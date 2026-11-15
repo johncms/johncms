@@ -3,6 +3,7 @@
 
     @var message      \Johncms\Modules\Forum\Domain\Models\ForumMessage
     @var can_moderate bool Posts can be marked for deletion and the IP of the author is shown.
+    @var last_post    bool The post is the last one in sight: deleting it takes the topic with it.
 #}
 <div class="new_post-item border-bottom shadow mb-2" id="post_{{ message.id }}">
     <div class="new_post-header d-flex justify-content-between">
@@ -168,9 +169,20 @@
                     </div>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="{{ message.edit_url }}">{{ __('Edit') }}</a>
-                        <a class="dropdown-item" href="{{ message.delete_url }}">{{ __('Delete') }}</a>
+                        {# The choice of hiding or deleting for good is the template of the topic page. #}
+                        <form method="post" action="{{ message.delete_url }}"
+                              data-confirm="{{ __('Do you really want to delete?') }}"
+                              {% if last_post %}data-confirm-text="{{ __('This is the last post of the topic: the topic is deleted with it.') }}"{% endif %}
+                              {% if can('forum.post.destroy') %}data-confirm-fields="forum-post-delete-fields"{% endif %}
+                              data-confirm-button="{{ __('Delete') }}">
+                            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                            <button type="submit" class="dropdown-item">{{ __('Delete') }}</button>
+                        </form>
                         {% if message.restore_url %}
-                            <a class="dropdown-item" href="{{ message.restore_url }}">{{ __('Restore') }}</a>
+                            <form method="post" action="{{ message.restore_url }}">
+                                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                                <button type="submit" class="dropdown-item">{{ __('Restore') }}</button>
+                            </form>
                         {% endif %}
                     </div>
                 </div>

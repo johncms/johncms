@@ -1822,3 +1822,9 @@ msgstr "Выбраны все сообщения темы, поэтому уда
 
 msgid "Delete the chosen posts?"
 msgstr "Удалить выбранные сообщения?"
+
+msgid "This is the last post of the topic: the topic is deleted with it."
+msgstr "Это последнее сообщение темы: тема удалится вместе с ним."
+
+msgid "Its files go too. This cannot be undone."
+msgstr "Его файлы удалятся тоже. Отменить это нельзя."

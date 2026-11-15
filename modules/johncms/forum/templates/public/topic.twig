@@ -17,6 +17,7 @@
     @var filter_url       string       Sets the filter, or clears it when one is on.
     @var can_moderate     bool         The visitor may delete posts in bulk and act on the topic.
     @var message          string       The result of the last action on the topic, empty when there is none.
+    @var one_post_in_sight bool        Deleting the post in sight takes the topic with it.
     @var can_set_curators bool
     @var token            string       One-time token of the reply form.
     @var total            int
@@ -203,8 +204,28 @@
     {% endif %}
 
     {% for message in messages %}
-        {% include '@forum/public/components/message.twig' with {message: message, can_moderate: can_moderate} only %}
+        {% include '@forum/public/components/message.twig' with {
+            message: message,
+            can_moderate: can_moderate,
+            last_post: one_post_in_sight and not message.deleted,
+        } only %}
     {% endfor %}
+
+    {% if can('forum.post.destroy') %}
+        <template id="forum-post-delete-fields">
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="action" value="hide" id="forum-post-delete-hide" checked>
+                <label class="form-check-label" for="forum-post-delete-hide">{{ __('Hide') }}</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="action" value="delete" id="forum-post-delete-destroy">
+                <label class="form-check-label" for="forum-post-delete-destroy">
+                    {{ __('Delete a post for good') }}
+                    <span class="form-text d-block mt-0 text-danger">{{ __('Its files go too. This cannot be undone.') }}</span>
+                </label>
+            </div>
+        </template>
+    {% endif %}
 
     {% if can_moderate %}
         <div class="d-flex align-items-center mt-3 mb-3">

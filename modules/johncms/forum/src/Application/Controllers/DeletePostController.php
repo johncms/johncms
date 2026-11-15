@@ -55,24 +55,10 @@ final readonly class DeletePostController
             );
         }
 
-        if ($request->getMethod() === 'POST') {
-            $action = $request->body('action', 'delete');
-            $hardDelete = $action === 'delete' && $this->accessChecker->allows(ForumPermissions::POST_DESTROY);
-            $result = $this->deletePostUseCase->execute($context, $hardDelete, $this->getForumSettings());
-            redirect($result->redirectUrl);
-        }
-
-        return new ViewResponse(
-            '@forum/public/delete-post.twig',
-            [
-                'title'           => __('Delete Message'),
-                'page_title'      => __('Delete Message'),
-                'posts'           => $context->posts,
-                'back_url'        => $context->backUrl,
-                'can_hard_delete' => $this->accessChecker->allows(ForumPermissions::POST_DESTROY),
-                'delete_action'   => '/forum/delete-post/' . $id . '/',
-            ]
-        );
+        // Deleting for good is asked for explicitly; anything else hides the post.
+        $hardDelete = $request->body('action', 'hide') === 'delete' && $this->accessChecker->allows(ForumPermissions::POST_DESTROY);
+        $result = $this->deletePostUseCase->execute($context, $hardDelete, $this->getForumSettings());
+        redirect($result->redirectUrl);
     }
 
     private function getForumSettings(): array

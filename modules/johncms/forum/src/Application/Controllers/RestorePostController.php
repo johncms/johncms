@@ -11,7 +11,6 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureEditPostAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetEditPostContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\RestorePostUseCase;
-use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 
 final readonly class RestorePostController
@@ -25,7 +24,7 @@ final readonly class RestorePostController
     ) {
     }
 
-    public function __invoke(Request $request, int $id): ViewResponse
+    public function __invoke(int $id): ViewResponse
     {
         try {
             $context = $this->contextUseCase->execute($id, $this->getForumSettings());
@@ -52,20 +51,8 @@ final readonly class RestorePostController
             );
         }
 
-        if ($request->getMethod() === 'POST') {
-            $this->restorePostUseCase->execute($context);
-            redirect($context->backUrl);
-        }
-
-        return new ViewResponse(
-            '@forum/public/restore-post.twig',
-            [
-                'title'          => __('Restore Message'),
-                'page_title'     => __('Restore Message'),
-                'back_url'       => $context->backUrl,
-                'restore_action' => '/forum/restore-post/' . $id . '/',
-            ]
-        );
+        $this->restorePostUseCase->execute($context);
+        redirect($context->backUrl);
     }
 
     private function getForumSettings(): array

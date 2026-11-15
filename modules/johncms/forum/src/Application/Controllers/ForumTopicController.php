@@ -97,6 +97,8 @@ final readonly class ForumTopicController
                 [
                     'canonical'        => $result->canonical,
                     'message'          => (string) $this->session->getFlash(self::MESSAGE),
+                    // The count is empty in topics that were never recounted.
+                    'one_post_in_sight' => (int) $result->viewData['topic']->post_count <= 1,
                     'title'            => $meta->title,
                     'page_title'       => $result->title,
                     'keywords'         => $result->viewData['topic']->calculated_meta_keywords,

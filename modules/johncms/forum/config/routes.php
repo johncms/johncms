@@ -134,8 +134,8 @@ return static function (RouteCollection $router): void {
             $r->map(['GET', 'POST'], '/forum/reply-message/{id:number}', ReplyMessageController::class)->name('forum.reply_message'),
             $r->map(['GET', 'POST'], '/forum/edit-post/{id:number}', EditPostController::class)->name('forum.edit_post'),
             $r->map(['GET', 'POST'], '/forum/move-topic/{id:number}', MoveTopicController::class)->name('forum.move_topic'),
-            $r->map(['GET', 'POST'], '/forum/delete-post/{id:number}', DeletePostController::class)->name('forum.delete_post'),
-            $r->map(['GET', 'POST'], '/forum/restore-post/{id:number}', RestorePostController::class)->name('forum.restore_post'),
+            $deletePost = $r->post('/forum/delete-post/{id:number}', DeletePostController::class)->name('forum.delete_post'),
+            $r->post('/forum/restore-post/{id:number}', RestorePostController::class)->name('forum.restore_post'),
             $r->map(['GET', 'POST'], '/forum/delete-post-file/{id:number}/{fid:number}', DeletePostFileController::class)->name('forum.delete_post_file'),
             $r->post('/forum/close/{id:number}', CloseTopicController::class)->name('forum.close_topic'),
             $r->map(['GET', 'POST'], '/forum/delete-topic/{id:number}', DeleteTopicController::class)->name('forum.delete_topic'),
@@ -150,7 +150,7 @@ return static function (RouteCollection $router): void {
         }
 
         // Asked in a dialog of the page, after the visitor is known to be allowed to write at all.
-        foreach ([$bulkDeletePosts, $deleteVote, $deleteVoteAnswer] as $route) {
+        foreach ([$bulkDeletePosts, $deletePost, $deleteVote, $deleteVoteAnswer] as $route) {
             $route->addMiddleware(RequireConfirmationMiddleware::class);
         }
 
