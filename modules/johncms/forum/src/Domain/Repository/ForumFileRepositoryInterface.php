@@ -26,6 +26,11 @@ interface ForumFileRepositoryInterface
 
     public function markDeletedByPostId(int $postId): void;
 
+    /**
+     * @param int[] $postIds
+     */
+    public function markDeletedByPostIds(array $postIds): void;
+
     public function restoreByPostId(int $postId): void;
 
     /**

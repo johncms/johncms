@@ -70,6 +70,17 @@ final class ForumFileRepository implements ForumFileRepositoryInterface
             ->update(['del' => 1]);
     }
 
+    public function markDeletedByPostIds(array $postIds): void
+    {
+        if ($postIds === []) {
+            return;
+        }
+
+        ForumFile::query()
+            ->whereIn('post', $postIds)
+            ->update(['del' => 1]);
+    }
+
     public function restoreByPostId(int $postId): void
     {
         ForumFile::query()
