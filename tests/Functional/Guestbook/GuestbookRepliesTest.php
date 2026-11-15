@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Guestbook;
 
+use Dom\Element;
 use Dom\HTMLDocument;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Modules\Guestbook\Application\Services\GuestbookReplyNotifier;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
+use Johncms\Users\User;
 use Tests\Functional\FunctionalTestCase;
 use Tests\Support\Fixture;
 use Tests\Support\FunctionalUserFactory;
@@ -112,6 +114,26 @@ final class GuestbookRepliesTest extends FunctionalTestCase
         self::assertSame(0, Capsule::table('notifications')->count());
     }
 
+    public function testAFormSentBackWithAnErrorStillAnswersTheEntry(): void
+    {
+        $answered = FunctionalUserFactory::create();
+        $entry = Fixture::insert('guest', ['adm' => 0, 'user_id' => $answered->id, 'name' => $answered->name, 'text' => '<p>The first words</p>', 'time' => time()]);
+        $club = Fixture::insert('guest', ['adm' => 1, 'user_id' => $answered->id, 'name' => $answered->name, 'text' => '<p>Of the club</p>', 'time' => time()]);
+        $author = FunctionalUserFactory::create();
+
+        $form = $this->sentBack($author, $entry);
+        self::assertSame((string) $entry, $form->querySelector('[data-comment-reply-field]')?->getAttribute('value'));
+        $label = $form->querySelector('[data-comment-reply-label]');
+        self::assertNotNull($label);
+        self::assertFalse($label->hasAttribute('hidden'));
+        self::assertSame($answered->name, $label->querySelector('[data-comment-reply-name]')?->textContent);
+        self::assertSame('The first words', $label->querySelector('[data-comment-reply-excerpt]')?->textContent);
+
+        $form = $this->sentBack($author, $club);
+        self::assertSame('', $form->querySelector('[data-comment-reply-field]')?->getAttribute('value'), 'An entry of the other guestbook is not recalled.');
+        self::assertTrue($form->querySelector('[data-comment-reply-label]')?->hasAttribute('hidden'));
+    }
+
     public function testAnAnswerToADeletedEntryIsShownWithoutTheLink(): void
     {
         $answer = Fixture::insert('guest', ['adm' => 0, 'user_id' => 0, 'name' => 'Visitor', 'text' => '<p>Orphan</p>', 'time' => time(), 'reply_to_id' => 999999]);
@@ -119,6 +141,17 @@ final class GuestbookRepliesTest extends FunctionalTestCase
         $page = HTMLDocument::createFromString((string) $this->handleRequest('/guestbook/')->getContent(), LIBXML_NOERROR);
         self::assertNotNull($page->querySelector('#guestbook-entry-' . $answer));
         self::assertNull($page->querySelector('#guestbook-entry-' . $answer . ' .site-comment__reply-to'));
+    }
+
+    /** The form of the page answered to an empty text sent without the script. */
+    private function sentBack(User $author, int $replyTo): Element
+    {
+        $response = $this->postForm('/guestbook/', ['message' => '', 'reply_to' => (string) $replyTo], $author);
+        self::assertSame(200, $response->getStatusCode());
+        $form = HTMLDocument::createFromString((string) $response->getContent(), LIBXML_NOERROR)->querySelector('[data-guestbook-form]');
+        self::assertNotNull($form);
+
+        return $form;
     }
 
     private function notifier(): GuestbookReplyNotifier

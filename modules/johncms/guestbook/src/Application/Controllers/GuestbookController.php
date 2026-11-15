@@ -123,6 +123,10 @@ final readonly class GuestbookController
                 'can_clear'        => $this->access->canClear(),
                 'errors'           => $errors,
                 'form_data'        => $this->form->getFormData($request),
+                // A form sent back with an error still answers the entry it answered.
+                'answered'         => $request->getMethod() === 'POST'
+                    ? $this->guestbookEntries->findAnswered($request->bodyInt('reply_to'))
+                    : null,
                 'captcha'          => $challenge,
                 'message'          => $message,
                 'added'            => $this->session->getFlash('guestbook_added'),

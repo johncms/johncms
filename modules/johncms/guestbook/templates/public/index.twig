@@ -9,6 +9,7 @@
     @param array                   form_data  Values the visitor has entered.
     @param ?\Johncms\Captcha\CaptchaChallenge captcha The verification, or null when none is asked for.
     @param string                  message    Flash message about the last action.
+    @param ?GuestbookEntryReplyDTO answered   The entry the text in the form answers.
 #}
 {% extends '@theme/layouts/default.twig' %}
 
@@ -27,13 +28,13 @@
                 <form class="site-compose__form" name="form" data-live-list-form data-guestbook-form action="/guestbook/{{ page > 1 ? '?page=' ~ page : '' }}" method="post">
                     <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}"/>
                     {# The entry the text answers, set by the Reply and Quote buttons; the label says which. #}
-                    <input type="hidden" name="reply_to" value="" data-comment-reply-field>
-                    <div class="site-compose__reply" data-comment-reply-label hidden>
+                    <input type="hidden" name="reply_to" value="{{ answered ? answered.id : '' }}" data-comment-reply-field>
+                    <div class="site-compose__reply" data-comment-reply-label{% if not answered %} hidden{% endif %}>
                         {% include '@theme/components/icon.twig' with {name: 'reply', size: 14} only %}
                         <span class="site-compose__reply-text">
                             {{ d__('system', 'In answer to:') }}
-                            <b class="site-compose__reply-name" data-comment-reply-name></b>
-                            <span class="site-compose__reply-excerpt" data-comment-reply-excerpt></span>
+                            <b class="site-compose__reply-name" data-comment-reply-name>{{ answered ? answered.authorName : '' }}</b>
+                            <span class="site-compose__reply-excerpt" data-comment-reply-excerpt>{{ answered ? answered.excerpt : '' }}</span>
                         </span>
                         <button type="button" class="btn-close site-compose__reply-cancel" data-comment-reply-cancel
                                 title="{{ __('Do not answer this entry') }}" aria-label="{{ __('Do not answer this entry') }}"></button>

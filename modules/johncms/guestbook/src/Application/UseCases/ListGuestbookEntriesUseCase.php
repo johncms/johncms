@@ -79,6 +79,20 @@ final readonly class ListGuestbookEntriesUseCase
         })->all();
     }
 
+    /**
+     * The entry a text being written answers, as the form recalls it: null when there is no such
+     * entry in the guestbook being read.
+     */
+    public function findAnswered(int $id): ?GuestbookEntryReplyDTO
+    {
+        $entry = $id > 0 ? $this->repository->find($id) : null;
+        if ($entry === null || $entry->adm !== $this->mode->isAdminClub()) {
+            return null;
+        }
+
+        return $this->getReplyTo($entry);
+    }
+
     /** The entry answered, or null when the entry answers none or the one it answered is gone. */
     private function getReplyTo(?GuestbookEntry $answered): ?GuestbookEntryReplyDTO
     {
