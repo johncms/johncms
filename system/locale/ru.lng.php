@@ -516,6 +516,8 @@ The number is shown so that support for the old scheme is not removed while it i
       'Write a comment' => 'Написать комментарий',
       'You are not logged in. You must be <a href="/login/">logged in</a> to comment.' => 'Вы не авторизованы. Чтобы комментировать, нужно <a href="/login/">войти</a>.',
       'Quote' => 'Цитата',
+      'An answer to your comment' => 'Ответ на ваш комментарий',
+      '<b>%s</b> answered your comment: %s' => '<b>%s</b> ответил(а) на ваш комментарий: %s',
       'In answer to:' => 'В ответ:',
       'Do not answer this comment' => 'Не отвечать на этот комментарий',
     ),

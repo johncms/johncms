@@ -90,6 +90,8 @@ use Johncms\Mail\Queue\MailQueueSettings;
 use Symfony\Component\Mime\HtmlToTextConverter\DefaultHtmlToTextConverter;
 use Symfony\Component\Mime\HtmlToTextConverter\HtmlToTextConverterInterface;
 use Johncms\NavChain;
+use Johncms\Notifications\EloquentNotificationRepository;
+use Johncms\Notifications\NotificationRepositoryInterface;
 use Johncms\Router\RouteCollectorFactory;
 use Johncms\Router\RequestContextFactory;
 use Johncms\Router\UrlMatcherFactory;
@@ -394,6 +396,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(EditorUploadConsumers::class)
         ->arg('$consumers', tagged_iterator('johncms.editor_upload_consumer'));
     $services->alias(CommentRepositoryInterface::class, EloquentCommentRepository::class);
+    $services->alias(NotificationRepositoryInterface::class, EloquentNotificationRepository::class);
     $services->set(CommentSubjects::class)
         ->arg('$tagged', tagged_iterator('johncms.comment_subject'));
     $services->set(FilePathLockInterface::class, LocalFilePathLock::class);

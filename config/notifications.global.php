@@ -29,6 +29,23 @@ return [
             ],
         ],
     ],
+    // The fields of an answer are stored as plain text and escaped here.
+    'comments' => [
+        'name'   => d__('system', 'Comments'),
+        'events' => [
+            'reply' => [
+                'name'    => d__('system', 'An answer to your comment'),
+                'message' => static function (array $fields = []): string {
+                    $escape = static fn(string $key): string => htmlspecialchars((string) ($fields[$key] ?? ''), ENT_QUOTES, 'UTF-8');
+
+                    return '<a href="' . $escape('reply_url') . '">'
+                        . sprintf(d__('system', '<b>%s</b> answered your comment: %s'), $escape('user_name'), $escape('subject_title'))
+                        . '</a>'
+                        . ($escape('message') === '' ? '' : '<div class="text-muted small mt-1">' . $escape('message') . '</div>');
+                },
+            ],
+        ],
+    ],
     'karma' => [
         'name'   => d__('system', 'Karma'),
         'events' => [

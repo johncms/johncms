@@ -97,9 +97,14 @@ final class LibraryDiscussionTest extends FunctionalTestCase
         $page = (string) $this->handleRequest($this->url(), cookies: $this->actingAs($author))->getContent();
 
         self::assertSame($parent, (int) Capsule::table('comments')->where('user_id', $author->id)->value('reply_to_id'));
+        self::assertTrue(Capsule::table('notifications')->where('user_id', $answered->id)->where('module', 'comments')->exists());
         self::assertStringContainsString('data-comment-reply-to="' . $parent . '"', $page);
         self::assertStringContainsString('href="' . $this->url() . '/comment/' . $parent . '"', $page);
         self::assertStringContainsString('name="reply_to"', $page);
+        // The notification reads as a sentence on the page of the notifications.
+        $notifications = (string) $this->handleRequest('/notifications', cookies: $this->actingAs($answered))->getContent();
+        self::assertStringContainsString($this->url() . '/comment/', $notifications);
+        self::assertStringContainsString('An answer', $notifications);
     }
 
     public function testTheOldCommentsMoveIntoTheCore(): void

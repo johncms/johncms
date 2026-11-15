@@ -10,6 +10,7 @@ use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\CurrentUser;
 use Johncms\Comments\Application\CommentAccess;
 use Johncms\Comments\Application\CommentExcerpt;
+use Johncms\Comments\Application\CommentReplyNotifier;
 use Johncms\Comments\Application\CommentsService;
 use Johncms\Comments\Application\Exceptions\CommentAccessDeniedException;
 use Johncms\Comments\Application\Exceptions\CommentNotFoundException;
@@ -26,6 +27,7 @@ use Johncms\EditorUploads\EditorUploads;
 use Johncms\EditorUploads\ImageSources;
 use Johncms\Files\FileStore;
 use Johncms\Http\UploadedFileDTO;
+use Johncms\Notifications\NotificationRepositoryInterface;
 use Johncms\Image\StoreEditorImageUseCase;
 use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Security\ClientInfoDTO;
@@ -421,19 +423,36 @@ final class CommentsServiceTest extends FunctionalTestCase
             normalizer: $container->get(EditorContentNormalizer::class),
             antiflood: $container->get(AntifloodCheckerInterface::class),
             dates: $container->get(DateFormatterInterface::class),
-            excerpt: new CommentExcerpt(new HtmlFragment()),
+            excerpt: $excerpt = new CommentExcerpt(new HtmlFragment()),
+            replyNotifier: new CommentReplyNotifier(
+                notifications: $container->get(NotificationRepositoryInterface::class),
+                ignoreList: $container->get(IgnoreListCheckerInterface::class),
+                excerpt: $excerpt,
+            ),
         );
     }
 
-    public function testAnAnswerKeepsTheCommentItAnswers(): void
+    public function testAnAnswerKeepsTheCommentItAnswersAndTellsItsAuthor(): void
     {
         $answered = FunctionalUserFactory::create();
         $parent = $this->insertComment($answered->id, text: '<blockquote><p>Somebody else</p></blockquote><p>The first words</p>');
-        $this->signIn(FunctionalUserFactory::create());
+        $author = $this->signIn(FunctionalUserFactory::create());
 
         $id = $this->comments->add($this->object(), '<p>An answer</p>', $this->client(), $parent);
 
         self::assertSame($parent, (int) Capsule::table('comments')->where('id', $id)->value('reply_to_id'));
+        $notification = Capsule::table('notifications')->where('user_id', $answered->id)->first();
+        self::assertNotNull($notification);
+        self::assertSame(CommentReplyNotifier::MODULE, $notification->module);
+        self::assertSame(CommentReplyNotifier::EVENT, $notification->event_type);
+        self::assertSame($author->id, (int) $notification->sender_id);
+        self::assertSame($id, (int) $notification->entity_id);
+        self::assertSame([
+            'user_name'     => $author->name,
+            'subject_title' => 'An object',
+            'reply_url'     => '/test/' . self::OBJECT . '/comments/comment/' . $id,
+            'message'       => 'An answer',
+        ], json_decode((string) $notification->fields, true));
 
         $view = $this->comments->page($this->object(), 10, 0)->comments[1];
         self::assertNotNull($view->replyTo);
@@ -454,19 +473,44 @@ final class CommentsServiceTest extends FunctionalTestCase
         $id = $this->comments->add($this->object(), '<p>An answer</p>', $this->client(), $elsewhere);
 
         self::assertNull(Capsule::table('comments')->where('id', $id)->value('reply_to_id'));
+        self::assertFalse(Capsule::table('notifications')->where('user_id', $other->id)->exists());
     }
 
-    public function testDeletingTheAnsweredCommentKeepsTheAnswer(): void
+    public function testNobodyIsToldOfTheirOwnAnswerNorBySomebodyTheyIgnore(): void
     {
-        $parent = $this->insertComment(FunctionalUserFactory::create()->id);
+        $author = FunctionalUserFactory::create();
+        $own = $this->insertComment($author->id);
+        $this->signIn($author);
+        $this->comments->add($this->object(), '<p>To myself</p>', $this->client(), $own);
+
+        $ignoring = FunctionalUserFactory::create();
+        $ignored = $this->insertComment($ignoring->id);
+        Fixture::insert('cms_contact', ['user_id' => $ignoring->id, 'from_id' => $author->id, 'ban' => 1, 'time' => time()]);
+        $this->allowNextPost();
+        $this->comments->add($this->object(), '<p>To who ignores me</p>', $this->client(), $ignored);
+
+        self::assertFalse(Capsule::table('notifications')->whereIn('user_id', [$author->id, $ignoring->id])->exists());
+        self::assertSame(2, Capsule::table('comments')->whereNotNull('reply_to_id')->where('user_id', $author->id)->count());
+    }
+
+    public function testDeletingAnAnswerTakesItsNotificationBackAndDeletingTheAnsweredOneKeepsTheAnswer(): void
+    {
+        $answered = FunctionalUserFactory::create();
+        $parent = $this->insertComment($answered->id);
         $this->signIn(FunctionalUserFactory::create());
-        $answer = $this->comments->add($this->object(), '<p>An answer</p>', $this->client(), $parent);
+        $first = $this->comments->add($this->object(), '<p>One answer</p>', $this->client(), $parent);
+        $this->allowNextPost();
+        $second = $this->comments->add($this->object(), '<p>Another answer</p>', $this->client(), $parent);
         $this->signIn(FunctionalUserFactory::createSupervisor());
+
+        $this->comments->delete($this->object(), $first);
+
+        self::assertSame([$second], array_map('intval', Capsule::table('notifications')->where('user_id', $answered->id)->pluck('entity_id')->all()));
 
         $this->comments->delete($this->object(), $parent);
 
-        self::assertSame([$answer], $this->remaining([$answer]));
-        self::assertNull(Capsule::table('comments')->where('id', $answer)->value('reply_to_id'));
+        self::assertSame([$second], $this->remaining([$second]));
+        self::assertNull(Capsule::table('comments')->where('id', $second)->value('reply_to_id'));
         self::assertNull($this->comments->page($this->object(), 10, 0)->comments[0]->replyTo);
     }
 

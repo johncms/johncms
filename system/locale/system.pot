@@ -17,15 +17,30 @@ msgstr ""
 msgid "<a href=\"%s\">User <b>%s</b> responded to your message in the topic %s</a>"
 msgstr ""
 
-#: config/notifications.global.php:33
-msgid "Karma"
-msgstr ""
-
-#: config/notifications.global.php:36
-msgid "New vote in karma"
+#: config/notifications.global.php:34
+#: system/src/Comments/CommentWordingDTO.php:57
+#: system/src/Users/Bans/BanKind.php:33
+msgid "Comments"
 msgstr ""
 
 #: config/notifications.global.php:37
+msgid "An answer to your comment"
+msgstr ""
+
+#: config/notifications.global.php:42
+#, php-format
+msgid "<b>%s</b> answered your comment: %s"
+msgstr ""
+
+#: config/notifications.global.php:50
+msgid "Karma"
+msgstr ""
+
+#: config/notifications.global.php:53
+msgid "New vote in karma"
+msgstr ""
+
+#: config/notifications.global.php:54
 msgid "User <b>#user_name#</b> voted in <a href=\"#karma_url#\">your karma</a>."
 msgstr ""
 
@@ -782,23 +797,18 @@ msgstr ""
 msgid "The owner has added you to the ignore list."
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:249
+#: system/src/Comments/Application/CommentsService.php:250
 #, php-format
 msgid "You cannot write so often. Wait %d seconds."
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:256
+#: system/src/Comments/Application/CommentsService.php:257
 msgid "Message already exists"
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:417
+#: system/src/Comments/Application/CommentsService.php:422
 #, php-format
 msgid "The comment is too long: at most %d characters."
-msgstr ""
-
-#: system/src/Comments/CommentWordingDTO.php:57
-#: system/src/Users/Bans/BanKind.php:33
-msgid "Comments"
 msgstr ""
 
 #: system/src/Comments/CommentWordingDTO.php:58

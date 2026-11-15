@@ -63,6 +63,7 @@ final readonly class CommentsService
         private AntifloodCheckerInterface $antiflood,
         private DateFormatterInterface $dates,
         private CommentExcerpt $excerpt,
+        private CommentReplyNotifier $replyNotifier,
     ) {
     }
 
@@ -273,6 +274,9 @@ final readonly class CommentsService
                 'reply_to_id'         => $answeredAuthor === null ? null : $replyTo,
             ]);
             $this->bindPictures($comment->id, $user->id, $html);
+            if ($answeredAuthor !== null) {
+                $this->replyNotifier->replied($subject, $answeredAuthor, $comment->id, $html, $user);
+            }
             $this->subjects->get($subject->type)?->commentsChanged($subject->id, 1);
             $this->comments->changeUserCommentCount($user->id, 1);
             $this->comments->touchLastPost($user->id, time());
@@ -387,6 +391,7 @@ final readonly class CommentsService
             $this->comments->unlinkAnswers($ids);
             $this->comments->delete($ids);
             $this->uploads->detach(CommentEditorUploads::OWNER_TYPE, $ids);
+            $this->replyNotifier->withdrawn($ids);
             foreach ($perSubject as $subject) {
                 // The module of a kind may be switched off: its objects are not counted then.
                 $this->subjects->get($subject['type'])?->commentsChanged($subject['id'], -$subject['count']);
@@ -434,7 +439,8 @@ final readonly class CommentsService
     }
 
     /**
-     * Delete the comments, their pictures, and what their authors are counted.
+     * Delete the comments, their pictures, the notifications of their answers, and what their
+     * authors are counted.
      *
      * @param array<int, int> $authorsById
      */
@@ -448,6 +454,7 @@ final readonly class CommentsService
         $this->comments->unlinkAnswers($ids);
         $this->comments->delete($ids);
         $this->uploads->detach(CommentEditorUploads::OWNER_TYPE, $ids);
+        $this->replyNotifier->withdrawn($ids);
         foreach (array_count_values($authorsById) as $userId => $count) {
             $this->comments->changeUserCommentCount($userId, -$count);
         }

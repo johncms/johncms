@@ -1780,6 +1780,13 @@ msgstr "Вы не авторизованы. Чтобы комментирова�
 msgid "Quote"
 msgstr "Цитата"
 
+msgid "An answer to your comment"
+msgstr "Ответ на ваш комментарий"
+
+#, php-format
+msgid "<b>%s</b> answered your comment: %s"
+msgstr "<b>%s</b> ответил(а) на ваш комментарий: %s"
+
 msgid "In answer to:"
 msgstr "В ответ:"
 
