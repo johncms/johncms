@@ -193,12 +193,7 @@ final readonly class CommentsService
                     'ip_via_proxy' => $row->author_ip_via_proxy ?? '',
                     'user_agent'   => $row->author_user_agent ?? '',
                 ] : null,
-                replyTo: $parent === null ? null : new CommentReplyDTO(
-                    id: $parent->id,
-                    authorName: $users[$parent->user_id]->name ?? $parent->author_name,
-                    excerpt: $this->excerpt->of($parent->text),
-                    url: $subject->discussionUrl . '/comment/' . $parent->id,
-                ),
+                replyTo: $parent === null ? null : $this->recalled($subject, $parent, $users[$parent->user_id]->name ?? null),
             );
         }
 
@@ -212,6 +207,33 @@ final readonly class CommentsService
     private function authorIds(array $rows): array
     {
         return array_values(array_unique(array_filter(array_map(static fn(Comment $row): int => $row->user_id, $rows))));
+    }
+
+    /**
+     * The comment a text being written answers, as the form recalls it: null when the subject has
+     * no such comment.
+     */
+    public function answered(CommentSubjectDTO $subject, int $commentId): ?CommentReplyDTO
+    {
+        $comment = $commentId > 0 ? $this->comments->find($subject->type, $subject->id, $commentId) : null;
+        if ($comment === null) {
+            return null;
+        }
+
+        $author = $comment->user_id > 0 ? ($this->users->findMany([$comment->user_id])[$comment->user_id] ?? null) : null;
+
+        return $this->recalled($subject, $comment, $author?->name);
+    }
+
+    /** A comment as an answer recalls it; the name of the account wins over the one it was written under. */
+    private function recalled(CommentSubjectDTO $subject, Comment $comment, ?string $accountName): CommentReplyDTO
+    {
+        return new CommentReplyDTO(
+            id: $comment->id,
+            authorName: $accountName ?? $comment->author_name,
+            excerpt: $this->excerpt->of($comment->text),
+            url: $subject->discussionUrl . '/comment/' . $comment->id,
+        );
     }
 
     /**

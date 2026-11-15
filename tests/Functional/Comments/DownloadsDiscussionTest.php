@@ -134,6 +134,27 @@ final class DownloadsDiscussionTest extends FunctionalTestCase
         self::assertSame(0, Capsule::table('comments')->where('subject_type', 'downloads')->count());
     }
 
+    public function testARefusedAnswerStillAnswersItsComment(): void
+    {
+        $author = FunctionalUserFactory::create();
+        $answered = $this->comment($author->id, text: '<p>The first words</p>');
+        $ofOtherFile = $this->comment(FunctionalUserFactory::create()->id, subjectId: $this->file());
+        $cookies = $this->actingAs(FunctionalUserFactory::create());
+
+        $this->handleRequest($this->url(), 'POST', $this->withCsrfToken(['text' => '<p></p>', 'reply_to' => (string) $answered]), cookies: $cookies);
+        $form = $this->page($this->handleRequest($this->url(), cookies: $cookies))->querySelector('[data-comment-form]');
+        self::assertSame((string) $answered, $form?->querySelector('[data-comment-reply-field]')?->getAttribute('value'));
+        $label = $form->querySelector('[data-comment-reply-label]');
+        self::assertFalse($label?->hasAttribute('hidden'));
+        self::assertSame($author->name, $label->querySelector('[data-comment-reply-name]')?->textContent, 'The name of the account, as under the answer.');
+        self::assertSame('The first words', $label->querySelector('[data-comment-reply-excerpt]')?->textContent);
+
+        $this->handleRequest($this->url(), 'POST', $this->withCsrfToken(['text' => '<p></p>', 'reply_to' => (string) $ofOtherFile]), cookies: $cookies);
+        $form = $this->page($this->handleRequest($this->url(), cookies: $cookies))->querySelector('[data-comment-form]');
+        self::assertSame('', $form?->querySelector('[data-comment-reply-field]')?->getAttribute('value'), 'A comment of another discussion is not recalled.');
+        self::assertTrue($form->querySelector('[data-comment-reply-label]')?->hasAttribute('hidden'));
+    }
+
     public function testAGuestAndABannedUserCannotPostDirectly(): void
     {
         $this->handleRequest($this->url(), 'POST', $this->withCsrfToken(['text' => '<p>From a guest</p>']));

@@ -21,6 +21,7 @@ final readonly class CommentDiscussionView
     public const string FLASH_MESSAGE = 'comments.message';
     public const string FLASH_ERROR = 'comments.error';
     public const string FLASH_TEXT = 'comments.text';
+    public const string FLASH_REPLY_TO = 'comments.reply_to';
     public const string FLASH_ADDED = 'comments.added';
 
     /** Id of the discussion on the page; the links of the pagination lead to it. */
@@ -65,6 +66,8 @@ final readonly class CommentDiscussionView
             // The live list keeps the text in the editor; the flash is still read so that it does
             // not come back on the next page shown.
             'text'       => $this->session->getFlash(self::FLASH_TEXT) ?? '',
+            // A form sent back with an error still answers the comment it answered.
+            'answered'   => $this->comments->answered($subject, (int) ($this->session->getFlash(self::FLASH_REPLY_TO) ?? 0)),
         ];
     }
 }

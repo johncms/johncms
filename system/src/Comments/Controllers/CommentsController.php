@@ -240,6 +240,7 @@ final readonly class CommentsController
         } catch (CommentAccessDeniedException | CommentValidationException $exception) {
             $this->session->flash(CommentDiscussionView::FLASH_ERROR, $exception->getMessage());
             $this->session->flash(CommentDiscussionView::FLASH_TEXT, $text);
+            $this->session->flash(CommentDiscussionView::FLASH_REPLY_TO, $request->bodyInt('reply_to'));
 
             return new RedirectResponse($this->pageUrl($object, max(1, $request->bodyInt('page'))) . '#comment-form');
         }

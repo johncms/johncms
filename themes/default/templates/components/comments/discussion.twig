@@ -16,6 +16,7 @@
     @var error      string|null
     @var added      int|null
     @var text       string The text to put back into the form after an error.
+    @var answered   \Johncms\Comments\Application\DTO\CommentReplyDTO|null The comment the text in the form answers.
     @var titled     bool   The discussion has a heading of its own: it is a part of a page about something else.
     @var count_shown bool  The page shows the number of comments itself, under its heading.
 #}
@@ -40,13 +41,13 @@
             <form class="site-compose__form" id="comment-form-{{ subject.type }}-{{ subject.id }}" method="post" action="{{ subject.discussionUrl }}" data-live-list-form data-comment-form>
                 <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                 {# The comment the text answers, set by the Reply and Quote buttons; the label says which. #}
-                <input type="hidden" name="reply_to" value="" data-comment-reply-field>
-                <div class="site-compose__reply" data-comment-reply-label hidden>
+                <input type="hidden" name="reply_to" value="{{ answered ? answered.id : '' }}" data-comment-reply-field>
+                <div class="site-compose__reply" data-comment-reply-label{% if not answered %} hidden{% endif %}>
                     {% include '@theme/components/icon.twig' with {name: 'reply', size: 14} only %}
                     <span class="site-compose__reply-text">
                         {{ d__('system', 'In answer to:') }}
-                        <b class="site-compose__reply-name" data-comment-reply-name></b>
-                        <span class="site-compose__reply-excerpt" data-comment-reply-excerpt></span>
+                        <b class="site-compose__reply-name" data-comment-reply-name>{{ answered ? (answered.authorName ?: d__('system', 'Unknown author')) : '' }}</b>
+                        <span class="site-compose__reply-excerpt" data-comment-reply-excerpt>{{ answered ? answered.excerpt : '' }}</span>
                     </span>
                     <button type="button" class="btn-close site-compose__reply-cancel" data-comment-reply-cancel
                             title="{{ d__('system', 'Do not answer this comment') }}" aria-label="{{ d__('system', 'Do not answer this comment') }}"></button>
