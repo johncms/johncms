@@ -65,6 +65,7 @@ docker-compose.override.yml
 /public/upload/guestbook/*
 /public/upload/news/
 /public/upload/collections/
+/public/upload/comments/
 
 # Generated sitemap files
 /public/sitemap.xml
