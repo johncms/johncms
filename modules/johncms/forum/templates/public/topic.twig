@@ -16,6 +16,8 @@
     @var filter_by_author bool
     @var filter_url       string       Sets the filter, or clears it when one is on.
     @var can_moderate     bool         The visitor may delete posts in bulk and act on the topic.
+    @var move_targets     array        id, title — where the topic can be moved; empty unless the visitor may move it.
+    @var change_form      array        name, meta_keywords, meta_description — what the dialog of changing the topic starts from.
     @var message          string       The result of the last action on the topic, empty when there is none.
     @var one_post_in_sight bool        Deleting the post in sight takes the topic with it.
     @var can_set_curators bool
@@ -220,7 +222,7 @@
             <div class="form-check">
                 <input type="radio" class="form-check-input" name="action" value="delete" id="forum-post-delete-destroy">
                 <label class="form-check-label" for="forum-post-delete-destroy">
-                    {{ __('Delete a post for good') }}
+                    {{ __('Delete for good') }}
                     <span class="form-text d-block mt-0 text-danger">{{ __('Its files go too. This cannot be undone.') }}</span>
                 </label>
             </div>
@@ -252,7 +254,8 @@
                         <a class="dropdown-item" href="/forum/curators/{{ id }}/{{ page > 1 ? '?page=' ~ page : '' }}">{{ __('Curators of the Topic') }}</a>
                     {% endif %}
 
-                    <a class="dropdown-item" href="/forum/change-topic/{{ id }}/">{{ __('Change the topic') }}</a>
+                    {# Each opens the dialog of its form; without the script, the page of that form. #}
+                    <a class="dropdown-item" href="/forum/change-topic/{{ id }}/" data-confirm-form="topic-change">{{ __('Change the topic') }}</a>
 
                     <button type="submit" form="topic-close" class="dropdown-item">{{ topic.closed ? __('Open Topic') : __('Close Topic') }}</button>
 
@@ -264,7 +267,7 @@
 
                     <button type="submit" form="topic-pin" class="dropdown-item">{{ topic.pinned ? __('Unfix Topic') : __('Pin Topic') }}</button>
 
-                    <a class="dropdown-item" href="/forum/move-topic/{{ id }}/">{{ __('Move Topic') }}</a>
+                    <a class="dropdown-item" href="/forum/move-topic/{{ id }}/"{% if move_targets %} data-confirm-form="topic-move"{% endif %}>{{ __('Move Topic') }}</a>
                 </div>
             </div>
         </div>
@@ -283,6 +286,29 @@
                 <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
             </form>
         {% endif %}
+        <form method="post" action="/forum/change-topic/{{ id }}/" id="topic-change"
+              data-confirm="{{ __('Change the topic') }}" data-confirm-fields="forum-topic-change-fields"
+              data-confirm-button="{{ __('Save') }}" data-confirm-tone="primary">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+        </form>
+        <template id="forum-topic-change-fields">
+            {% include '@forum/public/components/change-topic-fields.twig' with {
+                form_data: change_form,
+                errors: [],
+                id_prefix: 'topic-change',
+            } only %}
+        </template>
+        {% if move_targets %}
+            <form method="post" action="/forum/move-topic/{{ id }}/" id="topic-move"
+                  data-confirm="{{ __('Move topic') }}" data-confirm-text="{{ topic.name }}" data-confirm-fields="forum-topic-move-fields"
+                  data-confirm-button="{{ __('Move') }}" data-confirm-tone="primary">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                <input type="hidden" name="submit" value="1">
+            </form>
+            <template id="forum-topic-move-fields">
+                {% include '@forum/public/components/move-topic-fields.twig' with {targets: move_targets, id_prefix: 'topic-move'} only %}
+            </template>
+        {% endif %}
         <form method="post" action="/forum/delete-topic/{{ id }}/" id="topic-delete"
               data-confirm="{{ __('Delete the topic?') }}" data-confirm-text="{{ topic.name }}"
               {% if can('forum.topic.destroy') %}data-confirm-fields="forum-topic-delete-fields"{% endif %}
@@ -298,7 +324,7 @@
                 <div class="form-check">
                     <input type="radio" class="form-check-input" name="del" value="2" id="forum-topic-delete-destroy">
                     <label class="form-check-label" for="forum-topic-delete-destroy">
-                        {{ __('Delete a topic for good') }}
+                        {{ __('Delete for good') }}
                         <span class="form-text d-block mt-0 text-danger">{{ __('Its posts, poll and files go too. This cannot be undone.') }}</span>
                     </label>
                 </div>

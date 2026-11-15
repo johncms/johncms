@@ -1,0 +1,29 @@
+{#
+    The name and the meta tags of a topic: in the form of the page and in the dialog of the topic.
+
+    @var form_data array  name, meta_keywords, meta_description
+    @var errors    array  Validation messages by field name, empty in the dialog.
+    @var id_prefix string Keeps the ids apart when the fields stand twice on a page.
+#}
+<div class="mb-3">
+    <label class="form-label" for="{{ id_prefix }}-name">{{ __('Topic name') }}</label>
+    <input type="text" class="form-control{{ errors.name|default([]) ? ' is-invalid' : '' }}" id="{{ id_prefix }}-name"
+           name="name" value="{{ form_data.name }}" required>
+    {% if errors.name|default([]) %}
+        <div class="invalid-feedback d-block">{{ errors.name|join(', ') }}</div>
+    {% endif %}
+</div>
+<div class="mb-3">
+    <label class="form-label" for="{{ id_prefix }}-keywords">{{ __('Meta keywords') }}</label>
+    <textarea name="meta_keywords" class="form-control{{ errors.meta_keywords|default([]) ? ' is-invalid' : '' }}" id="{{ id_prefix }}-keywords" rows="1">{{ form_data.meta_keywords }}</textarea>
+    {% if errors.meta_keywords|default([]) %}
+        <div class="invalid-feedback d-block">{{ errors.meta_keywords|join(', ') }}</div>
+    {% endif %}
+</div>
+<div class="mb-3">
+    <label class="form-label" for="{{ id_prefix }}-description">{{ __('Meta description') }}</label>
+    <textarea name="meta_description" class="form-control{{ errors.meta_description|default([]) ? ' is-invalid' : '' }}" id="{{ id_prefix }}-description" rows="2">{{ form_data.meta_description }}</textarea>
+    {% if errors.meta_description|default([]) %}
+        <div class="invalid-feedback d-block">{{ errors.meta_description|join(', ') }}</div>
+    {% endif %}
+</div>

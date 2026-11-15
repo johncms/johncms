@@ -8,6 +8,7 @@ use Johncms\Modules\Forum\Application\Services\UnreadTopicsCounter;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Modules\Forum\Application\Services\TopicMoveTargets;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
@@ -32,6 +33,7 @@ final readonly class ForumTopicController
         private PaginationFactory $paginationFactory,
         private AccessCheckerInterface $accessChecker,
         private UnreadTopicsCounter $unreadTopics,
+        private TopicMoveTargets $moveTargets,
     ) {
     }
 
@@ -111,6 +113,14 @@ final readonly class ForumTopicController
                     'filter_url'       => '/forum/filter/' . $result->viewData['id'] . '/'
                         . ($result->viewData['filter_by_author'] ? 'clear/' : '') . $filterSuffix,
                     'can_moderate'     => $canModerate,
+                    // The dialog of moving the topic needs the sections only when it can be opened.
+                    'move_targets'     => $canModerate ? $this->moveTargets->forSection($result->viewData['topic']->section_id) : [],
+                    // What the dialog of changing the topic starts from; the meta tags may be empty in the table.
+                    'change_form'      => [
+                        'name'             => $result->viewData['topic']->name,
+                        'meta_keywords'    => $result->viewData['topic']->meta_keywords ?? '',
+                        'meta_description' => $result->viewData['topic']->meta_description ?? '',
+                    ],
                     'can_set_curators' => $this->accessChecker->allows(ForumPermissions::CURATORS_MANAGE),
                 ]
             )

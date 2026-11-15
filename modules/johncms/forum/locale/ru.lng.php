@@ -442,6 +442,8 @@
       'Delete the topic?' => 'Удалить тему?',
       'Its posts, poll and files go too. This cannot be undone.' => 'Её сообщения, опрос и файлы удалятся тоже. Отменить это нельзя.',
       'Delete the file?' => 'Удалить файл?',
+      'Delete for good' => 'Удалить безвозвратно',
+      'There is no other section of topics to move it to.' => 'Нет другого раздела с темами, куда её можно перенести.',
     ),
   ),
 );

@@ -30,9 +30,18 @@ import { Modal } from 'bootstrap';
  * with the fields: data-confirm-fields="<id of the template>". They are shown under the question
  * and go into the form with the answer, so without the script there is nothing to choose and
  * nothing is sent.
+ *
+ * A link may open the dialog of a form that stands elsewhere on the page:
+ *
+ *     <a href="/topic/1/move" data-confirm-form="topic-move">Move</a>
+ *     <form method="post" action="/topic/1/move" id="topic-move" data-confirm="…" data-confirm-fields="…">
+ *
+ * With the script the link sends that form, so the dialog asks; without it the link opens its
+ * page, where the same form stands on its own. The focus goes back to the link afterwards.
  */
 const element = document.querySelector('[data-confirm-dialog]');
 const approved = new WeakSet();
+const openers = new WeakMap();
 const FIELD = 'confirmed';
 let modal = null;
 
@@ -95,6 +104,8 @@ document.addEventListener('submit', async event => {
   event.preventDefault();
   setAnswer(form, null);
   const submitter = event.submitter;
+  const opener = submitter ?? openers.get(form);
+  openers.delete(form);
   const fields = form.dataset.confirmFields ? document.getElementById(form.dataset.confirmFields) : null;
   const yes = await confirmAction({
     fields: fields instanceof HTMLTemplateElement ? fields : null,
@@ -105,8 +116,8 @@ document.addEventListener('submit', async event => {
   });
 
   // Back on the button before the form is sent: a live list that replaces it then moves the focus on.
-  if (submitter?.isConnected) {
-    submitter.focus();
+  if (opener?.isConnected) {
+    opener.focus();
   }
 
   if (yes && form.isConnected) {
@@ -115,6 +126,19 @@ document.addEventListener('submit', async event => {
     form.requestSubmit(submitter?.isConnected ? submitter : null);
   }
 }, true);
+
+document.addEventListener('click', event => {
+  const link = event.target.closest('a[data-confirm-form]');
+  const form = link ? document.getElementById(link.dataset.confirmForm) : null;
+
+  if (!(form instanceof HTMLFormElement) || !form.matches('[data-confirm]')) {
+    return;
+  }
+
+  event.preventDefault();
+  openers.set(form, link);
+  form.requestSubmit();
+});
 
 /**
  * Puts the answer into the form — the field the server checks and the values chosen in the

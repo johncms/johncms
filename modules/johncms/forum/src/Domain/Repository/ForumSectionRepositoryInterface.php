@@ -27,15 +27,6 @@ interface ForumSectionRepositoryInterface
      */
     public function getChildrenWithCounts(int $parentId): Collection;
 
-    /**
-     * @return ForumSection[]
-     */
-    public function getTopicSectionsByCategory(int $categoryId, int $excludeSectionId): array;
-
-    /**
-     * @return ForumSection[]
-     */
-    public function getOtherCategories(int $excludeCategoryId): array;
 
     /**
      * @return Collection<int, ForumSection>

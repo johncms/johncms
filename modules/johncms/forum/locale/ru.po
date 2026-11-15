@@ -1837,3 +1837,9 @@ msgstr "Её сообщения, опрос и файлы удалятся то�
 
 msgid "Delete the file?"
 msgstr "Удалить файл?"
+
+msgid "Delete for good"
+msgstr "Удалить безвозвратно"
+
+msgid "There is no other section of topics to move it to."
+msgstr "Нет другого раздела с темами, куда её можно перенести."

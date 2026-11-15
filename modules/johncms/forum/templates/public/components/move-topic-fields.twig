@@ -1,0 +1,15 @@
+{#
+    The choice of the section a topic moves to: in the form of the page and in the dialog of the
+    topic.
+
+    @var targets   array  id, title
+    @var id_prefix string Keeps the ids apart when the fields stand twice on a page.
+#}
+<div class="mb-3">
+    <label class="form-label" for="{{ id_prefix }}-section">{{ __('New section') }}</label>
+    <select class="form-select" name="razd" id="{{ id_prefix }}-section">
+        {% for target in targets %}
+            <option value="{{ target.id }}">{{ target.title }}</option>
+        {% endfor %}
+    </select>
+</div>

@@ -18,4 +18,13 @@
             <label class="form-check-label" for="style-guide-clear-all">{{ d__('system', 'All of them') }}</label>
         </div>
     </template>
+
+    {# A link that opens the dialog of a form standing elsewhere; without the script, its own page. #}
+    <a href="#messages" class="btn btn-outline-secondary" data-confirm-form="style-guide-edit-form">{{ d__('system', 'Edit') }}</a>
+    <form method="get" action="#messages" id="style-guide-edit-form" data-confirm="{{ d__('system', 'Edit') }}"
+          data-confirm-button="{{ d__('system', 'Save') }}" data-confirm-tone="primary" data-confirm-fields="style-guide-edit-fields"></form>
+    <template id="style-guide-edit-fields">
+        <label class="form-label" for="style-guide-edit-name">{{ d__('system', 'Name') }}</label>
+        <input class="form-control" type="text" name="name" value="JohnCMS" id="style-guide-edit-name">
+    </template>
 </div>

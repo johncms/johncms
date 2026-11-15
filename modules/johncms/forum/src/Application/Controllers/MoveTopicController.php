@@ -27,9 +27,7 @@ final readonly class MoveTopicController
     {
         try {
             $this->accessUseCase->execute();
-            $other = filter_var($request->queryParam('other'), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
-            $otherCategoryId = $other !== null && $other > 0 ? $other : null;
-            $context = $this->contextUseCase->execute($id, $otherCategoryId);
+            $context = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException | ForumNotFoundException $exception) {
             return $this->forumErrorRenderer->viewResponse(
                 $exception,
@@ -77,14 +75,11 @@ final readonly class MoveTopicController
         return new ViewResponse(
             '@forum/public/move-topic.twig',
             [
-                'title'                     => __('Move topic'),
-                'page_title'                => __('Move topic'),
-                'current_section'           => $context->currentSection,
-                'current_sections'          => $context->currentSections,
-                'other_categories'          => $context->otherCategories,
-                'other_category_url_prefix' => '/forum/move-topic/' . $id . '/?other=',
-                'back_url'                  => $context->topic->url,
-                'form_action'               => '/forum/move-topic/' . $id . '/',
+                'title'       => __('Move topic'),
+                'page_title'  => __('Move topic'),
+                'targets'     => $context->targets,
+                'back_url'    => $context->topic->url,
+                'form_action' => '/forum/move-topic/' . $id . '/',
             ]
         );
     }
