@@ -782,16 +782,16 @@ msgstr ""
 msgid "The owner has added you to the ignore list."
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:234
+#: system/src/Comments/Application/CommentsService.php:249
 #, php-format
 msgid "You cannot write so often. Wait %d seconds."
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:241
+#: system/src/Comments/Application/CommentsService.php:256
 msgid "Message already exists"
 msgstr ""
 
-#: system/src/Comments/Application/CommentsService.php:398
+#: system/src/Comments/Application/CommentsService.php:417
 #, php-format
 msgid "The comment is too long: at most %d characters."
 msgstr ""
@@ -861,7 +861,7 @@ msgid "Enter the comment text"
 msgstr ""
 
 #: system/src/Comments/Controllers/CommentsController.php:156
-#: themes/default/templates/components/comments/comment.twig:51
+#: themes/default/templates/components/comments/comment.twig:62
 #: themes/default/templates/components/style-guide/examples/button-states.twig:11
 #: themes/default/templates/components/style-guide/examples/button-states.twig:13
 #: themes/default/templates/components/style-guide/examples/controls.twig:12
@@ -1340,6 +1340,7 @@ msgid "If you cannot see the image code, enable graphics in your browser and ref
 msgstr ""
 
 #: themes/default/templates/components/comments/comment.twig:11
+#: themes/default/templates/components/comments/comment.twig:35
 msgid "Unknown author"
 msgstr ""
 
@@ -1348,22 +1349,27 @@ msgstr ""
 msgid "Online"
 msgstr ""
 
-#: themes/default/templates/components/comments/comment.twig:32
+#: themes/default/templates/components/comments/comment.twig:34
+#: themes/default/templates/components/comments/discussion.twig:45
+msgid "In answer to:"
+msgstr ""
+
+#: themes/default/templates/components/comments/comment.twig:42
 msgid "Edited by %s, %s"
 msgstr ""
 
-#: themes/default/templates/components/comments/comment.twig:40
+#: themes/default/templates/components/comments/comment.twig:51
 #: themes/default/templates/components/style-guide/examples/button-states.twig:20
 msgid "Reply"
 msgstr ""
 
-#: themes/default/templates/components/comments/comment.twig:46
+#: themes/default/templates/components/comments/comment.twig:57
 msgid "Quote"
 msgstr ""
 
-#: themes/default/templates/components/comments/comment.twig:56
-#: themes/default/templates/components/comments/comment.twig:60
 #: themes/default/templates/components/comments/comment.twig:67
+#: themes/default/templates/components/comments/comment.twig:71
+#: themes/default/templates/components/comments/comment.twig:78
 #: themes/default/templates/components/style-guide/examples/button-states.twig:22
 #: themes/default/templates/components/style-guide/examples/confirm.twig:3
 #: themes/default/templates/components/style-guide/examples/confirm.twig:4
@@ -1371,11 +1377,15 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: themes/default/templates/components/comments/comment.twig:72
+#: themes/default/templates/components/comments/comment.twig:83
 msgid "All of the author"
 msgstr ""
 
-#: themes/default/templates/components/comments/discussion.twig:53
+#: themes/default/templates/components/comments/discussion.twig:50
+msgid "Do not answer this comment"
+msgstr ""
+
+#: themes/default/templates/components/comments/discussion.twig:65
 msgid "Send"
 msgstr ""
 

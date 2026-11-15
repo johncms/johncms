@@ -68,6 +68,18 @@ final readonly class EloquentCommentRepository implements CommentRepositoryInter
         return $comment;
     }
 
+    public function getByIds(array $ids): array
+    {
+        if ($ids === []) {
+            return [];
+        }
+
+        /** @var array<int, Comment> $comments */
+        $comments = Comment::query()->whereIn('id', $ids)->get()->keyBy('id')->all();
+
+        return $comments;
+    }
+
     public function findLatestOfUser(string $subjectType, int $userId): ?Comment
     {
         /** @var Comment|null $comment */

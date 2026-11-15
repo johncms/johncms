@@ -87,14 +87,19 @@ final class LibraryDiscussionTest extends FunctionalTestCase
         self::assertFalse(Capsule::table('comments')->where('id', $id)->exists());
     }
 
-    public function testAnAnswerSentFromTheFormKeepsTheCommentItAnswers(): void
+    public function testAnAnswerSentFromTheFormRecallsTheCommentItAnswers(): void
     {
-        $parent = $this->comment(FunctionalUserFactory::create()->id);
+        $answered = FunctionalUserFactory::create();
+        $parent = $this->comment($answered->id);
         $author = FunctionalUserFactory::create();
 
         $this->postForm($this->url(), ['text' => '<p>An answer</p>', 'reply_to' => $parent], $author);
+        $page = (string) $this->handleRequest($this->url(), cookies: $this->actingAs($author))->getContent();
 
         self::assertSame($parent, (int) Capsule::table('comments')->where('user_id', $author->id)->value('reply_to_id'));
+        self::assertStringContainsString('data-comment-reply-to="' . $parent . '"', $page);
+        self::assertStringContainsString('href="' . $this->url() . '/comment/' . $parent . '"', $page);
+        self::assertStringContainsString('name="reply_to"', $page);
     }
 
     public function testTheOldCommentsMoveIntoTheCore(): void

@@ -1779,3 +1779,9 @@ msgstr "Вы не авторизованы. Чтобы комментирова�
 
 msgid "Quote"
 msgstr "Цитата"
+
+msgid "In answer to:"
+msgstr "В ответ:"
+
+msgid "Do not answer this comment"
+msgstr "Не отвечать на этот комментарий"

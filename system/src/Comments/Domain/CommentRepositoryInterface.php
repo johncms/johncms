@@ -27,6 +27,14 @@ interface CommentRepositoryInterface
     /** The comment only when it belongs to this very subject. */
     public function find(string $subjectType, int $subjectId, int $id): ?Comment;
 
+    /**
+     * The comments with these ids, wherever they are.
+     *
+     * @param list<int> $ids
+     * @return array<int, Comment> By id; a comment that is gone is missing.
+     */
+    public function getByIds(array $ids): array;
+
     public function findLatestOfUser(string $subjectType, int $userId): ?Comment;
 
     /**

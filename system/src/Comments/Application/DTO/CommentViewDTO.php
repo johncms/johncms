@@ -16,6 +16,7 @@ final readonly class CommentViewDTO
      * @param string                $editedAt           Empty when it was never edited.
      * @param int                   $authorCommentCount Comments of the same author under the subject.
      * @param array{ip: string, ip_via_proxy: string, user_agent: string}|null $origin For the staff only.
+     * @param CommentReplyDTO|null  $replyTo            The comment it answers; null when none, or when that one is gone.
      */
     public function __construct(
         public int $id,
@@ -31,6 +32,7 @@ final readonly class CommentViewDTO
         public bool $canDelete,
         public int $authorCommentCount,
         public ?array $origin,
+        public ?CommentReplyDTO $replyTo = null,
     ) {
     }
 }

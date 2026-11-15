@@ -26,6 +26,16 @@
             {# A feed of the latest comments knows no position: the link still leads to the comment. #}
             <a class="site-comment__anchor" href="{{ subject.discussionUrl }}/comment/{{ comment.id }}">#{{ comment.number ?: '' }}</a>
         </header>
+        {% if comment.replyTo %}
+            {% set answered = comment.replyTo %}
+            {# The script scrolls to the comment when it is on the page; the address finds its page otherwise. #}
+            <a class="site-comment__reply-to" href="{{ answered.url }}" data-comment-reply-to="{{ answered.id }}">
+                {% include '@theme/components/icon.twig' with {name: 'reply', size: 12} only %}
+                <span class="visually-hidden">{{ d__('system', 'In answer to:') }}</span>
+                <span class="site-comment__reply-name">{{ answered.authorName ?: d__('system', 'Unknown author') }}</span>
+                {% if answered.excerpt %}<span class="site-comment__reply-excerpt">{{ answered.excerpt }}</span>{% endif %}
+            </a>
+        {% endif %}
         <div class="site-comment__body ck-content" data-comment-body>{{ comment.text }}</div>
         {% if comment.editCount > 0 %}
             <div class="site-comment__status">
@@ -36,7 +46,8 @@
             <footer class="site-comment__footer">
                 <div class="site-comment__actions">
                     {% if can_reply and author and author.id != app.user.id %}
-                        <a class="btn btn-outline-secondary btn-xs" href="#comment-form" data-editor-reply="{{ name }}">
+                        {# Marks the form as an answer to this comment: the label above the form says to whom. #}
+                        <a class="btn btn-outline-secondary btn-xs" href="#comment-form" data-comment-reply>
                             {% include '@theme/components/icon.twig' with {name: 'message-square', size: 12} only %} {{ d__('system', 'Reply') }}
                         </a>
                     {% endif %}

@@ -37,6 +37,18 @@
             {% include '@theme/components/comments/error.twig' with {error: error} only %}
             <form class="site-compose__form" id="comment-form-{{ subject.type }}-{{ subject.id }}" method="post" action="{{ subject.discussionUrl }}" data-live-list-form data-comment-form>
                 <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                {# The comment the text answers, set by the Reply and Quote buttons; the label says which. #}
+                <input type="hidden" name="reply_to" value="" data-comment-reply-field>
+                <div class="site-compose__reply" data-comment-reply-label hidden>
+                    {% include '@theme/components/icon.twig' with {name: 'reply', size: 14} only %}
+                    <span class="site-compose__reply-text">
+                        {{ d__('system', 'In answer to:') }}
+                        <b class="site-compose__reply-name" data-comment-reply-name></b>
+                        <span class="site-compose__reply-excerpt" data-comment-reply-excerpt></span>
+                    </span>
+                    <button type="button" class="btn-close site-compose__reply-cancel" data-comment-reply-cancel
+                            title="{{ d__('system', 'Do not answer this comment') }}" aria-label="{{ d__('system', 'Do not answer this comment') }}"></button>
+                </div>
                 {% include '@theme/components/editor.twig' with {
                     name: 'text',
                     id: 'comment-text',

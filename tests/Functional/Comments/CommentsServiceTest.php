@@ -9,6 +9,7 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\CurrentUser;
 use Johncms\Comments\Application\CommentAccess;
+use Johncms\Comments\Application\CommentExcerpt;
 use Johncms\Comments\Application\CommentsService;
 use Johncms\Comments\Application\Exceptions\CommentAccessDeniedException;
 use Johncms\Comments\Application\Exceptions\CommentNotFoundException;
@@ -17,6 +18,7 @@ use Johncms\Comments\CommentSubjectDTO;
 use Johncms\Comments\CommentSubjects;
 use Johncms\Comments\Domain\CommentRepositoryInterface;
 use Johncms\Content\ContentRendererInterface;
+use Johncms\Content\Html\HtmlFragment;
 use Johncms\Database\TransactionManagerInterface;
 use Johncms\EditorUploads\EditorUploadConsumers;
 use Johncms\EditorUploads\EditorUploadRepositoryInterface;
@@ -419,17 +421,28 @@ final class CommentsServiceTest extends FunctionalTestCase
             normalizer: $container->get(EditorContentNormalizer::class),
             antiflood: $container->get(AntifloodCheckerInterface::class),
             dates: $container->get(DateFormatterInterface::class),
+            excerpt: new CommentExcerpt(new HtmlFragment()),
         );
     }
 
     public function testAnAnswerKeepsTheCommentItAnswers(): void
     {
-        $parent = $this->insertComment(FunctionalUserFactory::create()->id);
+        $answered = FunctionalUserFactory::create();
+        $parent = $this->insertComment($answered->id, text: '<blockquote><p>Somebody else</p></blockquote><p>The first words</p>');
         $this->signIn(FunctionalUserFactory::create());
 
         $id = $this->comments->add($this->object(), '<p>An answer</p>', $this->client(), $parent);
 
         self::assertSame($parent, (int) Capsule::table('comments')->where('id', $id)->value('reply_to_id'));
+
+        $view = $this->comments->page($this->object(), 10, 0)->comments[1];
+        self::assertNotNull($view->replyTo);
+        self::assertSame($parent, $view->replyTo->id);
+        self::assertSame($answered->name, $view->replyTo->authorName);
+        // The quote is somebody else's words: the excerpt starts with the comment's own.
+        self::assertSame('The first words', $view->replyTo->excerpt);
+        self::assertSame('/test/' . self::OBJECT . '/comments/comment/' . $parent, $view->replyTo->url);
+        self::assertNull($this->comments->page($this->object(), 10, 0)->comments[0]->replyTo);
     }
 
     public function testAnAnswerToACommentOfAnotherDiscussionAnswersNobody(): void
@@ -454,6 +467,7 @@ final class CommentsServiceTest extends FunctionalTestCase
 
         self::assertSame([$answer], $this->remaining([$answer]));
         self::assertNull(Capsule::table('comments')->where('id', $answer)->value('reply_to_id'));
+        self::assertNull($this->comments->page($this->object(), 10, 0)->comments[0]->replyTo);
     }
 
     private function object(bool $open = true, ?int $ownerId = null, bool $ownerCanEdit = false, bool $ownerCanDelete = false): CommentSubjectDTO

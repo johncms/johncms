@@ -10,6 +10,7 @@ use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\CurrentUser;
 use Johncms\Comments\Application\DTO\CommentAuthorDTO;
 use Johncms\Comments\Application\DTO\CommentPageDTO;
+use Johncms\Comments\Application\DTO\CommentReplyDTO;
 use Johncms\Comments\Application\DTO\CommentViewDTO;
 use Johncms\Comments\Application\DTO\LatestCommentDTO;
 use Johncms\Comments\Application\Exceptions\CommentAccessDeniedException;
@@ -61,6 +62,7 @@ final readonly class CommentsService
         private EditorContentNormalizer $normalizer,
         private AntifloodCheckerInterface $antiflood,
         private DateFormatterInterface $dates,
+        private CommentExcerpt $excerpt,
     ) {
     }
 
@@ -156,13 +158,17 @@ final readonly class CommentsService
      */
     private function views(array $rows): array
     {
-        $users = $this->users->findMany($this->authorIds($rows));
-        $this->staff->preload(array_keys($users));
+        $answered = $this->comments->getByIds(array_values(array_unique(array_filter(
+            array_map(static fn(Comment $row): ?int => $row->reply_to_id, $rows)
+        ))));
+        $users = $this->users->findMany($this->authorIds([...$rows, ...array_values($answered)]));
+        $this->staff->preload($this->authorIds($rows));
         $canSeeOrigin = $this->access->canSeeOrigin();
 
         $views = [];
         foreach ($rows as $row) {
             $user = $users[$row->user_id] ?? null;
+            $parent = $row->reply_to_id === null ? null : ($answered[$row->reply_to_id] ?? null);
             $views[] = fn(CommentSubjectDTO $subject, int $number, array $authorCounts): CommentViewDTO => new CommentViewDTO(
                 id: $row->id,
                 number: $number,
@@ -186,6 +192,12 @@ final readonly class CommentsService
                     'ip_via_proxy' => $row->author_ip_via_proxy ?? '',
                     'user_agent'   => $row->author_user_agent ?? '',
                 ] : null,
+                replyTo: $parent === null ? null : new CommentReplyDTO(
+                    id: $parent->id,
+                    authorName: $users[$parent->user_id]->name ?? $parent->author_name,
+                    excerpt: $this->excerpt->of($parent->text),
+                    url: $subject->discussionUrl . '/comment/' . $parent->id,
+                ),
             );
         }
 
