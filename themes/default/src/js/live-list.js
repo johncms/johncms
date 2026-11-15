@@ -189,6 +189,15 @@ function initLiveList(root) {
       load(new URL(location.href), {history: 'none'});
     }
   });
+
+  // Back from another page the browser may show the HTML it got first, without what the list
+  // brought later: the comment just added, for instance. An entry the list has written to is
+  // asked for again then.
+  const navigation = performance.getEntriesByType('navigation')[0];
+
+  if (history.state?.liveList && navigation?.type === 'back_forward') {
+    load(new URL(location.href), {history: 'none'});
+  }
 }
 
 document.querySelectorAll('[data-live-list]').forEach(initLiveList);

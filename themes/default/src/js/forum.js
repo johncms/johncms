@@ -40,7 +40,10 @@ $(function () {
       },
     });
   });
-  $('.image-preview').magnificPopup({
+  // Taken on the whole page: a picture that comes later, in a comment the live list brought, opens
+  // the same way.
+  $(document.body).magnificPopup({
+    delegate: '.image-preview',
     type: 'image',
     image: {
       verticalFit: true,
