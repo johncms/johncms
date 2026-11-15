@@ -58,7 +58,7 @@ final readonly class TopicsPeriodController
         return new ViewResponse(
             '@forum/public/topic-list.twig',
             [
-                'pagination'          => $pagination->hasPages() ? $pagination->render() : null,
+                'pagination'          => $pagination->hasPages() ? $pagination->render(withRange: true) : null,
                 'title'               => $caption,
                 'page_title'          => $caption,
                 'empty_message'       => __('There is nothing new in this forum for selected period'),
@@ -67,6 +67,8 @@ final readonly class TopicsPeriodController
                 'show_period'         => true,
                 'period_action'       => '/forum/topics-period/',
                 'mark_as_read_action' => '',
+                'message'             => '',
+                'period'              => $result->hours,
             ]
         );
     }

@@ -36,6 +36,8 @@ final readonly class LatestTopicsController
                 'show_period'         => false,
                 'period_action'       => '/forum/topics-period/',
                 'mark_as_read_action' => '',
+                'message'             => '',
+                'period'              => 0,
             ]
         );
     }

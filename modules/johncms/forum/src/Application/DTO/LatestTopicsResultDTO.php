@@ -7,7 +7,7 @@ namespace Johncms\Modules\Forum\Application\DTO;
 final readonly class LatestTopicsResultDTO
 {
     /**
-     * @param array<int, array<string, mixed>> $topics
+     * @param list<ForumTopicRowDTO> $topics
      */
     public function __construct(
         public array $topics,

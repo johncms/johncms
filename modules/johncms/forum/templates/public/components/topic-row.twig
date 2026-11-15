@@ -1,0 +1,67 @@
+{#
+    A topic in a listing. The title stretches over the row; the count of posts leads to the last
+    page and, with the buttons of a moderator over a hidden topic, stays above the stretched link.
+
+    @var topic \Johncms\Modules\Forum\Application\DTO\ForumTopicRowDTO
+#}
+{% set icon = topic.deleted ? 'trash-2' : (topic.closed ? 'lock-keyhole' : (topic.hasPoll ? 'chart-column' : (topic.pinned ? 'pin' : 'message-square'))) %}
+<article class="site-forum-topic{{ topic.pinned ? ' site-forum-topic--pinned' }}{{ topic.closed ? ' site-forum-topic--closed' }}{{ topic.deleted ? ' site-forum-topic--deleted' }}">
+    <span class="site-forum-topic__icon" aria-hidden="true">{% include '@theme/components/icon.twig' with {name: icon, size: 14} only %}</span>
+    <div class="site-forum-topic__main">
+        <h2 class="site-forum-topic__titleline">
+            <a class="site-forum-topic__title stretched-link" href="{{ topic.url }}">{{ topic.name }}</a>
+            <a class="site-forum-topic__count{{ topic.unread ? ' site-forum-topic__count--unread' }}" href="{{ topic.lastPageUrl }}"
+               title="{{ topic.unread ? __('New posts — to the last page') : __('To the last page') }}">{{ topic.posts|format_number }}</a>
+            {% if topic.pinned %}<span class="site-forum-badge site-forum-badge--accent">{{ __('Pinned') }}</span>{% endif %}
+            {% if topic.hasPoll %}<span class="site-forum-badge">{{ __('Poll') }}</span>{% endif %}
+            {% if topic.closed %}<span class="site-forum-badge">{{ __('Closed') }}</span>{% endif %}
+            {% if topic.deleted %}<span class="site-forum-badge site-forum-badge--danger">{{ __('Deleted') }}</span>{% endif %}
+        </h2>
+        <div class="site-forum-topic__meta">
+            <span class="site-forum-topic__author">
+                <span class="site-forum-topic__avatar" aria-hidden="true">{{ topic.author|slice(0, 1)|upper }}</span>{{ topic.author }}
+            </span>
+            {% if topic.lastDate %}
+                <span aria-hidden="true">·</span>
+                <span>{{ __('last:') }} <span class="site-forum-topic__last-who">{{ topic.lastAuthor }}</span></span>
+                <span aria-hidden="true">·</span>
+                <span>{{ topic.lastDate }}</span>
+            {% endif %}
+            {% if topic.deleted and topic.deletedBy %}
+                <span aria-hidden="true">·</span>
+                <span class="site-forum-topic__deleted-by">{{ __('deleted by %s')|format(topic.deletedBy) }}</span>
+            {% endif %}
+            {% if topic.sectionName %}
+                <span aria-hidden="true">·</span>
+                <span class="site-forum-topic__place">
+                    {% if topic.categoryName %}<a href="{{ topic.categoryUrl }}">{{ topic.categoryName }}</a> › {% endif %}<a href="{{ topic.sectionUrl }}">{{ topic.sectionName }}</a>
+                </span>
+            {% endif %}
+        </div>
+    </div>
+    {% if topic.deleted and (can('forum.topic.moderate') or can('forum.topic.destroy')) %}
+        <div class="site-forum-topic__actions">
+            {% if can('forum.topic.moderate') %}
+                <form method="post" action="/forum/restore-topic/{{ topic.id }}/">
+                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                    <button type="submit" class="site-icon-button" title="{{ __('Restore Topic') }}" aria-label="{{ __('Restore Topic') }}">
+                        {% include '@theme/components/icon.twig' with {name: 'rotate-ccw', size: 13} only %}
+                    </button>
+                </form>
+            {% endif %}
+            {% if can('forum.topic.destroy') %}
+                <form method="post" action="/forum/delete-topic/{{ topic.id }}/"
+                      data-confirm="{{ __('Delete the topic for good?') }}" data-confirm-text="{{ topic.name }} — {{ __('Its posts, poll and files go too. This cannot be undone.') }}"
+                      data-confirm-button="{{ __('Delete for good') }}">
+                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                    <input type="hidden" name="del" value="2">
+                    <button type="submit" class="site-icon-button site-icon-button--danger" title="{{ __('Delete for good') }}" aria-label="{{ __('Delete for good') }}">
+                        {% include '@theme/components/icon.twig' with {name: 'trash-2', size: 13} only %}
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+    {% else %}
+        <span class="site-forum-topic__chevron" aria-hidden="true">{% include '@theme/components/icon.twig' with {name: 'chevron-right', size: 14} only %}</span>
+    {% endif %}
+</article>

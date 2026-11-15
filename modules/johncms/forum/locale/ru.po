@@ -1872,3 +1872,33 @@ msgstr "Открыть раздел"
 
 msgid "Users / guests"
 msgstr "Пользователи / гости"
+
+msgid "New posts — to the last page"
+msgstr "Новые сообщения — на последнюю страницу"
+
+msgid "To the last page"
+msgstr "На последнюю страницу"
+
+msgid "Pinned"
+msgstr "Закреп"
+
+msgid "Closed"
+msgstr "Закрыта"
+
+msgid "last:"
+msgstr "последний:"
+
+msgid "deleted by %s"
+msgstr "удалил %s"
+
+msgid "Delete the topic for good?"
+msgstr "Удалить тему безвозвратно?"
+
+msgid "Start the first one."
+msgstr "Начните первую."
+
+msgid "Mark every topic as read?"
+msgstr "Отметить все темы прочитанными?"
+
+msgid "Hours"
+msgstr "Часов"

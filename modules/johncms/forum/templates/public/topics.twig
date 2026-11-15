@@ -1,106 +1,62 @@
 {#
-    A section of the forum: the topics it holds.
+    A section of the forum: the topics it holds, the pinned ones first.
 
-    @var topics        iterable
+    @var summary       string Description of the section, empty when it has none.
+    @var topics        \Johncms\Modules\Forum\Application\DTO\ForumTopicRowDTO[]
     @var total         int
+    @var totals        array  topics, posts — over the section, as the visitor sees it.
     @var pagination    \Twig\Markup Null when everything fits on one page.
-    @var create_access bool         The visitor may open a topic here.
+    @var create_access bool   The visitor may open a topic here.
     @var new_topic_url string
     @var files_url     string
-    @var online        array        online_u, online_g
-    @var files_count   int
-    @var unread_count  int
+    @var online        array  online_u, online_g
+    @var files_count   string
+    @var unread_count  string
 #}
 {% extends '@theme/layouts/default.twig' %}
 
-{% block content %}
-    {% include '@forum/public/components/header.twig' with {
-        unread_count: unread_count,
-        files_count: files_count,
-        files_url: files_url,
-        files_name: __('Category Files')
-    } only %}
+{% block content_class %}site-content--contained{% endblock %}
 
-    {% if total == 0 %}
-        {% include '@theme/components/alert.twig' with {
-            alert_type: 'alert-info',
-            alert: __('No topics in this section')
-        } only %}
-    {% endif %}
-
+{% block page_actions %}
     {% if create_access %}
-        <div class="mb-3">
-            <a href="{{ new_topic_url }}" class="btn btn-primary">{{ __('New Topic') }}</a>
-        </div>
+        <a href="{{ new_topic_url }}" class="btn btn-primary">
+            {% include '@theme/components/icon.twig' with {name: 'plus', size: 14} only %} {{ __('New Topic') }}
+        </a>
     {% endif %}
+{% endblock %}
 
-    {% for topic in topics %}
-        <div class="forum-section">
-            <div class="section-header">
-                <div class="d-flex align-items-center w-100">
-                    {% if topic.has_icons %}
-                        <div class="topic-icons d-flex align-items-center">
-                            {% if topic.pinned %}
-                                <div class="me-1" title="{{ __('Pinned topic') }}">
-                                    <svg class="icon">
-                                        <use xlink:href="{{ asset('icons/sprite.svg') }}#pin"/>
-                                    </svg>
-                                </div>
-                            {% endif %}
-                            {% if topic.has_poll %}
-                                <div class="me-1" title="{{ __('Topic has poll') }}">
-                                    <svg class="icon">
-                                        <use xlink:href="{{ asset('icons/sprite.svg') }}#bar-chart"/>
-                                    </svg>
-                                </div>
-                            {% endif %}
-                            {% if topic.closed %}
-                                <div class="me-1" title="{{ __('Closed topic') }}">
-                                    <svg class="icon">
-                                        <use xlink:href="{{ asset('icons/sprite.svg') }}#lock"/>
-                                    </svg>
-                                </div>
-                            {% endif %}
-                            {% if topic.deleted %}
-                                <div class="me-1" title="{{ __('Deleted topic') }}">
-                                    <svg class="icon">
-                                        <use xlink:href="{{ asset('icons/sprite.svg') }}#x"/>
-                                    </svg>
-                                </div>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                    <a href="{{ topic.url }}" class="section-name flex-grow-1 flex-md-grow-0">{{ topic.name }}</a>
-                    {% if topic.deleted %}
-                        <div class="ms-3">
-                            <span class="badge bg-danger">{{ __('Deleted topic') }}</span>
-                        </div>
-                    {% elseif topic.last_page_url %}
-                        <a href="{{ topic.last_page_url }}" title="{{ __('Last page') }}">
-                            <span class="badge rounded-pill {{ topic.unread ? 'bg-danger' : 'counter-badge' }} ms-3">{{ topic.show_posts_count }}</span>
-                        </a>
-                    {% else %}
-                        <span class="badge rounded-pill {{ topic.unread ? 'bg-danger' : 'counter-badge' }} ms-3">{{ topic.show_posts_count }}</span>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="small pt-2 text-muted">
-                {{ __('Author') }}: {{ topic.user_name }},
-                {{ __('Last post') }}: {{ topic.show_last_post_date }}, {{ topic.show_last_author }}
-            </div>
-        </div>
-    {% endfor %}
+{% block page_subtitle %}
+    {% include '@forum/public/components/stat.twig' with {totals: totals, summary: summary} only %}
+{% endblock %}
 
-    <div class="pt-2">
-        <div>{{ __('Total') }}: {{ total }}</div>
-        {% if pagination %}
-            <div class="mt-2">{{ pagination }}</div>
+{% block content %}
+    <div class="site-forum">
+        {% include '@forum/public/components/header.twig' with {
+            unread_count: unread_count,
+            files_count: files_count,
+            files_url: files_url,
+            files_name: __('Category Files'),
+        } only %}
+
+        {% if topics %}
+            <div class="site-forum__rows" id="forum-topics">
+                {% for topic in topics %}
+                    {% include '@forum/public/components/topic-row.twig' with {topic: topic} only %}
+                {% endfor %}
+            </div>
+            {% if pagination %}<div class="site-forum__pagination">{{ pagination }}</div>{% endif %}
+        {% else %}
+            {% include '@theme/components/empty-state.twig' with {
+                icon: 'messages-square',
+                title: __('No topics in this section'),
+                description: create_access ? __('Start the first one.') : '',
+            } only %}
         {% endif %}
-    </div>
 
-    {% include '@forum/public/components/footer.twig' with {
-        online: online,
-        who_url: '/forum/visitors/',
-        who_name: __('Who in Forum')
-    } only %}
+        {% include '@forum/public/components/footer.twig' with {
+            online: online,
+            who_url: '/forum/visitors/',
+            who_name: __('Who in Forum'),
+        } only %}
+    </div>
 {% endblock %}

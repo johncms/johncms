@@ -14,11 +14,16 @@ use Johncms\Modules\Forum\Application\UseCases\ViewUnreadTopicsUseCase;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 
 final readonly class UnreadTopicsController
 {
+    /** The result of marking every topic as read, shown as a toast after the redirect. */
+    public const string MESSAGE = 'forum_unread_message';
+
     public function __construct(
         private NavChain $navChain,
+        private Session $session,
         private CurrentUser $currentUser,
         private EnsureForumUserAccessUseCase $forumUserAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
@@ -52,7 +57,7 @@ final readonly class UnreadTopicsController
         return new ViewResponse(
             '@forum/public/topic-list.twig',
             [
-                'pagination'          => $pagination->hasPages() ? $pagination->render() : null,
+                'pagination'          => $pagination->hasPages() ? $pagination->render(withRange: true) : null,
                 'title'               => $caption,
                 'page_title'          => $caption,
                 'empty_message'       => __('The list is empty'),
@@ -61,6 +66,8 @@ final readonly class UnreadTopicsController
                 'show_period'         => false,
                 'period_action'       => '/forum/topics-period/',
                 'mark_as_read_action' => $result->total > 0 ? '/forum/unread/mark-read/' : '',
+                'period'              => 0,
+                'message'             => (string) $this->session->getFlash(self::MESSAGE),
             ]
         );
     }

@@ -9,7 +9,6 @@ use Johncms\Modules\Forum\Application\DTO\ForumLastTopicDTO;
 use Johncms\Modules\Forum\Application\DTO\ForumSectionRowDTO;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
-use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Utils\DateFormatterInterface;
 
@@ -24,7 +23,7 @@ use Johncms\Utils\DateFormatterInterface;
 final readonly class ForumSectionRows
 {
     public function __construct(
-        private ForumSectionRepositoryInterface $sectionRepository,
+        private ForumSectionPaths $sectionPaths,
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumTopicPathService $topicPathService,
         private AccessCheckerInterface $accessChecker,
@@ -38,22 +37,9 @@ final readonly class ForumSectionRows
     public function under(int $parentId): array
     {
         $withHidden = $this->accessChecker->allows(ForumPermissions::DELETED_VIEW);
-
-        $children = [];
-        $sections = [];
-        foreach ($this->sectionRepository->getAllOrdered() as $section) {
-            $sections[$section->id] = $section;
-            $children[(int) $section->parent][] = $section;
-        }
-
-        $own = [];
-        foreach ($this->topicRepository->getSectionStats($withHidden) as $stats) {
-            $own[$stats['section_id']] = $stats;
-        }
-
-        $paths = [];
-        $totals = [];
-        $this->walk($children, 0, '', $paths, $totals, $own);
+        $sections = $this->sectionPaths->sections();
+        $children = $this->children($sections);
+        $totals = $this->count($children, $withHidden);
 
         $rows = $children[$parentId] ?? [];
         $shown = [...$rows];
@@ -61,21 +47,67 @@ final readonly class ForumSectionRows
             array_push($shown, ...($children[$row->id] ?? []));
         }
 
-        $lastTopics = $this->lastTopics($shown, $totals, $paths, $sections, $withHidden);
+        $lastTopics = $this->lastTopics($shown, $totals, $sections, $withHidden);
 
         return array_map(
             fn(ForumSection $section): ForumSectionRowDTO => $this->row(
                 $section,
-                $paths,
                 $totals,
                 $lastTopics,
                 array_map(
-                    fn(ForumSection $child): ForumSectionRowDTO => $this->row($child, $paths, $totals, $lastTopics, []),
+                    fn(ForumSection $child): ForumSectionRowDTO => $this->row($child, $totals, $lastTopics, []),
                     $children[$section->id] ?? [],
                 ),
             ),
             $rows,
         );
+    }
+
+    /**
+     * What a section holds together with the sections under it.
+     *
+     * @return array{topics: int, posts: int}
+     */
+    public function totalsOf(int $sectionId): array
+    {
+        $children = $this->children($this->sectionPaths->sections());
+        $totals = $this->count($children, $this->accessChecker->allows(ForumPermissions::DELETED_VIEW));
+
+        return [
+            'topics' => $totals[$sectionId]['topics'] ?? 0,
+            'posts'  => $totals[$sectionId]['posts'] ?? 0,
+        ];
+    }
+
+    /**
+     * @param array<int, ForumSection> $sections
+     * @return array<int, list<ForumSection>> The sections right under each one, by its id.
+     */
+    private function children(array $sections): array
+    {
+        $children = [];
+        foreach ($sections as $section) {
+            $children[(int) $section->parent][] = $section;
+        }
+
+        return $children;
+    }
+
+    /**
+     * @param array<int, list<ForumSection>> $children
+     * @return array<int, array{topics: int, posts: int, last_date: int, last_in: int}>
+     */
+    private function count(array $children, bool $withHidden): array
+    {
+        $own = [];
+        foreach ($this->topicRepository->getSectionStats($withHidden) as $stats) {
+            $own[$stats['section_id']] = $stats;
+        }
+
+        $totals = [];
+        $this->walk($children, 0, $totals, $own);
+
+        return $totals;
     }
 
     /**
@@ -93,19 +125,16 @@ final readonly class ForumSectionRows
     }
 
     /**
-     * Fills the path of every section and what it holds together with the sections under it.
+     * Fills what every section holds together with the sections under it.
      *
-     * @param array<int, list<ForumSection>>                                       $children
-     * @param array<int, string>                                                   $paths
-     * @param array<int, array{topics: int, posts: int, last_date: int, last_in: int}> $totals
+     * @param array<int, list<ForumSection>>                                          $children
+     * @param array<int, array{topics: int, posts: int, last_date: int, last_in: int}>    $totals
      * @param array<int, array{section_id: int, topics: int, posts: int, last_date: int}> $own
      */
-    private function walk(array $children, int $parentId, string $parentPath, array &$paths, array &$totals, array $own): void
+    private function walk(array $children, int $parentId, array &$totals, array $own): void
     {
         foreach ($children[$parentId] ?? [] as $section) {
-            $path = ltrim($parentPath . '/' . trim((string) $section->slug), '/');
-            $paths[$section->id] = $path;
-            $this->walk($children, $section->id, $path, $paths, $totals, $own);
+            $this->walk($children, $section->id, $totals, $own);
 
             $total = [
                 'topics'    => $own[$section->id]['topics'] ?? 0,
@@ -130,11 +159,10 @@ final readonly class ForumSectionRows
      *
      * @param list<ForumSection>                                                    $shown
      * @param array<int, array{topics: int, posts: int, last_date: int, last_in: int}> $totals
-     * @param array<int, string>                                                    $paths
      * @param array<int, ForumSection>                                              $sections
      * @return array<int, ForumLastTopicDTO>
      */
-    private function lastTopics(array $shown, array $totals, array $paths, array $sections, bool $withHidden): array
+    private function lastTopics(array $shown, array $totals, array $sections, bool $withHidden): array
     {
         $wanted = [];
         foreach ($shown as $section) {
@@ -162,7 +190,7 @@ final readonly class ForumSectionRows
 
             $lastTopics[$section->id] = new ForumLastTopicDTO(
                 name: (string) $topic->name,
-                url: '/forum/' . $paths[$topic->section_id] . '/' . $this->topicPathService->getTopicSlug($topic) . '-' . $topic->id . '/',
+                url: $this->sectionPaths->url($topic->section_id) . $this->topicPathService->getTopicSlug($topic) . '-' . $topic->id . '/',
                 author: (string) ($withHidden ? $topic->mod_last_post_author_name : $topic->last_post_author_name),
             );
         }
@@ -171,19 +199,18 @@ final readonly class ForumSectionRows
     }
 
     /**
-     * @param array<int, string>                                                    $paths
      * @param array<int, array{topics: int, posts: int, last_date: int, last_in: int}> $totals
      * @param array<int, ForumLastTopicDTO>                                         $lastTopics
      * @param list<ForumSectionRowDTO>                                              $children
      */
-    private function row(ForumSection $section, array $paths, array $totals, array $lastTopics, array $children): ForumSectionRowDTO
+    private function row(ForumSection $section, array $totals, array $lastTopics, array $children): ForumSectionRowDTO
     {
         $total = $totals[$section->id];
 
         return new ForumSectionRowDTO(
             id: $section->id,
             name: (string) $section->name,
-            url: '/forum/' . $paths[$section->id] . '/',
+            url: (string) $this->sectionPaths->url($section->id),
             description: trim((string) $section->description),
             holdsTopics: $section->section_type === 1,
             topics: $total['topics'],

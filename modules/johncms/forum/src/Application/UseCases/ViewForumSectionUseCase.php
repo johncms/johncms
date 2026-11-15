@@ -12,6 +12,8 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Application\Services\ForumSectionRows;
+use Johncms\Modules\Forum\Application\Services\ForumTopicRows;
+use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumWhoRepositoryInterface;
@@ -27,6 +29,7 @@ final readonly class ViewForumSectionUseCase
         private CurrentUser $currentUser,
         private ForumAccess $forumAccess,
         private ForumSectionRows $sectionRows,
+        private ForumTopicRows $topicRows,
     ) {
     }
 
@@ -70,8 +73,10 @@ final readonly class ViewForumSectionUseCase
                     'create_access' => $this->canCreateTopic(),
                     'new_topic_url' => '/forum/new-topic/' . $currentSection->id . '/',
                     'files_url'     => '/forum/files/?s=' . $currentSection->id,
-                    'topics'        => $topics,
+                    'topics'        => $this->topicRows->present($topics->map(static fn(ForumTopic $topic): array => $topic->getAttributes())),
                     'total'         => $total,
+                    'totals'        => $this->sectionRows->totalsOf($currentSection->id),
+                    'summary'       => trim((string) $currentSection->description),
                 ],
                 filesCount: (int) ($currentSection->section_files_count ?? 0),
                 onlineUsers: $this->whoRepository->countForumUsers(),

@@ -114,7 +114,9 @@ return static function (RouteCollection $router): void {
         $r->get('/forum/visitors', ViewForumVisitorsController::class)->name('forum.visitors');
         $r->get('/forum/topic-visitors/{id:number}', ViewTopicVisitorsController::class)->name('forum.topic_visitors');
         $r->get('/forum/unread', UnreadTopicsController::class)->name('forum.unread');
-        $r->post('/forum/unread/mark-read', MarkAllTopicsReadController::class)->name('forum.unread_mark_read');
+        $r->post('/forum/unread/mark-read', MarkAllTopicsReadController::class)
+            ->name('forum.unread_mark_read')
+            ->addMiddleware(RequireConfirmationMiddleware::class);
         $r->map(['GET', 'POST'], '/forum/topics-period', TopicsPeriodController::class)->name('forum.topics_period');
 
         // Everything that writes something down. A guest is sent to sign in and an account banned

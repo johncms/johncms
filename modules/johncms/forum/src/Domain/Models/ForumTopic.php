@@ -21,8 +21,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Johncms\Casts\Serialize;
-use Johncms\Users\User;
-use Johncms\Utils\DateFormatterInterface;
 
 /**
  * Class Topic
@@ -63,20 +61,12 @@ use Johncms\Utils\DateFormatterInterface;
  * @property ForumSection $section
  * @method Builder read() - Метка прочитанного
  * @property string $url
- * @property string $show_posts_count
- * @property string $show_last_author
- * @property string $show_last_post_date
- * @property bool $has_icons
- * @property string $last_page_url
- * @property bool $unread
  * @property int $read
  * @property string $formatted_view_count
  *
  * @property int $files_count
  * @property ForumFile $files
  *
- * @property User $current_user
- * @property DateFormatterInterface $dateFormatter
  */
 class ForumTopic extends Model
 {
@@ -102,12 +92,6 @@ class ForumTopic extends Model
 
     protected $appends = [
         'url',
-        'show_posts_count',
-        'show_last_author',
-        'show_last_post_date',
-        'has_icons',
-        'last_page_url',
-        'unread',
     ];
 
     protected $fillable = [
@@ -139,22 +123,6 @@ class ForumTopic extends Model
         'pinned',
         'has_poll',
     ];
-
-    /**
-     * Текущий пользователь
-     *
-     * @var User
-     */
-    protected $current_user;
-
-    protected DateFormatterInterface $dateFormatter;
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        $this->current_user = di(CurrentUser::class)->user();
-        $this->dateFormatter = di(DateFormatterInterface::class);
-    }
 
     /**
      * Добавляем глобальные ограничения

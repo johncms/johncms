@@ -17,6 +17,7 @@ use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Collections\Application\Services\CollectionStructureMemo;
 use Johncms\Modules\Collections\Application\Console\RebuildCollectionSearchCommand;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
+use Johncms\Modules\Forum\Application\Services\ForumSectionPaths;
 use Johncms\Modules\News\Application\Sitemap\NewsUrlsProvider;
 use Johncms\View\Twig\Extension\MailExtension;
 use Johncms\Http\Environment;
@@ -93,6 +94,8 @@ final class ContainerCompilationTest extends TestCase
                 DownloadCategoryPathService::class,
                 // Remembers the paths of the sections of the forum for one request.
                 ForumSectionPathService::class,
+                // Holds every section of the forum and its address for one request.
+                ForumSectionPaths::class,
                 NavChain::class,
                 // Holds the menu items this visitor may open, which is a fact about one request.
                 MenuRegistry::class,

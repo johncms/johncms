@@ -65,7 +65,7 @@ final readonly class ForumSectionController
 
         if ($result->template === '@forum/public/topics.twig') {
             $pagination = $this->paginationFactory->create((int) $result->viewData['total'], null, 'page', $page);
-            $extra['pagination'] = $pagination->hasPages() ? $pagination->render() : null;
+            $extra['pagination'] = $pagination->hasPages() ? $pagination->render(withRange: true) : null;
 
             $meta = new PageMeta($result->section->name, $page, $result->section->calculated_meta_description);
             $extra['title'] = $meta->title;
