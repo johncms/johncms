@@ -129,7 +129,6 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
 
         self::assertNotNull($dto->meta);
         self::assertSame('127.0.0.1', $dto->meta->ip);
-        self::assertSame('/admin/ip-search?ip=127.0.0.1', $dto->meta->searchIpUrl);
         self::assertSame('UA', $dto->meta->userAgent);
         self::assertFalse($dto->meta->canManage);
         self::assertNull($dto->meta->editUrl);

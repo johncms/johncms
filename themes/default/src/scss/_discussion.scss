@@ -183,10 +183,6 @@
   &__identity { display: flex; align-items: center; gap: .625rem; padding: .875rem 1rem; border-block-end: 1px solid var(--border); font-weight: 600; }
   &__identity img { inline-size: 2rem; block-size: 2rem; border-radius: .5rem; object-fit: cover; }
   &__field { padding: .875rem 1rem; }
-  &__meta { display: flex; align-items: center; gap: .75rem; flex: 1 1 12rem; min-inline-size: 0; color: var(--fg-dim); font-family: var(--bs-font-monospace); font-size: .6875rem; }
-  &__ip { flex-shrink: 0; color: var(--fg-muted); text-decoration: none; }
-  &__ip:hover { color: var(--accent); }
-  &__agent { min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 }
 .site-comment {
   &__status { margin-block-end: .5rem; color: var(--fg-muted); font-size: .75rem; overflow-wrap: anywhere; }

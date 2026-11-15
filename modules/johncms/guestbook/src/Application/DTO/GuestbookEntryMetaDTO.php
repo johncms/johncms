@@ -12,7 +12,6 @@ final readonly class GuestbookEntryMetaDTO
 {
     public function __construct(
         public ?string $ip,
-        public ?string $searchIpUrl,
         public ?string $userAgent,
         public bool $canManage,
         public ?string $editUrl,

@@ -39,16 +39,6 @@
         </div>
         {% if can_write or post.meta %}
             <footer class="site-comment__footer">
-                {% if post.meta and (post.meta.ip or post.meta.userAgent) %}
-                    <div class="site-guestbook__meta">
-                        {% if post.meta.ip %}
-                            <a class="site-guestbook__ip" href="{{ post.meta.searchIpUrl }}" dir="ltr">{{ post.meta.ip }}</a>
-                        {% endif %}
-                        {% if post.meta.userAgent %}
-                            <span class="site-guestbook__agent" dir="ltr" title="{{ post.meta.userAgent }}">{{ post.meta.userAgent }}</span>
-                        {% endif %}
-                    </div>
-                {% endif %}
                 <div class="site-comment__actions">
                     {# A guest is answered too: whoever wrote the entry, the answer recalls it. #}
                     {% if can_write and (post.userId == 0 or post.userId != (app.user.isValid ? app.user.id : 0)) %}
@@ -64,25 +54,22 @@
                         </button>
                     {% endif %}
                     {% if post.meta and post.meta.canManage %}
-                        <details class="site-popover" data-site-popover>
-                            <summary class="btn btn-outline-secondary btn-xs btn-icon" aria-label="{{ __('Edit') }}">
-                                {% include '@theme/components/icon.twig' with {name: 'chevron-down', size: 12} only %}
-                            </summary>
-                            <div class="site-popover__panel">
-                                <a class="site-popover__item" href="{{ post.meta.editUrl }}">
-                                    {% include '@theme/components/icon.twig' with {name: 'pencil', size: 14} only %}
-                                    <span>{{ __('Edit') }}</span>
-                                </a>
-                                <form method="post" action="{{ post.meta.deleteUrl }}" data-live-list-form data-confirm="{{ __('Delete this message?') }}" data-confirm-button="{{ __('Delete') }}">
-                                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                                    <input type="hidden" name="id" value="{{ post.id }}">
-                                    <button type="submit" class="site-popover__item">
-                                        {% include '@theme/components/icon.twig' with {name: 'trash-2', size: 14} only %}
-                                        <span>{{ __('Delete') }}</span>
-                                    </button>
-                                </form>
-                            </div>
-                        </details>
+                        <a class="btn btn-outline-secondary btn-xs" href="{{ post.meta.editUrl }}">
+                            {% include '@theme/components/icon.twig' with {name: 'pencil', size: 12} only %} {{ __('Edit') }}
+                        </a>
+                        <form method="post" action="{{ post.meta.deleteUrl }}" data-live-list-form data-confirm="{{ __('Delete this message?') }}" data-confirm-button="{{ __('Delete') }}">
+                            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                            <input type="hidden" name="id" value="{{ post.id }}">
+                            <button type="submit" class="btn btn-outline-secondary btn-xs btn-icon site-comment__delete" title="{{ __('Delete') }}" aria-label="{{ __('Delete') }}">
+                                {% include '@theme/components/icon.twig' with {name: 'trash-2', size: 12} only %}
+                            </button>
+                        </form>
+                    {% endif %}
+                    {% if post.meta %}
+                        {% include '@theme/components/moderator-meta.twig' with {
+                            ip: post.meta.ip,
+                            user_agent: post.meta.userAgent,
+                        } only %}
                     {% endif %}
                 </div>
             </footer>
