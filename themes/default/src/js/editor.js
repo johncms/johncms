@@ -86,8 +86,10 @@ export function clearEditor(field) {
 /** Puts the caret at the end of the editor and scrolls the form into view. */
 export function focusEditor(editor) {
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  editor.ui.element.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: 'center' });
+  // Focus first: the editor scrolls to its caret on focus, and a scroll of its own started after a
+  // smooth one stops it halfway.
   editor.editing.view.focus();
+  editor.ui.element.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: 'center' });
 }
 
 /** Starts an answer: "name, " at the caret, then the caret at the end. */
