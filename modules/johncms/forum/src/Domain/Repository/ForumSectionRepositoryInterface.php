@@ -17,16 +17,6 @@ interface ForumSectionRepositoryInterface
 
     public function findWithSectionFilesCountById(int $sectionId): ?ForumSection;
 
-    /**
-     * @return Collection<int, ForumSection>
-     */
-    public function getRootSectionsWithSubsections(): Collection;
-
-    /**
-     * @return Collection<int, ForumSection>
-     */
-    public function getChildrenWithCounts(int $parentId): Collection;
-
 
     /**
      * @return Collection<int, ForumSection>

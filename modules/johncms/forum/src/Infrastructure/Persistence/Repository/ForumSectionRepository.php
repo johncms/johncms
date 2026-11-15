@@ -43,26 +43,6 @@ final class ForumSectionRepository implements ForumSectionRepositoryInterface
             ->find($sectionId);
     }
 
-    public function getRootSectionsWithSubsections(): Collection
-    {
-        return ForumSection::query()
-            ->withCount('subsections', 'topics')
-            ->with('subsections')
-            ->where('parent', 0)
-            ->orWhereNull('parent')
-            ->orderBy('sort')
-            ->get();
-    }
-
-    public function getChildrenWithCounts(int $parentId): Collection
-    {
-        return ForumSection::query()
-            ->withCount(['subsections', 'topics'])
-            ->where('parent', $parentId)
-            ->orderBy('sort')
-            ->get();
-    }
-
     public function getAllForSitemap(): Collection
     {
         return ForumSection::query()

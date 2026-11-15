@@ -11,6 +11,7 @@ use Johncms\Modules\Forum\Application\DTO\ForumSectionPageResultDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
+use Johncms\Modules\Forum\Application\Services\ForumSectionRows;
 use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumWhoRepositoryInterface;
@@ -25,6 +26,7 @@ final readonly class ViewForumSectionUseCase
         private ForumSectionPathService $sectionPathService,
         private CurrentUser $currentUser,
         private ForumAccess $forumAccess,
+        private ForumSectionRows $sectionRows,
     ) {
     }
 
@@ -86,7 +88,7 @@ final readonly class ViewForumSectionUseCase
             throw new ForumNotFoundException('Category not found.');
         }
 
-        $children = $this->sectionRepository->getChildrenWithCounts($currentSection->id);
+        $children = $this->sectionRows->under($currentSection->id);
 
         return new ForumSectionPageResultDTO(
             section: $currentSection,
@@ -95,7 +97,8 @@ final readonly class ViewForumSectionUseCase
                 'id'        => $currentSection->id,
                 'files_url' => '/forum/files/?c=' . $currentSection->id,
                 'sections'  => $children,
-                'total'     => $children->count(),
+                'totals'    => $this->sectionRows->totals($children),
+                'summary'   => trim((string) $currentSection->description),
             ],
             filesCount: (int) ($currentSection->category_files_count ?? 0),
             onlineUsers: $this->whoRepository->countForumUsers(),

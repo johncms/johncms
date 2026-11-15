@@ -49,7 +49,7 @@ final class ForumIndexingTest extends FunctionalTestCase
 
         $html = (string) $this->handleRequest('/forum/talk/a-topic-' . $topic . '/')->getContent();
 
-        self::assertStringContainsString('<a href="/forum/files/?t=' . $topic . '" class="pe-2" rel="nofollow">', $html);
+        self::assertStringContainsString('<a class="site-chip" href="/forum/files/?t=' . $topic . '" rel="nofollow">', $html);
     }
 
     private function topic(): int

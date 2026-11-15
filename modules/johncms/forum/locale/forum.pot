@@ -426,7 +426,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/MarkAllTopicsReadController.php:37
 #: modules/johncms/forum/src/Application/Controllers/UnreadTopicsController.php:46
 #: modules/johncms/forum/templates/homepage/latest.twig:10
-#: modules/johncms/forum/templates/public/components/header.twig:21
+#: modules/johncms/forum/templates/public/components/header.twig:19
 msgid "Unread"
 msgstr ""
 
@@ -542,8 +542,8 @@ msgid "There is nothing new in this forum for selected period"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/ViewForumVisitorsController.php:48
-#: modules/johncms/forum/templates/public/index.twig:53
-#: modules/johncms/forum/templates/public/section.twig:44
+#: modules/johncms/forum/templates/public/index.twig:44
+#: modules/johncms/forum/templates/public/section.twig:46
 #: modules/johncms/forum/templates/public/topics.twig:104
 msgid "Who in Forum"
 msgstr ""
@@ -720,7 +720,7 @@ msgid "In the Topic"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Services/HiddenListControlsMapper.php:59
-#: modules/johncms/forum/templates/public/components/header.twig:62
+#: modules/johncms/forum/templates/public/components/header.twig:37
 #: modules/johncms/forum/templates/public/search.twig:33
 msgid "Search"
 msgstr ""
@@ -758,6 +758,9 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Services/SectionFormMapper.php:73
 #: modules/johncms/forum/templates/admin/index.twig:33
 #: modules/johncms/forum/templates/admin/section-form.twig:150
+#: modules/johncms/forum/templates/public/components/header.twig:16
+#: modules/johncms/forum/templates/public/components/section-row.twig:17
+#: modules/johncms/forum/templates/public/components/section-row.twig:49
 msgid "Topics"
 msgstr ""
 
@@ -1070,7 +1073,7 @@ msgid "Settings"
 msgstr ""
 
 #: modules/johncms/forum/templates/admin/index.twig:35
-#: modules/johncms/forum/templates/public/index.twig:16
+#: modules/johncms/forum/templates/public/index.twig:24
 msgid "Files"
 msgstr ""
 
@@ -1083,6 +1086,7 @@ msgid "Hidden topics"
 msgstr ""
 
 #: modules/johncms/forum/templates/admin/index.twig:46
+#: modules/johncms/forum/templates/public/index.twig:36
 msgid "The forum has no sections yet"
 msgstr ""
 
@@ -1378,7 +1382,11 @@ msgstr ""
 msgid "Topic name"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/components/footer.twig:20
+#: modules/johncms/forum/templates/public/components/footer.twig:17
+msgid "Users / guests"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/components/footer.twig:22
 msgid "Forum rules"
 msgstr ""
 
@@ -1386,12 +1394,16 @@ msgstr ""
 msgid "Read only"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/components/header.twig:34
+#: modules/johncms/forum/templates/public/components/header.twig:23
 msgid "Show for Period"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/components/header.twig:43
+#: modules/johncms/forum/templates/public/components/header.twig:27
 msgid "Last activity"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/components/header.twig:36
+msgid "Search the forum"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/components/message.twig:46
@@ -1458,6 +1470,30 @@ msgstr ""
 
 #: modules/johncms/forum/templates/public/components/move-topic-fields.twig:9
 msgid "New section"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/components/section-row.twig:30
+msgid "No topics yet"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/components/section-row.twig:35
+msgid "Subsections of %s"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/components/section-row.twig:56
+#: modules/johncms/forum/templates/public/components/stat.twig:11
+msgid "%s topic"
+msgid_plural "%s topics"
+msgstr[0] ""
+
+#: modules/johncms/forum/templates/public/components/section-row.twig:57
+#: modules/johncms/forum/templates/public/components/stat.twig:12
+msgid "%s post"
+msgid_plural "%s posts"
+msgstr[0] ""
+
+#: modules/johncms/forum/templates/public/components/section-row.twig:59
+msgid "Open the section"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/curators.twig:15
@@ -1580,11 +1616,11 @@ msgstr ""
 msgid "Clear history"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/section.twig:17
+#: modules/johncms/forum/templates/public/section.twig:26
 msgid "Section Files"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/section.twig:23
+#: modules/johncms/forum/templates/public/section.twig:38
 msgid "There are no sections in this category"
 msgstr ""
 

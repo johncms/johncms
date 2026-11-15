@@ -1,0 +1,65 @@
+{#
+    A section in a listing of the forum: what it holds over all the sections under it and where the
+    last post was written. A section with sections under it opens them below; the title always
+    leads to the section itself.
+
+    @var row \Johncms\Modules\Forum\Application\DTO\ForumSectionRowDTO
+#}
+{% set body_id = 'forum-section-' ~ row.id %}
+<article class="site-forum-row">
+    <div class="site-forum-row__head">
+        <span class="site-forum-row__icon" aria-hidden="true">
+            {% include '@theme/components/icon.twig' with {name: row.holdsTopics ? 'messages-square' : 'folder', size: 15} only %}
+        </span>
+        <div class="site-forum-row__main">
+            <h2 class="site-forum-row__titleline">
+                <a class="site-forum-row__title" href="{{ row.url }}">{{ row.name }}</a>
+                <span class="site-forum-row__count" title="{{ __('Topics') }}">{{ row.topics|format_number }}</span>
+            </h2>
+            {% if row.description %}<p class="site-forum-row__desc">{{ row.description }}</p>{% endif %}
+        </div>
+        <div class="site-forum-row__last">
+            {% if row.lastTopic %}
+                <a class="site-forum-row__last-topic" href="{{ row.lastTopic.url }}">{{ row.lastTopic.name }}</a>
+                <div class="site-forum-row__last-meta">
+                    <span class="site-forum-row__last-who">{{ row.lastTopic.author }}</span>
+                    <span aria-hidden="true">·</span>
+                    <span>{{ row.lastDate }}</span>
+                </div>
+            {% else %}
+                <span class="site-forum-row__last-empty">{{ __('No topics yet') }}</span>
+            {% endif %}
+        </div>
+        {% if row.children %}
+            <button type="button" class="site-forum-row__toggle collapsed" data-bs-toggle="collapse" data-bs-target="#{{ body_id }}"
+                    aria-expanded="false" aria-controls="{{ body_id }}" aria-label="{{ __('Subsections of %s')|format(row.name) }}">
+                {% include '@theme/components/icon.twig' with {name: 'chevron-down', size: 14} only %}
+            </button>
+        {% endif %}
+    </div>
+    {% if row.children %}
+        <div class="collapse" id="{{ body_id }}">
+            <div class="site-forum-row__body">
+                <ul class="site-forum-row__subs">
+                    {% for child in row.children %}
+                        <li>
+                            <a class="site-forum-sub" href="{{ child.url }}">
+                                <span class="site-forum-sub__arrow" aria-hidden="true">»</span>
+                                <span class="site-forum-sub__title">{{ child.name }}</span>
+                                <span class="site-forum-sub__count" title="{{ __('Topics') }}">{{ child.topics|format_number }}</span>
+                                {% if child.lastDate %}<span class="site-forum-sub__last">{{ child.lastDate }}</span>{% endif %}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="site-forum-row__stats">
+                    <span>{{ n__('%s topic', '%s topics', row.topics)|format(row.topics|format_number) }}</span>
+                    <span>{{ n__('%s post', '%s posts', row.posts)|format(row.posts|format_number) }}</span>
+                    <a class="btn btn-outline-secondary btn-sm" href="{{ row.url }}">
+                        {{ __('Open the section') }} {% include '@theme/components/icon.twig' with {name: 'chevron-right', size: 12} only %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</article>

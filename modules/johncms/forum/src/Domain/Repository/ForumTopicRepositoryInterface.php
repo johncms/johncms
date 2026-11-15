@@ -39,6 +39,23 @@ interface ForumTopicRepositoryInterface
     public function countReadBySectionId(int $sectionId): int;
 
     /**
+     * Topics, posts and the date of the last post of every section that holds topics. With
+     * $withHidden the hidden topics and posts count as well, and the dates are those of the staff.
+     *
+     * @return list<array{section_id: int, topics: int, posts: int, last_date: int}>
+     */
+    public function getSectionStats(bool $withHidden): array;
+
+    /**
+     * The topics whose last post is the given date in the given section, for each pair given. A
+     * section may answer with more than one when two topics end at the same second.
+     *
+     * @param array<int, int> $lastDates Section id => date of its last post.
+     * @return Collection<int, ForumTopic>
+     */
+    public function getEndingAt(array $lastDates, bool $withHidden): Collection;
+
+    /**
      * @return Collection<int, ForumTopic>
      */
     public function getReadBySectionId(int $sectionId, int $limit, int $offset): Collection;

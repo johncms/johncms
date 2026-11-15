@@ -1,46 +1,49 @@
 {#
-    A category of the forum: the sections it holds.
+    A category of the forum: the sections it holds, each opening the sections under it.
 
-    @var sections     iterable
+    @var summary      string Description of the category, empty when it has none.
+    @var sections     \Johncms\Modules\Forum\Application\DTO\ForumSectionRowDTO[]
+    @var totals       array  topics, posts — over the category, as the visitor sees it.
     @var files_url    string
-    @var online       array    online_u, online_g
-    @var files_count  int
-    @var unread_count int
+    @var online       array  online_u, online_g
+    @var files_count  string
+    @var unread_count string
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
+{% block page_subtitle %}
+    {% include '@forum/public/components/stat.twig' with {totals: totals, summary: summary} only %}
+{% endblock %}
+
 {% block content %}
-    {% include '@forum/public/components/header.twig' with {
-        unread_count: unread_count,
-        files_count: files_count,
-        files_url: files_url,
-        files_name: __('Section Files')
-    } only %}
-
-    {% if sections is empty %}
-        {% include '@theme/components/alert.twig' with {
-            alert_type: 'alert-info',
-            alert: __('There are no sections in this category')
+    <div class="site-forum">
+        {% include '@forum/public/components/header.twig' with {
+            unread_count: unread_count,
+            files_count: files_count,
+            files_url: files_url,
+            files_name: __('Section Files'),
         } only %}
-    {% endif %}
 
-    {% for section in sections %}
-        <div class="forum-section">
-            <div class="section-header">
-                <div class="d-flex align-items-center">
-                    <a href="{{ section.url }}" class="section-name">{{ section.name }}</a>
-                    <span class="badge rounded-pill counter-badge ms-3">{{ section.section_type == 1 ? section.topics_count : section.subsections_count }}</span>
-                </div>
+        {% if sections %}
+            <div class="site-forum__rows">
+                {% for row in sections %}
+                    {% include '@forum/public/components/section-row.twig' with {row: row} only %}
+                {% endfor %}
             </div>
-            {% if section.description %}
-                <div class="small pt-2 text-muted">{{ section.description|nl2br }}</div>
-            {% endif %}
-        </div>
-    {% endfor %}
+        {% else %}
+            {% include '@theme/components/empty-state.twig' with {
+                icon: 'folder',
+                title: __('There are no sections in this category'),
+                description: '',
+            } only %}
+        {% endif %}
 
-    {% include '@forum/public/components/footer.twig' with {
-        online: online,
-        who_url: '/forum/visitors/',
-        who_name: __('Who in Forum')
-    } only %}
+        {% include '@forum/public/components/footer.twig' with {
+            online: online,
+            who_url: '/forum/visitors/',
+            who_name: __('Who in Forum'),
+        } only %}
+    </div>
 {% endblock %}

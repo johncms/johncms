@@ -444,6 +444,25 @@
       'Delete the file?' => 'Удалить файл?',
       'Delete for good' => 'Удалить безвозвратно',
       'There is no other section of topics to move it to.' => 'Нет другого раздела с темами, куда её можно перенести.',
+      'Search the forum' => 'Поиск по форуму',
+      'No topics yet' => 'Тем пока нет',
+      'Subsections of %s' => 'Подразделы: %s',
+      '%s topic' => 
+      array (
+        0 => '%s тема',
+        1 => '%s темы',
+        2 => '%s тем',
+        3 => '%s тем',
+      ),
+      '%s post' => 
+      array (
+        0 => '%s сообщение',
+        1 => '%s сообщения',
+        2 => '%s сообщений',
+        3 => '%s сообщений',
+      ),
+      'Open the section' => 'Открыть раздел',
+      'Users / guests' => 'Пользователи / гости',
     ),
   ),
 );

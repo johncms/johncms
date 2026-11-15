@@ -1,10 +1,10 @@
 {#
-    The bar above every listing of the forum: what is unread, the files and the search.
+    The bar above every listing of the forum: the collections of topics, the files and the search.
 
-    @var unread_count int
+    @var unread_count string Unread topics of the member, formatted; "0" or empty shows the chip without it.
     @var files_url    string
     @var files_name   string
-    @var files_count  int
+    @var files_count  string Files here, formatted; 0 when the forum does not count them.
 #}
 {# The visitor is here, so they may read; the banner is about what they may not do. A guest is
    told nothing: writing takes signing in, and that goes without saying. #}
@@ -12,59 +12,30 @@
     <div class="alert alert-danger">{{ __('Read only') }}</div>
 {% endif %}
 
-<div class="border-top full-mobile-width border-bottom d-flex mb-3 pt-2 pb-2 align-items-center">
-    <div class="me-auto d-flex pt-2 pb-2 flex-shrink-0">
+<div class="site-forum-toolbar">
+    <nav class="site-forum-toolbar__chips" aria-label="{{ __('Topics') }}">
         {% if app.user.isValid %}
-            {% if unread_count %}
-                <div class="d-flex align-items-center pe-2">
-                    <a href="/forum/unread/" class="pe-2 d-flex">
-                        <span class="d-none d-sm-inline">{{ __('Unread') }}</span>
-                        <div class="icon_with_badge">
-                            <svg class="icon d-sm-none">
-                                <use xlink:href="{{ asset('icons/sprite.svg') }}#forum"/>
-                            </svg>
-                            <span class="badge rounded-pill bg-danger d-sm-none">{{ unread_count }}</span>
-                            <span class="d-none d-sm-inline text-danger fw-bold ps-1">+{{ unread_count }}</span>
-                        </div>
-                    </a>
-                </div>
-            {% endif %}
-            <div class="pe-3">
-                <a href="/forum/topics-period/">
-                    <span class="d-none d-sm-inline">{{ __('Show for Period') }}</span>
-                    <svg class="icon d-sm-none">
-                        <use xlink:href="{{ asset('icons/sprite.svg') }}#calendar"/>
-                    </svg>
-                </a>
-            </div>
-        {% else %}
-            <div class="pe-3">
-                <a href="/forum/latest-topics/">
-                    <span class="d-none d-sm-inline">{{ __('Last activity') }}</span>
-                    <svg class="icon d-sm-none">
-                        <use xlink:href="{{ asset('icons/sprite.svg') }}#calendar"/>
-                    </svg>
-                </a>
-            </div>
-        {% endif %}
-        <div class="d-flex align-items-center">
-            <a href="{{ files_url }}" class="pe-2" rel="nofollow">
-                <span class="d-none d-sm-inline">{{ files_name }}</span>
-                <svg class="icon d-sm-none"><use xlink:href="{{ asset('icons/sprite.svg') }}#download"/></svg>
-                {% if files_count > 0 %}
-                    <span class="badge rounded-pill bg-success">{{ files_count }}</span>
-                {% endif %}
+            <a class="site-chip" href="/forum/unread/">
+                {% include '@theme/components/icon.twig' with {name: 'sparkles', size: 12} only %} {{ __('Unread') }}
+                {% if unread_count %}<span class="site-chip__count">{{ unread_count }}</span>{% endif %}
             </a>
-        </div>
-    </div>
-    <form class="form-inline search-in-nav mb-0" action="/forum/search/" method="get">
-        <div class="input-with-inner-btn">
-            <input class="form-control pe-5 border-radius-12" name="search" type="search" minlength="4" placeholder="{{ __('Search') }}">
-            <button class="btn icon-button" type="submit">
-                <svg class="icon">
-                    <use xlink:href="{{ asset('icons/sprite.svg') }}#search"/>
-                </svg>
-            </button>
-        </div>
+            <a class="site-chip" href="/forum/topics-period/">
+                {% include '@theme/components/icon.twig' with {name: 'calendar', size: 12} only %} {{ __('Show for Period') }}
+            </a>
+        {% else %}
+            <a class="site-chip" href="/forum/latest-topics/">
+                {% include '@theme/components/icon.twig' with {name: 'calendar', size: 12} only %} {{ __('Last activity') }}
+            </a>
+        {% endif %}
+        <a class="site-chip" href="{{ files_url }}" rel="nofollow">
+            {% include '@theme/components/icon.twig' with {name: 'download', size: 12} only %} {{ files_name }}
+            {% if files_count %}<span class="site-chip__count">{{ files_count }}</span>{% endif %}
+        </a>
+    </nav>
+    <form action="/forum/search/" method="get" class="site-search-field" role="search">
+        <input name="search" type="search" minlength="4" placeholder="{{ __('Search the forum') }}" aria-label="{{ __('Search the forum') }}">
+        <button type="submit" class="btn" aria-label="{{ __('Search') }}" title="{{ __('Search') }}">
+            {% include '@theme/components/icon.twig' with {name: 'search', size: 16} only %}
+        </button>
     </form>
 </div>

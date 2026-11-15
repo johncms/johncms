@@ -751,18 +751,6 @@ parameters:
 			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumSectionRepository.php
 
 		-
-			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumSectionRepository\:\:getChildrenWithCounts\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
-			identifier: return.type
-			count: 1
-			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumSectionRepository.php
-
-		-
-			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumSectionRepository\:\:getRootSectionsWithSubsections\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
-			identifier: return.type
-			count: 1
-			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumSectionRepository.php
-
-		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Query\\Builder\:\:withCount\(\)\.$#'
 			identifier: method.notFound
 			count: 1

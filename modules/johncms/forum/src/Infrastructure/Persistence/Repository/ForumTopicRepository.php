@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Infrastructure\Persistence\Repository;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Query\Expression;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
@@ -204,6 +205,62 @@ final class ForumTopicRepository implements ForumTopicRepositoryInterface
             ->read()
             ->where('section_id', $sectionId)
             ->count();
+    }
+
+    public function getSectionStats(bool $withHidden): array
+    {
+        $posts = $withHidden ? 'mod_post_count' : 'post_count';
+        $date = $withHidden ? 'mod_last_post_date' : 'last_post_date';
+
+        return $this->topicsInSight($withHidden)
+            ->toBase()
+            ->groupBy('section_id')
+            ->selectRaw('section_id, COUNT(*) AS topics, COALESCE(SUM(' . $posts . '), 0) AS posts, COALESCE(MAX(' . $date . '), 0) AS last_date')
+            ->get()
+            ->map(static fn(object $row): array => [
+                'section_id' => (int) $row->section_id,
+                'topics'     => (int) $row->topics,
+                'posts'      => (int) $row->posts,
+                'last_date'  => (int) $row->last_date,
+            ])
+            ->all();
+    }
+
+    public function getEndingAt(array $lastDates, bool $withHidden): Collection
+    {
+        if ($lastDates === []) {
+            return new Collection();
+        }
+
+        $date = $withHidden ? 'mod_last_post_date' : 'last_post_date';
+
+        return $this->topicsInSight($withHidden)
+            ->where(static function ($pairs) use ($lastDates, $date): void {
+                foreach ($lastDates as $sectionId => $lastDate) {
+                    $pairs->orWhere(static function ($pair) use ($sectionId, $lastDate, $date): void {
+                        $pair->where('section_id', $sectionId)->where($date, $lastDate);
+                    });
+                }
+            })
+            ->get();
+    }
+
+    /**
+     * Every topic, or only those not hidden; decided by the caller rather than by the scope that
+     * asks who the visitor is.
+     *
+     * @return Builder<ForumTopic>
+     */
+    private function topicsInSight(bool $withHidden): Builder
+    {
+        $query = ForumTopic::query()->withoutGlobalScope('access');
+        if (! $withHidden) {
+            $query->where(static function (Builder $visible): void {
+                $visible->where('deleted', '!=', 1)->orWhereNull('deleted');
+            });
+        }
+
+        return $query;
     }
 
     /**

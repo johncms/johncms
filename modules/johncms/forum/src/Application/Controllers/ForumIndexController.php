@@ -42,6 +42,7 @@ final readonly class ForumIndexController
                 'title'        => __('Forum'),
                 'page_title'   => __('Forum'),
                 'sections'     => $result->sections,
+                'totals'       => $result->totals,
                 'online'       => [
                     'online_u' => $result->onlineUsers,
                     'online_g' => $result->onlineGuests,

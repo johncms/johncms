@@ -1,0 +1,14 @@
+{#
+    The line under the heading of a listing of the forum: what the page is about and what it holds.
+
+    @var totals  array  topics, posts
+    @var summary string What the page is about; empty to leave it out.
+#}
+<p class="site-page-heading__subtitle">
+    {% if summary|default('') %}<span>{{ summary }}</span>{% endif %}
+    <span class="site-page-stat">
+        <span class="site-page-stat__dot" aria-hidden="true"></span>
+        {{ n__('%s topic', '%s topics', totals.topics)|format(totals.topics|format_number) }} ·
+        {{ n__('%s post', '%s posts', totals.posts)|format(totals.posts|format_number) }}
+    </span>
+</p>

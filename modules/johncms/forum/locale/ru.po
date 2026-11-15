@@ -1843,3 +1843,32 @@ msgstr "Удалить безвозвратно"
 
 msgid "There is no other section of topics to move it to."
 msgstr "Нет другого раздела с темами, куда её можно перенести."
+
+msgid "Search the forum"
+msgstr "Поиск по форуму"
+
+msgid "No topics yet"
+msgstr "Тем пока нет"
+
+msgid "Subsections of %s"
+msgstr "Подразделы: %s"
+
+msgid "%s topic"
+msgid_plural "%s topics"
+msgstr[0] "%s тема"
+msgstr[1] "%s темы"
+msgstr[2] "%s тем"
+msgstr[3] "%s тем"
+
+msgid "%s post"
+msgid_plural "%s posts"
+msgstr[0] "%s сообщение"
+msgstr[1] "%s сообщения"
+msgstr[2] "%s сообщений"
+msgstr[3] "%s сообщений"
+
+msgid "Open the section"
+msgstr "Открыть раздел"
+
+msgid "Users / guests"
+msgstr "Пользователи / гости"
