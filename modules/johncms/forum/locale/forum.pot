@@ -15,7 +15,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/CuratorsController.php:33
 #: modules/johncms/forum/src/Application/Controllers/CuratorsController.php:44
 #: modules/johncms/forum/src/Application/Controllers/DeletePostController.php:53
-#: modules/johncms/forum/src/Application/Controllers/DeletePostFileController.php:53
+#: modules/johncms/forum/src/Application/Controllers/DeletePostFileController.php:52
 #: modules/johncms/forum/src/Application/Controllers/DeleteTopicController.php:43
 #: modules/johncms/forum/src/Application/Controllers/DeleteTopicController.php:54
 #: modules/johncms/forum/src/Application/Controllers/DeleteVoteAnswerController.php:36
@@ -158,7 +158,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/Admin/SectionFormController.php:112
 #: modules/johncms/forum/src/Application/Controllers/Admin/SectionFormController.php:127
 #: modules/johncms/forum/src/Application/Controllers/DeletePostController.php:43
-#: modules/johncms/forum/src/Application/Controllers/DeletePostFileController.php:43
+#: modules/johncms/forum/src/Application/Controllers/DeletePostFileController.php:42
 #: modules/johncms/forum/src/Application/Controllers/DownloadFileController.php:46
 #: modules/johncms/forum/src/Application/Controllers/EditPostController.php:49
 #: modules/johncms/forum/src/Application/Controllers/FilterByAuthorController.php:54
@@ -322,8 +322,8 @@ msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/DeletePostController.php:40
 #: modules/johncms/forum/src/Application/Controllers/DeletePostController.php:50
-#: modules/johncms/forum/src/Application/Controllers/DeletePostFileController.php:40
-#: modules/johncms/forum/src/Application/Controllers/DeletePostFileController.php:50
+#: modules/johncms/forum/src/Application/Controllers/DeletePostFileController.php:39
+#: modules/johncms/forum/src/Application/Controllers/DeletePostFileController.php:49
 #: modules/johncms/forum/src/Application/Controllers/EditPostController.php:46
 #: modules/johncms/forum/src/Application/Controllers/EditPostController.php:56
 #: modules/johncms/forum/src/Application/Controllers/RestorePostController.php:36
@@ -332,15 +332,10 @@ msgid "Error"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/DeletePostController.php:41
-#: modules/johncms/forum/src/Application/Controllers/DeletePostFileController.php:41
+#: modules/johncms/forum/src/Application/Controllers/DeletePostFileController.php:40
 #: modules/johncms/forum/src/Application/Controllers/EditPostController.php:47
 #: modules/johncms/forum/src/Application/Controllers/RestorePostController.php:37
 msgid "Message does not exists or has been deleted"
-msgstr ""
-
-#: modules/johncms/forum/src/Application/Controllers/DeletePostFileController.php:66
-#: modules/johncms/forum/src/Application/Controllers/DeletePostFileController.php:67
-msgid "Delete file"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/DeleteTopicController.php:50
@@ -637,7 +632,7 @@ msgid "Empty the lists of hidden topics and posts"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Services/ForumStructureRowMapper.php:56
-#: modules/johncms/forum/templates/public/components/message.twig:171
+#: modules/johncms/forum/templates/public/components/message.twig:176
 msgid "Edit"
 msgstr ""
 
@@ -654,10 +649,10 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Services/ForumStructureRowMapper.php:61
 #: modules/johncms/forum/templates/admin/delete-section-dialog.twig:86
 #: modules/johncms/forum/templates/admin/purge-hidden-dialog.twig:44
-#: modules/johncms/forum/templates/public/components/message.twig:127
-#: modules/johncms/forum/templates/public/components/message.twig:177
-#: modules/johncms/forum/templates/public/components/message.twig:179
-#: modules/johncms/forum/templates/public/delete-post-file.twig:17
+#: modules/johncms/forum/templates/public/components/message.twig:129
+#: modules/johncms/forum/templates/public/components/message.twig:131
+#: modules/johncms/forum/templates/public/components/message.twig:182
+#: modules/johncms/forum/templates/public/components/message.twig:184
 #: modules/johncms/forum/templates/public/edit-poll.twig:61
 #: modules/johncms/forum/templates/public/topic.twig:234
 #: modules/johncms/forum/templates/public/topic.twig:289
@@ -1019,7 +1014,6 @@ msgstr ""
 #: modules/johncms/forum/templates/admin/delete-section-dialog.twig:83
 #: modules/johncms/forum/templates/admin/purge-hidden-dialog.twig:41
 #: modules/johncms/forum/templates/public/clear-search-history.twig:17
-#: modules/johncms/forum/templates/public/delete-post-file.twig:18
 msgid "Cancel"
 msgstr ""
 
@@ -1446,26 +1440,29 @@ msgstr ""
 msgid "Attached files"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/components/message.twig:155
+#: modules/johncms/forum/templates/public/components/message.twig:128
+msgid "Delete the file?"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/components/message.twig:160
 #: modules/johncms/forum/templates/public/show-post.twig:127
 msgid "Reply"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/components/message.twig:160
+#: modules/johncms/forum/templates/public/components/message.twig:165
 #: modules/johncms/forum/templates/public/show-post.twig:132
 msgid "Quote"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/components/message.twig:174
-#: modules/johncms/forum/templates/public/delete-post-file.twig:12
+#: modules/johncms/forum/templates/public/components/message.twig:179
 msgid "Do you really want to delete?"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/components/message.twig:175
+#: modules/johncms/forum/templates/public/components/message.twig:180
 msgid "This is the last post of the topic: the topic is deleted with it."
 msgstr ""
 
-#: modules/johncms/forum/templates/public/components/message.twig:184
+#: modules/johncms/forum/templates/public/components/message.twig:189
 msgid "Restore"
 msgstr ""
 
@@ -1476,10 +1473,6 @@ msgstr ""
 
 #: modules/johncms/forum/templates/public/curators.twig:36
 msgid "Assign"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/delete-post-file.twig:22
-msgid "After deleting, one point will be subtracted from the counter of forum posts"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/edit-poll.twig:60

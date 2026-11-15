@@ -124,7 +124,12 @@
                             </div>
                             {% if message.can_edit %}
                                 <div class="delete-link">
-                                    <a href="{{ file.delete_url }}">{{ __('Delete') }}</a>
+                                    <form method="post" action="{{ file.delete_url }}"
+                                          data-confirm="{{ __('Delete the file?') }}" data-confirm-text="{{ file.filename }}"
+                                          data-confirm-button="{{ __('Delete') }}">
+                                        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                                        <button type="submit" class="btn btn-link p-0">{{ __('Delete') }}</button>
+                                    </form>
                                 </div>
                             {% endif %}
                         </div>

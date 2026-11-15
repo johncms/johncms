@@ -12,7 +12,6 @@ use Johncms\Modules\Forum\Application\UseCases\DeletePostFileUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureEditPostAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetDeletePostFileContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetEditPostContextUseCase;
-use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 
 final readonly class DeletePostFileController
@@ -27,7 +26,7 @@ final readonly class DeletePostFileController
     ) {
     }
 
-    public function __invoke(Request $request, int $id, int $fid): ViewResponse
+    public function __invoke(int $id, int $fid): ViewResponse
     {
         try {
             $context = $this->contextUseCase->execute($id, $this->getForumSettings());
@@ -55,20 +54,8 @@ final readonly class DeletePostFileController
             );
         }
 
-        if ($request->getMethod() === 'POST' && $request->hasBody('delfile')) {
-            $this->deletePostFileUseCase->execute($file->id, $file->filename);
-            redirect($context->backUrl);
-        }
-
-        return new ViewResponse(
-            '@forum/public/delete-post-file.twig',
-            [
-                'title'         => __('Delete file'),
-                'page_title'    => __('Delete file'),
-                'back_url'      => $context->backUrl,
-                'delete_action' => '/forum/delete-post-file/' . $id . '/' . $fid . '/',
-            ]
-        );
+        $this->deletePostFileUseCase->execute($file->id, $file->filename);
+        redirect($context->backUrl);
     }
 
     private function getForumSettings(): array

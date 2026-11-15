@@ -136,7 +136,7 @@ return static function (RouteCollection $router): void {
             $r->map(['GET', 'POST'], '/forum/move-topic/{id:number}', MoveTopicController::class)->name('forum.move_topic'),
             $deletePost = $r->post('/forum/delete-post/{id:number}', DeletePostController::class)->name('forum.delete_post'),
             $r->post('/forum/restore-post/{id:number}', RestorePostController::class)->name('forum.restore_post'),
-            $r->map(['GET', 'POST'], '/forum/delete-post-file/{id:number}/{fid:number}', DeletePostFileController::class)->name('forum.delete_post_file'),
+            $deletePostFile = $r->post('/forum/delete-post-file/{id:number}/{fid:number}', DeletePostFileController::class)->name('forum.delete_post_file'),
             $r->post('/forum/close/{id:number}', CloseTopicController::class)->name('forum.close_topic'),
             $deleteTopic = $r->post('/forum/delete-topic/{id:number}', DeleteTopicController::class)->name('forum.delete_topic'),
             $r->post('/forum/pin-topic/{id:number}', PinTopicController::class)->name('forum.pin_topic'),
@@ -150,7 +150,7 @@ return static function (RouteCollection $router): void {
         }
 
         // Asked in a dialog of the page, after the visitor is known to be allowed to write at all.
-        foreach ([$bulkDeletePosts, $deletePost, $deleteTopic, $deleteVote, $deleteVoteAnswer] as $route) {
+        foreach ([$bulkDeletePosts, $deletePost, $deletePostFile, $deleteTopic, $deleteVote, $deleteVoteAnswer] as $route) {
             $route->addMiddleware(RequireConfirmationMiddleware::class);
         }
 

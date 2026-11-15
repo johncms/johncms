@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Functional\Forum;
 
 use Johncms\Modules\Forum\Application\Services\ForumTopicStatsRecalculator;
+use Johncms\Modules\Forum\Domain\Models\ForumFile;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Tests\Functional\FunctionalTestCase;
@@ -99,6 +100,30 @@ final class ForumPostDeletionTest extends FunctionalTestCase
 
         self::assertSame(302, $this->postForm('/forum/restore-post/' . $post . '/', [], $moderator)->getStatusCode());
         self::assertFalse($this->isHidden($post));
+    }
+
+    public function testAFileOfAPostIsDeletedOnlyByAConfirmedForm(): void
+    {
+        $post = $this->post('with a file');
+        $file = Fixture::insert('cms_forum_files', [
+            'topic'    => $this->topic,
+            'post'     => $post,
+            'time'     => time(),
+            'filename' => 'missing-on-disk.zip',
+            'filetype' => 1,
+            'del'      => 0,
+        ]);
+        $moderator = FunctionalUserFactory::createSupervisor();
+        $address = '/forum/delete-post-file/' . $post . '/' . $file . '/';
+
+        $this->handleRequest($address, cookies: $this->actingAs($moderator));
+        self::assertTrue(ForumFile::query()->withoutGlobalScopes()->whereKey($file)->exists(), 'Opening the address changes nothing.');
+
+        self::assertSame(409, $this->postForm($address, [], $moderator)->getStatusCode());
+        self::assertTrue(ForumFile::query()->withoutGlobalScopes()->whereKey($file)->exists());
+
+        self::assertSame(302, $this->postForm($address, ['confirmed' => '1'], $moderator)->getStatusCode());
+        self::assertFalse(ForumFile::query()->withoutGlobalScopes()->whereKey($file)->exists());
     }
 
     /**
