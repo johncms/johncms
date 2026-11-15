@@ -48,6 +48,8 @@
 .tooltip {
   --bs-tooltip-bg: var(--fg);
   --bs-tooltip-color: var(--bg);
+  // Solid: whatever lies under a tooltip, a border of a highlighted post for one, must not show through.
+  --bs-tooltip-opacity: 1;
 }
 
 .popover {
