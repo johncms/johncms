@@ -84,9 +84,11 @@
                     <a href="/forum/search/?search={{ search_term|url_encode }}" class="text-reset">{{ search_term }}</a>
                 {% endfor %}
             </div>
-            <div class="mt-1">
-                <a href="{{ history_reset_url }}" class="text-reset">{{ __('Clear history') }}</a>
-            </div>
+            <form method="post" action="{{ history_reset_url }}" class="mt-1"
+                  data-confirm="{{ __('Do you really want to clear the search history?') }}" data-confirm-button="{{ __('Clear') }}">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                <button type="submit" class="btn btn-link p-0 text-reset">{{ __('Clear history') }}</button>
+            </form>
         </div>
     {% endif %}
     <a href="/forum/" class="mb-2">{{ __('Forum') }}</a>

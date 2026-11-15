@@ -8,7 +8,6 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ClearForumSearchHistoryUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
-use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 
 final readonly class ClearForumSearchHistoryController
@@ -20,7 +19,7 @@ final readonly class ClearForumSearchHistoryController
     ) {
     }
 
-    public function __invoke(Request $request): ViewResponse
+    public function __invoke(): ViewResponse
     {
         try {
             $this->forumUserAccessUseCase->execute();
@@ -28,19 +27,7 @@ final readonly class ClearForumSearchHistoryController
             return $this->forumErrorRenderer->viewResponse($exception);
         }
 
-        if ($request->hasBody('submit')) {
-            $this->clearForumSearchHistoryUseCase->execute();
-            redirect('/forum/search/');
-        }
-
-        return new ViewResponse(
-            '@forum/public/clear-search-history.twig',
-            [
-                'title'      => __('Forum search'),
-                'page_title' => __('Forum search'),
-                'action_url' => '/forum/search/history/clear/',
-                'back_url'   => '/forum/search/',
-            ]
-        );
+        $this->clearForumSearchHistoryUseCase->execute();
+        redirect('/forum/search/');
     }
 }

@@ -102,7 +102,9 @@ return static function (RouteCollection $router): void {
         $r->get('/forum/file-preview/{id:number}', FilePreviewController::class)->name('forum.file_preview');
         $r->get('/forum/files', ForumFilesController::class)->name('forum.files');
         $r->get('/forum/search', ForumSearchController::class)->name('forum.search');
-        $r->map(['GET', 'POST'], '/forum/search/history/clear', ClearForumSearchHistoryController::class)->name('forum.search_history_clear');
+        $r->post('/forum/search/history/clear', ClearForumSearchHistoryController::class)
+            ->name('forum.search_history_clear')
+            ->addMiddleware(RequireConfirmationMiddleware::class);
         $r->get('/forum/filter/{id:number}', FilterByAuthorController::class)->name('forum.filter');
         $r->post('/forum/filter/{id:number}/clear', ClearFilterByAuthorController::class)->name('forum.filter_clear');
         $r->post('/forum/filter/{id:number}/set', SetFilterByAuthorController::class)->name('forum.filter_set');
