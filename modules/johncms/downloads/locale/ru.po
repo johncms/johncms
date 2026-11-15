@@ -1378,3 +1378,6 @@ msgstr[0] "Ещё %d файл"
 msgstr[1] "Ещё %d файла"
 msgstr[2] "Ещё %d файлов"
 msgstr[3] "Ещё %d файлов"
+
+msgid "published %s"
+msgstr "опубликован %s"

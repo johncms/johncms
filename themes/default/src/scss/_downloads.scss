@@ -86,6 +86,24 @@
 // - narrow: the same order with the side in one column.
 .site-dlf-container { container: site-dlf / inline-size; }
 
+// The section of a file under its heading: a link like the section of a news article.
+.site-dlf-section {
+  display: inline-flex;
+  align-items: center;
+  gap: .375rem;
+  padding: .1875rem .625rem;
+  border-radius: 2rem;
+  background: color-mix(in oklab, var(--accent) 18%, transparent);
+  color: var(--accent);
+  font-family: var(--bs-font-monospace);
+  font-size: .71875rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-decoration: none;
+  text-transform: uppercase;
+  &:hover { background: color-mix(in oklab, var(--accent) 26%, transparent); color: var(--accent); }
+}
+
 .site-dlf {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 20rem;

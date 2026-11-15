@@ -1,8 +1,9 @@
 {#
     The page of one file: what it is in the main column — the player or the picture, the
-    description, the screenshots, the properties, the additional files, the discussion — and how to
-    get it in the side column: the download, the figures, the rating, the favorites and the menu of
-    a moderator. On a narrow screen the side column comes right after the heading.
+    description, the screenshots, the properties, the discussion — and how to get it in the side
+    column: the download with the additional files, the figures, the rating, the favorites and the
+    menu of a moderator. Where the page is too narrow for two columns, the side one stands between
+    the screenshots and the properties.
 
     @var id               int
     @var file_url         string       The page itself; the vote and the favorites are posted to it.
@@ -18,11 +19,19 @@
 
 {% block content_class %}site-content--contained site-content--wide{% endblock %}
 
+{# What the file is at a glance: its section, its format, its size and when it was published. #}
 {% block page_subtitle %}
+    {% set facts = [file.extension|upper, file.main_file.size, __('published %s')|format(file.display_date)]|filter(fact => fact) %}
     <p class="site-page-heading__subtitle">
         {% if category %}
-            <span>{{ __('In the section') }} <a href="{{ category.url }}">{{ category.name }}</a></span>
+            <a class="site-dlf-section" href="{{ category.url }}" title="{{ __('In the section') }} {{ category.name }}">
+                {% include '@theme/components/icon.twig' with {name: 'folder', size: 13} only %} {{ category.name }}
+            </a>
         {% endif %}
+        <span class="site-page-stat">
+            <span class="site-page-stat__dot" aria-hidden="true"></span>
+            {{ facts|join(' · ') }}
+        </span>
         {% if file.type == 3 %}
             <span class="badge text-bg-warning">{{ __('Awaiting moderation') }}</span>
         {% endif %}
@@ -153,18 +162,6 @@
                                 {% include '@theme/components/icon.twig' with {name: 'user', size: 12} only %}
                                 <dt>{{ __('Uploaded by') }}</dt>
                                 <dd><a href="/downloads/user-files/{{ file.upload_user.id }}/">{{ file.upload_user.name }}</a></dd>
-                            </div>
-                        {% endif %}
-                        <div class="site-dlf__stat">
-                            {% include '@theme/components/icon.twig' with {name: 'archive', size: 12} only %}
-                            <dt>{{ __('Published') }}</dt>
-                            <dd>{{ file.display_date }}</dd>
-                        </div>
-                        {% if file.extension %}
-                            <div class="site-dlf__stat">
-                                {% include '@theme/components/icon.twig' with {name: 'file', size: 12} only %}
-                                <dt>{{ __('Format') }}</dt>
-                                <dd>{{ file.extension }}</dd>
                             </div>
                         {% endif %}
                     </dl>

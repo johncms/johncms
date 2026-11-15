@@ -68,12 +68,12 @@ msgstr ""
 #: modules/johncms/downloads/templates/public/components/file-row.twig:20
 #: modules/johncms/downloads/templates/public/moderation.twig:48
 #: modules/johncms/downloads/templates/public/scan-dir.twig:39
-#: modules/johncms/downloads/templates/public/view.twig:148
+#: modules/johncms/downloads/templates/public/view.twig:156
 msgid "Downloads"
 msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php:73
-#: modules/johncms/downloads/templates/public/view.twig:124
+#: modules/johncms/downloads/templates/public/view.twig:132
 msgid "Additional files"
 msgstr ""
 
@@ -82,7 +82,7 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/EditFileController.php:53
 #: modules/johncms/downloads/src/Application/Controllers/EditFileController.php:54
 #: modules/johncms/downloads/src/Application/Controllers/EditFileController.php:75
-#: modules/johncms/downloads/templates/public/view.twig:217
+#: modules/johncms/downloads/templates/public/view.twig:213
 msgid "Edit File"
 msgstr ""
 
@@ -241,7 +241,7 @@ msgid "Edit Folder"
 msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/EditScreenController.php:51
-#: modules/johncms/downloads/templates/public/view.twig:218
+#: modules/johncms/downloads/templates/public/view.twig:214
 msgid "Managing Screenshots"
 msgstr ""
 
@@ -311,8 +311,8 @@ msgstr ""
 #: modules/johncms/downloads/templates/public/components/file-row.twig:48
 #: modules/johncms/downloads/templates/public/components/file-row.twig:49
 #: modules/johncms/downloads/templates/public/import.twig:38
-#: modules/johncms/downloads/templates/public/view.twig:110
-#: modules/johncms/downloads/templates/public/view.twig:117
+#: modules/johncms/downloads/templates/public/view.twig:118
+#: modules/johncms/downloads/templates/public/view.twig:125
 msgid "Download"
 msgstr ""
 
@@ -360,7 +360,7 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:83
 #: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:103
 #: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:115
-#: modules/johncms/downloads/templates/public/view.twig:221
+#: modules/johncms/downloads/templates/public/view.twig:217
 msgid "Move File"
 msgstr ""
 
@@ -815,7 +815,7 @@ msgstr ""
 #: modules/johncms/downloads/templates/public/edit-file.twig:28
 #: modules/johncms/downloads/templates/public/import.twig:48
 #: modules/johncms/downloads/templates/public/upload.twig:71
-#: modules/johncms/downloads/templates/public/view.twig:61
+#: modules/johncms/downloads/templates/public/view.twig:69
 msgid "Description"
 msgstr ""
 
@@ -897,7 +897,7 @@ msgid "New"
 msgstr ""
 
 #: modules/johncms/downloads/templates/public/components/file-row.twig:23
-#: modules/johncms/downloads/templates/public/view.twig:103
+#: modules/johncms/downloads/templates/public/view.twig:111
 msgid "Comments"
 msgstr ""
 
@@ -906,12 +906,12 @@ msgid "Accept"
 msgstr ""
 
 #: modules/johncms/downloads/templates/public/components/file-row.twig:41
-#: modules/johncms/downloads/templates/public/view.twig:227
+#: modules/johncms/downloads/templates/public/view.twig:223
 msgid "Delete the file “%s”?"
 msgstr ""
 
 #: modules/johncms/downloads/templates/public/components/file-row.twig:42
-#: modules/johncms/downloads/templates/public/view.twig:228
+#: modules/johncms/downloads/templates/public/view.twig:224
 msgid "Its additional files, screenshots, comments and bookmarks are deleted with it. This cannot be undone."
 msgstr ""
 
@@ -1096,7 +1096,7 @@ msgstr ""
 
 #: modules/johncms/downloads/templates/public/new-files.twig:15
 #: modules/johncms/downloads/templates/public/upload.twig:15
-#: modules/johncms/downloads/templates/public/view.twig:24
+#: modules/johncms/downloads/templates/public/view.twig:26
 msgid "In the section"
 msgstr ""
 
@@ -1138,7 +1138,7 @@ msgid "Categories"
 msgstr ""
 
 #: modules/johncms/downloads/templates/public/scan-dir.twig:30
-#: modules/johncms/downloads/templates/public/view.twig:219
+#: modules/johncms/downloads/templates/public/view.twig:215
 msgid "Additional Files"
 msgstr ""
 
@@ -1259,78 +1259,74 @@ msgstr ""
 msgid "Files this user uploads appear here."
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/view.twig:27
+#: modules/johncms/downloads/templates/public/view.twig:23
+msgid "published %s"
+msgstr ""
+
+#: modules/johncms/downloads/templates/public/view.twig:35
 msgid "Awaiting moderation"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/view.twig:69
+#: modules/johncms/downloads/templates/public/view.twig:77
 msgid "Screenshots"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/view.twig:71
+#: modules/johncms/downloads/templates/public/view.twig:79
 msgid "Manage"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/view.twig:76
-#: modules/johncms/downloads/templates/public/view.twig:77
+#: modules/johncms/downloads/templates/public/view.twig:84
+#: modules/johncms/downloads/templates/public/view.twig:85
 msgid "Screenshot:"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/view.twig:87
+#: modules/johncms/downloads/templates/public/view.twig:95
 msgid "File properties"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/view.twig:133
+#: modules/johncms/downloads/templates/public/view.twig:141
 msgid "One more file"
 msgid_plural "%d more files"
 msgstr[0] ""
 
-#: modules/johncms/downloads/templates/public/view.twig:154
+#: modules/johncms/downloads/templates/public/view.twig:162
 msgid "Uploaded by"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/view.twig:160
-msgid "Published"
-msgstr ""
-
-#: modules/johncms/downloads/templates/public/view.twig:166
-msgid "Format"
-msgstr ""
-
-#: modules/johncms/downloads/templates/public/view.twig:175
+#: modules/johncms/downloads/templates/public/view.twig:171
 msgid "Rating"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/view.twig:179
-#: modules/johncms/downloads/templates/public/view.twig:188
+#: modules/johncms/downloads/templates/public/view.twig:175
+#: modules/johncms/downloads/templates/public/view.twig:184
 msgid "Like"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/view.twig:182
-#: modules/johncms/downloads/templates/public/view.twig:189
+#: modules/johncms/downloads/templates/public/view.twig:178
+#: modules/johncms/downloads/templates/public/view.twig:185
 msgid "Dislike"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/view.twig:195
+#: modules/johncms/downloads/templates/public/view.twig:191
 msgid "%d%% approve"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/view.twig:197
+#: modules/johncms/downloads/templates/public/view.twig:193
 msgid "No votes yet"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/view.twig:206
+#: modules/johncms/downloads/templates/public/view.twig:202
 msgid "Remove from Favorites"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/view.twig:206
+#: modules/johncms/downloads/templates/public/view.twig:202
 msgid "Add to Favorites"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/view.twig:214
+#: modules/johncms/downloads/templates/public/view.twig:210
 msgid "Actions"
 msgstr ""
 
-#: modules/johncms/downloads/templates/public/view.twig:229
+#: modules/johncms/downloads/templates/public/view.twig:225
 msgid "Delete File"
 msgstr ""
