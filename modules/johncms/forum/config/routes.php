@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Johncms\Http\Middleware\RequireAuthMiddleware;
+use Johncms\Http\Middleware\RequireConfirmationMiddleware;
 use Johncms\Modules\Admin\Application\Middlewares\AdminAccessMiddleware;
 use Johncms\Modules\Admin\Application\Middlewares\SuperAdminAccessMiddleware;
 use Johncms\Modules\Forum\Application\Controllers\Admin\DeleteSectionController;
@@ -22,6 +23,7 @@ use Johncms\Modules\Forum\Application\Controllers\CuratorsController;
 use Johncms\Modules\Forum\Application\Controllers\DeletePostController;
 use Johncms\Modules\Forum\Application\Controllers\DeletePostFileController;
 use Johncms\Modules\Forum\Application\Controllers\DeleteTopicController;
+use Johncms\Modules\Forum\Application\Controllers\DeleteVoteAnswerController;
 use Johncms\Modules\Forum\Application\Controllers\DeleteVoteController;
 use Johncms\Modules\Forum\Application\Controllers\DownloadFileController;
 use Johncms\Modules\Forum\Application\Controllers\EditPostController;
@@ -124,7 +126,9 @@ return static function (RouteCollection $router): void {
             $r->map(['GET', 'POST'], '/forum/curators/{id:number}', CuratorsController::class)->name('forum.curators'),
             $r->post('/forum/bulk-delete-posts/{id:number}', BulkDeletePostsController::class)->name('forum.bulk_delete_posts'),
             $r->map(['GET', 'POST'], '/forum/editvote/{id:number}', EditVoteController::class)->name('forum.edit_vote'),
-            $r->map(['GET', 'POST'], '/forum/delvote/{id:number}', DeleteVoteController::class)->name('forum.delete_vote'),
+            $deleteVote = $r->post('/forum/delvote/{id:number}', DeleteVoteController::class)->name('forum.delete_vote'),
+            $deleteVoteAnswer = $r->post('/forum/editvote/{id:number}/answers/{answer:number}/delete', DeleteVoteAnswerController::class)
+                ->name('forum.delete_vote_answer'),
             $r->map(['GET', 'POST'], '/forum/new-topic/{id:number}', NewTopicController::class)->name('forum.new_topic'),
             $r->map(['GET', 'POST'], '/forum/new-message/{id:number}', NewMessageController::class)->name('forum.new_message'),
             $r->map(['GET', 'POST'], '/forum/reply-message/{id:number}', ReplyMessageController::class)->name('forum.reply_message'),
@@ -133,16 +137,21 @@ return static function (RouteCollection $router): void {
             $r->map(['GET', 'POST'], '/forum/delete-post/{id:number}', DeletePostController::class)->name('forum.delete_post'),
             $r->map(['GET', 'POST'], '/forum/restore-post/{id:number}', RestorePostController::class)->name('forum.restore_post'),
             $r->map(['GET', 'POST'], '/forum/delete-post-file/{id:number}/{fid:number}', DeletePostFileController::class)->name('forum.delete_post_file'),
-            $r->map(['GET', 'POST'], '/forum/close/{id:number}', CloseTopicController::class)->name('forum.close_topic'),
+            $r->post('/forum/close/{id:number}', CloseTopicController::class)->name('forum.close_topic'),
             $r->map(['GET', 'POST'], '/forum/delete-topic/{id:number}', DeleteTopicController::class)->name('forum.delete_topic'),
-            $r->map(['GET', 'POST'], '/forum/pin-topic/{id:number}', PinTopicController::class)->name('forum.pin_topic'),
-            $r->map(['GET', 'POST'], '/forum/restore-topic/{id:number}', RestoreTopicController::class)->name('forum.restore_topic'),
-            $r->map(['GET', 'POST'], '/forum/poll-vote/{id:number}', SubmitVoteController::class)->name('forum.poll_vote'),
+            $r->post('/forum/pin-topic/{id:number}', PinTopicController::class)->name('forum.pin_topic'),
+            $r->post('/forum/restore-topic/{id:number}', RestoreTopicController::class)->name('forum.restore_topic'),
+            $r->post('/forum/poll-vote/{id:number}', SubmitVoteController::class)->name('forum.poll_vote'),
         ];
 
         foreach ($signedIn as $route) {
             $route->addMiddleware(RequireAuthMiddleware::class);
             $route->addMiddleware(ForumBanMiddleware::class);
+        }
+
+        // Asked in a dialog of the page, after the visitor is known to be allowed to write at all.
+        foreach ([$deleteVote, $deleteVoteAnswer] as $route) {
+            $route->addMiddleware(RequireConfirmationMiddleware::class);
         }
 
         $r->get('/forum/{sectionPath}', ForumPathController::class)->name('forum.section')->requirements(['sectionPath' => '[a-z0-9\\-/]+']);

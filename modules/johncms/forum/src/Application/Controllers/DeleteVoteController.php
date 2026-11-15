@@ -10,12 +10,13 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\DeleteVoteUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureDeleteVoteAccessUseCase;
-use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
 
 final readonly class DeleteVoteController
 {
     public function __construct(
+        private Session $session,
         private ForumErrorRenderer $forumErrorRenderer,
         private EnsureDeleteVoteAccessUseCase $accessUseCase,
         private DeleteVoteUseCase $deleteVoteUseCase,
@@ -23,7 +24,7 @@ final readonly class DeleteVoteController
     ) {
     }
 
-    public function __invoke(Request $request, int $id): ViewResponse
+    public function __invoke(int $id): ViewResponse
     {
         try {
             $this->accessUseCase->execute($id);
@@ -47,28 +48,8 @@ final readonly class DeleteVoteController
             );
         }
 
-        if ($request->query->has('yes')) {
-            $this->deleteVoteUseCase->execute($id);
-            return new ViewResponse(
-                '@theme/pages/result.twig',
-                [
-                    'title'         => __('Delete Poll'),
-                    'type'          => 'alert-success',
-                    'message'       => __('Poll deleted'),
-                    'back_url'      => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
-                    'back_url_name' => __('Back'),
-                ]
-            );
-        }
-
-        return new ViewResponse(
-            '@forum/public/delete-poll.twig',
-            [
-                'title'      => __('Delete Poll'),
-                'page_title' => __('Delete Poll'),
-                'back_url'   => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
-                'delete_url' => '/forum/delvote/' . $id . '/?yes',
-            ]
-        );
+        $this->deleteVoteUseCase->execute($id);
+        $this->session->flash(ForumTopicController::MESSAGE, __('Poll deleted'));
+        redirect($this->topicPathService->getTopicUrlById($id) ?? '/forum/');
     }
 }

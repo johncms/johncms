@@ -37,7 +37,7 @@ final readonly class PinTopicController
             pageNotFound();
         }
 
-        $pin = $request->query->has('pin');
+        $pin = $request->bodyInt('pin', 0) === 1;
         $this->pinTopicUseCase->execute($topic->id, $pin);
         redirect($topic->url);
     }

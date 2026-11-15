@@ -21,6 +21,9 @@ use Johncms\Utils\ShortNumberFormatter;
 
 final readonly class ForumTopicController
 {
+    /** The result of an action on the topic (a vote, a poll removed), shown as a toast after the redirect. */
+    public const string MESSAGE = 'forum_topic_message';
+
     public function __construct(
         private Session $session,
         private CurrentUser $currentUser,
@@ -93,6 +96,7 @@ final readonly class ForumTopicController
                 $result->viewData,
                 [
                     'canonical'        => $result->canonical,
+                    'message'          => (string) $this->session->getFlash(self::MESSAGE),
                     'title'            => $meta->title,
                     'page_title'       => $result->title,
                     'keywords'         => $result->viewData['topic']->calculated_meta_keywords,

@@ -9,17 +9,21 @@ use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\GetSubmitVoteContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\SubmitVoteUseCase;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 
 final readonly class SubmitVoteController
 {
     public function __construct(
         private CurrentUser $currentUser,
+        private Session $session,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetSubmitVoteContextUseCase $contextUseCase,
         private SubmitVoteUseCase $submitVoteUseCase,
+        private ForumTopicPathService $topicPathService,
     ) {
     }
 
@@ -40,17 +44,7 @@ final readonly class SubmitVoteController
 
         $this->submitVoteUseCase->execute($context->topicId, $context->voteId, $this->currentUser->id());
 
-        $referer = htmlspecialchars((string) $request->server->getString('HTTP_REFERER', '/forum/'));
-        return new ViewResponse(
-            '@theme/pages/result.twig',
-            [
-                'title'         => __('Forum'),
-                'page_title'    => __('Forum'),
-                'type'          => 'alert-success',
-                'message'       => __('Vote accepted'),
-                'back_url'      => $referer,
-                'back_url_name' => __('Back'),
-            ]
-        );
+        $this->session->flash(ForumTopicController::MESSAGE, __('Vote accepted'));
+        redirect($this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/');
     }
 }

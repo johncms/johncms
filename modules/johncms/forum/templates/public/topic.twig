@@ -16,6 +16,7 @@
     @var filter_by_author bool
     @var filter_url       string       Sets the filter, or clears it when one is on.
     @var can_moderate     bool         The visitor may delete posts in bulk and act on the topic.
+    @var message          string       The result of the last action on the topic, empty when there is none.
     @var can_set_curators bool
     @var token            string       One-time token of the reply form.
     @var total            int
@@ -61,6 +62,10 @@
         files_url: '/forum/files/?t=' ~ id,
         files_name: __('Topic Files')
     } only %}
+
+    {% if message %}
+        {% include '@theme/components/toast.twig' with {message: message} only %}
+    {% endif %}
 
     {% if filter_by_author %}
         <div class="alert alert-warning">
@@ -217,7 +222,7 @@
                 <div class="dropdown-menu" aria-labelledby="actions">
                     {% if topic_vote %}
                         <a class="dropdown-item" href="/forum/editvote/{{ id }}/">{{ __('Edit Poll') }}</a>
-                        <a class="dropdown-item" href="/forum/delvote/{{ id }}/">{{ __('Delete Poll') }}</a>
+                        <button type="submit" form="topic-delete-poll" class="dropdown-item">{{ __('Delete Poll') }}</button>
                     {% else %}
                         <a class="dropdown-item" href="/forum/addvote/{{ id }}/">{{ __('Add Poll') }}</a>
                     {% endif %}
@@ -228,29 +233,44 @@
 
                     <a class="dropdown-item" href="/forum/change-topic/{{ id }}/">{{ __('Change the topic') }}</a>
 
-                    {% if topic.closed %}
-                        <a class="dropdown-item" href="/forum/close/{{ id }}/">{{ __('Open Topic') }}</a>
-                    {% else %}
-                        <a class="dropdown-item" href="/forum/close/{{ id }}/?closed">{{ __('Close Topic') }}</a>
-                    {% endif %}
+                    <button type="submit" form="topic-close" class="dropdown-item">{{ topic.closed ? __('Open Topic') : __('Close Topic') }}</button>
 
                     {% if topic.deleted %}
-                        <a class="dropdown-item" href="/forum/restore-topic/{{ id }}/">{{ __('Restore Topic') }}</a>
+                        <button type="submit" form="topic-restore" class="dropdown-item">{{ __('Restore Topic') }}</button>
                     {% endif %}
 
                     <a class="dropdown-item" href="/forum/delete-topic/{{ id }}/">{{ __('Delete Topic') }}</a>
 
-                    {% if topic.pinned %}
-                        <a class="dropdown-item" href="/forum/pin-topic/{{ id }}/">{{ __('Unfix Topic') }}</a>
-                    {% else %}
-                        <a class="dropdown-item" href="/forum/pin-topic/{{ id }}/?pin">{{ __('Pin Topic') }}</a>
-                    {% endif %}
+                    <button type="submit" form="topic-pin" class="dropdown-item">{{ topic.pinned ? __('Unfix Topic') : __('Pin Topic') }}</button>
 
                     <a class="dropdown-item" href="/forum/move-topic/{{ id }}/">{{ __('Move Topic') }}</a>
                 </div>
             </div>
         </div>
         </form>
+
+        {# The actions of the menu change the topic, so each sends a form; they stand apart from the
+           form of the posts, which cannot hold them. #}
+        <form method="post" action="/forum/close/{{ id }}/" id="topic-close">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+            <input type="hidden" name="closed" value="{{ topic.closed ? 0 : 1 }}">
+        </form>
+        <form method="post" action="/forum/pin-topic/{{ id }}/" id="topic-pin">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+            <input type="hidden" name="pin" value="{{ topic.pinned ? 0 : 1 }}">
+        </form>
+        {% if topic.deleted %}
+            <form method="post" action="/forum/restore-topic/{{ id }}/" id="topic-restore">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+            </form>
+        {% endif %}
+        {% if topic_vote %}
+            <form method="post" action="/forum/delvote/{{ id }}/" id="topic-delete-poll"
+                  data-confirm="{{ __('Do you really want to delete a poll?') }}" data-confirm-text="{{ topic_vote.name }}"
+                  data-confirm-button="{{ __('Delete') }}">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+            </form>
+        {% endif %}
     {% endif %}
 
     {% if write_access and not reply_above %}

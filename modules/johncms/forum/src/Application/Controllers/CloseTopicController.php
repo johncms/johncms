@@ -39,7 +39,7 @@ final readonly class CloseTopicController
             pageNotFound();
         }
 
-        $closed = $request->query->has('closed');
+        $closed = $request->bodyInt('closed', 0) === 1;
         $this->closeTopicUseCase->execute($topicId, $closed);
         redirect($this->topicPathService->getTopicUrlById($topicId) ?? '/forum/');
     }

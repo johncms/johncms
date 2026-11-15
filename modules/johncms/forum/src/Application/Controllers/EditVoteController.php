@@ -8,7 +8,6 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
-use Johncms\Modules\Forum\Application\UseCases\DeleteVoteAnswerUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetEditVoteContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\UpdateVoteUseCase;
 use Johncms\Http\Request;
@@ -20,7 +19,6 @@ final readonly class EditVoteController
         private ForumErrorRenderer $forumErrorRenderer,
         private GetEditVoteContextUseCase $contextUseCase,
         private UpdateVoteUseCase $updateVoteUseCase,
-        private DeleteVoteAnswerUseCase $deleteVoteAnswerUseCase,
         private ForumTopicPathService $topicPathService,
     ) {
     }
@@ -46,25 +44,6 @@ final readonly class EditVoteController
                     'message'       => __('Wrong data'),
                     'back_url'      => '/forum/',
                     'back_url_name' => __('Back'),
-                ]
-            );
-        }
-
-        $deleteAnswer = $request->query->has('delvote');
-        $voteId = abs($request->queryInt('vote', 0));
-        if ($deleteAnswer && $voteId > 0) {
-            if ($request->query->has('yes')) {
-                $this->deleteVoteAnswerUseCase->execute($context->topicId, $voteId);
-                redirect('/forum/editvote/' . $context->topicId . '/');
-            }
-
-            return new ViewResponse(
-                '@forum/public/delete-poll-answer.twig',
-                [
-                    'title'      => __('Delete Answer'),
-                    'page_title' => __('Delete Answer'),
-                    'delete_url' => '/forum/editvote/' . $context->topicId . '/?vote=' . $voteId . '&delvote&yes',
-                    'back_url'   => '/forum/editvote/' . $context->topicId . '/',
                 ]
             );
         }
@@ -129,7 +108,7 @@ final readonly class EditVoteController
                 'input_label' => __('Answer') . ' ' . ($i + 1),
                 'input_value' => $answer->name,
                 'delete_url'  => $context->savedVote > 2
-                    ? '/forum/editvote/' . $context->topicId . '/?vote=' . $answer->id . '&delvote'
+                    ? '/forum/editvote/' . $context->topicId . '/answers/' . $answer->id . '/delete'
                     : '',
             ];
             $i++;

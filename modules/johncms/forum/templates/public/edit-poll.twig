@@ -9,6 +9,8 @@
     @var saved_vote int    Answers already saved.
     @var votes      array  input_name, input_label, input_value, delete_url
 #}
+{# The buttons that remove a saved answer sit in the form of the poll, but send forms of their own:
+   forms cannot be nested, so these stand after it and the buttons point at them. #}
 {% extends '@theme/layouts/default.twig' %}
 
 {% block content %}
@@ -32,9 +34,8 @@
                             <input type="text" class="form-control" id="vote_{{ vote.input_name }}" placeholder="{{ vote.input_label }}"
                                    name="{{ vote.input_name }}" value="{{ vote.input_value }}" maxlength="150">
                             {% if vote.delete_url|default('') %}
-                                <div class="input-group-append">
-                                    <a href="{{ vote.delete_url }}" class="btn btn-danger">&times;</a>
-                                </div>
+                                <button type="submit" form="delete-answer-{{ vote.input_name }}" class="btn btn-danger"
+                                        title="{{ __('Delete Answer') }}" aria-label="{{ __('Delete Answer') }}">&times;</button>
                             {% endif %}
                         </div>
                         <div class="small text-muted">{{ __('Maximum length: 150 characters') }}</div>
@@ -54,6 +55,13 @@
                     <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Back to topic') }}</a>
                 </div>
             </form>
+            {% for vote in votes|filter(vote => vote.delete_url|default('')) %}
+                <form method="post" action="{{ vote.delete_url }}" id="delete-answer-{{ vote.input_name }}"
+                      data-confirm="{{ __('Do you really want to delete the answer?') }}" data-confirm-text="{{ vote.input_value }}"
+                      data-confirm-button="{{ __('Delete') }}">
+                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                </form>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
