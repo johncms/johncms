@@ -8,6 +8,8 @@ use Dom\HTMLDocument;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Auth\Authorization\RolePermission;
 use Johncms\Auth\CurrentUser;
+use Johncms\Comments\Application\CommentsService;
+use Johncms\Comments\Application\DTO\LatestCommentDTO;
 use Johncms\Modules\Collections\Application\Api\CollectionSectionsApiInterface;
 use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
@@ -140,6 +142,25 @@ final class NewsCollectionDiscussionTest extends FunctionalTestCase
         self::assertSame(0, Capsule::table('comments')->count());
     }
 
+    public function testTheFeedLeavesTheCommentsOfHiddenArticlesOutBeforePaging(): void
+    {
+        $visible = $this->comment(FunctionalUserFactory::create()->id, gmdate('Y-m-d H:i:s', time() - 60));
+        $draft = $this->api->addItem(new CollectionItemFormDTO($this->collection, null, 'draft', 'Draft', true, null, null, 100, null, '<p>Body</p>', []));
+        $scheduled = $this->api->addItem(new CollectionItemFormDTO($this->collection, null, 'scheduled', 'Scheduled', true, null, null, 100, null, '<p>Body</p>', []));
+        Capsule::table('collection_items')->where('id', $draft)->update(['active' => false]);
+        Capsule::table('collection_items')->where('id', $scheduled)->update(['active_from' => gmdate('Y-m-d H:i:s', time() + 86400)]);
+        // Newer than the visible one: a limit taken before the filter would see only these.
+        $this->comment(FunctionalUserFactory::create()->id, subjectId: $draft);
+        $this->comment(FunctionalUserFactory::create()->id, subjectId: $scheduled);
+        $this->handleRequest('/news/');
+        $comments = $this->container()->get(CommentsService::class);
+
+        $latest = $comments->latest('news', 1, 0);
+
+        self::assertSame([$visible], array_map(static fn (LatestCommentDTO $comment): int => $comment->comment->id, $latest));
+        self::assertSame(1, $comments->countOfType('news'));
+    }
+
     public function testDeletingTheArticleOrItsSectionTakesItsCommentsAndVotes(): void
     {
         $comment = $this->comment(FunctionalUserFactory::create()->id);
@@ -200,16 +221,16 @@ final class NewsCollectionDiscussionTest extends FunctionalTestCase
         return '/news/comments/' . $this->item;
     }
 
-    private function comment(int $userId): int
+    private function comment(int $userId, ?string $createdAt = null, ?int $subjectId = null): int
     {
         return Fixture::insert('comments', [
             'subject_type' => 'news',
-            'subject_id'   => $this->item,
+            'subject_id'   => $subjectId ?? $this->item,
             'user_id'      => $userId,
             'text'         => '<p>A comment</p>',
             'author_name'  => 'Author',
             'author_ip'    => '127.0.0.1',
-            'created_at'   => gmdate('Y-m-d H:i:s'),
+            'created_at'   => $createdAt ?? gmdate('Y-m-d H:i:s'),
         ]);
     }
 

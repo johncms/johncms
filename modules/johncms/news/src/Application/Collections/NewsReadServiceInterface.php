@@ -26,6 +26,13 @@ interface NewsReadServiceInterface
 
     public function findById(int $itemId): ?NewsArticleViewDTO;
 
+    /**
+     * The articles findById() does not find at the moment: drafts, scheduled, in a hidden section.
+     *
+     * @return list<int>
+     */
+    public function hiddenIds(): array;
+
     public function findByCode(string $category, string $code): ?NewsArticleViewDTO;
 
     public function preview(int $itemId): ?NewsArticleViewDTO;

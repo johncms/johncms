@@ -69,6 +69,11 @@ final readonly class NewsReadService implements NewsReadServiceInterface
         return $item !== null ? $this->mapper->articles($collection, [$item])[0] : null;
     }
 
+    public function hiddenIds(): array
+    {
+        return $this->items->getHiddenItemIds($this->collection()->id);
+    }
+
     public function findByCode(string $category, string $code): ?NewsArticleViewDTO
     {
         $collection = $this->collection();

@@ -223,6 +223,22 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
         return $query->first();
     }
 
+    public function getHiddenIds(int $collectionId, DateTimeImmutable $at, ?SectionTree $sections = null): array
+    {
+        $visible = ContentCollectionItem::query();
+        $this->publication->apply(builder: $visible, collectionId: $collectionId, at: $at, sections: $sections);
+        $visible->select('id');
+
+        return array_map(
+            'intval',
+            ContentCollectionItem::query()
+                ->where('collection_id', $collectionId)
+                ->whereNotIn('id', $visible->toBase())
+                ->pluck('id')
+                ->all()
+        );
+    }
+
     public function countForPanel(int $collectionId, ItemListFilter $filter, ?array $sectionIds, DateTimeInterface $now): int
     {
         return $this->panelQuery($collectionId, $filter, $sectionIds, $now)->count();

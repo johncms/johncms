@@ -66,6 +66,14 @@ interface ContentCollectionItemRepositoryInterface
      */
     public function findVisibleById(int $collectionId, int $id, ?SectionTree $sections = null): ?ContentCollectionItem;
 
+    /**
+     * The items of the collection a visitor does not see at the moment: switched off, not yet or
+     * no longer published, in a hidden section, or all of them while the collection is off.
+     *
+     * @return list<int>
+     */
+    public function getHiddenIds(int $collectionId, DateTimeImmutable $at, ?SectionTree $sections = null): array;
+
     public function findVisibleByIdForUpdate(int $collectionId, int $id): ?ContentCollectionItem;
 
     public function findVisibleByCode(int $collectionId, ?int $sectionId, string $code, ?SectionTree $sections = null): ?ContentCollectionItem;

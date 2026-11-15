@@ -82,9 +82,17 @@ final readonly class NewsCommentSubject implements CommentSubjectInterface
 
     public function hiddenIds(): ?array
     {
-        // An article the visitor may not see is not found, so the feeds leave its comments out
-        // when they show them.
-        return $this->availability->ready() ? [] : null;
+        if (! $this->availability->ready()) {
+            return null;
+        }
+
+        // The articles find() does not find: the feeds leave their comments out before they are
+        // paginated and counted.
+        try {
+            return $this->news->hiddenIds();
+        } catch (NewsCollectionUnavailableException) {
+            return null;
+        }
     }
 
     public function commentsChanged(int $id, int $delta): void

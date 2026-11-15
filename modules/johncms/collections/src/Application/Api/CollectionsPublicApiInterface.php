@@ -31,6 +31,14 @@ interface CollectionsPublicApiInterface
 
     public function findItem(int $collectionId, int $id): ?CollectionItemDTO;
 
+    /**
+     * The items findItem() does not find at the moment, for a query of another module that has to
+     * leave them out before it is paginated: the comments of the items, for instance.
+     *
+     * @return list<int>
+     */
+    public function getHiddenItemIds(int $collectionId): array;
+
     public function findItemByCode(int $collectionId, ?int $sectionId, string $code): ?CollectionItemDTO;
 
     /** Counts a view of a published item; false when the collection has no such published item. */

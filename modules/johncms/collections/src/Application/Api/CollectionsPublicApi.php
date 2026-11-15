@@ -81,6 +81,15 @@ final readonly class CollectionsPublicApi implements CollectionsPublicApiInterfa
         return $item === null ? null : $this->mapper->item($item);
     }
 
+    public function getHiddenItemIds(int $collectionId): array
+    {
+        return $this->items->getHiddenIds(
+            collectionId: $collectionId,
+            at: new DateTimeImmutable('now', new DateTimeZone('UTC')),
+            sections: $this->structures->of($collectionId)->sections,
+        );
+    }
+
     public function findItemByCode(int $collectionId, ?int $sectionId, string $code): ?CollectionItemDTO
     {
         $item = $this->items->findVisibleByCode(collectionId: $collectionId, sectionId: $sectionId, code: $code, sections: $this->structures->of($collectionId)->sections);
