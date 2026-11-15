@@ -45,6 +45,9 @@ interface ForumFileRepositoryInterface
 
     public function markDeletedByTopicId(int $topicId): void;
 
+    /** Brings back the files of the topic whose posts are in sight; those of hidden posts stay hidden. */
+    public function restoreOfVisiblePostsByTopicId(int $topicId): void;
+
     public function deleteByTopicId(int $topicId): void;
 
     public function countForListing(ForumFileCountQuery $query): int;

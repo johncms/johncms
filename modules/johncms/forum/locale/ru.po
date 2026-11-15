@@ -1828,3 +1828,9 @@ msgstr "Это последнее сообщение темы: тема удал
 
 msgid "Its files go too. This cannot be undone."
 msgstr "Его файлы удалятся тоже. Отменить это нельзя."
+
+msgid "Delete the topic?"
+msgstr "Удалить тему?"
+
+msgid "Its posts, poll and files go too. This cannot be undone."
+msgstr "Её сообщения, опрос и файлы удалятся тоже. Отменить это нельзя."

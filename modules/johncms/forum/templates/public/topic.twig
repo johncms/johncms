@@ -260,7 +260,7 @@
                         <button type="submit" form="topic-restore" class="dropdown-item">{{ __('Restore Topic') }}</button>
                     {% endif %}
 
-                    <a class="dropdown-item" href="/forum/delete-topic/{{ id }}/">{{ __('Delete Topic') }}</a>
+                    <button type="submit" form="topic-delete" class="dropdown-item">{{ __('Delete Topic') }}</button>
 
                     <button type="submit" form="topic-pin" class="dropdown-item">{{ topic.pinned ? __('Unfix Topic') : __('Pin Topic') }}</button>
 
@@ -282,6 +282,27 @@
             <form method="post" action="/forum/restore-topic/{{ id }}/" id="topic-restore">
                 <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
             </form>
+        {% endif %}
+        <form method="post" action="/forum/delete-topic/{{ id }}/" id="topic-delete"
+              data-confirm="{{ __('Delete the topic?') }}" data-confirm-text="{{ topic.name }}"
+              {% if can('forum.topic.destroy') %}data-confirm-fields="forum-topic-delete-fields"{% endif %}
+              data-confirm-button="{{ __('Delete') }}">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+        </form>
+        {% if can('forum.topic.destroy') %}
+            <template id="forum-topic-delete-fields">
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" name="del" value="1" id="forum-topic-delete-hide" checked>
+                    <label class="form-check-label" for="forum-topic-delete-hide">{{ __('Hide') }}</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" name="del" value="2" id="forum-topic-delete-destroy">
+                    <label class="form-check-label" for="forum-topic-delete-destroy">
+                        {{ __('Delete a topic for good') }}
+                        <span class="form-text d-block mt-0 text-danger">{{ __('Its posts, poll and files go too. This cannot be undone.') }}</span>
+                    </label>
+                </div>
+            </template>
         {% endif %}
         {% if topic_vote %}
             <form method="post" action="/forum/delvote/{{ id }}/" id="topic-delete-poll"

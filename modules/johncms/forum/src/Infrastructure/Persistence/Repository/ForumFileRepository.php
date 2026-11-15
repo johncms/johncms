@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Infrastructure\Persistence\Repository;
 
 use Johncms\Modules\Forum\Domain\Models\ForumFile;
+use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Query\ForumFileCountQuery;
 use Johncms\Modules\Forum\Domain\Query\ForumFileListingQuery;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
@@ -101,6 +102,26 @@ final class ForumFileRepository implements ForumFileRepositoryInterface
         ForumFile::query()
             ->where('topic', $topicId)
             ->update(['del' => 1]);
+    }
+
+    public function restoreOfVisiblePostsByTopicId(int $topicId): void
+    {
+        // The scope that hides deleted files would leave them out for whoever may not see them.
+        ForumFile::query()
+            ->withoutGlobalScopes()
+            ->where('topic', $topicId)
+            ->whereIn(
+                'post',
+                ForumMessage::query()
+                    ->withoutGlobalScopes()
+                    ->select('id')
+                    ->where('topic_id', $topicId)
+                    ->where(static function ($query): void {
+                        $query->whereNull('deleted')
+                            ->orWhere('deleted', '!=', 1);
+                    }),
+            )
+            ->update(['del' => 0]);
     }
 
     public function deleteByTopicId(int $topicId): void

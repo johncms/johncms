@@ -11,7 +11,6 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
-use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\DeleteTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetDeleteTopicContextUseCase;
 use Johncms\Http\Request;
@@ -25,7 +24,6 @@ final readonly class DeleteTopicController
         private GetDeleteTopicContextUseCase $contextUseCase,
         private DeleteTopicUseCase $deleteTopicUseCase,
         private ForumSectionPathService $sectionPathService,
-        private ForumTopicPathService $topicPathService,
         private AccessCheckerInterface $accessChecker,
     ) {
     }
@@ -49,8 +47,8 @@ final readonly class DeleteTopicController
             return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
-                    'title'         => __('Curators'),
-                    'page_title'    => __('Curators'),
+                    'title'         => __('Delete Topic'),
+                    'page_title'    => __('Delete Topic'),
                     'message'       => __('Topic has been deleted or does not exists'),
                     'back_url'      => '/forum/',
                     'back_url_name' => __('Back'),
@@ -58,27 +56,13 @@ final readonly class DeleteTopicController
             );
         }
 
-        if ($request->hasBody('submit')) {
-            $deleteMode = $request->bodyInt('del', 0);
-
-            if ($deleteMode === 2 && $this->accessChecker->allows(ForumPermissions::TOPIC_DESTROY)) {
-                $this->deleteTopicUseCase->deleteTopic($topic->id);
-            } else {
-                $this->deleteTopicUseCase->hideTopic($topic->id, $this->currentUser->user()->name);
-            }
-
-            redirect($this->sectionPathService->getSectionUrlById($topic->section_id) ?? '/forum/');
+        // Deleting for good is asked for explicitly; anything else hides the topic.
+        if ($request->bodyInt('del', 1) === 2 && $this->accessChecker->allows(ForumPermissions::TOPIC_DESTROY)) {
+            $this->deleteTopicUseCase->deleteTopic($topic->id);
+        } else {
+            $this->deleteTopicUseCase->hideTopic($topic->id, $this->currentUser->user()->name);
         }
 
-        return new ViewResponse(
-            '@forum/public/delete-topic.twig',
-            [
-                'title'           => __('Delete Topic'),
-                'page_title'      => __('Delete Topic'),
-                'back_url'        => $this->topicPathService->getTopicUrlById($topic->id) ?? '/forum/',
-                'can_hard_delete' => $this->accessChecker->allows(ForumPermissions::TOPIC_DESTROY),
-                'delete_url'      => '/forum/delete-topic/' . $topic->id . '/',
-            ]
-        );
+        redirect($this->sectionPathService->getSectionUrlById($topic->section_id) ?? '/forum/');
     }
 }
