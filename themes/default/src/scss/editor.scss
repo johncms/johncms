@@ -28,3 +28,8 @@
 
   &__status { margin-block-start: .375rem; }
 }
+
+// The "Powered by" badge is a balloon panel and takes the panel layer, which sits above Bootstrap's
+// modals for the editor's own dropdowns. The badge only marks the corner of the editor: it stays
+// under the sticky header and under the picture opened in the popup.
+.ck.ck-balloon-panel.ck-powered-by-balloon { z-index: 1000; }
