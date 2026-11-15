@@ -1,5 +1,5 @@
 // Small controls of the public pages (style guide, "Controls"): chips that lead to a list,
-// a segmented switch of a few links, and a square button holding only an icon.
+// a segmented switch of a few links, a square button holding only an icon, and a search field.
 
 .site-chip {
   display: inline-flex;
@@ -50,4 +50,27 @@
   &:hover:not(:disabled) { border-color: var(--border-strong); color: var(--fg); }
   &:disabled { opacity: .4; cursor: default; }
   &--danger:hover:not(:disabled) { border-color: color-mix(in oklab, var(--danger) 50%, transparent); background: var(--danger-soft); color: var(--danger); }
+}
+
+// A search field: the input and the button inside one rounded box. It fills the row up to its
+// width; a page that needs it wider or narrower sets max-inline-size.
+.site-search-field {
+  display: flex;
+  align-items: center;
+  gap: .625rem;
+  flex: 1 1 20rem;
+  max-inline-size: 22.5rem;
+  min-inline-size: 0;
+  padding: .1875rem .375rem .1875rem .875rem;
+  border: 1px solid var(--border);
+  border-radius: 2rem;
+  background: var(--bg-elev);
+  color: var(--fg-muted);
+  &:focus-within { border-color: var(--accent); }
+  > input { inline-size: 100%; min-inline-size: 0; padding: .25rem 0; border: 0; outline: 0; background: transparent; color: var(--fg); font-size: .8125rem; }
+  > input[type="search"]:focus-visible { outline: none; }
+  > input::placeholder { color: var(--fg-muted); opacity: 1; }
+  > button { display: grid; place-items: center; flex-shrink: 0; inline-size: 2rem; block-size: 2rem; padding: 0; border: 0; border-radius: 50%; color: var(--fg-muted); }
+  > button:hover { background: var(--accent-soft); color: var(--accent); }
+  > button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; box-shadow: none; }
 }

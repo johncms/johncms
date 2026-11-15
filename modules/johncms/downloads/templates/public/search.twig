@@ -20,7 +20,7 @@
         </div>
 
         <form action="/downloads/search/" method="get" class="site-dl-search" role="search">
-            <div class="site-news-search site-dl-search__field{% if error %} is-invalid{% endif %}">
+            <div class="site-search-field site-dl-search__field{% if error %} is-invalid{% endif %}">
                 <input name="search" type="search" value="{{ search_query }}" maxlength="64" required minlength="2"
                     placeholder="{{ __('Search query') }}" aria-label="{{ __('Search query') }}"
                     {% if error %}aria-invalid="true" aria-describedby="downloads-search-error"{% endif %}>

@@ -1,4 +1,4 @@
-{# Chips lead to a list, the segmented switch holds a few links of which one is current, the icon button names its action in aria-label. #}
+{# Chips lead to a list, the segmented switch holds a few links of which one is current, the icon button names its action in aria-label, the search field holds its button inside. #}
 <div class="d-flex flex-wrap align-items-center gap-3">
     <div class="d-flex flex-wrap gap-2">
         <a class="site-chip" href="#buttons">{% include '@theme/components/icon.twig' with {name: 'search', size: 12} only %} {{ d__('system', 'Search') }}</a>
@@ -13,4 +13,10 @@
         <button type="button" class="site-icon-button site-icon-button--danger" aria-label="{{ d__('system', 'Delete') }}" title="{{ d__('system', 'Delete') }}">{% include '@theme/components/icon.twig' with {name: 'trash-2', size: 13} only %}</button>
         <button type="button" class="site-icon-button" aria-label="{{ d__('system', 'Up') }}" title="{{ d__('system', 'Up') }}" disabled>{% include '@theme/components/icon.twig' with {name: 'chevron-up', size: 13} only %}</button>
     </div>
+    <form action="#buttons" method="get" class="site-search-field" role="search">
+        <input name="search" type="search" placeholder="{{ d__('system', 'Search') }}" aria-label="{{ d__('system', 'Search') }}">
+        <button type="submit" class="btn" aria-label="{{ d__('system', 'Search') }}" title="{{ d__('system', 'Search') }}">
+            {% include '@theme/components/icon.twig' with {name: 'search', size: 16} only %}
+        </button>
+    </form>
 </div>
