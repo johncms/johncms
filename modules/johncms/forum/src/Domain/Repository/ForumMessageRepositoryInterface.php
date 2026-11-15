@@ -72,10 +72,12 @@ interface ForumMessageRepositoryInterface
     public function deleteById(int $messageId): void;
 
     /**
+     * The ids among the given ones of the posts of the topic that are not hidden.
+     *
      * @param int[] $ids
      * @return int[]
      */
-    public function getExistingIdsByTopic(int $topicId, array $ids): array;
+    public function getVisibleIdsByTopic(int $topicId, array $ids): array;
 
     /**
      * @param int[] $ids

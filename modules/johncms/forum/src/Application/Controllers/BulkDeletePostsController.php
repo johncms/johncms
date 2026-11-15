@@ -45,7 +45,10 @@ final readonly class BulkDeletePostsController
                 return $this->result('alert-danger', __('You did not choose something to delete'), $backUrl);
             }
 
-            $this->bulkDeletePostsUseCase->execute($id, $confirmIds, $this->currentUser->user()->name);
+            $result = $this->bulkDeletePostsUseCase->execute($id, $confirmIds, $this->currentUser->user()->name);
+            if ($result->topicHidden) {
+                return $this->result('alert-success', __('Every post of the topic was chosen, so the whole topic is deleted'), $result->sectionUrl);
+            }
 
             return $this->result('alert-success', __('Marked posts are deleted'), $backUrl);
         }

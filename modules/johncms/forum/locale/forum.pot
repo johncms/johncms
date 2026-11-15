@@ -8,7 +8,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/AddVoteController.php:35
 #: modules/johncms/forum/src/Application/Controllers/AddVoteController.php:46
 #: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:35
-#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:79
+#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:82
 #: modules/johncms/forum/src/Application/Controllers/ChangeTopicController.php:41
 #: modules/johncms/forum/src/Application/Controllers/ClearFilterByAuthorController.php:37
 #: modules/johncms/forum/src/Application/Controllers/CloseTopicController.php:35
@@ -258,18 +258,22 @@ msgid "Edit Section"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:45
-#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:54
+#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:57
 msgid "You did not choose something to delete"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:50
+msgid "Every post of the topic was chosen, so the whole topic is deleted"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:53
 msgid "Marked posts are deleted"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:60
-#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:61
-#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:74
-#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:75
+#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:63
+#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:64
+#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:77
+#: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:78
 msgid "Delete posts"
 msgstr ""
 

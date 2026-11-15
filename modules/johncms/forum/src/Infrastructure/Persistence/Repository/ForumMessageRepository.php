@@ -208,7 +208,7 @@ class ForumMessageRepository implements ForumMessageRepositoryInterface
             ->delete();
     }
 
-    public function getExistingIdsByTopic(int $topicId, array $ids): array
+    public function getVisibleIdsByTopic(int $topicId, array $ids): array
     {
         if ($ids === []) {
             return [];
@@ -217,6 +217,10 @@ class ForumMessageRepository implements ForumMessageRepositoryInterface
         return ForumMessage::query()
             ->where('topic_id', $topicId)
             ->whereIn('id', $ids)
+            ->where(static function ($query): void {
+                $query->whereNull('deleted')
+                    ->orWhere('deleted', '!=', 1);
+            })
             ->pluck('id')
             ->map(static fn ($id): int => (int) $id)
             ->all();

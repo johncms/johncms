@@ -1816,3 +1816,6 @@ msgstr "Последний ответ"
 
 msgid "No replies yet"
 msgstr "Нет ответов"
+
+msgid "Every post of the topic was chosen, so the whole topic is deleted"
+msgstr "Выбраны все сообщения темы, поэтому удалена вся тема"
