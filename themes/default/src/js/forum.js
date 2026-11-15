@@ -1,5 +1,3 @@
-import { Tooltip } from 'bootstrap';
-
 $('#first_post')
   .on('hide.bs.collapse', function (e) {
     togglePreview();
@@ -74,9 +72,6 @@ $(function () {
         return element.find('img');
       }
     }
-  });
-  document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
-    Tooltip.getOrCreateInstance(el);
   });
 });
 

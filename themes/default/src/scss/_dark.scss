@@ -188,6 +188,46 @@
     color: #888;
   }
 
+  // A raised dark surface like the popovers: an inverted light tooltip glares on a dark page.
+  .tooltip {
+    --bs-tooltip-bg: var(--bg-elev-2);
+    --bs-tooltip-color: var(--fg);
+  }
+
+  .tooltip-inner {
+    border: 1px solid var(--border-strong);
+  }
+
+  // The arrow is drawn the way the popover draws it: a triangle of the border colour under one of
+  // the background colour, shifted inwards by the width of the border.
+  .tooltip-arrow::before {
+    --bs-tooltip-bg: var(--border-strong);
+  }
+
+  .tooltip-arrow::after {
+    position: absolute;
+    content: "";
+    border-color: transparent;
+    border-style: solid;
+  }
+
+  // Placement of Bootstrap, side of Popper the arrow points to, widths of its triangle.
+  $tooltip-arrows: (
+    (top, top, var(--bs-tooltip-arrow-height) calc(var(--bs-tooltip-arrow-width) * .5) 0),
+    (end, right, calc(var(--bs-tooltip-arrow-width) * .5) var(--bs-tooltip-arrow-height) calc(var(--bs-tooltip-arrow-width) * .5) 0),
+    (bottom, bottom, 0 calc(var(--bs-tooltip-arrow-width) * .5) var(--bs-tooltip-arrow-height)),
+    (start, left, calc(var(--bs-tooltip-arrow-width) * .5) 0 calc(var(--bs-tooltip-arrow-width) * .5) var(--bs-tooltip-arrow-height)),
+  );
+
+  @each $placement, $side, $widths in $tooltip-arrows {
+    .bs-tooltip-#{$placement} .tooltip-arrow::after,
+    .bs-tooltip-auto[data-popper-placement^="#{$side}"] .tooltip-arrow::after {
+      #{$side}: -2px;
+      border-width: $widths;
+      border-#{$side}-color: var(--bg-elev-2);
+    }
+  }
+
 
 }
 

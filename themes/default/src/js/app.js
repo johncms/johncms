@@ -24,6 +24,7 @@ import './editor';
 import './live-list';
 import './share';
 import './hover-popover';
+import './tooltips';
 import './comments';
 import './guestbook';
 
