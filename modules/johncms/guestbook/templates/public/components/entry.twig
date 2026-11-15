@@ -17,11 +17,11 @@
                 <span class="site-comment__name">{{ post.user ? post.name : __('Guest') ~ ': ' ~ post.name }}</span>
             {% endif %}
             {% if post.user and post.user.rightsName %}<span class="site-comment__role">{{ post.user.rightsName }}</span>{% endif %}
-            <time class="site-comment__date">{{ post.createdAt }}</time>
+            {# The date leads to the entry: the number of an entry is its id, which says nothing to a reader. #}
+            <a class="site-comment__date" href="#guestbook-entry-{{ post.id }}"><time>{{ post.createdAt }}</time></a>
             {% if post.editCount %}
                 <span class="site-comment__date" title="{{ __('Edited:') }} {{ post.updatedBy }} ({{ post.updateAt }}) [{{ post.editCount }}]">{{ __('Edited') }}</span>
             {% endif %}
-            <a class="site-comment__anchor" href="#guestbook-entry-{{ post.id }}">#{{ post.id }}</a>
         </header>
         {% if post.user and post.user.status %}<div class="site-comment__status">{{ post.user.status }}</div>{% endif %}
         <div class="site-comment__body ck-content">
