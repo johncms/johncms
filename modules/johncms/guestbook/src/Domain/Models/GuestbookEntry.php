@@ -34,9 +34,6 @@ use Johncms\Users\User;
  * @property string $text
  * @property string $ip Stored as a number, read and written as the address.
  * @property string $browser
- * @property string $admin
- * @property string $otvet
- * @property int $otime
  * @property string $edit_who
  * @property int $edit_time
  * @property int $edit_count
@@ -54,7 +51,6 @@ class GuestbookEntry extends Model
     protected $casts = [
         'adm'            => 'boolean',
         'time'           => TimeToDate::class,
-        'otime'          => TimeToDate::class,
         'edit_time'      => TimeToDate::class,
         'ip'             => Ip::class,
         'name'           => SpecialChars::class,
@@ -70,9 +66,6 @@ class GuestbookEntry extends Model
         'text',
         'ip',
         'browser',
-        'admin',
-        'otvet',
-        'otime',
         'edit_who',
         'edit_time',
         'edit_count',

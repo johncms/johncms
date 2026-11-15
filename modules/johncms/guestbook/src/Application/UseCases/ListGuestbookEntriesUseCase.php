@@ -71,9 +71,6 @@ final readonly class ListGuestbookEntriesUseCase
                 editCount: $entry->edit_count,
                 updatedBy: $entry->edit_who,
                 text:      $this->textFormatter->formatPost($entry),
-                replyText: $this->textFormatter->formatReply($entry),
-                repliedBy: $entry->admin,
-                repliedAt: (string) $entry->otime,
                 userId:    $entry->user_id,
                 user:      $this->getUser($entry),
                 meta:      $this->getMeta($entry, $authorLevels),
@@ -133,11 +130,6 @@ final readonly class ListGuestbookEntriesUseCase
             canManage:   $canManage,
             editUrl:     $canManage ? '/guestbook/edit?id=' . $entry->id : null,
             deleteUrl:   $canManage ? '/guestbook/delpost' : null,
-            // The reply of the staff is a permission of its own, and the screen behind the link
-            // asks for it.
-            replyUrl:    $canManage && $this->accessChecker->allows(GuestbookPermissions::ENTRY_REPLY)
-                ? '/guestbook/otvet?id=' . $entry->id
-                : null,
         );
     }
 

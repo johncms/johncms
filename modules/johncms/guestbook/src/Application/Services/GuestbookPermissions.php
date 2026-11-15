@@ -24,9 +24,6 @@ final class GuestbookPermissions implements PermissionProviderInterface
     /** Edit and delete the entries of other people. */
     public const ENTRY_MANAGE = 'guestbook.entry.manage';
 
-    /** Answer an entry with the reply that is shown as coming from the staff. */
-    public const ENTRY_REPLY = 'guestbook.entry.reply';
-
     /** Empty the guestbook. */
     public const CLEAR = 'guestbook.clear';
 
@@ -65,13 +62,6 @@ final class GuestbookPermissions implements PermissionProviderInterface
                 d__('guestbook', 'Edit and delete the entries of other people'),
                 $group,
                 $staff
-            ),
-            new PermissionDefinition(
-                self::ENTRY_REPLY,
-                self::GROUP,
-                d__('guestbook', 'Answer an entry on behalf of the staff'),
-                $group,
-                [SystemRole::SuperModerator->value, SystemRole::Admin->value]
             ),
             new PermissionDefinition(
                 self::CLEAR,

@@ -68,7 +68,7 @@ final class GuestbookPicturesTest extends FunctionalTestCase
         self::assertSame(['owner_type' => null, 'owner_id' => null], $this->registration($picture['id']));
     }
 
-    public function testEditingWithoutThePictureGivesItUpAndTheReplyKeepsIt(): void
+    public function testEditingWithoutThePictureGivesItUp(): void
     {
         $author = FunctionalUserFactory::create();
         $moderator = FunctionalUserFactory::createSupervisor();
@@ -76,7 +76,6 @@ final class GuestbookPicturesTest extends FunctionalTestCase
         $this->postForm('/guestbook/', ['message' => $this->withPicture($picture['url'])], $author);
         $entry = (int) Capsule::table('guest')->value('id');
 
-        $this->postForm('/guestbook/otvet?id=' . $entry, ['message' => '<p>A reply of the staff</p>'], $moderator);
         self::assertSame(['owner_type' => 'guestbook', 'owner_id' => $entry], $this->registration($picture['id']));
 
         $this->postForm('/guestbook/edit?id=' . $entry, ['message' => '<p>No picture any more</p>'], $moderator);

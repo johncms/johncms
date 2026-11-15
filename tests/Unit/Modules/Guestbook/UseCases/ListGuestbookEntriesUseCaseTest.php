@@ -89,7 +89,7 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
     {
         $author = UserFactory::make(attributes: ['id' => 5, 'name' => 'Author', 'status' => 'The Boss']);
         $this->roles->grantTo(5, ['supervisor']);
-        $entry = $this->makeEntry(['user_id' => 5, 'name' => 'Author', 'text' => 'Hello', 'otvet' => 'Reply'], $author);
+        $entry = $this->makeEntry(['user_id' => 5, 'name' => 'Author', 'text' => 'Hello'], $author);
 
         $this->repository->method('getEntries')->willReturn(new Collection([$entry]));
 
@@ -101,9 +101,8 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
         self::assertSame(10, $dto->id);
         self::assertSame('Author', $dto->name);
         self::assertTrue($dto->isOnline);
-        // Both are markup: the formatter has sanitized them, and a template prints them as they are.
+        // Markup: the formatter has sanitized it, and a template prints it as it is.
         self::assertSame('Hello', (string) $dto->text);
-        self::assertSame('Reply', (string) $dto->replyText);
         self::assertSame(5, $dto->userId);
 
         self::assertNotNull($dto->user);
@@ -135,7 +134,6 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
         self::assertFalse($dto->meta->canManage);
         self::assertNull($dto->meta->editUrl);
         self::assertNull($dto->meta->deleteUrl);
-        self::assertNull($dto->meta->replyUrl);
     }
 
     public function testMetaAllowsManagingGuestEntry(): void
@@ -145,7 +143,7 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
         $this->repository->method('getEntries')->willReturn(new Collection([$entry]));
 
         $dto = $this->makeUseCase(
-            granted: [GuestbookPermissions::ENTRY_MANAGE, GuestbookPermissions::ENTRY_REPLY]
+            granted: [GuestbookPermissions::ENTRY_MANAGE]
         )->getPage(10, 0)[0];
 
         self::assertNull($dto->user);
@@ -155,7 +153,6 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
         self::assertTrue($dto->meta->canManage);
         self::assertSame('/guestbook/edit?id=10', $dto->meta->editUrl);
         self::assertSame('/guestbook/delpost', $dto->meta->deleteUrl);
-        self::assertSame('/guestbook/otvet?id=10', $dto->meta->replyUrl);
     }
 
     /**
@@ -196,15 +193,12 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
         $content->method('render')->willReturnCallback(
             static fn (string $html): Markup => new Markup($html, 'UTF-8')
         );
-        $content->method('renderOrNull')->willReturnCallback(
-            static fn (string $html): ?Markup => $html === '' ? null : new Markup($html, 'UTF-8')
-        );
 
         return new GuestbookEntryTextFormatter(new StaffTitles($this->roles), $content);
     }
 
     /**
-     * Касты TimeToDate дёргают di() при непустом значении, поэтому time/otime/edit_time — пустые.
+     * The TimeToDate casts call di() for a non-empty value, so time and edit_time are left empty.
      *
      * @param array<string, mixed> $attributes
      */
@@ -217,9 +211,6 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
             'text'           => 'Hello',
             'ip'             => '127.0.0.1',
             'browser'        => 'UA',
-            'admin'          => '',
-            'otvet'          => '',
-            'otime'          => 0,
             'edit_who'       => '',
             'edit_time'      => 0,
             'edit_count'     => 0,

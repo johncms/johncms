@@ -22,7 +22,6 @@ msgstr ""
 #: modules/johncms/guestbook/src/Application/Controllers/DeleteEntryController.php:40
 #: modules/johncms/guestbook/src/Application/Controllers/DeleteEntryController.php:50
 #: modules/johncms/guestbook/src/Application/Controllers/EditEntryController.php:51
-#: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:53
 msgid "Wrong data"
 msgstr ""
 
@@ -43,15 +42,13 @@ msgstr ""
 
 #: modules/johncms/guestbook/src/Application/Controllers/EditEntryController.php:82
 #: modules/johncms/guestbook/src/Application/Controllers/GuestbookController.php:47
-#: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:84
 msgid "Admin Club"
 msgstr ""
 
 #: modules/johncms/guestbook/src/Application/Controllers/EditEntryController.php:82
 #: modules/johncms/guestbook/src/Application/Controllers/GuestbookController.php:47
-#: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:84
 #: modules/johncms/guestbook/src/Application/Menu/GuestbookMenuItemProvider.php:29
-#: modules/johncms/guestbook/src/Application/Services/GuestbookPermissions.php:38
+#: modules/johncms/guestbook/src/Application/Services/GuestbookPermissions.php:35
 msgid "Guestbook"
 msgstr ""
 
@@ -71,22 +68,6 @@ msgstr ""
 msgid "Public project chat. Be kind to each other and avoid flooding."
 msgstr ""
 
-#: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:52
-#: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:85
-#: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:90
-#: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:91
-#: modules/johncms/guestbook/templates/public/components/entry.twig:63
-#: modules/johncms/guestbook/templates/public/components/entry.twig:81
-#: modules/johncms/guestbook/templates/public/reply.twig:33
-#: modules/johncms/guestbook/templates/public/reply.twig:37
-#: modules/johncms/guestbook/templates/public/reply.twig:39
-msgid "Reply"
-msgstr ""
-
-#: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:74
-msgid "Your reply to the message was saved"
-msgstr ""
-
 #: modules/johncms/guestbook/src/Application/Dashboard/GuestbookMetricsProvider.php:25
 msgid "guestbook entries today"
 msgstr ""
@@ -95,27 +76,23 @@ msgstr ""
 msgid "Admin Chat"
 msgstr ""
 
-#: modules/johncms/guestbook/src/Application/Services/GuestbookPermissions.php:51
+#: modules/johncms/guestbook/src/Application/Services/GuestbookPermissions.php:48
 msgid "Read the guestbook"
 msgstr ""
 
-#: modules/johncms/guestbook/src/Application/Services/GuestbookPermissions.php:58
+#: modules/johncms/guestbook/src/Application/Services/GuestbookPermissions.php:55
 msgid "Leave an entry in the guestbook"
 msgstr ""
 
-#: modules/johncms/guestbook/src/Application/Services/GuestbookPermissions.php:65
+#: modules/johncms/guestbook/src/Application/Services/GuestbookPermissions.php:62
 msgid "Edit and delete the entries of other people"
 msgstr ""
 
-#: modules/johncms/guestbook/src/Application/Services/GuestbookPermissions.php:72
-msgid "Answer an entry on behalf of the staff"
-msgstr ""
-
-#: modules/johncms/guestbook/src/Application/Services/GuestbookPermissions.php:79
+#: modules/johncms/guestbook/src/Application/Services/GuestbookPermissions.php:69
 msgid "Empty the guestbook"
 msgstr ""
 
-#: modules/johncms/guestbook/src/Application/Services/GuestbookPermissions.php:86
+#: modules/johncms/guestbook/src/Application/Services/GuestbookPermissions.php:76
 msgid "Enter the admin club"
 msgstr ""
 
@@ -138,11 +115,11 @@ msgid ""
 "Inserting links: <a href=\"https://johncms.com\">https://johncms.com</a>, images, tables, videos and much more"
 msgstr ""
 
-#: modules/johncms/guestbook/src/Install/Installer.php:63
+#: modules/johncms/guestbook/src/Install/Installer.php:57
 msgid "Welcome to the Guestbook!"
 msgstr ""
 
-#: modules/johncms/guestbook/src/Install/Installer.php:67
+#: modules/johncms/guestbook/src/Install/Installer.php:58
 msgid "A sample reply from the Administrator"
 msgstr ""
 
@@ -158,17 +135,21 @@ msgstr ""
 msgid "Edited"
 msgstr ""
 
+#: modules/johncms/guestbook/templates/public/components/entry.twig:57
+msgid "Reply"
+msgstr ""
+
+#: modules/johncms/guestbook/templates/public/components/entry.twig:68
 #: modules/johncms/guestbook/templates/public/components/entry.twig:74
-#: modules/johncms/guestbook/templates/public/components/entry.twig:86
 msgid "Edit"
 msgstr ""
 
-#: modules/johncms/guestbook/templates/public/components/entry.twig:88
+#: modules/johncms/guestbook/templates/public/components/entry.twig:76
 msgid "Delete this message?"
 msgstr ""
 
-#: modules/johncms/guestbook/templates/public/components/entry.twig:88
-#: modules/johncms/guestbook/templates/public/components/entry.twig:93
+#: modules/johncms/guestbook/templates/public/components/entry.twig:76
+#: modules/johncms/guestbook/templates/public/components/entry.twig:81
 msgid "Delete"
 msgstr ""
 
@@ -186,17 +167,14 @@ msgstr[0] ""
 #: modules/johncms/guestbook/templates/public/edit.twig:26
 #: modules/johncms/guestbook/templates/public/index.twig:61
 #: modules/johncms/guestbook/templates/public/index.twig:63
-#: modules/johncms/guestbook/templates/public/reply.twig:15
 msgid "Message"
 msgstr ""
 
 #: modules/johncms/guestbook/templates/public/edit.twig:35
-#: modules/johncms/guestbook/templates/public/reply.twig:48
 msgid "Back"
 msgstr ""
 
 #: modules/johncms/guestbook/templates/public/edit.twig:39
-#: modules/johncms/guestbook/templates/public/reply.twig:52
 msgid "Save"
 msgstr ""
 

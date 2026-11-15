@@ -37,13 +37,7 @@ final readonly class EditGuestbookEntryUseCase
             $locked->edit_count = $locked->edit_count + 1;
             $this->repository->save($locked);
 
-            // The reply shares the pictures of the entry: what it shows is kept too.
-            $this->uploads->bind(
-                GuestbookEditorUploads::OWNER_TYPE,
-                $locked->id,
-                $this->currentUser->id(),
-                $text . (string) $locked->otvet
-            );
+            $this->uploads->bind(GuestbookEditorUploads::OWNER_TYPE, $locked->id, $this->currentUser->id(), $text);
         });
     }
 }

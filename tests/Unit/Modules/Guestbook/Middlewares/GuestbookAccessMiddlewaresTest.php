@@ -9,7 +9,6 @@ use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Http\Request;
 use Johncms\Modules\Guestbook\Application\Middlewares\GuestbookCleanAccessMiddleware;
 use Johncms\Modules\Guestbook\Application\Middlewares\GuestbookEditAccessMiddleware;
-use Johncms\Modules\Guestbook\Application\Middlewares\GuestbookReplyAccessMiddleware;
 use Johncms\Modules\Guestbook\Application\Services\GuestbookPermissions;
 use Johncms\Router\MiddlewareInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -46,7 +45,7 @@ final class GuestbookAccessMiddlewaresTest extends TestCase
     public function testThrowsWithoutThePermission(string $middlewareClass, string $permission): void
     {
         $others = array_values(array_diff(
-            [GuestbookPermissions::CLEAR, GuestbookPermissions::ENTRY_MANAGE, GuestbookPermissions::ENTRY_REPLY],
+            [GuestbookPermissions::CLEAR, GuestbookPermissions::ENTRY_MANAGE],
             [$permission]
         ));
 
@@ -64,7 +63,6 @@ final class GuestbookAccessMiddlewaresTest extends TestCase
         return [
             'clean' => [GuestbookCleanAccessMiddleware::class, GuestbookPermissions::CLEAR],
             'edit'  => [GuestbookEditAccessMiddleware::class, GuestbookPermissions::ENTRY_MANAGE],
-            'reply' => [GuestbookReplyAccessMiddleware::class, GuestbookPermissions::ENTRY_REPLY],
         ];
     }
 

@@ -36,12 +36,6 @@
         {% endif %}
         <div class="site-comment__body ck-content" data-comment-body>
             {{ post.text }}
-            {% if post.replyText %}
-                <div class="site-comment__reply">
-                    <div class="site-comment__header"><b class="site-comment__name">{{ post.repliedBy }}</b><time class="site-comment__date">{{ post.repliedAt }}</time></div>
-                    {{ post.replyText }}
-                </div>
-            {% endif %}
         </div>
         {% if can_write or post.meta %}
             <footer class="site-comment__footer">
@@ -75,12 +69,6 @@
                                 {% include '@theme/components/icon.twig' with {name: 'chevron-down', size: 12} only %}
                             </summary>
                             <div class="site-popover__panel">
-                                {% if post.meta.replyUrl %}
-                                    <a class="site-popover__item" href="{{ post.meta.replyUrl }}">
-                                        {% include '@theme/components/icon.twig' with {name: 'message-square', size: 14} only %}
-                                        <span>{{ __('Reply') }}</span>
-                                    </a>
-                                {% endif %}
                                 <a class="site-popover__item" href="{{ post.meta.editUrl }}">
                                     {% include '@theme/components/icon.twig' with {name: 'pencil', size: 14} only %}
                                     <span>{{ __('Edit') }}</span>

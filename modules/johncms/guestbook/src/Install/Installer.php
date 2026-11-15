@@ -42,44 +42,21 @@ class Installer extends \Johncms\Modules\Installer
             . '<span style="color:blue">blue</span><br>' . "\n"
             . 'Inserting links: <a href="https://johncms.com">https://johncms.com</a>, images, tables, videos and much more');
 
-        Capsule::table('guest')->insert([
-            [
-                'adm'     => 1,
-                'time'    => $now,
-                'user_id' => 1,
-                'name'    => 'admin',
-                'text'    => $adminClubText,
-                'ip'      => 2130706433,
-                'browser' => $ua,
-                'admin'   => '',
-                'otvet'   => '',
-                'otime'   => 0,
-            ],
-            [
-                'adm'     => 0,
-                'time'    => $now,
-                'user_id' => 1,
-                'name'    => 'admin',
-                'text'    => d__('guestbook', 'Welcome to the Guestbook!'),
-                'ip'      => 2130706433,
-                'browser' => $ua,
-                'admin'   => 'admin',
-                'otvet'   => d__('guestbook', 'A sample reply from the Administrator'),
-                'otime'   => $now,
-            ],
-            [
-                'adm'     => 0,
-                'time'    => $now,
-                'user_id' => 1,
-                'name'    => 'admin',
-                'text'    => $formattingText,
-                'ip'      => 2130706433,
-                'browser' => $ua,
-                'admin'   => '',
-                'otvet'   => '',
-                'otime'   => 0,
-            ],
-        ]);
+        $entry = static fn (bool $adminClub, string $text, ?int $replyTo = null): array => [
+            'adm'         => $adminClub ? 1 : 0,
+            'time'        => $now,
+            'user_id'     => 1,
+            'name'        => 'admin',
+            'text'        => $text,
+            'ip'          => 2130706433,
+            'browser'     => $ua,
+            'reply_to_id' => $replyTo,
+        ];
+
+        Capsule::table('guest')->insert($entry(true, $adminClubText));
+        $welcome = Capsule::table('guest')->insertGetId($entry(false, d__('guestbook', 'Welcome to the Guestbook!')));
+        Capsule::table('guest')->insert($entry(false, d__('guestbook', 'A sample reply from the Administrator'), $welcome));
+        Capsule::table('guest')->insert($entry(false, $formattingText));
     }
 
     /**

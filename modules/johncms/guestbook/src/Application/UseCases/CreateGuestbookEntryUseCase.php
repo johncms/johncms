@@ -52,7 +52,6 @@ final readonly class CreateGuestbookEntryUseCase
                     'text'        => $dto->text,
                     'ip'          => $dto->ip,
                     'browser'     => $dto->userAgent,
-                    'otvet'       => '',
                     'reply_to_id' => $answered?->id,
                 ]
             );

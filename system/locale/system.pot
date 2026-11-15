@@ -1395,7 +1395,7 @@ msgid "Reply"
 msgstr ""
 
 #: themes/default/templates/components/comments/comment.twig:55
-#: modules/johncms/guestbook/templates/public/components/entry.twig:69
+#: modules/johncms/guestbook/templates/public/components/entry.twig:63
 msgid "Quote"
 msgstr ""
 
