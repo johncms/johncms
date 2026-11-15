@@ -87,6 +87,16 @@ final class LibraryDiscussionTest extends FunctionalTestCase
         self::assertFalse(Capsule::table('comments')->where('id', $id)->exists());
     }
 
+    public function testAnAnswerSentFromTheFormKeepsTheCommentItAnswers(): void
+    {
+        $parent = $this->comment(FunctionalUserFactory::create()->id);
+        $author = FunctionalUserFactory::create();
+
+        $this->postForm($this->url(), ['text' => '<p>An answer</p>', 'reply_to' => $parent], $author);
+
+        self::assertSame($parent, (int) Capsule::table('comments')->where('user_id', $author->id)->value('reply_to_id'));
+    }
+
     public function testTheOldCommentsMoveIntoTheCore(): void
     {
         $db = $this->container()->get(ConnectionInterface::class);

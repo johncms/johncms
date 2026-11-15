@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null    $edited_by
  * @property string|null $editor_name         The name of the editor at the time of the edit.
  * @property int         $edit_count
+ * @property int|null    $reply_to_id         The comment of the same subject it answers; null when it answers none or that one is gone.
  */
 final class Comment extends Model
 {
@@ -48,6 +49,7 @@ final class Comment extends Model
         'edited_by',
         'editor_name',
         'edit_count',
+        'reply_to_id',
     ];
 
     protected $casts = [
@@ -57,5 +59,6 @@ final class Comment extends Model
         'staff_smilies' => 'boolean',
         'edited_by'     => 'integer',
         'edit_count'    => 'integer',
+        'reply_to_id'   => 'integer',
     ];
 }

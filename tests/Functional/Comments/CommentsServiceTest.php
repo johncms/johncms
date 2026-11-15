@@ -422,6 +422,40 @@ final class CommentsServiceTest extends FunctionalTestCase
         );
     }
 
+    public function testAnAnswerKeepsTheCommentItAnswers(): void
+    {
+        $parent = $this->insertComment(FunctionalUserFactory::create()->id);
+        $this->signIn(FunctionalUserFactory::create());
+
+        $id = $this->comments->add($this->object(), '<p>An answer</p>', $this->client(), $parent);
+
+        self::assertSame($parent, (int) Capsule::table('comments')->where('id', $id)->value('reply_to_id'));
+    }
+
+    public function testAnAnswerToACommentOfAnotherDiscussionAnswersNobody(): void
+    {
+        $other = FunctionalUserFactory::create();
+        $elsewhere = $this->insertComment($other->id, subjectId: self::OTHER_OBJECT);
+        $this->signIn(FunctionalUserFactory::create());
+
+        $id = $this->comments->add($this->object(), '<p>An answer</p>', $this->client(), $elsewhere);
+
+        self::assertNull(Capsule::table('comments')->where('id', $id)->value('reply_to_id'));
+    }
+
+    public function testDeletingTheAnsweredCommentKeepsTheAnswer(): void
+    {
+        $parent = $this->insertComment(FunctionalUserFactory::create()->id);
+        $this->signIn(FunctionalUserFactory::create());
+        $answer = $this->comments->add($this->object(), '<p>An answer</p>', $this->client(), $parent);
+        $this->signIn(FunctionalUserFactory::createSupervisor());
+
+        $this->comments->delete($this->object(), $parent);
+
+        self::assertSame([$answer], $this->remaining([$answer]));
+        self::assertNull(Capsule::table('comments')->where('id', $answer)->value('reply_to_id'));
+    }
+
     private function object(bool $open = true, ?int $ownerId = null, bool $ownerCanEdit = false, bool $ownerCanDelete = false): CommentSubjectDTO
     {
         return new CommentSubjectDTO(
@@ -474,13 +508,18 @@ final class CommentsServiceTest extends FunctionalTestCase
         return $file->url;
     }
 
-    private function insertComment(int $userId, ?string $createdAt = null, int $subjectId = self::OBJECT, string $type = self::TYPE): int
-    {
+    private function insertComment(
+        int $userId,
+        ?string $createdAt = null,
+        int $subjectId = self::OBJECT,
+        string $type = self::TYPE,
+        string $text = '<p>A comment</p>',
+    ): int {
         return Fixture::insert('comments', [
             'subject_type' => $type,
             'subject_id'   => $subjectId,
             'user_id'      => $userId,
-            'text'         => '<p>A comment</p>',
+            'text'         => $text,
             'author_name'  => 'Author',
             'created_at'   => $createdAt ?? gmdate('Y-m-d H:i:s'),
         ]);

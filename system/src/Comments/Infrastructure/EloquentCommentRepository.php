@@ -194,6 +194,13 @@ final readonly class EloquentCommentRepository implements CommentRepositoryInter
         }
     }
 
+    public function unlinkAnswers(array $ids): void
+    {
+        foreach (array_chunk($ids, 500) as $chunk) {
+            Comment::query()->whereIn('reply_to_id', $chunk)->update(['reply_to_id' => null]);
+        }
+    }
+
     public function changeUserCommentCount(int $userId, int $delta): void
     {
         if ($userId === 0 || $delta === 0) {

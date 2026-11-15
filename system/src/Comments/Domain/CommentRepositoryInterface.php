@@ -97,6 +97,13 @@ interface CommentRepositoryInterface
      */
     public function delete(array $ids): void;
 
+    /**
+     * The answers to these comments answer nothing any more.
+     *
+     * @param list<int> $ids
+     */
+    public function unlinkAnswers(array $ids): void;
+
     /** Change the number of comments the user has written; it never goes below zero. */
     public function changeUserCommentCount(int $userId, int $delta): void;
 

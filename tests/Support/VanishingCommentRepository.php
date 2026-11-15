@@ -27,6 +27,11 @@ final readonly class VanishingCommentRepository implements CommentRepositoryInte
         return $comment;
     }
 
+    public function unlinkAnswers(array $ids): void
+    {
+        $this->inner->unlinkAnswers($ids);
+    }
+
     public function count(string $subjectType, int $subjectId): int
     {
         return $this->inner->count($subjectType, $subjectId);

@@ -220,10 +220,13 @@ final readonly class CommentsService
     }
 
     /**
+     * The comment it answers, when there is one, has to be of the same subject. One deleted while
+     * the answer was being written leaves the answer without the link rather than refusing it.
+     *
      * @throws CommentAccessDeniedException
      * @throws CommentValidationException
      */
-    public function add(CommentSubjectDTO $subject, string $text, ClientInfoDTO $client): int
+    public function add(CommentSubjectDTO $subject, string $text, ClientInfoDTO $client, int $replyTo = 0): int
     {
         $this->access->ensureCanWrite($subject);
         $html = $this->prepare($subject, $text);
@@ -241,7 +244,9 @@ final readonly class CommentsService
             throw new CommentValidationException(d__('system', 'Message already exists'));
         }
 
-        return $this->transactions->run(function () use ($subject, $html, $client, $user): int {
+        return $this->transactions->run(function () use ($subject, $html, $client, $user, $replyTo): int {
+            // Locked till the answer is written: the comment cannot go between the two.
+            $answeredAuthor = $replyTo > 0 ? ($this->comments->getLocked($subject->type, $subject->id, [$replyTo])[$replyTo] ?? null) : null;
             $comment = $this->comments->create([
                 'subject_type'        => $subject->type,
                 'subject_id'          => $subject->id,
@@ -253,6 +258,7 @@ final readonly class CommentsService
                 'author_user_agent'   => $client->userAgent,
                 'staff_smilies'       => $this->staff->isStaff($user->id),
                 'created_at'          => gmdate(self::DATE_FORMAT),
+                'reply_to_id'         => $answeredAuthor === null ? null : $replyTo,
             ]);
             $this->bindPictures($comment->id, $user->id, $html);
             $this->subjects->get($subject->type)?->commentsChanged($subject->id, 1);
@@ -366,6 +372,7 @@ final readonly class CommentsService
             }
 
             $ids = array_column($rows, 'id');
+            $this->comments->unlinkAnswers($ids);
             $this->comments->delete($ids);
             $this->uploads->detach(CommentEditorUploads::OWNER_TYPE, $ids);
             foreach ($perSubject as $subject) {
@@ -426,6 +433,7 @@ final readonly class CommentsService
         }
 
         $ids = array_keys($authorsById);
+        $this->comments->unlinkAnswers($ids);
         $this->comments->delete($ids);
         $this->uploads->detach(CommentEditorUploads::OWNER_TYPE, $ids);
         foreach (array_count_values($authorsById) as $userId => $count) {

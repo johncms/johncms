@@ -236,7 +236,7 @@ final readonly class CommentsController
     {
         $text = $request->body('text');
         try {
-            $commentId = $this->comments->add($object, $text, $this->environment->getClientInfo());
+            $commentId = $this->comments->add($object, $text, $this->environment->getClientInfo(), $request->bodyInt('reply_to'));
         } catch (CommentAccessDeniedException | CommentValidationException $exception) {
             $this->session->flash(CommentDiscussionView::FLASH_ERROR, $exception->getMessage());
             $this->session->flash(CommentDiscussionView::FLASH_TEXT, $text);
