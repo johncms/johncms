@@ -894,7 +894,7 @@ msgstr "Изменено:"
 
 #: themes/default/templates/system/pages/comments_list.phtml:85
 msgid "Edited"
-msgstr "Изменен"
+msgstr "Изменено"
 
 msgid "New message from the contact form"
 msgstr "Новое сообщение из формы обратной связи"

@@ -23,6 +23,9 @@
             {% endif %}
             {% if author and author.rightsName %}<span class="site-comment__role">{{ author.rightsName }}</span>{% endif %}
             <time class="site-comment__date" data-comment-date>{{ comment.createdAt }}</time>
+            {% if comment.editCount > 0 %}
+                <span class="site-comment__date" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ d__('system', 'Edited by %s, %s')|format(comment.editorName, comment.editedAt) }}{% if comment.editCount > 1 %} [{{ comment.editCount }}]{% endif %}">{{ d__('system', 'Edited') }}</span>
+            {% endif %}
             {# A feed of the latest comments knows no position: the link still leads to the comment. #}
             <a class="site-comment__anchor" href="{{ subject.discussionUrl }}/comment/{{ comment.id }}">#{{ comment.number ?: '' }}</a>
         </header>
@@ -37,11 +40,6 @@
             </a>
         {% endif %}
         <div class="site-comment__body ck-content" data-comment-body>{{ comment.text }}</div>
-        {% if comment.editCount > 0 %}
-            <div class="site-comment__status">
-                {{ d__('system', 'Edited by %s, %s')|format(comment.editorName, comment.editedAt) }}{% if comment.editCount > 1 %} [{{ comment.editCount }}]{% endif %}
-            </div>
-        {% endif %}
         {% if can_reply or comment.canEdit or comment.canDelete or comment.origin %}
             <footer class="site-comment__footer">
                 <div class="site-comment__actions">

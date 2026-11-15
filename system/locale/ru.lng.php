@@ -200,7 +200,7 @@ PHP должен работать с драйвером по умолчанию:
       'Send' => 'Отправить',
       'The list is empty' => 'Список пуст',
       'Edited:' => 'Изменено:',
-      'Edited' => 'Изменен',
+      'Edited' => 'Изменено',
       'New message from the contact form' => 'Новое сообщение из формы обратной связи',
       'A new message has been sent through the contact form on the <a href="%s">%s</a> website' => 'На сайте <a href="%s">%s</a> отправлено новое сообщение через форму обратной связи',
       'Sender:' => 'Отправитель:',
