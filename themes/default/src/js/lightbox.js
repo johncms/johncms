@@ -1,3 +1,5 @@
+// The pictures of the site open in a lightbox: the galleries of the posts and of the files of the
+// downloads, and the single pictures of a text. magnific-popup is a plugin of jQuery.
 $(function () {
   $('.image-gallery').each(function () {
     $(this).magnificPopup({
@@ -60,9 +62,4 @@ $(function () {
       }
     }
   });
-});
-
-$(".custom-file-input").on("change", function () {
-  var fileName = $(this).val().split("\\").pop();
-  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 });

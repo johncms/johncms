@@ -26,7 +26,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/EditPostController.php:93
 #: modules/johncms/forum/src/Application/Controllers/EditVoteController.php:35
 #: modules/johncms/forum/src/Application/Controllers/EditVoteController.php:46
-#: modules/johncms/forum/src/Application/Controllers/FilterByAuthorController.php:39
+#: modules/johncms/forum/src/Application/Controllers/FilterByAuthorController.php:40
 #: modules/johncms/forum/src/Application/Controllers/ForumFilesController.php:52
 #: modules/johncms/forum/src/Application/Controllers/MoveTopicController.php:36
 #: modules/johncms/forum/src/Application/Controllers/MoveTopicController.php:52
@@ -110,7 +110,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/DeleteVoteAnswerController.php:45
 #: modules/johncms/forum/src/Application/Controllers/DeleteVoteController.php:44
 #: modules/johncms/forum/src/Application/Controllers/EditVoteController.php:44
-#: modules/johncms/forum/src/Application/Controllers/FilterByAuthorController.php:37
+#: modules/johncms/forum/src/Application/Controllers/FilterByAuthorController.php:38
 #: modules/johncms/forum/src/Application/Controllers/ForumFilesController.php:50
 #: modules/johncms/forum/src/Application/Controllers/MoveTopicController.php:48
 #: modules/johncms/forum/src/Application/Controllers/MoveTopicController.php:50
@@ -161,7 +161,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/DeletePostFileController.php:40
 #: modules/johncms/forum/src/Application/Controllers/DownloadFileController.php:46
 #: modules/johncms/forum/src/Application/Controllers/EditPostController.php:49
-#: modules/johncms/forum/src/Application/Controllers/FilterByAuthorController.php:54
+#: modules/johncms/forum/src/Application/Controllers/FilterByAuthorController.php:56
 #: modules/johncms/forum/src/Application/Controllers/ForumFilesController.php:57
 #: modules/johncms/forum/src/Application/Controllers/ForumIndexController.php:34
 #: modules/johncms/forum/src/Application/Controllers/ForumIndexController.php:42
@@ -282,11 +282,11 @@ msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/ClearFilterByAuthorController.php:33
 #: modules/johncms/forum/src/Application/Controllers/ClearFilterByAuthorController.php:34
-#: modules/johncms/forum/src/Application/Controllers/FilterByAuthorController.php:35
 #: modules/johncms/forum/src/Application/Controllers/FilterByAuthorController.php:36
-#: modules/johncms/forum/src/Application/Controllers/FilterByAuthorController.php:56
-#: modules/johncms/forum/src/Application/Controllers/FilterByAuthorController.php:61
-#: modules/johncms/forum/src/Application/Controllers/FilterByAuthorController.php:62
+#: modules/johncms/forum/src/Application/Controllers/FilterByAuthorController.php:37
+#: modules/johncms/forum/src/Application/Controllers/FilterByAuthorController.php:58
+#: modules/johncms/forum/src/Application/Controllers/FilterByAuthorController.php:63
+#: modules/johncms/forum/src/Application/Controllers/FilterByAuthorController.php:64
 #: modules/johncms/forum/src/Application/Controllers/SetFilterByAuthorController.php:33
 #: modules/johncms/forum/src/Application/Controllers/SetFilterByAuthorController.php:34
 #: modules/johncms/forum/src/Application/Controllers/SetFilterByAuthorController.php:47
@@ -415,7 +415,7 @@ msgstr ""
 #: modules/johncms/forum/templates/public/curators.twig:21
 #: modules/johncms/forum/templates/public/files-list.twig:31
 #: modules/johncms/forum/templates/public/files-sections.twig:40
-#: modules/johncms/forum/templates/public/filter-by-author.twig:26
+#: modules/johncms/forum/templates/public/filter-by-author.twig:33
 msgid "The list is empty"
 msgstr ""
 
@@ -744,6 +744,7 @@ msgid "Hidden by"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Services/HiddenListControlsMapper.php:84
+#: modules/johncms/forum/templates/public/filter-by-author.twig:49
 msgid "Posts"
 msgstr ""
 
@@ -1314,7 +1315,8 @@ msgstr ""
 #: modules/johncms/forum/templates/public/change-topic.twig:21
 #: modules/johncms/forum/templates/public/curators.twig:38
 #: modules/johncms/forum/templates/public/edit-poll.twig:55
-#: modules/johncms/forum/templates/public/filter-by-author.twig:54
+#: modules/johncms/forum/templates/public/filter-by-author.twig:36
+#: modules/johncms/forum/templates/public/filter-by-author.twig:55
 #: modules/johncms/forum/templates/public/move-topic.twig:19
 #: modules/johncms/forum/templates/public/move-topic.twig:24
 msgid "Back to topic"
@@ -1545,7 +1547,6 @@ msgid "Delete for good"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/curators.twig:15
-#: modules/johncms/forum/templates/public/filter-by-author.twig:20
 msgid "Changes saved"
 msgstr ""
 
@@ -1590,18 +1591,18 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/filter-by-author.twig:29
+#: modules/johncms/forum/templates/public/filter-by-author.twig:42
 msgid "Filter will be display posts from selected authors only"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/filter-by-author.twig:49
-msgid "Filter"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/filter-by-author.twig:51
+#: modules/johncms/forum/templates/public/filter-by-author.twig:57
 #: modules/johncms/forum/templates/public/topic.twig:127
 #: modules/johncms/forum/templates/public/topic.twig:199
 msgid "Cancel Filter"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/filter-by-author.twig:59
+msgid "Filter"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/move-topic.twig:18

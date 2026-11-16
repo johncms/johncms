@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Modules\Forum\Application\ForumUtils;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ViewFilterByAuthorUseCase;
@@ -51,8 +52,9 @@ final readonly class FilterByAuthorController
             }
         }
 
+        $backUrl = $context->topic->url . ($page > 1 ? '?page=' . $page : '');
         $this->navChain->add(__('Forum'), '/forum/');
-        $this->navChain->add($context->topic->name, $context->topic->url);
+        ForumUtils::buildBreadcrumbs($context->topic->section_id, $context->topic->name, $backUrl);
         $this->navChain->add(__('Filter by author'));
 
         return new ViewResponse(
@@ -60,9 +62,9 @@ final readonly class FilterByAuthorController
             [
                 'title'               => __('Filter by author'),
                 'page_title'          => __('Filter by author'),
-                'back_url'            => $context->topic->url . ($page > 1 ? '?page=' . $page : ''),
+                'back_url'            => $backUrl,
+                'topic_name'          => $context->topic->name,
                 'list'                => $context->authors,
-                'saved'               => false,
                 'selected_user_ids'   => $selectedUsers,
                 'set_filter_action'   => '/forum/filter/' . $context->topic->id . '/set/' . ($page > 1 ? '?page=' . $page : ''),
                 'clear_filter_action' => '/forum/filter/' . $context->topic->id . '/clear/' . ($page > 1 ? '?page=' . $page : ''),

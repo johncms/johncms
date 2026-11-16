@@ -330,6 +330,31 @@
   .btn-link { font-size: inherit; }
 }
 
+// A form of the forum on a page of its own: a card with the actions under it.
+.site-forum-form {
+  padding: 1.125rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: .75rem;
+  background: var(--bg-elev);
+  fieldset { min-inline-size: 0; margin: 0; padding: 0; border: 0; }
+  &__title { margin-block-end: .875rem; color: var(--fg-muted); font-size: .875rem; }
+  &__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .5rem; margin-block-start: 1.125rem; }
+}
+
+.site-forum-authors {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+  gap: .25rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  &__item { display: flex; align-items: center; gap: .625rem; padding: .375rem .5rem; border-radius: .375rem; }
+  &__item:hover { background: var(--bg-inset); }
+  &__item .form-check-input { flex-shrink: 0; margin: 0; }
+  &__name { flex: 1; min-inline-size: 0; overflow: hidden; font-size: .875rem; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
+  &__count { padding: .0625rem .4375rem; border: 1px solid var(--border); border-radius: 2rem; background: var(--bg-inset); color: var(--fg-dim); font-family: var(--bs-font-monospace); font-size: .6875rem; }
+}
+
 @media (max-width: 720px) {
   .site-forum-toolbar > .site-search-field { max-inline-size: none; }
   .site-forum-row {

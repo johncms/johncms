@@ -36,7 +36,8 @@ if (document.querySelector('[data-site-palette]')) {
 }
 
 import './prism';
-import './forum';
+import './lightbox';
+import './file-input';
 import './progress';
 import './main';
 
