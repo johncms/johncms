@@ -195,7 +195,7 @@
       'Edited:' => 'Изм.:',
       'Edited' => 'Изменено',
       'Attached files' => 'Прикрепленные файлы',
-      'Reply' => 'Ответ',
+      'Reply' => 'Ответить',
       'Quote' => 'Цитата',
       'Filter by author is activated' => 'Активирован фильтр по автору',
       'Topic closed' => 'Тема закрыта',
@@ -476,6 +476,17 @@
       'Select for deleting' => 'Отметить для удаления',
       'Downloads' => 'Скачиваний',
       'Show in the topic' => 'Показать в теме',
+      '%s view' => 
+      array (
+        0 => '%s просмотр',
+        1 => '%s просмотра',
+        2 => '%s просмотров',
+        3 => '%s просмотров',
+      ),
+      'No posts here' => 'Здесь нет сообщений',
+      'The filter by author leaves none of them.' => 'Фильтр по автору не оставил ни одного.',
+      'The topic is closed: no new posts.' => 'Тема закрыта: новые сообщения не принимаются.',
+      'Sign in to answer in the topic.' => 'Чтобы ответить в теме, войдите на сайт.',
     ),
   ),
 );

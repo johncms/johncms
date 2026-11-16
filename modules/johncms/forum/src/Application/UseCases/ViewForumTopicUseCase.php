@@ -245,25 +245,21 @@ final readonly class ViewForumTopicUseCase
         bool $showVoteResult,
     ): array {
         $results = [];
-        $colorClasses = config('forum')['answer_colors'];
+        $top = 0;
+        foreach ($topicVote->answers as $answer) {
+            $top = max($top, (int) $answer->count);
+        }
 
         foreach ($topicVote->answers as $answer) {
-            $vote = $answer->toArray();
-            $countVote = $topicVote->count ? round(100 / $topicVote->count * (int) $vote['count']) : 0;
-            $color = null;
-            if ($countVote > 0 && $countVote <= 25) {
-                $color = $colorClasses['0_25'];
-            } elseif ($countVote > 25 && $countVote <= 50) {
-                $color = $colorClasses['25_50'];
-            } elseif ($countVote > 50 && $countVote <= 75) {
-                $color = $colorClasses['50_75'];
-            } elseif ($countVote > 75 && $countVote <= 100) {
-                $color = $colorClasses['75_100'];
-            }
-
-            $vote['color_class'] = $color;
-            $vote['vote_percent'] = $countVote;
-            $results[] = $vote;
+            $count = (int) $answer->count;
+            $results[] = [
+                'id'           => (int) $answer->id,
+                'name'         => (string) $answer->name,
+                'count'        => $count,
+                'vote_percent' => $topicVote->count ? (int) round(100 / $topicVote->count * $count) : 0,
+                // The answers that lead, ties included; none before the first vote.
+                'leader'       => $top > 0 && $count === $top,
+            ];
         }
 
         return [

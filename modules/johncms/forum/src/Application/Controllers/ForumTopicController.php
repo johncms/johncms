@@ -74,8 +74,9 @@ final readonly class ForumTopicController
             );
         }
 
+        $topic = $result->viewData['topic'];
         $this->navChain->add(__('Forum'), '/forum/');
-        ForumUtils::buildBreadcrumbs($result->viewData['topic']->section_id, $result->title);
+        ForumUtils::buildBreadcrumbs($topic->section_id, $result->title);
 
 
         $pagination = $this->paginationFactory->create(
@@ -85,7 +86,7 @@ final readonly class ForumTopicController
             $page
         );
 
-        $meta = new PageMeta($result->title, $page, $result->viewData['topic']->calculated_meta_description);
+        $meta = new PageMeta($result->title, $page, $topic->calculated_meta_description);
         $filterSuffix = $page > 1 ? '?page=' . $page : '';
         $canModerate = $this->accessChecker->allows(ForumPermissions::TOPIC_MODERATE);
 
@@ -95,14 +96,22 @@ final readonly class ForumTopicController
                 $result->viewData,
                 [
                     'canonical'        => $result->canonical,
+                    // What the heading says of the topic; the columns may be empty in the table.
+                    'state'            => [
+                        'closed'     => (bool) $topic->closed,
+                        'pinned'     => (bool) $topic->pinned,
+                        'deleted'    => (bool) $topic->deleted,
+                        'deleted_by' => (string) $topic->deleted_by,
+                    ],
+                    'views'            => (int) $topic->view_count,
                     'message'          => (string) $this->session->getFlash(self::MESSAGE),
                     // The count is empty in topics that were never recounted.
-                    'one_post_in_sight' => (int) $result->viewData['topic']->post_count <= 1,
+                    'one_post_in_sight' => (int) $topic->post_count <= 1,
                     'title'            => $meta->title,
                     'page_title'       => $result->title,
-                    'keywords'         => $result->viewData['topic']->calculated_meta_keywords,
+                    'keywords'         => $topic->calculated_meta_keywords,
                     'description'      => $meta->description,
-                    'pagination'       => $pagination->hasPages() ? $pagination->render() : null,
+                    'pagination'       => $pagination->hasPages() ? $pagination->render(withRange: true) : null,
                     'unread_count'     => ShortNumberFormatter::format($this->unreadTopics->count()),
                     'reply_url'        => '/forum/new-message/' . $result->viewData['id'] . '/' . $filterSuffix,
                     'reply_above'      => $result->viewData['newest_first'],
@@ -110,12 +119,12 @@ final readonly class ForumTopicController
                         . ($result->viewData['filter_by_author'] ? 'clear/' : '') . $filterSuffix,
                     'can_moderate'     => $canModerate,
                     // The dialog of moving the topic needs the sections only when it can be opened.
-                    'move_targets'     => $canModerate ? $this->moveTargets->forSection($result->viewData['topic']->section_id) : [],
+                    'move_targets'     => $canModerate ? $this->moveTargets->forSection($topic->section_id) : [],
                     // What the dialog of changing the topic starts from; the meta tags may be empty in the table.
                     'change_form'      => [
-                        'name'             => $result->viewData['topic']->name,
-                        'meta_keywords'    => $result->viewData['topic']->meta_keywords ?? '',
-                        'meta_description' => $result->viewData['topic']->meta_description ?? '',
+                        'name'             => $topic->name,
+                        'meta_keywords'    => $topic->meta_keywords ?? '',
+                        'meta_description' => $topic->meta_description ?? '',
                     ],
                     'can_set_curators' => $this->accessChecker->allows(ForumPermissions::CURATORS_MANAGE),
                 ]

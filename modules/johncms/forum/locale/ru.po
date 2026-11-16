@@ -1150,7 +1150,7 @@ msgstr "Прикрепленные файлы"
 #: modules/forum/templates/show_post.phtml:138
 #: modules/forum/templates/topic.phtml:354
 msgid "Reply"
-msgstr "Ответ"
+msgstr "Ответить"
 
 #: modules/forum/templates/show_post.phtml:143
 #: modules/forum/templates/topic.phtml:359
@@ -1911,3 +1911,22 @@ msgstr "Скачиваний"
 
 msgid "Show in the topic"
 msgstr "Показать в теме"
+
+msgid "%s view"
+msgid_plural "%s views"
+msgstr[0] "%s просмотр"
+msgstr[1] "%s просмотра"
+msgstr[2] "%s просмотров"
+msgstr[3] "%s просмотров"
+
+msgid "No posts here"
+msgstr "Здесь нет сообщений"
+
+msgid "The filter by author leaves none of them."
+msgstr "Фильтр по автору не оставил ни одного."
+
+msgid "The topic is closed: no new posts."
+msgstr "Тема закрыта: новые сообщения не принимаются."
+
+msgid "Sign in to answer in the topic."
+msgstr "Чтобы ответить в теме, войдите на сайт."

@@ -95,11 +95,5 @@ return [
                 'wmf',
             ],
         ],
-        'answer_colors' => [
-            '0_25'   => 'bg-success',
-            '25_50'  => 'bg-info',
-            '50_75'  => 'bg-warning',
-            '75_100' => 'bg-danger',
-        ],
     ],
 ];

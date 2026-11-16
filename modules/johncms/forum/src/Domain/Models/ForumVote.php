@@ -13,10 +13,10 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Domain\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Johncms\Auth\CurrentUser;
-use Johncms\Casts\SpecialChars;
 use Johncms\Users\User;
 
 /**
@@ -34,7 +34,7 @@ use Johncms\Users\User;
  *
  * @method ForumVote voteUser()
  * @property int $vote_user
- * @property ForumVote $answers
+ * @property Collection<int, ForumVote> $answers
  *
  */
 class ForumVote extends Model
@@ -55,7 +55,6 @@ class ForumVote extends Model
         'type'  => 'integer',
         'time'  => 'integer',
         'topic' => 'integer',
-        'name'  => SpecialChars::class,
         'count' => 'integer',
     ];
 

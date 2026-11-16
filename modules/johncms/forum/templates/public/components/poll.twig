@@ -1,0 +1,56 @@
+{#
+    The poll of a topic: the form of the vote, or the results with a bar for each answer.
+
+    @var id        int    The topic.
+    @var topic_url string
+    @var vote      \Johncms\Modules\Forum\Domain\Models\ForumVote
+    @var poll      array  results (id, name, count, vote_percent, leader), show_form
+#}
+<section class="site-forum-poll" aria-labelledby="topic-poll-title">
+    <h2 class="site-forum-poll__title" id="topic-poll-title">
+        {% include '@theme/components/icon.twig' with {name: 'chart-column', size: 16} only %}
+        <span>{{ vote.name }}</span>
+    </h2>
+    {% if poll.show_form %}
+        <form action="/forum/poll-vote/{{ id }}/" method="post">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+            <div class="site-forum-poll__answers">
+                {% for item in poll.results %}
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="vote_{{ item.id }}" name="vote" value="{{ item.id }}" required>
+                        <label class="form-check-label" for="vote_{{ item.id }}">{{ item.name }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="site-forum-poll__foot">
+                <button type="submit" name="submit" value="1" class="btn btn-primary btn-sm">{{ __('Vote') }}</button>
+                <a class="btn btn-outline-secondary btn-sm" href="{{ topic_url }}?vote_result=1" rel="nofollow">{{ __('Results') }}</a>
+            </div>
+        </form>
+    {% else %}
+        <ul class="site-forum-poll__results">
+            {% for item in poll.results %}
+                <li class="site-forum-poll__result{{ item.leader ? ' site-forum-poll__result--leader' }}">
+                    <div class="site-forum-poll__answer">
+                        <span class="site-forum-poll__name">{{ item.name }}</span>
+                        <span class="site-forum-poll__count">{{ item.count|format_number }} · {{ item.vote_percent }}%</span>
+                    </div>
+                    <div class="site-forum-poll__bar" aria-hidden="true"><span style="inline-size: {{ item.vote_percent }}%"></span></div>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="site-forum-poll__foot">
+            <span class="site-forum-poll__total">
+                {{ __('Total votes') }}:
+                {% if can('forum.poll.voters.view') %}
+                    <a href="/forum/poll-voters/{{ id }}/">{{ vote.count|format_number }}</a>
+                {% else %}
+                    {{ vote.count|format_number }}
+                {% endif %}
+            </span>
+            {% if vote.vote_user != 1 and app.user.isValid %}
+                <a class="btn btn-outline-secondary btn-sm" href="{{ topic_url }}">{{ __('Vote') }}</a>
+            {% endif %}
+        </div>
+    {% endif %}
+</section>

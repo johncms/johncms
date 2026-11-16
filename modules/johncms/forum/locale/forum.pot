@@ -88,7 +88,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/AddFileController.php:106
 #: modules/johncms/forum/templates/public/new-topic.twig:62
 #: modules/johncms/forum/templates/public/reply-message.twig:28
-#: modules/johncms/forum/templates/public/topic.twig:45
+#: modules/johncms/forum/templates/public/topic.twig:318
 msgid "Add File"
 msgstr ""
 
@@ -100,7 +100,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/AddVoteController.php:94
 #: modules/johncms/forum/src/Application/Controllers/AddVoteController.php:115
 #: modules/johncms/forum/src/Application/Controllers/AddVoteController.php:116
-#: modules/johncms/forum/templates/public/topic.twig:204
+#: modules/johncms/forum/templates/public/topic.twig:76
 msgid "Add Poll"
 msgstr ""
 
@@ -169,7 +169,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:55
 #: modules/johncms/forum/src/Application/Controllers/ForumSectionController.php:45
 #: modules/johncms/forum/src/Application/Controllers/ForumTopicController.php:72
-#: modules/johncms/forum/src/Application/Controllers/ForumTopicController.php:77
+#: modules/johncms/forum/src/Application/Controllers/ForumTopicController.php:78
 #: modules/johncms/forum/src/Application/Controllers/LatestTopicsController.php:24
 #: modules/johncms/forum/src/Application/Controllers/PollVotersController.php:57
 #: modules/johncms/forum/src/Application/Controllers/PollVotersController.php:63
@@ -275,8 +275,8 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/ChangeTopicController.php:38
 #: modules/johncms/forum/src/Application/Controllers/ChangeTopicController.php:91
 #: modules/johncms/forum/src/Application/Controllers/ChangeTopicController.php:92
-#: modules/johncms/forum/templates/public/topic.twig:212
-#: modules/johncms/forum/templates/public/topic.twig:244
+#: modules/johncms/forum/templates/public/topic.twig:50
+#: modules/johncms/forum/templates/public/topic.twig:246
 msgid "Change the topic"
 msgstr ""
 
@@ -291,7 +291,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/SetFilterByAuthorController.php:34
 #: modules/johncms/forum/src/Application/Controllers/SetFilterByAuthorController.php:47
 #: modules/johncms/forum/src/Application/Controllers/SetFilterByAuthorController.php:48
-#: modules/johncms/forum/templates/public/topic.twig:324
+#: modules/johncms/forum/templates/public/topic.twig:202
 msgid "Filter by author"
 msgstr ""
 
@@ -299,7 +299,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/CuratorsController.php:41
 #: modules/johncms/forum/src/Application/Controllers/CuratorsController.php:86
 #: modules/johncms/forum/src/Application/Controllers/CuratorsController.php:87
-#: modules/johncms/forum/templates/public/topic.twig:309
+#: modules/johncms/forum/templates/public/topic.twig:188
 msgid "Curators"
 msgstr ""
 
@@ -329,7 +329,7 @@ msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/DeleteTopicController.php:50
 #: modules/johncms/forum/src/Application/Controllers/DeleteTopicController.php:51
-#: modules/johncms/forum/templates/public/topic.twig:220
+#: modules/johncms/forum/templates/public/topic.twig:86
 msgid "Delete Topic"
 msgstr ""
 
@@ -340,7 +340,7 @@ msgid "Delete Answer"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/DeleteVoteController.php:43
-#: modules/johncms/forum/templates/public/topic.twig:202
+#: modules/johncms/forum/templates/public/topic.twig:72
 msgid "Delete Poll"
 msgstr ""
 
@@ -374,7 +374,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/EditVoteController.php:75
 #: modules/johncms/forum/src/Application/Controllers/EditVoteController.php:129
 #: modules/johncms/forum/src/Application/Controllers/EditVoteController.php:130
-#: modules/johncms/forum/templates/public/topic.twig:201
+#: modules/johncms/forum/templates/public/topic.twig:69
 msgid "Edit Poll"
 msgstr ""
 
@@ -425,7 +425,7 @@ msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/MoveTopicController.php:78
 #: modules/johncms/forum/src/Application/Controllers/MoveTopicController.php:79
-#: modules/johncms/forum/templates/public/topic.twig:257
+#: modules/johncms/forum/templates/public/topic.twig:259
 msgid "Move topic"
 msgstr ""
 
@@ -647,9 +647,9 @@ msgstr ""
 #: modules/johncms/forum/templates/public/components/message.twig:114
 #: modules/johncms/forum/templates/public/components/message.twig:117
 #: modules/johncms/forum/templates/public/edit-poll.twig:61
-#: modules/johncms/forum/templates/public/topic.twig:190
-#: modules/johncms/forum/templates/public/topic.twig:269
-#: modules/johncms/forum/templates/public/topic.twig:290
+#: modules/johncms/forum/templates/public/topic.twig:169
+#: modules/johncms/forum/templates/public/topic.twig:271
+#: modules/johncms/forum/templates/public/topic.twig:292
 msgid "Delete"
 msgstr ""
 
@@ -873,7 +873,7 @@ msgid "Section files"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:116
-#: modules/johncms/forum/templates/public/topic.twig:60
+#: modules/johncms/forum/templates/public/topic.twig:115
 msgid "Topic Files"
 msgstr ""
 
@@ -1361,7 +1361,7 @@ msgstr ""
 #: modules/johncms/forum/templates/public/change-topic.twig:20
 #: modules/johncms/forum/templates/public/edit-poll.twig:54
 #: modules/johncms/forum/templates/public/edit-post.twig:23
-#: modules/johncms/forum/templates/public/topic.twig:245
+#: modules/johncms/forum/templates/public/topic.twig:247
 msgid "Save"
 msgstr ""
 
@@ -1403,6 +1403,7 @@ msgstr ""
 
 #: modules/johncms/forum/templates/public/components/message.twig:31
 #: modules/johncms/forum/templates/public/components/topic-row.twig:18
+#: modules/johncms/forum/templates/public/topic.twig:98
 msgid "Deleted"
 msgstr ""
 
@@ -1432,6 +1433,7 @@ msgid "Delete the file?"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/components/message.twig:89
+#: modules/johncms/forum/templates/public/topic.twig:38
 msgid "Reply"
 msgstr ""
 
@@ -1455,6 +1457,19 @@ msgstr ""
 msgid "New section"
 msgstr ""
 
+#: modules/johncms/forum/templates/public/components/poll.twig:26
+#: modules/johncms/forum/templates/public/components/poll.twig:52
+msgid "Vote"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/components/poll.twig:27
+msgid "Results"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/components/poll.twig:44
+msgid "Total votes"
+msgstr ""
+
 #: modules/johncms/forum/templates/public/components/section-row.twig:30
 msgid "No topics yet"
 msgstr ""
@@ -1472,6 +1487,7 @@ msgstr[0] ""
 
 #: modules/johncms/forum/templates/public/components/section-row.twig:57
 #: modules/johncms/forum/templates/public/components/stat.twig:12
+#: modules/johncms/forum/templates/public/topic.twig:103
 msgid "%s post"
 msgid_plural "%s posts"
 msgstr[0] ""
@@ -1489,10 +1505,12 @@ msgid "To the last page"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/components/topic-row.twig:15
+#: modules/johncms/forum/templates/public/topic.twig:95
 msgid "Pinned"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/components/topic-row.twig:17
+#: modules/johncms/forum/templates/public/topic.twig:96
 msgid "Closed"
 msgstr ""
 
@@ -1501,11 +1519,12 @@ msgid "last:"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/components/topic-row.twig:32
+#: modules/johncms/forum/templates/public/topic.twig:99
 msgid "deleted by %s"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/components/topic-row.twig:47
-#: modules/johncms/forum/templates/public/topic.twig:217
+#: modules/johncms/forum/templates/public/topic.twig:82
 msgid "Restore Topic"
 msgstr ""
 
@@ -1514,14 +1533,14 @@ msgid "Delete the topic for good?"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/components/topic-row.twig:54
-#: modules/johncms/forum/templates/public/topic.twig:282
+#: modules/johncms/forum/templates/public/topic.twig:284
 msgid "Its posts, poll and files go too. This cannot be undone."
 msgstr ""
 
 #: modules/johncms/forum/templates/public/components/topic-row.twig:55
 #: modules/johncms/forum/templates/public/components/topic-row.twig:58
-#: modules/johncms/forum/templates/public/topic.twig:179
-#: modules/johncms/forum/templates/public/topic.twig:281
+#: modules/johncms/forum/templates/public/topic.twig:223
+#: modules/johncms/forum/templates/public/topic.twig:283
 msgid "Delete for good"
 msgstr ""
 
@@ -1541,7 +1560,8 @@ msgstr ""
 #: modules/johncms/forum/templates/public/edit-post.twig:16
 #: modules/johncms/forum/templates/public/new-topic.twig:43
 #: modules/johncms/forum/templates/public/reply-message.twig:21
-#: modules/johncms/forum/templates/public/topic.twig:38
+#: modules/johncms/forum/templates/public/topic.twig:309
+#: modules/johncms/forum/templates/public/topic.twig:311
 msgid "Message"
 msgstr ""
 
@@ -1566,7 +1586,6 @@ msgstr ""
 #: modules/johncms/forum/templates/public/files-list.twig:139
 #: modules/johncms/forum/templates/public/poll-voters.twig:24
 #: modules/johncms/forum/templates/public/search.twig:71
-#: modules/johncms/forum/templates/public/topic.twig:301
 #: modules/johncms/forum/templates/public/visitors.twig:38
 msgid "Total"
 msgstr ""
@@ -1580,13 +1599,13 @@ msgid "Filter"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/filter-by-author.twig:51
-#: modules/johncms/forum/templates/public/topic.twig:74
-#: modules/johncms/forum/templates/public/topic.twig:321
+#: modules/johncms/forum/templates/public/topic.twig:127
+#: modules/johncms/forum/templates/public/topic.twig:199
 msgid "Cancel Filter"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/move-topic.twig:18
-#: modules/johncms/forum/templates/public/topic.twig:258
+#: modules/johncms/forum/templates/public/topic.twig:260
 msgid "Move"
 msgstr ""
 
@@ -1596,7 +1615,7 @@ msgstr ""
 
 #: modules/johncms/forum/templates/public/new-topic.twig:65
 #: modules/johncms/forum/templates/public/reply-message.twig:31
-#: modules/johncms/forum/templates/public/topic.twig:48
+#: modules/johncms/forum/templates/public/topic.twig:321
 msgid "Write"
 msgstr ""
 
@@ -1675,90 +1694,86 @@ msgstr ""
 msgid "Show period"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/topic.twig:70
-msgid "Filter by author is activated"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/topic.twig:81
-msgid "Topic closed"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/topic.twig:87
-msgid "Topic deleted by"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/topic.twig:91
-msgid "Undelete topic"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/topic.twig:107
-#: modules/johncms/forum/templates/public/topic.twig:137
-msgid "Vote"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/topic.twig:108
-msgid "Results"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/topic.twig:128
-msgid "Total votes"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/topic.twig:174
-#: modules/johncms/forum/templates/public/topic.twig:276
-msgid "Hide"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/topic.twig:180
-msgid "Its files go too. This cannot be undone."
-msgstr ""
-
-#: modules/johncms/forum/templates/public/topic.twig:190
-msgid "Delete the chosen posts?"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/topic.twig:192
-msgid "Delete selected"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/topic.twig:197
+#: modules/johncms/forum/templates/public/topic.twig:45
 msgid "Actions with topic"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/topic.twig:208
-msgid "Curators of the Topic"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/topic.twig:214
-msgid "Open Topic"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/topic.twig:214
-msgid "Close Topic"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/topic.twig:222
-msgid "Unfix Topic"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/topic.twig:222
-msgid "Pin Topic"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/topic.twig:224
+#: modules/johncms/forum/templates/public/topic.twig:53
 msgid "Move Topic"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/topic.twig:267
+#: modules/johncms/forum/templates/public/topic.twig:56
+msgid "Unfix Topic"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/topic.twig:56
+msgid "Pin Topic"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/topic.twig:59
+msgid "Open Topic"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/topic.twig:59
+msgid "Close Topic"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/topic.twig:63
+msgid "Curators of the Topic"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/topic.twig:104
+msgid "%s view"
+msgid_plural "%s views"
+msgstr[0] ""
+
+#: modules/johncms/forum/templates/public/topic.twig:124
+msgid "Filter by author is activated"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/topic.twig:160
+msgid "No posts here"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/topic.twig:161
+msgid "The filter by author leaves none of them."
+msgstr ""
+
+#: modules/johncms/forum/templates/public/topic.twig:169
+msgid "Delete the chosen posts?"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/topic.twig:172
+msgid "Delete selected"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/topic.twig:210
+msgid "Who is here"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/topic.twig:218
+#: modules/johncms/forum/templates/public/topic.twig:278
+msgid "Hide"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/topic.twig:224
+msgid "Its files go too. This cannot be undone."
+msgstr ""
+
+#: modules/johncms/forum/templates/public/topic.twig:269
 msgid "Delete the topic?"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/topic.twig:289
+#: modules/johncms/forum/templates/public/topic.twig:291
 msgid "Do you really want to delete a poll?"
 msgstr ""
 
+#: modules/johncms/forum/templates/public/topic.twig:328
+msgid "The topic is closed: no new posts."
+msgstr ""
+
 #: modules/johncms/forum/templates/public/topic.twig:332
-msgid "Who is here"
+msgid "Sign in to answer in the topic."
 msgstr ""
 
 #: modules/johncms/forum/templates/public/topics.twig:51

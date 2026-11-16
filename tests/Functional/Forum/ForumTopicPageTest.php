@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Functional\Forum;
 
 use Johncms\Modules\Forum\Application\Services\ForumTopicStatsRecalculator;
+use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Users\User;
 use Tests\Functional\FunctionalTestCase;
 use Tests\Support\Fixture;
@@ -83,6 +84,32 @@ final class ForumTopicPageTest extends FunctionalTestCase
         self::assertStringContainsString('A hidden post', $moderator);
         self::assertStringContainsString('site-forum-post--deleted', $moderator);
         self::assertStringContainsString('Alex', $moderator);
+    }
+
+    public function testAMemberAnswersOnThePageUnlessTheTopicIsClosed(): void
+    {
+        $this->post('A post');
+        $member = FunctionalUserFactory::create();
+
+        self::assertStringContainsString('name="msg"', $this->page($member));
+
+        ForumTopic::query()->whereKey($this->topic)->update(['closed' => 1]);
+
+        self::assertStringNotContainsString('name="msg"', $this->page($member));
+    }
+
+    public function testThePollShowsItsTextEscapedOnce(): void
+    {
+        $this->post('A post');
+        ForumTopic::query()->whereKey($this->topic)->update(['has_poll' => 1]);
+        Fixture::insert('cms_forum_vote', ['type' => 1, 'time' => time(), 'topic' => $this->topic, 'name' => 'Tom & Jerry?', 'count' => 0]);
+        Fixture::insert('cms_forum_vote', ['type' => 2, 'time' => 0, 'topic' => $this->topic, 'name' => 'Cats <b>and</b> dogs', 'count' => 0]);
+
+        $html = $this->page(FunctionalUserFactory::create());
+
+        self::assertStringContainsString('Tom &amp; Jerry?', $html);
+        self::assertStringContainsString('Cats &lt;b&gt;and&lt;/b&gt; dogs', $html);
+        self::assertStringNotContainsString('&amp;amp;', $html);
     }
 
     private function page(User|int $as, int $page = 1): string

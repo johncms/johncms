@@ -284,6 +284,52 @@
 
 .site-forum-post-back { margin-block-start: 1rem; }
 
+// The page of a topic around its posts: the line under the heading, the poll, the bar of the
+// moderator, the form of the answer and what is said of the topic below.
+.site-forum-topic-head__note { color: var(--danger); font-family: var(--bs-font-monospace); font-size: .75rem; }
+
+.site-forum-filter { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1rem; }
+
+.site-forum-poll {
+  margin-block-end: 1.25rem;
+  padding: 1rem 1.125rem;
+  border: 1px solid var(--border);
+  border-radius: .75rem;
+  background: var(--bg-elev);
+  &__title { display: flex; align-items: center; gap: .5rem; margin: 0 0 .875rem; font-size: 1rem; font-weight: 700; overflow-wrap: anywhere; > .site-icon { flex-shrink: 0; color: var(--accent); } }
+  &__answers { display: flex; flex-direction: column; gap: .375rem; }
+  &__results { display: flex; flex-direction: column; gap: .625rem; margin: 0; padding: 0; list-style: none; }
+  &__answer { display: flex; justify-content: space-between; gap: 1rem; margin-block-end: .25rem; font-size: .875rem; }
+  &__name { min-inline-size: 0; overflow-wrap: anywhere; }
+  &__result--leader &__name { font-weight: 600; }
+  &__count { flex-shrink: 0; color: var(--fg-dim); font-family: var(--bs-font-monospace); font-size: .75rem; }
+  &__bar { block-size: .375rem; overflow: hidden; border-radius: 1rem; background: var(--bg-inset); }
+  &__bar > span { display: block; block-size: 100%; border-radius: inherit; background: color-mix(in oklab, var(--accent) 45%, var(--bg-inset)); }
+  &__result--leader &__bar > span { background: var(--accent); }
+  &__foot { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin-block-start: 1rem; }
+  &__total { color: var(--fg-muted); font-size: .8125rem; }
+}
+
+.site-forum__pagination--top { margin-block: 0 1rem; }
+
+.site-forum-bulk { display: flex; justify-content: flex-end; margin-block-start: .75rem; }
+.site-forum-bulk .btn { display: inline-flex; align-items: center; gap: .375rem; }
+
+.site-forum-reply { margin-block: 1.5rem; }
+.site-compose__actions.site-forum-reply__actions { align-items: center; justify-content: space-between; gap: .75rem; }
+
+.site-forum-topic-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 2rem;
+  margin-block-start: 1.5rem;
+  color: var(--fg-muted);
+  font-size: .8125rem;
+  &__item { display: inline-flex; flex-wrap: wrap; align-items: center; gap: .375rem; }
+  form { display: contents; }
+  .btn-link { font-size: inherit; }
+}
+
 @media (max-width: 720px) {
   .site-forum-toolbar > .site-search-field { max-inline-size: none; }
   .site-forum-row {
@@ -298,4 +344,6 @@
   .site-forum-sub__last { display: none; }
   .site-forum-topic { gap: .625rem; padding: .625rem .75rem; }
   .site-forum-topic__chevron { display: none; }
+  // The menu of the topic may wrap under the heading, to its start: it opens from there.
+  .site-forum-topic-actions .site-popover__panel { inset-inline: 0 auto; }
 }
