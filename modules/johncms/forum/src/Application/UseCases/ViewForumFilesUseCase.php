@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Modules\Forum\Application\Services\ForumUserSettings;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\CurrentUser;
@@ -38,6 +39,7 @@ final readonly class ViewForumFilesUseCase
         private ProfileLinksInterface $profileLinks,
         private AccessCheckerInterface $accessChecker,
         private ForumAttachmentStorage $attachments,
+        private ForumUserSettings $userSettings,
     ) {
     }
 
@@ -159,7 +161,6 @@ final readonly class ViewForumFilesUseCase
         $files = [];
 
         if ($total > 0) {
-            $forumSettings = $this->getForumSettings();
             $listingScope = $this->createScopeQuery($context, $this->accessChecker->allows(ForumPermissions::DELETED_VIEW));
             $listingFilter = $query->isNew
                 ? ForumFileCountQuery::forNew($listingScope, $newFrom)
@@ -167,7 +168,7 @@ final readonly class ViewForumFilesUseCase
 
             $rows = $this->fileRepository->getListingItems(new ForumFileListingQuery(
                 filter: $listingFilter,
-                upfp: ! empty($forumSettings['upfp']),
+                upfp: $this->userSettings->newestFirst(),
                 start: $query->start,
                 limit: (int) $this->currentUser->user()->config->kmess,
             ));
@@ -310,24 +311,6 @@ final readonly class ViewForumFilesUseCase
             8 => __('MP3'),
             9 => __('Other'),
         ];
-    }
-
-    private function getForumSettings(): array
-    {
-        $setForumDefault = [
-            'farea'    => 0,
-            'upfp'     => 0,
-            'preview'  => 1,
-            'postclip' => 1,
-            'postcut'  => 2,
-        ];
-
-        $setForum = [];
-        if ($this->currentUser->isValid() && ! empty($this->currentUser->user()->set_forum)) {
-            $setForum = (array) $this->currentUser->user()->set_forum;
-        }
-
-        return array_merge($setForumDefault, $setForum);
     }
 
     private function buildLinkSuffix(?int $categoryId, ?int $sectionId, ?int $topicId): string

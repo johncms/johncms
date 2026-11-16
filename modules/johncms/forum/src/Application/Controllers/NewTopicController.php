@@ -180,28 +180,9 @@ final readonly class NewTopicController
                 'preview_message' => $msgPreview,
                 'preview_time'    => time(),
                 'can_set_meta'    => $this->accessChecker->allows(ForumPermissions::TOPIC_META_MANAGE),
-                'preview_enabled' => ! empty($this->getForumSettings()['preview']),
                 'errors'          => $errors,
                 'data'            => $data,
             ]
         );
-    }
-
-    private function getForumSettings(): array
-    {
-        $setForumDefault = [
-            'farea'    => 0,
-            'upfp'     => 0,
-            'preview'  => 1,
-            'postclip' => 1,
-            'postcut'  => 2,
-        ];
-
-        $setForum = [];
-        if ($this->currentUser->isValid() && ! empty($this->currentUser->user()->set_forum)) {
-            $setForum = (array) $this->currentUser->user()->set_forum;
-        }
-
-        return array_merge($setForumDefault, $setForum);
     }
 }

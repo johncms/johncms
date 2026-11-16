@@ -88,10 +88,7 @@ final readonly class SettingsController
     public function saveForum(Request $request): ViewResponse
     {
         $command = new UpdateForumSettingsCommand(
-            farea: $request->hasBody('farea'),
             upfp: $request->hasBody('upfp'),
-            preview: $request->hasBody('preview'),
-            postclip: $request->bodyInt('postclip', 1),
         );
 
         $setForum = $this->forumSettingsUseCase->save($command, $this->currentUser->user());

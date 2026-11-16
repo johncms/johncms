@@ -22,29 +22,6 @@
             <input type="checkbox" class="custom-control-input" name="upfp" value="1" id="upfp"{% if set_forum.upfp %} checked{% endif %}>
             <label class="custom-control-label" for="upfp">{{ __('Inverse sorting') }}</label>
         </div>
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" name="farea" value="1" id="farea"{% if set_forum.farea %} checked{% endif %}>
-            <label class="custom-control-label" for="farea">{{ __('Use the form of a quick answer') }}</label>
-        </div>
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" name="preview" value="1" id="preview"{% if set_forum.preview %} checked{% endif %}>
-            <label class="custom-control-label" for="preview">{{ __('Preview of messages') }}</label>
-        </div>
-
-        <h3 class="mt-3">{{ __('Attach first post') }}</h3>
-
-        <div class="custom-control custom-radio">
-            <input type="radio" id="postclip1" name="postclip" value="2" class="custom-control-input"{% if set_forum.postclip == 2 %} checked="checked"{% endif %}>
-            <label class="custom-control-label" for="postclip1">{{ __('Always') }}</label>
-        </div>
-        <div class="custom-control custom-radio">
-            <input type="radio" id="postclip2" name="postclip" value="1" class="custom-control-input"{% if set_forum.postclip == 1 %} checked="checked"{% endif %}>
-            <label class="custom-control-label" for="postclip2">{{ __('In unread topics') }}</label>
-        </div>
-        <div class="custom-control custom-radio">
-            <input type="radio" id="postclip3" name="postclip" value="0" class="custom-control-input"{% if not set_forum.postclip %} checked="checked"{% endif %}>
-            <label class="custom-control-label" for="postclip3">{{ __('Never') }}</label>
-        </div>
 
         <div class="mt-3">
             <input type="submit" name="submit" value="{{ __('Save') }}" class="btn btn-primary"/>

@@ -80,7 +80,7 @@ msgid "Enter the text of the entry"
 msgstr ""
 
 #: modules/johncms/profile/src/Application/Controllers/AccountController.php:23
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:162
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:159
 msgid "My Account"
 msgstr ""
 
@@ -365,35 +365,35 @@ msgid_plural "%d devices have been signed out"
 msgstr[0] ""
 
 #: modules/johncms/profile/src/Application/Controllers/SettingsController.php:53
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:183
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:180
 msgid "General setting"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:99
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:120
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:202
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:96
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:117
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:199
 msgid "Settings saved successfully"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:104
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:206
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:101
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:203
 msgid "Default settings are set"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:130
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:188
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:127
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:185
 #: modules/johncms/profile/src/Application/UseCases/GetBanHistoryUseCase.php:46
 #: modules/johncms/profile/templates/public/ban.twig:39
 #: modules/johncms/profile/templates/public/statistics.twig:35
 msgid "Forum"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:147
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:193
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:144
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:190
 msgid "Mail"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:163
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:160
 #: modules/johncms/profile/templates/public/account.twig:64
 msgid "Settings"
 msgstr ""
@@ -607,7 +607,7 @@ msgstr ""
 #: modules/johncms/profile/templates/public/ban.twig:82
 #: modules/johncms/profile/templates/public/confirm-delete.twig:19
 #: modules/johncms/profile/templates/public/edit.twig:259
-#: modules/johncms/profile/templates/public/forum-settings.twig:51
+#: modules/johncms/profile/templates/public/forum-settings.twig:28
 #: modules/johncms/profile/templates/public/images.twig:35
 #: modules/johncms/profile/templates/public/karma-vote.twig:48
 #: modules/johncms/profile/templates/public/mail-settings.twig:32
@@ -839,7 +839,7 @@ msgid "Roles of the account"
 msgstr ""
 
 #: modules/johncms/profile/templates/public/edit.twig:258
-#: modules/johncms/profile/templates/public/forum-settings.twig:50
+#: modules/johncms/profile/templates/public/forum-settings.twig:27
 #: modules/johncms/profile/templates/public/images.twig:34
 #: modules/johncms/profile/templates/public/mail-settings.twig:31
 #: modules/johncms/profile/templates/public/password.twig:47
@@ -855,31 +855,7 @@ msgstr ""
 msgid "Inverse sorting"
 msgstr ""
 
-#: modules/johncms/profile/templates/public/forum-settings.twig:27
-msgid "Use the form of a quick answer"
-msgstr ""
-
-#: modules/johncms/profile/templates/public/forum-settings.twig:31
-msgid "Preview of messages"
-msgstr ""
-
-#: modules/johncms/profile/templates/public/forum-settings.twig:34
-msgid "Attach first post"
-msgstr ""
-
-#: modules/johncms/profile/templates/public/forum-settings.twig:38
-msgid "Always"
-msgstr ""
-
-#: modules/johncms/profile/templates/public/forum-settings.twig:42
-msgid "In unread topics"
-msgstr ""
-
-#: modules/johncms/profile/templates/public/forum-settings.twig:46
-msgid "Never"
-msgstr ""
-
-#: modules/johncms/profile/templates/public/forum-settings.twig:52
+#: modules/johncms/profile/templates/public/forum-settings.twig:29
 #: modules/johncms/profile/templates/public/settings.twig:93
 msgid "Reset Settings"
 msgstr ""

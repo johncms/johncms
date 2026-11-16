@@ -39,7 +39,6 @@ final readonly class ForumTopicController
 
     public function __invoke(Request $request, string $path): ViewResponse
     {
-        $setForum = $this->getForumSettings();
         $perPage = (int) $this->currentUser->user()->config->kmess;
         $page = max(1, $request->queryInt('page', 1));
         if ($page === 1) {
@@ -60,10 +59,8 @@ final readonly class ForumTopicController
             $result = $this->viewForumTopicUseCase->execute(
                 path: $path,
                 page: $page,
-                showClip: $request->query->has('clip'),
                 showVoteResult: $request->query->has('vote_result'),
                 incrementViewCount: $this->shouldIncrementViewCount($path),
-                setForum: $setForum,
                 filterEnabled: $filterEnabled,
                 filterTopicId: $filterTopicId,
                 filterByUsers: $filterByUsers,
@@ -108,8 +105,7 @@ final readonly class ForumTopicController
                     'pagination'       => $pagination->hasPages() ? $pagination->render() : null,
                     'unread_count'     => ShortNumberFormatter::format($this->unreadTopics->count()),
                     'reply_url'        => '/forum/new-message/' . $result->viewData['id'] . '/' . $filterSuffix,
-                    'reply_above'      => ! empty($result->viewData['settings_forum']['upfp']),
-                    'quick_reply'      => ! empty($result->viewData['settings_forum']['farea']),
+                    'reply_above'      => $result->viewData['newest_first'],
                     'filter_url'       => '/forum/filter/' . $result->viewData['id'] . '/'
                         . ($result->viewData['filter_by_author'] ? 'clear/' : '') . $filterSuffix,
                     'can_moderate'     => $canModerate,
@@ -138,26 +134,5 @@ final readonly class ForumTopicController
         }
 
         return false;
-    }
-
-    /**
-     * @return array<string, int>
-     */
-    private function getForumSettings(): array
-    {
-        $default = [
-            'farea'    => 0,
-            'upfp'     => 0,
-            'preview'  => 1,
-            'postclip' => 1,
-            'postcut'  => 2,
-        ];
-
-        $settings = [];
-        if ($this->currentUser->isValid() && ! empty($this->currentUser->user()->set_forum)) {
-            $settings = (array) $this->currentUser->user()->set_forum;
-        }
-
-        return array_merge($default, $settings);
     }
 }

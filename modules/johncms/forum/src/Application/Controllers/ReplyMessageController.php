@@ -174,7 +174,6 @@ final readonly class ReplyMessageController
                         topic: $topic,
                         messageText: $msg,
                         addFiles: $addFiles,
-                        forumSettings: $this->getForumSettings(),
                         clientInfo: $this->environment->getClientInfo(),
                     );
                     $this->pictures->bind($result->messageId, $this->currentUser->id());
@@ -225,24 +224,6 @@ final readonly class ReplyMessageController
                 'back_url'    => $this->buildTopicBackUrl($topic->url, $page),
             ]
         );
-    }
-
-    private function getForumSettings(): array
-    {
-        $setForumDefault = [
-            'farea'    => 0,
-            'upfp'     => 0,
-            'preview'  => 1,
-            'postclip' => 1,
-            'postcut'  => 2,
-        ];
-
-        $setForum = [];
-        if ($this->currentUser->isValid() && ! empty($this->currentUser->user()->set_forum)) {
-            $setForum = (array) $this->currentUser->user()->set_forum;
-        }
-
-        return array_merge($setForumDefault, $setForum);
     }
 
     private function isValidToken(Request $request): bool

@@ -53,8 +53,6 @@ interface ForumMessageRepositoryInterface
         array $filterUserIds = [],
     ): Collection;
 
-    public function findFirstByTopicIdWithUsers(int $topicId): ?ForumMessage;
-
     public function countByTopicId(int $topicId, bool $includeDeleted): int;
 
     public function countByTopicIdWithComparison(

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
-use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ViewPostUseCase;
@@ -16,7 +15,6 @@ use Johncms\NavChain;
 final readonly class ShowPostController
 {
     public function __construct(
-        private CurrentUser $currentUser,
         private NavChain $navChain,
         private ForumErrorRenderer $forumErrorRenderer,
         private ViewPostUseCase $viewPostUseCase,
@@ -28,7 +26,6 @@ final readonly class ShowPostController
         try {
             $result = $this->viewPostUseCase->execute(
                 postId: $id,
-                forumSettings: $this->getForumSettings(),
                 homeUrl: (string) config('johncms.homeurl')
             );
         } catch (ForumNotFoundException | ForumAccessDeniedException $exception) {
@@ -66,24 +63,6 @@ final readonly class ShowPostController
                 'topic'       => $result['topic'],
             ]
         );
-    }
-
-    private function getForumSettings(): array
-    {
-        $setForumDefault = [
-            'farea'    => 0,
-            'upfp'     => 0,
-            'preview'  => 1,
-            'postclip' => 1,
-            'postcut'  => 2,
-        ];
-
-        $setForum = [];
-        if ($this->currentUser->isValid() && ! empty($this->currentUser->user()->set_forum)) {
-            $setForum = (array) $this->currentUser->user()->set_forum;
-        }
-
-        return array_merge($setForumDefault, $setForum);
     }
 
     private function buildPostMetaTitle(int $postId, string $topicName): string

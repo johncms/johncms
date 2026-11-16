@@ -5,12 +5,10 @@
     @var page             int
     @var topic            \Johncms\Modules\Forum\Domain\Models\ForumTopic
     @var messages         iterable
-    @var first_post       \Johncms\Modules\Forum\Domain\Models\ForumMessage Null when there is nothing to pin.
     @var topic_vote       \Johncms\Modules\Forum\Domain\Models\ForumVote    Null when the topic has no poll.
-    @var poll_data        array        results, show_form, clip
+    @var poll_data        array        results, show_form
     @var curators         array        id, name of each curator of the topic
     @var write_access     bool
-    @var quick_reply      bool         The visitor asked for the editor right on the page.
     @var reply_above      bool         The reply form goes above the posts.
     @var reply_url        string
     @var filter_by_author bool
@@ -30,10 +28,9 @@
 #}
 {% extends '@theme/layouts/default.twig' %}
 
-{% macro reply_form(reply_url, quick_reply, token, css_class) %}
+{% macro reply_form(reply_url, token, css_class) %}
     <form name="new_message" action="{{ reply_url }}" method="post" class="{{ css_class }}">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-        {% if quick_reply %}
             <input type="hidden" name="token" value="{{ token }}"/>
             <div class="form-group">
                 {% include '@theme/components/editor.twig' with {
@@ -50,9 +47,6 @@
             <div>
                 <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Write') }}</button>
             </div>
-        {% else %}
-            <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Write') }}</button>
-        {% endif %}
     </form>
 {% endmacro %}
 
@@ -111,7 +105,7 @@
                 {% endfor %}
                 <div class="mt-2">
                     <button type="submit" name="submit" value="1" class="btn btn-success btn-sm">{{ __('Vote') }}</button>
-                    <a class="btn btn-outline-secondary btn-sm" href="{{ topic.url }}?vote_result=1{{ poll_data.clip }}">{{ __('Results') }}</a>
+                    <a class="btn btn-outline-secondary btn-sm" href="{{ topic.url }}?vote_result=1">{{ __('Results') }}</a>
                 </div>
             </form>
         {% else %}
@@ -140,7 +134,7 @@
                 </div>
                 {% if topic_vote.vote_user != 1 and app.user.isValid %}
                     <div>
-                        <a href="{{ topic.url }}?clip=1">{{ __('Vote') }}</a>
+                        <a href="{{ topic.url }}">{{ __('Vote') }}</a>
                     </div>
                 {% endif %}
             </div>
@@ -148,7 +142,7 @@
     {% endif %}
 
     {% if write_access and reply_above %}
-        {{ forms.reply_form(reply_url, quick_reply, token, 'mb-3') }}
+        {{ forms.reply_form(reply_url, token, 'mb-3') }}
     {% endif %}
 
     <div class="d-flex flex-wrap justify-content-between align-items-center mt-1 mb-3 pagination-no-padding">
@@ -162,48 +156,6 @@
             {{ topic.formatted_view_count }}
         </div>
     </div>
-
-    {% if first_post %}
-        <div class="post-item mb-2 first-post" id="first_post_block">
-            <div class="section-header post-header collapsed" data-bs-toggle="collapse" data-bs-target="#first_post" aria-expanded="false" aria-controls="first_post">
-                <div class="d-flex align-items-center">
-                    <div class="topic-icons d-flex align-items-center me-2">
-                        <svg class="icon">
-                            <use xlink:href="{{ asset('icons/sprite.svg') }}#pin"/>
-                        </svg>
-                    </div>
-                    {% if first_post.user_profile_link %}
-                        <a href="{{ first_post.user_profile_link }}" class="user-login me-2">{{ first_post.user_data.name }}</a>
-                    {% else %}
-                        <a class="user-login me-2">{{ first_post.user_data.name }}</a>
-                    {% endif %}
-                    <span class="post-date">{{ first_post.post_time }}</span>
-                </div>
-                {% if first_post.post_preview %}
-                    <div class="toggle d-flex align-items-center pe-2">
-                        <svg class="icon icon-chevron-bottom text-dark-brown">
-                            <use xlink:href="{{ asset('icons/sprite.svg') }}#chevron-bottom"/>
-                        </svg>
-                    </div>
-                {% endif %}
-            </div>
-            {% if first_post.post_preview %}
-                <div class="collapse" id="first_post">
-                    <div class="pt-2">
-                        {{ first_post.post_text }}
-                    </div>
-                </div>
-                <div class="post-preview pt-2">
-                    {{ first_post.post_preview }}
-                </div>
-            {% else %}
-                <div class="pt-2">
-                    {{ first_post.post_text }}
-                </div>
-            {% endif %}
-        </div>
-        <div class="border-bottom full-mobile-width mt-4 mb-3"></div>
-    {% endif %}
 
     {% for message in messages %}
         {% include '@forum/public/components/message.twig' with {
@@ -340,7 +292,7 @@
     {% endif %}
 
     {% if write_access and not reply_above %}
-        {{ forms.reply_form(reply_url, quick_reply, token, 'mt-1 mb-2') }}
+        {{ forms.reply_form(reply_url, token, 'mt-1 mb-2') }}
     {% endif %}
 
     <div>

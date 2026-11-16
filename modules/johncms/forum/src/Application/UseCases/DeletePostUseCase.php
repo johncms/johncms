@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Modules\Forum\Application\Services\ForumUserSettings;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
@@ -36,10 +37,11 @@ final readonly class DeletePostUseCase
         private ForumMessagePictures $pictures,
         private AccessCheckerInterface $accessChecker,
         private ForumAttachmentStorage $attachments,
+        private ForumUserSettings $userSettings,
     ) {
     }
 
-    public function execute(EditPostContextDTO $context, bool $hardDelete, array $forumSettings): DeletePostResultDTO
+    public function execute(EditPostContextDTO $context, bool $hardDelete): DeletePostResultDTO
     {
         $message = $context->message;
         $topic = $context->topic;
@@ -66,7 +68,7 @@ final readonly class DeletePostUseCase
             $strictPageCount = $this->messageRepository->countByTopicIdWithComparison(
                 topicId: $topic->id,
                 messageId: $message->id,
-                upfp: ! empty($forumSettings['upfp']),
+                upfp: $this->userSettings->newestFirst(),
                 includeDeleted: true,
                 strict: true,
             );

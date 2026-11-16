@@ -8,6 +8,7 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Access\ForumAccess;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Modules\Forum\Application\Services\ForumUserSettings;
 use Carbon\Carbon;
 use Johncms\Modules\Forum\Application\DTO\ForumTopicPageResultDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
@@ -39,6 +40,7 @@ final readonly class ViewForumTopicUseCase
         private Session $session,
         private AccessCheckerInterface $accessChecker,
         private ForumAccess $forumAccess,
+        private ForumUserSettings $userSettings,
     ) {
     }
 
@@ -49,10 +51,8 @@ final readonly class ViewForumTopicUseCase
     public function execute(
         string $path,
         int $page,
-        bool $showClip,
         bool $showVoteResult,
         bool $incrementViewCount,
-        array $setForum,
         bool $filterEnabled,
         int $filterTopicId,
         array $filterByUsers,
@@ -103,11 +103,12 @@ final readonly class ViewForumTopicUseCase
         $perPage = (int) $this->currentUser->user()->config->kmess;
         $start = ($page - 1) * $perPage;
 
+        $newestFirst = $this->userSettings->newestFirst();
         $filterUserIds = $isFilterEnabled ? $filterByUsers : [];
         $total = $this->messageRepository->countAllByTopicId($topic->id, $filterUserIds);
         $messagesCollection = $this->messageRepository->getByTopicIdWithUsersAndFiles(
             topicId: $topic->id,
-            upfp: ! empty($setForum['upfp']),
+            upfp: $newestFirst,
             limit: $perPage,
             offset: $start,
             filterUserIds: $filterUserIds,
@@ -117,37 +118,23 @@ final readonly class ViewForumTopicUseCase
         // a moderator holds, and the topic is the subject that narrows it down.
         $canModerateTopic = $this->accessChecker->allows(ForumPermissions::TOPIC_MODERATE, $topic);
 
-        $firstMessage = null;
-        if (
-            $showClip
-            || (
-                (int) $setForum['postclip'] === 2
-                && (
-                    (! empty($setForum['upfp']) && $start < (int) ceil($total - $perPage))
-                    || (empty($setForum['upfp']) && $start > 0)
-                )
-            )
-        ) {
-            $firstMessage = $this->messageRepository->findFirstByTopicIdWithUsers($topic->id);
-        }
-
         $i = 1;
         $canReplyInClosedTopic = $canModerateTopic;
         $banned = $this->forumAccess->isBanned();
         $messages = $messagesCollection->map(
-            function (ForumMessage $message) use ($canModerateTopic, $setForum, $access, &$i, $start, $total, $topic, $canReplyInClosedTopic, $page, $banned): ForumMessage {
+            function (ForumMessage $message) use ($canModerateTopic, $newestFirst, $access, &$i, $start, $total, $topic, $canReplyInClosedTopic, $page, $banned): ForumMessage {
                 if (
                     ! $banned
                     && (
                         $canModerateTopic
                         || ($i === 1 && $access === 2 && $message->user_id === $this->currentUser->id())
                         || ($message->user_id === $this->currentUser->id()
-                            && empty($setForum['upfp'])
+                            && ! $newestFirst
                             && ($start + $i) === $total
                             && $message->date > time() - 300
                         )
                         || ($message->user_id === $this->currentUser->id()
-                            && ! empty($setForum['upfp'])
+                            && $newestFirst
                             && $start === 0
                             && $i === 1
                             && $message->date > time() - 300
@@ -190,7 +177,7 @@ final readonly class ViewForumTopicUseCase
         if ($topic->has_poll) {
             $topicVote = $this->voteRepository->findPollByTopicWithAnswers($topic->id);
             if ($topicVote instanceof ForumVote) {
-                $pollData = $this->buildPollData($topic, $topicVote, $showClip, $showVoteResult);
+                $pollData = $this->buildPollData($topic, $topicVote, $showVoteResult);
             }
         }
 
@@ -206,7 +193,7 @@ final readonly class ViewForumTopicUseCase
         }
 
         $token = null;
-        if ($writeAccess && ! empty($setForum['farea'])) {
+        if ($writeAccess) {
             $token = random_int(1000, 100000);
             $this->session->set('token', $token);
         }
@@ -220,7 +207,6 @@ final readonly class ViewForumTopicUseCase
 
         return new ForumTopicPageResultDTO(
             viewData: [
-                'first_post'       => $firstMessage,
                 'topic'            => $topic,
                 'topic_vote'       => $topicVote,
                 'curators'         => $curators,
@@ -228,7 +214,7 @@ final readonly class ViewForumTopicUseCase
                 'page'             => $page,
                 'id'               => $topic->id,
                 'token'            => $token,
-                'settings_forum'   => $setForum,
+                'newest_first'     => $newestFirst,
                 'write_access'     => $writeAccess,
                 'messages'         => $messages,
                 'online'           => $online,
@@ -250,7 +236,6 @@ final readonly class ViewForumTopicUseCase
     private function buildPollData(
         ForumTopic $topic,
         ForumVote $topicVote,
-        bool $showClip,
         bool $showVoteResult,
     ): array {
         $results = [];
@@ -284,7 +269,6 @@ final readonly class ViewForumTopicUseCase
                 && (int) ($topicVote->vote_user ?? 0) !== 1
             ),
             'results'   => $results,
-            'clip'      => $showClip ? '&amp;clip' : '',
         ];
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Modules\Forum\Application\Services\ForumUserSettings;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\CurrentUser;
@@ -32,13 +33,14 @@ final readonly class ViewPostUseCase
         private ProfileLinksInterface $profileLinks,
         private DateFormatterInterface $dateFormatter,
         private AccessCheckerInterface $accessChecker,
+        private ForumUserSettings $userSettings,
     ) {
     }
 
     /**
      * @return array{post: ViewPostDTO, topic: mixed, canonical: string}
      */
-    public function execute(int $postId, array $forumSettings, string $homeUrl): array
+    public function execute(int $postId, string $homeUrl): array
     {
         $message = $this->messageRepository->findById($postId);
         if ($message === null) {
@@ -74,7 +76,7 @@ final readonly class ViewPostUseCase
 
         $files = $this->getFiles($message);
         $moderation = $this->getModerationInfo($message);
-        $messagePage = $this->getMessagePage($message, $forumSettings);
+        $messagePage = $this->getMessagePage($message);
         $actions = $this->getActions($message->id, $message->user_id, $messagePage, (bool) $message->topic?->closed);
         $backToTopicUrl = $this->topicPathService->getTopicUrl($message->topic, $messagePage);
         $canonical = $homeUrl . $this->topicPathService->getTopicUrl($message->topic, $messagePage > 1 ? $messagePage : null);
@@ -170,10 +172,10 @@ final readonly class ViewPostUseCase
         return $message->user_id === null ? '' : $this->profileLinks->urlOf($message->user_id) ?? '';
     }
 
-    private function getMessagePage(ForumMessage $message, array $forumSettings): int
+    private function getMessagePage(ForumMessage $message): int
     {
         $countQuery = ForumMessage::query()->where('topic_id', $message->topic_id);
-        if (! empty($forumSettings['upfp'])) {
+        if ($this->userSettings->newestFirst()) {
             $countQuery->where('id', '>=', $message->id);
         } else {
             $countQuery->where('id', '<=', $message->id);

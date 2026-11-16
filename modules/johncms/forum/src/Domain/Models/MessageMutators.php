@@ -149,20 +149,6 @@ trait MessageMutators
     }
 
     /**
-     * Preview message
-     *
-     * @return string
-     */
-    public function getPostPreviewAttribute(): string
-    {
-        $plainText = trim(strip_tags($this->text));
-        if (mb_strlen($plainText) <= 500) {
-            return '';
-        }
-        return mb_substr($plainText, 0, 500) . '...';
-    }
-
-    /**
      * User profile url
      *
      * @return string

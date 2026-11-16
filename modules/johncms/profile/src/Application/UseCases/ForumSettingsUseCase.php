@@ -10,11 +10,8 @@ use Johncms\Users\User;
 
 final readonly class ForumSettingsUseCase
 {
-    private const DEFAULT_SETTINGS = [
-        'farea'    => 0,
-        'upfp'     => 0,
-        'preview'  => 1,
-        'postclip' => 1,
+    private const array DEFAULT_SETTINGS = [
+        'upfp' => 0,
     ];
 
     public function __construct(
@@ -27,7 +24,11 @@ final readonly class ForumSettingsUseCase
      */
     public function getCurrent(User $user): array
     {
-        return array_merge(self::DEFAULT_SETTINGS, (array) $user->set_forum);
+        // Only the keys the forum still reads: older accounts keep settings that were dropped since.
+        return array_intersect_key(
+            array_merge(self::DEFAULT_SETTINGS, (array) $user->set_forum),
+            self::DEFAULT_SETTINGS
+        );
     }
 
     /**
@@ -35,13 +36,8 @@ final readonly class ForumSettingsUseCase
      */
     public function save(UpdateForumSettingsCommand $command, User $user): array
     {
-        $postclip = ($command->postclip < 0 || $command->postclip > 2) ? 1 : $command->postclip;
-
         $settings = [
-            'farea'    => $command->farea,
-            'upfp'     => $command->upfp,
-            'preview'  => $command->preview,
-            'postclip' => $postclip,
+            'upfp' => $command->upfp,
         ];
 
         $this->profileUserRepository->saveForumSettings($user->id, $settings);

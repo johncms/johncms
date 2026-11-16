@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Modules\Forum\Application\Services\ForumUserSettings;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\DTO\EditPostContextDTO;
@@ -20,10 +21,11 @@ final readonly class GetEditPostContextUseCase
         private ForumTopicPathService $topicPathService,
         private CurrentUser $currentUser,
         private AccessCheckerInterface $accessChecker,
+        private ForumUserSettings $userSettings,
     ) {
     }
 
-    public function execute(int $messageId, array $forumSettings): EditPostContextDTO
+    public function execute(int $messageId): EditPostContextDTO
     {
         $message = $this->messageRepository->findById($messageId);
         if ($message === null) {
@@ -42,7 +44,7 @@ final readonly class GetEditPostContextUseCase
         // about, and the voter of the module answers for them.
         $canModerate = $this->accessChecker->allows(ForumPermissions::TOPIC_MODERATE, $message->topic);
 
-        $upfp = ! empty($forumSettings['upfp']);
+        $upfp = $this->userSettings->newestFirst();
         $includeDeleted = $this->accessChecker->allows(ForumPermissions::DELETED_VIEW);
         $totalForPage = $this->messageRepository->countByTopicIdWithComparison(
             topicId: $message->topic_id,

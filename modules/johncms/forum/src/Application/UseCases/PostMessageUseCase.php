@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Modules\Forum\Application\Services\ForumUserSettings;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
@@ -24,6 +25,7 @@ final readonly class PostMessageUseCase
         private ForumFileRepositoryInterface $fileRepository,
         private CurrentUser $currentUser,
         private AccessCheckerInterface $accessChecker,
+        private ForumUserSettings $userSettings,
     ) {
     }
 
@@ -31,7 +33,6 @@ final readonly class PostMessageUseCase
         ForumTopic $topic,
         string $messageText,
         bool $addFiles,
-        array $forumSettings,
         ClientInfoDTO $clientInfo,
     ): PostMessageResultDTO {
         $messageId = null;
@@ -59,7 +60,7 @@ final readonly class PostMessageUseCase
             );
         }
 
-        $page = $this->resolveMessagePage($topic->id, $forumSettings);
+        $page = $this->resolveMessagePage($topic->id);
 
         return new PostMessageResultDTO(
             messageId: (int) $messageId,
@@ -125,11 +126,11 @@ final readonly class PostMessageUseCase
         return (int) $lastMessage->id;
     }
 
-    private function resolveMessagePage(int $topicId, array $forumSettings): int
+    private function resolveMessagePage(int $topicId): int
     {
         $includeDeleted = $this->accessChecker->allows(ForumPermissions::DELETED_VIEW);
         $total = $this->messageRepository->countByTopicId($topicId, $includeDeleted);
-        $page = $forumSettings['upfp'] ? 1 : (int) ceil($total / $this->currentUser->user()->config->kmess);
+        $page = $this->userSettings->newestFirst() ? 1 : (int) ceil($total / $this->currentUser->user()->config->kmess);
 
         return max(1, $page);
     }

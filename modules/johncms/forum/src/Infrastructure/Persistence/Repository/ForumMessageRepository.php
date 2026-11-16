@@ -142,15 +142,6 @@ class ForumMessageRepository implements ForumMessageRepositoryInterface
             ->get();
     }
 
-    public function findFirstByTopicIdWithUsers(int $topicId): ?ForumMessage
-    {
-        return ForumMessage::query()
-            ->users()
-            ->where('topic_id', $topicId)
-            ->orderBy('id')
-            ->first();
-    }
-
     public function countByTopicId(int $topicId, bool $includeDeleted): int
     {
         $query = ForumMessage::query()
