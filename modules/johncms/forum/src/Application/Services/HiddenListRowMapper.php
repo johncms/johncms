@@ -54,7 +54,7 @@ final readonly class HiddenListRowMapper
                 'hidden_by'  => (string) $post->deleted_by,
                 'origin'     => $origin ? $this->origin((string) $post->ip, (string) $post->ip_via_proxy, (string) $post->user_agent) : null,
                 'actions'    => [
-                    $this->action($post->url, __('Open in the topic'), 'external-link'),
+                    $this->action('/forum/post/' . $post->id . '/', __('Open in the topic'), 'external-link'),
                     $this->action($this->filterMapper->url($filter->withAuthor((int) $post->user_id)), __('Only this author'), 'user'),
                     $this->action($this->filterMapper->url($filter->withTopic((int) $post->topic_id)), __('Only this topic'), 'message-square'),
                 ],

@@ -51,93 +51,73 @@ final readonly class ForumWhoRepository implements ForumWhoRepositoryInterface
 
     public function countTopicUsers(int $topicId): int
     {
-        $placeIdExpression = "CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(`users`.`place`, 'id=', -1), '&', 1) AS UNSIGNED)";
-        $topicPathIdExpression = "CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(`users`.`place`, '-', -1), '/', 1) AS UNSIGNED)";
-
-        return User::query()
-            ->online()
-            ->where(static function ($query) use ($topicId, $placeIdExpression, $topicPathIdExpression): void {
-                $query->where(static function ($query) use ($topicId, $placeIdExpression): void {
-                    $query->where('users.place', 'regexp', '^/forum?(.*)id=([0-9]+)')
-                        ->where(static function ($query) use ($topicId, $placeIdExpression): void {
-                            $query->whereRaw($placeIdExpression . ' = ?', [$topicId])
-                                ->orWhereExists(static function ($subQuery) use ($topicId, $placeIdExpression): void {
-                                    $subQuery->selectRaw('1')
-                                        ->from('forum_messages as frm')
-                                        ->whereRaw('frm.id = ' . $placeIdExpression)
-                                        ->where('frm.topic_id', $topicId);
-                                });
-                        });
-                })->orWhere(static function ($query) use ($topicId, $topicPathIdExpression): void {
-                    $query->where('users.place', 'regexp', '^/forum/.+/.+-[0-9]+(/|\\?|$)')
-                        ->whereRaw($topicPathIdExpression . ' = ?', [$topicId]);
-                });
-            })
-            ->count();
+        return $this->topicUsers($topicId)->count();
     }
 
     public function getTopicUsers(int $topicId, int $start, int $limit): Collection
     {
-        $placeIdExpression = "CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(`users`.`place`, 'id=', -1), '&', 1) AS UNSIGNED)";
-        $topicPathIdExpression = "CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(`users`.`place`, '-', -1), '/', 1) AS UNSIGNED)";
-
-        return User::query()
-            ->online()
-            ->where(static function ($query) use ($topicId, $placeIdExpression, $topicPathIdExpression): void {
-                $query->where(static function ($query) use ($topicId, $placeIdExpression): void {
-                    $query->where('users.place', 'regexp', '^/forum?(.*)id=([0-9]+)')
-                        ->where(static function ($query) use ($topicId, $placeIdExpression): void {
-                            $query->whereRaw($placeIdExpression . ' = ?', [$topicId])
-                                ->orWhereExists(static function ($subQuery) use ($topicId, $placeIdExpression): void {
-                                    $subQuery->selectRaw('1')
-                                        ->from('forum_messages as frm')
-                                        ->whereRaw('frm.id = ' . $placeIdExpression)
-                                        ->where('frm.topic_id', $topicId);
-                                });
-                        });
-                })->orWhere(static function ($query) use ($topicId, $topicPathIdExpression): void {
-                    $query->where('users.place', 'regexp', '^/forum/.+/.+-[0-9]+(/|\\?|$)')
-                        ->whereRaw($topicPathIdExpression . ' = ?', [$topicId]);
-                });
-            })
-            ->orderBy('users.name')
-            ->offset(max(0, $start))
-            ->limit(max(1, $limit))
-            ->get();
+        return $this->topicUsers($topicId)
+            ->slice(max(0, $start), max(1, $limit))
+            ->values();
     }
 
     public function countTopicGuests(int $topicId): int
     {
-        $topicPathIdExpression = "CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(`cms_sessions`.`place`, '-', -1), '/', 1) AS UNSIGNED)";
-
-        return GuestSession::query()
-            ->online()
-            ->where(static function ($query) use ($topicId, $topicPathIdExpression): void {
-                $query->where('place', 'like', '/forum?type=topic&id=' . $topicId . '%')
-                    ->orWhere(static function ($query) use ($topicId, $topicPathIdExpression): void {
-                        $query->where('cms_sessions.place', 'regexp', '^/forum/.+/.+-[0-9]+(/|\\?|$)')
-                            ->whereRaw($topicPathIdExpression . ' = ?', [$topicId]);
-                    });
-            })
-            ->count();
+        return $this->topicGuests($topicId)->count();
     }
 
     public function getTopicGuests(int $topicId, int $start, int $limit): Collection
     {
-        $topicPathIdExpression = "CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(`cms_sessions`.`place`, '-', -1), '/', 1) AS UNSIGNED)";
+        return $this->topicGuests($topicId)
+            ->slice(max(0, $start), max(1, $limit))
+            ->values();
+    }
 
+    /**
+     * The members online in the forum, narrowed to the topic by the address each was last seen at.
+     * Those online are few, so the address is matched here rather than by functions of one
+     * database server.
+     *
+     * @return Collection<int, User>
+     */
+    private function topicUsers(int $topicId): Collection
+    {
+        return User::query()
+            ->online()
+            ->where('place', 'like', '/forum%')
+            ->orderBy('name')
+            ->get()
+            ->filter(fn (User $user): bool => $this->isTopicPlace((string) $user->place, $topicId))
+            ->values()
+            ->toBase();
+    }
+
+    /**
+     * @return Collection<int, GuestSession>
+     */
+    private function topicGuests(int $topicId): Collection
+    {
         return GuestSession::query()
             ->online()
-            ->where(static function ($query) use ($topicId, $topicPathIdExpression): void {
-                $query->where('place', 'like', '/forum?type=topic&id=' . $topicId . '%')
-                    ->orWhere(static function ($query) use ($topicId, $topicPathIdExpression): void {
-                        $query->where('cms_sessions.place', 'regexp', '^/forum/.+/.+-[0-9]+(/|\\?|$)')
-                            ->whereRaw($topicPathIdExpression . ' = ?', [$topicId]);
-                    });
-            })
+            ->where('place', 'like', '/forum%')
             ->orderByDesc('movings')
-            ->offset(max(0, $start))
-            ->limit(max(1, $limit))
-            ->get();
+            ->get()
+            ->filter(fn (GuestSession $guest): bool => $this->isTopicPlace((string) $guest->place, $topicId))
+            ->values()
+            ->toBase();
+    }
+
+    /**
+     * The address of a page of the topic, /forum/{sections}/{slug}-{id}/ with any query, or the
+     * address of the topic before the paths, /forum?type=topic&id={id}.
+     */
+    private function isTopicPlace(string $place, int $topicId): bool
+    {
+        if (preg_match('~^/forum/.+/.+-(\d+)(?:/|\?|$)~', $place, $matches) === 1) {
+            return (int) $matches[1] === $topicId;
+        }
+
+        return preg_match('~^/forum/?\?type=topic&id=(\d+)(?:&|$)~', $place, $matches) === 1
+            && (int) $matches[1] === $topicId;
     }
 }

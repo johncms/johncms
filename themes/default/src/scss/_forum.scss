@@ -235,6 +235,55 @@
   &__actions { position: relative; z-index: 2; display: flex; gap: .25rem; }
 }
 
+// The posts of a topic: the comment of the theme, with the mark of a hidden post, the box of the
+// bulk deleting and the files under the text.
+.site-forum-posts { display: flex; flex-direction: column; gap: .75rem; }
+
+.site-forum-post {
+  &--deleted { border-style: dashed; border-color: color-mix(in oklab, var(--danger) 35%, var(--border)); background: color-mix(in oklab, var(--danger) 4%, var(--bg-elev)); }
+  &__note { color: var(--fg-dim); font-size: .6875rem; }
+  &__select { display: inline-flex; margin-inline-start: auto; cursor: pointer; }
+  &__select .form-check-input { margin: 0; }
+}
+
+.site-forum-files {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 13.5rem), 1fr));
+  gap: .5rem;
+  margin: .75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-forum-file {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: .625rem;
+  align-items: center;
+  padding: .375rem .5rem .375rem .375rem;
+  border: 1px solid var(--border);
+  border-radius: .5rem;
+  background: var(--bg-inset);
+  form { display: contents; }
+  &__thumb {
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+    border-radius: .375rem;
+    background: var(--bg-elev);
+    color: var(--fg-muted);
+  }
+  &__thumb img { inline-size: 100%; block-size: 100%; object-fit: cover; }
+  &__info { display: flex; flex-direction: column; gap: .125rem; min-inline-size: 0; }
+  &__name { overflow: hidden; color: var(--fg); font-size: .8125rem; font-weight: 500; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
+  &__name:hover { color: var(--accent); }
+  &__meta { display: inline-flex; align-items: center; gap: .25rem; color: var(--fg-dim); font-family: var(--bs-font-monospace); font-size: .6875rem; }
+}
+
+.site-forum-post-back { margin-block-start: 1rem; }
+
 @media (max-width: 720px) {
   .site-forum-toolbar > .site-search-field { max-inline-size: none; }
   .site-forum-row {

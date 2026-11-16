@@ -8,6 +8,7 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Access\ForumAccess;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Modules\Forum\Application\Services\ForumPostRows;
 use Johncms\Modules\Forum\Application\Services\ForumUserSettings;
 use Carbon\Carbon;
 use Johncms\Modules\Forum\Application\DTO\ForumTopicPageResultDTO;
@@ -41,6 +42,7 @@ final readonly class ViewForumTopicUseCase
         private AccessCheckerInterface $accessChecker,
         private ForumAccess $forumAccess,
         private ForumUserSettings $userSettings,
+        private ForumPostRows $postRows,
     ) {
     }
 
@@ -118,50 +120,28 @@ final readonly class ViewForumTopicUseCase
         // a moderator holds, and the topic is the subject that narrows it down.
         $canModerateTopic = $this->accessChecker->allows(ForumPermissions::TOPIC_MODERATE, $topic);
 
-        $i = 1;
-        $canReplyInClosedTopic = $canModerateTopic;
         $banned = $this->forumAccess->isBanned();
-        $messages = $messagesCollection->map(
-            function (ForumMessage $message) use ($canModerateTopic, $newestFirst, $access, &$i, $start, $total, $topic, $canReplyInClosedTopic, $page, $banned): ForumMessage {
-                if (
-                    ! $banned
-                    && (
-                        $canModerateTopic
-                        || ($i === 1 && $access === 2 && $message->user_id === $this->currentUser->id())
-                        || ($message->user_id === $this->currentUser->id()
-                            && ! $newestFirst
-                            && ($start + $i) === $total
-                            && $message->date > time() - 300
-                        )
-                        || ($message->user_id === $this->currentUser->id()
-                            && $newestFirst
-                            && $start === 0
-                            && $i === 1
-                            && $message->date > time() - 300
-                        )
-                    )
-                ) {
-                    $message->can_edit = true;
-                }
-
-                if (
-                    $this->currentUser->id() !== $message->user_id
-                    && $this->currentUser->isValid()
-                    && ! $banned
-                    && (! $topic->closed || $canReplyInClosedTopic)
-                ) {
-                    $message->reply_url = '/forum/reply-message/' . $message->id . '/' . ($page > 1 ? '?page=' . $page : '');
-                    $message->quote_url = '/forum/reply-message/' . $message->id . '/' . ($page > 1 ? '?page=' . $page . '&amp;quote=1' : '?quote=1');
-                }
-
-                ++$i;
-
-                return $message;
+        $editableIds = [];
+        $i = 1;
+        foreach ($messagesCollection as $message) {
+            if (! $banned && $this->mayEdit($message, $i, $canModerateTopic, $newestFirst, $access, $start, $total)) {
+                $editableIds[$message->id] = true;
             }
+            ++$i;
+        }
+
+        $canReply = $this->currentUser->isValid()
+            && ! $banned
+            && (! $topic->closed || $canModerateTopic);
+        $messages = $this->postRows->present(
+            messages: $messagesCollection,
+            editableIds: $editableIds,
+            canReply: $canReply,
+            page: $page,
         );
 
         if ($this->currentUser->isValid()) {
-            $postIds = $messages->pluck('id')->all();
+            $postIds = $messagesCollection->pluck('id')->all();
             if ($postIds !== []) {
                 Notification::query()
                     ->where('module', 'forum')
@@ -228,6 +208,32 @@ final readonly class ViewForumTopicUseCase
             canonical: $canonical,
             title: (string) $topic->name,
         );
+    }
+
+    /**
+     * A moderator changes any post; the author changes their newest post for five minutes, and the
+     * first post of the topic at any time in a section that lets them.
+     *
+     * @param int $position The place of the post on the page, from one.
+     */
+    private function mayEdit(ForumMessage $message, int $position, bool $canModerate, bool $newestFirst, int $access, int $start, int $total): bool
+    {
+        if ($canModerate) {
+            return true;
+        }
+
+        if ($message->user_id !== $this->currentUser->id()) {
+            return false;
+        }
+
+        $isNewest = $newestFirst ? $start === 0 && $position === 1 : $start + $position === $total;
+        $isFirst = $newestFirst ? $start + $position === $total : $start === 0 && $position === 1;
+
+        if ($isFirst && $access === 2) {
+            return true;
+        }
+
+        return $isNewest && $message->date > time() - 300;
     }
 
     /**

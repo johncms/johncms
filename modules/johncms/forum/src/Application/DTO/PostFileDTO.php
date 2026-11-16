@@ -12,6 +12,8 @@ final readonly class PostFileDTO
         public ?string $previewUrl,
         public string $fileSize,
         public int $downloadCount,
+        /** Null unless the visitor may change the post. */
+        public ?string $deleteUrl,
     ) {
     }
 }

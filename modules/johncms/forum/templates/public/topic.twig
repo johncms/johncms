@@ -4,7 +4,7 @@
     @var id               int
     @var page             int
     @var topic            \Johncms\Modules\Forum\Domain\Models\ForumTopic
-    @var messages         iterable
+    @var messages         \Johncms\Modules\Forum\Application\DTO\ForumPostDTO[]
     @var topic_vote       \Johncms\Modules\Forum\Domain\Models\ForumVote    Null when the topic has no poll.
     @var poll_data        array        results, show_form
     @var curators         array        id, name of each curator of the topic
@@ -157,13 +157,15 @@
         </div>
     </div>
 
-    {% for message in messages %}
-        {% include '@forum/public/components/message.twig' with {
-            message: message,
-            can_moderate: can_moderate,
-            last_post: one_post_in_sight and not message.deleted,
-        } only %}
-    {% endfor %}
+    <div class="site-forum-posts">
+        {% for post in messages %}
+            {% include '@forum/public/components/message.twig' with {
+                post: post,
+                can_moderate: can_moderate,
+                last_post: one_post_in_sight and not post.isDeleted,
+            } only %}
+        {% endfor %}
+    </div>
 
     {% if can('forum.post.destroy') %}
         <template id="forum-post-delete-fields">
@@ -329,16 +331,4 @@
         who_url: '/forum/topic-visitors/' ~ id ~ '/',
         who_name: __('Who is here')
     } only %}
-{% endblock %}
-
-{% block scripts %}
-    {{ parent() }}
-    <script>
-        if (window.location.hash !== '') {
-            var post = $(window.location.hash);
-            if (post.offset() !== undefined) {
-                $('body,html').animate({scrollTop: post.offset().top - 50}, 500);
-            }
-        }
-    </script>
 {% endblock %}

@@ -52,15 +52,15 @@ final readonly class ShowPostController
             '@forum/public/show-post.twig',
             [
                 'canonical'   => $result['canonical'],
-                'title'       => $this->buildPostMetaTitle((int) $result['post']->id, (string) $result['topic']->name),
-                'page_title'  => $this->buildPostMetaTitle((int) $result['post']->id, (string) $result['topic']->name),
+                'title'       => $this->buildPostMetaTitle($result['post']->id, (string) $result['topic']->name),
+                'page_title'  => $this->buildPostMetaTitle($result['post']->id, (string) $result['topic']->name),
                 'description' => $this->buildPostMetaDescription(
-                    (int) $result['post']->id,
+                    $result['post']->id,
                     (string) $result['topic']->name,
                     (string) ($result['topic']->calculated_meta_description ?? '')
                 ),
                 'post'        => $result['post'],
-                'topic'       => $result['topic'],
+                'topic_url'   => $result['topic_url'],
             ]
         );
     }

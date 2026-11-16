@@ -7,13 +7,13 @@ namespace Johncms\Modules\Forum\Application\DTO;
 final readonly class PostAuthorDTO
 {
     public function __construct(
+        /** Null for a post whose author is gone. */
         public ?int $id,
         public string $name,
-        public string $avatarUrl,
         public bool $isOnline,
-        public ?string $status,
+        public string $status,
         public ?string $profileUrl,
-        public ?string $rightsName,
+        public string $rightsName,
     ) {
     }
 }

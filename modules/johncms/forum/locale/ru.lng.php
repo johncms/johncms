@@ -473,6 +473,9 @@
       'Start the first one.' => 'Начните первую.',
       'Mark every topic as read?' => 'Отметить все темы прочитанными?',
       'Hours' => 'Часов',
+      'Select for deleting' => 'Отметить для удаления',
+      'Downloads' => 'Скачиваний',
+      'Show in the topic' => 'Показать в теме',
     ),
   ),
 );

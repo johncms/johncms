@@ -13,16 +13,15 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Domain\Models;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
-use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Johncms\Casts\Ip;
 use Johncms\Casts\TimeToDate;
 use Johncms\Users\User;
-use Johncms\Utils\DateFormatterInterface;
 
 /**
  * Class Message
@@ -49,17 +48,7 @@ use Johncms\Utils\DateFormatterInterface;
  *
  * @property ForumTopic $topic
  * @property User $user
- * @property User $user_data
- * @property ForumFile $files
- * @property string $url
- * @property string $edit_url
- * @property string $delete_url
- * @property string $restore_url
- * @property string $post_time
- * @property \Twig\Markup $post_text
- * @property string $search_ip_url
- * @property string $search_ip_via_proxy_url
- * @property string $user_profile_link
+ * @property Collection<int, ForumFile> $files
  *
  *
  * @method ForumMessage users()
@@ -77,10 +66,6 @@ class ForumMessage extends Model
     protected $table = 'forum_messages';
 
     public $timestamps = false;
-
-    public $can_edit = false;
-    public $reply_url = '';
-    public $quote_url = '';
 
     protected $casts = [
         'pinned'       => 'bool',
@@ -106,32 +91,6 @@ class ForumMessage extends Model
         'deleted',
         'deleted_by',
     ];
-
-    protected $appends = [
-        'url',
-        'post_time',
-        'post_text',
-        'edit_time',
-        'edit_url',
-        'delete_url',
-        'restore_url',
-    ];
-
-    /**
-     * Current user
-     *
-     * @var User
-     */
-    protected $current_user;
-
-    protected DateFormatterInterface $dateFormatter;
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        $this->current_user = di(CurrentUser::class)->user();
-        $this->dateFormatter = di(DateFormatterInterface::class);
-    }
 
     /**
      * Global scopes

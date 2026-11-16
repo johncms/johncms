@@ -1,197 +1,133 @@
 {#
-    One post inside a topic.
+    One post of a topic.
 
-    @var message      \Johncms\Modules\Forum\Domain\Models\ForumMessage
-    @var can_moderate bool Posts can be marked for deletion and the IP of the author is shown.
+    @var post         \Johncms\Modules\Forum\Application\DTO\ForumPostDTO
+    @var can_moderate bool The post can be marked for deleting together with others (the form #topic-bulk-delete).
     @var last_post    bool The post is the last one in sight: deleting it takes the topic with it.
 #}
-<div class="new_post-item border-bottom shadow mb-2" id="post_{{ message.id }}">
-    <div class="new_post-header d-flex justify-content-between">
-        <div class="post-user">
-            {% if message.user_profile_link %}
-                <a href="{{ message.user_profile_link }}">
-                    <div class="avatar">
-                        <img src="{{ avatar(message.user_id) }}" class="img-fluid" alt=".">
-                    </div>
-                </a>
+{% set author = post.author %}
+<article class="site-comment site-forum-post{{ post.isDeleted ? ' site-forum-post--deleted' : '' }}" id="post-{{ post.id }}">
+    <div class="site-comment__avatar">
+        {% if author.profileUrl %}<a href="{{ author.profileUrl }}" tabindex="-1" aria-hidden="true">{% endif %}
+        <img src="{{ avatar(author.id ?? 0) }}" alt="" width="40" height="40" loading="lazy">
+        {% if author.profileUrl %}</a>{% endif %}
+        {% if author.isOnline %}<span class="site-comment__online" title="{{ d__('system', 'Online') }}"></span>{% endif %}
+    </div>
+    <div class="site-comment__main">
+        <header class="site-comment__header">
+            {% if author.profileUrl %}
+                <a class="site-comment__name" href="{{ author.profileUrl }}">{{ author.name }}</a>
             {% else %}
-                <div class="avatar">
-                    <img src="{{ avatar(message.user_id) }}" class="img-fluid" alt=".">
-                </div>
+                <span class="site-comment__name">{{ author.name }}</span>
             {% endif %}
-            <span class="user-status {{ message.user_data.is_online ? 'online' : 'offline' }} shadow"></span>
-            {% if message.user_data.rights_name %}
-                <div class="post-of-user"
-                     data-bs-toggle="tooltip"
-                     data-bs-placement="top"
-                     data-bs-html="true"
-                     title="{{ message.user_data.rights_name }}">
-                    <svg class="icon-post">
-                        <use xlink:href="{{ asset('icons/sprite.svg') }}?4#check"/>
-                    </svg>
-                </div>
+            {% if author.rightsName %}<span class="site-comment__role">{{ author.rightsName }}</span>{% endif %}
+            {# The date is the lasting link of the post: it opens on a page of its own. #}
+            <a class="site-comment__date" href="{{ post.url }}"><time>{{ post.createdAt }}</time></a>
+            {% if post.editInfo %}
+                <span class="site-comment__date" data-bs-toggle="tooltip" data-bs-placement="top"
+                      title="{{ __('Edited:') }} {{ post.editInfo.editorName }} ({{ post.editInfo.editedAt }}) [{{ post.editInfo.editCount }}]">{{ __('Edited') }}</span>
             {% endif %}
-        </div>
-        <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
-            <div class="w-100">
-                {% if message.user_profile_link %}
-                    <a href="{{ message.user_profile_link }}"><span class="user-name d-inline me-2">{{ message.user_data.name }}</span></a>
-                {% else %}
-                    <div class="user-name d-inline me-2">{{ message.user_name }}</div>
-                {% endif %}
-                <a href="{{ message.url }}"
-                   class="post-meta d-inline me-2"
-                   data-bs-toggle="tooltip"
-                   data-bs-placement="top"
-                   title="{{ __('Link to post') }}">
-                    {{ message.post_time }}
-                </a>
-                {% if message.edit_count %}
-                    <div class="post-meta d-inline me-2"
-                         data-bs-toggle="tooltip"
-                         data-bs-placement="top"
-                         data-bs-html="true"
-                         title="{{ __('Edited:') }} {{ message.editor_name }} <br> ({{ message.edit_time }}) [{{ message.edit_count }}]">
-                        {{ __('Edited') }}
-                    </div>
-                {% endif %}
-                {% if message.can_edit %}
-                    {% if message.deleted %}
-                        <div class="d-inline me-2 badge bg-danger"
-                             data-bs-toggle="tooltip"
-                             data-bs-placement="top"
-                             title="{{ __('Post deleted:') }} {{ message.deleted_by }}">
-                            {{ __('Deleted') }}
-                        </div>
-                    {% elseif message.deleted_by %}
-                        <div class="post-meta d-inline me-2"
-                             data-bs-toggle="tooltip"
-                             data-bs-placement="top"
-                             title="{{ __('Post restored by:') }} {{ message.deleted_by }}">
-                            {{ __('Restored') }}
-                        </div>
-                    {% endif %}
-                {% endif %}
-            </div>
-            {% if message.user_data.status %}
-                <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
-                    <span class="fw-bold">{{ message.user_data.status }}</span>
-                </div>
+            {% if post.isDeleted %}
+                <span class="site-forum-badge site-forum-badge--danger">{{ __('Deleted') }}</span>
+                <span class="site-forum-post__note">{{ __('Post deleted:') }} {{ post.deletedBy }}</span>
+            {% elseif post.restoredBy %}
+                <span class="site-forum-post__note">{{ __('Post restored by:') }} {{ post.restoredBy }}</span>
             {% endif %}
-        </div>
-
-        {% if can_moderate %}
-            <div class="custom-control custom-checkbox d-inline float-right">
-                <input type="checkbox" class="custom-control-input" name="post_ids[]" value="{{ message.id }}" id="check_{{ message.id }}" form="topic-bulk-delete">
-                <label class="custom-control-label" for="check_{{ message.id }}"></label>
-            </div>
-        {% endif %}
-    </div>
-    <div class="post-body">
-        {{ message.post_text }}
-    </div>
-    {% if message.files.count() > 0 %}
-        <div class="pb-1">
-            <div class="fw-bold pb-1">{{ __('Attached files') }}:</div>
-            <div class="d-flex flex-wrap image-gallery">
-                {% for file in message.files %}
-                    <div class="attached-file pe-3 d-flex flex-column justify-content-between">
-                        <div class="d-flex justify-content-center align-items-center">
-                            {% if file.file_preview %}
-                                <a href="{{ file.file_url }}" class="gallery-item" data-source="{{ file.file_url }}" title="{{ file.filename }}">
-                                    <img src="{{ file.file_preview }}" class="img-thumbnail thumb-limit-height" alt="{{ file.filename }}">
-                                </a>
-                            {% else %}
-                                <a href="{{ file.file_url }}">
-                                    <svg class="icon attachment-icon">
-                                        <use xlink:href="{{ asset('icons/sprite.svg') }}#file"/>
-                                    </svg>
-                                </a>
-                            {% endif %}
-                        </div>
-                        <div class="pt-1">
-                            <div class="text-muted small d-flex flex-wrap justify-content-center">
-                                <div class="text-nowrap pe-1">
-                                    <svg class="icon downloads-icon">
-                                        <use xlink:href="{{ asset('icons/sprite.svg') }}#download"/>
-                                    </svg>
-                                    {{ file.dlcount }}
-                                </div>
-                                <div>({{ file.file_size }})</div>
-                            </div>
-                            <div class="file-name">
-                                <a href="{{ file.file_url }}" title="{{ file.filename }}">{{ file.filename }}</a>
-                            </div>
-                            {% if message.can_edit %}
-                                <div class="delete-link">
-                                    <form method="post" action="{{ file.delete_url }}"
-                                          data-confirm="{{ __('Delete the file?') }}" data-confirm-text="{{ file.filename }}"
-                                          data-confirm-button="{{ __('Delete') }}">
-                                        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                                        <button type="submit" class="btn btn-link p-0">{{ __('Delete') }}</button>
-                                    </form>
-                                </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    {% endif %}
-    <div class="post-footer d-flex justify-content-between mt-2">
-        <div class="overflow-hidden">
             {% if can_moderate %}
-                <div class="post-meta d-flex">
-                    <div class="user-ip me-2">
-                        <a href="{{ message.user_data.search_ip_url }}">{{ message.user_data.ip }}</a>
-                        {% if message.user_data.ip_via_proxy %}
-                            / <a href="{{ message.user_data.search_ip_via_proxy_url }}">{{ message.user_data.ip_via_proxy }}</a>
+                <label class="site-forum-post__select" title="{{ __('Select for deleting') }}">
+                    <input type="checkbox" class="form-check-input" name="post_ids[]" value="{{ post.id }}" form="topic-bulk-delete"
+                           aria-label="{{ __('Select for deleting') }}">
+                </label>
+            {% endif %}
+        </header>
+        {% if author.status %}<div class="site-comment__status">{{ author.status }}</div>{% endif %}
+        <div class="site-comment__body ck-content">{{ post.body }}</div>
+
+        {% if post.files %}
+            <ul class="site-forum-files image-gallery" aria-label="{{ __('Attached files') }}">
+                {% for file in post.files %}
+                    <li class="site-forum-file">
+                        {% if file.previewUrl %}
+                            <a class="site-forum-file__thumb gallery-item" href="{{ file.fileUrl }}" data-source="{{ file.fileUrl }}" title="{{ file.filename }}">
+                                <img src="{{ file.previewUrl }}" alt="" loading="lazy">
+                            </a>
+                        {% else %}
+                            <span class="site-forum-file__thumb">
+                                {% include '@theme/components/icon.twig' with {name: 'file', size: 18} only %}
+                            </span>
                         {% endif %}
-                    </div>
-                    <div class="useragent">
-                        <span>{{ message.user_data.browser }}</span>
-                    </div>
-                </div>
-            {% endif %}
-        </div>
-        <div class="d-flex">
-            {% if message.reply_url %}
-                <div class="ms-3">
-                    <a href="{{ message.reply_url }}">{{ __('Reply') }}</a>
-                </div>
-            {% endif %}
-            {% if message.quote_url %}
-                <div class="ms-3">
-                    <a href="{{ message.quote_url }}">{{ __('Quote') }}</a>
-                </div>
-            {% endif %}
-            {% if message.can_edit %}
-                <div class="dropdown ms-3">
-                    <div class="cursor-pointer" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <svg class="icon text-primary">
-                            <use xlink:href="{{ asset('icons/sprite.svg') }}?1#more_horizontal"/>
-                        </svg>
-                    </div>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="{{ message.edit_url }}">{{ __('Edit') }}</a>
+                        <span class="site-forum-file__info">
+                            <a class="site-forum-file__name" href="{{ file.fileUrl }}" title="{{ file.filename }}">{{ file.filename }}</a>
+                            <span class="site-forum-file__meta">
+                                {{ file.fileSize }} ·
+                                {% include '@theme/components/icon.twig' with {name: 'download', size: 11} only %}
+                                <span class="visually-hidden">{{ __('Downloads') }}:</span> {{ file.downloadCount }}
+                            </span>
+                        </span>
+                        {% if file.deleteUrl %}
+                            <form method="post" action="{{ file.deleteUrl }}"
+                                  data-confirm="{{ __('Delete the file?') }}" data-confirm-text="{{ file.filename }}"
+                                  data-confirm-button="{{ __('Delete') }}">
+                                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                                <button type="submit" class="btn btn-outline-secondary btn-xs btn-icon site-comment__delete"
+                                        title="{{ __('Delete') }}" aria-label="{{ __('Delete') }}">
+                                    {% include '@theme/components/icon.twig' with {name: 'trash-2', size: 12} only %}
+                                </button>
+                            </form>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% set actions = post.actions %}
+        {% if actions.replyUrl or actions.editUrl or post.origin %}
+            <footer class="site-comment__footer">
+                <div class="site-comment__actions">
+                    {% if actions.replyUrl %}
+                        <a class="btn btn-outline-secondary btn-xs" href="{{ actions.replyUrl }}">
+                            {% include '@theme/components/icon.twig' with {name: 'message-square', size: 12} only %} {{ __('Reply') }}
+                        </a>
+                        <a class="btn btn-outline-secondary btn-xs" href="{{ actions.quoteUrl }}">
+                            {% include '@theme/components/icon.twig' with {name: 'quote', size: 12} only %} {{ __('Quote') }}
+                        </a>
+                    {% endif %}
+                    {% if actions.editUrl %}
+                        <a class="btn btn-outline-secondary btn-xs" href="{{ actions.editUrl }}">
+                            {% include '@theme/components/icon.twig' with {name: 'pencil', size: 12} only %} {{ __('Edit') }}
+                        </a>
+                    {% endif %}
+                    {% if actions.restoreUrl %}
+                        <form method="post" action="{{ actions.restoreUrl }}">
+                            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                            <button type="submit" class="btn btn-outline-secondary btn-xs">
+                                {% include '@theme/components/icon.twig' with {name: 'rotate-ccw', size: 12} only %} {{ __('Restore') }}
+                            </button>
+                        </form>
+                    {% endif %}
+                    {% if actions.deleteUrl %}
                         {# The choice of hiding or deleting for good is the template of the topic page. #}
-                        <form method="post" action="{{ message.delete_url }}"
+                        <form method="post" action="{{ actions.deleteUrl }}"
                               data-confirm="{{ __('Do you really want to delete?') }}"
                               {% if last_post %}data-confirm-text="{{ __('This is the last post of the topic: the topic is deleted with it.') }}"{% endif %}
                               {% if can('forum.post.destroy') %}data-confirm-fields="forum-post-delete-fields"{% endif %}
                               data-confirm-button="{{ __('Delete') }}">
                             <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                            <button type="submit" class="dropdown-item">{{ __('Delete') }}</button>
+                            <button type="submit" class="btn btn-outline-secondary btn-xs btn-icon site-comment__delete"
+                                    title="{{ __('Delete') }}" aria-label="{{ __('Delete') }}">
+                                {% include '@theme/components/icon.twig' with {name: 'trash-2', size: 12} only %}
+                            </button>
                         </form>
-                        {% if message.restore_url %}
-                            <form method="post" action="{{ message.restore_url }}">
-                                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                                <button type="submit" class="dropdown-item">{{ __('Restore') }}</button>
-                            </form>
-                        {% endif %}
-                    </div>
+                    {% endif %}
+                    {% if post.origin %}
+                        {% include '@theme/components/moderator-meta.twig' with {
+                            ip: post.origin.ip,
+                            ip_via_proxy: post.origin.ipViaProxy,
+                            user_agent: post.origin.userAgent,
+                        } only %}
+                    {% endif %}
                 </div>
-            {% endif %}
-        </div>
+            </footer>
+        {% endif %}
     </div>
-</div>
+</article>

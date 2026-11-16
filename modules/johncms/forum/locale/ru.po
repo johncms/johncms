@@ -1902,3 +1902,12 @@ msgstr "Отметить все темы прочитанными?"
 
 msgid "Hours"
 msgstr "Часов"
+
+msgid "Select for deleting"
+msgstr "Отметить для удаления"
+
+msgid "Downloads"
+msgstr "Скачиваний"
+
+msgid "Show in the topic"
+msgstr "Показать в теме"

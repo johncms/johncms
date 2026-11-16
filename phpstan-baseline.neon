@@ -655,28 +655,10 @@ parameters:
 			path: modules/johncms/forum/src/Application/UseCases/ViewForumTopicUseCase.php
 
 		-
-			message: '#^Argument of an invalid type Johncms\\Modules\\Forum\\Domain\\Models\\ForumFile supplied for foreach, only iterables are supported\.$#'
-			identifier: foreach.nonIterable
-			count: 1
-			path: modules/johncms/forum/src/Application/UseCases/ViewPostUseCase.php
-
-		-
 			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Domain\\Models\\ForumFile should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
 			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
 			count: 3
 			path: modules/johncms/forum/src/Domain/Models/ForumFile.php
-
-		-
-			message: '#^Access to an undefined property Johncms\\Modules\\Forum\\Domain\\Models\\ForumMessage\:\:\$datereg\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/forum/src/Domain/Models/ForumMessage.php
-
-		-
-			message: '#^Access to an undefined property Johncms\\Modules\\Forum\\Domain\\Models\\ForumMessage\:\:\$lastdate\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/forum/src/Domain/Models/ForumMessage.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Forum\\Domain\\Models\\ForumMessage\:\:scopeUsers\(\) should return Illuminate\\Database\\Eloquent\\Builder but returns Illuminate\\Database\\Query\\Builder\.$#'
@@ -801,13 +783,13 @@ parameters:
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<Johncms\\Users\\GuestSession\>\:\:online\(\)\.$#'
 			identifier: method.notFound
-			count: 4
+			count: 3
 			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumWhoRepository.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<Johncms\\Users\\User\>\:\:online\(\)\.$#'
 			identifier: method.notFound
-			count: 4
+			count: 3
 			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumWhoRepository.php
 
 		-
