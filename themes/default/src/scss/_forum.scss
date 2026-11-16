@@ -240,7 +240,10 @@
 .site-forum-posts { display: flex; flex-direction: column; gap: .75rem; }
 
 .site-forum-post {
-  &--deleted { border-style: dashed; border-color: color-mix(in oklab, var(--danger) 35%, var(--border)); background: color-mix(in oklab, var(--danger) 4%, var(--bg-elev)); }
+  // Doubled: the comment of the theme is styled after the forum and would take the border back.
+  &--deleted.site-comment { border-style: dashed; border-color: color-mix(in oklab, var(--danger) 35%, var(--border)); background: color-mix(in oklab, var(--danger) 4%, var(--bg-elev)); }
+  &--deleted .site-comment__body { color: var(--fg-muted); }
+  &--deleted .site-comment__footer { border-block-start-color: color-mix(in oklab, var(--danger) 25%, var(--border)); }
   &__note { color: var(--fg-dim); font-size: .6875rem; }
   &__select { display: inline-flex; margin-inline-start: auto; cursor: pointer; }
   &__select .form-check-input { margin: 0; }
