@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
@@ -36,7 +37,7 @@ final readonly class DeleteVoteController
                     'back_url_name' => __('Back'),
                 ]
             );
-        } catch (ForumValidationException $exception) {
+        } catch (ForumValidationException | ForumNotFoundException $exception) {
             return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [

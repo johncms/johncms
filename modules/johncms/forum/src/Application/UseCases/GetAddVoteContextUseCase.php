@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
@@ -28,7 +29,7 @@ final readonly class GetAddVoteContextUseCase
 
         $topic = $this->topicRepository->findActiveById($topicId);
         if ($topic === null) {
-            throw new ForumValidationException('Topic not found.');
+            throw new ForumNotFoundException('Topic not found.');
         }
 
         if ($this->voteRepository->topicHasPoll($topicId)) {

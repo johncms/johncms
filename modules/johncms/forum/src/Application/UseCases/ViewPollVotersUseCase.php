@@ -8,7 +8,7 @@ use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\DTO\PollVotersQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\PollVotersResultDTO;
-use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
 use Johncms\Users\ProfileLinksInterface;
 
@@ -26,7 +26,7 @@ final readonly class ViewPollVotersUseCase
     {
         $poll = $this->voteRepository->findPollByTopic($query->topicId);
         if ($poll === null) {
-            throw new ForumValidationException('Poll not found.');
+            throw new ForumNotFoundException('Poll not found.');
         }
 
         $limit = (int) $this->currentUser->user()->config->kmess;

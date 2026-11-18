@@ -7,6 +7,7 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\DTO\PollVotersQueryDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicBreadcrumbs;
@@ -49,7 +50,7 @@ final readonly class PollVotersController
                     'back_url_name' => __('Back'),
                 ]
             );
-        } catch (ForumValidationException $exception) {
+        } catch (ForumValidationException | ForumNotFoundException $exception) {
             return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [

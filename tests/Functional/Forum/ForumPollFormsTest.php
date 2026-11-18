@@ -88,6 +88,14 @@ final class ForumPollFormsTest extends FunctionalTestCase
         self::assertStringNotContainsString('form="topic-close"', $page, 'Not what the poll manager may not do.');
     }
 
+    public function testThePagesOfATopicThatIsNotThereAnswerNotFound(): void
+    {
+        foreach (['/forum/addvote/', '/forum/editvote/', '/forum/poll-voters/', '/forum/filter/'] as $address) {
+            self::assertSame(404, $this->handleRequest($address . '99999/', cookies: $this->actingAs($this->moderator))->getStatusCode(), $address);
+        }
+        self::assertSame(404, $this->handleRequest('/forum/editvote/' . $this->topic . '/', cookies: $this->actingAs($this->moderator))->getStatusCode(), 'A topic without a poll.');
+    }
+
     public function testTheCuratorsAreSavedAndTheTopicOpensAgain(): void
     {
         $writer = FunctionalUserFactory::create(['name' => 'Writer']);

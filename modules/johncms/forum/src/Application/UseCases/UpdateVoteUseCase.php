@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
-use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Domain\Models\ForumVote;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
 
@@ -23,7 +23,7 @@ final readonly class UpdateVoteUseCase
     {
         $poll = $this->voteRepository->findPollByTopic($topicId);
         if ($poll === null) {
-            throw new ForumValidationException('Poll not found.');
+            throw new ForumNotFoundException('Poll not found.');
         }
 
         if ($pollName !== '') {

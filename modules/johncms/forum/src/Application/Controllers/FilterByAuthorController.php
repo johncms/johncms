@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Modules\Forum\Application\ForumUtils;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ViewFilterByAuthorUseCase;
@@ -29,7 +30,7 @@ final readonly class FilterByAuthorController
 
         try {
             $context = $this->viewFilterByAuthorUseCase->execute($id);
-        } catch (ForumValidationException $exception) {
+        } catch (ForumValidationException | ForumNotFoundException $exception) {
             return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [

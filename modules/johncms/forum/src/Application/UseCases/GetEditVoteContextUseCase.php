@@ -7,7 +7,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 use Johncms\Modules\Forum\Application\DTO\EditVoteAnswerDTO;
 use Johncms\Modules\Forum\Application\DTO\EditVoteContextDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
@@ -28,7 +28,7 @@ final readonly class GetEditVoteContextUseCase
 
         $poll = $this->voteRepository->findPollByTopic($topicId);
         if ($poll === null) {
-            throw new ForumValidationException('Poll not found.');
+            throw new ForumNotFoundException('Poll not found.');
         }
 
         $answers = [];
