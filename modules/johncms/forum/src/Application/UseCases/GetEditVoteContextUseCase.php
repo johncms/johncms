@@ -22,7 +22,7 @@ final readonly class GetEditVoteContextUseCase
 
     public function execute(int $topicId): EditVoteContextDTO
     {
-        if (! $this->accessChecker->allows(ForumPermissions::TOPIC_MODERATE)) {
+        if (! $this->accessChecker->allows(ForumPermissions::POLL_MANAGE)) {
             throw new ForumAccessDeniedException('Access denied to edit poll.');
         }
 

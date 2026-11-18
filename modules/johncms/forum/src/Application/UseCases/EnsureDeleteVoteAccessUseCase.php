@@ -20,7 +20,7 @@ final readonly class EnsureDeleteVoteAccessUseCase
 
     public function execute(int $topicId): void
     {
-        if (! $this->accessChecker->allows(ForumPermissions::TOPIC_MODERATE)) {
+        if (! $this->accessChecker->allows(ForumPermissions::POLL_MANAGE)) {
             throw new ForumAccessDeniedException('Access denied to delete poll.');
         }
 

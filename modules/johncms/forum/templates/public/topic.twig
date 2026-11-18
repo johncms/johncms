@@ -16,6 +16,7 @@
     @var filter_by_author  bool
     @var filter_url        string       Sets the filter, or clears it when one is on.
     @var can_moderate      bool         The visitor may delete posts in bulk and act on the topic.
+    @var can_manage_poll   bool         The visitor may add, change and delete the poll.
     @var move_targets      array        id, title — where the topic can be moved; empty unless the visitor may move it.
     @var change_form       array        name, meta_keywords, meta_description — what the dialog of changing the topic starts from.
     @var message           string       The result of the last action on the topic, empty when there is none.
@@ -39,13 +40,15 @@
             {% include '@theme/components/icon.twig' with {name: 'message-square', size: 14} only %} {{ __('Reply') }}
         </a>
     {% endif %}
-    {% if can_moderate %}
-        {# Each item that changes the topic sends a form of its own, kept below the posts. #}
+    {% if can_moderate or can_manage_poll or can_set_curators %}
+        {# Each item that changes the topic sends a form of its own, kept below the posts. Every
+           group is there by a permission of its own. #}
         <details class="site-popover site-forum-topic-actions" data-site-popover>
             <summary class="btn btn-outline-secondary">
                 {% include '@theme/components/icon.twig' with {name: 'settings', size: 14} only %} {{ __('Actions with topic') }}
             </summary>
             <div class="site-popover__panel">
+                {% if can_moderate %}
                 {# Each opens the dialog of its form; without the script, the page of that form. #}
                 <a class="site-popover__item" href="/forum/change-topic/{{ id }}/" data-confirm-form="topic-change">
                     {% include '@theme/components/icon.twig' with {name: 'pencil', size: 14} only %}<span>{{ __('Change the topic') }}</span>
@@ -59,12 +62,14 @@
                 <button type="submit" form="topic-close" class="site-popover__item">
                     {% include '@theme/components/icon.twig' with {name: 'lock-keyhole', size: 14} only %}<span>{{ state.closed ? __('Open Topic') : __('Close Topic') }}</span>
                 </button>
+                {% endif %}
                 {% if can_set_curators %}
                     <a class="site-popover__item" href="/forum/curators/{{ id }}/{{ page > 1 ? '?page=' ~ page : '' }}">
                         {% include '@theme/components/icon.twig' with {name: 'users', size: 14} only %}<span>{{ __('Curators of the Topic') }}</span>
                     </a>
                 {% endif %}
-                <hr class="site-popover__divider">
+                {% if can_manage_poll %}
+                {% if can_moderate or can_set_curators %}<hr class="site-popover__divider">{% endif %}
                 {% if topic_vote %}
                     <a class="site-popover__item" href="/forum/editvote/{{ id }}/">
                         {% include '@theme/components/icon.twig' with {name: 'chart-column', size: 14} only %}<span>{{ __('Edit Poll') }}</span>
@@ -77,6 +82,8 @@
                         {% include '@theme/components/icon.twig' with {name: 'chart-column', size: 14} only %}<span>{{ __('Add Poll') }}</span>
                     </a>
                 {% endif %}
+                {% endif %}
+                {% if can_moderate %}
                 <hr class="site-popover__divider">
                 {% if state.deleted %}
                     <button type="submit" form="topic-restore" class="site-popover__item">
@@ -86,6 +93,7 @@
                 <button type="submit" form="topic-delete" class="site-popover__item site-popover__item--danger">
                     {% include '@theme/components/icon.twig' with {name: 'trash-2', size: 14} only %}<span>{{ __('Delete Topic') }}</span>
                 </button>
+                {% endif %}
             </div>
         </details>
     {% endif %}
@@ -288,13 +296,13 @@
                 </div>
             </template>
         {% endif %}
-        {% if topic_vote %}
-            <form method="post" action="/forum/delvote/{{ id }}/" id="topic-delete-poll"
-                  data-confirm="{{ __('Do you really want to delete a poll?') }}" data-confirm-text="{{ topic_vote.name }}"
-                  data-confirm-button="{{ __('Delete') }}">
-                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-            </form>
-        {% endif %}
+    {% endif %}
+    {% if can_manage_poll and topic_vote %}
+        <form method="post" action="/forum/delvote/{{ id }}/" id="topic-delete-poll"
+              data-confirm="{{ __('Do you really want to delete a poll?') }}" data-confirm-text="{{ topic_vote.name }}"
+              data-confirm-button="{{ __('Delete') }}">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+        </form>
     {% endif %}
 {% endblock %}
 

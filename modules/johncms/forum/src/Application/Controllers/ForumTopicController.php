@@ -127,6 +127,7 @@ final readonly class ForumTopicController
                         'meta_description' => $topic->meta_description ?? '',
                     ],
                     'can_set_curators' => $this->accessChecker->allows(ForumPermissions::CURATORS_MANAGE),
+                    'can_manage_poll'  => $this->accessChecker->allows(ForumPermissions::POLL_MANAGE),
                 ]
             )
         );

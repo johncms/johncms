@@ -22,7 +22,7 @@ final readonly class GetAddVoteContextUseCase
 
     public function execute(int $topicId): int
     {
-        if (! $this->accessChecker->allows(ForumPermissions::TOPIC_MODERATE)) {
+        if (! $this->accessChecker->allows(ForumPermissions::POLL_MANAGE)) {
             throw new ForumAccessDeniedException('Access denied to add poll.');
         }
 

@@ -75,6 +75,19 @@ final class ForumPollFormsTest extends FunctionalTestCase
         self::assertSame('Green tea', Capsule::table('cms_forum_vote')->where('id', $tea)->value('name'));
     }
 
+    public function testThePollIsManagedByItsOwnPermission(): void
+    {
+        $pollManager = FunctionalUserFactory::createWithPermissions(['forum.view', 'forum.post', 'forum.poll.manage']);
+        $topicModerator = FunctionalUserFactory::createWithPermissions(['forum.view', 'forum.post', 'forum.topic.moderate']);
+
+        self::assertSame(200, $this->handleRequest('/forum/addvote/' . $this->topic . '/', cookies: $this->actingAs($pollManager))->getStatusCode());
+        self::assertSame(403, $this->handleRequest('/forum/addvote/' . $this->topic . '/', cookies: $this->actingAs($topicModerator))->getStatusCode());
+
+        $page = (string) $this->handleRequest('/forum/talk/a-topic-' . $this->topic . '/', cookies: $this->actingAs($pollManager))->getContent();
+        self::assertStringContainsString('href="/forum/addvote/' . $this->topic . '/"', $page, 'The menu offers the poll.');
+        self::assertStringNotContainsString('form="topic-close"', $page, 'Not what the poll manager may not do.');
+    }
+
     public function testTheCuratorsAreSavedAndTheTopicOpensAgain(): void
     {
         $writer = FunctionalUserFactory::create(['name' => 'Writer']);
