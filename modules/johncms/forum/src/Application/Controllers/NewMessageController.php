@@ -12,10 +12,12 @@ use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
+use Johncms\Modules\Forum\Application\Services\ForumAnsweredPosts;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\GetNewMessageContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\PostMessageUseCase;
+use Johncms\Modules\Forum\Application\UseCases\ReplyMessageUseCase;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Http\Environment;
@@ -37,6 +39,8 @@ final readonly class NewMessageController
         private ForumErrorRenderer $forumErrorRenderer,
         private GetNewMessageContextUseCase $contextUseCase,
         private PostMessageUseCase $postMessageUseCase,
+        private ReplyMessageUseCase $replyMessageUseCase,
+        private ForumAnsweredPosts $answeredPosts,
         private ForumMessagePictures $pictures,
         private TransactionManagerInterface $transactions,
         private ForumTopicPathService $topicPathService,
@@ -138,15 +142,24 @@ final readonly class NewMessageController
             }
 
             $this->session->remove('token');
+            $answered = $this->answeredPosts->find($topic, $request->bodyInt('reply_to'));
 
             try {
-                $result = $this->transactions->run(function () use ($topic, $msg, $addFiles) {
-                    $result = $this->postMessageUseCase->execute(
-                        topic: $topic,
-                        messageText: $msg,
-                        addFiles: $addFiles,
-                        clientInfo: $this->environment->getClientInfo(),
-                    );
+                $result = $this->transactions->run(function () use ($topic, $msg, $addFiles, $answered) {
+                    $result = $answered === null
+                        ? $this->postMessageUseCase->execute(
+                            topic: $topic,
+                            messageText: $msg,
+                            addFiles: $addFiles,
+                            clientInfo: $this->environment->getClientInfo(),
+                        )
+                        : $this->replyMessageUseCase->execute(
+                            sourceMessage: $answered,
+                            topic: $topic,
+                            messageText: $msg,
+                            addFiles: $addFiles,
+                            clientInfo: $this->environment->getClientInfo(),
+                        );
                     $this->pictures->bind($result->messageId, $this->currentUser->id());
 
                     return $result;

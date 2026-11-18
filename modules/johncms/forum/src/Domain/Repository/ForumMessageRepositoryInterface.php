@@ -14,6 +14,9 @@ interface ForumMessageRepositoryInterface
     /** The raw text of the post, hidden or not, its row held until the transaction ends; null when it is gone. */
     public function findTextLocked(int $id): ?string;
 
+    /** Whether the post, hidden or not, is still there; its row is held until the transaction ends. */
+    public function lockExisting(int $id): bool;
+
     /**
      * Posts of the topics, hidden ones included.
      *

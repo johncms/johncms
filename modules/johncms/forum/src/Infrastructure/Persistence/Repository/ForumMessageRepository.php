@@ -31,6 +31,14 @@ class ForumMessageRepository implements ForumMessageRepositoryInterface
         return $message === null ? null : (string) $message->getRawOriginal('text');
     }
 
+    public function lockExisting(int $id): bool
+    {
+        $query = ForumMessage::query()->withoutGlobalScope('access')->whereKey($id);
+        $query->getQuery()->lockForUpdate();
+
+        return $query->first(['id']) !== null;
+    }
+
     public function getIdsByTopicIds(array $topicIds): array
     {
         if ($topicIds === []) {

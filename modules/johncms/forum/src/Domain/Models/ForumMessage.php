@@ -44,6 +44,7 @@ use Johncms\Users\User;
  * @property int $edit_count
  * @property bool $deleted
  * @property string $deleted_by
+ * @property int|null $reply_to_id The post of the same topic it answers; null when it answers none or that one is gone.
  * @property int $old_id - Удалить
  *
  * @property ForumTopic $topic
@@ -73,6 +74,7 @@ class ForumMessage extends Model
         'ip'           => Ip::class,
         'ip_via_proxy' => Ip::class,
         'edit_time'    => TimeToDate::class,
+        'reply_to_id'  => 'integer',
     ];
 
     protected $fillable = [
@@ -90,6 +92,7 @@ class ForumMessage extends Model
         'edit_count',
         'deleted',
         'deleted_by',
+        'reply_to_id',
     ];
 
     /**

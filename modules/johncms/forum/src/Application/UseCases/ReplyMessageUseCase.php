@@ -47,6 +47,9 @@ final readonly class ReplyMessageUseCase
         $message->ip_via_proxy = $clientInfo->ipViaProxy;
         $message->user_agent = $clientInfo->userAgent;
         $message->text = $messageText;
+        // Held till the answer is written: the post cannot be deleted for good between the two.
+        // One already gone leaves the answer without the link.
+        $message->reply_to_id = $this->messageRepository->lockExisting($sourceMessage->id) ? $sourceMessage->id : null;
         $this->messageRepository->save($message);
 
         $this->currentUser->user()->update(
