@@ -33,6 +33,21 @@ interface ForumAttachmentStorageInterface
     public function delete(string $filename): void;
 
     /**
+     * The names of all the files in the directory of the attachments.
+     *
+     * @return list<string>
+     * @throws StorageException
+     */
+    public function names(): array;
+
+    /**
+     * When the file was written, as a Unix timestamp.
+     *
+     * @throws StorageException
+     */
+    public function lastModified(string $filename): int;
+
+    /**
      * Run the handler against the attachment as a file on this server.
      *
      * @template T

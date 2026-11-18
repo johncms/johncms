@@ -118,6 +118,20 @@ final readonly class FlysystemStorage implements StorageInterface
         $this->guard(fn() => $this->filesystem->deleteDirectory($path));
     }
 
+    public function files(string $directory): array
+    {
+        return $this->guard(function () use ($directory): array {
+            $files = [];
+            foreach ($this->filesystem->listContents($directory, false) as $item) {
+                if ($item->isFile()) {
+                    $files[] = $item->path();
+                }
+            }
+
+            return $files;
+        });
+    }
+
     public function copy(string $from, string $to): void
     {
         $this->write($to, fn() => $this->filesystem->copy($from, $to, ['visibility' => $this->visibility]));

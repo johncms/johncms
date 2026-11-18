@@ -109,6 +109,17 @@ interface StorageInterface
     public function deleteDirectory(string $path): void;
 
     /**
+     * The files directly in the directory, as paths of the disk; the directories in it and what
+     * they hold are left out. A directory that is not there holds nothing.
+     *
+     * What a cleanup walks to find the files no row points at any more.
+     *
+     * @return list<string>
+     * @throws StorageException
+     */
+    public function files(string $directory): array;
+
+    /**
      * Copy a file to another path of the same disk, replacing whatever is there.
      *
      * @throws StorageException

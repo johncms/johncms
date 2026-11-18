@@ -91,8 +91,14 @@ Decided in `FileStore`, and the two halves are ordered on purpose:
   store files outside one.
 
 `FileStore` does not join a transaction of the caller. A file stored inside a rolled-back
-`Capsule::transaction()` stays on the disk — in this CMS an attachment exists before the post
-does anyway, which is what `CleanupOrphanForumFilesUseCase` is for.
+`Capsule::transaction()` stays on the disk, so store files outside one, or delete them again
+when the transaction fails.
+
+The attachments of forum posts (`ForumPostFiles`, outside `FileStore`) are written as the last
+step of the transaction of the post and deleted again on a failure the code sees. A process that
+dies between the disk and the commit leaves a file no row of `cms_forum_files` points at; the
+scheduled `forum:cleanup-orphan-files` (`CleanupOrphanForumFilesUseCase`) deletes those older
+than a day.
 
 ## Pictures of the text editor
 
@@ -186,7 +192,7 @@ Each area has a small class owning its directory, so a path is spelled out once:
 | --- | --- |
 | `Johncms\Users\UserImages` | avatar and profile photo |
 | `Johncms\Modules\Album\Infrastructure\Storage\AlbumPhotoStorage` | pictures of the albums |
-| `Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage` | attachments of forum messages |
+| `Johncms\Modules\Forum\Domain\Storage\ForumAttachmentStorageInterface` | attachments of forum messages |
 | `Johncms\Modules\Library\Infrastructure\Storage\LibraryCoverStorage` | article covers, in three sizes |
 | `Johncms\Modules\Mail\Application\Services\MailFileService` | mail attachments |
 | `Johncms\Files\FileStore` | everything registered in the `files` table |

@@ -75,6 +75,16 @@ final readonly class ForumAttachmentStorage implements ForumAttachmentStorageInt
         $this->storage->delete($this->path($filename));
     }
 
+    public function names(): array
+    {
+        return array_map(basename(...), $this->storage->files(self::DIRECTORY));
+    }
+
+    public function lastModified(string $filename): int
+    {
+        return $this->storage->lastModified($this->path($filename));
+    }
+
     /**
      * Run the handler against the attachment as a file on this server.
      *

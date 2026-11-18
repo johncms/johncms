@@ -89,6 +89,19 @@ final class ForumFileRepository implements ForumFileRepositoryInterface
             ->update(['del' => 0]);
     }
 
+    public function filterKnownNames(array $filenames): array
+    {
+        $known = [];
+        foreach (array_chunk($filenames, 500) as $chunk) {
+            $known = [
+                ...$known,
+                ...ForumFile::query()->withoutGlobalScopes()->whereIn('filename', $chunk)->pluck('filename')->map(strval(...))->all(),
+            ];
+        }
+
+        return array_values(array_unique($known));
+    }
+
     public function getByPostId(int $postId): array
     {
         return ForumFile::query()

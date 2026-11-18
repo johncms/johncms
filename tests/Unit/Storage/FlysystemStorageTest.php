@@ -48,6 +48,19 @@ final class FlysystemStorageTest extends TestCase
         self::assertSame('contents', $this->disk->read('dir/file.txt'));
     }
 
+    public function testListsTheFilesDirectlyInADirectory(): void
+    {
+        $this->disk->store('dir/a.txt', 'a');
+        $this->disk->store('dir/b.txt', 'b');
+        $this->disk->store('dir/nested/c.txt', 'c');
+
+        $files = $this->disk->files('dir');
+        sort($files);
+
+        self::assertSame(['dir/a.txt', 'dir/b.txt'], $files);
+        self::assertSame([], $this->disk->files('missing'), 'A directory that is not there holds nothing.');
+    }
+
     public function testStoresFromAStream(): void
     {
         $stream = fopen('php://temp', 'r+b');

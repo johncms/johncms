@@ -16,6 +16,14 @@ interface ForumFileRepositoryInterface
 
     public function hasFilesForPost(int $postId): bool;
 
+    /**
+     * Of the given names, those a row points at, the rows of hidden files included.
+     *
+     * @param list<string> $filenames
+     * @return list<string>
+     */
+    public function filterKnownNames(array $filenames): array;
+
     public function findById(int $fileId): ?ForumFile;
 
     public function findByIdAndPostId(int $fileId, int $postId): ?ForumFile;
