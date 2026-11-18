@@ -150,21 +150,19 @@ final readonly class ViewForumFilesUseCase
      */
     private function buildListResult(ForumFilesQueryDTO $query, array $context, string $lnk, int $newFrom): ForumFilesViewResultDTO
     {
-        $scope = $this->createScopeQuery($context, false);
-        $countQuery = $query->isNew
+        // The count and the rows see the same files: the hidden ones only with the right to see them,
+        // as the counts of the kinds do.
+        $scope = $this->createScopeQuery($context, $this->accessChecker->allows(ForumPermissions::DELETED_VIEW));
+        $listingFilter = $query->isNew
             ? ForumFileCountQuery::forNew($scope, $newFrom)
             : ForumFileCountQuery::forType($scope, $query->fileType);
-        $total = $this->fileRepository->countForListing($countQuery);
+        $total = $this->fileRepository->countForListing($listingFilter);
 
         $caption = $query->isNew ? __('New Files') : $context['caption'];
         $seoMeta = $this->buildSeoMeta($query, $context, $caption);
         $files = [];
 
         if ($total > 0) {
-            $listingScope = $this->createScopeQuery($context, $this->accessChecker->allows(ForumPermissions::DELETED_VIEW));
-            $listingFilter = $query->isNew
-                ? ForumFileCountQuery::forNew($listingScope, $newFrom)
-                : ForumFileCountQuery::forType($listingScope, $query->fileType);
 
             $rows = $this->fileRepository->getListingItems(new ForumFileListingQuery(
                 filter: $listingFilter,
