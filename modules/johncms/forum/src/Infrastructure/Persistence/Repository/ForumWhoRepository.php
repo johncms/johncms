@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Infrastructure\Persistence\Repository;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Johncms\Modules\Forum\Domain\Repository\ForumWhoRepositoryInterface;
 use Johncms\Users\GuestSession;
@@ -13,111 +14,117 @@ final readonly class ForumWhoRepository implements ForumWhoRepositoryInterface
 {
     public function countForumUsers(): int
     {
-        return User::query()
-            ->online()
+        return $this->onlineUsers()
             ->where('place', 'like', '/forum%')
             ->count();
     }
 
     public function getForumUsers(int $start, int $limit): Collection
     {
-        return User::query()
-            ->online()
+        /** @var Collection<int, User> $users */
+        $users = $this->onlineUsers()
             ->where('place', 'like', '/forum%')
             ->orderBy('name')
             ->offset(max(0, $start))
             ->limit(max(1, $limit))
             ->get();
+
+        return $users;
     }
 
     public function countForumGuests(): int
     {
-        return GuestSession::query()
-            ->online()
+        return $this->onlineGuests()
             ->where('place', 'like', '/forum%')
             ->count();
     }
 
     public function getForumGuests(int $start, int $limit): Collection
     {
-        return GuestSession::query()
-            ->online()
+        /** @var Collection<int, GuestSession> $guests */
+        $guests = $this->onlineGuests()
             ->where('place', 'like', '/forum%')
             ->orderByDesc('movings')
             ->offset(max(0, $start))
             ->limit(max(1, $limit))
             ->get();
+
+        return $guests;
     }
 
     public function countTopicUsers(int $topicId): int
     {
-        return $this->topicUsers($topicId)->count();
+        return $this->inTopic($this->onlineUsers(), $topicId)->count();
     }
 
     public function getTopicUsers(int $topicId, int $start, int $limit): Collection
     {
-        return $this->topicUsers($topicId)
-            ->slice(max(0, $start), max(1, $limit))
-            ->values();
+        /** @var Collection<int, User> $users */
+        $users = $this->inTopic($this->onlineUsers(), $topicId)
+            ->orderBy('name')
+            ->offset(max(0, $start))
+            ->limit(max(1, $limit))
+            ->get()
+            ->toBase();
+
+        return $users;
     }
 
     public function countTopicGuests(int $topicId): int
     {
-        return $this->topicGuests($topicId)->count();
+        return $this->inTopic($this->onlineGuests(), $topicId)->count();
     }
 
     public function getTopicGuests(int $topicId, int $start, int $limit): Collection
     {
-        return $this->topicGuests($topicId)
-            ->slice(max(0, $start), max(1, $limit))
-            ->values();
-    }
-
-    /**
-     * The members online in the forum, narrowed to the topic by the address each was last seen at.
-     * Those online are few, so the address is matched here rather than by functions of one
-     * database server.
-     *
-     * @return Collection<int, User>
-     */
-    private function topicUsers(int $topicId): Collection
-    {
-        return User::query()
-            ->online()
-            ->where('place', 'like', '/forum%')
-            ->orderBy('name')
-            ->get()
-            ->filter(fn (User $user): bool => $this->isTopicPlace((string) $user->place, $topicId))
-            ->values()
-            ->toBase();
-    }
-
-    /**
-     * @return Collection<int, GuestSession>
-     */
-    private function topicGuests(int $topicId): Collection
-    {
-        return GuestSession::query()
-            ->online()
-            ->where('place', 'like', '/forum%')
+        /** @var Collection<int, GuestSession> $guests */
+        $guests = $this->inTopic($this->onlineGuests(), $topicId)
             ->orderByDesc('movings')
+            ->offset(max(0, $start))
+            ->limit(max(1, $limit))
             ->get()
-            ->filter(fn (GuestSession $guest): bool => $this->isTopicPlace((string) $guest->place, $topicId))
-            ->values()
             ->toBase();
+
+        return $guests;
     }
 
     /**
-     * The address of a page of the topic, /forum/{sections}/{slug}-{id}/ with any query, or the
-     * address of the topic before the paths, /forum?type=topic&id={id}.
+     * @return Builder<User>
      */
-    private function isTopicPlace(string $place, int $topicId): bool
+    private function onlineUsers(): Builder
     {
-        if (preg_match('~^/forum/.+/.+-(\d+)(?:/|\?|$)~', $place, $matches) === 1) {
-            return (int) $matches[1] === $topicId;
-        }
+        return User::query()->online();
+    }
 
-        return preg_match('~^/forum/?\?type=topic&id=(\d+)(?:&|$)~', $place, $matches) === 1
-            && (int) $matches[1] === $topicId;
+    /**
+     * @return Builder<GuestSession>
+     */
+    private function onlineGuests(): Builder
+    {
+        return GuestSession::query()->online();
+    }
+
+    /**
+     * Narrows the visitors to those last seen on a page of the topic, by plain LIKE that every
+     * database runs. The topic is the last segment of its address, /forum/{sections}/{slug}-{id}/,
+     * so the patterns end there: a section whose name ends in the same number does not match.
+     * The address of the topic before the paths, /forum?type=topic&id={id}, is matched as well.
+     *
+     * @template TBuilder of Builder
+     * @param TBuilder $query
+     * @return TBuilder
+     */
+    private function inTopic(Builder $query, int $topicId): Builder
+    {
+        $id = (string) $topicId;
+
+        return $query->where(static function (Builder $places) use ($id): void {
+            foreach (['/forum/%-' . $id, '/forum/%-' . $id . '/', '/forum/%-' . $id . '/?%', '/forum/%-' . $id . '?%'] as $pattern) {
+                $places->orWhere('place', 'like', $pattern);
+            }
+            foreach (['/forum?type=topic&id=' . $id, '/forum/?type=topic&id=' . $id] as $legacy) {
+                $places->orWhere('place', '=', $legacy)->orWhere('place', 'like', $legacy . '&%');
+            }
+        });
     }
 }
