@@ -17,7 +17,7 @@ use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Johncms\Users\User;
-use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
+use Johncms\Modules\Forum\Domain\Storage\ForumAttachmentStorageInterface;
 
 /**
  * Class File
@@ -86,7 +86,7 @@ class ForumFile extends Model
 
     public function exists(): bool
     {
-        return di(ForumAttachmentStorage::class)->exists((string) $this->filename);
+        return di(ForumAttachmentStorageInterface::class)->exists((string) $this->filename);
     }
 
     /**
@@ -96,7 +96,7 @@ class ForumFile extends Model
      */
     public function getFilePreviewAttribute(): string
     {
-        $attachments = di(ForumAttachmentStorage::class);
+        $attachments = di(ForumAttachmentStorageInterface::class);
         $filename = (string) $this->filename;
 
         if (! $attachments->isImage($filename) || ! $attachments->exists($filename)) {
@@ -113,7 +113,7 @@ class ForumFile extends Model
      */
     public function getFileSizeAttribute()
     {
-        $attachments = di(ForumAttachmentStorage::class);
+        $attachments = di(ForumAttachmentStorageInterface::class);
         if (! $attachments->exists((string) $this->filename)) {
             return '';
         }

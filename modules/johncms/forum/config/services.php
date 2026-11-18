@@ -17,6 +17,7 @@ use Johncms\Modules\Forum\Domain\Repository\ForumUnreadRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumWhoRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\HiddenForumRepositoryInterface;
+use Johncms\Modules\Forum\Domain\Storage\ForumAttachmentStorageInterface;
 use Johncms\Modules\Forum\Infrastructure\Config\FileSystemForumConfigRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumAdminRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumFileRepository;
@@ -61,6 +62,7 @@ return static function (ContainerConfigurator $container): void {
     // consumers when the container is compiled and then no longer answers to a name, so
     // asking for it takes the page down; public keeps it in the container.
     $services->set(ForumAttachmentStorage::class)->autowire()->public();
+    $services->alias(ForumAttachmentStorageInterface::class, ForumAttachmentStorage::class)->public();
 
     $services->set(ForumMessageRepositoryInterface::class, ForumMessageRepository::class)->public();
     $services->set(ForumFileRepositoryInterface::class, ForumFileRepository::class)->public();

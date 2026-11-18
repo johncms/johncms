@@ -6,7 +6,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Modules\Forum\Application\Uploads\ForumMessagePictures;
-use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
+use Johncms\Modules\Forum\Domain\Storage\ForumAttachmentStorageInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
@@ -23,7 +23,7 @@ final readonly class DeleteTopicUseCase
         private ForumVoteRepositoryInterface $voteRepository,
         private ForumUnreadRepositoryInterface $unreadRepository,
         private ForumMessagePictures $pictures,
-        private ForumAttachmentStorage $attachments,
+        private ForumAttachmentStorageInterface $attachments,
     ) {
     }
 

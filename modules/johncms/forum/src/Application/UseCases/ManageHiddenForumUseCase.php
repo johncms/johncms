@@ -12,7 +12,7 @@ use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Modules\Forum\Domain\Repository\HiddenForumRepositoryInterface;
 use Johncms\Modules\Forum\Domain\ValueObjects\HiddenListFilter;
-use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
+use Johncms\Modules\Forum\Domain\Storage\ForumAttachmentStorageInterface;
 
 /**
  * The hidden posts and topics of the forum: the list of the panel, and emptying it for good.
@@ -21,7 +21,7 @@ final readonly class ManageHiddenForumUseCase
 {
     public function __construct(
         private HiddenForumRepositoryInterface $repository,
-        private ForumAttachmentStorage $attachments,
+        private ForumAttachmentStorageInterface $attachments,
         private ForumMessagePictures $pictures,
         private TransactionManagerInterface $transactions,
     ) {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Infrastructure\Storage;
 
+use Johncms\Modules\Forum\Domain\Storage\ForumAttachmentStorageInterface;
 use Johncms\Storage\StorageException;
 use Johncms\Storage\StorageInterface;
 
@@ -14,7 +15,7 @@ use Johncms\Storage\StorageInterface;
  * table and go through Johncms\Files\FileStore. These predate it: seven places used to build
  * `UPLOAD_PATH . 'forum/attach/'` themselves, including two in the admin module.
  */
-final readonly class ForumAttachmentStorage
+final readonly class ForumAttachmentStorage implements ForumAttachmentStorageInterface
 {
     private const string DIRECTORY = 'forum/attach';
 

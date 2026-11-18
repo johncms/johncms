@@ -565,28 +565,10 @@ parameters:
 			path: modules/johncms/downloads/src/Infrastructure/Persistence/Repository/DownloadFileRepository.php
 
 		-
-			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\Controllers\\Admin\\DeleteSectionController should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
-			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
-			count: 1
-			path: modules/johncms/forum/src/Application/Controllers/Admin/DeleteSectionController.php
-
-		-
 			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1
 			path: modules/johncms/forum/src/Application/Controllers/CuratorsController.php
-
-		-
-			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\Controllers\\DownloadFileController should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
-			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
-			count: 1
-			path: modules/johncms/forum/src/Application/Controllers/DownloadFileController.php
-
-		-
-			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\Controllers\\FilePreviewController should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
-			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
-			count: 1
-			path: modules/johncms/forum/src/Application/Controllers/FilePreviewController.php
 
 		-
 			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
@@ -611,48 +593,6 @@ parameters:
 			identifier: property.notFound
 			count: 1
 			path: modules/johncms/forum/src/Application/UseCases/CreateTopicUseCase.php
-
-		-
-			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\Uploads\\ForumPostFiles should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
-			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
-			count: 1
-			path: modules/johncms/forum/src/Application/Uploads/ForumPostFiles.php
-
-		-
-			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\UseCases\\DeletePostFileUseCase should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
-			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
-			count: 1
-			path: modules/johncms/forum/src/Application/UseCases/DeletePostFileUseCase.php
-
-		-
-			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\UseCases\\DeletePostUseCase should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
-			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
-			count: 1
-			path: modules/johncms/forum/src/Application/UseCases/DeletePostUseCase.php
-
-		-
-			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\UseCases\\DeleteTopicUseCase should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
-			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
-			count: 1
-			path: modules/johncms/forum/src/Application/UseCases/DeleteTopicUseCase.php
-
-		-
-			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\UseCases\\ManageHiddenForumUseCase should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
-			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
-			count: 1
-			path: modules/johncms/forum/src/Application/UseCases/ManageHiddenForumUseCase.php
-
-		-
-			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\UseCases\\ViewForumFilesUseCase should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
-			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
-			count: 1
-			path: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php
-
-		-
-			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Domain\\Models\\ForumFile should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
-			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
-			count: 3
-			path: modules/johncms/forum/src/Domain/Models/ForumFile.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Forum\\Domain\\Models\\ForumMessage\:\:scopeUsers\(\) should return Illuminate\\Database\\Eloquent\\Builder but returns Illuminate\\Database\\Query\\Builder\.$#'

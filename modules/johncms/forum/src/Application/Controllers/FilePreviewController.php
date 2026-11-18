@@ -11,7 +11,7 @@ use Johncms\Image\ImageProcessingException;
 use Johncms\Image\ThumbnailGenerator;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
+use Johncms\Modules\Forum\Domain\Storage\ForumAttachmentStorageInterface;
 
 /**
  * The thumbnail of an image attached to a post.
@@ -27,7 +27,7 @@ final readonly class FilePreviewController
     public function __construct(
         private ForumFileRepositoryInterface $fileRepository,
         private ThumbnailGenerator $thumbnails,
-        private ForumAttachmentStorage $attachments,
+        private ForumAttachmentStorageInterface $attachments,
     ) {
     }
 

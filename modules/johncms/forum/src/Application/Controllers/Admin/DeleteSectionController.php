@@ -13,7 +13,7 @@ use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\UseCases\DeleteForumSectionUseCase;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\Modules\Forum\Domain\Repository\ForumStructureRepositoryInterface;
-use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
+use Johncms\Modules\Forum\Domain\Storage\ForumAttachmentStorageInterface;
 use Johncms\NavChain;
 
 /**
@@ -30,7 +30,7 @@ final readonly class DeleteSectionController
         private AccessCheckerInterface $accessChecker,
         private ForumStructureRepositoryInterface $repository,
         private DeleteForumSectionUseCase $deleteSection,
-        private ForumAttachmentStorage $attachments,
+        private ForumAttachmentStorageInterface $attachments,
         private Session $session,
     ) {
     }

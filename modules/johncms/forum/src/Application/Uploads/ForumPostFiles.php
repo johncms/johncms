@@ -12,7 +12,7 @@ use Johncms\Modules\Forum\Application\DTO\ForumSettingsDTO;
 use Johncms\Modules\Forum\Domain\Models\ForumFile;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
-use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
+use Johncms\Modules\Forum\Domain\Storage\ForumAttachmentStorageInterface;
 use LogicException;
 use Throwable;
 
@@ -45,7 +45,7 @@ final readonly class ForumPostFiles
     private const int OTHER_TYPE = 9;
 
     public function __construct(
-        private ForumAttachmentStorage $attachments,
+        private ForumAttachmentStorageInterface $attachments,
         private ForumFileRepositoryInterface $files,
         private ForumMessageRepositoryInterface $messages,
     ) {

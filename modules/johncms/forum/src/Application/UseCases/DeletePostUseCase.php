@@ -8,7 +8,7 @@ use Johncms\Modules\Forum\Application\Services\ForumUserSettings;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
-use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
+use Johncms\Modules\Forum\Domain\Storage\ForumAttachmentStorageInterface;
 use Johncms\Modules\Forum\Application\DTO\DeletePostResultDTO;
 use Johncms\Modules\Forum\Application\DTO\EditPostContextDTO;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
@@ -36,7 +36,7 @@ final readonly class DeletePostUseCase
         private CurrentUser $currentUser,
         private ForumMessagePictures $pictures,
         private AccessCheckerInterface $accessChecker,
-        private ForumAttachmentStorage $attachments,
+        private ForumAttachmentStorageInterface $attachments,
         private ForumUserSettings $userSettings,
     ) {
     }

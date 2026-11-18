@@ -22,7 +22,7 @@ use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Utils\DateFormatterInterface;
-use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
+use Johncms\Modules\Forum\Domain\Storage\ForumAttachmentStorageInterface;
 use Johncms\Users\ProfileLinksInterface;
 
 final readonly class ViewForumFilesUseCase
@@ -38,7 +38,7 @@ final readonly class ViewForumFilesUseCase
         private CurrentUser $currentUser,
         private ProfileLinksInterface $profileLinks,
         private AccessCheckerInterface $accessChecker,
-        private ForumAttachmentStorage $attachments,
+        private ForumAttachmentStorageInterface $attachments,
         private ForumUserSettings $userSettings,
     ) {
     }
