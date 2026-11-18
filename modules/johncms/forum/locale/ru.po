@@ -1933,3 +1933,6 @@ msgstr "Чтобы ответить в теме, войдите на сайт."
 
 msgid "A deleted post"
 msgstr "Удалённое сообщение"
+
+msgid "Do not answer this post"
+msgstr "Не отвечать на это сообщение"

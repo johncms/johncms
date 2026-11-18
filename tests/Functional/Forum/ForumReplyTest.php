@@ -157,6 +157,49 @@ final class ForumReplyTest extends FunctionalTestCase
         self::assertNull(Capsule::table('forum_messages')->where('id', $answer)->value('reply_to_id'));
     }
 
+    public function testTheFormOfTheTopicCarriesTheAnsweredPost(): void
+    {
+        $answered = $this->post($this->topic, $this->author, '<p>A question</p>');
+
+        $page = $this->topicPage($this->writer);
+
+        self::assertStringContainsString('name="reply_to" value="" data-comment-reply-field', $page);
+        self::assertStringContainsString('href="/forum/reply-message/' . $answered . '/" data-comment-reply', $page, 'Without the script Reply opens the page of the answer.');
+    }
+
+    public function testThePostAnAnswerRecallsIsShownOnThePageOfTheTopicItIsOn(): void
+    {
+        $first = $this->post($this->topic, $this->author, '<p>First</p>');
+        $this->post($this->topic, $this->author, '<p>Second</p>');
+        $third = $this->post($this->topic, $this->author, '<p>Third</p>');
+        $topicUrl = '/forum/talk/a-topic-' . $this->topic . '/';
+
+        // Two posts on a page; the size of a page is a setting of the visitor.
+        Capsule::table('users')->where('id', $this->writer->id)->update(['set_user' => serialize(['kmess' => 2])]);
+
+        self::assertStringContainsString('href="' . $topicUrl . '#post-' . $first . '"', $this->postPage($first));
+        self::assertStringContainsString('href="' . $topicUrl . '?page=2#post-' . $third . '"', $this->postPage($third));
+
+        Capsule::table('users')->where('id', $this->writer->id)->update(['set_forum' => serialize(['upfp' => 1])]);
+        self::assertStringContainsString('href="' . $topicUrl . '?page=2#post-' . $first . '"', $this->postPage($first), 'The newest come first.');
+        self::assertStringContainsString('href="' . $topicUrl . '#post-' . $third . '"', $this->postPage($third));
+    }
+
+    public function testThePostAnAnswerRecallsOpensWhenTheFilterLeavesItOut(): void
+    {
+        $answered = $this->post($this->topic, $this->author, '<p>A question</p>');
+        $this->post($this->topic, $this->writer, '<p>An answer</p>', ['reply_to_id' => $answered]);
+        $session = $this->container()->get(Session::class);
+        $session->set('fsort_id', $this->topic);
+        $session->set('fsort_users', [$this->writer->id]);
+
+        $topic = $this->topicPage($this->writer);
+        self::assertStringNotContainsString('id="post-' . $answered . '"', $topic, 'The filter leaves the post out.');
+        self::assertStringContainsString('href="/forum/post/' . $answered . '/"', $topic);
+
+        self::assertStringContainsString('<p>A question</p>', $this->postPage($answered));
+    }
+
     /**
      * The form as the page gives it: with the one-time token the page put into the session.
      *
@@ -184,6 +227,14 @@ final class ForumReplyTest extends FunctionalTestCase
     private function topicPage(User $visitor): string
     {
         $response = $this->handleRequest('/forum/talk/a-topic-' . $this->topic . '/', cookies: $this->actingAs($visitor));
+        self::assertSame(200, $response->getStatusCode());
+
+        return (string) $response->getContent();
+    }
+
+    private function postPage(int $post): string
+    {
+        $response = $this->handleRequest('/forum/post/' . $post . '/', cookies: $this->actingAs($this->writer));
         self::assertSame(200, $response->getStatusCode());
 
         return (string) $response->getContent();

@@ -98,6 +98,8 @@ function enableQuotes(discussion, editor, reply) {
   discussion.addEventListener('click', event => {
     const comment = event.target.closest('[data-comment-quote]')?.closest('[data-comment]');
     if (!comment) return;
+    // In the forum the button is a link to the page of the answer, the way without the script.
+    event.preventDefault();
     // Built from text nodes: the quoted comment is user content.
     const author = comment.querySelector('[data-comment-author]').textContent.trim();
     const date = comment.querySelector('[data-comment-date]').textContent.trim();

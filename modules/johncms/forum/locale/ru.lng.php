@@ -488,6 +488,7 @@
       'The topic is closed: no new posts.' => 'Тема закрыта: новые сообщения не принимаются.',
       'Sign in to answer in the topic.' => 'Чтобы ответить в теме, войдите на сайт.',
       'A deleted post' => 'Удалённое сообщение',
+      'Do not answer this post' => 'Не отвечать на это сообщение',
     ),
   ),
 );

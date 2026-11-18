@@ -6,7 +6,8 @@
     @var last_post    bool The post is the last one in sight: deleting it takes the topic with it.
 #}
 {% set author = post.author %}
-<article class="site-comment site-forum-post{{ post.isDeleted ? ' site-forum-post--deleted' : '' }}" id="post-{{ post.id }}">
+{# The data-comment-* marks are read by comments.js: Reply and Quote fill the form under the topic. #}
+<article class="site-comment site-forum-post{{ post.isDeleted ? ' site-forum-post--deleted' : '' }}" id="post-{{ post.id }}" data-comment data-comment-id="{{ post.id }}">
     <div class="site-comment__avatar">
         {% if author.profileUrl %}<a href="{{ author.profileUrl }}" tabindex="-1" aria-hidden="true">{% endif %}
         <img src="{{ avatar(author.id ?? 0) }}" alt="" width="40" height="40" loading="lazy">
@@ -16,13 +17,13 @@
     <div class="site-comment__main">
         <header class="site-comment__header">
             {% if author.profileUrl %}
-                <a class="site-comment__name" href="{{ author.profileUrl }}">{{ author.name }}</a>
+                <a class="site-comment__name" href="{{ author.profileUrl }}" data-comment-author>{{ author.name }}</a>
             {% else %}
-                <span class="site-comment__name">{{ author.name }}</span>
+                <span class="site-comment__name" data-comment-author>{{ author.name }}</span>
             {% endif %}
             {% if author.rightsName %}<span class="site-comment__role">{{ author.rightsName }}</span>{% endif %}
             {# The date is the lasting link of the post: it opens on a page of its own. #}
-            <a class="site-comment__date" href="{{ post.url }}"><time>{{ post.createdAt }}</time></a>
+            <a class="site-comment__date" href="{{ post.url }}"><time data-comment-date>{{ post.createdAt }}</time></a>
             {% if post.editInfo %}
                 <span class="site-comment__date" data-bs-toggle="tooltip" data-bs-placement="top"
                       title="{{ __('Edited:') }} {{ post.editInfo.editorName }} ({{ post.editInfo.editedAt }}) [{{ post.editInfo.editCount }}]">{{ __('Edited') }}</span>
@@ -51,7 +52,8 @@
                     <span class="site-comment__reply-excerpt">{{ __('A deleted post') }}</span>
                 </span>
             {% else %}
-                <a class="site-comment__reply-to" href="{{ answered.url }}">
+                {# The script scrolls to the post when it is on the page; the address shows it otherwise. #}
+                <a class="site-comment__reply-to" href="{{ answered.url }}" data-comment-reply-to="{{ answered.id }}">
                     {% include '@theme/components/icon.twig' with {name: 'reply', size: 12} only %}
                     <span class="visually-hidden">{{ d__('system', 'In answer to:') }}</span>
                     <span class="site-comment__reply-name">{{ answered.authorName }}</span>
@@ -59,7 +61,7 @@
                 </a>
             {% endif %}
         {% endif %}
-        <div class="site-comment__body ck-content">{{ post.body }}</div>
+        <div class="site-comment__body ck-content" data-comment-body>{{ post.body }}</div>
 
         {% if post.files %}
             <ul class="site-forum-files image-gallery" aria-label="{{ __('Attached files') }}">
@@ -103,10 +105,11 @@
             <footer class="site-comment__footer">
                 <div class="site-comment__actions">
                     {% if actions.replyUrl %}
-                        <a class="btn btn-outline-secondary btn-xs" href="{{ actions.replyUrl }}">
+                        {# The page of the answer works without the script; with it, the form under the topic is used. #}
+                        <a class="btn btn-outline-secondary btn-xs" href="{{ actions.replyUrl }}" data-comment-reply>
                             {% include '@theme/components/icon.twig' with {name: 'message-square', size: 12} only %} {{ __('Reply') }}
                         </a>
-                        <a class="btn btn-outline-secondary btn-xs" href="{{ actions.quoteUrl }}">
+                        <a class="btn btn-outline-secondary btn-xs" href="{{ actions.quoteUrl }}" data-comment-quote>
                             {% include '@theme/components/icon.twig' with {name: 'quote', size: 12} only %} {{ __('Quote') }}
                         </a>
                     {% endif %}
