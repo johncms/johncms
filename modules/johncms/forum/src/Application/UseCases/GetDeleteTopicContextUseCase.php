@@ -19,9 +19,15 @@ final readonly class GetDeleteTopicContextUseCase
     ) {
     }
 
-    public function execute(int $topicId): ForumTopic
+    /**
+     * Hiding a topic is moderation; deleting it for good is a permission of its own, which may be
+     * granted without moderation, so it lets the request in on its own.
+     */
+    public function execute(int $topicId, bool $forGood): ForumTopic
     {
-        if (! $this->accessChecker->allows(ForumPermissions::TOPIC_MODERATE)) {
+        $allowed = $this->accessChecker->allows(ForumPermissions::TOPIC_MODERATE)
+            || ($forGood && $this->accessChecker->allows(ForumPermissions::TOPIC_DESTROY));
+        if (! $allowed) {
             throw new ForumAccessDeniedException('Access denied to delete topic.');
         }
 

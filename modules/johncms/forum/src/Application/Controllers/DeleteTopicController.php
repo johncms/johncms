@@ -6,10 +6,10 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
-use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Application\UseCases\DeleteTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetDeleteTopicContextUseCase;
@@ -33,8 +33,11 @@ final readonly class DeleteTopicController
      */
     public function __invoke(Request $request, int $id): ViewResponse
     {
+        // Deleting for good is asked for explicitly; anything else hides the topic.
+        $forGood = $request->bodyInt('del', 1) === 2;
+
         try {
-            $topic = $this->contextUseCase->execute($id);
+            $topic = $this->contextUseCase->execute($id, $forGood);
         } catch (ForumAccessDeniedException $exception) {
             return $this->forumErrorRenderer->viewResponse(
                 $exception,
@@ -56,8 +59,8 @@ final readonly class DeleteTopicController
             );
         }
 
-        // Deleting for good is asked for explicitly; anything else hides the topic.
-        if ($request->bodyInt('del', 1) === 2 && $this->accessChecker->allows(ForumPermissions::TOPIC_DESTROY)) {
+        // A moderator asking for more than they may delete hides the topic, as the dialog offers.
+        if ($forGood && $this->accessChecker->allows(ForumPermissions::TOPIC_DESTROY)) {
             $this->deleteTopicUseCase->deleteTopic($topic->id);
         } else {
             $this->deleteTopicUseCase->hideTopic($topic->id, $this->currentUser->user()->name);

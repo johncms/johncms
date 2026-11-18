@@ -74,6 +74,25 @@ final class ForumTopicDeletionTest extends FunctionalTestCase
         self::assertTrue($this->fresh()->deleted, 'Without the permission the topic is only hidden.');
     }
 
+    public function testDeletingForGoodNeedsNoModerationBesides(): void
+    {
+        $this->post();
+        ForumTopic::query()->withoutGlobalScopes()->whereKey($this->topic)->update(['deleted' => 1, 'deleted_by' => 'Alex']);
+        $destroyer = FunctionalUserFactory::createWithPermissions(['forum.view', 'forum.deleted.view', 'forum.topic.destroy']);
+
+        self::assertSame(302, $this->postForm('/forum/delete-topic/' . $this->topic . '/', ['confirmed' => '1', 'del' => '2'], $destroyer)->getStatusCode());
+        self::assertFalse(ForumTopic::query()->withoutGlobalScopes()->whereKey($this->topic)->exists());
+    }
+
+    public function testHidingATopicTakesModeration(): void
+    {
+        $this->post();
+        $destroyer = FunctionalUserFactory::createWithPermissions(['forum.view', 'forum.deleted.view', 'forum.topic.destroy']);
+
+        self::assertSame(403, $this->postForm('/forum/delete-topic/' . $this->topic . '/', ['confirmed' => '1'], $destroyer)->getStatusCode());
+        self::assertFalse($this->fresh()->deleted);
+    }
+
     public function testRestoringATopicBringsBackTheFilesOfThePostsInSight(): void
     {
         $shown = $this->file($this->post());
