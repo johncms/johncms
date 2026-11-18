@@ -4,44 +4,46 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
-use Johncms\Database\TransactionManagerInterface;
-use Johncms\EditorUploads\EditorUploadBindException;
-use Johncms\Modules\Forum\Application\Uploads\ForumMessagePictures;
-use Johncms\Modules\Forum\Application\Uploads\ForumPostFiles;
-use Johncms\Modules\Forum\Domain\Models\ForumTopic;
-use Johncms\Storage\StorageException;
-use Symfony\Component\HttpFoundation\Response;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
-use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Database\TransactionManagerInterface;
+use Johncms\EditorUploads\EditorUploadBindException;
+use Johncms\Http\Environment;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
+use Johncms\Http\UploadedFileMapper;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
+use Johncms\Modules\Forum\Application\ForumUtils;
 use Johncms\Modules\Forum\Application\Services\ForumAnsweredPosts;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumFormTokens;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Modules\Forum\Application\Services\ForumPostChecks;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
+use Johncms\Modules\Forum\Application\Uploads\ForumMessagePictures;
+use Johncms\Modules\Forum\Application\Uploads\ForumPostFiles;
 use Johncms\Modules\Forum\Application\UseCases\GetNewMessageContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\PostMessageUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ReplyMessageUseCase;
-use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
-use Johncms\Security\AntifloodCheckerInterface;
-use Johncms\Http\Environment;
-use Johncms\Http\Request;
-use Johncms\Http\UploadedFileMapper;
-use Johncms\Http\View\ViewResponse;
-use Johncms\Http\Session;
+use Johncms\Modules\Forum\Domain\Models\ForumTopic;
+use Johncms\NavChain;
+use Johncms\Storage\StorageException;
 use Johncms\System\Utility\EditorContentNormalizer;
-use Twig\Markup;
+use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * A post in a topic. The form under the topic sends here; the page of this address is that form
+ * on its own, for the way without the script and for a form sent back with what was wrong.
+ */
 final readonly class NewMessageController
 {
     public function __construct(
         private Environment $environment,
         private Session $session,
-        private AntifloodCheckerInterface $antifloodChecker,
         private EditorContentNormalizer $editorContentNormalizer,
         private CurrentUser $currentUser,
-        private ForumMessageRepositoryInterface $messageRepository,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetNewMessageContextUseCase $contextUseCase,
         private PostMessageUseCase $postMessageUseCase,
@@ -53,7 +55,9 @@ final readonly class NewMessageController
         private AccessCheckerInterface $accessChecker,
         private ForumFormTokens $formTokens,
         private ForumPostFiles $postFiles,
+        private ForumPostChecks $checks,
         private UploadedFileMapper $uploadedFiles,
+        private NavChain $navChain,
     ) {
     }
 
@@ -89,126 +93,79 @@ final readonly class NewMessageController
                     'message'       => __('You cannot write in a closed topic'),
                     'back_url'      => $topic->url,
                     'back_url_name' => __('Back'),
-                ]
+                ],
+                Response::HTTP_FORBIDDEN,
             );
         }
 
-        $flood = $this->antifloodChecker->getRemainingSeconds();
-        if ($flood) {
-            return new ViewResponse(
-                '@theme/pages/result.twig',
-                [
-                    'title'         => __('New message'),
-                    'type'          => 'alert-danger',
-                    'message'       => new Markup(
-                        sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
-                        'UTF-8'
-                    ),
-                    'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
-                    'back_url_name' => __('Back'),
-                ]
-            );
-        }
-
-        $msg = $this->editorContentNormalizer->trimEdgeEmptyBlocks($request->body('msg', ''));
-        $msg = trim($msg);
-        $files = $this->uploadedFiles->fromField($request->files->get('files'));
+        $sent = $request->body('msg', '');
         $replyTo = $request->bodyInt('reply_to');
-
-        if (
-            $request->hasBody('submit')
-            && $msg !== ''
-            && $this->isValidToken($request)
-        ) {
-            if (mb_strlen($msg) < 4) {
-                return new ViewResponse(
-                    '@theme/pages/result.twig',
-                    [
-                        'title'         => __('New message'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('Text is too short'),
-                        'back_url'      => $topic->url,
-                        'back_url_name' => __('Back'),
-                    ]
-                );
-            }
-
-            $lastMessage = $this->messageRepository->findLastMessageByUser($this->currentUser->id());
-            if ($lastMessage !== null && $msg === (string) $lastMessage->getRawOriginal('text')) {
-                return new ViewResponse(
-                    '@theme/pages/result.twig',
-                    [
-                        'title'         => __('New message'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('Message already exists'),
-                        'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
-                        'back_url_name' => __('Back'),
-                    ]
-                );
-            }
-
-            $fileErrors = $this->postFiles->check($files);
-            if ($fileErrors !== []) {
-                return $this->form($topic, $page, $msg, $replyTo, $fileErrors);
-            }
-
-            if ($this->session->get('fsort_id') === $topic->id) {
-                $this->session->remove(['fsort_id', 'fsort_users']);
-            }
-
-            $this->formTokens->consume($request->body('token', ''));
-            $answered = $this->answeredPosts->find($topic, $replyTo);
-
-            try {
-                $result = $this->transactions->run(function () use ($topic, $msg, $files, $answered) {
-                    $result = $answered === null
-                        ? $this->postMessageUseCase->execute(
-                            topic: $topic,
-                            messageText: $msg,
-                            withFiles: $files !== [],
-                            clientInfo: $this->environment->getClientInfo(),
-                        )
-                        : $this->replyMessageUseCase->execute(
-                            sourceMessage: $answered,
-                            topic: $topic,
-                            messageText: $msg,
-                            clientInfo: $this->environment->getClientInfo(),
-                        );
-                    $this->pictures->bind($result->messageId, $this->currentUser->id());
-                    // Last: a failure after the files are written would leave them behind.
-                    $this->postFiles->store($result->messageId, $files);
-
-                    return $result;
-                });
-            } catch (EditorUploadBindException $exception) {
-                return new ViewResponse(
-                    '@theme/pages/result.twig',
-                    [
-                        'title'         => __('New message'),
-                        'type'          => 'alert-danger',
-                        'message'       => $exception->getMessage(),
-                        'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
-                        'back_url_name' => __('Back'),
-                    ]
-                );
-            } catch (StorageException) {
-                return $this->form($topic, $page, $msg, $replyTo, [__('The files could not be saved. Try again.')]);
-            }
-
-            redirect($this->topicPathService->getTopicUrlById($result->topicId, $result->page > 1 ? $result->page : null) ?? '/forum/');
+        if (! $request->hasBody('submit')) {
+            return $this->form($topic, $page, $sent, $replyTo, []);
         }
 
-        return $this->form($topic, $page, $msg, $replyTo, []);
+        $msg = trim($this->editorContentNormalizer->trimEdgeEmptyBlocks($sent));
+        $files = $this->uploadedFiles->fromField($request->files->get('files'));
+        $errors = $this->checks->errors($msg);
+        if ($errors === [] && ($fileErrors = $this->postFiles->check($files)) !== []) {
+            $errors = ['files' => $fileErrors];
+        }
+        if ($errors === [] && ! $this->formTokens->consume($request->body('token'))) {
+            $errors = ['_form' => [__('The form was already sent or is out of date. Send it again if needed.')]];
+        }
+        if ($errors !== []) {
+            return $this->form($topic, $page, $sent, $replyTo, $errors);
+        }
+
+        if ($this->session->get('fsort_id') === $topic->id) {
+            $this->session->remove(['fsort_id', 'fsort_users']);
+        }
+
+        $answered = $this->answeredPosts->find($topic, $replyTo);
+
+        try {
+            $result = $this->transactions->run(function () use ($topic, $msg, $files, $answered) {
+                $result = $answered === null
+                    ? $this->postMessageUseCase->execute(
+                        topic: $topic,
+                        messageText: $msg,
+                        withFiles: $files !== [],
+                        clientInfo: $this->environment->getClientInfo(),
+                    )
+                    : $this->replyMessageUseCase->execute(
+                        sourceMessage: $answered,
+                        topic: $topic,
+                        messageText: $msg,
+                        clientInfo: $this->environment->getClientInfo(),
+                    );
+                $this->pictures->bind($result->messageId, $this->currentUser->id());
+                // Last: a failure after the files are written would leave them behind.
+                $this->postFiles->store($result->messageId, $files);
+
+                return $result;
+            });
+        } catch (EditorUploadBindException $exception) {
+            return $this->form($topic, $page, $sent, $replyTo, ['message' => [$exception->getMessage()]]);
+        } catch (StorageException) {
+            return $this->form($topic, $page, $sent, $replyTo, ['files' => [__('The files could not be saved. Try again.')]]);
+        }
+
+        redirect($this->topicPathService->getTopicUrlById($result->topicId, $result->page > 1 ? $result->page : null) ?? '/forum/');
     }
 
     /**
-     * The page of the form: the way without the script, and the form sent back with what was
-     * wrong with its files. The files are chosen anew; the text and the post it answers stay.
+     * The page of the form. Sent back, it keeps the text and the post it answers and says what was
+     * wrong beside the fields; the files are chosen anew.
      *
-     * @param list<string> $fileErrors
+     * @param array<string, list<string>> $errors
      */
-    private function form(ForumTopic $topic, int $page, string $msg, int $replyTo, array $fileErrors): ViewResponse
+    private function form(ForumTopic $topic, int $page, string $msg, int $replyTo, array $errors): ViewResponse
     {
+        $backUrl = $topic->url . ($page > 1 ? '?page=' . $page : '');
+        $this->navChain->add(__('Forum'), '/forum/');
+        ForumUtils::buildBreadcrumbs($topic->section_id, $topic->name, $backUrl);
+        $this->navChain->add(__('New message'));
+
         return new ViewResponse(
             '@forum/public/reply-message.twig',
             [
@@ -219,25 +176,11 @@ final readonly class NewMessageController
                 'form_action' => '/forum/new-message/' . $topic->id . '/' . ($page > 1 ? '?page=' . $page : ''),
                 'msg'         => $msg,
                 'reply_to'    => $replyTo,
-                'back_url'    => $this->buildTopicBackUrl($topic->url, $page),
+                'back_url'    => $backUrl,
                 'file_limits' => $this->postFiles->limits(),
-                'file_errors' => $fileErrors,
+                'errors'      => $errors,
             ],
-            $fileErrors !== [] ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK,
+            $errors !== [] ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK,
         );
-    }
-
-    private function isValidToken(Request $request): bool
-    {
-        return $this->formTokens->isValid($request->body('token', ''));
-    }
-
-    private function buildTopicBackUrl(string $topicUrl, int $page): string
-    {
-        if ($page <= 1) {
-            return $topicUrl;
-        }
-
-        return $topicUrl . '?page=' . $page;
     }
 }

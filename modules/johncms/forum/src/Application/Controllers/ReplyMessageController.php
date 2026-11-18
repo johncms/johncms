@@ -4,41 +4,45 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
-use Johncms\Database\TransactionManagerInterface;
-use Johncms\EditorUploads\EditorUploadBindException;
-use Johncms\Modules\Forum\Application\Uploads\ForumMessagePictures;
-use Johncms\Modules\Forum\Application\Uploads\ForumPostFiles;
-use Johncms\Storage\StorageException;
-use Symfony\Component\HttpFoundation\Response;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
-use Johncms\Modules\Forum\Application\Services\ForumPermissions;
-use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
-use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
-use Johncms\Modules\Forum\Application\Services\ForumFormTokens;
-use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
-use Johncms\Modules\Forum\Application\UseCases\GetReplyMessageContextUseCase;
-use Johncms\Modules\Forum\Application\UseCases\ReplyMessageUseCase;
-use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
-use Johncms\Security\AntifloodCheckerInterface;
+use Johncms\Comments\Application\CommentExcerpt;
+use Johncms\Database\TransactionManagerInterface;
+use Johncms\EditorUploads\EditorUploadBindException;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\Http\UploadedFileMapper;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Http\Session;
+use Johncms\Modules\Forum\Application\DTO\ReplyMessageContextDTO;
+use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
+use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
+use Johncms\Modules\Forum\Application\ForumUtils;
+use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
+use Johncms\Modules\Forum\Application\Services\ForumFormTokens;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Modules\Forum\Application\Services\ForumPostChecks;
+use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
+use Johncms\Modules\Forum\Application\Uploads\ForumMessagePictures;
+use Johncms\Modules\Forum\Application\Uploads\ForumPostFiles;
+use Johncms\Modules\Forum\Application\UseCases\GetReplyMessageContextUseCase;
+use Johncms\Modules\Forum\Application\UseCases\ReplyMessageUseCase;
+use Johncms\NavChain;
+use Johncms\Storage\StorageException;
 use Johncms\System\Utility\EditorContentNormalizer;
-use Twig\Markup;
+use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * An answer to a post on a page of its own: the way the Reply and Quote buttons take without the
+ * script, and the answer sent back with what was wrong.
+ */
 final readonly class ReplyMessageController
 {
     public function __construct(
         private Environment $environment,
         private Session $session,
-        private AntifloodCheckerInterface $antifloodChecker,
         private EditorContentNormalizer $editorContentNormalizer,
         private CurrentUser $currentUser,
-        private ForumMessageRepositoryInterface $messageRepository,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetReplyMessageContextUseCase $contextUseCase,
         private ReplyMessageUseCase $replyMessageUseCase,
@@ -48,7 +52,10 @@ final readonly class ReplyMessageController
         private AccessCheckerInterface $accessChecker,
         private ForumFormTokens $formTokens,
         private ForumPostFiles $postFiles,
+        private ForumPostChecks $checks,
         private UploadedFileMapper $uploadedFiles,
+        private CommentExcerpt $excerpt,
+        private NavChain $navChain,
     ) {
     }
 
@@ -75,212 +82,121 @@ final readonly class ReplyMessageController
         $topic = $context->topic;
         $sourceMessage = $context->message;
 
+        $refusal = null;
         if (
             ($topic->deleted && ! $this->accessChecker->allows(ForumPermissions::DELETED_VIEW))
             || ($topic->closed && ! $this->accessChecker->allows(ForumPermissions::TOPIC_MODERATE))
         ) {
+            $refusal = __('You cannot write in a closed topic');
+        } elseif ($sourceMessage->user_id === $this->currentUser->id()) {
+            $refusal = __('You can not reply to your own message');
+        }
+        if ($refusal !== null) {
             return new ViewResponse(
                 '@theme/pages/result.twig',
                 [
                     'title'         => __('New message'),
                     'type'          => 'alert-danger',
-                    'message'       => __('You cannot write in a closed topic'),
+                    'message'       => $refusal,
                     'back_url'      => $topic->url,
                     'back_url_name' => __('Back'),
-                ]
+                ],
+                Response::HTTP_FORBIDDEN,
             );
         }
 
-        if ($sourceMessage->user_id === $this->currentUser->id()) {
-            return new ViewResponse(
-                '@theme/pages/result.twig',
-                [
-                    'title'         => __('New message'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('You can not reply to your own message'),
-                    'back_url'      => $topic->url,
-                    'back_url_name' => __('Back'),
-                ]
-            );
+        if (! $request->hasBody('submit')) {
+            return $this->form($request, $context, $page, $this->opening($request, $context), []);
         }
 
-        $flood = $this->antifloodChecker->getRemainingSeconds();
-        if ($flood) {
-            return new ViewResponse(
-                '@theme/pages/result.twig',
-                [
-                    'title'         => __('New message'),
-                    'type'          => 'alert-danger',
-                    'message'       => new Markup(
-                        sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
-                        'UTF-8'
-                    ),
-                    'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
-                    'back_url_name' => __('Back'),
-                ]
-            );
-        }
-
-        $msg = $this->editorContentNormalizer->trimEdgeEmptyBlocks($request->body('msg', ''));
-        $msg = trim($msg);
+        $sent = $request->body('msg');
+        $msg = trim($this->editorContentNormalizer->trimEdgeEmptyBlocks($sent));
         $files = $this->uploadedFiles->fromField($request->files->get('files'));
-
-        if (
-            $request->hasBody('submit')
-            && $this->isValidToken($request)
-        ) {
-            if ($msg === '') {
-                return new ViewResponse(
-                    '@theme/pages/result.twig',
-                    [
-                        'title'         => __('New message'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('You have not entered the message'),
-                        'back_url'      => $this->getReplyUrl($request, $id, $page),
-                        'back_url_name' => __('Repeat'),
-                    ]
-                );
-            }
-
-            if (mb_strlen($msg) < 4) {
-                return new ViewResponse(
-                    '@theme/pages/result.twig',
-                    [
-                        'title'         => __('New message'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('Text is too short'),
-                        'back_url'      => $topic->url,
-                        'back_url_name' => __('Back'),
-                    ]
-                );
-            }
-
-            $lastMessage = $this->messageRepository->findLastMessageByUser($this->currentUser->id());
-            if ($lastMessage !== null && $msg === (string) $lastMessage->getRawOriginal('text')) {
-                return new ViewResponse(
-                    '@theme/pages/result.twig',
-                    [
-                        'title'         => __('New message'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('Message already exists'),
-                        'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
-                        'back_url_name' => __('Back'),
-                    ]
-                );
-            }
-
-            $fileErrors = $this->postFiles->check($files);
-            if ($fileErrors !== []) {
-                return $this->form($request, $sourceMessage->id, $topic->name, $topic->url, $page, $msg, $fileErrors);
-            }
-
-            if ($this->session->get('fsort_id') === $topic->id) {
-                $this->session->remove(['fsort_id', 'fsort_users']);
-            }
-
-            $this->formTokens->consume($request->body('token', ''));
-
-            try {
-                $result = $this->transactions->run(function () use ($sourceMessage, $topic, $msg, $files) {
-                    $result = $this->replyMessageUseCase->execute(
-                        sourceMessage: $sourceMessage,
-                        topic: $topic,
-                        messageText: $msg,
-                        clientInfo: $this->environment->getClientInfo(),
-                    );
-                    $this->pictures->bind($result->messageId, $this->currentUser->id());
-                    // Last: a failure after the files are written would leave them behind.
-                    $this->postFiles->store($result->messageId, $files);
-
-                    return $result;
-                });
-            } catch (EditorUploadBindException $exception) {
-                return new ViewResponse(
-                    '@theme/pages/result.twig',
-                    [
-                        'title'         => __('New message'),
-                        'type'          => 'alert-danger',
-                        'message'       => $exception->getMessage(),
-                        'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
-                        'back_url_name' => __('Back'),
-                    ]
-                );
-            } catch (StorageException) {
-                return $this->form($request, $sourceMessage->id, $topic->name, $topic->url, $page, $msg, [__('The files could not be saved. Try again.')]);
-            }
-
-            redirect($this->topicPathService->getTopicUrlById($result->topicId, $result->page > 1 ? $result->page : null) ?? '/forum/');
+        $errors = $this->checks->errors($msg);
+        if ($errors === [] && ($fileErrors = $this->postFiles->check($files)) !== []) {
+            $errors = ['files' => $fileErrors];
+        }
+        if ($errors === [] && ! $this->formTokens->consume($request->body('token'))) {
+            $errors = ['_form' => [__('The form was already sent or is out of date. Send it again if needed.')]];
+        }
+        if ($errors !== []) {
+            return $this->form($request, $context, $page, $sent, $errors);
         }
 
-        $isQuote = $request->query->has('quote');
-        $quoteText = (string) $sourceMessage->getRawOriginal('text');
-
-        if ($isQuote) {
-            $msg = '<blockquote>' . $quoteText . '</blockquote><p>' . $msg . '</p>';
-        } else {
-            $msg = '<p>' . $sourceMessage->user_name . ',&nbsp;' . $msg . '</p>';
+        if ($this->session->get('fsort_id') === $topic->id) {
+            $this->session->remove(['fsort_id', 'fsort_users']);
         }
 
-        return $this->form($request, $sourceMessage->id, $topic->name, $topic->url, $page, $msg, []);
+        try {
+            $result = $this->transactions->run(function () use ($sourceMessage, $topic, $msg, $files) {
+                $result = $this->replyMessageUseCase->execute(
+                    sourceMessage: $sourceMessage,
+                    topic: $topic,
+                    messageText: $msg,
+                    clientInfo: $this->environment->getClientInfo(),
+                );
+                $this->pictures->bind($result->messageId, $this->currentUser->id());
+                // Last: a failure after the files are written would leave them behind.
+                $this->postFiles->store($result->messageId, $files);
+
+                return $result;
+            });
+        } catch (EditorUploadBindException $exception) {
+            return $this->form($request, $context, $page, $sent, ['message' => [$exception->getMessage()]]);
+        } catch (StorageException) {
+            return $this->form($request, $context, $page, $sent, ['files' => [__('The files could not be saved. Try again.')]]);
+        }
+
+        redirect($this->topicPathService->getTopicUrlById($result->topicId, $result->page > 1 ? $result->page : null) ?? '/forum/');
+    }
+
+    /** What the editor opens with: the post quoted, or the name of its author to address. */
+    private function opening(Request $request, ReplyMessageContextDTO $context): string
+    {
+        if ($request->query->has('quote')) {
+            return '<blockquote>' . $context->message->getRawOriginal('text') . '</blockquote><p></p>';
+        }
+
+        return '<p>' . htmlspecialchars($context->message->user_name) . ',&nbsp;</p>';
     }
 
     /**
-     * The page of the answer, and the answer sent back with what was wrong with its files: the
-     * files are chosen anew, the text stays.
+     * The page of the answer. Sent back, it keeps the text and says what was wrong beside the
+     * fields; the files are chosen anew.
      *
-     * @param list<string> $fileErrors
+     * @param array<string, list<string>> $errors
      */
-    private function form(
-        Request $request,
-        int $sourceId,
-        string $topicName,
-        string $topicUrl,
-        int $page,
-        string $msg,
-        array $fileErrors,
-    ): ViewResponse {
+    private function form(Request $request, ReplyMessageContextDTO $context, int $page, string $msg, array $errors): ViewResponse
+    {
+        $topic = $context->topic;
+        $backUrl = $topic->url . ($page > 1 ? '?page=' . $page : '');
+        $this->navChain->add(__('Forum'), '/forum/');
+        ForumUtils::buildBreadcrumbs($topic->section_id, $topic->name, $backUrl);
+        $this->navChain->add(__('Reply to message'));
+
+        $action = '/forum/reply-message/' . $context->message->id . '/';
+        $query = array_filter(['page' => $page > 1 ? $page : null, 'quote' => $request->query->has('quote') ? 1 : null]);
+
         return new ViewResponse(
             '@forum/public/reply-message.twig',
             [
                 'title'       => __('Reply to message'),
                 'page_title'  => __('Reply to message'),
                 'token'       => $this->formTokens->issue(),
-                'topic_name'  => $topicName,
-                'form_action' => $this->getReplyUrl($request, $sourceId, $page),
+                'topic_name'  => $topic->name,
+                'form_action' => $action . ($query !== [] ? '?' . http_build_query($query) : ''),
                 'msg'         => $msg,
                 'reply_to'    => 0,
-                'back_url'    => $this->buildTopicBackUrl($topicUrl, $page),
+                'answered'    => [
+                    'name'    => $context->message->user_name,
+                    'excerpt' => $this->excerpt->of((string) $context->message->getRawOriginal('text')),
+                    'url'     => '/forum/post/' . $context->message->id . '/',
+                ],
+                'back_url'    => $backUrl,
                 'file_limits' => $this->postFiles->limits(),
-                'file_errors' => $fileErrors,
+                'errors'      => $errors,
             ],
-            $fileErrors !== [] ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK,
+            $errors !== [] ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK,
         );
-    }
-
-    private function isValidToken(Request $request): bool
-    {
-        return $this->formTokens->isValid($request->body('token', ''));
-    }
-
-    private function getReplyUrl(Request $request, int $messageId, int $page = 1): string
-    {
-        $url = '/forum/reply-message/' . $messageId . '/';
-        if ($page > 1) {
-            $url .= '?page=' . $page;
-        }
-        if ($request->query->has('quote')) {
-            $url .= ($page > 1 ? '&' : '?') . 'quote=1';
-        }
-
-        return $url;
-    }
-
-    private function buildTopicBackUrl(string $topicUrl, int $page): string
-    {
-        if ($page <= 1) {
-            return $topicUrl;
-        }
-
-        return $topicUrl . '?page=' . $page;
     }
 }

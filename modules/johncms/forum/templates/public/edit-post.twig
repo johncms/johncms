@@ -1,44 +1,62 @@
 {#
-    Editing a post of a topic.
+    Editing a post of a topic. A form sent back keeps the text and says what was wrong beside it;
+    the files are chosen again.
 
-    @var action_url string
-    @var back_url   string
-    @var msg        string Source of the post, as it is stored.
-    @var errors     array  Validation messages by field name; _form for the form as a whole.
-    @var token      string One-time token of the form, kept in the session.
+    @var action_url     string
+    @var back_url       string The page of the topic the post is on.
+    @var topic_name     string
+    @var msg            string Source of the post, as it is stored or as it was sent.
+    @var errors         array  Validation messages by field: message, files; _form for the form as a whole.
+    @var token          string One-time token of the form, kept in the session.
     @var file_limits    \Johncms\Modules\Forum\Application\DTO\ForumFileLimitsDTO
-    @var files_attached int Files the post holds already; deleted under the post in the topic.
+    @var files_attached int    Files the post holds already; deleted under the post in the topic.
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
+{% block page_subtitle %}
+    <p class="site-page-heading__subtitle"><span>{{ __('In the topic') }} <a href="{{ back_url }}">{{ topic_name }}</a></span></p>
+{% endblock %}
+
 {% block content %}
-    <form name="edit_post" action="{{ action_url }}" method="post" enctype="multipart/form-data">
+    {% if errors._form|default([]) %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors._form|join(' ')} only %}
+    {% endif %}
+
+    <form class="site-forum-write" name="edit_post" action="{{ action_url }}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <input type="hidden" name="token" value="{{ token }}">
-        {% if errors._form|default([]) %}
-            <div class="alert alert-danger">{{ errors._form|join(', ') }}</div>
-        {% endif %}
-        {% include '@theme/components/editor.twig' with {
-            name: 'msg',
-            label: __('Message'),
-            value: msg,
-            errors: errors.message|default([])|join(', '),
-            upload_url: '/forum/upload_file/',
-            allow_upload: true
-        } only %}
-        <div class="mb-3">
-            {% include '@forum/public/components/file-field.twig' with {
-                id: 'post-files',
-                limits: file_limits,
-                errors: errors.files|default([]),
-                attached: files_attached,
-            } only %}
-        </div>
-        <div>
-            <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Save') }}</button>
-        </div>
-        <div class="mt-3">
-            <a href="/help/?act=smileys" class="pe-2">{{ __('Smilies') }}</a> <a href="{{ back_url }}">{{ __('Back') }}</a>
+
+        <section class="site-forum-write__section">
+            <div class="site-forum-write__field">
+                {% include '@theme/components/editor.twig' with {
+                    name: 'msg',
+                    id: 'post-message',
+                    label: __('Message'),
+                    value: msg,
+                    errors: errors.message|default([])|join(' '),
+                    upload_url: '/forum/upload_file/',
+                    allow_upload: true,
+                } only %}
+            </div>
+            <div class="site-forum-write__field">
+                {% include '@forum/public/components/file-field.twig' with {
+                    id: 'post-files',
+                    limits: file_limits,
+                    errors: errors.files|default([]),
+                    attached: files_attached,
+                } only %}
+            </div>
+        </section>
+
+        <div class="site-forum-write__actions">
+            <a href="{{ back_url }}" class="btn btn-outline-secondary">
+                {% include '@theme/components/icon.twig' with {name: 'chevron-left', size: 14, class: 'site-icon--directional'} only %} {{ __('Cancel') }}
+            </a>
+            <button type="submit" name="submit" value="1" class="btn btn-primary">
+                {% include '@theme/components/icon.twig' with {name: 'check', size: 14} only %} {{ __('Save') }}
+            </button>
         </div>
     </form>
 {% endblock %}

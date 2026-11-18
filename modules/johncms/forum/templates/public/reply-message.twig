@@ -1,43 +1,72 @@
 {#
-    Writing a message into a topic: a new one, a reply or a quote.
+    Writing a post into a topic on a page of its own: a new post, an answer or a quote. The form
+    under the topic is the usual way; this page is the way without the script, and the form sent
+    back with what was wrong beside its fields. The files are chosen again.
 
     @var form_action string
-    @var back_url    string
+    @var back_url    string The page of the topic.
     @var token       string One-time token of the form, kept in the session.
     @var topic_name  string
-    @var msg         string Body of the message, prefilled for a reply and a quote.
-    @var reply_to    int    The post the text answers, when the form under the topic was sent with one; 0 otherwise.
+    @var msg         string Body of the post: prefilled for an answer and a quote, kept when sent back.
+    @var reply_to    int    The post the form under the topic answered; 0 for none.
+    @var answered    ?array name, excerpt, url of the post this page answers; absent for a new post.
     @var file_limits \Johncms\Modules\Forum\Application\DTO\ForumFileLimitsDTO
-    @var file_errors list<string> What was wrong with the files sent; they are chosen anew.
+    @var errors      array  Messages by field: message, files; _form for the form as a whole.
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
+{% block page_subtitle %}
+    <p class="site-page-heading__subtitle"><span>{{ __('In the topic') }} <a href="{{ back_url }}">{{ topic_name }}</a></span></p>
+{% endblock %}
+
 {% block content %}
-    <form name="message_form" action="{{ form_action }}" method="post" enctype="multipart/form-data">
+    {% if errors._form|default([]) %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors._form|join(' ')} only %}
+    {% endif %}
+
+    <form class="site-forum-write" name="message_form" action="{{ form_action }}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <input type="hidden" name="token" value="{{ token }}">
         {% if reply_to %}<input type="hidden" name="reply_to" value="{{ reply_to }}">{% endif %}
-        <div class="h4">{{ __('Topic') }}: {{ topic_name }}</div>
 
-        {% include '@theme/components/editor.twig' with {
-            name: 'msg',
-            label: __('Message'),
-            value: msg,
-            upload_url: '/forum/upload_file/',
-            allow_upload: true
-        } only %}
-        <div class="mb-3">
-            {% include '@forum/public/components/file-field.twig' with {
-                id: 'message-files',
-                limits: file_limits,
-                errors: file_errors,
-            } only %}
-        </div>
-        <div>
-            <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Write') }}</button>
-        </div>
-        <div class="mt-3">
-            <a href="/help/?act=smileys" class="pe-2">{{ __('Smilies') }}</a> <a href="{{ back_url }}">{{ __('Back') }}</a>
+        <section class="site-forum-write__section">
+            {% if answered|default(null) %}
+                <a class="site-comment__reply-to" href="{{ answered.url }}">
+                    {% include '@theme/components/icon.twig' with {name: 'reply', size: 12} only %}
+                    <span class="visually-hidden">{{ d__('system', 'In answer to:') }}</span>
+                    <span class="site-comment__reply-name">{{ answered.name }}</span>
+                    {% if answered.excerpt %}<span class="site-comment__reply-excerpt">{{ answered.excerpt }}</span>{% endif %}
+                </a>
+            {% endif %}
+            <div class="site-forum-write__field">
+                {% include '@theme/components/editor.twig' with {
+                    name: 'msg',
+                    id: 'message-text',
+                    label: __('Message'),
+                    value: msg,
+                    errors: errors.message|default([])|join(' '),
+                    upload_url: '/forum/upload_file/',
+                    allow_upload: true,
+                } only %}
+            </div>
+            <div class="site-forum-write__field">
+                {% include '@forum/public/components/file-field.twig' with {
+                    id: 'message-files',
+                    limits: file_limits,
+                    errors: errors.files|default([]),
+                } only %}
+            </div>
+        </section>
+
+        <div class="site-forum-write__actions">
+            <a href="{{ back_url }}" class="btn btn-outline-secondary">
+                {% include '@theme/components/icon.twig' with {name: 'chevron-left', size: 14, class: 'site-icon--directional'} only %} {{ __('Cancel') }}
+            </a>
+            <button type="submit" name="submit" value="1" class="btn btn-primary">
+                {% include '@theme/components/icon.twig' with {name: 'send', size: 14} only %} {{ __('Write') }}
+            </button>
         </div>
     </form>
 {% endblock %}

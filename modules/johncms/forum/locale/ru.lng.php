@@ -502,6 +502,11 @@
       'Attach files' => 'Прикрепить файлы',
       'Up to %d files of %d KB each.' => 'До %d файлов, каждый до %d КБ.',
       'The post holds as many files as it may. Delete one to attach another.' => 'В сообщении уже максимум файлов. Удалите один, чтобы прикрепить другой.',
+      'In the section' => 'В разделе',
+      'In the topic' => 'В теме',
+      'Create topic' => 'Создать тему',
+      'From 3 to 200 characters, not repeating a topic of this section.' => 'От 3 до 200 символов, без повтора темы этого раздела.',
+      'Left empty, the templates of the forum settings are used.' => 'Если оставить пустыми, используются шаблоны из настроек форума.',
     ),
   ),
 );

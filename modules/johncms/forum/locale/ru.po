@@ -1975,3 +1975,18 @@ msgstr "До %d файлов, каждый до %d КБ."
 
 msgid "The post holds as many files as it may. Delete one to attach another."
 msgstr "В сообщении уже максимум файлов. Удалите один, чтобы прикрепить другой."
+
+msgid "In the section"
+msgstr "В разделе"
+
+msgid "In the topic"
+msgstr "В теме"
+
+msgid "Create topic"
+msgstr "Создать тему"
+
+msgid "From 3 to 200 characters, not repeating a topic of this section."
+msgstr "От 3 до 200 символов, без повтора темы этого раздела."
+
+msgid "Left empty, the templates of the forum settings are used."
+msgstr "Если оставить пустыми, используются шаблоны из настроек форума."

@@ -379,3 +379,24 @@
   // The menu of the topic may wrap under the heading, to its start: it opens from there.
   .site-forum-topic-actions .site-popover__panel { inset-inline: 0 auto; }
 }
+
+// The forms that write: a new topic, a post, an edit, a poll. Cards of fields like the upload form
+// of the downloads, the actions in a row under them.
+.site-forum-write {
+  display: flex;
+  flex-direction: column;
+  gap: .625rem;
+  &__section { min-inline-size: 0; padding: 1.25rem; border: 1px solid var(--border); border-radius: .75rem; background: var(--bg-elev); }
+  &__title { display: flex; align-items: center; gap: .625rem; margin: 0 0 1rem; font-size: .9375rem; font-weight: 700; letter-spacing: -.01em; }
+  &__field + &__field { margin-block-start: 1rem; }
+  &__note { margin: 0 0 1rem; color: var(--fg-muted); font-size: .8125rem; }
+  &__actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; margin-block-start: .625rem; }
+  &__actions-end { display: flex; flex-wrap: wrap; gap: .5rem; margin-inline-start: auto; }
+  &__actions .btn { display: inline-flex; align-items: center; gap: .375rem; }
+}
+
+.site-forum-preview { margin-block-end: 1rem; }
+
+@media (max-width: 720px) {
+  .site-forum-write__section { padding: 1rem; }
+}

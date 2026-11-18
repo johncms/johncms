@@ -36,7 +36,6 @@ use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\Validator\Rules\ModelNotExists;
 use Johncms\Validator\Rules\StringLength;
 use Johncms\Validator\ValidatorInterface;
-use Twig\Markup;
 
 final readonly class NewTopicController
 {
@@ -63,8 +62,6 @@ final readonly class NewTopicController
 
     public function __invoke(Request $request, int $id): ViewResponse
     {
-        $page = max(1, $request->queryInt('page', 1));
-
         try {
             $section = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException $exception) {
@@ -77,23 +74,6 @@ final readonly class NewTopicController
             );
         } catch (ForumNotFoundException) {
             pageNotFound();
-        }
-
-        $flood = $this->antifloodChecker->getRemainingSeconds();
-        if ($flood) {
-            return new ViewResponse(
-                '@theme/pages/result.twig',
-                [
-                    'title'         => __('New Topic'),
-                    'type'          => 'alert-danger',
-                    'message'       => new Markup(
-                        sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
-                        'UTF-8'
-                    ),
-                    'back_url'      => $section->url . ($page > 1 ? '?page=' . $page : ''),
-                    'back_url_name' => __('Back'),
-                ]
-            );
         }
 
         $data = [
@@ -142,6 +122,11 @@ final readonly class NewTopicController
                 $validationResult = $validationResult->withError('files', $fileError);
             }
 
+            $flood = $this->antifloodChecker->getRemainingSeconds();
+            if ($flood > 0) {
+                $validationResult = $validationResult->withError('_form', sprintf(d__('system', 'You cannot write so often. Wait %d seconds.'), $flood));
+            }
+
             if (! $this->formTokens->consume($request->body('token', ''))) {
                 $validationResult = $validationResult->withError('_form', __('The form was already sent or is out of date. Send it again if needed.'));
             }
@@ -179,6 +164,7 @@ final readonly class NewTopicController
             new ContentContext(adminSmilies: $this->accessChecker->allows(CorePermissions::SMILIES_ADMIN_USE))
         );
 
+        $this->navChain->add(__('Forum'), '/forum/');
         ForumUtils::buildBreadcrumbs($section->parent, $section->name, $section->url);
         $this->navChain->add(__('New Topic'));
 
@@ -192,6 +178,7 @@ final readonly class NewTopicController
                 'file_limits'     => $this->postFiles->limits(),
                 'msg'             => (string) $data['message'],
                 'back_url'        => $section->url,
+                'section_name'    => $section->name,
                 'show_preview'    => ! empty($data['name']) && ! empty($data['message']) && ! $request->body('submit'),
                 'preview_message' => $msgPreview,
                 'preview_time'    => time(),
