@@ -607,16 +607,16 @@ parameters:
 			path: modules/johncms/forum/src/Application/Services/ForumErrorRenderer.php
 
 		-
-			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\UseCases\\AttachFileToPostUseCase should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
-			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
-			count: 1
-			path: modules/johncms/forum/src/Application/UseCases/AttachFileToPostUseCase.php
-
-		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Forum\\Domain\\Models\\ForumUnread\:\:\$time\.$#'
 			identifier: property.notFound
 			count: 1
 			path: modules/johncms/forum/src/Application/UseCases/CreateTopicUseCase.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\Uploads\\ForumPostFiles should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/forum/src/Application/Uploads/ForumPostFiles.php
 
 		-
 			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\UseCases\\DeletePostFileUseCase should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'

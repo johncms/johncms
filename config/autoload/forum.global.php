@@ -14,6 +14,8 @@ return [
     'forum' => [
         'settings'      => [
             'file_counters' => false,
+            // How many files one post may hold, those it has already counted in.
+            'max_files_per_post' => 5,
 
             'topic_keywords'      => '',
             'topic_description'   => '',

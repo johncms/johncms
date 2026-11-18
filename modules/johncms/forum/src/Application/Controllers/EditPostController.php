@@ -7,6 +7,8 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 use Johncms\Database\TransactionManagerInterface;
 use Johncms\EditorUploads\EditorUploadBindException;
 use Johncms\Modules\Forum\Application\Uploads\ForumMessagePictures;
+use Johncms\Modules\Forum\Application\Uploads\ForumPostFiles;
+use Johncms\Storage\StorageException;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
@@ -16,6 +18,7 @@ use Johncms\Modules\Forum\Application\UseCases\EditPostUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureEditPostAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetEditPostContextUseCase;
 use Johncms\Http\Request;
+use Johncms\Http\UploadedFileMapper;
 use Johncms\Http\View\ViewResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Johncms\System\Utility\EditorContentNormalizer;
@@ -32,6 +35,8 @@ final readonly class EditPostController
         private ForumMessagePictures $pictures,
         private TransactionManagerInterface $transactions,
         private ForumFormTokens $formTokens,
+        private ForumPostFiles $postFiles,
+        private UploadedFileMapper $uploadedFiles,
     ) {
     }
 
@@ -80,6 +85,18 @@ final readonly class EditPostController
                 );
             }
 
+            $files = $this->uploadedFiles->fromField($request->files->get('files'));
+            $fileErrors = $this->postFiles->check($files, $this->postFiles->countOf($context->message->id));
+            if ($fileErrors !== []) {
+                return $this->form(
+                    id: $id,
+                    page: $page,
+                    message: $request->body('msg'),
+                    backUrl: $context->backUrl,
+                    errors: ['files' => $fileErrors],
+                );
+            }
+
             if (! $this->formTokens->consume($request->body('token', ''))) {
                 return $this->form(
                     id: $id,
@@ -91,10 +108,20 @@ final readonly class EditPostController
             }
 
             try {
-                $this->transactions->run(function () use ($context, $msg): void {
+                $this->transactions->run(function () use ($context, $msg, $files): void {
                     $this->editPostUseCase->execute($context, $msg);
                     $this->pictures->bind($context->message->id, $this->currentUser->id());
+                    // Last: a failure after the files are written would leave them behind.
+                    $this->postFiles->store($context->message->id, $files);
                 });
+            } catch (StorageException) {
+                return $this->form(
+                    id: $id,
+                    page: $page,
+                    message: $request->body('msg'),
+                    backUrl: $context->backUrl,
+                    errors: ['files' => [__('The files could not be saved. Try again.')]],
+                );
             } catch (EditorUploadBindException $exception) {
                 return new ViewResponse(
                     '@theme/pages/result.twig',
@@ -123,16 +150,19 @@ final readonly class EditPostController
      */
     private function form(int $id, int $page, string $message, string $backUrl, array $errors): ViewResponse
     {
+        // The files are chosen anew; the field counts those the post holds already.
         return new ViewResponse(
             '@forum/public/edit-post.twig',
             [
-                'title'      => __('Edit Message'),
-                'page_title' => __('Edit Message'),
-                'action_url' => '/forum/edit-post/' . $id . '/' . ($page > 1 ? '?page=' . $page : ''),
-                'msg'        => $message,
-                'back_url'   => $backUrl,
-                'errors'     => $errors,
-                'token'      => $this->formTokens->issue(),
+                'title'          => __('Edit Message'),
+                'page_title'     => __('Edit Message'),
+                'action_url'     => '/forum/edit-post/' . $id . '/' . ($page > 1 ? '?page=' . $page : ''),
+                'msg'            => $message,
+                'back_url'       => $backUrl,
+                'errors'         => $errors,
+                'token'          => $this->formTokens->issue(),
+                'file_limits'    => $this->postFiles->limits(),
+                'files_attached' => $this->postFiles->countOf($id),
             ],
             $errors ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK,
         );

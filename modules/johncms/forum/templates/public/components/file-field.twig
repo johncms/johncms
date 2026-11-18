@@ -1,0 +1,25 @@
+{#
+    The files a post is sent with, in any form that writes one.
+
+    @var id       string                                                    Id of the field.
+    @var limits   \Johncms\Modules\Forum\Application\DTO\ForumFileLimitsDTO What the field accepts.
+    @var errors   list<string>                                              What was wrong with the files sent.
+    @var attached int                                                       Files the post holds already; 0 for a new one.
+    @var compact  bool                                                      The field of the form under the topic: no visible label.
+#}
+{% set left = limits.maxFiles - attached|default(0) %}
+<div class="site-forum-files-field{{ compact|default(false) ? ' site-forum-files-field--compact' : '' }}">
+    <label class="form-label{{ compact|default(false) ? ' visually-hidden' : '' }}" for="{{ id }}">{{ __('Attach files') }}</label>
+    {% if left > 0 %}
+        <input type="file" class="form-control{{ compact|default(false) ? ' form-control-sm' : '' }}{{ errors|default([]) ? ' is-invalid' : '' }}"
+               id="{{ id }}" name="files[]" multiple accept="{{ limits.accept }}" aria-describedby="{{ id }}-help">
+        <div class="form-text" id="{{ id }}-help">{{ __('Up to %d files of %d KB each.')|format(left, limits.maxSizeKb) }}</div>
+    {% else %}
+        <div class="form-text" id="{{ id }}-help">{{ __('The post holds as many files as it may. Delete one to attach another.') }}</div>
+    {% endif %}
+    {% if errors|default([]) %}
+        <div class="invalid-feedback d-block" role="alert">
+            {% for error in errors %}{{ error }}{% if not loop.last %}<br>{% endif %}{% endfor %}
+        </div>
+    {% endif %}
+</div>

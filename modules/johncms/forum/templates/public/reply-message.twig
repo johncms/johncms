@@ -6,14 +6,17 @@
     @var token       string One-time token of the form, kept in the session.
     @var topic_name  string
     @var msg         string Body of the message, prefilled for a reply and a quote.
-    @var add_file    bool   The visitor asked to attach a file after writing.
+    @var reply_to    int    The post the text answers, when the form under the topic was sent with one; 0 otherwise.
+    @var file_limits \Johncms\Modules\Forum\Application\DTO\ForumFileLimitsDTO
+    @var file_errors list<string> What was wrong with the files sent; they are chosen anew.
 #}
 {% extends '@theme/layouts/default.twig' %}
 
 {% block content %}
-    <form name="message_form" action="{{ form_action }}" method="post">
+    <form name="message_form" action="{{ form_action }}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <input type="hidden" name="token" value="{{ token }}">
+        {% if reply_to %}<input type="hidden" name="reply_to" value="{{ reply_to }}">{% endif %}
         <div class="h4">{{ __('Topic') }}: {{ topic_name }}</div>
 
         {% include '@theme/components/editor.twig' with {
@@ -23,9 +26,12 @@
             upload_url: '/forum/upload_file/',
             allow_upload: true
         } only %}
-        <div class="custom-control custom-checkbox mb-3">
-            <input type="checkbox" class="custom-control-input" name="addfiles" value="1" id="addfiles"{% if add_file %} checked="checked"{% endif %}>
-            <label class="custom-control-label" for="addfiles">{{ __('Add File') }}</label>
+        <div class="mb-3">
+            {% include '@forum/public/components/file-field.twig' with {
+                id: 'message-files',
+                limits: file_limits,
+                errors: file_errors,
+            } only %}
         </div>
         <div>
             <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Write') }}</button>

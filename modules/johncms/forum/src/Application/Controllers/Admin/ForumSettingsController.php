@@ -34,6 +34,7 @@ final readonly class ForumSettingsController
     {
         $dto = new ForumSettingsDTO(
             fileCounters: $request->hasBody('file_counters'),
+            maxFilesPerPost: ForumSettingsDTO::clampMaxFiles($request->bodyInt('max_files_per_post', ForumSettingsDTO::DEFAULT_MAX_FILES)),
             topicKeywords: trim($request->body('topic_keywords', '')),
             topicDescription: trim($request->body('topic_description', '')),
             sectionKeywords: trim($request->body('section_keywords', '')),
@@ -63,6 +64,7 @@ final readonly class ForumSettingsController
             'page_title'      => $title,
             'module_menu'     => ['forum' => true],
             'settings'        => ForumSettingsDTO::fromArray($this->configRepository->getSettings()),
+            'max_files_limit' => ForumSettingsDTO::MAX_FILES_LIMIT,
             'form_action'     => self::URL,
             'list_url'        => '/admin/forum',
             'error_message'   => $errorMessage,

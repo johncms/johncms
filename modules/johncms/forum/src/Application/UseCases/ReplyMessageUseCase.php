@@ -35,7 +35,6 @@ final readonly class ReplyMessageUseCase
         ForumMessage $sourceMessage,
         ForumTopic $topic,
         string $messageText,
-        bool $addFiles,
         ClientInfoDTO $clientInfo,
     ): PostMessageResultDTO {
         $message = new ForumMessage();

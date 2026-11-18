@@ -319,7 +319,11 @@
 .site-forum-bulk .btn { display: inline-flex; align-items: center; gap: .375rem; }
 
 .site-forum-reply { margin-block: 1.5rem; }
-.site-compose__actions.site-forum-reply__actions { align-items: center; justify-content: space-between; gap: .75rem; }
+.site-compose__actions.site-forum-reply__actions { flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: .75rem; }
+
+// The files of a post. Under the topic the field shares the row with the button.
+.site-forum-files-field--compact { flex: 1 1 14rem; min-inline-size: 0; max-inline-size: 24rem; }
+.site-forum-files-field--compact .form-text { margin-block-start: .25rem; font-size: .75rem; }
 
 .site-forum-topic-foot {
   display: flex;

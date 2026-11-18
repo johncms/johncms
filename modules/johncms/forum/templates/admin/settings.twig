@@ -3,6 +3,7 @@
     engines — of the forum itself, and the templates for its sections and topics.
 
     @var \Johncms\Modules\Forum\Application\DTO\ForumSettingsDTO settings
+    @var int    max_files_limit The highest number of files a post may be allowed.
     @var string form_action
     @var string list_url        The tree of the forum.
     @var string error_message   Empty unless the configuration could not be written.
@@ -38,6 +39,12 @@
                                 {{ __('Show file counters') }}
                                 <span class="form-text d-block mt-0">{{ __('The number of attached files on the main page of the forum, in its sections and topics.') }}</span>
                             </label>
+                        </div>
+                        <div class="mt-3">
+                            <label class="form-label" for="forum-max_files_per_post">{{ __('Files in one post') }}</label>
+                            <input class="form-control w-auto" type="number" name="max_files_per_post" id="forum-max_files_per_post"
+                                   min="1" max="{{ max_files_limit }}" value="{{ settings.maxFilesPerPost }}" aria-describedby="forum-max_files_per_post-help">
+                            <div class="form-text" id="forum-max_files_per_post-help">{{ __('How many files may be attached to a post, those already attached counted in.') }}</div>
                         </div>
                     </div>
                 </div>

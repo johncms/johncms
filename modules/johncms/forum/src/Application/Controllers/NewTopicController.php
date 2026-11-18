@@ -7,6 +7,8 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 use Johncms\Database\TransactionManagerInterface;
 use Johncms\EditorUploads\EditorUploadBindException;
 use Johncms\Modules\Forum\Application\Uploads\ForumMessagePictures;
+use Johncms\Modules\Forum\Application\Uploads\ForumPostFiles;
+use Johncms\Storage\StorageException;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\CurrentUser;
@@ -25,6 +27,7 @@ use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
+use Johncms\Http\UploadedFileMapper;
 use Johncms\Http\View\ViewResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Johncms\NavChain;
@@ -53,6 +56,8 @@ final readonly class NewTopicController
         private ValidatorInterface $validator,
         private AccessCheckerInterface $accessChecker,
         private ForumFormTokens $formTokens,
+        private ForumPostFiles $postFiles,
+        private UploadedFileMapper $uploadedFiles,
     ) {
     }
 
@@ -96,7 +101,6 @@ final readonly class NewTopicController
             'message'    => $this->editorContentNormalizer->trimEdgeEmptyBlocks(
                 ForumUtils::topicLink($request->body('msg', ''), $request->server->getString('HTTP_HOST', ''))
             ),
-            'add_files'  => $request->bodyInt('addfiles', 0),
         ];
 
         if ($this->accessChecker->allows(ForumPermissions::TOPIC_META_MANAGE)) {
@@ -104,6 +108,7 @@ final readonly class NewTopicController
             $data['meta_description'] = $request->body('meta_description');
         }
 
+        $files = $this->uploadedFiles->fromField($request->files->get('files'));
         $errors = [];
         if ($request->body('submit')) {
             $rules = [
@@ -133,6 +138,10 @@ final readonly class NewTopicController
             ];
 
             $validationResult = $this->validator->validate($data, $rules);
+            foreach ($this->postFiles->check($files) as $fileError) {
+                $validationResult = $validationResult->withError('files', $fileError);
+            }
+
             if (! $this->formTokens->consume($request->body('token', ''))) {
                 $validationResult = $validationResult->withError('_form', __('The form was already sent or is out of date. Send it again if needed.'));
             }
@@ -140,7 +149,7 @@ final readonly class NewTopicController
             $errors = $validationResult->getErrors();
             if ($validationResult->isValid()) {
                 try {
-                    $result = $this->transactions->run(function () use ($section, $data) {
+                    $result = $this->transactions->run(function () use ($section, $data, $files) {
                         $result = $this->createTopicUseCase->execute(
                             section: $section,
                             topicName: (string) $data['name'],
@@ -150,17 +159,17 @@ final readonly class NewTopicController
                             clientInfo: $this->environment->getClientInfo(),
                         );
                         $this->pictures->bind($result->messageId, $this->currentUser->id());
+                        // Last: a failure after the files are written would leave them behind.
+                        $this->postFiles->store($result->messageId, $files);
 
                         return $result;
                     });
 
-                    if ($data['add_files'] === 1) {
-                        redirect('/forum/addfile/' . $result->messageId . '/');
-                    }
-
                     redirect($result->topicUrl);
                 } catch (EditorUploadBindException $exception) {
                     $errors = ['message' => [$exception->getMessage()]];
+                } catch (StorageException) {
+                    $errors = ['files' => [__('The files could not be saved. Try again.')]];
                 }
             }
         }
@@ -180,7 +189,7 @@ final readonly class NewTopicController
                 'page_title'      => __('New Topic'),
                 'action_url'      => '/forum/new-topic/' . $section->id . '/',
                 'th'              => $data['name'],
-                'add_files'       => ($data['add_files'] === 1),
+                'file_limits'     => $this->postFiles->limits(),
                 'msg'             => (string) $data['message'],
                 'back_url'        => $section->url,
                 'show_preview'    => ! empty($data['name']) && ! empty($data['message']) && ! $request->body('submit'),

@@ -12,7 +12,6 @@ use Johncms\Modules\Forum\Application\Controllers\Admin\ForumSettingsController;
 use Johncms\Modules\Forum\Application\Controllers\Admin\HiddenListController;
 use Johncms\Modules\Forum\Application\Controllers\Admin\PurgeHiddenController;
 use Johncms\Modules\Forum\Application\Controllers\Admin\SectionFormController;
-use Johncms\Modules\Forum\Application\Controllers\AddFileController;
 use Johncms\Modules\Forum\Application\Controllers\AddVoteController;
 use Johncms\Modules\Forum\Application\Controllers\BulkDeletePostsController;
 use Johncms\Modules\Forum\Application\Controllers\ChangeTopicController;
@@ -124,7 +123,6 @@ return static function (RouteCollection $router): void {
         // these routes. Declared here rather than in a group of their own, because a nested group
         // compiles after the catch-all below and would never be reached.
         $signedIn = [
-            $r->map(['GET', 'POST'], '/forum/addfile/{id:number}', AddFileController::class)->name('forum.add_file'),
             $r->map(['GET', 'POST'], '/forum/addvote/{id:number}', AddVoteController::class)->name('forum.add_vote'),
             $r->map(['GET', 'POST'], '/forum/change-topic/{id:number}', ChangeTopicController::class)->name('forum.change_topic'),
             $r->map(['GET', 'POST'], '/forum/curators/{id:number}', CuratorsController::class)->name('forum.curators'),

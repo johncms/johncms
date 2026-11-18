@@ -7,6 +7,10 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 use Johncms\Database\TransactionManagerInterface;
 use Johncms\EditorUploads\EditorUploadBindException;
 use Johncms\Modules\Forum\Application\Uploads\ForumMessagePictures;
+use Johncms\Modules\Forum\Application\Uploads\ForumPostFiles;
+use Johncms\Modules\Forum\Domain\Models\ForumTopic;
+use Johncms\Storage\StorageException;
+use Symfony\Component\HttpFoundation\Response;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
@@ -23,6 +27,7 @@ use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
+use Johncms\Http\UploadedFileMapper;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
 use Johncms\System\Utility\EditorContentNormalizer;
@@ -47,6 +52,8 @@ final readonly class NewMessageController
         private ForumTopicPathService $topicPathService,
         private AccessCheckerInterface $accessChecker,
         private ForumFormTokens $formTokens,
+        private ForumPostFiles $postFiles,
+        private UploadedFileMapper $uploadedFiles,
     ) {
     }
 
@@ -105,7 +112,8 @@ final readonly class NewMessageController
 
         $msg = $this->editorContentNormalizer->trimEdgeEmptyBlocks($request->body('msg', ''));
         $msg = trim($msg);
-        $addFiles = $request->hasBody('addfiles');
+        $files = $this->uploadedFiles->fromField($request->files->get('files'));
+        $replyTo = $request->bodyInt('reply_to');
 
         if (
             $request->hasBody('submit')
@@ -139,30 +147,36 @@ final readonly class NewMessageController
                 );
             }
 
+            $fileErrors = $this->postFiles->check($files);
+            if ($fileErrors !== []) {
+                return $this->form($topic, $page, $msg, $replyTo, $fileErrors);
+            }
+
             if ($this->session->get('fsort_id') === $topic->id) {
                 $this->session->remove(['fsort_id', 'fsort_users']);
             }
 
             $this->formTokens->consume($request->body('token', ''));
-            $answered = $this->answeredPosts->find($topic, $request->bodyInt('reply_to'));
+            $answered = $this->answeredPosts->find($topic, $replyTo);
 
             try {
-                $result = $this->transactions->run(function () use ($topic, $msg, $addFiles, $answered) {
+                $result = $this->transactions->run(function () use ($topic, $msg, $files, $answered) {
                     $result = $answered === null
                         ? $this->postMessageUseCase->execute(
                             topic: $topic,
                             messageText: $msg,
-                            addFiles: $addFiles,
+                            withFiles: $files !== [],
                             clientInfo: $this->environment->getClientInfo(),
                         )
                         : $this->replyMessageUseCase->execute(
                             sourceMessage: $answered,
                             topic: $topic,
                             messageText: $msg,
-                            addFiles: $addFiles,
                             clientInfo: $this->environment->getClientInfo(),
                         );
                     $this->pictures->bind($result->messageId, $this->currentUser->id());
+                    // Last: a failure after the files are written would leave them behind.
+                    $this->postFiles->store($result->messageId, $files);
 
                     return $result;
                 });
@@ -177,29 +191,39 @@ final readonly class NewMessageController
                         'back_url_name' => __('Back'),
                     ]
                 );
-            }
-
-            if ($addFiles) {
-                redirect('/forum/addfile/' . $result->messageId . '/');
+            } catch (StorageException) {
+                return $this->form($topic, $page, $msg, $replyTo, [__('The files could not be saved. Try again.')]);
             }
 
             redirect($this->topicPathService->getTopicUrlById($result->topicId, $result->page > 1 ? $result->page : null) ?? '/forum/');
         }
 
-        $token = $this->formTokens->issue();
+        return $this->form($topic, $page, $msg, $replyTo, []);
+    }
 
+    /**
+     * The page of the form: the way without the script, and the form sent back with what was
+     * wrong with its files. The files are chosen anew; the text and the post it answers stay.
+     *
+     * @param list<string> $fileErrors
+     */
+    private function form(ForumTopic $topic, int $page, string $msg, int $replyTo, array $fileErrors): ViewResponse
+    {
         return new ViewResponse(
             '@forum/public/reply-message.twig',
             [
                 'title'       => __('New message'),
                 'page_title'  => __('New message'),
-                'token'       => $token,
+                'token'       => $this->formTokens->issue(),
                 'topic_name'  => $topic->name,
                 'form_action' => '/forum/new-message/' . $topic->id . '/' . ($page > 1 ? '?page=' . $page : ''),
-                'add_file'    => $addFiles,
                 'msg'         => $msg,
+                'reply_to'    => $replyTo,
                 'back_url'    => $this->buildTopicBackUrl($topic->url, $page),
-            ]
+                'file_limits' => $this->postFiles->limits(),
+                'file_errors' => $fileErrors,
+            ],
+            $fileErrors !== [] ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK,
         );
     }
 

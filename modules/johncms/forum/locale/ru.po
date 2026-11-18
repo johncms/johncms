@@ -1939,3 +1939,39 @@ msgstr "Не отвечать на это сообщение"
 
 msgid "The form was already sent or is out of date. Send it again if needed."
 msgstr "Форма уже отправлена или устарела. Отправьте её ещё раз, если нужно."
+
+msgid "The files could not be saved. Try again."
+msgstr "Не удалось сохранить файлы. Попробуйте ещё раз."
+
+msgid "A post may hold %d files at most, and this one holds %d already."
+msgstr "В сообщении может быть не больше %d файлов, а в этом уже %d."
+
+msgid "A post may hold %d files at most."
+msgstr "В сообщении может быть не больше %d файлов."
+
+msgid "The file %s is larger than %d KB."
+msgstr "Файл %s больше %d КБ."
+
+msgid "The file %s was not uploaded completely. Choose it again."
+msgstr "Файл %s загрузился не полностью. Выберите его ещё раз."
+
+msgid "The file %s could not be uploaded. Choose it again."
+msgstr "Не удалось загрузить файл %s. Выберите его ещё раз."
+
+msgid "Files of this type cannot be attached: %s."
+msgstr "Файлы такого типа прикреплять нельзя: %s."
+
+msgid "Files in one post"
+msgstr "Файлов в одном сообщении"
+
+msgid "How many files may be attached to a post, those already attached counted in."
+msgstr "Сколько файлов можно прикрепить к сообщению, включая уже прикреплённые."
+
+msgid "Attach files"
+msgstr "Прикрепить файлы"
+
+msgid "Up to %d files of %d KB each."
+msgstr "До %d файлов, каждый до %d КБ."
+
+msgid "The post holds as many files as it may. Delete one to attach another."
+msgstr "В сообщении уже максимум файлов. Удалите один, чтобы прикрепить другой."

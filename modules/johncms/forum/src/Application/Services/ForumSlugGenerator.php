@@ -14,7 +14,7 @@ use Johncms\Modules\Forum\Domain\Repository\ForumStructureRepositoryInterface;
 final readonly class ForumSlugGenerator
 {
     private const RESERVED = [
-        'addfile', 'addvote', 'bulk-delete-posts', 'change-topic', 'close', 'delete-post',
+        'addvote', 'bulk-delete-posts', 'change-topic', 'close', 'delete-post',
         'delete-post-file', 'delete-topic', 'delvote', 'download-file', 'edit-post', 'editvote',
         'files', 'filter', 'latest-topics', 'move-topic', 'new-message', 'new-topic', 'pin-topic',
         'poll-vote', 'poll-voters', 'post', 'reply-message', 'restore-post', 'restore-topic',

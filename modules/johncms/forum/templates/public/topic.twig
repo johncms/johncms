@@ -22,6 +22,7 @@
     @var one_post_in_sight bool         Deleting the post in sight takes the topic with it.
     @var can_set_curators  bool
     @var token             string       One-time token of the reply form.
+    @var file_limits       ?\Johncms\Modules\Forum\Application\DTO\ForumFileLimitsDTO What the files of the reply form may be; null when the visitor does not write here.
     @var total             int          Posts in sight, the filter by author applied.
     @var pagination        \Twig\Markup Null when everything fits on one page.
     @var online            array        online_u, online_g
@@ -301,7 +302,7 @@
 {% block reply %}
     {% if write_access %}
         <section class="site-compose site-forum-reply" id="topic-reply">
-            <form class="site-compose__form" name="new_message" action="{{ reply_url }}" method="post">
+            <form class="site-compose__form" name="new_message" action="{{ reply_url }}" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                 <input type="hidden" name="token" value="{{ token }}">
                 {# The post the text answers, set by the Reply and Quote buttons; the label says which. #}
@@ -326,10 +327,11 @@
                     allow_upload: true,
                 } only %}
                 <div class="site-compose__actions site-forum-reply__actions">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="addfiles" value="1" id="addfiles">
-                        <label class="form-check-label" for="addfiles">{{ __('Add File') }}</label>
-                    </div>
+                    {% include '@forum/public/components/file-field.twig' with {
+                        id: 'topic-reply-files',
+                        limits: file_limits,
+                        compact: true,
+                    } only %}
                     <button type="submit" name="submit" value="1" class="btn btn-primary">
                         {% include '@theme/components/icon.twig' with {name: 'send', size: 14} only %} {{ __('Write') }}
                     </button>

@@ -7,6 +7,9 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 use Johncms\Database\TransactionManagerInterface;
 use Johncms\EditorUploads\EditorUploadBindException;
 use Johncms\Modules\Forum\Application\Uploads\ForumMessagePictures;
+use Johncms\Modules\Forum\Application\Uploads\ForumPostFiles;
+use Johncms\Storage\StorageException;
+use Symfony\Component\HttpFoundation\Response;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
@@ -21,6 +24,7 @@ use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
+use Johncms\Http\UploadedFileMapper;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
 use Johncms\System\Utility\EditorContentNormalizer;
@@ -43,6 +47,8 @@ final readonly class ReplyMessageController
         private ForumTopicPathService $topicPathService,
         private AccessCheckerInterface $accessChecker,
         private ForumFormTokens $formTokens,
+        private ForumPostFiles $postFiles,
+        private UploadedFileMapper $uploadedFiles,
     ) {
     }
 
@@ -117,7 +123,7 @@ final readonly class ReplyMessageController
 
         $msg = $this->editorContentNormalizer->trimEdgeEmptyBlocks($request->body('msg', ''));
         $msg = trim($msg);
-        $addFiles = $request->hasBody('addfiles');
+        $files = $this->uploadedFiles->fromField($request->files->get('files'));
 
         if (
             $request->hasBody('submit')
@@ -163,6 +169,11 @@ final readonly class ReplyMessageController
                 );
             }
 
+            $fileErrors = $this->postFiles->check($files);
+            if ($fileErrors !== []) {
+                return $this->form($request, $sourceMessage->id, $topic->name, $topic->url, $page, $msg, $fileErrors);
+            }
+
             if ($this->session->get('fsort_id') === $topic->id) {
                 $this->session->remove(['fsort_id', 'fsort_users']);
             }
@@ -170,15 +181,16 @@ final readonly class ReplyMessageController
             $this->formTokens->consume($request->body('token', ''));
 
             try {
-                $result = $this->transactions->run(function () use ($sourceMessage, $topic, $msg, $addFiles) {
+                $result = $this->transactions->run(function () use ($sourceMessage, $topic, $msg, $files) {
                     $result = $this->replyMessageUseCase->execute(
                         sourceMessage: $sourceMessage,
                         topic: $topic,
                         messageText: $msg,
-                        addFiles: $addFiles,
                         clientInfo: $this->environment->getClientInfo(),
                     );
                     $this->pictures->bind($result->messageId, $this->currentUser->id());
+                    // Last: a failure after the files are written would leave them behind.
+                    $this->postFiles->store($result->messageId, $files);
 
                     return $result;
                 });
@@ -193,16 +205,12 @@ final readonly class ReplyMessageController
                         'back_url_name' => __('Back'),
                     ]
                 );
-            }
-
-            if ($addFiles) {
-                redirect('/forum/addfile/' . $result->messageId . '/');
+            } catch (StorageException) {
+                return $this->form($request, $sourceMessage->id, $topic->name, $topic->url, $page, $msg, [__('The files could not be saved. Try again.')]);
             }
 
             redirect($this->topicPathService->getTopicUrlById($result->topicId, $result->page > 1 ? $result->page : null) ?? '/forum/');
         }
-
-        $token = $this->formTokens->issue();
 
         $isQuote = $request->query->has('quote');
         $quoteText = (string) $sourceMessage->getRawOriginal('text');
@@ -213,18 +221,39 @@ final readonly class ReplyMessageController
             $msg = '<p>' . $sourceMessage->user_name . ',&nbsp;' . $msg . '</p>';
         }
 
+        return $this->form($request, $sourceMessage->id, $topic->name, $topic->url, $page, $msg, []);
+    }
+
+    /**
+     * The page of the answer, and the answer sent back with what was wrong with its files: the
+     * files are chosen anew, the text stays.
+     *
+     * @param list<string> $fileErrors
+     */
+    private function form(
+        Request $request,
+        int $sourceId,
+        string $topicName,
+        string $topicUrl,
+        int $page,
+        string $msg,
+        array $fileErrors,
+    ): ViewResponse {
         return new ViewResponse(
             '@forum/public/reply-message.twig',
             [
                 'title'       => __('Reply to message'),
                 'page_title'  => __('Reply to message'),
-                'token'       => $token,
-                'topic_name'  => $topic->name,
-                'form_action' => $this->getReplyUrl($request, $sourceMessage->id, $page),
-                'add_file'    => $addFiles,
+                'token'       => $this->formTokens->issue(),
+                'topic_name'  => $topicName,
+                'form_action' => $this->getReplyUrl($request, $sourceId, $page),
                 'msg'         => $msg,
-                'back_url'    => $this->buildTopicBackUrl($topic->url, $page),
-            ]
+                'reply_to'    => 0,
+                'back_url'    => $this->buildTopicBackUrl($topicUrl, $page),
+                'file_limits' => $this->postFiles->limits(),
+                'file_errors' => $fileErrors,
+            ],
+            $fileErrors !== [] ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK,
         );
     }
 
@@ -240,7 +269,7 @@ final readonly class ReplyMessageController
             $url .= '?page=' . $page;
         }
         if ($request->query->has('quote')) {
-            $url .= ($page > 1 ? '&amp;' : '?') . 'quote=1';
+            $url .= ($page > 1 ? '&' : '?') . 'quote=1';
         }
 
         return $url;

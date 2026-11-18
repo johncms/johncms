@@ -9,6 +9,7 @@ use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Access\ForumAccess;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Services\ForumFormTokens;
+use Johncms\Modules\Forum\Application\Uploads\ForumPostFiles;
 use Johncms\Modules\Forum\Application\Services\ForumPostRows;
 use Johncms\Modules\Forum\Application\Services\ForumUserSettings;
 use Carbon\Carbon;
@@ -39,6 +40,7 @@ final readonly class ViewForumTopicUseCase
         private ForumTopicPathService $topicPathService,
         private CurrentUser $currentUser,
         private ForumFormTokens $formTokens,
+        private ForumPostFiles $postFiles,
         private AccessCheckerInterface $accessChecker,
         private ForumAccess $forumAccess,
         private ForumUserSettings $userSettings,
@@ -190,6 +192,7 @@ final readonly class ViewForumTopicUseCase
                 'page'             => $page,
                 'id'               => $topic->id,
                 'token'            => $token,
+                'file_limits'      => $writeAccess ? $this->postFiles->limits() : null,
                 'newest_first'     => $newestFirst,
                 'write_access'     => $writeAccess,
                 'messages'         => $messages,

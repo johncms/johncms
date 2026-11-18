@@ -35,4 +35,22 @@ final readonly class UploadedFileMapper
             error: $file->getError(),
         );
     }
+
+    /**
+     * The files of a field that may hold several (name="files[]" multiple). A field left empty
+     * sends one entry without a file: that one is not a file, and is left out.
+     *
+     * @return list<UploadedFileDTO>
+     */
+    public function fromField(mixed $field): array
+    {
+        $files = [];
+        foreach (is_array($field) ? $field : [$field] as $file) {
+            if ($file instanceof UploadedFile && $file->getError() !== UPLOAD_ERR_NO_FILE) {
+                $files[] = $this->fromUploadedFile($file);
+            }
+        }
+
+        return $files;
+    }
 }

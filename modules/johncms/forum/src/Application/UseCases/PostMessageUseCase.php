@@ -12,7 +12,6 @@ use Johncms\Modules\Forum\Application\DTO\PostMessageResultDTO;
 use Johncms\Modules\Forum\Application\Services\ForumTopicStatsRecalculator;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
-use Johncms\Modules\Forum\Domain\Models\ForumUnread;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Security\ClientInfoDTO;
@@ -32,11 +31,12 @@ final readonly class PostMessageUseCase
     public function execute(
         ForumTopic $topic,
         string $messageText,
-        bool $addFiles,
+        bool $withFiles,
         ClientInfoDTO $clientInfo,
     ): PostMessageResultDTO {
+        // A post with files is a post of its own: the files belong to it, not to the one before.
         $messageId = null;
-        if (! $addFiles) {
+        if (! $withFiles) {
             $messageId = $this->tryMergeWithLastMessage($topic, $messageText);
         }
 
@@ -52,13 +52,6 @@ final readonly class PostMessageUseCase
                 'lastpost'  => time(),
             ]
         );
-
-        if ($addFiles) {
-            ForumUnread::query()->updateOrInsert(
-                ['topic_id' => $topic->id, 'user_id' => $this->currentUser->id()],
-                ['time' => time()]
-            );
-        }
 
         $page = $this->resolveMessagePage($topic->id);
 

@@ -8,7 +8,7 @@
     @var data            array  meta_description, meta_keywords
     @var errors          array  Validation messages by field name.
     @var token           string One-time token of the form, kept in the session.
-    @var add_files       bool   The author asked to attach a file after writing.
+    @var file_limits     \Johncms\Modules\Forum\Application\DTO\ForumFileLimitsDTO
     @var show_preview    bool   The author pressed "Preview".
     @var preview_message \Twig\Markup
     @var preview_time    int    Timestamp shown in the preview.
@@ -26,7 +26,7 @@
         } only %}
     {% endif %}
 
-    <form name="new_topic" action="{{ action_url }}" method="post">
+    <form name="new_topic" action="{{ action_url }}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}"/>
         <input type="hidden" name="token" value="{{ token }}">
         {% if errors._form|default([]) %}
@@ -59,9 +59,12 @@
                 <textarea name="meta_keywords" class="form-control" id="meta_keywords" rows="1">{{ data.meta_keywords }}</textarea>
             </div>
         {% endif %}
-        <div class="custom-control custom-checkbox mb-3">
-            <input type="checkbox" class="custom-control-input" name="addfiles" value="1" id="addfiles"{% if add_files %} checked{% endif %}>
-            <label class="custom-control-label" for="addfiles">{{ __('Add File') }}</label>
+        <div class="mb-3">
+            {% include '@forum/public/components/file-field.twig' with {
+                id: 'topic-files',
+                limits: file_limits,
+                errors: errors.files|default([]),
+            } only %}
         </div>
         <div>
             <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Write') }}</button>
