@@ -1,45 +1,25 @@
 {#
-    One visitor of the forum, of a topic or of a poll.
+    One person in a list of the forum: who is in the forum or a topic, who voted in a poll.
 
-    @var item array id, name, user_is_online, user_profile_link, place, search_ip_url, ip,
-                    search_ip_via_proxy_url, ip_via_proxy, browser
+    @var item array id, name, user_is_online, user_profile_link, place (where the person is; empty
+                    when the list does not say), ip, ip_via_proxy, browser
 #}
-<div class="user-row">
-    <div class="d-flex align-items-start">
-        <div class="user-avatar me-2 me-md-4">
-            <div class="avatar-image rounded-circle overflow-hidden">
-                <img src="{{ avatar(item.id|default(0)) }}" class="img-fluid" alt=".">
-            </div>
-            <div class="user-status {{ item.user_is_online ? 'online' : 'offline' }} shadow"></div>
-        </div>
-        <div class="overflow-auto flex-grow-1">
-            <div class="user-name">
-                {% if item.user_profile_link %}
-                    <a href="{{ item.user_profile_link }}" class="user-login me-2">{{ item.name }}</a>
-                {% else %}
-                    <a class="user-login me-2">{{ item.name }}</a>
-                {% endif %}
-            </div>
-            {% if item.place %}
-                <div class="text">
-                    {{ item.place }}
-                </div>
-            {% endif %}
-        </div>
+<article class="site-forum-user">
+    <span class="site-forum-user__avatar">
+        <img src="{{ avatar(item.id|default(0)) }}" alt="" width="40" height="40" loading="lazy">
+        {% if item.user_is_online|default(false) %}<span class="site-forum-user__online" title="{{ d__('system', 'Online') }}"></span>{% endif %}
+    </span>
+    <div class="site-forum-user__main">
+        {% if item.user_profile_link|default('') %}
+            <a class="site-forum-user__name" href="{{ item.user_profile_link }}">{{ item.name }}</a>
+        {% else %}
+            <span class="site-forum-user__name">{{ item.name }}</span>
+        {% endif %}
+        {% if item.place|default('') %}<span class="site-forum-user__place">{{ item.place }}</span>{% endif %}
     </div>
     {% if can('users.origin.view') %}
-        <div class="post-footer d-flex justify-content-between border-top pt-2 mt-2">
-            <div class="post-user-info d-flex overflow-hidden small align-items-center">
-                <div class="user-ip me-2">
-                    <a href="{{ item.search_ip_url }}">{{ item.ip }}</a>
-                    {% if item.ip_via_proxy %}
-                        / <a href="{{ item.search_ip_via_proxy_url }}">{{ item.ip_via_proxy }}</a>
-                    {% endif %}
-                </div>
-                <div class="useragent">
-                    <span>{{ item.browser }}</span>
-                </div>
-            </div>
-        </div>
+        {% include '@theme/components/moderator-meta.twig' with {
+            ip: item.ip|default(''), ip_via_proxy: item.ip_via_proxy|default(''), user_agent: item.browser|default('')
+        } only %}
     {% endif %}
-</div>
+</article>

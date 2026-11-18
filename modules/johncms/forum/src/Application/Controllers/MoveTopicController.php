@@ -7,6 +7,7 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
+use Johncms\Modules\Forum\Application\Services\ForumTopicBreadcrumbs;
 use Johncms\Modules\Forum\Application\UseCases\EnsureMoveTopicAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetMoveTopicContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\MoveTopicUseCase;
@@ -20,6 +21,7 @@ final readonly class MoveTopicController
         private EnsureMoveTopicAccessUseCase $accessUseCase,
         private GetMoveTopicContextUseCase $contextUseCase,
         private MoveTopicUseCase $moveTopicUseCase,
+        private ForumTopicBreadcrumbs $breadcrumbs,
     ) {
     }
 
@@ -72,6 +74,8 @@ final readonly class MoveTopicController
             redirect($context->topic->url);
         }
 
+        $this->breadcrumbs->add($context->topic, $context->topic->url, __('Move topic'));
+
         return new ViewResponse(
             '@forum/public/move-topic.twig',
             [
@@ -79,6 +83,7 @@ final readonly class MoveTopicController
                 'page_title'  => __('Move topic'),
                 'targets'     => $context->targets,
                 'back_url'    => $context->topic->url,
+                'topic_name'  => $context->topic->name,
                 'form_action' => '/forum/move-topic/' . $id . '/',
             ]
         );

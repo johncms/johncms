@@ -4,22 +4,31 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Http\Request;
+use Johncms\Http\Session;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
+use Johncms\Modules\Forum\Application\Services\ForumTopicBreadcrumbs;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\GetEditVoteContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\UpdateVoteUseCase;
-use Johncms\Http\Request;
-use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditVoteController
 {
+    private const int MAX_ANSWERS = 20;
+
     public function __construct(
         private ForumErrorRenderer $forumErrorRenderer,
         private GetEditVoteContextUseCase $contextUseCase,
         private UpdateVoteUseCase $updateVoteUseCase,
         private ForumTopicPathService $topicPathService,
+        private ForumTopicRepositoryInterface $topics,
+        private ForumTopicBreadcrumbs $breadcrumbs,
+        private Session $session,
     ) {
     }
 
@@ -48,79 +57,65 @@ final readonly class EditVoteController
             );
         }
 
-        if ($request->hasBody('submit')) {
-            $pollName = mb_substr(trim($request->body('name_vote', '')), 0, 200);
-
-            $existingAnswers = [];
-            foreach ($context->answers as $answer) {
-                $inputName = $answer->id . 'vote';
-                $existingAnswers[$answer->id] = mb_substr(trim($request->body($inputName, '')), 0, 150);
-            }
-
-            $newAnswers = [];
-            for ($vote = $context->savedVote; $vote < 20; $vote++) {
-                $value = mb_substr(trim($request->body((string) $vote, '')), 0, 150);
-                if ($value === '') {
-                    continue;
-                }
-                $newAnswers[] = $value;
-            }
-
-            $this->updateVoteUseCase->execute($context->topicId, $pollName, $existingAnswers, $newAnswers);
-
-            return new ViewResponse(
-                '@theme/pages/result.twig',
-                [
-                    'title'         => __('Edit Poll'),
-                    'page_title'    => __('Edit Poll'),
-                    'type'          => 'alert-success',
-                    'message'       => __('Poll changed'),
-                    'back_url'      => $this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/',
-                    'back_url_name' => __('Continue'),
-                ]
-            );
-        }
-
+        $sent = $request->getMethod() === 'POST';
         $countVote = $request->bodyInt('count_vote', $context->savedVote);
-        if ($context->savedVote < 20) {
-            if ($request->hasBody('plus')) {
-                $countVote++;
-            } elseif ($request->hasBody('minus')) {
-                $countVote--;
-            }
+        if ($request->hasBody('plus')) {
+            $countVote++;
+        } elseif ($request->hasBody('minus')) {
+            $countVote--;
+        }
+        $countVote = max($context->savedVote, min(self::MAX_ANSWERS, $countVote));
 
-            if (empty($countVote)) {
-                $countVote = $context->savedVote;
-            } elseif ($countVote > 20) {
-                $countVote = 20;
-            }
+        $pollName = $sent ? mb_substr(trim($request->body('name_vote')), 0, 200) : $context->pollName;
+        $existing = [];
+        foreach ($context->answers as $answer) {
+            $existing[$answer->id] = $sent ? mb_substr(trim($request->body($answer->id . 'vote')), 0, 150) : $answer->name;
+        }
+        $new = [];
+        for ($vote = $context->savedVote; $vote < $countVote; $vote++) {
+            $new[$vote] = mb_substr(trim($request->body((string) $vote)), 0, 150);
         }
 
-        if ($countVote < $context->savedVote) {
-            $countVote = $context->savedVote;
+        $errors = [];
+        if ($request->hasBody('submit')) {
+            if ($pollName === '') {
+                $errors['name_vote'] = [__('Enter the question of the poll.')];
+            }
+            if (in_array('', $existing, true)) {
+                $errors['answers'] = [__('A saved answer cannot be left empty: delete it with its button.')];
+            }
+
+            if ($errors === []) {
+                $this->updateVoteUseCase->execute($context->topicId, $pollName, $existing, array_values(array_filter($new, static fn (string $answer): bool => $answer !== '')));
+                $this->session->flash(ForumTopicController::MESSAGE, __('Poll changed'));
+                redirect($this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/');
+            }
         }
 
         $votes = [];
-        $i = 0;
+        $number = 0;
         foreach ($context->answers as $answer) {
             $votes[] = [
                 'input_name'  => $answer->id . 'vote',
-                'input_label' => __('Answer') . ' ' . ($i + 1),
-                'input_value' => $answer->name,
-                'delete_url'  => $context->savedVote > 2
-                    ? '/forum/editvote/' . $context->topicId . '/answers/' . $answer->id . '/delete'
-                    : '',
+                'input_label' => __('Answer') . ' ' . ++$number,
+                'input_value' => $existing[$answer->id],
+                // A poll keeps two answers at least.
+                'delete_url'  => $context->savedVote > 2 ? '/forum/editvote/' . $context->topicId . '/answers/' . $answer->id . '/delete' : '',
             ];
-            $i++;
         }
-
-        for ($vote = $i; $vote < $countVote; $vote++) {
+        foreach ($new as $vote => $answer) {
             $votes[] = [
                 'input_name'  => $vote,
-                'input_label' => __('Answer') . ' ' . ($vote + 1),
-                'input_value' => $request->body((string) $vote, ''),
+                'input_label' => __('Answer') . ' ' . ++$number,
+                'input_value' => $answer,
                 'delete_url'  => '',
             ];
+        }
+
+        $topic = $this->topics->findById($context->topicId);
+        $topicUrl = $this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/';
+        if ($topic !== null) {
+            $this->breadcrumbs->add($topic, $topicUrl, __('Edit Poll'));
         }
 
         return new ViewResponse(
@@ -129,12 +124,15 @@ final readonly class EditVoteController
                 'title'      => __('Edit Poll'),
                 'page_title' => __('Edit Poll'),
                 'action_url' => '/forum/editvote/' . $context->topicId . '/',
-                'back_url'   => $this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/',
+                'back_url'   => $topicUrl,
+                'topic_name' => $topic->name ?? '',
                 'saved_vote' => $context->savedVote,
                 'count_vote' => $countVote,
-                'poll_name'  => $context->pollName,
+                'poll_name'  => $pollName,
                 'votes'      => $votes,
-            ]
+                'errors'     => $errors,
+            ],
+            $errors !== [] ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK,
         );
     }
 }

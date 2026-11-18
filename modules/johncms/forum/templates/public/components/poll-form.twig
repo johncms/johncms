@@ -1,0 +1,82 @@
+{#
+    The form of a poll, to add one or to change it. The number of answers changes by sending the
+    form with "Add answer" or "Remove the last": it works without the script.
+
+    @var action_url  string
+    @var back_url    string       The topic.
+    @var poll_name   string
+    @var count_vote  int          Answer fields on the form.
+    @var votes       array        input_name, input_label, input_value, delete_url (a saved answer that may be deleted).
+    @var can_add     bool         Another answer fits.
+    @var can_remove  bool         The last field is a new answer and may go.
+    @var errors      array        Messages by field: name_vote, answers.
+    @var submit_name string       The label of the button that saves.
+#}
+{% set name_errors = errors.name_vote|default([]) %}
+{% set answer_errors = errors.answers|default([]) %}
+<form class="site-forum-write" name="poll" action="{{ action_url }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+    <input type="hidden" name="count_vote" value="{{ count_vote }}">
+
+    <section class="site-forum-write__section">
+        <div class="site-forum-write__field">
+            <label class="form-label" for="poll-name">{{ __('Question') }}</label>
+            <input type="text" class="form-control{{ name_errors ? ' is-invalid' : '' }}" id="poll-name" name="name_vote" value="{{ poll_name }}"
+                   maxlength="200" required aria-describedby="poll-name-hint{{ name_errors ? ' poll-name-errors' : '' }}">
+            <div class="form-text" id="poll-name-hint">{{ __('Up to 200 characters.') }}</div>
+            {% if name_errors %}<div class="invalid-feedback d-block" id="poll-name-errors">{{ name_errors|join(' ') }}</div>{% endif %}
+        </div>
+    </section>
+
+    <section class="site-forum-write__section">
+        <h2 class="site-forum-write__title">{{ __('Answers') }}</h2>
+        <p class="site-forum-write__note">{{ __('Two at least, up to 150 characters each. Empty fields are left out.') }}</p>
+        {% if answer_errors %}<div class="invalid-feedback d-block mb-3" role="alert">{{ answer_errors|join(' ') }}</div>{% endif %}
+        {% for vote in votes %}
+            <div class="site-forum-write__field">
+                <label class="form-label" for="poll-answer-{{ vote.input_name }}">{{ vote.input_label }}</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="poll-answer-{{ vote.input_name }}" name="{{ vote.input_name }}"
+                           value="{{ vote.input_value }}" maxlength="150">
+                    {% if vote.delete_url|default('') %}
+                        {# The form of the deletion stands after this one: forms cannot be nested. #}
+                        <button type="submit" form="poll-delete-answer-{{ vote.input_name }}" class="btn btn-outline-secondary site-comment__delete"
+                                title="{{ __('Delete Answer') }}" aria-label="{{ __('Delete Answer') }}">
+                            {% include '@theme/components/icon.twig' with {name: 'trash-2', size: 14} only %}
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+        {% if can_add or can_remove %}
+            <div class="site-forum-write__actions">
+                {% if can_add %}
+                    <button type="submit" name="plus" value="1" class="btn btn-outline-secondary btn-sm">
+                        {% include '@theme/components/icon.twig' with {name: 'plus', size: 14} only %} {{ __('Add Answer') }}
+                    </button>
+                {% endif %}
+                {% if can_remove %}
+                    <button type="submit" name="minus" value="1" class="btn btn-outline-secondary btn-sm">
+                        {% include '@theme/components/icon.twig' with {name: 'x', size: 14} only %} {{ __('Delete last') }}
+                    </button>
+                {% endif %}
+            </div>
+        {% endif %}
+    </section>
+
+    <div class="site-forum-write__actions">
+        <a href="{{ back_url }}" class="btn btn-outline-secondary">
+            {% include '@theme/components/icon.twig' with {name: 'chevron-left', size: 14, class: 'site-icon--directional'} only %} {{ __('Cancel') }}
+        </a>
+        <button type="submit" name="submit" value="1" class="btn btn-primary">
+            {% include '@theme/components/icon.twig' with {name: 'check', size: 14} only %} {{ submit_name }}
+        </button>
+    </div>
+</form>
+{% for vote in votes|filter(vote => vote.delete_url|default('')) %}
+    <form method="post" action="{{ vote.delete_url }}" id="poll-delete-answer-{{ vote.input_name }}"
+          data-confirm="{{ __('Do you really want to delete the answer?') }}" data-confirm-text="{{ vote.input_value }}"
+          data-confirm-button="{{ __('Delete') }}">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+    </form>
+{% endfor %}

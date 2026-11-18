@@ -18,7 +18,7 @@
 {% block content_class %}site-content--contained{% endblock %}
 
 {% block page_subtitle %}
-    <p class="site-page-heading__subtitle"><span>{{ __('In the topic') }} <a href="{{ back_url }}">{{ topic_name }}</a></span></p>
+    {% include '@forum/public/components/topic-subtitle.twig' with {url: back_url, name: topic_name} only %}
 {% endblock %}
 
 {% block content %}

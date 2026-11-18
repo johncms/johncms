@@ -4,25 +4,32 @@
 
     @var form_action string
     @var back_url    string
+    @var topic_name  string
     @var targets     array  id, title — every section that holds topics, the current one left out.
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
+{% block page_subtitle %}
+    {% include '@forum/public/components/topic-subtitle.twig' with {url: back_url, name: topic_name} only %}
+{% endblock %}
+
 {% block content %}
-    <form name="move_topic" class="card card-body shadow" action="{{ form_action }}" method="post">
-        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-        <input type="hidden" name="submit" value="1">
-        {% if targets %}
+    {% if targets %}
+        <form class="site-forum-form" name="move_topic" action="{{ form_action }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+            <input type="hidden" name="submit" value="1">
             {% include '@forum/public/components/move-topic-fields.twig' with {targets: targets, id_prefix: 'move-topic-page'} only %}
-            <div>
+            <div class="site-forum-form__actions">
+                <a href="{{ back_url }}" class="btn btn-outline-secondary">{{ __('Cancel') }}</a>
                 <button type="submit" class="btn btn-primary">{{ __('Move') }}</button>
-                <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Back to topic') }}</a>
             </div>
-        {% else %}
-            <div class="alert alert-warning">{{ __('There is no other section of topics to move it to.') }}</div>
-            <div>
-                <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Back to topic') }}</a>
-            </div>
-        {% endif %}
-    </form>
+        </form>
+    {% else %}
+        {% include '@theme/components/empty-state.twig' with {icon: 'folder', title: __('There is no other section of topics to move it to.')} only %}
+        <div class="site-forum-form__actions">
+            <a href="{{ back_url }}" class="btn btn-outline-secondary">{{ __('Back to topic') }}</a>
+        </div>
+    {% endif %}
 {% endblock %}

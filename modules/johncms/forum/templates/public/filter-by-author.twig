@@ -18,12 +18,7 @@
 {% endblock %}
 
 {% block page_subtitle %}
-    <p class="site-page-heading__subtitle">
-        <a class="site-subject-link" href="{{ back_url }}" title="{{ topic_name }}">
-            {% include '@theme/components/icon.twig' with {name: 'messages-square', size: 14} only %}
-            <span class="site-subject-link__text">{{ topic_name }}</span>
-        </a>
-    </p>
+    {% include '@forum/public/components/topic-subtitle.twig' with {url: back_url, name: topic_name} only %}
 {% endblock %}
 
 {% block content %}

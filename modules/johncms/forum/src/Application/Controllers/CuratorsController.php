@@ -7,9 +7,11 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
+use Johncms\Modules\Forum\Application\Services\ForumTopicBreadcrumbs;
 use Johncms\Modules\Forum\Application\UseCases\GetCuratorsContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\UpdateCuratorsUseCase;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
 
 final readonly class CuratorsController
@@ -18,6 +20,8 @@ final readonly class CuratorsController
         private ForumErrorRenderer $forumErrorRenderer,
         private GetCuratorsContextUseCase $contextUseCase,
         private UpdateCuratorsUseCase $updateCuratorsUseCase,
+        private ForumTopicBreadcrumbs $breadcrumbs,
+        private Session $session,
     ) {
     }
 
@@ -51,7 +55,6 @@ final readonly class CuratorsController
         $total = count($context['candidates']);
 
         $selectedUsers = ! empty($topic->curators) ? $topic->curators : [];
-        $saved = false;
 
         if ($request->hasBody('submit')) {
             $selectedUsers = $request->bodyList('users');
@@ -75,10 +78,14 @@ final readonly class CuratorsController
             ];
         }
 
+        $topicUrl = $topic->url . ($page > 1 ? '?page=' . $page : '');
         if ($request->hasBody('submit') && $total > 0) {
             $this->updateCuratorsUseCase->execute($topic, $curators);
-            $saved = true;
+            $this->session->flash(ForumTopicController::MESSAGE, __('Curators saved'));
+            redirect($topicUrl);
         }
+
+        $this->breadcrumbs->add($topic, $topicUrl, __('Curators'));
 
         return new ViewResponse(
             '@forum/public/curators.twig',
@@ -86,10 +93,9 @@ final readonly class CuratorsController
                 'title'         => __('Curators'),
                 'page_title'    => __('Curators'),
                 'action_url'    => '/forum/curators/' . $topic->id . '/' . ($page > 1 ? '?page=' . $page : ''),
-                'back_url'      => $topic->url . ($page > 1 ? '?page=' . $page : ''),
+                'back_url'      => $topicUrl,
                 'curators_list' => $curatorsList,
                 'topic_name'    => $topic->name,
-                'saved'         => $saved,
             ]
         );
     }

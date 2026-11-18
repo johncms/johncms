@@ -7,28 +7,30 @@
     @var pagination    \Twig\Markup Null when everything fits on one page.
     @var empty_message string
     @var topic_url     string
+    @var topic_name    string
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
+{% block page_subtitle %}
+    {% include '@forum/public/components/topic-subtitle.twig' with {url: topic_url, name: topic_name} only %}
+{% endblock %}
+
 {% block content %}
-    <h3>{{ poll_name }}</h3>
-
-    {% for item in items %}
-        {% include '@forum/public/components/user-row.twig' with {item: item} only %}
-    {% endfor %}
-
-    {% if not total %}
-        <div class="alert alert-info shadow border-0">{{ empty_message }}</div>
-    {% else %}
-        <div class="mb-n2 pt-1">
-            <div>{{ __('Total') }}: {{ total }}</div>
-            {% if pagination %}
-                <div class="mt-1">{{ pagination }}</div>
-            {% endif %}
-        </div>
-    {% endif %}
-
-    <div class="mt-3">
-        <a href="{{ topic_url }}">{{ __('Go to Topic') }}</a>
+    <div class="site-forum-list-head">
+        <h2 class="site-forum-list-head__title">{{ poll_name }}</h2>
+        <span class="site-forum-list-head__count">{{ __('Total') }}: {{ total|format_number }}</span>
     </div>
+
+    {% if items %}
+        <div class="site-forum-users">
+            {% for item in items %}
+                {% include '@forum/public/components/user-row.twig' with {item: item} only %}
+            {% endfor %}
+        </div>
+        {% if pagination %}<div class="site-forum__pagination">{{ pagination }}</div>{% endif %}
+    {% else %}
+        {% include '@theme/components/empty-state.twig' with {icon: 'chart-column', title: empty_message} only %}
+    {% endif %}
 {% endblock %}

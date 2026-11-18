@@ -1979,8 +1979,6 @@ msgstr "В сообщении уже максимум файлов. Удалит
 msgid "In the section"
 msgstr "В разделе"
 
-msgid "In the topic"
-msgstr "В теме"
 
 msgid "Create topic"
 msgstr "Создать тему"
@@ -1990,3 +1988,30 @@ msgstr "От 3 до 200 символов, без повтора темы это�
 
 msgid "Left empty, the templates of the forum settings are used."
 msgstr "Если оставить пустыми, используются шаблоны из настроек форума."
+
+msgid "A curator moderates this topic only."
+msgstr "Куратор модерирует только эту тему."
+
+msgid "A poll needs two answers at least."
+msgstr "В опросе должно быть не меньше двух ответов."
+
+msgid "A saved answer cannot be left empty: delete it with its button."
+msgstr "Сохранённый ответ нельзя оставить пустым: удалите его кнопкой рядом."
+
+msgid "Curators are chosen among those who write in the topic."
+msgstr "Кураторов выбирают среди тех, кто пишет в теме."
+
+msgid "Curators saved"
+msgstr "Кураторы сохранены"
+
+msgid "Enter the question of the poll."
+msgstr "Введите вопрос опроса."
+
+msgid "Two at least, up to 150 characters each. Empty fields are left out."
+msgstr "Не меньше двух, каждый до 150 символов. Пустые поля не сохраняются."
+
+msgid "Question"
+msgstr "Вопрос"
+
+msgid "Up to 200 characters."
+msgstr "До 200 символов."

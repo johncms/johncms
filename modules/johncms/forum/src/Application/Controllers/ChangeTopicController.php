@@ -7,6 +7,8 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
+use Johncms\Modules\Forum\Application\Services\ForumTopicBreadcrumbs;
+use Symfony\Component\HttpFoundation\Response;
 use Johncms\Modules\Forum\Application\UseCases\ChangeTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetChangeTopicContextUseCase;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
@@ -23,6 +25,7 @@ final readonly class ChangeTopicController
         private GetChangeTopicContextUseCase $contextUseCase,
         private ChangeTopicUseCase $changeTopicUseCase,
         private ValidatorInterface $validator,
+        private ForumTopicBreadcrumbs $breadcrumbs,
     ) {
     }
 
@@ -85,6 +88,8 @@ final readonly class ChangeTopicController
             $errors = $result->getErrors();
         }
 
+        $this->breadcrumbs->add($topic, $topic->url, __('Change the topic'));
+
         return new ViewResponse(
             '@forum/public/change-topic.twig',
             [
@@ -93,8 +98,10 @@ final readonly class ChangeTopicController
                 'action_url' => '/forum/change-topic/' . $topic->id . '/',
                 'form_data'  => $formData,
                 'back_url'   => $topic->url,
+                'topic_name' => $topic->name,
                 'errors'     => $errors,
-            ]
+            ],
+            $errors ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK,
         );
     }
 }

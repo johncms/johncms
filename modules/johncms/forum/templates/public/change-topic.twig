@@ -4,21 +4,28 @@
 
     @var action_url string
     @var back_url   string
+    @var topic_name string
     @var form_data  array  name, meta_keywords, meta_description
     @var errors     array  Validation messages by field name.
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
+{% block page_subtitle %}
+    {% include '@forum/public/components/topic-subtitle.twig' with {url: back_url, name: topic_name} only %}
+{% endblock %}
+
 {% block content %}
-    <form name="rename_topic" action="{{ action_url }}" method="post">
-        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}"/>
-        {% if errors._form|default([]) %}
-            <div class="alert alert-danger">{{ errors._form|join(', ') }}</div>
-        {% endif %}
+    {% if errors._form|default([]) %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors._form|join(' ')} only %}
+    {% endif %}
+    <form class="site-forum-form" name="rename_topic" action="{{ action_url }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         {% include '@forum/public/components/change-topic-fields.twig' with {form_data: form_data, errors: errors, id_prefix: 'change-topic-page'} only %}
-        <div>
+        <div class="site-forum-form__actions">
+            <a href="{{ back_url }}" class="btn btn-outline-secondary">{{ __('Cancel') }}</a>
             <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Save') }}</button>
-            <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Back to topic') }}</a>
         </div>
     </form>
 {% endblock %}

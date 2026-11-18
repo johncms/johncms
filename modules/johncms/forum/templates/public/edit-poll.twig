@@ -1,67 +1,34 @@
 {#
-    Editing the poll of a topic: the answers already saved can be renamed or removed one by one,
-    the rest of the fields are new answers.
+    Changing the poll of a topic: the saved answers are renamed or deleted one by one, the rest of
+    the fields are new answers. A form sent back keeps its fields and says what was wrong.
 
     @var action_url string
-    @var back_url   string
+    @var back_url   string The topic.
+    @var topic_name string
     @var poll_name  string
     @var count_vote int    Answer fields on the form, never fewer than the saved ones.
     @var saved_vote int    Answers already saved.
     @var votes      array  input_name, input_label, input_value, delete_url
+    @var errors     array  Messages by field: name_vote, answers.
 #}
-{# The buttons that remove a saved answer sit in the form of the poll, but send forms of their own:
-   forms cannot be nested, so these stand after it and the buttons point at them. #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
+{% block page_subtitle %}
+    {% include '@forum/public/components/topic-subtitle.twig' with {url: back_url, name: topic_name} only %}
+{% endblock %}
+
 {% block content %}
-    <div class="row">
-        <div class="col-12">
-            <form name="new_topic" action="{{ action_url }}" method="post">
-                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                <input type="hidden" name="count_vote" value="{{ count_vote }}">
-                <div class="form-group">
-                    <label for="name_vote">{{ __('Poll') }}</label>
-                    <input type="text" class="form-control" id="name_vote" placeholder="{{ __('Poll') }}"
-                           name="name_vote" value="{{ poll_name }}" maxlength="200" required>
-                    <div class="small text-muted">{{ __('Maximum length: 200 characters') }}</div>
-                </div>
-
-                <h4>{{ __('Answers') }}</h4>
-                {% for vote in votes %}
-                    <div class="form-group">
-                        <label for="vote_{{ vote.input_name }}">{{ vote.input_label }}</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="vote_{{ vote.input_name }}" placeholder="{{ vote.input_label }}"
-                                   name="{{ vote.input_name }}" value="{{ vote.input_value }}" maxlength="150">
-                            {% if vote.delete_url|default('') %}
-                                <button type="submit" form="delete-answer-{{ vote.input_name }}" class="btn btn-danger"
-                                        title="{{ __('Delete Answer') }}" aria-label="{{ __('Delete Answer') }}">&times;</button>
-                            {% endif %}
-                        </div>
-                        <div class="small text-muted">{{ __('Maximum length: 150 characters') }}</div>
-                    </div>
-                {% endfor %}
-
-                <div class="mb-4">
-                    {% if count_vote < 20 %}
-                        <button type="submit" name="plus" value="1" class="btn btn-outline-primary btn-sm">{{ __('Add Answer') }}</button>
-                    {% endif %}
-                    {% if count_vote - saved_vote %}
-                        <button type="submit" name="minus" value="1" class="btn btn-outline-danger btn-sm">{{ __('Delete last') }}</button>
-                    {% endif %}
-                </div>
-                <div>
-                    <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Save') }}</button>
-                    <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Back to topic') }}</a>
-                </div>
-            </form>
-            {% for vote in votes|filter(vote => vote.delete_url|default('')) %}
-                <form method="post" action="{{ vote.delete_url }}" id="delete-answer-{{ vote.input_name }}"
-                      data-confirm="{{ __('Do you really want to delete the answer?') }}" data-confirm-text="{{ vote.input_value }}"
-                      data-confirm-button="{{ __('Delete') }}">
-                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                </form>
-            {% endfor %}
-        </div>
-    </div>
+    {% include '@forum/public/components/poll-form.twig' with {
+        action_url: action_url,
+        back_url: back_url,
+        poll_name: poll_name,
+        count_vote: count_vote,
+        votes: votes,
+        can_add: count_vote < 20,
+        can_remove: count_vote > saved_vote,
+        errors: errors,
+        submit_name: __('Save'),
+    } only %}
 {% endblock %}

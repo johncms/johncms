@@ -1,0 +1,12 @@
+{#
+    The subtitle of a page about a topic: the topic it is about, as a link back to it.
+
+    @var url  string
+    @var name string
+#}
+<p class="site-page-heading__subtitle">
+    <a class="site-subject-link" href="{{ url }}" title="{{ name }}">
+        {% include '@theme/components/icon.twig' with {name: 'messages-square', size: 14} only %}
+        <span class="site-subject-link__text">{{ name }}</span>
+    </a>
+</p>

@@ -79,7 +79,7 @@ final class ForumTopicManagementTest extends FunctionalTestCase
     {
         $refused = $this->postForm('/forum/change-topic/' . $this->topic . '/', ['name' => 'A'], FunctionalUserFactory::createSupervisor());
 
-        self::assertSame(200, $refused->getStatusCode());
+        self::assertSame(422, $refused->getStatusCode());
         self::assertStringContainsString('id="change-topic-page-name"', (string) $refused->getContent());
         self::assertStringContainsString('is-invalid', (string) $refused->getContent());
         self::assertSame('A topic', $this->fresh()->name);

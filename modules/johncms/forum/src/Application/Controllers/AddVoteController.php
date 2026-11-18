@@ -4,22 +4,32 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Http\Request;
+use Johncms\Http\Session;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
+use Johncms\Modules\Forum\Application\Services\ForumTopicBreadcrumbs;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\CreateVoteUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetAddVoteContextUseCase;
-use Johncms\Http\Request;
-use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class AddVoteController
 {
+    private const int MIN_ANSWERS = 2;
+    private const int MAX_ANSWERS = 20;
+
     public function __construct(
         private ForumErrorRenderer $forumErrorRenderer,
         private GetAddVoteContextUseCase $contextUseCase,
         private CreateVoteUseCase $createVoteUseCase,
         private ForumTopicPathService $topicPathService,
+        private ForumTopicRepositoryInterface $topics,
+        private ForumTopicBreadcrumbs $breadcrumbs,
+        private Session $session,
     ) {
     }
 
@@ -48,64 +58,49 @@ final readonly class AddVoteController
             );
         }
 
-        $countVoteRaw = $request->bodyInt('count_vote', 0);
-        $countVote = (int) $countVoteRaw;
+        $countVote = $request->bodyInt('count_vote', self::MIN_ANSWERS);
         if ($request->hasBody('plus')) {
             $countVote++;
         } elseif ($request->hasBody('minus')) {
             $countVote--;
         }
-        $countVote = $this->normalizeVoteCount($countVote);
+        $countVote = max(self::MIN_ANSWERS, min(self::MAX_ANSWERS, $countVote));
 
+        $pollName = mb_substr(trim($request->body('name_vote')), 0, 200);
+        $answers = [];
+        for ($vote = 0; $vote < $countVote; $vote++) {
+            $answers[$vote] = mb_substr(trim($request->body((string) $vote)), 0, 150);
+        }
+
+        $errors = [];
         if ($request->hasBody('submit')) {
-            $voteName = mb_substr(trim($request->body('name_vote', '')), 0, 200);
-            $firstAnswer = trim($request->body('0', ''));
-            $secondAnswer = trim($request->body('1', ''));
-
-            if ($voteName !== '' && $firstAnswer !== '' && $secondAnswer !== '' && ! empty($countVoteRaw)) {
-                $answers = [];
-                for ($vote = 0; $vote < $countVote; $vote++) {
-                    $text = mb_substr(trim($request->body((string) $vote, '')), 0, 150);
-                    if ($text === '') {
-                        continue;
-                    }
-                    $answers[] = $text;
-                }
-
-                $this->createVoteUseCase->execute($topicId, $voteName, $answers);
-
-                return new ViewResponse(
-                    '@theme/pages/result.twig',
-                    [
-                        'title'         => __('Add Poll'),
-                        'page_title'    => __('Add Poll'),
-                        'type'          => 'alert-success',
-                        'message'       => __('Poll added'),
-                        'back_url'      => $this->topicPathService->getTopicUrlById($topicId) ?? '/forum/',
-                        'back_url_name' => __('Continue'),
-                    ]
-                );
+            $filled = array_values(array_filter($answers, static fn (string $answer): bool => $answer !== ''));
+            if ($pollName === '') {
+                $errors['name_vote'] = [__('Enter the question of the poll.')];
+            }
+            if (count($filled) < self::MIN_ANSWERS) {
+                $errors['answers'] = [__('A poll needs two answers at least.')];
             }
 
-            return new ViewResponse(
-                '@theme/pages/result.twig',
-                [
-                    'title'         => __('Add Poll'),
-                    'page_title'    => __('Add Poll'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('The required fields are not filled'),
-                    'back_url'      => '/forum/addvote/' . $topicId . '/',
-                    'back_url_name' => __('Repeat'),
-                ]
-            );
+            if ($errors === []) {
+                $this->createVoteUseCase->execute($topicId, $pollName, $filled);
+                $this->session->flash(ForumTopicController::MESSAGE, __('Poll added'));
+                redirect($this->topicPathService->getTopicUrlById($topicId) ?? '/forum/');
+            }
+        }
+
+        $topic = $this->topics->findById($topicId);
+        $topicUrl = $this->topicPathService->getTopicUrlById($topicId) ?? '/forum/';
+        if ($topic !== null) {
+            $this->breadcrumbs->add($topic, $topicUrl, __('Add Poll'));
         }
 
         $votes = [];
-        for ($vote = 0; $vote < $countVote; $vote++) {
+        foreach ($answers as $vote => $answer) {
             $votes[] = [
                 'input_name'  => $vote,
                 'input_label' => __('Answer') . ' ' . ($vote + 1),
-                'input_value' => $request->body((string) $vote, ''),
+                'input_value' => $answer,
             ];
         }
 
@@ -115,24 +110,14 @@ final readonly class AddVoteController
                 'title'      => __('Add Poll'),
                 'page_title' => __('Add Poll'),
                 'action_url' => '/forum/addvote/' . $topicId . '/',
-                'back_url'   => $this->topicPathService->getTopicUrlById($topicId) ?? '/forum/',
+                'back_url'   => $topicUrl,
+                'topic_name' => $topic->name ?? '',
                 'count_vote' => $countVote,
-                'poll_name'  => $request->body('name_vote', ''),
+                'poll_name'  => $pollName,
                 'votes'      => $votes,
-            ]
+                'errors'     => $errors,
+            ],
+            $errors !== [] ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK,
         );
-    }
-
-    private function normalizeVoteCount(int $count): int
-    {
-        if ($count < 2) {
-            return 2;
-        }
-
-        if ($count > 20) {
-            return 20;
-        }
-
-        return $count;
     }
 }

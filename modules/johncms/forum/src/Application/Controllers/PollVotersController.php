@@ -9,22 +9,24 @@ use Johncms\Modules\Forum\Application\DTO\PollVotersQueryDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
+use Johncms\Modules\Forum\Application\Services\ForumTopicBreadcrumbs;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
+use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Modules\Forum\Application\UseCases\EnsurePollVotersAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewPollVotersUseCase;
-use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 
 final readonly class PollVotersController
 {
     public function __construct(
-        private NavChain $navChain,
         private ForumErrorRenderer $forumErrorRenderer,
         private EnsurePollVotersAccessUseCase $accessUseCase,
         private ViewPollVotersUseCase $viewPollVotersUseCase,
         private ForumTopicPathService $topicPathService,
         private PaginationFactory $paginationFactory,
+        private ForumTopicRepositoryInterface $topics,
+        private ForumTopicBreadcrumbs $breadcrumbs,
     ) {
     }
 
@@ -60,8 +62,11 @@ final readonly class PollVotersController
         }
 
         $caption = __('Who voted in the poll');
-        $this->navChain->add(__('Forum'), '/forum/');
-        $this->navChain->add($caption);
+        $topic = $this->topics->findById($id);
+        $topicUrl = $this->topicPathService->getTopicUrlById($id) ?? '/forum/';
+        if ($topic !== null) {
+            $this->breadcrumbs->add($topic, $topicUrl, $caption);
+        }
 
         $pagination = $this->paginationFactory->create($result->total, null, 'page', $page);
 
@@ -73,9 +78,10 @@ final readonly class PollVotersController
                 'empty_message' => __('No one has voted in this poll yet'),
                 'poll_name'     => $result->pollName,
                 'items'         => $result->items,
-                'pagination'    => $pagination->hasPages() ? $pagination->render() : null,
+                'pagination'    => $pagination->hasPages() ? $pagination->render(withRange: true) : null,
                 'total'         => $result->total,
-                'topic_url'     => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
+                'topic_url'     => $topicUrl,
+                'topic_name'    => $topic->name ?? '',
             ]
         );
     }

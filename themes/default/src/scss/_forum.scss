@@ -400,3 +400,25 @@
 @media (max-width: 720px) {
   .site-forum-write__section { padding: 1rem; }
 }
+
+// A person in a list of the forum: who is here, who voted. Like the rows of users of the downloads.
+.site-forum-users { display: flex; flex-direction: column; gap: .5rem; }
+.site-forum-user {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .75rem .875rem;
+  border: 1px solid var(--border);
+  border-radius: .625rem;
+  background: var(--bg-elev);
+  &__avatar { position: relative; flex-shrink: 0; }
+  &__avatar img { display: block; inline-size: 2.5rem; block-size: 2.5rem; border-radius: 50%; object-fit: cover; }
+  &__online { position: absolute; inset-block-end: 0; inset-inline-end: 0; inline-size: .625rem; block-size: .625rem; border: 2px solid var(--bg-elev); border-radius: 50%; background: var(--accent); }
+  &__main { display: flex; flex: 1; flex-direction: column; gap: .125rem; min-inline-size: 0; }
+  &__name { color: var(--fg); font-size: .875rem; font-weight: 600; text-decoration: none; overflow-wrap: anywhere; }
+  a.site-forum-user__name:hover { color: var(--accent); }
+  &__place { color: var(--fg-muted); font-size: .8125rem; overflow-wrap: anywhere; }
+}
+.site-forum-list-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem; margin-block-end: .75rem; }
+.site-forum-list-head__title { margin: 0; font-size: 1rem; font-weight: 700; }
+.site-forum-list-head__count { color: var(--fg-dim); font-family: var(--bs-font-monospace); font-size: .8125rem; }
