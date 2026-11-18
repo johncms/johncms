@@ -261,14 +261,15 @@ final readonly class ViewForumTopicUseCase
             ];
         }
 
+        // The column of the vote of the visitor is selected for a member only: a guest has none.
+        $canVote = ! $topic->closed
+            && $this->currentUser->isValid()
+            && ! $this->forumAccess->isBanned()
+            && (int) $topicVote->getAttribute('vote_user') !== 1;
+
         return [
-            'show_form' => (
-                ! $topic->closed
-                && ! $showVoteResult
-                && $this->currentUser->isValid()
-                && ! $this->forumAccess->isBanned()
-                && (int) ($topicVote->vote_user ?? 0) !== 1
-            ),
+            'show_form' => $canVote && ! $showVoteResult,
+            'can_vote'  => $canVote,
             'results'   => $results,
         ];
     }

@@ -4,7 +4,7 @@
     @var id        int    The topic.
     @var topic_url string
     @var vote      \Johncms\Modules\Forum\Domain\Models\ForumVote
-    @var poll      array  results (id, name, count, vote_percent, leader), show_form
+    @var poll      array  results (id, name, count, vote_percent, leader), show_form, can_vote (the visitor may vote and has not)
 #}
 <section class="site-forum-poll" aria-labelledby="topic-poll-title">
     <h2 class="site-forum-poll__title" id="topic-poll-title">
@@ -48,7 +48,7 @@
                     {{ vote.count|format_number }}
                 {% endif %}
             </span>
-            {% if vote.vote_user != 1 and app.user.isValid %}
+            {% if poll.can_vote %}
                 <a class="btn btn-outline-secondary btn-sm" href="{{ topic_url }}">{{ __('Vote') }}</a>
             {% endif %}
         </div>

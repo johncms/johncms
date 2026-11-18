@@ -112,6 +112,21 @@ final class ForumTopicPageTest extends FunctionalTestCase
         self::assertStringNotContainsString('&amp;amp;', $html);
     }
 
+    public function testAGuestSeesTheResultsOfThePoll(): void
+    {
+        $this->post('A post');
+        ForumTopic::query()->whereKey($this->topic)->update(['has_poll' => 1]);
+        Fixture::insert('cms_forum_vote', ['type' => 1, 'time' => time(), 'topic' => $this->topic, 'name' => 'Tea or coffee?', 'count' => 0]);
+        Fixture::insert('cms_forum_vote', ['type' => 2, 'time' => 0, 'topic' => $this->topic, 'name' => 'Tea', 'count' => 0]);
+
+        // A guest has no vote of their own to look up: the page must not ask for it.
+        $response = $this->handleRequest('/forum/talk/a-topic-' . $this->topic . '/');
+
+        self::assertSame(200, $response->getStatusCode());
+        self::assertStringContainsString('Tea or coffee?', (string) $response->getContent());
+        self::assertStringNotContainsString('action="/forum/poll-vote/', (string) $response->getContent());
+    }
+
     private function page(User|int $as, int $page = 1): string
     {
         $response = $this->handleRequest(
