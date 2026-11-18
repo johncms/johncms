@@ -18,6 +18,14 @@ interface ForumMessageRepositoryInterface
     public function lockExisting(int $id): bool;
 
     /**
+     * The posts answers recall, hidden or not, by id: who wrote them, their text and whether they are hidden.
+     *
+     * @param list<int> $ids
+     * @return array<int, ForumMessage>
+     */
+    public function getAnsweredByIds(array $ids): array;
+
+    /**
      * Posts of the topics, hidden ones included.
      *
      * @param list<int> $topicIds

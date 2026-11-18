@@ -41,6 +41,24 @@
             {% endif %}
         </header>
         {% if author.status %}<div class="site-comment__status">{{ author.status }}</div>{% endif %}
+        {% if post.replyTo %}
+            {% set answered = post.replyTo %}
+            {% if answered.hidden %}
+                {# A hidden post is not named to whoever may not see it. #}
+                <span class="site-comment__reply-to">
+                    {% include '@theme/components/icon.twig' with {name: 'reply', size: 12} only %}
+                    <span class="visually-hidden">{{ d__('system', 'In answer to:') }}</span>
+                    <span class="site-comment__reply-excerpt">{{ __('A deleted post') }}</span>
+                </span>
+            {% else %}
+                <a class="site-comment__reply-to" href="{{ answered.url }}">
+                    {% include '@theme/components/icon.twig' with {name: 'reply', size: 12} only %}
+                    <span class="visually-hidden">{{ d__('system', 'In answer to:') }}</span>
+                    <span class="site-comment__reply-name">{{ answered.authorName }}</span>
+                    {% if answered.excerpt %}<span class="site-comment__reply-excerpt">{{ answered.excerpt }}</span>{% endif %}
+                </a>
+            {% endif %}
+        {% endif %}
         <div class="site-comment__body ck-content">{{ post.body }}</div>
 
         {% if post.files %}

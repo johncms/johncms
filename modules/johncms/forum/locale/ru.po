@@ -1930,3 +1930,6 @@ msgstr "Тема закрыта: новые сообщения не приним
 
 msgid "Sign in to answer in the topic."
 msgstr "Чтобы ответить в теме, войдите на сайт."
+
+msgid "A deleted post"
+msgstr "Удалённое сообщение"

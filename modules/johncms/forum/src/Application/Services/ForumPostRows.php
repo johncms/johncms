@@ -8,6 +8,7 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\CurrentUser;
+use Johncms\Comments\Application\CommentExcerpt;
 use Johncms\Content\ContentContext;
 use Johncms\Content\ContentRendererInterface;
 use Johncms\Modules\Forum\Application\DTO\ForumPostDTO;
@@ -16,8 +17,10 @@ use Johncms\Modules\Forum\Application\DTO\PostAuthorDTO;
 use Johncms\Modules\Forum\Application\DTO\PostEditInfoDTO;
 use Johncms\Modules\Forum\Application\DTO\PostFileDTO;
 use Johncms\Modules\Forum\Application\DTO\PostModerationDTO;
+use Johncms\Modules\Forum\Application\DTO\PostReplyDTO;
 use Johncms\Modules\Forum\Domain\Models\ForumFile;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
+use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Users\ProfileLinksInterface;
 use Johncms\Utils\DateFormatterInterface;
 
@@ -26,7 +29,7 @@ use Johncms\Utils\DateFormatterInterface;
  * may be done with each.
  *
  * Takes the posts with the columns of the author joined (ForumMessage::scopeUsers) and the files
- * loaded; the roles of all the authors are read at once.
+ * loaded; the roles of all the authors and the posts they answer are read at once.
  */
 final readonly class ForumPostRows
 {
@@ -40,6 +43,8 @@ final readonly class ForumPostRows
         private ContentRendererInterface $contentRenderer,
         private ProfileLinksInterface $profileLinks,
         private DateFormatterInterface $dateFormatter,
+        private ForumMessageRepositoryInterface $messageRepository,
+        private CommentExcerpt $excerpt,
     ) {
     }
 
@@ -57,6 +62,9 @@ final readonly class ForumPostRows
 
         $seesOrigin = $this->accessChecker->allows(CorePermissions::USERS_ORIGIN_VIEW);
         $seesHidden = $this->accessChecker->allows(ForumPermissions::DELETED_VIEW);
+        $answered = $this->messageRepository->getAnsweredByIds(array_values(array_unique(array_filter(
+            array_map(static fn (ForumMessage $message): ?int => $message->reply_to_id, $messages)
+        ))));
 
         $posts = [];
         foreach ($messages as $message) {
@@ -67,14 +75,22 @@ final readonly class ForumPostRows
                 page: $page,
                 seesOrigin: $seesOrigin,
                 seesHidden: $seesHidden,
+                answered: $answered[$message->reply_to_id ?? 0] ?? null,
             );
         }
 
         return $posts;
     }
 
-    private function post(ForumMessage $message, bool $canEdit, bool $canReply, int $page, bool $seesOrigin, bool $seesHidden): ForumPostDTO
-    {
+    private function post(
+        ForumMessage $message,
+        bool $canEdit,
+        bool $canReply,
+        int $page,
+        bool $seesOrigin,
+        bool $seesHidden,
+        ?ForumMessage $answered,
+    ): ForumPostDTO {
         $authorId = (int) $message->user_id;
         $deleted = $message->deleted;
 
@@ -100,6 +116,21 @@ final readonly class ForumPostRows
                 )
                 : null,
             actions: $this->actions($message->id, $authorId, $canEdit, $canReply, $page, $deleted && $seesHidden),
+            replyTo: $answered === null ? null : $this->replyTo($answered, $seesHidden),
+        );
+    }
+
+    private function replyTo(ForumMessage $answered, bool $seesHidden): PostReplyDTO
+    {
+        if ($answered->deleted && ! $seesHidden) {
+            return new PostReplyDTO(id: $answered->id, authorName: '', excerpt: '', url: null);
+        }
+
+        return new PostReplyDTO(
+            id: $answered->id,
+            authorName: $answered->user_name,
+            excerpt: $this->excerpt->of($answered->text),
+            url: '/forum/post/' . $answered->id . '/',
         );
     }
 

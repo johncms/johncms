@@ -487,6 +487,7 @@
       'The filter by author leaves none of them.' => 'Фильтр по автору не оставил ни одного.',
       'The topic is closed: no new posts.' => 'Тема закрыта: новые сообщения не принимаются.',
       'Sign in to answer in the topic.' => 'Чтобы ответить в теме, войдите на сайт.',
+      'A deleted post' => 'Удалённое сообщение',
     ),
   ),
 );

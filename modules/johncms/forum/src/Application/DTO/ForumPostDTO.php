@@ -30,6 +30,8 @@ final readonly class ForumPostDTO
         /** Where the post came from; null unless the visitor may see it. */
         public ?PostModerationDTO $origin,
         public PostActionsDTO $actions,
+        /** The post it answers; null when it answers none or that one is gone. */
+        public ?PostReplyDTO $replyTo,
     ) {
     }
 }

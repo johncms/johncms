@@ -106,6 +106,8 @@ final class HiddenForumRepository implements HiddenForumRepositoryInterface
 
         if ($filter->tab === HiddenListTab::POSTS) {
             ForumFile::query()->withoutGlobalScope('access')->whereIn('post', $ids)->delete();
+            // The answers outlive the posts and lose only the link to them.
+            ForumMessage::query()->withoutGlobalScope('access')->whereIn('reply_to_id', $ids)->update(['reply_to_id' => null]);
             ForumMessage::query()->withoutGlobalScope('access')->whereIn('id', $ids)->delete();
 
             return $ids;

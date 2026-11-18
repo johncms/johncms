@@ -39,6 +39,23 @@ class ForumMessageRepository implements ForumMessageRepositoryInterface
         return $query->first(['id']) !== null;
     }
 
+    public function getAnsweredByIds(array $ids): array
+    {
+        if ($ids === []) {
+            return [];
+        }
+
+        /** @var array<int, ForumMessage> $messages */
+        $messages = ForumMessage::query()
+            ->withoutGlobalScope('access')
+            ->whereIn('id', $ids)
+            ->get(['id', 'user_name', 'text', 'deleted'])
+            ->keyBy('id')
+            ->all();
+
+        return $messages;
+    }
+
     public function getIdsByTopicIds(array $topicIds): array
     {
         if ($topicIds === []) {
@@ -202,6 +219,8 @@ class ForumMessageRepository implements ForumMessageRepositoryInterface
 
     public function deleteById(int $messageId): void
     {
+        // The answers outlive the post, hidden ones included, and lose only the link to it.
+        ForumMessage::query()->withoutGlobalScope('access')->where('reply_to_id', $messageId)->update(['reply_to_id' => null]);
         ForumMessage::query()
             ->where('id', $messageId)
             ->delete();

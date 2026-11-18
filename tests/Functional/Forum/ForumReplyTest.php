@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Tests\Functional\Forum;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Http\Session;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Services\ForumTopicStatsRecalculator;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +19,9 @@ use Tests\Support\FunctionalUserFactory;
  * An answer keeps the post it answers, whether it is written on the page of the answer or in the
  * form under the topic. A post the writer may not answer leaves the answer without the link
  * rather than refusing it.
+ *
+ * The answer recalls the post above its text. A hidden one is recalled only as deleted to whoever
+ * may not see it; one deleted for good leaves the answer as an ordinary post.
  */
 final class ForumReplyTest extends FunctionalTestCase
 {
@@ -97,6 +102,61 @@ final class ForumReplyTest extends FunctionalTestCase
         self::assertSame($hidden, $this->answeredByLatestOfWriter());
     }
 
+    public function testAnAnswerRecallsThePostItAnswersAboveItsText(): void
+    {
+        $answered = $this->post($this->topic, $this->author, '<p>Which version should I take?</p>');
+        $this->post($this->topic, $this->writer, '<p>The latest one.</p>', ['reply_to_id' => $answered]);
+
+        $page = $this->topicPage($this->writer);
+
+        self::assertStringContainsString('href="/forum/post/' . $answered . '/"', $page);
+        self::assertStringContainsString('Which version should I take?</span>', $page, 'The excerpt is plain text.');
+        self::assertMatchesRegularExpression('~site-comment__reply-name">Author</span>~', $page);
+    }
+
+    public function testAHiddenPostIsRecalledOnlyAsDeletedToWhoeverMayNotSeeIt(): void
+    {
+        $this->post($this->topic, $this->author, '<p>A question</p>');
+        $hidden = $this->post($this->topic, $this->author, '<p>Something regretted</p>', ['deleted' => 1, 'deleted_by' => 'Alex']);
+        $this->post($this->topic, $this->writer, '<p>An answer to it</p>', ['reply_to_id' => $hidden]);
+
+        $member = $this->topicPage($this->writer);
+        self::assertStringContainsString('<span class="site-comment__reply-to">', $member, 'Recalled without a link.');
+        self::assertStringNotContainsString('Something regretted', $member);
+        self::assertStringNotContainsString('/forum/post/' . $hidden . '/', $member);
+
+        $moderator = $this->topicPage(FunctionalUserFactory::createWithPermissions([ForumPermissions::DELETED_VIEW]));
+        self::assertStringContainsString('href="/forum/post/' . $hidden . '/"', $moderator);
+        self::assertStringNotContainsString('<span class="site-comment__reply-to">', $moderator);
+    }
+
+    public function testDeletingThePostForGoodKeepsTheAnswerWithoutTheLink(): void
+    {
+        $this->post($this->topic, $this->author, '<p>A question</p>');
+        $answered = $this->post($this->topic, $this->author, '<p>Another one</p>');
+        $answer = $this->post($this->topic, $this->writer, '<p>An answer</p>', ['reply_to_id' => $answered, 'deleted' => 1]);
+
+        $this->postForm('/forum/delete-post/' . $answered . '/', ['confirmed' => '1', 'action' => 'delete'], FunctionalUserFactory::createSupervisor());
+
+        self::assertFalse(Capsule::table('forum_messages')->where('id', $answered)->exists());
+        self::assertTrue(Capsule::table('forum_messages')->where('id', $answer)->exists(), 'A hidden answer is kept as well.');
+        self::assertNull(Capsule::table('forum_messages')->where('id', $answer)->value('reply_to_id'));
+        self::assertStringNotContainsString('site-comment__reply-to', $this->topicPage($this->writer));
+    }
+
+    public function testEmptyingTheHiddenPostsKeepsTheAnswersWithoutTheLink(): void
+    {
+        $this->post($this->topic, $this->author, '<p>A question</p>');
+        $hidden = $this->post($this->topic, $this->author, '<p>Hidden</p>', ['deleted' => 1, 'deleted_by' => 'Alex']);
+        $answer = $this->post($this->topic, $this->writer, '<p>An answer</p>', ['reply_to_id' => $hidden]);
+        $purger = FunctionalUserFactory::createWithPermissions([CorePermissions::ADMIN_ACCESS, ForumPermissions::DELETED_VIEW, ForumPermissions::HIDDEN_PURGE]);
+
+        $this->postForm('/admin/forum/hidden/purge', [], $purger);
+
+        self::assertFalse(Capsule::table('forum_messages')->where('id', $hidden)->exists());
+        self::assertNull(Capsule::table('forum_messages')->where('id', $answer)->value('reply_to_id'));
+    }
+
     /**
      * The form as the page gives it: with the one-time token the page put into the session.
      *
@@ -119,6 +179,14 @@ final class ForumReplyTest extends FunctionalTestCase
         $answered = Capsule::table('forum_messages')->where('user_id', $this->writer->id)->orderByDesc('id')->value('reply_to_id');
 
         return $answered === null ? null : (int) $answered;
+    }
+
+    private function topicPage(User $visitor): string
+    {
+        $response = $this->handleRequest('/forum/talk/a-topic-' . $this->topic . '/', cookies: $this->actingAs($visitor));
+        self::assertSame(200, $response->getStatusCode());
+
+        return (string) $response->getContent();
     }
 
     private function topic(string $slug): int
