@@ -63,7 +63,7 @@ final readonly class ForumFilesController
         $viewData = $result->viewData;
         if ($result->template === '@forum/public/files-list.twig') {
             $pagination = $this->paginationFactory->create((int) ($viewData['total'] ?? 0), null, 'page', $page);
-            $viewData['pagination'] = $pagination->hasPages() ? $pagination->render() : null;
+            $viewData['pagination'] = $pagination->hasPages() ? $pagination->render(withRange: true) : null;
         }
 
         return new ViewResponse($result->template, $viewData);

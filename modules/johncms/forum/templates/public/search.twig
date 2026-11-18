@@ -1,8 +1,12 @@
 {#
-    Search over the topics and the posts of the forum.
+    Search over the posts of the forum, or over the names of its topics. Before anything is searched
+    for, the page says what the search takes; a query it does not take comes back in its field
+    with the reason under it.
 
     @var query             string
     @var search_t          bool         Search over the topic names instead of the posts.
+    @var searched          bool         A query was taken and searched for.
+    @var error             string       Why the query was not taken; empty otherwise.
     @var results           array        name and formatted_text carry the highlight, so they are markup.
     @var total             int
     @var pagination        \Twig\Markup Null when everything fits on one page.
@@ -11,85 +15,97 @@
 #}
 {% extends '@theme/layouts/default.twig' %}
 
+{% block content_class %}site-content--contained{% endblock %}
+
 {% block meta %}
     {{ parent() }}
     <meta name="robots" content="noindex,follow">
 {% endblock %}
 
+{% block page_subtitle %}
+    {% if searched %}
+        <p class="site-page-heading__subtitle">
+            <span class="site-page-stat">
+                <span class="site-page-stat__dot" aria-hidden="true"></span>
+                {{ __('Found') }}: {{ total|format_number }}
+            </span>
+        </p>
+    {% endif %}
+{% endblock %}
+
 {% block content %}
-    <form action="/forum/search/" method="get">
-        <div class="form-group">
-            <label for="search_query">{{ __('Search query') }}</label>
-            <input type="text" class="form-control" id="search_query" placeholder="{{ __('Search query') }}"
-                   name="search" value="{{ query }}" maxlength="150" minlength="4" required>
-            <div class="small text-muted">{{ __('Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance.')|raw }}</div>
-        </div>
-        <div class="form-group">
-            <div class="custom-control custom-checkbox mb-3">
-                <input type="checkbox" class="custom-control-input" name="t" value="1" id="search_t"{% if search_t %} checked="checked"{% endif %}>
-                <label class="custom-control-label" for="search_t">{{ __('Search in the topic names') }}</label>
+    <div class="site-forum">
+        <form action="/forum/search/" method="get" class="site-forum-search" role="search">
+            <div class="site-search-field site-forum-search__field{% if error %} is-invalid{% endif %}">
+                <input name="search" type="search" value="{{ query }}" maxlength="64" minlength="4" required
+                       placeholder="{{ __('Search the forum') }}" aria-label="{{ __('Search the forum') }}"
+                       {% if error %}aria-invalid="true" aria-describedby="forum-search-error"{% endif %}>
+                <button type="submit" class="btn" aria-label="{{ __('Search') }}" title="{{ __('Search') }}">
+                    {% include '@theme/components/icon.twig' with {name: 'search', size: 16} only %}
+                </button>
             </div>
-        </div>
-        <button type="submit" class="btn btn-primary">{{ __('Search') }}</button>
-    </form>
+            <div class="form-check site-forum-search__option">
+                <input class="form-check-input" type="checkbox" name="t" value="1" id="forum-search-topics"{% if search_t %} checked{% endif %}>
+                <label class="form-check-label" for="forum-search-topics">{{ __('Search in the topic names') }}</label>
+            </div>
+            {% if error %}<p class="site-forum-search__error" id="forum-search-error">{{ error }}</p>{% endif %}
+        </form>
 
-    {% if query and not total %}
-        <div class="alert alert-info mt-3">
-            {{ __('Your search did not match any results') }}
-        </div>
-    {% endif %}
-
-    {% for result in results %}
-        <div class="forum-section">
-            <div class="section-header">
-                <div class="d-flex align-items-center w-100">
-                    <a href="{{ result.topic_url }}" class="section-name flex-grow-1 flex-md-grow-0">{{ result.name }}</a>
+        {% if searched %}
+            {% if results %}
+                <div class="site-forum-results">
+                    {% for result in results %}
+                        <article class="site-forum-result">
+                            <a class="site-forum-result__title" href="{{ result.post_url ?: result.topic_url }}">{{ result.name }}</a>
+                            <div class="site-forum-result__meta">
+                                {% if profile_url(result.user_id) %}
+                                    <a href="{{ profile_url(result.user_id) }}">{{ result.user_name }}</a>
+                                {% else %}
+                                    <span>{{ result.user_name }}</span>
+                                {% endif %}
+                                <span aria-hidden="true">·</span>
+                                <time>{{ result.formatted_date }}</time>
+                                {% if result.post_url %}
+                                    <span aria-hidden="true">·</span>
+                                    <a href="{{ result.topic_url }}">{{ __('Go to Topic') }}</a>
+                                {% endif %}
+                            </div>
+                            {% if result.formatted_text %}
+                                <div class="site-forum-result__text">{{ result.formatted_text }}</div>
+                            {% endif %}
+                        </article>
+                    {% endfor %}
                 </div>
-            </div>
-            <div class="small pt-2 text-muted">
-                {{ __('Author') }}:
-                {% if profile_url(result.user_id) %}
-                    <a href="{{ profile_url(result.user_id) }}" class="me-2">{{ result.user_name }}</a>
-                {% else %}
-                    <span class="me-2">{{ result.user_name }}</span>
-                {% endif %}
-                <span class="me-2">{{ result.formatted_date }}</span>
-                {% if result.post_url %}
-                    <a href="{{ result.post_url }}">{{ __('Go to Message') }}</a>
-                {% endif %}
-            </div>
-            {% if not search_t %}
-                <div class="post-body">
-                    {{ result.formatted_text }}
+                {% if pagination %}<div class="site-forum__pagination">{{ pagination }}</div>{% endif %}
+            {% else %}
+                {% include '@theme/components/empty-state.twig' with {
+                    icon: 'search',
+                    title: __('Your search did not match any results'),
+                    description: search_t ? __('Try other words or search in the posts.') : __('Try other words or search in the topic names.'),
+                } only %}
+            {% endif %}
+        {% elseif not error %}
+            {% include '@theme/components/empty-state.twig' with {
+                icon: 'search',
+                title: __('Search the forum'),
+                description: __('Over the posts or the names of the topics, without regard to case; from 4 to 64 characters. The best matches come first.'),
+            } only %}
+        {% endif %}
+
+        {% if search_history %}
+            <section class="site-forum-history" aria-labelledby="forum-search-history">
+                <h2 class="site-forum-history__title" id="forum-search-history">{{ __('Search History') }}</h2>
+                <div class="site-forum-history__terms">
+                    {% for search_term in search_history %}
+                        <a class="site-chip" href="/forum/search/?search={{ search_term|url_encode }}">{{ search_term }}</a>
+                    {% endfor %}
+                    <form method="post" action="{{ history_reset_url }}"
+                          data-confirm="{{ __('Do you really want to clear the search history?') }}" data-confirm-button="{{ __('Clear') }}">
+                        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                        <button type="submit" class="btn btn-link btn-sm">{{ __('Clear history') }}</button>
+                    </form>
                 </div>
-            {% endif %}
-        </div>
-    {% endfor %}
-
-    {% if total > 0 %}
-        <div>
-            <div class="my-2">{{ __('Total') }}: {{ total }}</div>
-            {% if pagination %}
-                <div>{{ pagination }}</div>
-            {% endif %}
-        </div>
-    {% endif %}
-
-    {% if search_history %}
-        <div class="forum-section mb-2">
-            <div class="h5 mb-2">{{ __('Search History') }}</div>
-            <div>
-                {% for search_term in search_history %}
-                    {% if not loop.first %} / {% endif %}
-                    <a href="/forum/search/?search={{ search_term|url_encode }}" class="text-reset">{{ search_term }}</a>
-                {% endfor %}
-            </div>
-            <form method="post" action="{{ history_reset_url }}" class="mt-1"
-                  data-confirm="{{ __('Do you really want to clear the search history?') }}" data-confirm-button="{{ __('Clear') }}">
-                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                <button type="submit" class="btn btn-link p-0 text-reset">{{ __('Clear history') }}</button>
-            </form>
-        </div>
-    {% endif %}
-    <a href="/forum/" class="mb-2">{{ __('Forum') }}</a>
+            </section>
+        {% endif %}
+    </div>
 {% endblock %}

@@ -14,14 +14,14 @@ use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\UseCases\ViewTopicVisitorsUseCase;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
-use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\Forum\Application\Services\ForumTopicBreadcrumbs;
 
 final readonly class ViewTopicVisitorsController
 {
     public function __construct(
-        private NavChain $navChain,
+        private ForumTopicBreadcrumbs $breadcrumbs,
         private CurrentUser $currentUser,
         private EnsureForumUserAccessUseCase $forumUserAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
@@ -76,8 +76,10 @@ final readonly class ViewTopicVisitorsController
 
         $topic = $this->topicRepository->findById($id);
         $caption = __('Who in Topic');
-        $this->navChain->add(__('Forum'), '/forum/');
-        $this->navChain->add($caption);
+        $topicUrl = $this->topicPathService->getTopicUrlById($id) ?? '/forum/';
+        if ($topic !== null) {
+            $this->breadcrumbs->add($topic, $topicUrl, $caption);
+        }
 
         $pagination = $this->paginationFactory->create($result->total, null, 'page', $page);
 
@@ -88,13 +90,13 @@ final readonly class ViewTopicVisitorsController
                 'page_title'      => $caption,
                 'empty_message'   => __('The list is empty'),
                 'items'           => $result->items,
-                'pagination'      => $pagination->hasPages() ? $pagination->render() : null,
+                'pagination'      => $pagination->hasPages() ? $pagination->render(withRange: true) : null,
                 'total'           => $result->total,
                 'topic_name'      => (string) ($topic->name ?? ''),
                 'is_users'        => ! $showGuests,
                 'users_list_url'  => '/forum/topic-visitors/' . $id . '/',
                 'guests_list_url' => '/forum/topic-visitors/' . $id . '/?mode=guests',
-                'topic_url'       => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
+                'topic_url'       => $topicUrl,
             ]
         );
     }

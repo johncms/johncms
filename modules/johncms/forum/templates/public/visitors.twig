@@ -1,5 +1,6 @@
 {#
-    Who is in the forum or in a topic right now: users or guests.
+    Who is in the forum or in a topic right now: users, or guests for those who see where visitors
+    come from.
 
     @var items           array        See the component of a user row for the keys.
     @var total           int
@@ -13,38 +14,35 @@
 #}
 {% extends '@theme/layouts/default.twig' %}
 
-{% block content %}
+{% block content_class %}site-content--contained{% endblock %}
+
+{% block page_subtitle %}
     {% if topic_name|default('') %}
-        <div class="pb-2">
-            <h4>{{ __('Who in Topic') }}: {{ topic_name }}</h4>
-        </div>
+        {% include '@forum/public/components/topic-subtitle.twig' with {url: topic_url, name: topic_name} only %}
     {% endif %}
+{% endblock %}
 
-    {% if can('users.origin.view') %}
-        <div class="d-flex mb-3">
-            <a href="{{ users_list_url }}" class="btn btn-outline-primary me-2 {{ is_users ? 'active' : '' }}">{{ __('Users') }}</a>
-            <a href="{{ guests_list_url }}" class="btn btn-outline-primary {{ is_users ? '' : 'active' }}">{{ __('Guests') }}</a>
+{% block content %}
+    <div class="site-forum-list-head">
+        {% if can('users.origin.view') %}
+            <nav class="site-segmented" aria-label="{{ __('Who is here') }}">
+                <a class="site-segmented__item" href="{{ users_list_url }}"{% if is_users %} aria-current="page"{% endif %}>{{ __('Users') }}</a>
+                <a class="site-segmented__item" href="{{ guests_list_url }}"{% if not is_users %} aria-current="page"{% endif %}>{{ __('Guests') }}</a>
+            </nav>
+        {% else %}
+            <h2 class="site-forum-list-head__title">{{ __('Users') }}</h2>
+        {% endif %}
+        <span class="site-forum-list-head__count">{{ __('Total') }}: {{ total|format_number }}</span>
+    </div>
+
+    {% if items %}
+        <div class="site-forum-users">
+            {% for item in items %}
+                {% include '@forum/public/components/user-row.twig' with {item: item} only %}
+            {% endfor %}
         </div>
-    {% endif %}
-
-    {% for item in items %}
-        {% include '@forum/public/components/user-row.twig' with {item: item} only %}
-    {% endfor %}
-
-    {% if not total %}
-        <div class="alert alert-info shadow border-0">{{ empty_message }}</div>
+        {% if pagination %}<div class="site-forum__pagination">{{ pagination }}</div>{% endif %}
     {% else %}
-        <div>
-            <div class="my-2">{{ __('Total') }}: {{ total }}</div>
-            {% if pagination %}
-                {{ pagination }}
-            {% endif %}
-        </div>
-    {% endif %}
-
-    {% if topic_url|default('') %}
-        <div>
-            <a href="{{ topic_url }}">{{ __('Go to Topic') }}</a>
-        </div>
+        {% include '@theme/components/empty-state.twig' with {icon: 'users', title: empty_message, description: ''} only %}
     {% endif %}
 {% endblock %}

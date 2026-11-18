@@ -1,43 +1,64 @@
 {#
-    Kinds of the files attached in the forum, with the count of each.
+    Kinds of the files attached in the forum, or in one category, section or topic of it, with the
+    count of each.
 
-    @var sections  array  url, name, count
+    @var sections  array  url, type (see ForumPostFiles), name, count
+    @var total     int
     @var new_url   string
     @var new_count int
+    @var back_url  string The place the files are of; the forum for all of them.
 #}
 {% extends '@theme/layouts/default.twig' %}
+
+{% block content_class %}site-content--contained{% endblock %}
 
 {% block meta %}
     {{ parent() }}
     <meta name="robots" content="noindex,follow">
 {% endblock %}
 
-{% block content %}
-    {% if new_count %}
-        <div class="border-top border-bottom mb-3">
-            <div class="py-3">
-                <a href="{{ new_url }}">{{ __('New Files') }}</a>
-                <span class="badge rounded-pill bg-danger">{{ new_count }}</span>
-            </div>
-        </div>
-    {% endif %}
+{% block page_subtitle %}
+    <p class="site-page-heading__subtitle">
+        <span class="site-page-stat">
+            <span class="site-page-stat__dot" aria-hidden="true"></span>
+            {{ __('Total') }}: {{ total|format_number }}
+        </span>
+    </p>
+{% endblock %}
 
-    {% if sections %}
-        <div>
-            {% for section in sections %}
-                <div class="shadow border-radius-12 forum-section post-item mb-2">
-                    <div class="section-header border-0 pb-0">
-                        <div class="d-flex align-items-center">
-                            <a href="{{ section.url }}" class="text-dark-brown">{{ section.name }}</a>
-                            <span class="badge rounded-pill text-bg-light border ms-3">{{ section.count }}</span>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <div class="alert alert-info">
-            {{ __('The list is empty') }}
-        </div>
-    {% endif %}
+{% set icons = {1: 'file', 2: 'file', 3: 'file', 4: 'file-text', 5: 'file-image', 6: 'file-archive', 7: 'file-video-camera', 8: 'file-music', 9: 'file'} %}
+
+{% block content %}
+    <div class="site-forum">
+        {% if new_count %}
+            <nav class="site-forum-toolbar__chips site-forum-files-nav" aria-label="{{ __('Forum Files') }}">
+                <a class="site-chip" href="{{ new_url }}">
+                    {% include '@theme/components/icon.twig' with {name: 'sparkles', size: 12} only %} {{ __('New Files') }}
+                    <span class="site-chip__count">{{ new_count|format_number }}</span>
+                </a>
+            </nav>
+        {% endif %}
+
+        {% if sections %}
+            <ul class="site-forum-kinds">
+                {% for section in sections %}
+                    <li>
+                        <a class="site-forum-kind" href="{{ section.url }}">
+                            <span class="site-forum-kind__icon">
+                                {% include '@theme/components/icon.twig' with {name: icons[section.type]|default('file'), size: 18} only %}
+                            </span>
+                            <span class="site-forum-kind__name">{{ section.name }}</span>
+                            <span class="site-forum-kind__count">{{ section.count|format_number }}</span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            {% include '@theme/components/empty-state.twig' with {
+                icon: 'file',
+                title: __('The list is empty'),
+                description: __('The files attached to the posts appear here.'),
+            } only %}
+        {% endif %}
+    </div>
 {% endblock %}

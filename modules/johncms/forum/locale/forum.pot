@@ -114,7 +114,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/ForumIndexController.php:34
 #: modules/johncms/forum/src/Application/Controllers/ForumIndexController.php:42
 #: modules/johncms/forum/src/Application/Controllers/ForumIndexController.php:43
-#: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:55
+#: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:34
 #: modules/johncms/forum/src/Application/Controllers/ForumSectionController.php:45
 #: modules/johncms/forum/src/Application/Controllers/ForumTopicController.php:72
 #: modules/johncms/forum/src/Application/Controllers/ForumTopicController.php:78
@@ -131,13 +131,10 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/ViewForumVisitorsController.php:49
 #: modules/johncms/forum/src/Application/Controllers/ViewTopicVisitorsController.php:47
 #: modules/johncms/forum/src/Application/Controllers/ViewTopicVisitorsController.php:72
-#: modules/johncms/forum/src/Application/Controllers/ViewTopicVisitorsController.php:79
 #: modules/johncms/forum/src/Application/Exceptions/ForumErrorCode.php:36
 #: modules/johncms/forum/src/Application/Menu/ForumMenuItemProvider.php:27
 #: modules/johncms/forum/src/Application/Services/ForumPermissions.php:60
 #: modules/johncms/forum/src/Application/Services/ForumTopicBreadcrumbs.php:23
-#: modules/johncms/forum/templates/public/files-list.twig:148
-#: modules/johncms/forum/templates/public/search.twig:94
 msgid "Forum"
 msgstr ""
 
@@ -357,26 +354,25 @@ msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/ForumFilesController.php:48
 #: modules/johncms/forum/src/Application/Controllers/ForumFilesController.php:49
-#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:128
+#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:127
+#: modules/johncms/forum/templates/public/files-list.twig:33
+#: modules/johncms/forum/templates/public/files-sections.twig:34
 msgid "Forum Files"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:47
-#: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:56
-#: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:60
+#: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:35
+#: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:50
+#: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:51
+#: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:68
 #: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:103
 msgid "Forum search"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:48
-msgid "Invalid length"
+#: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:55
+msgid "The query takes from 4 to 64 characters."
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:50
-msgid "Repeat"
-msgstr ""
-
-#: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:59
+#: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:67
 #, php-format
 msgid "Search results for: %s"
 msgstr ""
@@ -388,10 +384,10 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/LatestTopicsController.php:33
 #: modules/johncms/forum/src/Application/Controllers/UnreadTopicsController.php:63
 #: modules/johncms/forum/src/Application/Controllers/ViewForumVisitorsController.php:59
-#: modules/johncms/forum/src/Application/Controllers/ViewTopicVisitorsController.php:89
+#: modules/johncms/forum/src/Application/Controllers/ViewTopicVisitorsController.php:91
 #: modules/johncms/forum/templates/public/curators.twig:22
-#: modules/johncms/forum/templates/public/files-list.twig:31
-#: modules/johncms/forum/templates/public/files-sections.twig:40
+#: modules/johncms/forum/templates/public/files-list.twig:81
+#: modules/johncms/forum/templates/public/files-sections.twig:59
 #: modules/johncms/forum/templates/public/filter-by-author.twig:28
 msgid "The list is empty"
 msgstr ""
@@ -498,7 +494,6 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/ViewTopicVisitorsController.php:43
 #: modules/johncms/forum/src/Application/Controllers/ViewTopicVisitorsController.php:68
 #: modules/johncms/forum/src/Application/Controllers/ViewTopicVisitorsController.php:78
-#: modules/johncms/forum/templates/public/visitors.twig:19
 msgid "Who in Topic"
 msgstr ""
 
@@ -684,13 +679,12 @@ msgstr ""
 
 #: modules/johncms/forum/src/Application/Services/HiddenListControlsMapper.php:59
 #: modules/johncms/forum/templates/public/components/header.twig:37
-#: modules/johncms/forum/templates/public/search.twig:33
+#: modules/johncms/forum/templates/public/search.twig:43
 msgid "Search"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Services/HiddenListControlsMapper.php:62
 #: modules/johncms/forum/templates/admin/hidden-results.twig:69
-#: modules/johncms/forum/templates/public/search.twig:50
 msgid "Author"
 msgstr ""
 
@@ -854,63 +848,63 @@ msgstr ""
 msgid "The section holds topics: move them out before it can hold sections"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:80
+#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:79
 #: modules/johncms/forum/templates/public/topics.twig:38
 msgid "Category Files"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:98
+#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:97
 msgid "Section files"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:116
+#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:115
 #: modules/johncms/forum/templates/public/topic.twig:117
 msgid "Topic Files"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:159
-#: modules/johncms/forum/templates/public/files-list.twig:23
-#: modules/johncms/forum/templates/public/files-sections.twig:19
+#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:158
+#: modules/johncms/forum/templates/public/files-list.twig:41
+#: modules/johncms/forum/templates/public/files-sections.twig:36
 msgid "New Files"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:190
+#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:189
 msgid "List of sections"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:304
+#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:298
 msgid "Windows applications"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:305
+#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:299
 msgid "Java applications"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:306
+#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:300
 msgid "SIS"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:307
+#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:301
 msgid "txt"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:308
+#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:302
 msgid "Pictures"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:309
+#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:303
 msgid "Archive"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:310
+#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:304
 msgid "Videos"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:311
+#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:305
 msgid "MP3"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:312
+#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:306
 msgid "Other"
 msgstr ""
 
@@ -1348,6 +1342,8 @@ msgid "Last activity"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/components/header.twig:36
+#: modules/johncms/forum/templates/public/search.twig:41
+#: modules/johncms/forum/templates/public/search.twig:90
 msgid "Search the forum"
 msgstr ""
 
@@ -1387,6 +1383,7 @@ msgid "Attached files"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/components/message.twig:84
+#: modules/johncms/forum/templates/public/files-list.twig:65
 msgid "Downloads"
 msgstr ""
 
@@ -1563,23 +1560,23 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/files-list.twig:75
-msgid "Link to post"
+#: modules/johncms/forum/templates/public/files-list.twig:26
+#: modules/johncms/forum/templates/public/files-sections.twig:24
+#: modules/johncms/forum/templates/public/poll-voters.twig:23
+#: modules/johncms/forum/templates/public/visitors.twig:35
+msgid "Total"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/files-list.twig:126
-msgid "To message"
+#: modules/johncms/forum/templates/public/files-list.twig:63
+msgid "KB"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/files-list.twig:129
+#: modules/johncms/forum/templates/public/files-list.twig:72
 msgid "To topic"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/files-list.twig:139
-#: modules/johncms/forum/templates/public/poll-voters.twig:23
-#: modules/johncms/forum/templates/public/search.twig:71
-#: modules/johncms/forum/templates/public/visitors.twig:38
-msgid "Total"
+#: modules/johncms/forum/templates/public/files-sections.twig:60
+msgid "The files attached to the posts appear here."
 msgstr ""
 
 #: modules/johncms/forum/templates/public/filter-by-author.twig:37
@@ -1626,40 +1623,47 @@ msgstr ""
 msgid "Write"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/search.twig:22
-#: modules/johncms/forum/templates/public/search.twig:23
-msgid "Search query"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/search.twig:25
-msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance."
-msgstr ""
-
 #: modules/johncms/forum/templates/public/search.twig:30
+msgid "Found"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/search.twig:49
 msgid "Search in the topic names"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/search.twig:38
+#: modules/johncms/forum/templates/public/search.twig:70
+msgid "Go to Topic"
+msgstr ""
+
+#: modules/johncms/forum/templates/public/search.twig:83
 msgid "Your search did not match any results"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/search.twig:58
-msgid "Go to Message"
+#: modules/johncms/forum/templates/public/search.twig:84
+msgid "Try other words or search in the posts."
 msgstr ""
 
-#: modules/johncms/forum/templates/public/search.twig:80
+#: modules/johncms/forum/templates/public/search.twig:84
+msgid "Try other words or search in the topic names."
+msgstr ""
+
+#: modules/johncms/forum/templates/public/search.twig:91
+msgid "Over the posts or the names of the topics, without regard to case; from 4 to 64 characters. The best matches come first."
+msgstr ""
+
+#: modules/johncms/forum/templates/public/search.twig:97
 msgid "Search History"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/search.twig:88
+#: modules/johncms/forum/templates/public/search.twig:103
 msgid "Do you really want to clear the search history?"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/search.twig:88
+#: modules/johncms/forum/templates/public/search.twig:103
 msgid "Clear"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/search.twig:90
+#: modules/johncms/forum/templates/public/search.twig:105
 msgid "Clear history"
 msgstr ""
 
@@ -1746,6 +1750,7 @@ msgid "Delete selected"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/topic.twig:212
+#: modules/johncms/forum/templates/public/visitors.twig:28
 msgid "Who is here"
 msgstr ""
 
@@ -1786,14 +1791,11 @@ msgstr ""
 msgid "Start the first one."
 msgstr ""
 
-#: modules/johncms/forum/templates/public/visitors.twig:25
+#: modules/johncms/forum/templates/public/visitors.twig:29
+#: modules/johncms/forum/templates/public/visitors.twig:33
 msgid "Users"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/visitors.twig:26
+#: modules/johncms/forum/templates/public/visitors.twig:30
 msgid "Guests"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/visitors.twig:47
-msgid "Go to Topic"
 msgstr ""

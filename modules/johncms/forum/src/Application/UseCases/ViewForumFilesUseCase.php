@@ -8,8 +8,7 @@ use Johncms\Modules\Forum\Application\Services\ForumUserSettings;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\CurrentUser;
-use Johncms\Content\ContentContext;
-use Johncms\Content\ContentRendererInterface;
+use Johncms\Comments\Application\CommentExcerpt;
 use Johncms\Modules\Forum\Application\DTO\ForumFilesQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\ForumFilesViewResultDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
@@ -34,7 +33,7 @@ final readonly class ViewForumFilesUseCase
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumTopicPathService $topicPathService,
         private DateFormatterInterface $dateFormatter,
-        private ContentRendererInterface $content,
+        private CommentExcerpt $excerpt,
         private CurrentUser $currentUser,
         private ProfileLinksInterface $profileLinks,
         private AccessCheckerInterface $accessChecker,
@@ -163,7 +162,6 @@ final readonly class ViewForumFilesUseCase
         $files = [];
 
         if ($total > 0) {
-
             $rows = $this->fileRepository->getListingItems(new ForumFileListingQuery(
                 filter: $listingFilter,
                 upfp: $this->userSettings->newestFirst(),
@@ -225,6 +223,7 @@ final readonly class ViewForumFilesUseCase
             if ($count > 0) {
                 $sections[] = [
                     'url'   => '/forum/files/?do=' . $key . $lnk,
+                    'type'  => $key,
                     'name'  => $type,
                     'count' => $count,
                 ];
@@ -262,14 +261,8 @@ final readonly class ViewForumFilesUseCase
         $this->staffTitles->preload(array_map(static fn (array $row): int => (int) ($row['user_id'] ?? 0), $rows));
 
         foreach ($rows as $row) {
-            $text = mb_substr((string) ($row['text'] ?? ''), 0, 500);
-            $text = $this->content->render(
-                $text,
-                new ContentContext(adminSmilies: $this->staffTitles->isStaff((int) $row['user_id']))
-            );
-
             $page = (int) ceil((int) ($row['page'] ?? 0) / $this->currentUser->user()->config->kmess);
-            $row['post_text'] = $text;
+            $row['excerpt'] = $this->excerpt->of((string) ($row['text'] ?? ''));
             $row['post_time'] = $this->dateFormatter->format((int) $row['time']);
             $row['user_is_online'] = time() <= (int) ($row['lastdate'] ?? 0) + 300;
             $row['user_profile_link'] = $this->profileLinks->urlOf((int) $row['user_id']) ?? '';

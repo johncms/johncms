@@ -31,6 +31,6 @@
         </div>
         {% if pagination %}<div class="site-forum__pagination">{{ pagination }}</div>{% endif %}
     {% else %}
-        {% include '@theme/components/empty-state.twig' with {icon: 'chart-column', title: empty_message} only %}
+        {% include '@theme/components/empty-state.twig' with {icon: 'chart-column', title: empty_message, description: ''} only %}
     {% endif %}
 {% endblock %}

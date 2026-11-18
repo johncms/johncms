@@ -153,7 +153,7 @@ final readonly class ViewForumSearchUseCase
             $pattern = '|' . preg_quote($keyword, '/') . '|siu';
             $highlighted = preg_replace(
                 $pattern,
-                '<span style="background-color: rgba(255, 193, 7, 0.28); border-radius: 2px;">$0</span>',
+                '<mark>$0</mark>',
                 $highlighted
             ) ?? $highlighted;
         }

@@ -515,6 +515,13 @@
       'Two at least, up to 150 characters each. Empty fields are left out.' => 'Не меньше двух, каждый до 150 символов. Пустые поля не сохраняются.',
       'Question' => 'Вопрос',
       'Up to 200 characters.' => 'До 200 символов.',
+      'Found' => 'Найдено',
+      'KB' => 'КБ',
+      'Over the posts or the names of the topics, without regard to case; from 4 to 64 characters. The best matches come first.' => 'По сообщениям или названиям тем, без учёта регистра; от 4 до 64 символов. Сначала — лучшие совпадения.',
+      'The files attached to the posts appear here.' => 'Здесь появятся файлы, прикреплённые к сообщениям.',
+      'The query takes from 4 to 64 characters.' => 'Запрос — от 4 до 64 символов.',
+      'Try other words or search in the posts.' => 'Попробуйте другие слова или поищите в сообщениях.',
+      'Try other words or search in the topic names.' => 'Попробуйте другие слова или поищите в названиях тем.',
     ),
   ),
 );

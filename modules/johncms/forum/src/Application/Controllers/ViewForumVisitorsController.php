@@ -58,7 +58,7 @@ final readonly class ViewForumVisitorsController
                 'page_title'      => $caption,
                 'empty_message'   => __('The list is empty'),
                 'items'           => $result->items,
-                'pagination'      => $pagination->hasPages() ? $pagination->render() : null,
+                'pagination'      => $pagination->hasPages() ? $pagination->render(withRange: true) : null,
                 'total'           => $result->total,
                 'is_users'        => ! $showGuests,
                 'users_list_url'  => '/forum/visitors/',

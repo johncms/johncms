@@ -422,3 +422,56 @@
 .site-forum-list-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem; margin-block-end: .75rem; }
 .site-forum-list-head__title { margin: 0; font-size: 1rem; font-weight: 700; }
 .site-forum-list-head__count { color: var(--fg-dim); font-family: var(--bs-font-monospace); font-size: .8125rem; }
+
+// The search of the forum: the field with its option, the results as cards, the history as chips.
+.site-forum-search {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem 1rem;
+  margin-block-end: 1.25rem;
+  &__field { flex: 1 1 20rem; max-inline-size: 28rem; }
+  &__field.is-invalid { border-color: var(--danger); }
+  &__option { margin: 0; font-size: .8125rem; }
+  &__error { flex-basis: 100%; margin: 0; color: var(--danger); font-size: .8125rem; }
+}
+.site-forum-results { display: flex; flex-direction: column; gap: .5rem; }
+.site-forum-result {
+  min-inline-size: 0;
+  padding: .875rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: .625rem;
+  background: var(--bg-elev);
+  &__title { color: var(--fg); font-weight: 600; text-decoration: none; overflow-wrap: anywhere; }
+  &__title:hover { color: var(--accent); }
+  &__meta { display: flex; flex-wrap: wrap; gap: .25rem .375rem; margin-block-start: .25rem; color: var(--fg-muted); font-size: .8125rem; }
+  &__text { margin-block-start: .5rem; font-size: .875rem; line-height: 1.6; overflow-wrap: anywhere; }
+  mark { padding: 0 .125rem; border-radius: .1875rem; background: var(--accent-soft); color: inherit; }
+}
+.site-forum-history {
+  margin-block-start: 1.75rem;
+  &__title { margin: 0 0 .625rem; color: var(--fg-muted); font-size: .8125rem; font-weight: 600; }
+  &__terms { display: flex; flex-wrap: wrap; align-items: center; gap: .375rem; }
+  &__terms form { display: contents; }
+}
+
+// The files of the forum: the kinds as rows, a file as a card with its thumbnail.
+.site-forum-files-nav { margin-block-end: 1rem; }
+.site-forum-kinds { display: flex; flex-direction: column; gap: .5rem; margin: 0; padding: 0; list-style: none; }
+.site-forum-kind {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .75rem .875rem;
+  border: 1px solid var(--border);
+  border-radius: .625rem;
+  background: var(--bg-elev);
+  color: var(--fg);
+  text-decoration: none;
+  &:hover { border-color: var(--accent); }
+  &__icon { display: grid; flex-shrink: 0; place-items: center; inline-size: 2.25rem; block-size: 2.25rem; border-radius: .5rem; background: var(--accent-soft); color: var(--accent); }
+  &__name { flex: 1; min-inline-size: 0; font-weight: 600; }
+  &__count { color: var(--fg-dim); font-family: var(--bs-font-monospace); font-size: .8125rem; }
+}
+.site-forum-attachment { display: flex; align-items: flex-start; gap: .875rem; }
+.site-forum-attachment__main { flex: 1; min-inline-size: 0; }

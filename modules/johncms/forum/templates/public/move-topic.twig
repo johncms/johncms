@@ -27,7 +27,7 @@
             </div>
         </form>
     {% else %}
-        {% include '@theme/components/empty-state.twig' with {icon: 'folder', title: __('There is no other section of topics to move it to.')} only %}
+        {% include '@theme/components/empty-state.twig' with {icon: 'folder', title: __('There is no other section of topics to move it to.'), description: ''} only %}
         <div class="site-forum-form__actions">
             <a href="{{ back_url }}" class="btn btn-outline-secondary">{{ __('Back to topic') }}</a>
         </div>

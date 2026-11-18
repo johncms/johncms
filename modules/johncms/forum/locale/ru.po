@@ -2015,3 +2015,24 @@ msgstr "Вопрос"
 
 msgid "Up to 200 characters."
 msgstr "До 200 символов."
+
+msgid "Found"
+msgstr "Найдено"
+
+msgid "KB"
+msgstr "КБ"
+
+msgid "Over the posts or the names of the topics, without regard to case; from 4 to 64 characters. The best matches come first."
+msgstr "По сообщениям или названиям тем, без учёта регистра; от 4 до 64 символов. Сначала — лучшие совпадения."
+
+msgid "The files attached to the posts appear here."
+msgstr "Здесь появятся файлы, прикреплённые к сообщениям."
+
+msgid "The query takes from 4 to 64 characters."
+msgstr "Запрос — от 4 до 64 символов."
+
+msgid "Try other words or search in the posts."
+msgstr "Попробуйте другие слова или поищите в сообщениях."
+
+msgid "Try other words or search in the topic names."
+msgstr "Попробуйте другие слова или поищите в названиях тем."
