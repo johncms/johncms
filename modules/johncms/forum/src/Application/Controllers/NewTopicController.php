@@ -17,6 +17,7 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
+use Johncms\Modules\Forum\Application\Services\ForumFormTokens;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Application\UseCases\CreateTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetNewTopicContextUseCase;
@@ -25,6 +26,7 @@ use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Johncms\NavChain;
 use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\System\Utility\EditorContentNormalizer;
@@ -50,6 +52,7 @@ final readonly class NewTopicController
         private ForumSectionPathService $sectionPathService,
         private ValidatorInterface $validator,
         private AccessCheckerInterface $accessChecker,
+        private ForumFormTokens $formTokens,
     ) {
     }
 
@@ -130,6 +133,10 @@ final readonly class NewTopicController
             ];
 
             $validationResult = $this->validator->validate($data, $rules);
+            if (! $this->formTokens->consume($request->body('token', ''))) {
+                $validationResult = $validationResult->withError('_form', __('The form was already sent or is out of date. Send it again if needed.'));
+            }
+
             $errors = $validationResult->getErrors();
             if ($validationResult->isValid()) {
                 try {
@@ -182,7 +189,9 @@ final readonly class NewTopicController
                 'can_set_meta'    => $this->accessChecker->allows(ForumPermissions::TOPIC_META_MANAGE),
                 'errors'          => $errors,
                 'data'            => $data,
-            ]
+                'token'           => $this->formTokens->issue(),
+            ],
+            $errors ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK,
         );
     }
 }

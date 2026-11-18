@@ -489,6 +489,7 @@
       'Sign in to answer in the topic.' => 'Чтобы ответить в теме, войдите на сайт.',
       'A deleted post' => 'Удалённое сообщение',
       'Do not answer this post' => 'Не отвечать на это сообщение',
+      'The form was already sent or is out of date. Send it again if needed.' => 'Форма уже отправлена или устарела. Отправьте её ещё раз, если нужно.',
     ),
   ),
 );

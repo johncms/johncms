@@ -7,6 +7,7 @@
     @var msg             string
     @var data            array  meta_description, meta_keywords
     @var errors          array  Validation messages by field name.
+    @var token           string One-time token of the form, kept in the session.
     @var add_files       bool   The author asked to attach a file after writing.
     @var show_preview    bool   The author pressed "Preview".
     @var preview_message \Twig\Markup
@@ -27,6 +28,7 @@
 
     <form name="new_topic" action="{{ action_url }}" method="post">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}"/>
+        <input type="hidden" name="token" value="{{ token }}">
         {% if errors._form|default([]) %}
             <div class="alert alert-danger">{{ errors._form|join(', ') }}</div>
         {% endif %}

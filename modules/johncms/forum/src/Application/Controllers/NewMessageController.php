@@ -14,6 +14,7 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumAnsweredPosts;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
+use Johncms\Modules\Forum\Application\Services\ForumFormTokens;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\GetNewMessageContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\PostMessageUseCase;
@@ -45,6 +46,7 @@ final readonly class NewMessageController
         private TransactionManagerInterface $transactions,
         private ForumTopicPathService $topicPathService,
         private AccessCheckerInterface $accessChecker,
+        private ForumFormTokens $formTokens,
     ) {
     }
 
@@ -141,7 +143,7 @@ final readonly class NewMessageController
                 $this->session->remove(['fsort_id', 'fsort_users']);
             }
 
-            $this->session->remove('token');
+            $this->formTokens->consume($request->body('token', ''));
             $answered = $this->answeredPosts->find($topic, $request->bodyInt('reply_to'));
 
             try {
@@ -184,7 +186,7 @@ final readonly class NewMessageController
             redirect($this->topicPathService->getTopicUrlById($result->topicId, $result->page > 1 ? $result->page : null) ?? '/forum/');
         }
 
-        $token = $this->regenerateToken();
+        $token = $this->formTokens->issue();
 
         return new ViewResponse(
             '@forum/public/reply-message.twig',
@@ -203,18 +205,7 @@ final readonly class NewMessageController
 
     private function isValidToken(Request $request): bool
     {
-        $token = $request->body('token', '');
-        $sessionToken = (string) $this->session->get('token', '');
-
-        return $token !== '' && $sessionToken !== '' && hash_equals($sessionToken, $token);
-    }
-
-    private function regenerateToken(): string
-    {
-        $token = (string) random_int(1000, 100000);
-        $this->session->set('token', $token);
-
-        return $token;
+        return $this->formTokens->isValid($request->body('token', ''));
     }
 
     private function buildTopicBackUrl(string $topicUrl, int $page): string

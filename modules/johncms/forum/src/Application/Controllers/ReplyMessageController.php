@@ -13,6 +13,7 @@ use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
+use Johncms\Modules\Forum\Application\Services\ForumFormTokens;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\GetReplyMessageContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ReplyMessageUseCase;
@@ -41,6 +42,7 @@ final readonly class ReplyMessageController
         private TransactionManagerInterface $transactions,
         private ForumTopicPathService $topicPathService,
         private AccessCheckerInterface $accessChecker,
+        private ForumFormTokens $formTokens,
     ) {
     }
 
@@ -165,7 +167,7 @@ final readonly class ReplyMessageController
                 $this->session->remove(['fsort_id', 'fsort_users']);
             }
 
-            $this->session->remove('token');
+            $this->formTokens->consume($request->body('token', ''));
 
             try {
                 $result = $this->transactions->run(function () use ($sourceMessage, $topic, $msg, $addFiles) {
@@ -200,7 +202,7 @@ final readonly class ReplyMessageController
             redirect($this->topicPathService->getTopicUrlById($result->topicId, $result->page > 1 ? $result->page : null) ?? '/forum/');
         }
 
-        $token = $this->regenerateToken();
+        $token = $this->formTokens->issue();
 
         $isQuote = $request->query->has('quote');
         $quoteText = (string) $sourceMessage->getRawOriginal('text');
@@ -228,18 +230,7 @@ final readonly class ReplyMessageController
 
     private function isValidToken(Request $request): bool
     {
-        $token = $request->body('token', '');
-        $sessionToken = (string) $this->session->get('token', '');
-
-        return $token !== '' && $sessionToken !== '' && hash_equals($sessionToken, $token);
-    }
-
-    private function regenerateToken(): string
-    {
-        $token = (string) random_int(1000, 100000);
-        $this->session->set('token', $token);
-
-        return $token;
+        return $this->formTokens->isValid($request->body('token', ''));
     }
 
     private function getReplyUrl(Request $request, int $messageId, int $page = 1): string

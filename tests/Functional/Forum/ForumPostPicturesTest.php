@@ -9,6 +9,7 @@ use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Database\ConnectionInterface;
 use Johncms\Database\Schema\SchemaInterface;
 use Johncms\Files\FileStore;
+use Johncms\Modules\Forum\Application\Services\ForumFormTokens;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\UseCases\DeleteTopicUseCase;
 use Johncms\Users\User;
@@ -65,6 +66,7 @@ final class ForumPostPicturesTest extends FunctionalTestCase
         $this->postForm('/forum/new-topic/' . $this->section . '/', [
             'th'     => 'A topic with pictures',
             'msg'    => '<p><img src="' . $own['url'] . '"></p><p><img src="' . $foreign['url'] . '"></p>',
+            'token'  => $this->container()->get(ForumFormTokens::class)->issue(),
             'submit' => '1',
         ], $author);
 
@@ -80,7 +82,7 @@ final class ForumPostPicturesTest extends FunctionalTestCase
         $picture = $this->upload($author);
         $message = $this->post($author->id, $picture);
 
-        $this->postForm('/forum/edit-post/' . $message . '/', ['msg' => '<p>Without the picture</p>', 'submit' => '1'], FunctionalUserFactory::createSupervisor());
+        $this->postForm('/forum/edit-post/' . $message . '/', ['msg' => '<p>Without the picture</p>', 'token' => $this->container()->get(ForumFormTokens::class)->issue(), 'submit' => '1'], FunctionalUserFactory::createSupervisor());
 
         self::assertSame('<p>Without the picture</p>', Capsule::table('forum_messages')->where('id', $message)->value('text'));
         self::assertNull($this->registration($picture['id']));

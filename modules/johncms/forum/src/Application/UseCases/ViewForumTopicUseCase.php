@@ -8,6 +8,7 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Access\ForumAccess;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Modules\Forum\Application\Services\ForumFormTokens;
 use Johncms\Modules\Forum\Application\Services\ForumPostRows;
 use Johncms\Modules\Forum\Application\Services\ForumUserSettings;
 use Carbon\Carbon;
@@ -24,7 +25,6 @@ use Johncms\Modules\Forum\Domain\Repository\ForumUnreadRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumWhoRepositoryInterface;
 use Johncms\Notifications\Notification;
-use Johncms\Http\Session;
 use Johncms\Utils\ShortNumberFormatter;
 
 final readonly class ViewForumTopicUseCase
@@ -38,7 +38,7 @@ final readonly class ViewForumTopicUseCase
         private ForumSectionPathService $sectionPathService,
         private ForumTopicPathService $topicPathService,
         private CurrentUser $currentUser,
-        private Session $session,
+        private ForumFormTokens $formTokens,
         private AccessCheckerInterface $accessChecker,
         private ForumAccess $forumAccess,
         private ForumUserSettings $userSettings,
@@ -172,11 +172,7 @@ final readonly class ViewForumTopicUseCase
             $writeAccess = true;
         }
 
-        $token = null;
-        if ($writeAccess) {
-            $token = random_int(1000, 100000);
-            $this->session->set('token', $token);
-        }
+        $token = $writeAccess ? $this->formTokens->issue() : null;
 
         $curators = [];
         foreach ((array) $topic->curators as $userId => $userName) {

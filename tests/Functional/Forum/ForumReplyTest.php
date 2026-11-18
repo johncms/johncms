@@ -7,6 +7,7 @@ namespace Tests\Functional\Forum;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Http\Session;
+use Johncms\Modules\Forum\Application\Services\ForumFormTokens;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Services\ForumTopicStatsRecalculator;
 use Johncms\Users\User;
@@ -201,17 +202,15 @@ final class ForumReplyTest extends FunctionalTestCase
     }
 
     /**
-     * The form as the page gives it: with the one-time token the page put into the session.
+     * The form as the page gives it: with a one-time token the page issued.
      *
      * @param array<string, string> $fields
      */
     private function send(string $uri, array $fields): Response
     {
-        $this->container()->get(Session::class)->set('token', '4242');
-
         return $this->postForm($uri, $fields + [
             'msg'    => '<p>An answer to that</p>',
-            'token'  => '4242',
+            'token'  => $this->container()->get(ForumFormTokens::class)->issue(),
             'submit' => '1',
         ], $this->writer);
     }

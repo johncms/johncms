@@ -11,11 +11,13 @@ use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
+use Johncms\Modules\Forum\Application\Services\ForumFormTokens;
 use Johncms\Modules\Forum\Application\UseCases\EditPostUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureEditPostAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetEditPostContextUseCase;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Johncms\System\Utility\EditorContentNormalizer;
 
 final readonly class EditPostController
@@ -29,6 +31,7 @@ final readonly class EditPostController
         private EditPostUseCase $editPostUseCase,
         private ForumMessagePictures $pictures,
         private TransactionManagerInterface $transactions,
+        private ForumFormTokens $formTokens,
     ) {
     }
 
@@ -77,6 +80,16 @@ final readonly class EditPostController
                 );
             }
 
+            if (! $this->formTokens->consume($request->body('token', ''))) {
+                return $this->form(
+                    id: $id,
+                    page: $page,
+                    message: $request->body('msg'),
+                    backUrl: $context->backUrl,
+                    errors: ['_form' => [__('The form was already sent or is out of date. Send it again if needed.')]],
+                );
+            }
+
             try {
                 $this->transactions->run(function () use ($context, $msg): void {
                     $this->editPostUseCase->execute($context, $msg);
@@ -102,6 +115,14 @@ final readonly class EditPostController
             ? (string) $context->message->getRawOriginal('text')
             : $request->body('msg');
 
+        return $this->form(id: $id, page: $page, message: $message, backUrl: $context->backUrl, errors: []);
+    }
+
+    /**
+     * @param array<string, list<string>> $errors
+     */
+    private function form(int $id, int $page, string $message, string $backUrl, array $errors): ViewResponse
+    {
         return new ViewResponse(
             '@forum/public/edit-post.twig',
             [
@@ -109,9 +130,11 @@ final readonly class EditPostController
                 'page_title' => __('Edit Message'),
                 'action_url' => '/forum/edit-post/' . $id . '/' . ($page > 1 ? '?page=' . $page : ''),
                 'msg'        => $message,
-                'back_url'   => $context->backUrl,
-                'errors'     => [],
-            ]
+                'back_url'   => $backUrl,
+                'errors'     => $errors,
+                'token'      => $this->formTokens->issue(),
+            ],
+            $errors ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK,
         );
     }
 }

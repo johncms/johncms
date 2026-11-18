@@ -1936,3 +1936,6 @@ msgstr "Удалённое сообщение"
 
 msgid "Do not answer this post"
 msgstr "Не отвечать на это сообщение"
+
+msgid "The form was already sent or is out of date. Send it again if needed."
+msgstr "Форма уже отправлена или устарела. Отправьте её ещё раз, если нужно."

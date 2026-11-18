@@ -22,8 +22,8 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/DeleteVoteAnswerController.php:47
 #: modules/johncms/forum/src/Application/Controllers/DeleteVoteController.php:36
 #: modules/johncms/forum/src/Application/Controllers/DeleteVoteController.php:46
-#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:59
-#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:93
+#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:62
+#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:106
 #: modules/johncms/forum/src/Application/Controllers/EditVoteController.php:35
 #: modules/johncms/forum/src/Application/Controllers/EditVoteController.php:46
 #: modules/johncms/forum/src/Application/Controllers/FilterByAuthorController.php:40
@@ -31,29 +31,29 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/MoveTopicController.php:36
 #: modules/johncms/forum/src/Application/Controllers/MoveTopicController.php:52
 #: modules/johncms/forum/src/Application/Controllers/MoveTopicController.php:67
-#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:64
-#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:82
-#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:99
-#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:121
-#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:135
-#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:175
-#: modules/johncms/forum/src/Application/Controllers/NewTopicController.php:86
+#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:66
+#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:84
+#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:101
+#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:123
+#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:137
+#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:177
+#: modules/johncms/forum/src/Application/Controllers/NewTopicController.php:89
 #: modules/johncms/forum/src/Application/Controllers/PinTopicController.php:33
 #: modules/johncms/forum/src/Application/Controllers/PollVotersController.php:47
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:60
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:81
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:94
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:111
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:145
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:159
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:191
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:62
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:83
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:96
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:113
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:147
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:161
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:193
 #: modules/johncms/forum/src/Application/Controllers/RestorePostController.php:47
 #: modules/johncms/forum/src/Application/Controllers/RestoreTopicController.php:34
 #: modules/johncms/forum/src/Application/Controllers/SetFilterByAuthorController.php:37
 #: modules/johncms/forum/src/Application/Controllers/SetFilterByAuthorController.php:52
 #: modules/johncms/forum/src/Application/Controllers/SubmitVoteController.php:40
-#: modules/johncms/forum/templates/public/edit-post.twig:26
-#: modules/johncms/forum/templates/public/new-topic.twig:69
+#: modules/johncms/forum/templates/public/edit-post.twig:31
+#: modules/johncms/forum/templates/public/new-topic.twig:71
 #: modules/johncms/forum/templates/public/reply-message.twig:34
 msgid "Back"
 msgstr ""
@@ -78,15 +78,15 @@ msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/AddFileController.php:92
 #: modules/johncms/forum/src/Application/Controllers/AddVoteController.php:98
-#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:75
+#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:78
 #: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:50
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:132
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:134
 msgid "Repeat"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/AddFileController.php:105
 #: modules/johncms/forum/src/Application/Controllers/AddFileController.php:106
-#: modules/johncms/forum/templates/public/new-topic.twig:62
+#: modules/johncms/forum/templates/public/new-topic.twig:64
 #: modules/johncms/forum/templates/public/reply-message.twig:28
 #: modules/johncms/forum/templates/public/topic.twig:331
 msgid "Add File"
@@ -160,7 +160,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/DeletePostController.php:41
 #: modules/johncms/forum/src/Application/Controllers/DeletePostFileController.php:40
 #: modules/johncms/forum/src/Application/Controllers/DownloadFileController.php:46
-#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:49
+#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:52
 #: modules/johncms/forum/src/Application/Controllers/FilterByAuthorController.php:56
 #: modules/johncms/forum/src/Application/Controllers/ForumFilesController.php:57
 #: modules/johncms/forum/src/Application/Controllers/ForumIndexController.php:34
@@ -313,8 +313,8 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/DeletePostController.php:48
 #: modules/johncms/forum/src/Application/Controllers/DeletePostFileController.php:37
 #: modules/johncms/forum/src/Application/Controllers/DeletePostFileController.php:47
-#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:46
-#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:56
+#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:49
+#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:59
 #: modules/johncms/forum/src/Application/Controllers/RestorePostController.php:34
 #: modules/johncms/forum/src/Application/Controllers/RestorePostController.php:44
 msgid "Error"
@@ -322,7 +322,7 @@ msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/DeletePostController.php:39
 #: modules/johncms/forum/src/Application/Controllers/DeletePostFileController.php:38
-#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:47
+#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:50
 #: modules/johncms/forum/src/Application/Controllers/RestorePostController.php:35
 msgid "Message does not exists or has been deleted"
 msgstr ""
@@ -356,16 +356,21 @@ msgstr ""
 msgid "File does not exist"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:71
-#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:89
-#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:108
-#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:109
+#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:74
+#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:102
+#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:129
+#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:130
 msgid "Edit Message"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:73
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:130
+#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:76
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:132
 msgid "You have not entered the message"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/EditPostController.php:89
+#: modules/johncms/forum/src/Application/Controllers/NewTopicController.php:137
+msgid "The form was already sent or is out of date. Send it again if needed."
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/EditVoteController.php:42
@@ -429,62 +434,62 @@ msgstr ""
 msgid "Move topic"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:61
-#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:78
-#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:92
-#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:117
-#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:131
-#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:171
-#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:192
-#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:193
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:57
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:77
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:90
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:104
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:128
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:141
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:155
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:187
+#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:63
+#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:80
+#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:94
+#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:119
+#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:133
+#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:173
+#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:194
+#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:195
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:59
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:79
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:92
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:106
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:130
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:143
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:157
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:189
 msgid "New message"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:62
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:58
+#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:64
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:60
 #: modules/johncms/forum/src/Application/Exceptions/ForumErrorCode.php:37
 #: modules/johncms/forum/src/Application/Exceptions/ForumErrorCode.php:51
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:80
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:79
+#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:82
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:81
 msgid "You cannot write in a closed topic"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:95
-#: modules/johncms/forum/src/Application/Controllers/NewTopicController.php:82
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:107
+#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:97
+#: modules/johncms/forum/src/Application/Controllers/NewTopicController.php:85
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:109
 #, php-format
 msgid "You cannot add the message so often<br>Please, wait %d sec."
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:119
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:143
+#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:121
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:145
 msgid "Text is too short"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:133
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:157
+#: modules/johncms/forum/src/Application/Controllers/NewMessageController.php:135
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:159
 msgid "Message already exists"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/NewTopicController.php:67
+#: modules/johncms/forum/src/Application/Controllers/NewTopicController.php:70
 msgid "Go to Section"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/NewTopicController.php:79
-#: modules/johncms/forum/src/Application/Controllers/NewTopicController.php:167
-#: modules/johncms/forum/src/Application/Controllers/NewTopicController.php:172
-#: modules/johncms/forum/src/Application/Controllers/NewTopicController.php:173
+#: modules/johncms/forum/src/Application/Controllers/NewTopicController.php:82
+#: modules/johncms/forum/src/Application/Controllers/NewTopicController.php:174
+#: modules/johncms/forum/src/Application/Controllers/NewTopicController.php:179
+#: modules/johncms/forum/src/Application/Controllers/NewTopicController.php:180
 #: modules/johncms/forum/templates/public/topics.twig:23
 msgid "New Topic"
 msgstr ""
@@ -498,12 +503,12 @@ msgstr ""
 msgid "No one has voted in this poll yet"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:92
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:94
 msgid "You can not reply to your own message"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:217
-#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:218
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:219
+#: modules/johncms/forum/src/Application/Controllers/ReplyMessageController.php:220
 msgid "Reply to message"
 msgstr ""
 
@@ -1132,7 +1137,7 @@ msgid "The section is not saved: check the fields marked below."
 msgstr ""
 
 #: modules/johncms/forum/templates/admin/section-form.twig:60
-#: modules/johncms/forum/templates/public/new-topic.twig:34
+#: modules/johncms/forum/templates/public/new-topic.twig:36
 msgid "Title"
 msgstr ""
 
@@ -1174,13 +1179,13 @@ msgstr ""
 
 #: modules/johncms/forum/templates/admin/section-form.twig:126
 #: modules/johncms/forum/templates/public/components/change-topic-fields.twig:17
-#: modules/johncms/forum/templates/public/new-topic.twig:56
+#: modules/johncms/forum/templates/public/new-topic.twig:58
 msgid "Meta keywords"
 msgstr ""
 
 #: modules/johncms/forum/templates/admin/section-form.twig:131
 #: modules/johncms/forum/templates/public/components/change-topic-fields.twig:24
-#: modules/johncms/forum/templates/public/new-topic.twig:52
+#: modules/johncms/forum/templates/public/new-topic.twig:54
 msgid "Meta description"
 msgstr ""
 
@@ -1362,7 +1367,7 @@ msgstr ""
 #: modules/johncms/forum/templates/public/add-poll.twig:42
 #: modules/johncms/forum/templates/public/change-topic.twig:20
 #: modules/johncms/forum/templates/public/edit-poll.twig:54
-#: modules/johncms/forum/templates/public/edit-post.twig:23
+#: modules/johncms/forum/templates/public/edit-post.twig:28
 #: modules/johncms/forum/templates/public/topic.twig:248
 msgid "Save"
 msgstr ""
@@ -1562,16 +1567,16 @@ msgstr ""
 msgid "Do you really want to delete the answer?"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/edit-post.twig:16
-#: modules/johncms/forum/templates/public/new-topic.twig:43
+#: modules/johncms/forum/templates/public/edit-post.twig:21
+#: modules/johncms/forum/templates/public/new-topic.twig:45
 #: modules/johncms/forum/templates/public/reply-message.twig:21
 #: modules/johncms/forum/templates/public/topic.twig:322
 #: modules/johncms/forum/templates/public/topic.twig:324
 msgid "Message"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/edit-post.twig:26
-#: modules/johncms/forum/templates/public/new-topic.twig:74
+#: modules/johncms/forum/templates/public/edit-post.twig:31
+#: modules/johncms/forum/templates/public/new-topic.twig:76
 #: modules/johncms/forum/templates/public/reply-message.twig:34
 msgid "Smilies"
 msgstr ""
@@ -1618,13 +1623,13 @@ msgstr ""
 msgid "There is no other section of topics to move it to."
 msgstr ""
 
-#: modules/johncms/forum/templates/public/new-topic.twig:65
+#: modules/johncms/forum/templates/public/new-topic.twig:67
 #: modules/johncms/forum/templates/public/reply-message.twig:31
 #: modules/johncms/forum/templates/public/topic.twig:334
 msgid "Write"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/new-topic.twig:66
+#: modules/johncms/forum/templates/public/new-topic.twig:68
 msgid "Preview"
 msgstr ""
 
