@@ -118,6 +118,9 @@ final readonly class ForumPostFiles
 
         $message = $this->messages->findById($messageId) ?? throw new LogicException(sprintf('The post %d is not saved.', $messageId));
         $message->loadMissing('topic.section');
+        // A file of a hidden post or of a hidden topic is hidden with them: the listings of files
+        // must not show what the post itself does not.
+        $hidden = $message->deleted || $message->topic->deleted;
         $written = [];
         try {
             foreach ($files as $file) {
@@ -133,6 +136,7 @@ final readonly class ForumPostFiles
                 $row->time = $message->date;
                 $row->filename = $name;
                 $row->filetype = $this->typeOf($name);
+                $row->del = $hidden;
                 $this->files->save($row);
             }
         } catch (Throwable $exception) {

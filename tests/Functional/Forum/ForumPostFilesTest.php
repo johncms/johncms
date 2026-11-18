@@ -165,6 +165,29 @@ final class ForumPostFilesTest extends FunctionalTestCase
         self::assertCount(1, $this->filesOf($post));
     }
 
+    public function testAFileOfAHiddenPostIsHiddenWithIt(): void
+    {
+        $post = $this->post($this->writer, '<p>Something regretted</p>', time());
+        Capsule::table('forum_messages')->where('id', $post)->update(['deleted' => 1, 'deleted_by' => 'Alex']);
+        $moderator = FunctionalUserFactory::createSupervisor();
+
+        $response = $this->handleRequest(
+            '/forum/edit-post/' . $post . '/',
+            'POST',
+            $this->withCsrfToken([
+                'msg'    => '<p>Something regretted, edited</p>',
+                'token'  => $this->container()->get(ForumFormTokens::class)->issue(),
+                'submit' => '1',
+            ]),
+            cookies: $this->actingAs($moderator),
+            files: ['files' => [$this->file('regret.txt')]],
+        );
+
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame(1, (int) Capsule::table('cms_forum_files')->where('post', $post)->value('del'));
+        self::assertStringNotContainsString('>regret.txt</a>', (string) $this->handleRequest('/forum/files/?do=4')->getContent(), 'A guest does not see it.');
+    }
+
     public function testTheFormsNoLongerOfferToAttachAFileAfterwards(): void
     {
         $page = (string) $this->handleRequest('/forum/talk/a-topic-' . $this->topic . '/', cookies: $this->actingAs($this->writer))->getContent();
